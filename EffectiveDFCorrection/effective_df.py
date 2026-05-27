@@ -231,7 +231,7 @@ def plot_nu_vs_lambda(p_values, N_values, repeats, rng):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    rng = np.random.default_rng(42)
+    rng = np.random.default_rng(0)
 
     configs = [
         dict(p=0.50, N=1000, label="p=0.50, N=1000"),

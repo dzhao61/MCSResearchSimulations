@@ -47,6 +47,9 @@ MICalcDiscrete = JPackage("infodynamics.measures.discrete").MutualInformationCal
 LAM_LO = 0.5    # below this: point-mass regime, chi²(ν) is wrong family
 LAM_HI = 50.0   # above this: correction is trivial (ν≈1, a≈1)
 
+# ── Plot toggle ───────────────────────────────────────────────────────────────
+LOG_SCALE = True   # True = log x-axis,  False = linear x-axis
+
 
 # ── Bootstrap ─────────────────────────────────────────────────────────────────
 
@@ -111,7 +114,9 @@ def generate_data(p_values, N_values, K, rng):
 # ── Plotting ──────────────────────────────────────────────────────────────────
 
 def plot_fits(df, fits_nu, fits_a):
-    lam_curve = np.logspace(np.log10(LAM_LO * 0.9), np.log10(LAM_HI * 1.5), 300)
+    lam_curve = (np.logspace(np.log10(LAM_LO * 0.9), np.log10(LAM_HI * 1.5), 300)
+                 if LOG_SCALE else
+                 np.linspace(LAM_LO * 0.9, LAM_HI * 1.5, 300))
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
     colors_model = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3"]
@@ -145,8 +150,8 @@ def plot_fits(df, fits_nu, fits_a):
                         label="χ²(1) nominal")
         ax_data.axvspan(LAM_LO, LAM_HI, alpha=0.06, color="grey",
                         label="Fitting region")
-        ax_data.set_xscale("log")
-        ax_data.set_xlabel(r"$\lambda = N \cdot p^2$", fontsize=11)
+        if LOG_SCALE:
+            ax_data.set_xscale("log")
         ax_data.set_ylabel(ylabel, fontsize=11)
         ax_data.set_title(title, fontsize=12, fontweight="bold")
         ax_data.legend(fontsize=7, loc="upper right")
@@ -160,7 +165,8 @@ def plot_fits(df, fits_nu, fits_a):
             resid = df_fit[target] - func(df_fit["lam"].values, *popt)
             ax_res.scatter(df_fit["lam"], resid, s=25, color="#333333", zorder=5)
             ax_res.axhline(0, color="red", linewidth=1.2)
-            ax_res.set_xscale("log")
+            if LOG_SCALE:
+                ax_res.set_xscale("log")
             ax_res.set_xlabel(r"$\lambda = N \cdot p^2$", fontsize=11)
             ax_res.set_ylabel("Residual", fontsize=11)
             ax_res.set_title(f"Residuals: best model = {best_name}", fontsize=11)
