@@ -3,10 +3,11 @@ Stage 14: Stage-2-style null comparison.
 
 Compare four null approximations for discrete mutual information:
 
-    1. standard chi-square
+    1. JIDT analytic chi-square significance
     2. Stage 12 moment model
-    3. empirical product null, using fresh independent JIDT samples
-    4. empirical permutation null, using fixed observed marginals and JIDT
+    3. empirical product null, using the JIDT example's fresh independent
+       bootstrap loop with JIDT computing every MI
+    4. JIDT empirical permutation significance, via computeSignificance(repeats)
 
 The default configuration is binary and Stage-2-like: several sparse and dense
 Bernoulli settings.  For each setting we create one observed independent
@@ -146,6 +147,52 @@ def jidt_T(calc, x: np.ndarray, y: np.ndarray) -> float:
     return float(2.0 * len(x) * mi_bits * np.log(2.0))
 
 
+def jidt_analytic_standard(x_obs: np.ndarray, y_obs: np.ndarray):
+    """
+    JIDT's built-in analytic chi-square significance object.
+
+    JIDT's distribution methods use MI in bits internally.  The rest of this
+    stage reports T = 2 N I_nats, so estimates from this object are converted
+    by multiplying MI_bits by 2 N log(2).
+    """
+    calc = MICalcDiscrete(int(max(x_obs.max(), y_obs.max()) + 1))
+    calc.initialise()
+    calc.addObservations(JArray(JInt)(x_obs.tolist()), JArray(JInt)(y_obs.tolist()))
+    calc.computeAverageLocalOfObservations()
+    return calc.computeSignificance()
+
+
+def jidt_estimate_to_T(mi_bits: float, N: int) -> float:
+    return float(2.0 * N * mi_bits * np.log(2.0))
+
+
+def jidt_T_to_estimate(T: float, N: int) -> float:
+    return float(T / (2.0 * N * np.log(2.0)))
+
+
+def jidt_analytic_quantile(standard_dist, q: float, N: int) -> float:
+    # computeEstimateForGivenPValue takes a right-tail p-value.
+    mi_bits = float(standard_dist.computeEstimateForGivenPValue(1.0 - q))
+    return jidt_estimate_to_T(mi_bits, N)
+
+
+def jidt_analytic_cdf(standard_dist, T_grid: np.ndarray, N: int) -> np.ndarray:
+    cdf = []
+    for T in T_grid:
+        mi_bits = jidt_T_to_estimate(float(T), N)
+        p_tail = float(standard_dist.computePValueForGivenEstimate(mi_bits))
+        cdf.append(1.0 - p_tail)
+    return np.asarray(cdf, dtype=float)
+
+
+def jidt_analytic_p_value(standard_dist) -> float:
+    p_value = float(standard_dist.pValue)
+    if np.isfinite(p_value):
+        return p_value
+    actual = max(float(standard_dist.actualValue), 0.0)
+    return float(standard_dist.computePValueForGivenEstimate(actual))
+
+
 def sample_categorical(p: np.ndarray, N: int, rng: np.random.Generator) -> np.ndarray:
     return np.searchsorted(np.cumsum(p), rng.random(N)).astype(int)
 
@@ -157,6 +204,15 @@ def product_null_T(
     repeats: int,
     rng: np.random.Generator,
 ) -> np.ndarray:
+    """
+    Product-null bootstrap used in the JIDT null-distribution example:
+    draw fresh independent x and y samples, then use JIDT to compute MI.
+
+    JIDT does not expose this as a separate computeSignificance API; the toolkit
+    API is fixed-marginal permutation significance.  This loop mirrors the
+    JIDT example's non-toolkit branch, generalized to arbitrary categorical
+    marginals.
+    """
     calc = MICalcDiscrete(int(max(len(p_x), len(p_y))))
     T = np.empty(repeats)
     for i in range(repeats):
@@ -177,6 +233,26 @@ def permutation_null_T(
     for i in range(repeats):
         T[i] = jidt_T(calc, x_obs, rng.permutation(y_obs))
     return T
+
+
+def jidt_permutation_null_T(
+    x_obs: np.ndarray,
+    y_obs: np.ndarray,
+    repeats: int,
+) -> tuple[np.ndarray, float]:
+    """
+    JIDT's built-in significance routine permutes observations internally.
+
+    This is the fixed-marginal null: the supplied observed x and y arrays are
+    kept as the marginal samples, and JIDT builds a null distribution by
+    randomising their pairing.
+    """
+    calc = MICalcDiscrete(int(max(x_obs.max(), y_obs.max()) + 1))
+    calc.initialise()
+    calc.addObservations(JArray(JInt)(x_obs.tolist()), JArray(JInt)(y_obs.tolist()))
+    null_dist = calc.computeSignificance(repeats)
+    mi_bits = np.asarray([float(v) for v in null_dist.distribution], dtype=float)
+    return 2.0 * len(x_obs) * mi_bits * np.log(2.0), float(null_dist.pValue)
 
 
 def selected_coefficients(path: Path) -> dict[str, dict[str, float]]:
@@ -238,6 +314,8 @@ def summarize_config(
     T_obs: float,
     product_T: np.ndarray,
     permutation_T: np.ndarray,
+    permutation_p_obs: float,
+    standard_dist,
     pred: dict[str, float],
     features: pd.Series,
 ) -> dict[str, float | str | int]:
@@ -259,17 +337,17 @@ def summarize_config(
         "product_sigma2": float(product_T.var(ddof=1)),
         "permutation_mu": float(permutation_T.mean()),
         "permutation_sigma2": float(permutation_T.var(ddof=1)),
-        "standard_p_obs": float(stats.chi2.sf(T_obs, df=nu0)),
+        "standard_p_obs": jidt_analytic_p_value(standard_dist),
         "stage12_p_obs": float(stats.chi2.sf(T_obs / pred["stage12_a"], df=pred["stage12_nu"])),
         "product_emp_p_obs": empirical_p_value(product_T, T_obs),
-        "permutation_emp_p_obs": empirical_p_value(permutation_T, T_obs),
+        "permutation_emp_p_obs": float(permutation_p_obs),
     }
     row.update(pred)
     for q in [0.95, 0.99]:
         suffix = int(q * 100)
         row[f"product_q{suffix}"] = float(np.quantile(product_T, q))
         row[f"permutation_q{suffix}"] = float(np.quantile(permutation_T, q))
-        row[f"standard_q{suffix}"] = float(stats.chi2.ppf(q, df=nu0))
+        row[f"standard_q{suffix}"] = jidt_analytic_quantile(standard_dist, q, cfg.N)
         row[f"stage12_q{suffix}"] = float(
             pred["stage12_a"] * stats.chi2.ppf(q, df=pred["stage12_nu"])
         )
@@ -300,13 +378,28 @@ def run_comparison(args: argparse.Namespace) -> tuple[pd.DataFrame, dict[str, di
         calc = MICalcDiscrete(int(max(x_obs.max(), y_obs.max()) + 1))
         T_obs = jidt_T(calc, x_obs, y_obs)
         pred, features = stage12_prediction(p_x_emp, p_y_emp, cfg.N, coefs, args.log_clip)
+        standard_dist = jidt_analytic_standard(x_obs, y_obs)
         product_T = product_null_T(p_x_emp, p_y_emp, cfg.N, args.repeats, rng)
-        permutation_T = permutation_null_T(x_obs, y_obs, args.repeats, rng)
-        row = summarize_config(cfg, T_obs, product_T, permutation_T, pred, features)
+        if args.permutation_method == "jidt":
+            permutation_T, permutation_p = jidt_permutation_null_T(x_obs, y_obs, args.repeats)
+        else:
+            permutation_T = permutation_null_T(x_obs, y_obs, args.repeats, rng)
+            permutation_p = empirical_p_value(permutation_T, T_obs)
+        row = summarize_config(
+            cfg,
+            T_obs,
+            product_T,
+            permutation_T,
+            permutation_p,
+            standard_dist,
+            pred,
+            features,
+        )
         rows.append(row)
         nulls[cfg.label] = {
             "product": product_T,
             "permutation": permutation_T,
+            "standard_dist": standard_dist,
             "standard_grid": np.asarray([]),
             "stage12_grid": np.asarray([]),
         }
@@ -398,7 +491,14 @@ def pvalue_summary(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def plot_cdfs(df: pd.DataFrame, nulls: dict[str, dict[str, np.ndarray]], out_path: Path) -> None:
+def hist_cdf(values: np.ndarray, bins: int, upper: float) -> tuple[np.ndarray, np.ndarray]:
+    counts, edges = np.histogram(values, bins=bins, range=(0.0, upper))
+    centres = 0.5 * (edges[:-1] + edges[1:])
+    cdf = np.cumsum(counts / max(len(values), 1))
+    return centres, cdf
+
+
+def plot_cdfs(df: pd.DataFrame, nulls: dict[str, dict[str, np.ndarray]], out_path: Path, bins: int) -> None:
     try:
         import matplotlib.pyplot as plt
     except Exception as exc:  # pragma: no cover
@@ -413,28 +513,34 @@ def plot_cdfs(df: pd.DataFrame, nulls: dict[str, dict[str, np.ndarray]], out_pat
     for idx, (_, row) in enumerate(df.iterrows()):
         ax = axes[idx // n_cols][idx % n_cols]
         label = str(row["config"])
-        product_T = np.sort(nulls[label]["product"])
-        permutation_T = np.sort(nulls[label]["permutation"])
-        product_cdf = np.arange(1, len(product_T) + 1) / len(product_T)
-        permutation_cdf = np.arange(1, len(permutation_T) + 1) / len(permutation_T)
-        xmax = float(max(np.quantile(product_T, 0.995), np.quantile(permutation_T, 0.995), row["stage12_q99"]))
+        product_T_raw = nulls[label]["product"]
+        permutation_T_raw = nulls[label]["permutation"]
+        xmax = float(
+            max(
+                np.quantile(product_T_raw, 0.995),
+                np.quantile(permutation_T_raw, 0.995),
+                row["stage12_q99"],
+            )
+        )
         grid = np.linspace(0.0, xmax * 1.08, 400)
+        product_x, product_cdf = hist_cdf(product_T_raw, bins, grid.max())
+        permutation_x, permutation_cdf = hist_cdf(permutation_T_raw, bins, grid.max())
 
-        ax.plot(product_T, product_cdf, color="red", linewidth=2.0, label="product null")
+        ax.plot(product_x, product_cdf, color="red", linewidth=2.0, label="product null")
         ax.plot(
-            permutation_T,
+            permutation_x,
             permutation_cdf,
             color="purple",
             linewidth=1.8,
             linestyle="-.",
-            label="permutation null",
+            label="JIDT permutation null",
         )
         ax.plot(
             grid,
-            stats.chi2.cdf(grid, df=float(row["nu0"])),
+            jidt_analytic_cdf(nulls[label]["standard_dist"], grid, int(row["N"])),
             color="green",
             linewidth=1.8,
-            label="standard chi2",
+            label="JIDT analytic chi2",
         )
         ax.plot(
             grid,
@@ -490,6 +596,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--repeats", type=int, default=3000)
     parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--log-clip", type=float, default=4.0)
+    parser.add_argument("--permutation-method", choices=["jidt", "manual"], default="jidt")
+    parser.add_argument("--plot-bins", type=int, default=100)
     parser.add_argument(
         "--selected-model",
         default=str(STAGE12 / "selected_moment_models.csv"),
@@ -521,7 +629,7 @@ def main() -> None:
     print(f"Saved p-value summary: {pvalue_path}")
 
     if not args.no_plot:
-        plot_cdfs(df, nulls, plot_path)
+        plot_cdfs(df, nulls, plot_path, args.plot_bins)
         print(f"Saved CDF plot: {plot_path}")
 
     print_summary(df, summary, pvalues)
