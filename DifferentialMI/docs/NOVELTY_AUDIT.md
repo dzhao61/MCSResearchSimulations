@@ -2,6 +2,16 @@
 
 Date: 25 July 2026
 
+> **Important correction:** the broader follow-up review located direct
+> mathematical and operational predecessors in the segregation literature.
+> In particular, Mora and Ruiz-Castillo (2009) derive regular asymptotic
+> inference for the discrete Mutual Information index and explicitly discuss
+> pairwise significance comparisons, while the `segregation` R package
+> provides bootstrap inference for the difference between two MI indices.
+> This document is retained as the earlier focused audit, but its negative
+> search conclusion is superseded by
+> [EXTENSIVE_NOVELTY_REVIEW.md](EXTENSIVE_NOVELTY_REVIEW.md).
+
 ## Question Audited
 
 The candidate thesis problem is inference for
@@ -103,31 +113,34 @@ equal MI.
   information functionals, but do not appear to make this discrete equal-MI
   comparison the main problem.
 
-## Search Result for the Exact Methodological Problem
+## Corrected Search Result for the Exact Methodological Problem
 
-The search did locate applications of the regular two-sample discrete null
+The expanded cross-disciplinary search located direct treatment of
 
 ```text
 I(P) = I(Q), with P and Q otherwise unrestricted.
 ```
 
-It did not locate a paper whose primary methodological contribution is:
+Mora and Ruiz-Castillo's 2009 working paper studies ordinary Shannon MI under
+a fully flexible multinomial model, derives its non-null asymptotic normal
+law, and explicitly states that pairwise significance tests can be performed.
+The resulting variance is equivalent to the influence variance used by this
+project. The `segregation` R package also supplies bootstrap bias correction,
+standard errors, and confidence intervals for the difference between two
+MI indices.
 
-- proving or demonstrating the weak-null failure of raw MI-difference
-  permutation;
-- deriving the bias-corrected two-sample discrete-MI Wald procedure;
-- comparing its finite-sample calibration and runtime with permutation across
-  heterogeneous multinomial populations; or
-- treating pooled-mixture degeneracy for studentized MI permutation.
+The remaining plausible gap is narrower:
 
-The defensible statement is therefore not "no one compares MI values." It is:
+- systematic MI-specific demonstration of raw label-permutation failure
+  under equal MI but unequal distributions;
+- finite-sample validation of a bias-corrected analytic test across
+  heterogeneous and sparse multinomial regimes;
+- observable operating-regime diagnostics;
+- pooled-mixture degeneracy analysis; and
+- a broad calibration, power, and runtime benchmark.
 
-> Applied work compares MI values using permutation, but this audit did not
-> locate a dedicated validation and deterministic weak-null inference
-> framework for that comparison.
-
-This is still not proof of priority. A formal database search and supervisor
-review remain required.
+These are provisional synthesis and validation contributions, not the first
+weak-null formulation or first-order test.
 
 ## Honest Novelty Boundary
 
@@ -155,11 +168,13 @@ and validating an existing applied practice:
 
 The strongest current wording is:
 
-> Fast and valid weak-null inference for differences in discrete mutual
-> information across heterogeneous multinomial populations, addressing the
-> limitations of raw permutation used in current applications.
+> A fast bias-corrected implementation and systematic finite-sample
+> validation of equal discrete-MI inference across heterogeneous multinomial
+> populations, addressing limitations of raw permutation used in current
+> applications.
 
-It should not currently be described as a fundamentally new asymptotic test.
+It should not be described as the first weak-null test or a fundamentally new
+first-order asymptotic test.
 
 ## Go/No-Go Implication
 
@@ -216,6 +231,17 @@ Before making a formal originality claim:
 4. Record search strings, dates, and inclusion decisions in the thesis.
 
 ## Primary Sources
+
+- Extensive corrected review and source classification:
+  [EXTENSIVE_NOVELTY_REVIEW.md](EXTENSIVE_NOVELTY_REVIEW.md)
+- Mora and Ruiz-Castillo (2009), direct multinomial MI asymptotics and
+  pairwise significance comparisons:
+  https://www.researchgate.net/publication/4724169_The_statistical_properties_of_the_Mutual_Information_index_of_multigroup_segregation
+- Elbers, direct bootstrap inference for differences between two MI indices:
+  https://elbersb.github.io/segregation/reference/mutual_difference.html
+- Fuentealba-Chaura et al. (2023), MI-index software with bootstrap
+  inferential analysis:
+  https://journal.r-project.org/articles/RJ-2023-047/
 
 - Moddemeijer (1989), entropy and MI bias/variance:
   https://doi.org/10.1016/0165-1684(89)90132-1

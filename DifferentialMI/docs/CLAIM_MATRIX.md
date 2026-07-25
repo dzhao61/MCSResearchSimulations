@@ -17,11 +17,13 @@ project findings from being conflated.
 | The leading plug-in MI bias is `(r-1)(c-1)/(2n)` | Classical | Cite Miller and Moddemeijer |
 | The first-order MI variance is the variance of the local log density ratio | Classical | Cite Moddemeijer |
 | A two-sample Wald statistic can combine two independent MI variances | Standard consequence | Do not claim as a new statistical principle |
+| The regular asymptotic MI law supports pairwise comparisons of discrete MI levels | Established | Cite Mora and Ruiz-Castillo (2009) |
+| Bootstrap bias correction, SEs, and CIs can be computed for a difference between two discrete MI indices | Established in segregation software | Cite Elbers' `mutual_difference` documentation |
 | Analytic correction outperforms jackknife in the tested regular grid | New empirical finding from this project | Restrict wording to the saved simulation regimes |
 | Studentized MI permutation can degenerate when opposite associations cancel in the pooled mixture | New MI-specific observation from this project; follows established general assumptions | Claim the example, diagnostic, and practical consequence, not a new general theorem |
 | The baseline is the first test of equal MI | False or unsupported | Do not use |
 | No one uses MI differences in information theory | False | Do not use |
-| The project provides the first dedicated fast weak-null validation framework for discrete MI differences | Plausible, not yet established | Use only after formal database and supervisor review |
+| The project provides the first systematic finite-sample study of bias-corrected analytic equal-MI inference and raw-permutation failure across heterogeneous discrete tables | Plausible, not yet established | Use only with "to our knowledge" after formal database and supervisor review |
 | A simple Edgeworth refinement improves the two-sided test | Rejected at the theory gate | Do not claim; the leading skewness term cancels |
 
 ## Contribution Levels
@@ -39,10 +41,14 @@ project findings from being conflated.
 - Differences between MI matrices or MI values across biological sequence
   populations.
 - Unstudentized label permutation with approximately 1,000 permutations.
+- Pairwise significance comparisons of the discrete Mutual Information
+  segregation index.
+- Bootstrap bias correction, standard errors, and confidence intervals for
+  differences between two MI indices.
 
 ### Current Project Contribution
 
-- A precise weak-null formulation for the applied MI-difference question.
+- A clear information-theoretic presentation of the equal-MI weak null.
 - Evidence that raw permutation can be invalid in both directions.
 - A much faster analytic-bias-corrected deterministic implementation.
 - Broad randomized calibration, coverage, power, runtime, and failure-boundary
@@ -78,7 +84,10 @@ Do not claim:
 
 ## Provisional Thesis Statement
 
-> Existing applications compare discrete mutual information across
-> populations using raw label permutation. This thesis characterizes the
-> weak-null failure of that practice and develops fast, bias-corrected
-> deterministic inference with explicitly validated operating conditions.
+> Building on established asymptotic inference for discrete mutual
+> information, this thesis characterizes the weak-null failure of raw
+> group-label permutation and develops a fast bias-corrected implementation
+> with explicitly validated finite-sample operating conditions.
+
+See [EXTENSIVE_NOVELTY_REVIEW.md](EXTENSIVE_NOVELTY_REVIEW.md) for the
+cross-disciplinary evidence and corrected novelty boundary.
