@@ -1,0 +1,11 @@
+{
+  "weak_null_scenarios": 144,
+  "weak_null_replicates": 432000,
+  "strong_null_scenarios": 72,
+  "strong_null_replicates": 216000,
+  "permutation_anchor_scenarios": 24,
+  "permutation_anchor_replicates": 24000,
+  "regular_mixture_anchors": 23,
+  "posthoc_deterministic_replicates": 60000,
+  "posthoc_permutation_replicates": 18000
+}

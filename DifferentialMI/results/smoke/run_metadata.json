@@ -1,0 +1,14 @@
+{
+  "profile": "smoke",
+  "settings": {
+    "null_replicates": 40,
+    "power_replicates": 40,
+    "permutations": 99,
+    "seed": 20260725
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "pid": 94215
+}

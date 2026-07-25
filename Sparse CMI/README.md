@@ -9,6 +9,10 @@ caveats are documented separately in `docs/JIDT_CMI_BASELINE_AUDIT.md`. The
 current novelty risk and safe claim boundary are documented in
 `docs/NOVELTY_AUDIT_AND_CLAIM_BOUNDARY.md`.
 
+The narrowed fallback thesis is frozen in
+`docs/SAFETY_NET_THESIS.md` so broader research exploration can proceed without
+losing the validated project.
+
 For binary `X` and `Y`, conditional on each stratum's observed margins,
 the only free cell count is hypergeometric. The package computes the exact
 finite-sample distribution and cumulants of each stratum's likelihood-ratio

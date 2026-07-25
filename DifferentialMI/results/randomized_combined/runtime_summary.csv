@@ -1,0 +1,2 @@
+comparison,table_pairs,mean_deterministic_ms,mean_permutation_ms,mean_speedup,minimum_speedup,maximum_speedup
+999 table permutations vs all deterministic estimators,24000,0.16982245157123535,7.775180641251306,40.79947298198636,6.683147882358899,183.62184715801448

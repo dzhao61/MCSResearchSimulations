@@ -1,0 +1,20 @@
+{
+  "mode": "followup",
+  "scenario_seed": 2026072501,
+  "simulation_seed": 2026072502,
+  "deterministic_replicates": 10000,
+  "anchor_replicates": 3000,
+  "permutations": 999,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "scenarios": 6,
+  "scenario_ids": [
+    "random_2x2_d5",
+    "random_2x5_d5",
+    "random_3x7_d5",
+    "random_4x6_d5",
+    "random_5x5_d5",
+    "random_5x10_d5"
+  ]
+}
