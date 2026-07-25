@@ -2,6 +2,11 @@
 
 This is an initial novelty screen, not a systematic review.
 
+The more detailed, updated claim analysis is in
+`NOVELTY_AUDIT_AND_CLAIM_BOUNDARY.md`. In particular, that audit incorporates
+Niu, Ray Choudhury, and Katsevich (2024) and `spaCRT`, which substantially
+narrow the defensible saddlepoint novelty claim.
+
 ## Closest established work
 
 ### Exact conditional independence in multidimensional tables
@@ -109,4 +114,3 @@ have close classical precedents. Before selecting the thesis title, perform a
 systematic citation search around Kreiner (1987), Koehler (1986), Kim and
 Agresti (1997), exact logistic regression, and saddlepoint inference for
 stratified 2x2 tables.
-

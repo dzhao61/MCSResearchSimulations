@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 
 import numpy as np
 from scipy.stats import hypergeom
@@ -16,22 +17,21 @@ class StratumNull:
     g_values: np.ndarray
 
 
-def stratum_null(stratum: Stratum) -> StratumNull:
-    """Return the exact conditional null for one fixed-margin stratum."""
-
+@lru_cache(maxsize=4096)
+def _stratum_null_cached(n: int, r: int, s: int) -> StratumNull:
     support = np.arange(
-        stratum.support_min,
-        stratum.support_max + 1,
+        max(0, r + s - n),
+        min(r, s) + 1,
         dtype=np.int64,
     )
-    if stratum.n == 0:
+    if n == 0:
         probabilities = np.ones(1, dtype=np.float64)
     else:
         probabilities = hypergeom.pmf(
             support,
-            M=stratum.n,
-            n=stratum.s,
-            N=stratum.r,
+            M=n,
+            n=s,
+            N=r,
         ).astype(np.float64)
         probability_sum = float(probabilities.sum())
         if not np.isfinite(probability_sum) or probability_sum <= 0:
@@ -39,8 +39,16 @@ def stratum_null(stratum: Stratum) -> StratumNull:
         probabilities /= probability_sum
 
     g_values = np.asarray(
-        g2_for_a(stratum.n, stratum.r, stratum.s, support),
+        g2_for_a(n, r, s, support),
         dtype=np.float64,
     )
+    support.setflags(write=False)
+    probabilities.setflags(write=False)
+    g_values.setflags(write=False)
     return StratumNull(support, probabilities, g_values)
 
+
+def stratum_null(stratum: Stratum) -> StratumNull:
+    """Return the cached exact conditional null for fixed stratum margins."""
+
+    return _stratum_null_cached(stratum.n, stratum.r, stratum.s)

@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-07-25T03:06:15.639197+00:00",
+  "command": [
+    "Sparse CMI/experiments/03_saddlepoint_validation.py",
+    "--profile",
+    "smoke",
+    "--null-samples",
+    "20000",
+    "--permutations",
+    "1000",
+    "--checkpoint-every",
+    "5",
+    "--seed",
+    "5030",
+    "--output-dir",
+    "Sparse CMI/results/saddlepoint_smoke_k20000_b1000"
+  ],
+  "profile": "smoke",
+  "seed": 5030,
+  "null_samples": 20000,
+  "permutations": 1000,
+  "exact_max_states": 100000,
+  "exact_max_informative": 10,
+  "configuration_count": 29,
+  "elapsed_seconds": 36.00436879100744,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3",
+    "matplotlib": "3.10.9"
+  }
+}
