@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-07-25T02:02:14.209211+00:00",
+  "command": [
+    "Sparse CMI/experiments/02_unconditional_calibration.py",
+    "--profile",
+    "smoke",
+    "--replicates",
+    "5000",
+    "--anchor-replicates",
+    "100",
+    "--anchor-samples",
+    "1000",
+    "--checkpoint-every",
+    "5",
+    "--seed",
+    "5030",
+    "--output-dir",
+    "Sparse CMI/results/unconditional_smoke_r5000_a100_k1000"
+  ],
+  "profile": "smoke",
+  "seed": 5030,
+  "replicates": 5000,
+  "anchor_replicates": 100,
+  "anchor_samples": 1000,
+  "configuration_count": 32,
+  "elapsed_seconds": 17.730928124976344,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3"
+  }
+}

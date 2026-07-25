@@ -1,0 +1,58 @@
+{
+  "created_utc": "2026-07-25T01:57:54.133341+00:00",
+  "command": [
+    "Sparse CMI/experiments/01_first_stage_falsification.py",
+    "--profile",
+    "full",
+    "--null-samples",
+    "100000",
+    "--permutations",
+    "1000",
+    "--checkpoint-every",
+    "5",
+    "--seed",
+    "5030",
+    "--output-dir",
+    "Sparse CMI/results/full_initial_k100000_b1000"
+  ],
+  "profile": "full",
+  "seed": 5030,
+  "null_samples": 100000,
+  "permutations": 1000,
+  "exact_max_states": 100000,
+  "exact_max_informative": 10,
+  "configuration_count": 103,
+  "elapsed_seconds": 12.325226332992315,
+  "decision": {
+    "verdict": "PROCEED",
+    "criteria": {
+      "normal_beats_chi_sparse": true,
+      "skewness_correction_broadly_helps": true,
+      "diagnostics_predict_error": true,
+      "faster_than_permutation": true
+    },
+    "normal_beats_chi_sparse_rate": 0.7727272727272727,
+    "normal_p_beats_chi_sparse_rate": 0.9090909090909091,
+    "edgeworth_beats_normal_sparse_rate": 0.48863636363636365,
+    "edgeworth_tail_p_beats_normal_sparse_rate": 0.9886363636363636,
+    "edgeworth_tail_fpr_nonworse_rate": 0.9962121212121212,
+    "normal_mean_tail_fpr_error": 0.014009556791503938,
+    "edgeworth_mean_tail_fpr_error": 0.006981560198886558,
+    "diagnostic_correlations": {
+      "lyapunov_ratio": 0.6170285237111589,
+      "max_variance_share": 0.678137391714732,
+      "skewness": 0.5524546213686108,
+      "informative_strata": -0.445481275202975
+    },
+    "best_abs_diagnostic_correlation": 0.678137391714732,
+    "median_runtime_speedup": 36.402981825929075,
+    "sparse_configuration_count": 88
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3",
+    "matplotlib": "3.10.9"
+  }
+}

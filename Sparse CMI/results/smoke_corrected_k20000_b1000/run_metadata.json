@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-07-25T01:56:27.422630+00:00",
+  "command": [
+    "Sparse CMI/experiments/01_first_stage_falsification.py",
+    "--profile",
+    "smoke",
+    "--null-samples",
+    "20000",
+    "--permutations",
+    "1000",
+    "--checkpoint-every",
+    "5",
+    "--seed",
+    "5030",
+    "--output-dir",
+    "Sparse CMI/results/smoke_corrected_k20000_b1000"
+  ],
+  "profile": "smoke",
+  "seed": 5030,
+  "null_samples": 20000,
+  "permutations": 1000,
+  "exact_max_states": 100000,
+  "exact_max_informative": 10,
+  "configuration_count": 29,
+  "elapsed_seconds": 2.1292763330275193,
+  "decision": {
+    "verdict": "NARROW_OR_REVISE",
+    "criteria": {
+      "normal_beats_chi_sparse": true,
+      "skewness_correction_broadly_helps": false,
+      "diagnostics_predict_error": true,
+      "faster_than_permutation": true
+    },
+    "normal_beats_chi_sparse_rate": 0.7391304347826086,
+    "normal_p_beats_chi_sparse_rate": 0.9130434782608695,
+    "edgeworth_beats_normal_sparse_rate": 0.5217391304347826,
+    "edgeworth_p_beats_normal_sparse_rate": 0.17391304347826086,
+    "diagnostic_correlations": {
+      "lyapunov_ratio": 0.7286630488406511,
+      "max_variance_share": 0.8280762773105149,
+      "skewness": 0.6783423778983719,
+      "informative_strata": -0.3001037743426322
+    },
+    "best_abs_diagnostic_correlation": 0.8280762773105149,
+    "median_runtime_speedup": 33.15692820422982,
+    "sparse_configuration_count": 23
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3",
+    "matplotlib": "3.10.9"
+  }
+}
