@@ -5,7 +5,10 @@ import unittest
 
 import numpy as np
 
-from sparse_cmi.exact_convolution import exact_conditional_distribution
+from sparse_cmi.exact_convolution import (
+    estimate_convolution_complexity,
+    exact_conditional_distribution,
+)
 from sparse_cmi.hypergeom import stratum_null
 from sparse_cmi.models import Stratum
 from sparse_cmi.moments import aggregate_moments
@@ -55,6 +58,43 @@ class ExactAndPermutationTests(unittest.TestCase):
         self.assertAlmostEqual(moments.mean, mean, places=10)
         self.assertAlmostEqual(moments.variance, variance, places=10)
         self.assertAlmostEqual(moments.third_cumulant, third, places=9)
+
+    def test_complexity_bound_covers_repeated_support_convolution(self) -> None:
+        strata = [Stratum(10, 5, 5, 2) for _ in range(20)]
+        complexity = estimate_convolution_complexity(strata)
+        exact = exact_conditional_distribution(strata, max_states=1000)
+        self.assertEqual(complexity.state_upper_bound, 231)
+        self.assertGreaterEqual(
+            complexity.state_upper_bound,
+            exact.values.size,
+        )
+        self.assertEqual(complexity.informative_components, 20)
+        self.assertGreater(complexity.transition_upper_bound, 0)
+
+    def test_complexity_bound_saturates_above_requested_cap(self) -> None:
+        strata = [Stratum(30, 15, 15, 8) for _ in range(20)]
+        complexity = estimate_convolution_complexity(strata, cap=100_000)
+        self.assertEqual(complexity.state_upper_bound, 100_001)
+        self.assertEqual(complexity.transition_upper_bound, 100_001)
+
+    def test_random_complexity_bounds_never_understate_states(self) -> None:
+        rng = np.random.default_rng(25_072_026)
+        for _ in range(100):
+            strata = []
+            for label in range(int(rng.integers(1, 7))):
+                n = int(rng.integers(2, 11))
+                r = int(rng.integers(0, n + 1))
+                s = int(rng.integers(0, n + 1))
+                lower = max(0, r + s - n)
+                upper = min(r, s)
+                observed = int(rng.integers(lower, upper + 1))
+                strata.append(Stratum(n, r, s, observed, label))
+            complexity = estimate_convolution_complexity(strata)
+            exact = exact_conditional_distribution(strata, max_states=100_000)
+            self.assertGreaterEqual(
+                complexity.state_upper_bound,
+                exact.values.size,
+            )
 
     def test_direct_sampler_matches_exact_distribution(self) -> None:
         strata = [Stratum(5, 2, 2, 1)]

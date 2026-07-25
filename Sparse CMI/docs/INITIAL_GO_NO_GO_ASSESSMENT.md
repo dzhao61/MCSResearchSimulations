@@ -1,5 +1,10 @@
 # Initial Go/No-Go Assessment
 
+> **Update, 25 July 2026:** This initial assessment is superseded for current
+> decision-making by `SADDLEPOINT_ROUTER_VALIDATION_REPORT.md`. The
+> deterministic exact/saddlepoint router has now been implemented and tested
+> on a full confirmation grid and direct JIDT blockwise anchors.
+
 ## Recommendation
 
 **Proceed with a narrower, routed sparse-CMI project, subject to a high-risk

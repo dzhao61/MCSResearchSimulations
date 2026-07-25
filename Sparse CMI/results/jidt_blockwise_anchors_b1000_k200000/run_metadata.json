@@ -1,0 +1,29 @@
+{
+  "created_utc": "2026-07-25T03:28:57.211483+00:00",
+  "command": [
+    "Sparse CMI/experiments/04_jidt_blockwise_anchors.py",
+    "--permutations",
+    "1000",
+    "--reference-samples",
+    "200000",
+    "--candidate-samples",
+    "20000",
+    "--seed",
+    "5030",
+    "--output-dir",
+    "Sparse CMI/results/jidt_blockwise_anchors_b1000_k200000"
+  ],
+  "seed": 5030,
+  "permutations": 1000,
+  "reference_samples": 200000,
+  "candidate_samples": 20000,
+  "target_quantile": 0.95,
+  "elapsed_seconds": 2.045329499989748,
+  "jidt_jar": "/Users/danielzhao/MyMac/Masters Degree/CSYS5030/JIDT/jidt/infodynamics.jar",
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3"
+  }
+}
