@@ -1,0 +1,10 @@
+{
+  "profile": "empirical_large",
+  "replicates": 1,
+  "samples": 1000,
+  "batch_size": 10000,
+  "jidt_shuffles": 1000,
+  "seed": 20260706,
+  "config_count": 9,
+  "rows": 9
+}

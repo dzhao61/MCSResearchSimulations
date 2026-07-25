@@ -1,0 +1,11 @@
+{
+  "profile": "empirical_calibration",
+  "replicates": 2,
+  "samples": 1000,
+  "batch_size": 10000,
+  "jidt_shuffles": 1000,
+  "jidt_replicates": 1,
+  "seed": 20260706,
+  "config_count": 12,
+  "rows": 24
+}

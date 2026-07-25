@@ -1,0 +1,4 @@
+alpha,saddle_mean_abs_calibration_error,chi2_mean_abs_calibration_error,jidt_mean_abs_calibration_error,saddle_within_20pct_fraction,chi2_within_20pct_fraction,jidt_within_20pct_fraction
+0.1,0.14375000000000002,0.125,0.11250000000000002,0.0,0.0,0.0
+0.05,0.1,0.059375000000000004,0.078125,0.0,0.0,0.0
+0.01,0.04,0.01,0.01,0.0,0.0,0.0

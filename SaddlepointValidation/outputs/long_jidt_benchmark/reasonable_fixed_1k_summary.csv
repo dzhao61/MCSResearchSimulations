@@ -1,0 +1,7 @@
+alphabet,N,skewness,shuffles,heap,jidt_time_s,jidt_p,saddle_note,jidt_g_abs_diff
+20x3,1000000,strong,1000,4GB,13.759,0.023,timeout >3s,2.96e-12
+80x20,1000000,strong,1000,4GB,14.047,0.262,timeout >3s,3.41e-12
+80x80,1000000,balanced,1000,4GB,12.724,0.703,skipped,1.64e-11
+20x3,2000000,strong,1000,8GB,34.475,0.935,timeout >3s,2.37e-12
+50x10,2000000,mild,1000,8GB,29.966,0.112,skipped,2.93e-10
+80x80,2000000,balanced,1000,8GB,31.336,0.172,skipped,1.73e-11

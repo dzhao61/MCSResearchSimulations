@@ -1,0 +1,10 @@
+{
+  "profile": "standard",
+  "replicates": 3,
+  "jidt_replicates": 3,
+  "shuffles": 500,
+  "seed": 20260705,
+  "exact_table_limit": 1000,
+  "config_count": 36,
+  "result_rows": 108
+}

@@ -1,0 +1,2 @@
+configs,rows,median_gamma_time_s,median_jidt_time_s,median_gamma_speedup_vs_jidt,median_abs_gamma_vs_empirical,median_abs_chi2_dynamic_vs_empirical,median_abs_gamma_vs_jidt,median_abs_chi2_dynamic_vs_jidt
+3,3,0.23392312496434897,30.49477491696598,139.44418422916914,0.0016303729331228478,0.01236911027919406,0.015039767342293814,0.00225536482578495

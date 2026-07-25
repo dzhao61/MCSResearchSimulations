@@ -1,0 +1,20 @@
+{
+  "profile": "focused",
+  "replicates": 1,
+  "jidt_replicates": 0,
+  "shuffles": 20,
+  "seed": 20260705,
+  "exact_table_limit": 1000,
+  "workers": 1,
+  "parallel_jidt": false,
+  "resume": true,
+  "cgf_cache_maxsize": 4096,
+  "cgf_cache_info": {
+    "hits": 0,
+    "misses": 0,
+    "maxsize": 4096,
+    "currsize": 0
+  },
+  "config_count": 12,
+  "result_rows": 12
+}
