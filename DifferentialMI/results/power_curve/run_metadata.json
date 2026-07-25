@@ -1,0 +1,14 @@
+{
+  "profile": "power_curve",
+  "settings": {
+    "null_replicates": 1000,
+    "power_replicates": 1500,
+    "permutations": 499,
+    "seed": 20260727
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "pid": 94535
+}

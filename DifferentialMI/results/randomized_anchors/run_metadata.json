@@ -1,0 +1,12 @@
+{
+  "mode": "anchors",
+  "scenario_seed": 2026072501,
+  "simulation_seed": 2026072502,
+  "deterministic_replicates": 3000,
+  "anchor_replicates": 1000,
+  "permutations": 999,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "scenarios": 72
+}

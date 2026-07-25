@@ -1,0 +1,12 @@
+{
+  "mode": "smoke",
+  "scenario_seed": 2026072501,
+  "simulation_seed": 2026072502,
+  "deterministic_replicates": 200,
+  "anchor_replicates": 30,
+  "permutations": 99,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "scenarios": 8
+}
