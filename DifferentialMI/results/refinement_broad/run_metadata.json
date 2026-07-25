@@ -1,0 +1,30 @@
+{
+  "mode": "broad",
+  "scenario_seeds": [
+    2026072501,
+    2026072601
+  ],
+  "simulation_seed": 2026072701,
+  "replicates_per_scenario": 2000,
+  "scenarios": 144,
+  "elapsed_seconds": 202.49389745900407,
+  "decision": {
+    "relative_mae_improvement": -0.016697588126159416,
+    "in_band_change": 0.0,
+    "new_bad_scenarios": 0,
+    "maximum_invalid_rate": 0.0,
+    "passes_stage_2": false
+  },
+  "post_run_stability_note": {
+    "issue": "Lugannani-Rice cancellation extremely close to the CGF mean",
+    "original_near_mean_z": 0.0001,
+    "corrected_near_mean_z": 0.01,
+    "affected_rows": 2244,
+    "affected_fraction": 0.007791666666666666,
+    "changed_alpha_05_decisions": 0,
+    "decision_unchanged": true
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

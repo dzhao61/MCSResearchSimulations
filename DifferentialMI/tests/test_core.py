@@ -19,7 +19,12 @@ from differential_mi.distributions import (
     table_with_target_mi,
     table_with_target_mi_from_interaction,
 )
-from differential_mi.inference import compare_tables
+from differential_mi.inference import (
+    _build_influence_cgf,
+    analytic_wald_test,
+    compare_tables,
+    influence_saddlepoint_test,
+)
 from differential_mi.statistics import (
     analytic_bias_corrected_mi,
     influence_variance,
@@ -191,6 +196,124 @@ class CoreTests(unittest.TestCase):
         self.assertGreater(result.standard_error, 0)
         self.assertGreaterEqual(result.pooled_mi_plugin, 0)
         self.assertGreaterEqual(result.pooled_influence_variance, 0)
+        with self.assertRaises(ValueError):
+            compare_tables(p, q, permutations=0, rng=np.random.default_rng(7))
+
+    def test_primary_analytic_wald_api(self) -> None:
+        p = np.array([[30, 10, 5], [10, 35, 10]])
+        q = np.array([[80, 10, 5], [20, 60, 25]])
+        result = analytic_wald_test(p, q, confidence_level=0.90)
+        degrees_of_freedom = (p.shape[0] - 1) * (p.shape[1] - 1)
+        self.assertEqual(result.degrees_of_freedom, degrees_of_freedom)
+        self.assertAlmostEqual(
+            result.mi_p_corrected,
+            plugin_mi(p) - degrees_of_freedom / (2 * p.sum()),
+        )
+        self.assertAlmostEqual(
+            result.delta_corrected,
+            result.mi_p_corrected - result.mi_q_corrected,
+        )
+        self.assertTrue(result.valid_first_order_calculation)
+        self.assertGreaterEqual(result.p_value, 0)
+        self.assertLessEqual(result.p_value, 1)
+        self.assertLess(
+            result.confidence_interval_low, result.confidence_interval_high
+        )
+        self.assertEqual(result.confidence_level, 0.90)
+
+    def test_primary_wald_is_invariant_to_category_relabelling(self) -> None:
+        p = np.array([[12, 5, 3], [4, 18, 8], [7, 2, 11]])
+        q = np.array([[20, 4, 6], [3, 15, 12], [8, 5, 7]])
+        baseline = analytic_wald_test(p, q)
+        row_order = [2, 0, 1]
+        column_order = [1, 2, 0]
+        relabelled = analytic_wald_test(
+            p[np.ix_(row_order, column_order)],
+            q[np.ix_(row_order, column_order)],
+        )
+        self.assertAlmostEqual(baseline.delta_corrected, relabelled.delta_corrected)
+        self.assertAlmostEqual(baseline.standard_error, relabelled.standard_error)
+        self.assertAlmostEqual(baseline.p_value, relabelled.p_value)
+
+    def test_primary_wald_is_invariant_to_group_swap(self) -> None:
+        p = np.array([[30, 10, 5], [10, 35, 10]])
+        q = np.array([[80, 10, 5], [20, 60, 25]])
+        baseline = analytic_wald_test(p, q)
+        swapped = analytic_wald_test(q, p)
+        self.assertAlmostEqual(baseline.delta_corrected, -swapped.delta_corrected)
+        self.assertAlmostEqual(baseline.standard_error, swapped.standard_error)
+        self.assertAlmostEqual(baseline.p_value, swapped.p_value)
+        self.assertTrue(baseline.numerically_computable)
+
+    def test_primary_wald_rejects_invalid_inputs(self) -> None:
+        valid = np.array([[3, 2], [1, 4]])
+        with self.assertRaises(ValueError):
+            analytic_wald_test(valid, np.ones((2, 3), dtype=int))
+        with self.assertRaises(ValueError):
+            analytic_wald_test(valid, valid, confidence_level=1.0)
+        with self.assertRaises(ValueError):
+            analytic_wald_test(valid.astype(float) + 0.5, valid)
+        with self.assertRaises(ValueError):
+            analytic_wald_test(
+                np.array([[3.0, np.nan], [1.0, 4.0]]), valid
+            )
+        with self.assertRaises(ValueError):
+            analytic_wald_test(valid.astype(complex) + 1j, valid)
+        with self.assertRaises(ValueError):
+            analytic_wald_test(np.array([[3, 2, 1]]), np.array([[4, 1, 1]]))
+
+    def test_influence_cgf_matches_wald_first_two_cumulants(self) -> None:
+        p = np.array([[30, 10, 5], [10, 35, 10]])
+        q = np.array([[80, 10, 5], [20, 60, 25]])
+        cgf = _build_influence_cgf(p, q, int(p.sum()), int(q.sum()))
+        value, first, second = cgf.evaluate(0.0)
+        expected = influence_variance(p) / p.sum() + influence_variance(q) / q.sum()
+        self.assertLess(abs(value), 1e-12)
+        self.assertLess(abs(first), 1e-12)
+        self.assertLess(abs(second - expected), 1e-12)
+
+    def test_influence_saddlepoint_is_finite_and_invariant(self) -> None:
+        p = np.array([[12, 5, 3], [4, 18, 8], [7, 2, 11]])
+        q = np.array([[20, 4, 6], [3, 15, 12], [8, 5, 7]])
+        baseline = influence_saddlepoint_test(p, q)
+        swapped = influence_saddlepoint_test(q, p)
+        relabelled = influence_saddlepoint_test(
+            p[np.ix_([2, 0, 1], [1, 2, 0])],
+            q[np.ix_([2, 0, 1], [1, 2, 0])],
+        )
+        self.assertTrue(baseline.valid_first_order_calculation)
+        self.assertTrue(np.isfinite(baseline.saddlepoint_p_value))
+        self.assertGreaterEqual(baseline.saddlepoint_p_value, 0.0)
+        self.assertLessEqual(baseline.saddlepoint_p_value, 1.0)
+        self.assertAlmostEqual(
+            baseline.saddlepoint_p_value, swapped.saddlepoint_p_value
+        )
+        self.assertAlmostEqual(
+            baseline.saddlepoint_p_value, relabelled.saddlepoint_p_value
+        )
+        self.assertAlmostEqual(
+            baseline.lower_tail_probability + baseline.upper_tail_probability,
+            1.0,
+        )
+
+    def test_influence_saddlepoint_records_near_mean_fallback(self) -> None:
+        p = np.array([[30, 8], [7, 25]])
+        result = influence_saddlepoint_test(p, p)
+        self.assertEqual(result.route, "normal_near_mean")
+        self.assertAlmostEqual(result.saddlepoint_p_value, 1.0)
+
+    def test_influence_saddlepoint_near_mean_regression(self) -> None:
+        p = np.array([[300, 120, 80], [100, 250, 150], [50, 170, 280]])
+        q = np.array([[300, 119, 80], [101, 250, 150], [50, 170, 280]])
+        result = influence_saddlepoint_test(p, q)
+        self.assertEqual(result.route, "normal_near_mean")
+        self.assertAlmostEqual(result.saddlepoint_p_value, result.wald_p_value)
+        self.assertGreater(result.saddlepoint_p_value, 0.99)
+
+    def test_influence_saddlepoint_rejects_invalid_option(self) -> None:
+        table = np.array([[30, 8], [7, 25]])
+        with self.assertRaises(ValueError):
+            influence_saddlepoint_test(table, table, near_mean_z=0.0)
 
     def test_table_permutation_probabilities_equal_label_counts(self) -> None:
         pooled = np.array([2, 1, 1])

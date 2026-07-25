@@ -1,0 +1,3 @@
+method,scenarios,mean_absolute_fpr_error_05,median_absolute_fpr_error_05,within_035_065,minimum_fpr_05,maximum_fpr_05
+wald_analytic,6,0.010000000000000002,0.005000000000000001,0.6666666666666666,0.02,0.07
+influence_saddlepoint,6,0.010000000000000002,0.005000000000000001,0.6666666666666666,0.02,0.07

@@ -24,8 +24,16 @@ than jackknife-Wald.
 
 Read these first:
 
+- [BASELINE_SCOPE.md](BASELINE_SCOPE.md): frozen target, method, and
+  exclusions.
 - [ROBUST_VALIDATION_REPORT.md](ROBUST_VALIDATION_REPORT.md): result and
   recommendation.
+- [REFINEMENT_DECISION.md](REFINEMENT_DECISION.md): why Edgeworth and the
+  tested empirical saddlepoint were not retained.
+- [ADVERSARIAL_AUDIT.md](ADVERSARIAL_AUDIT.md): formula, software, JIDT, and
+  scope audit.
+- [results/adult_case_study/REPORT.md](results/adult_case_study/REPORT.md):
+  pre-specified real-data example.
 - [docs/REGULAR_CASE_DERIVATION.md](docs/REGULAR_CASE_DERIVATION.md): formal
   derivation and assumptions.
 - [docs/NOVELTY_AUDIT.md](docs/NOVELTY_AUDIT.md): prior art and honest claim
@@ -64,6 +72,12 @@ From the repository root:
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
   .venv/bin/python DifferentialMI/experiments/run_randomized_validation.py \
   --mode smoke --output-dir DifferentialMI/results/randomized_smoke
+```
+
+Run the professor-facing verification:
+
+```bash
+.venv/bin/python DifferentialMI/experiments/run_professor_demo.py
 ```
 
 The original controlled pilot remains available:

@@ -6,7 +6,13 @@ from .distributions import (
     mutual_information_probability,
     table_with_target_mi,
 )
-from .inference import compare_tables
+from .inference import (
+    AnalyticWaldResult,
+    InfluenceSaddlepointResult,
+    analytic_wald_test,
+    compare_tables,
+    influence_saddlepoint_test,
+)
 from .statistics import (
     analytic_bias_corrected_mi,
     influence_variance,
@@ -16,8 +22,12 @@ from .statistics import (
 
 __all__ = [
     "association_table",
+    "AnalyticWaldResult",
+    "InfluenceSaddlepointResult",
     "analytic_bias_corrected_mi",
+    "analytic_wald_test",
     "compare_tables",
+    "influence_saddlepoint_test",
     "influence_variance",
     "jackknife_mi",
     "marginal_probabilities",

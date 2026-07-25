@@ -29,9 +29,19 @@ The search used exact-title, keyword, and citation-chain queries around:
 - weak-null and studentized permutation tests;
 - MI-based two-sample tests.
 
-Primary papers and publisher or repository versions were preferred. This was
-a focused technical audit, not a systematic review of Scopus, Web of Science,
-MathSciNet, dissertations, and non-English literature.
+Primary papers and publisher or repository versions were preferred. The
+search was expanded after the pilot to include applied terminology:
+
+- `"mutual information difference" permutation test`;
+- `"p-values for differences in mutual information"`;
+- comparative MI matrices, information networks, immune repertoires, and
+  neural conditions; and
+- `"differential mutual information"`, while filtering uses where
+  "differential" only meant continuous-variable MI.
+
+This remains a structured web and citation-chain audit, not a complete
+systematic review of Scopus, Web of Science, MathSciNet, ProQuest
+dissertations, and non-English literature.
 
 ## What Is Established Prior Art
 
@@ -46,11 +56,36 @@ MathSciNet, dissertations, and non-English literature.
 | Studentized weak-null permutation | Chung and Romano establish the general asymptotic result | No |
 | Delta-method comparison of multinomial information functionals | Closely neighboring work exists for entropy | No |
 | One-sample MI significance and confidence bounds | Extensive existing literature | No |
+| Applied testing of MI differences | Immunology papers use raw label permutation for MI differences | No |
 
 The most important correction to the initial project framing is that the exact
 first-order variance used by our Wald test is already present in
 Moddemeijer's 1989 analysis. A thesis cannot claim that variance formula or
 the associated delta method as a new method.
+
+## Direct Applied Precedent
+
+The expanded search found direct use of the target comparison:
+
+- Boughter et al. (2020) compare MI matrices between polyreactive and
+  non-polyreactive antibody sequence populations. They calculate p-values for
+  MI differences using an unstudentized label-permutation test with 1,000
+  permutations.
+- Boughter et al. (2023) apply the same AIMS framework to compare MI between
+  peptide and immune-repertoire populations, again using two-sided
+  unstudentized permutation.
+- These are real examples of scientific questions framed as differences in
+  within-population MI, not MI between group label and observation.
+
+This changes the novelty argument. Comparing two MI values is already used in
+information-theoretic applications. The open problem is whether the common
+raw-permutation procedure is valid for the weak null and whether a fast,
+well-calibrated alternative can be supplied.
+
+The direct precedent strengthens practical relevance because our simulation
+shows that raw label permutation can be severely conservative or
+anti-conservative when the full population distributions differ despite
+equal MI.
 
 ## Nearby Work That Is Not the Same Target
 
@@ -68,18 +103,31 @@ the associated delta method as a new method.
   information functionals, but do not appear to make this discrete equal-MI
   comparison the main problem.
 
-## Search Result for the Exact Problem
+## Search Result for the Exact Methodological Problem
 
-This focused search did not locate a paper whose primary target is the
-regular two-sample discrete null
+The search did locate applications of the regular two-sample discrete null
 
 ```text
 I(P) = I(Q), with P and Q otherwise unrestricted.
 ```
 
-That absence is encouraging, but it is not proof of novelty. The result must
-be phrased as "no direct treatment was located in the focused search" until a
-formal library search and supervisor review are complete.
+It did not locate a paper whose primary methodological contribution is:
+
+- proving or demonstrating the weak-null failure of raw MI-difference
+  permutation;
+- deriving the bias-corrected two-sample discrete-MI Wald procedure;
+- comparing its finite-sample calibration and runtime with permutation across
+  heterogeneous multinomial populations; or
+- treating pooled-mixture degeneracy for studentized MI permutation.
+
+The defensible statement is therefore not "no one compares MI values." It is:
+
+> Applied work compares MI values using permutation, but this audit did not
+> locate a dedicated validation and deterministic weak-null inference
+> framework for that comparison.
+
+This is still not proof of priority. A formal database search and supervisor
+review remain required.
 
 ## Honest Novelty Boundary
 
@@ -92,12 +140,11 @@ A paper or thesis that only:
 would probably be too incremental as a methodological contribution. All
 three ingredients follow fairly directly from established theory.
 
-A defensible master's thesis can still make a useful contribution by
-developing and validating the problem as a coherent information-theoretic
-procedure:
+A defensible master's thesis can make a useful contribution by correcting
+and validating an existing applied practice:
 
-- explicitly formulate differential discrete MI under the weak null;
-- quantify how badly raw permutation fails for this target;
+- identify why the raw permutation used in applications is not a general
+  test of the equal-MI weak null;
 - compare classical analytic bias correction, jackknife correction, Wald,
   and studentized permutation in finite samples;
 - identify a transparent regular operating regime from observable table
@@ -108,9 +155,9 @@ procedure:
 
 The strongest current wording is:
 
-> A finite-sample validation and practical inference framework for
-> differences in discrete mutual information across heterogeneous
-> multinomial populations.
+> Fast and valid weak-null inference for differences in discrete mutual
+> information across heterogeneous multinomial populations, addressing the
+> limitations of raw permutation used in current applications.
 
 It should not currently be described as a fundamentally new asymptotic test.
 
@@ -182,3 +229,9 @@ Before making a formal originality claim:
   https://doi.org/10.3390/e25050734
 - Guha and Chothia (2014), MI-based `P = Q` two-sample testing:
   https://doi.org/10.1177/0008068320140103
+- Moddemeijer (1999), variance estimation and motivation for comparing MI
+  estimates: https://doi.org/10.1016/S0165-1684(98)00224-2
+- Boughter et al. (2020), applied MI-difference permutation in antibody
+  populations: https://doi.org/10.7554/eLife.61393
+- Boughter et al. (2023), applied MI-difference permutation in immune
+  repertoires: https://doi.org/10.1371/journal.pcbi.1011577

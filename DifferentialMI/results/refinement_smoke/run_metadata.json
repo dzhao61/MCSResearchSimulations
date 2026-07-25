@@ -1,0 +1,20 @@
+{
+  "mode": "smoke",
+  "scenario_seeds": [
+    2026072501
+  ],
+  "simulation_seed": 2026072701,
+  "replicates_per_scenario": 100,
+  "scenarios": 6,
+  "elapsed_seconds": 0.6494160420261323,
+  "decision": {
+    "relative_mae_improvement": 0.0,
+    "in_band_change": 0.0,
+    "new_bad_scenarios": 0,
+    "maximum_invalid_rate": 0.0,
+    "passes_stage_2": false
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

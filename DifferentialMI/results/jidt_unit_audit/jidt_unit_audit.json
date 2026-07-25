@@ -1,0 +1,13 @@
+{
+  "jar": "/Users/danielzhao/MyMac/Masters Degree/CSYS5030/JIDT/jidt/infodynamics.jar",
+  "tables": 34,
+  "maximum_absolute_mi_error_nats": 6.106226635438361e-16,
+  "maximum_absolute_jidt_vs_standard_p_difference": 0.07804339658481085,
+  "maximum_jidt_bits_convention_p_error": 5.022676631902259e-17,
+  "mi_matches_1e_10": true,
+  "jidt_analytic_matches_bits_convention_1e_10": true,
+  "jidt_analytic_matches_standard_nats_chi2": false,
+  "constructor": "MutualInformationCalculatorDiscrete(r, c, 0)",
+  "jidt_output_unit": "bits",
+  "manual_output_unit": "nats"
+}
