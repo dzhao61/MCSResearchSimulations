@@ -1,0 +1,7 @@
+{
+  "profile": "quick",
+  "replicates": 4,
+  "jidt_replicates": 4,
+  "shuffles": 500,
+  "result_rows": 64
+}

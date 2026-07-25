@@ -1,0 +1,2 @@
+name,r,c,N,skewness,seed,shuffles,table_json,g_statistic,saddle_status,saddle_route,saddle_p,saddle_time_s,jidt_p,jidt_time_s,jidt_g_statistic,jidt_g_abs_diff,jidt_over_saddle
+2x2_N30000_strong_1k_both,2,2,30000,strong,99007,1000,"[[24294,2742],[2700,264]]",4.660390666020525,ok,saddlepoint,0.031208443095022853,1.323080874979496,0.036,0.42381562502123415,4.660390666008511,1.2014389483283594e-11,0.320324806318285

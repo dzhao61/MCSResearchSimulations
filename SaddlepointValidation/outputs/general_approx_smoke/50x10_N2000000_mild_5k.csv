@@ -1,0 +1,2 @@
+name,r,c,N,skewness,observed_r,observed_c,dynamic_df,g_statistic,gamma_fixed_margin_p,empirical_fixed_margin_p,gamma_mu,gamma_variance,gamma_shape,gamma_scale,gamma_samples,gamma_time_s,gamma_error,chi2_nominal_p,chi2_dynamic_p,jidt_p,jidt_time_s,jidt_g_abs_diff,jidt_error
+50x10_N2000000_mild_5k,50,10,2000000,mild,50,10,441,478.0588846661714,0.11000620929269332,0.10757848430313938,441.4241428938577,877.194476728798,222.1346338798486,1.9871918898185936,5000,0.1846802500076592,,0.10808058301484216,0.10808058301484216,0.116,33.0700362920179,2.934825715783518e-10,

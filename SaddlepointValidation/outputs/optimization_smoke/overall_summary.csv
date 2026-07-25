@@ -1,0 +1,4 @@
+alpha,saddle_mean_abs_calibration_error,chi2_nominal_mean_abs_calibration_error,chi2_dynamic_mean_abs_calibration_error,chi2_mean_abs_calibration_error,jidt_mean_abs_calibration_error,saddle_within_20pct_fraction,chi2_nominal_within_20pct_fraction,chi2_dynamic_within_20pct_fraction,chi2_within_20pct_fraction,jidt_within_20pct_fraction
+0.1,0.23333333333333336,0.10000000000000002,0.16666666666666666,0.10000000000000002,,0.0,0.0,0.0,0.0,
+0.05,0.125,0.05000000000000001,0.05000000000000001,0.05000000000000001,,0.0,0.0,0.0,0.0,
+0.01,0.009999999999999998,0.009999999999999998,0.009999999999999998,0.009999999999999998,,0.0,0.0,0.0,0.0,
