@@ -2,5 +2,5 @@
 __pycache__/
 *.py[cod]
 
-# Large reproducible simulation output retained locally.
+# Large reproducible simulation output is not versioned.
 WelchSatterthwaiteMI/results/decisive/null_replicates.csv.gz

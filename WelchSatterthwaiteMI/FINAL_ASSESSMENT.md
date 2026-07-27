@@ -161,9 +161,8 @@ Welch degrees of freedom.
 - Generated report: `results/decisive/REPORT.md`
 - Aggregate results: `results/decisive/method_summary.csv`
 - Scenario results: `results/decisive/null_summary.csv`
-- Full null results: `results/decisive/null_replicates.csv.gz`
+- Full null replicate data: reproducible with `experiments/run_validation.py`
 - Permutation anchors: `results/decisive/permutation_summary.csv`
 - Power: `results/decisive/power_summary.csv`
 - Runtime: `results/decisive/runtime_summary.csv`
 - Seeds and environment: `results/decisive/run_metadata.json`
-
