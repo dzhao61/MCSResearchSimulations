@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checks": {
+    "scenario_row_counts": true,
+    "replicate_counts": true,
+    "scenario_keys_unique": true,
+    "simulation_seeds_unique": true,
+    "power_seeds_disjoint": true,
+    "all_null_deltas_numerically_zero": true,
+    "regular_stage_valid_rates": true,
+    "rates_counts_intervals_and_errors_consistent": true,
+    "saved_populations_valid_and_satisfy_null": true,
+    "aggregate_metrics_recompute_exactly": true,
+    "df_audit_is_finite_positive": true,
+    "df_error_improvement_recomputes": true,
+    "runtime_values_finite_positive": true,
+    "recorded_code_hashes_match": true,
+    "stored_decision_matches_criteria": true,
+    "power_methods_complete": true
+  },
+  "recomputed": {
+    "naive_median_absolute_log_df_error": 1.3637846245998584,
+    "candidate_median_absolute_log_df_error": 0.06218350356659935,
+    "df_error_reduction": 0.9544037214931614,
+    "scenario_rows": 326,
+    "null_table_pairs": 1940000,
+    "power_table_pairs": 50000
+  }
+}

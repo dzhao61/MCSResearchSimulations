@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from scipy.stats import multivariate_hypergeom
+from scipy.stats import multivariate_hypergeom, t
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -24,6 +24,7 @@ from differential_mi.inference import (
     analytic_wald_test,
     compare_tables,
     influence_saddlepoint_test,
+    welch_satterthwaite_test,
 )
 from differential_mi.statistics import (
     analytic_bias_corrected_mi,
@@ -189,17 +190,29 @@ class CoreTests(unittest.TestCase):
             result.wald_plugin_p,
             result.wald_analytic_p,
             result.wald_jackknife_p,
+            result.welch_satterthwaite_p,
         ):
             self.assertTrue(np.isfinite(value))
             self.assertGreaterEqual(value, 0)
             self.assertLessEqual(value, 1)
         self.assertGreater(result.standard_error, 0)
+        self.assertGreater(result.welch_degrees_of_freedom, 0)
+        self.assertGreaterEqual(
+            result.welch_satterthwaite_p,
+            result.wald_analytic_p,
+        )
+        primary = welch_satterthwaite_test(p, q)
+        self.assertAlmostEqual(result.welch_satterthwaite_p, primary.p_value)
+        self.assertAlmostEqual(
+            result.welch_degrees_of_freedom,
+            primary.welch_degrees_of_freedom,
+        )
         self.assertGreaterEqual(result.pooled_mi_plugin, 0)
         self.assertGreaterEqual(result.pooled_influence_variance, 0)
         with self.assertRaises(ValueError):
             compare_tables(p, q, permutations=0, rng=np.random.default_rng(7))
 
-    def test_primary_analytic_wald_api(self) -> None:
+    def test_normal_wald_comparator_api(self) -> None:
         p = np.array([[30, 10, 5], [10, 35, 10]])
         q = np.array([[80, 10, 5], [20, 60, 25]])
         result = analytic_wald_test(p, q, confidence_level=0.90)
@@ -221,7 +234,7 @@ class CoreTests(unittest.TestCase):
         )
         self.assertEqual(result.confidence_level, 0.90)
 
-    def test_primary_wald_is_invariant_to_category_relabelling(self) -> None:
+    def test_normal_wald_is_invariant_to_category_relabelling(self) -> None:
         p = np.array([[12, 5, 3], [4, 18, 8], [7, 2, 11]])
         q = np.array([[20, 4, 6], [3, 15, 12], [8, 5, 7]])
         baseline = analytic_wald_test(p, q)
@@ -235,7 +248,7 @@ class CoreTests(unittest.TestCase):
         self.assertAlmostEqual(baseline.standard_error, relabelled.standard_error)
         self.assertAlmostEqual(baseline.p_value, relabelled.p_value)
 
-    def test_primary_wald_is_invariant_to_group_swap(self) -> None:
+    def test_normal_wald_is_invariant_to_group_swap(self) -> None:
         p = np.array([[30, 10, 5], [10, 35, 10]])
         q = np.array([[80, 10, 5], [20, 60, 25]])
         baseline = analytic_wald_test(p, q)
@@ -245,7 +258,7 @@ class CoreTests(unittest.TestCase):
         self.assertAlmostEqual(baseline.p_value, swapped.p_value)
         self.assertTrue(baseline.numerically_computable)
 
-    def test_primary_wald_rejects_invalid_inputs(self) -> None:
+    def test_normal_wald_rejects_invalid_inputs(self) -> None:
         valid = np.array([[3, 2], [1, 4]])
         with self.assertRaises(ValueError):
             analytic_wald_test(valid, np.ones((2, 3), dtype=int))
@@ -261,6 +274,117 @@ class CoreTests(unittest.TestCase):
             analytic_wald_test(valid.astype(complex) + 1j, valid)
         with self.assertRaises(ValueError):
             analytic_wald_test(np.array([[3, 2, 1]]), np.array([[4, 1, 1]]))
+
+    def test_welch_reference_preserves_the_primary_statistic(self) -> None:
+        p = np.array([[30, 10, 5], [10, 35, 10]])
+        q = np.array([[80, 10, 5], [20, 60, 25]])
+        normal = analytic_wald_test(p, q)
+        welch = welch_satterthwaite_test(p, q, confidence_level=0.90)
+        self.assertAlmostEqual(welch.delta_corrected, normal.delta_corrected)
+        self.assertAlmostEqual(welch.mi_p_plugin, normal.mi_p_plugin)
+        self.assertAlmostEqual(welch.mi_q_plugin, normal.mi_q_plugin)
+        self.assertAlmostEqual(welch.bias_correction_p, normal.bias_correction_p)
+        self.assertAlmostEqual(welch.bias_correction_q, normal.bias_correction_q)
+        self.assertAlmostEqual(welch.standard_error, normal.standard_error)
+        self.assertAlmostEqual(welch.statistic, normal.z_statistic)
+        self.assertAlmostEqual(welch.normal_p_value, normal.p_value)
+        self.assertAlmostEqual(welch.zero_fraction_p, normal.zero_fraction_p)
+        self.assertAlmostEqual(
+            welch.minimum_independence_expected_q,
+            normal.minimum_independence_expected_q,
+        )
+        self.assertGreaterEqual(welch.p_value, welch.normal_p_value)
+        self.assertEqual(welch.confidence_level, 0.90)
+
+    def test_welch_reference_matches_direct_hand_calculation(self) -> None:
+        p = np.array([[17, 4, 2], [3, 19, 5], [2, 4, 14]])
+        q = np.array([[31, 5, 4], [8, 25, 7], [3, 9, 28]])
+
+        def direct_moments(table: np.ndarray) -> tuple[float, float]:
+            probability = table / table.sum()
+            row = probability.sum(axis=1)
+            column = probability.sum(axis=0)
+            positive = probability > 0
+            score = np.zeros_like(probability)
+            score[positive] = np.log(
+                probability[positive]
+                / np.outer(row, column)[positive]
+            )
+            mean = float(np.sum(probability * score))
+            variance = float(
+                np.sum(probability * (score - mean) ** 2)
+            )
+            return mean, variance
+
+        mi_p, variance_p = direct_moments(p)
+        mi_q, variance_q = direct_moments(q)
+        mi_df = (p.shape[0] - 1) * (p.shape[1] - 1)
+        delta = (
+            mi_p
+            - mi_df / (2.0 * p.sum())
+            - mi_q
+            + mi_df / (2.0 * q.sum())
+        )
+        component_p = variance_p / p.sum()
+        component_q = variance_q / q.sum()
+        standard_error = np.sqrt(component_p + component_q)
+        statistic = delta / standard_error
+        welch_df = (component_p + component_q) ** 2 / (
+            component_p**2 / (p.sum() - 1)
+            + component_q**2 / (q.sum() - 1)
+        )
+        expected_p = 2.0 * t.sf(abs(statistic), df=welch_df)
+
+        result = welch_satterthwaite_test(p, q)
+        self.assertAlmostEqual(result.delta_corrected, delta, places=13)
+        self.assertAlmostEqual(result.standard_error, standard_error, places=13)
+        self.assertAlmostEqual(result.statistic, statistic, places=13)
+        self.assertAlmostEqual(
+            result.welch_degrees_of_freedom,
+            welch_df,
+            places=12,
+        )
+        self.assertAlmostEqual(result.p_value, expected_p, places=13)
+
+    def test_welch_reference_is_invariant(self) -> None:
+        p = np.array([[38, 8, 4], [7, 25, 8], [4, 9, 17]])
+        q = np.array([[55, 4, 6], [10, 37, 13], [6, 16, 33]])
+        baseline = welch_satterthwaite_test(p, q)
+        swapped = welch_satterthwaite_test(q, p)
+        relabelled = welch_satterthwaite_test(
+            p[np.ix_([2, 0, 1], [1, 2, 0])],
+            q[np.ix_([2, 0, 1], [1, 2, 0])],
+        )
+        self.assertAlmostEqual(baseline.delta_corrected, -swapped.delta_corrected)
+        for name in (
+            "standard_error",
+            "welch_degrees_of_freedom",
+            "p_value",
+        ):
+            self.assertAlmostEqual(getattr(baseline, name), getattr(swapped, name))
+            self.assertAlmostEqual(
+                getattr(baseline, name),
+                getattr(relabelled, name),
+            )
+
+    def test_welch_reference_converges_to_normal(self) -> None:
+        p = np.array([[300_000, 100_000], [80_000, 520_000]])
+        q = np.array([[410_000, 90_000], [120_000, 380_000]])
+        result = welch_satterthwaite_test(p, q)
+        self.assertGreater(result.welch_degrees_of_freedom, 500_000)
+        self.assertLess(abs(result.p_value - result.normal_p_value), 1e-6)
+
+    def test_welch_reference_marks_degenerate_independence_invalid(self) -> None:
+        table = np.array([[10, 20], [20, 40]])
+        result = welch_satterthwaite_test(table, table)
+        self.assertFalse(result.valid_first_order_calculation)
+        self.assertTrue(np.isnan(result.p_value))
+
+    def test_welch_reference_rejects_single_observation(self) -> None:
+        p = np.array([[1, 0], [0, 0]])
+        q = np.array([[0, 1], [0, 0]])
+        with self.assertRaisesRegex(ValueError, "at least two observations"):
+            welch_satterthwaite_test(p, q)
 
     def test_influence_cgf_matches_wald_first_two_cumulants(self) -> None:
         p = np.array([[30, 10, 5], [10, 35, 10]])

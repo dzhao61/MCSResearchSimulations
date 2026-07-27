@@ -1,0 +1,3 @@
+scenario_key,scenario_seed,scenario_id,replicates,permutations,mean_permutation_ms,wald_normal_fpr_10,wald_normal_fpr_05,welch_reference_fpr_10,welch_reference_fpr_05,welch_unbiased_fpr_10,welch_unbiased_fpr_05,student_perm_analytic_fpr_10,student_perm_analytic_fpr_05
+hard:2026072501:random_2x2_d5,2026072501,random_2x2_d5,20,999,1.049877080367878,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.0
+hard:2026072501:random_2x5_d5,2026072501,random_2x5_d5,20,999,1.626947894692421,0.25,0.1,0.25,0.1,0.25,0.1,0.15,0.05

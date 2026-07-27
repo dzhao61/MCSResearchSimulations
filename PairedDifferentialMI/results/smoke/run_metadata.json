@@ -1,0 +1,13 @@
+{
+  "profile": "smoke",
+  "seed": 20260727,
+  "null_replicates": 300,
+  "power_replicates": 200,
+  "bootstrap_tables_per_scenario": 2,
+  "bootstrap_replicates": 99,
+  "scenarios": 5,
+  "elapsed_seconds": 0.036800957983359694,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

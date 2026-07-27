@@ -1,0 +1,6 @@
+# Python runtime artifacts.
+__pycache__/
+*.py[cod]
+
+# Large reproducible simulation output retained locally.
+WelchSatterthwaiteMI/results/decisive/null_replicates.csv.gz

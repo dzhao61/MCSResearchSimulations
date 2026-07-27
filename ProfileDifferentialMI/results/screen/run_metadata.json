@@ -1,0 +1,18 @@
+{
+  "profile": "screen",
+  "scenario_seeds": [
+    2026072501,
+    2026072601
+  ],
+  "simulation_seed": 2026072701,
+  "replicates_per_scenario": 100,
+  "power_replicates_per_scenario": 20,
+  "permutation_pairs_per_scenario": 5,
+  "permutations": 999,
+  "workers": 4,
+  "scenarios": 16,
+  "elapsed_seconds": 77.159356249962,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

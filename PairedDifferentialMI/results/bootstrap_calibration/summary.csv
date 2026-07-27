@@ -1,0 +1,5 @@
+scenario_id,regime,tables,wald_fpr_05,jackknife_fpr_05,bootstrap_fpr_05,bootstrap_valid_mean,bootstrap_median_ms
+balanced_2x2_n50_pair08,challenging,500,0.012,0.0,0.0,991.896,1.3069999404251575
+regular_3x3_n150_pair08,regular,500,0.046,0.042,0.048,999.0,2.3652289528399706
+sparse_3x3_n50_pair08,challenging,500,0.012,0.01,0.006,842.626,1.8623539945110679
+weak_2x2_n100_pair08,challenging,500,0.032,0.026,0.02,999.0,1.378729532007128

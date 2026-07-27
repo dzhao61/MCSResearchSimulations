@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "artifact_integrity_status": "PASS",
+  "scientific_method_status": "NO-GO",
+  "checks": {
+    "scenario_row_counts": true,
+    "replicate_counts": true,
+    "scenario_keys_unique": true,
+    "simulation_seeds_unique": true,
+    "power_seeds_disjoint": true,
+    "all_null_deltas_zero": true,
+    "populations_valid_and_satisfy_null": true,
+    "rates_validity_counts_and_intervals_consistent": true,
+    "aggregate_metrics_recompute": true,
+    "recorded_code_hashes_match": true,
+    "stored_decision_matches_criteria": true,
+    "power_methods_complete": true,
+    "runtime_finite_positive": true
+  },
+  "recomputed": {
+    "scenario_rows": 326,
+    "null_table_pairs": 1940000,
+    "power_table_pairs": 50000,
+    "edgeworth_invalid_by_stage": {
+      "broad": 1407,
+      "hard": 1021,
+      "stress": 7498,
+      "strong": 1363
+    }
+  },
+  "post_hoc_sensitivity": {
+    "normal_fallback_mae_05": {
+      "broad": 0.005822222222222222,
+      "hard": 0.010824999999999996,
+      "strong": 0.005555555555555556,
+      "stress": 0.026670987495477312,
+      "broad_balanced_design0": 0.0068000000000000005
+    },
+    "invalid_normal_rejection_fraction_05": {
+      "broad": 0.9893390191897654,
+      "hard": 1.0,
+      "strong": 0.9889948642699926,
+      "stress": 0.5243134628265238,
+      "broad_balanced_design0": 0.9881889763779528
+    },
+    "selective_invalidity_detected": true,
+    "normal_fallback_fails_core_criteria": true
+  }
+}

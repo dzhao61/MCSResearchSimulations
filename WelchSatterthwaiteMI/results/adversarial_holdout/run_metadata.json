@@ -1,0 +1,12 @@
+{
+  "scenario_seed": 64190217,
+  "simulation_seed": 81357029,
+  "bootstrap_seed": 91827,
+  "replicates": 10000,
+  "strong_null_replicates": 5000,
+  "population_pairs": 72,
+  "script_sha256": "6b12bf3867ec1ab182e0366bab627da8a948fa262acc76a3d4efee9df842d743",
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

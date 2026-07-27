@@ -21,6 +21,7 @@ P_VALUE_COLUMNS = [
     "wald_plugin_p",
     "wald_analytic_p",
     "wald_jackknife_p",
+    "welch_satterthwaite_p",
 ]
 
 

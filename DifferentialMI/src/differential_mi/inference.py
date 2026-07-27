@@ -8,7 +8,7 @@ from time import perf_counter
 import numpy as np
 from scipy.optimize import brentq
 from scipy.special import logsumexp
-from scipy.stats import norm
+from scipy.stats import norm, t
 
 from .statistics import (
     analytic_bias_corrected_mi,
@@ -38,6 +38,51 @@ class AnalyticWaldResult:
     influence_variance_q: float
     standard_error: float
     z_statistic: float
+    p_value: float
+    confidence_level: float
+    confidence_interval_low: float
+    confidence_interval_high: float
+    zero_fraction_p: float
+    zero_fraction_q: float
+    expected_below_1_fraction_p: float
+    expected_below_1_fraction_q: float
+    expected_below_5_fraction_p: float
+    expected_below_5_fraction_q: float
+    minimum_independence_expected_p: float
+    minimum_independence_expected_q: float
+    standardized_bias_difference: float
+    numerically_computable: bool
+    valid_first_order_calculation: bool
+    elapsed_seconds: float
+
+    def to_dict(self) -> dict[str, float | int | bool]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class WelchSatterthwaiteResult:
+    """Primary finite-df reference for analytic differential-MI inference."""
+
+    rows: int
+    columns: int
+    n_p: int
+    n_q: int
+    degrees_of_freedom: int
+    mi_p_plugin: float
+    mi_q_plugin: float
+    bias_correction_p: float
+    bias_correction_q: float
+    mi_p_corrected: float
+    mi_q_corrected: float
+    delta_corrected: float
+    influence_variance_p: float
+    influence_variance_q: float
+    variance_component_p: float
+    variance_component_q: float
+    standard_error: float
+    statistic: float
+    normal_p_value: float
+    welch_degrees_of_freedom: float
     p_value: float
     confidence_level: float
     confidence_interval_low: float
@@ -114,6 +159,8 @@ class ComparisonResult:
     wald_plugin_p: float
     wald_analytic_p: float
     wald_jackknife_p: float
+    welch_satterthwaite_p: float
+    welch_degrees_of_freedom: float
     naive_perm_plugin_p: float
     student_perm_plugin_p: float
     student_perm_analytic_p: float
@@ -136,6 +183,23 @@ def _safe_z(delta: np.ndarray, standard_error: np.ndarray) -> np.ndarray:
         out=np.full_like(delta_values, np.nan),
         where=np.isfinite(se_values) & (se_values > 0),
     )
+
+
+def _welch_satterthwaite_df(
+    component_p: float,
+    component_q: float,
+    n_p: int,
+    n_q: int,
+) -> float:
+    if n_p <= 1 or n_q <= 1:
+        return float("nan")
+    denominator = (
+        component_p**2 / (n_p - 1.0)
+        + component_q**2 / (n_q - 1.0)
+    )
+    if not np.isfinite(denominator) or denominator <= 0:
+        return float("nan")
+    return float((component_p + component_q) ** 2 / denominator)
 
 
 def _monte_carlo_p(reference: np.ndarray, observed: float) -> float:
@@ -458,7 +522,7 @@ def analytic_wald_test(
     *,
     confidence_level: float = 0.95,
 ) -> AnalyticWaldResult:
-    """Test equality of two discrete MI values using the fixed baseline method.
+    """Test equality of two discrete MI values using the normal comparator.
 
     The calculation uses natural logarithms, the classical full-support
     first-order bias correction, and the empirical influence-function
@@ -547,6 +611,113 @@ def analytic_wald_test(
     )
 
 
+def welch_satterthwaite_test(
+    table_p: np.ndarray,
+    table_q: np.ndarray,
+    *,
+    confidence_level: float = 0.95,
+) -> WelchSatterthwaiteResult:
+    """Apply the prospective primary reference to differential-MI inference.
+
+    The estimate, first-order bias correction, influence variance, standard
+    error, and statistic are identical to :func:`analytic_wald_test`. Only
+    the normal reference is replaced by a Student t reference whose effective
+    degrees of freedom use the Welch-Satterthwaite variance-component
+    approximation.
+
+    This is an empirically calibrated finite-sample approximation, not an
+    exact t test. In particular, the empirical MI influence variances are not
+    ordinary sample variances from fixed Gaussian observations, so assigning
+    each component ``n_i - 1`` degrees of freedom is a heuristic rather than
+    a derived moment match for the plug-in variance functional.
+    """
+    start = perf_counter()
+    normal = analytic_wald_test(
+        table_p,
+        table_q,
+        confidence_level=confidence_level,
+    )
+    component_p = normal.influence_variance_p / normal.n_p
+    component_q = normal.influence_variance_q / normal.n_q
+    welch_degrees_of_freedom = _welch_satterthwaite_df(
+        component_p,
+        component_q,
+        normal.n_p,
+        normal.n_q,
+    )
+    valid = bool(
+        normal.influence_variance_p + normal.influence_variance_q > 1e-14
+        and normal.numerically_computable
+        and np.isfinite(welch_degrees_of_freedom)
+        and welch_degrees_of_freedom > 0
+    )
+    normal_p_value = normal.p_value if valid else float("nan")
+    p_value = (
+        float(2.0 * t.sf(abs(normal.z_statistic), df=welch_degrees_of_freedom))
+        if valid
+        else float("nan")
+    )
+    critical = (
+        float(
+            t.ppf(
+                (1.0 + confidence_level) / 2.0,
+                df=welch_degrees_of_freedom,
+            )
+        )
+        if valid
+        else float("nan")
+    )
+    confidence_interval_low = (
+        float(normal.delta_corrected - critical * normal.standard_error)
+        if valid
+        else float("nan")
+    )
+    confidence_interval_high = (
+        float(normal.delta_corrected + critical * normal.standard_error)
+        if valid
+        else float("nan")
+    )
+    elapsed_seconds = perf_counter() - start
+    return WelchSatterthwaiteResult(
+        rows=normal.rows,
+        columns=normal.columns,
+        n_p=normal.n_p,
+        n_q=normal.n_q,
+        degrees_of_freedom=normal.degrees_of_freedom,
+        mi_p_plugin=normal.mi_p_plugin,
+        mi_q_plugin=normal.mi_q_plugin,
+        bias_correction_p=normal.bias_correction_p,
+        bias_correction_q=normal.bias_correction_q,
+        mi_p_corrected=normal.mi_p_corrected,
+        mi_q_corrected=normal.mi_q_corrected,
+        delta_corrected=normal.delta_corrected,
+        influence_variance_p=normal.influence_variance_p,
+        influence_variance_q=normal.influence_variance_q,
+        variance_component_p=component_p,
+        variance_component_q=component_q,
+        standard_error=normal.standard_error,
+        statistic=normal.z_statistic,
+        normal_p_value=normal_p_value,
+        welch_degrees_of_freedom=welch_degrees_of_freedom,
+        p_value=p_value,
+        confidence_level=confidence_level,
+        confidence_interval_low=confidence_interval_low,
+        confidence_interval_high=confidence_interval_high,
+        zero_fraction_p=normal.zero_fraction_p,
+        zero_fraction_q=normal.zero_fraction_q,
+        expected_below_1_fraction_p=normal.expected_below_1_fraction_p,
+        expected_below_1_fraction_q=normal.expected_below_1_fraction_q,
+        expected_below_5_fraction_p=normal.expected_below_5_fraction_p,
+        expected_below_5_fraction_q=normal.expected_below_5_fraction_q,
+        minimum_independence_expected_p=normal.minimum_independence_expected_p,
+        minimum_independence_expected_q=normal.minimum_independence_expected_q,
+        standardized_bias_difference=normal.standardized_bias_difference,
+        numerically_computable=valid,
+        valid_first_order_calculation=valid,
+        elapsed_seconds=elapsed_seconds,
+    )
+
+
 def compare_tables(
     table_p: np.ndarray,
     table_q: np.ndarray,
@@ -592,6 +763,23 @@ def compare_tables(
     wald_jackknife_p = (
         float(2.0 * norm.sf(abs(z_jackknife)))
         if np.isfinite(z_jackknife)
+        else float("nan")
+    )
+    component_p = var_p / n_p
+    component_q = var_q / n_q
+    welch_degrees_of_freedom = _welch_satterthwaite_df(
+        component_p,
+        component_q,
+        n_p,
+        n_q,
+    )
+    welch_satterthwaite_p = (
+        float(2.0 * t.sf(abs(z_analytic), df=welch_degrees_of_freedom))
+        if (
+            var_p + var_q > 1e-14
+            and np.isfinite(z_analytic)
+            and np.isfinite(welch_degrees_of_freedom)
+        )
         else float("nan")
     )
     deterministic_seconds = perf_counter() - deterministic_start
@@ -643,6 +831,8 @@ def compare_tables(
         wald_plugin_p=wald_plugin_p,
         wald_analytic_p=wald_analytic_p,
         wald_jackknife_p=wald_jackknife_p,
+        welch_satterthwaite_p=welch_satterthwaite_p,
+        welch_degrees_of_freedom=welch_degrees_of_freedom,
         naive_perm_plugin_p=naive_perm_plugin_p,
         student_perm_plugin_p=student_perm_plugin_p,
         student_perm_analytic_p=student_perm_analytic_p,

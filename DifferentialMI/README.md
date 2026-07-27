@@ -38,6 +38,11 @@ Read these first:
   derivation and assumptions.
 - [docs/NOVELTY_AUDIT.md](docs/NOVELTY_AUDIT.md): prior art and honest claim
   boundary.
+- [docs/WELCH_SATTERTHWAITE_NOVELTY_REVIEW.md](docs/WELCH_SATTERTHWAITE_NOVELTY_REVIEW.md):
+  prior uses of Welch with information measures and the narrow claim boundary
+  for the optional finite-df reference.
+- [docs/WELCH_SATTERTHWAITE_ADVERSARIAL_AUDIT.md](docs/WELCH_SATTERTHWAITE_ADVERSARIAL_AUDIT.md):
+  code, theory, seed-leakage, look-ahead, and fresh-holdout audit.
 - [ROBUST_VALIDATION_PROTOCOL.md](ROBUST_VALIDATION_PROTOCOL.md):
   pre-specified randomized protocol.
 
@@ -53,9 +58,13 @@ Read these first:
   bias-corrected MI difference.
 - `wald_plugin`: deterministic normal approximation using the estimated
   influence-function variance.
-- `wald_analytic`: deterministic normal approximation with the classical
-  `(r-1)(c-1)/(2n)` bias removed from each MI estimate. This is the current
-  primary baseline.
+- `welch_satterthwaite_test`: prospective primary deterministic baseline. It
+  combines the classical `(r-1)(c-1)/(2n)` bias correction and influence
+  variance with a Welch-Satterthwaite effective degrees of freedom and
+  Student t reference. Its `n_i-1` component degrees of freedom are an
+  empirically calibrated heuristic, not an exact finite-sample MI theorem.
+- `wald_analytic`: the historical frozen normal-Wald baseline and required
+  comparator. It uses the same estimate, standard error, and statistic.
 - `wald_jackknife`: deterministic normal approximation with the jackknife
   bias-corrected MI difference.
 
@@ -72,6 +81,18 @@ From the repository root:
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
   .venv/bin/python DifferentialMI/experiments/run_randomized_validation.py \
   --mode smoke --output-dir DifferentialMI/results/randomized_smoke
+```
+
+Use the prospective baseline and retain the historical normal comparator:
+
+```python
+from differential_mi import analytic_wald_test, welch_satterthwaite_test
+
+primary = welch_satterthwaite_test(table_p, table_q)
+normal_comparator = analytic_wald_test(table_p, table_q)
+
+print(primary.p_value, primary.welch_degrees_of_freedom)
+print(normal_comparator.p_value)
 ```
 
 Run the professor-facing verification:

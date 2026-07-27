@@ -1,0 +1,13 @@
+{
+  "profile": "pilot",
+  "seed": 20260727,
+  "null_replicates": 3000,
+  "power_replicates": 2000,
+  "bootstrap_tables_per_scenario": 8,
+  "bootstrap_replicates": 999,
+  "scenarios": 23,
+  "elapsed_seconds": 0.5260670830029994,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

@@ -1,0 +1,18 @@
+{
+  "profile": "smoke",
+  "scenario_seeds": [
+    2026072501,
+    2026072601
+  ],
+  "simulation_seed": 2026072701,
+  "replicates_per_scenario": 12,
+  "power_replicates_per_scenario": 4,
+  "permutation_pairs_per_scenario": 2,
+  "permutations": 999,
+  "workers": 4,
+  "scenarios": 16,
+  "elapsed_seconds": 9.036332667106763,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

@@ -1,0 +1,44 @@
+{
+  "profile": "decisive",
+  "settings": {
+    "broad_replicates": 5000,
+    "hard_replicates": 20000,
+    "stress_replicates": 10000,
+    "power_replicates": 10000,
+    "permutation_replicates": 1000,
+    "scenario_seeds": [
+      2026072501,
+      2026072601
+    ],
+    "broad_limit": null,
+    "hard_limit": null,
+    "stress_limit": null
+  },
+  "simulation_seed": 2026072801,
+  "permutations": 999,
+  "elapsed_seconds": 77.92100279196166,
+  "decision": "NO-GO",
+  "decision_metrics": {
+    "hard_normal_mae_05": 0.011770833333333333,
+    "hard_welch_mae_05": 0.010837499999999998,
+    "hard_relative_improvement": 0.07929203539823015,
+    "broad_normal_mae_05": 0.005143055555555557,
+    "broad_welch_mae_05": 0.005040277777777778,
+    "mean_power_loss": 0.0015400000000000413,
+    "median_normal_ms": 0.11734347208403051,
+    "median_welch_ms": 0.12796875671483576,
+    "runtime_ratio": 1.090548578818227,
+    "criteria": {
+      "hard_alpha05_mae_reduction_at_least_20pct": false,
+      "hard_alpha10_mae_does_not_increase": true,
+      "broad_alpha05_mae_increase_at_most_0_001": true,
+      "broad_in_band_drop_at_most_0_02": true,
+      "mean_power_loss_at_most_0_03": true,
+      "valid_rate_at_least_0_995": true,
+      "runtime_below_2x_and_1ms": true
+    }
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

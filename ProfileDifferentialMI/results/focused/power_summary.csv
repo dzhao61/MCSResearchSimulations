@@ -1,0 +1,5 @@
+method,replicates,valid_rate,rejection_rate_05,mean_true_delta
+wald_analytic,1600,1.0,0.45375,0.03714963705040114
+profile_lr,1600,1.0,0.56375,0.03714963705040114
+profile_pearson,1600,1.0,0.560625,0.03714963705040114
+profile_cr_2_3,1600,1.0,0.560625,0.03714963705040114
