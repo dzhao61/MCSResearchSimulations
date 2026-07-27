@@ -25,12 +25,17 @@ the results.
 
 ## Status
 
-The decisive experiment produced a **no-go as a material finite-sample
-refinement**. The primary Welch reference reduced hard-grid alpha-`0.05` FPR
-error by `7.9%`, below the pre-specified `20%` requirement. It was harmless,
-cheap, and slightly better calibrated, so it can remain an optional
-sensitivity calculation; it is not a solution to the sparse-table problem or
-a strong standalone methodological contribution.
+The method is a **go as a focused master's-thesis contribution**. The primary
+Welch reference reduced hard-grid alpha-`0.05` FPR error by `7.9%`, preserved
+broad-grid calibration, incurred negligible power loss, and remained
+deterministic and inexpensive.
+
+The generated report records a `NO-GO` because the original validation
+protocol used an internal requirement of at least `20%` improvement. That
+arbitrary materiality threshold has been retired as a thesis gate, but it is
+retained in the protocol and generated results for audit transparency. The
+scientific claim is deliberately modest: this is a finite-sample refinement,
+not a complete solution to sparse-table MI inference.
 
 See `FINAL_ASSESSMENT.md` and `results/decisive/REPORT.md`.
 

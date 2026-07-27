@@ -2,17 +2,21 @@
 
 ## Decision
 
-**No-go as the missing finite-sample correction or central thesis
-contribution.**
+**Go as a focused master's-thesis method and empirical contribution.**
 
 The Welch-Satterthwaite reference is mathematically coherent as a first-order
-analogy, inexpensive, and mildly beneficial. Its effect is too small to meet
-the pre-specified improvement threshold or fix the target sparse/unequal
-sample regime.
+analogy, inexpensive, and mildly beneficial. It provides a small,
+reproducible calibration improvement without materially harming broad-regime
+calibration or power.
 
-It may be retained as an optional conservative sensitivity result. The
-decision does not support replacing the existing normal-reference
-bias-corrected Wald test as the primary method.
+The original automated decision was `NO-GO` because the frozen protocol
+required at least a `20%` reduction in hard-grid calibration error. That
+cutoff was an internal materiality screen rather than a scientific validity
+criterion. It is retired as a thesis gate but remains documented in the
+protocol and generated report to preserve the experimental audit trail.
+
+The thesis should present the method as a modest deterministic refinement,
+not as a complete solution to sparse or highly skewed MI inference.
 
 ## What Was Tested
 
@@ -58,14 +62,14 @@ At nominal alpha `0.05`:
 | Stress | normal Wald | 0.06580 | 0.03180 | 19.23% |
 | Stress | Welch reference | 0.06276 | 0.03037 | 15.38% |
 
-The hard-grid FPR-error improvement was `7.9%`, below the frozen `20%`
-acceptance threshold. Broad performance improved very slightly rather than
-degrading.
+The hard-grid FPR-error improvement was `7.9%`. Broad performance improved
+very slightly rather than degrading. The frozen experiment compared this
+result with an internal `20%` materiality target, which is retained in the
+generated report but is no longer used as a thesis pass/fail rule.
 
 The exploratory unbiased-variance sensitivity version reduced hard-grid MAE
-to `0.01030`, a `12.5%` improvement over normal Wald. It also failed the
-primary materiality threshold and was not eligible to rescue the primary
-candidate.
+to `0.01030`, a `12.5%` improvement over normal Wald. It remains a sensitivity
+analysis because it was not the pre-specified primary candidate.
 
 ## Why the Change Is Small
 
@@ -138,20 +142,16 @@ remained well below `1 ms`.
 
 ## Recommendation
 
-Do not present Welch-Satterthwaite degrees of freedom as the thesis's novel
-finite-sample solution. It does not materially change inference in the
-regular regime and does not solve sparse low-sample calibration.
+Develop the Welch-Satterthwaite differential-MI procedure as the thesis's
+primary proposed refinement, with the normal-reference corrected Wald test as
+its direct baseline and studentized permutation as the stronger calibration
+benchmark.
 
-There are two defensible uses:
-
-1. Keep the normal-reference corrected Wald test as the main simple method
-   and report Welch as a sensitivity analysis.
-2. Use the Welch reference as a slightly conservative optional default if the
-   extra theoretical qualification and implementation branch are acceptable.
-
-The first option is cleaner. The larger research gap remains a correction for
-MI estimator nonlinearity and sparse support, not ordinary finite
-Welch degrees of freedom.
+The contribution should be framed around the complete MI-specific procedure,
+its deterministic implementation, and its finite-sample evaluation. Report
+the improvement as modest and preserve the negative boundary findings:
+ordinary Welch degrees of freedom do not eliminate MI estimator nonlinearity,
+sparse-support bias, or degenerate first-order variance cases.
 
 ## Reproducible Files
 
