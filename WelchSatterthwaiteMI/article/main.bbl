@@ -1,0 +1,139 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Shannon(1948)]{shannon1948}
+Claude~E. Shannon.
+\newblock A mathematical theory of communication.
+\newblock \emph{Bell System Technical Journal}, 27\penalty0 (3--4):\penalty0
+  379--423, 623--656, 1948.
+\newblock \doi{10.1002/j.1538-7305.1948.tb01338.x}.
+
+\bibitem[Brillinger(2004)]{brillinger2004}
+David~R. Brillinger.
+\newblock Some data analyses using mutual information.
+\newblock \emph{Brazilian Journal of Probability and Statistics}, 18\penalty0
+  (2):\penalty0 163--183, 2004.
+
+\bibitem[Lizier(2014)]{lizier2014}
+Joseph~T. Lizier.
+\newblock {JIDT}: An information-theoretic toolkit for studying the dynamics of
+  complex systems.
+\newblock \emph{Frontiers in Robotics and AI}, 1:\penalty0 11, 2014.
+\newblock \doi{10.3389/frobt.2014.00011}.
+
+\bibitem[Satterthwaite(1946)]{satterthwaite1946}
+Franklin~E. Satterthwaite.
+\newblock An approximate distribution of estimates of variance components.
+\newblock \emph{Biometrics Bulletin}, 2\penalty0 (6):\penalty0 110--114, 1946.
+\newblock \doi{10.2307/3002019}.
+
+\bibitem[Welch(1947)]{welch1947}
+Bernard~L. Welch.
+\newblock The generalization of ``student's'' problem when several different
+  population variances are involved.
+\newblock \emph{Biometrika}, 34\penalty0 (1--2):\penalty0 28--35, 1947.
+\newblock \doi{10.1093/biomet/34.1-2.28}.
+
+\bibitem[Miller(1955)]{miller1955}
+George~A. Miller.
+\newblock Note on the bias of information estimates.
+\newblock In Henry Quastler, editor, \emph{Information Theory in Psychology:
+  Problems and Methods}, pages 95--100. Free Press, Glencoe, Illinois, 1955.
+
+\bibitem[Moddemeijer(1989)]{moddemeijer1989}
+Roelof Moddemeijer.
+\newblock On estimation of entropy and mutual information of continuous
+  distributions.
+\newblock \emph{Signal Processing}, 16\penalty0 (3):\penalty0 233--248, 1989.
+\newblock \doi{10.1016/0165-1684(89)90132-1}.
+
+\bibitem[Paninski(2003)]{paninski2003}
+Liam Paninski.
+\newblock Estimation of entropy and mutual information.
+\newblock \emph{Neural Computation}, 15\penalty0 (6):\penalty0 1191--1253,
+  2003.
+\newblock \doi{10.1162/089976603321780272}.
+
+\bibitem[Kandasamy et~al.(2015)Kandasamy, Krishnamurthy, Poczos, Wasserman, and
+  Robins]{kandasamy2015}
+Kirthevasan Kandasamy, Akshay Krishnamurthy, Barnabas Poczos, Larry Wasserman,
+  and James~M. Robins.
+\newblock Influence functions for machine learning: Nonparametric estimators
+  for entropies, divergences and mutual informations.
+\newblock \emph{arXiv preprint arXiv:1411.4342}, 2015.
+\newblock \doi{10.48550/arXiv.1411.4342}.
+
+\bibitem[Mora and Ruiz-Castillo(2009)]{mora2009}
+Ricardo Mora and Javier Ruiz-Castillo.
+\newblock The statistical properties of the mutual information index of
+  multigroup segregation.
+\newblock Working Paper 09-84, Universidad Carlos III de Madrid, Departamento
+  de Econom{\'i}a, 2009.
+
+\bibitem[Hart and Giszter(2010)]{hart2010}
+Corey~B. Hart and Simon~F. Giszter.
+\newblock A neural basis for motor primitives in the spinal cord.
+\newblock \emph{Journal of Neuroscience}, 30\penalty0 (4):\penalty0 1322--1336,
+  2010.
+\newblock \doi{10.1523/JNEUROSCI.5894-08.2010}.
+
+\bibitem[Sarkar and Pandey(2020)]{sarkar2020}
+Suman Sarkar and Biswajit Pandey.
+\newblock A study on the statistical significance of mutual information between
+  morphology of a galaxy and its large-scale environment.
+\newblock \emph{Monthly Notices of the Royal Astronomical Society},
+  497\penalty0 (4):\penalty0 4077--4090, 2020.
+\newblock \doi{10.1093/mnras/staa2236}.
+
+\bibitem[Prince et~al.(2021)Prince, Tran, Grey, Saad, Chasiotis, Kwag, Kohl,
+  and Richards]{prince2021}
+Luke~Y. Prince, Matthew~M. Tran, Dorian Grey, Lydia Saad, Helen Chasiotis,
+  Jeehyun Kwag, Michael~M. Kohl, and Blake~A. Richards.
+\newblock Neocortical inhibitory interneuron subtypes are differentially
+  attuned to synchrony- and rate-coded information.
+\newblock \emph{Communications Biology}, 4:\penalty0 935, 2021.
+\newblock \doi{10.1038/s42003-021-02437-y}.
+
+\bibitem[Holmes and Nemenman(2019)]{holmes2019}
+Caroline~M. Holmes and Ilya Nemenman.
+\newblock Estimation of mutual information for real-valued data with error bars
+  and controlled bias.
+\newblock \emph{Physical Review E}, 100\penalty0 (2):\penalty0 022404, 2019.
+\newblock \doi{10.1103/PhysRevE.100.022404}.
+
+\bibitem[Martin et~al.(2026)Martin, Guy, Gallagher, and Neely]{martin2026}
+Andrew~Steven Martin, Heather Guy, Michael~Ray Gallagher, and III Neely,
+  Ryan~Reynolds.
+\newblock A guide to optimised spatiotemporal data co-location by mutual
+  information maximisation.
+\newblock \emph{Atmospheric Measurement Techniques}, 19:\penalty0 3511--3537,
+  2026.
+\newblock \doi{10.5194/amt-19-3511-2026}.
+
+\bibitem[Mather et~al.(2013)Mather, Oswald, Bandenburg, and
+  W{\'o}jcik]{mather2013}
+Luke Mather, Elisabeth Oswald, Joe Bandenburg, and Marcin W{\'o}jcik.
+\newblock Does my device leak information? an a priori statistical power
+  analysis of leakage detection tests.
+\newblock In \emph{Advances in Cryptology -- ASIACRYPT 2013}, pages 486--505.
+  Springer, 2013.
+\newblock \doi{10.1007/978-3-642-42033-7_25}.
+
+\bibitem[Chung and Romano(2013)]{chung2013}
+EunYi Chung and Joseph~P. Romano.
+\newblock Exact and asymptotically robust permutation tests.
+\newblock \emph{Annals of Statistics}, 41\penalty0 (2):\penalty0 484--507,
+  2013.
+\newblock \doi{10.1214/13-AOS1090}.
+
+\bibitem[von Davier(2026)]{vondavier2026}
+Alina~A. von Davier.
+\newblock A corrected welch satterthwaite equation.
+\newblock \emph{arXiv preprint arXiv:2602.20912}, 2026.
+\newblock \doi{10.48550/arXiv.2602.20912}.
+
+\end{thebibliography}
