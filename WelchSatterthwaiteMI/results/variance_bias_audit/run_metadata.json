@@ -1,0 +1,13 @@
+{
+  "post_hoc_diagnostic": true,
+  "decisive_scenarios": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/results/decisive/scenarios.csv",
+  "decisive_replicates": 20000,
+  "fresh_replicates": 10000,
+  "fresh_scenario_seed": 2026080301,
+  "simulation_seed": 2026080302,
+  "decisive_scenario_count": 12,
+  "fresh_scenario_count": 72,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1"
+}

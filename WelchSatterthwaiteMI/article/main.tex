@@ -26,15 +26,14 @@
 \newcommand{\E}{\operatorname{E}}
 \newcommand{\phat}{\widehat{P}}
 \newcommand{\qhat}{\widehat{Q}}
-\newcommand{\method}{Daniel's Method}
-\newtheorem{proposition}{Proposition}
+\newcommand{\method}{BCW--DMI}
 
-\title{\vspace{-1.2em}\textbf{Fast Differential Mutual Information Inference with a
-Bias-Corrected Welch--Satterthwaite Reference}}
+\title{\vspace{-1.2em}\textbf{Finite-Sample Differential Mutual Information
+Inference: A Bias-Corrected Welch-Type Test and Variance Audit}}
 \author{\textbf{Daniel Zhao}\\
 \small Master's Research in Information Theory\\
 \small Draft methods article}
-\date{\small 28 July 2026}
+\date{\small 3 August 2026}
 
 \begin{document}
 
@@ -48,12 +47,11 @@ independent populations may have distinct joint distributions but the same
 strength of dependence: \(H_0:\MI(P)=\MI(Q)\), allowing \(P\ne Q\). Resampling
 can address this weak null but is computationally costly, whereas a
 bias-corrected influence-function Wald test is fast but can be liberal in
-finite samples. We propose a deterministic refinement, termed \emph{\method},
-that combines the classical first-order correction for discrete plug-in MI,
-an empirical influence-function standard error, and a
-Welch--Satterthwaite-inspired Student reference. The estimator, standard error,
-and test statistic are unchanged from the normal Wald baseline; only the
-reference distribution and confidence-interval critical value change.
+finite samples. We study a deterministic bias-corrected Welch-type
+differential-MI test (\method) that combines the classical first-order
+correction for discrete plug-in MI, an empirical influence-function standard
+error, and a Student reference. This construction is an MI extension of the
+Hutcheson entropy-comparison template, not a wholly new statistical form.
 
 The method was evaluated on 1.22 million weak-null table pairs and 50,000
 power pairs spanning square and rectangular alphabets from \(2\times2\) to
@@ -66,10 +64,12 @@ Mean power loss was 0.00154, and median runtime was 0.128 ms versus 0.117 ms
 for the normal test. Studentized permutation remained better calibrated
 (hard-grid error 0.00642) but was substantially slower. An adversarial audit
 showed that the implemented component degrees of freedom are heuristic for
-plug-in influence variances, so the procedure is not an exact finite-sample
-Welch test. The evidence supports a low-cost, mildly conservative refinement
-for regular differential-MI inference, not a universal solution to sparse
-tables or independence.
+plug-in influence variances. A post-hoc 960,000-pair diagnostic found that a
+full variance-functional influence calculation reduced hard-grid error to
+0.00823 and reproduced the direction on six newly generated hard populations
+(0.00993 to 0.00662), but was not uniformly better across 72 regular
+scenarios. The evidence supports a low-cost research direction, not an exact
+Welch theorem or a universal sparse-table solution.
 \end{abstract}
 
 \noindent\textbf{Keywords:} mutual information; differential mutual
@@ -117,7 +117,8 @@ upward and its estimated uncertainty is itself noisy. Unequal sample sizes
 make the leading bias differ between groups. A normal-reference Wald test can
 therefore reject too often in skewed or low-expected-count regimes.
 
-This article studies a deliberately small modification. \method{} first
+This article studies a deliberately small modification, denoted \method{}.
+It first
 applies the classical \(O(n^{-1})\) bias correction to each MI estimate,
 studentizes their difference using empirical local-information variances, and
 then replaces the standard-normal reference by a Student distribution whose
@@ -138,14 +139,15 @@ tables are formed.
   \label{fig:pipeline}
 \end{figure*}
 
-The contribution is a synthesis and evaluation rather than the invention of
-its ingredients. Welch tests have previously been applied to collections of
-MI estimates, and asymptotic comparisons of discrete MI values already exist.
-The narrow contribution is, to our knowledge, the first systematic
-finite-sample evaluation of this specific one-table-per-population
-construction: bias-corrected discrete MI, empirical influence variance, and a
-Welch--Satterthwaite reference under the unrestricted weak null
-Eq.~\eqref{eq:null}.
+The contribution is a transport, audit, and evaluation rather than the
+invention of a test template. Hutcheson's entropy test already combines a
+difference of Shannon functionals, delta-method variances, and a
+Satterthwaite reference \citep{hutcheson1970}. The present work asks what
+happens after transporting that architecture to discrete MI, adding its
+specific leading bias correction, and evaluating it under the unrestricted
+weak null in Eq.~\eqref{eq:null}. The degrees-of-freedom audit then identifies
+why the textbook substitution is incomplete and motivates an MI-specific
+variance-functional refinement.
 
 \section{Related Work}
 
@@ -174,25 +176,44 @@ independence, where the chi-squared rather than normal limit is relevant.
 
 \subsection{Comparing mutual information values}
 
-The idea of comparing MI across populations is not new. Mora and
-Ruiz-Castillo derived asymptotic inference and pairwise comparisons for a
-discrete MI segregation index and recommended bootstrap methods in smaller
-samples \citep{mora2009}. Hart and Giszter combined jackknife uncertainties
-when comparing histogram MI estimates in neuroscience
-\citep{hart2010}. These works are close mathematical predecessors to the
-present two-sample problem.
+Hutcheson's classical test compares two Shannon diversity values by dividing
+their difference by estimated entropy variances and using Satterthwaite
+degrees of freedom \citep{hutcheson1970}. Its modern implementation uses the
+same broad structure as Eqs.~\eqref{eq:se} and \eqref{eq:df}, with \(n\)
+rather than \(n-1\) in the component denominators. Extending it to MI is not
+automatic: MI depends jointly on cell and marginal probabilities, has leading
+bias \(d/(2n)\), and has a degenerate first-order influence function at
+independence. Nevertheless, Hutcheson is the direct template and defines the
+appropriate novelty boundary.
+
+The idea of comparing MI across populations is also established. Mora and
+Ruiz-Castillo derived asymptotic inference and pairwise comparisons for the
+discrete MI segregation index in a working-paper line \citep{mora2009}; their
+published account establishes the wider role and properties of the M index
+\citep{mora2011}. Related segregation research shows how bias adjustments,
+asymptotic tests, and bootstrap refinements can be combined for nonlinear
+indices \citep{allen2015}. Hart and Giszter combined jackknife uncertainties
+when comparing histogram MI estimates in neuroscience \citep{hart2010}.
 
 Other studies apply familiar mean tests to \emph{replicated} MI estimates.
 Sarkar and Pandey used a Student test on MI values obtained from randomized or
 shuffled astronomical data \citep{sarkar2020}. Prince et al.\ applied Welch
 comparisons to per-neuron MI outcomes \citep{prince2021}. Martin et al.\ used
 an unequal-variance Welch test on repeated, non-overlapping partition
-estimates from a continuous KSG estimator \citep{holmes2019,martin2026}.
+estimates from a continuous KSG estimator \citep{martin2026}; the estimator
+itself builds on controlled-bias KSG work such as \citet{holmes2019}.
 These studies establish that Welch testing has entered MI applications. They
 do not, however, derive the two variance components from one discrete
 multinomial table per population as done here. Mather et al.\ evaluated
 Welch and MI leakage detectors side by side, but did not apply the Welch
 reference to the MI estimator itself \citep{mather2013}.
+
+Resampling is an essential comparator rather than an afterthought. Bootstrap
+methods can improve nonlinear segregation-index inference
+\citep{allen2015}, and simulation studies of Shannon diversity report strong
+coverage for bootstrap-\(t\) intervals \citep{palma2022}. A multinomial
+bootstrap-\(t\) comparison for differential MI is therefore required in the
+next confirmatory study.
 
 \subsection{Permutation under a weak null}
 
@@ -206,7 +227,7 @@ exactness when the complete distributions are equal \citep{chung2013}. We
 therefore use a studentized table-label permutation as the resampling
 benchmark, rather than raw permutation or a one-table independence shuffle.
 
-\section{Daniel's Method}
+\section{Bias-Corrected Welch-Type Test}
 
 \subsection{Data and estimand}
 
@@ -295,7 +316,7 @@ Set
 \end{equation}
 The two-sided p-value and \(100(1-\alpha)\%\) confidence interval are
 \begin{align}
-  p_{\mathrm{D}}
+  p_{\mathrm{BCW}}
     &=2\Pr\{t_{\widehat\nu}\ge |T|\},\\
   \widehat\Delta_{\mathrm{BC}}
     &\ \pm\
@@ -303,7 +324,7 @@ The two-sided p-value and \(100(1-\alpha)\%\) confidence interval are
   \label{eq:pvalue}
 \end{align}
 For finite \(\widehat\nu\), Student tails are heavier than normal tails.
-Thus, at a fixed \(T\), \(p_{\mathrm{D}}\) is never smaller than the normal
+Thus, at a fixed \(T\), \(p_{\mathrm{BCW}}\) is never smaller than the normal
 Wald p-value. The method is a transparent conservative adjustment, not a new
 effect estimator.
 
@@ -339,18 +360,16 @@ where
 is the MI influence function. Combining the independent
 expansions for \(P\) and \(Q\) establishes the normal-reference Wald limit.
 
-\begin{proposition}
-Assume fixed finite alphabets, positive population cell probabilities,
+Under fixed finite alphabets, positive population cell probabilities,
 independent and identically distributed observations within each group,
-independent groups, \(n_P/(n_P+n_Q)\to\lambda\in(0,1)\), and positive
-influence variances. Under \(H_0\), the statistic \(T\) in
-Eq.~\eqref{eq:tstat} converges in distribution to \(N(0,1)\).
-Furthermore, \(\widehat\nu\to\infty\), so the Student reference in
-Eq.~\eqref{eq:pvalue} converges to the same normal limit.
-\end{proposition}
+independent groups, sample-size proportions bounded away from zero and one,
+and positive influence variances, Eq.~\eqref{eq:linear} implies that \(T\)
+converges in distribution to \(N(0,1)\) under \(H_0\). Moreover,
+\(\widehat\nu\to\infty\), so the Student reference converges to the same
+normal limit. This is asymptotic compatibility by construction, not a
+second-order accuracy result.
 
-The proposition establishes first-order compatibility, not exact
-finite-sample validity. Classical Welch inference combines ordinary sample
+Classical Welch inference combines ordinary sample
 variances with known Gaussian degrees-of-freedom interpretations. Here,
 \(\widehat V_P\) and \(\widehat V_Q\) are nonlinear plug-in functionals:
 the local scores change with the same empirical tables used to estimate MI.
@@ -457,6 +476,21 @@ designs with 10,000 fresh table pairs each, and generated 72 strong-null
 table-pair evaluations and was designed to test the direction and
 generalizability of the observed effect rather than tune the method.
 
+\subsection{Post-hoc variance diagnostic}
+
+A subsequent methodological audit fixed a third population seed before
+simulation. It generated 20,000 new table pairs for each of the 12 decisive
+hard populations and 10,000 pairs for each of 72 entirely new weak-null
+populations, totalling 960,000 comparisons. It measured
+\(\E(\widehat V)/V\), the empirical variance of
+\(\widehat\Delta_{\mathrm{BC}}\), and its correlation with the estimated
+variance. It also compared Eq.~\eqref{eq:df} with local-score-kurtosis degrees
+of freedom, full variance-functional influence degrees of freedom, and a
+diagnostic normal test using the known population variance. Because this
+audit was designed after inspecting the original study, it is explicitly
+post-hoc even though its new population and simulation seeds were fixed
+before execution.
+
 \subsection{Comparators and metrics}
 
 The primary analytic comparator was the bias-corrected normal Wald test,
@@ -470,7 +504,11 @@ At nominal \(\alpha=0.05\) and 0.10, we recorded false-positive rate (FPR),
 Wilson intervals, mean absolute FPR error (MAE), confidence-interval coverage,
 valid-result rate, paired rejection changes, power, and runtime. Calibration
 is the central criterion: at \(\alpha=0.05\), an ideal method has FPR 0.05,
-and smaller \(|\mathrm{FPR}-0.05|\) is better.
+and smaller \(|\mathrm{FPR}-0.05|\) is better. Candidate methods were applied
+to the same table pair in every replicate. Consequently, their rejection
+changes are paired; the larger marginal Monte Carlo uncertainty of either FPR
+does not describe the uncertainty of the much smaller within-replicate
+difference.
 
 \section{Results}
 
@@ -512,12 +550,14 @@ FPR fell from 0.06177 to 0.06084, and MAE fell from 0.01177 to 0.01084, a
 Student p-value is nested above the normal p-value. Coverage increased by
 0.00093.
 
-The stress grid shows the limit of the reference correction. Mean FPR moved
-toward 0.05, but scenario-level behaviour was not uniformly better. Already
-conservative \(2\times2\) settings became more conservative, and 34
-first-order-degenerate cases were explicitly returned as invalid. The 99.987\%
-valid rate is high, but stress-grid FPR is conditional on a computable
-positive standard error.
+The stress-grid result is negative at the scenario level. Although mean FPR
+moved toward 0.05, the proportion inside the practical calibration band fell
+from 19.23\% to 15.38\%. The correction is monotone conservative, so already
+conservative \(2\times2\) settings became worse; the present method has no
+validated diagnostic that identifies such cases in advance. In addition, 34
+first-order-degenerate cases were explicitly returned as invalid. The
+99.987\% valid rate is high, but stress-grid FPR is conditional on a
+computable positive standard error.
 
 \begin{figure*}[t]
   \centering
@@ -547,12 +587,13 @@ conservative effect, but not uniform superiority: in the fresh broad grid,
 \centering
 \caption{\textbf{Adversarial holdout at nominal \(\alpha=0.05\).}
 Intervals are scenario-bootstrap intervals for the mean MAE gain
-\((\mathrm{MAE}_{N}-\mathrm{MAE}_{D})\).}
+\((\mathrm{MAE}_{N}-\mathrm{MAE}_{\mathrm{BCW}})\).}
 \label{tab:holdout}
 \small
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Holdout stage & Population pairs & Tables per pair & Normal MAE & Daniel MAE &
+Holdout stage & Populations & Replicates & Normal MAE & BCW MAE &
 Mean gain [95\% interval]\\
 \midrule
 Fresh weak-null broad & 72 & 10,000 & 0.004792 & 0.004582 &
@@ -613,7 +654,7 @@ studentized MI evaluation \(B\) times.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{evidence_summary.pdf}
-  \caption{\textbf{Accuracy and cost summary.} Left: normal and Daniel MAE
+  \caption{\textbf{Accuracy and cost summary.} Left: normal and BCW--DMI MAE
   across the decisive study and independent holdout. The largest benefit
   occurs in deliberately liberal hard regimes; broad and strong-null effects
   are small. Right: median observed single-pair runtime on a logarithmic
@@ -669,34 +710,88 @@ between the estimated MI difference and its total estimated variance reached
 0.84 in a skewed \(2\times2\) audit, so improving the denominator degrees of
 freedom alone may still not yield an exact Student law.
 
+\subsection{Variance bias and refined degrees of freedom}
+
+The post-hoc diagnostic rejected a simple universal variance-bias
+explanation. Mean estimated \(SE^2\) divided by its population first-order
+value was 1.001 on the decisive hard grid and 1.066 on the fresh 72-scenario
+grid, while the empirical variance of the corrected MI difference was 1.071
+and 1.063 times that population value. Even the oracle-variance normal test
+was not uniformly calibrated. Thus, finite-sample numerator variation and
+numerator--denominator dependence matter alongside variance estimation.
+
+For completeness, let \(V(P)=\Var_P(\ell)\), \(m_2=\E_P(\ell^2)\), and
+\(\mu=\MI(P)\). The influence function of the variance functional is
+\begin{align}
+g_P(x,y)={}&\ell_{xy}^2-m_2
+ +2\{\ell_{xy}-\E(\ell\mid X=x)\nonumber\\
+&-\E(\ell\mid Y=y)+\mu\}
+ -2\mu(\ell_{xy}-\mu).
+\label{eq:varianceif}
+\end{align}
+Writing \(\tau_P^2=\Var_P\{g_P(X,Y)\}\), first-order moment matching gives
+\(\nu_{V,P}=2n_PV(P)^2/\tau_P^2\). Plug-in versions for \(P\) and \(Q\) can
+replace \(n_P-1\) and \(n_Q-1\) in Eq.~\eqref{eq:df} at unchanged
+\(O(rc)\) order.
+
+Table~\ref{tab:postaudit} shows why this candidate deserves a new
+confirmatory study. It materially improved the deliberately liberal hard
+regimes and had its largest gain at \(\alpha=0.01\). Across all fresh regular
+scenarios, however, it improved 28, worsened 39, and tied five at
+\(\alpha=0.05\); the simpler local-kurtosis approximation had slightly lower
+mean MAE there. All candidate valid-result rates were one in this audit.
+
+\begin{table*}[t]
+\centering
+\caption{\textbf{Post-hoc degrees-of-freedom diagnostic.} Entries are mean
+absolute FPR errors. Variance IF uses Eq.~\eqref{eq:varianceif}; the oracle
+uses known population variances and is diagnostic, not usable.}
+\label{tab:postaudit}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Population set (\(\alpha\)) & Normal & \(n-1\) Welch & Local kurtosis &
+Variance IF & Oracle\\
+\midrule
+Decisive hard (0.05) & 0.01270 & 0.01169 & 0.01040 & \textbf{0.00823} & 0.00785\\
+Decisive hard (0.01) & 0.00568 & 0.00506 & 0.00428 & \textbf{0.00266} & 0.00354\\
+Fresh hard (0.05) & 0.00993 & 0.00912 & 0.00775 & \textbf{0.00662} & 0.00837\\
+Fresh hard (0.01) & 0.00407 & 0.00360 & 0.00317 & \textbf{0.00232} & 0.00317\\
+Fresh all (0.05) & 0.00463 & 0.00445 & \textbf{0.00423} & 0.00446 & 0.00756\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 \subsection{Post-protocol decision}
 
 The frozen validation protocol used an internal rule requiring at least a
 20\% reduction in hard-grid MAE. The observed 7.9\% reduction did not satisfy
-that rule, and the generated metadata correctly records ``NO-GO.'' The later
-decision to retain the method as a thesis contribution accepts a smaller
-effect as scientifically useful. This is a transparent post-protocol change
-in materiality judgement, not a pre-specified success. The numerical result,
-comparators, and frozen report were not altered.
+that rule, and the generated metadata correctly records NO-GO. The
+variance-functional result was obtained later and cannot retroactively change
+that decision. It instead defines a new candidate requiring a separately
+frozen protocol. This distinction preserves the original numerical result,
+comparators, and report while allowing the research direction to evolve.
 
 \section{Discussion}
 
 \subsection{What the method adds}
 
-\method{} occupies a practical middle ground. Relative to normal analytic
-inference, it adds almost no computational burden, preserves large-sample
-behaviour, and provides a small conservative adjustment where the baseline
-is mildly liberal. Relative to studentized permutation, it is less accurately
-calibrated but deterministic and faster. It is most attractive in screening
-or repeated-comparison settings where milliseconds accumulate, exact
-reproducibility is valuable, and a modest calibration improvement is useful.
+\method{} establishes a transparent MI-specific baseline between normal
+analytic inference and studentized permutation. It adds almost no
+computational burden and provides a small conservative adjustment where the
+normal reference is mildly liberal, but Hutcheson's entropy test makes clear
+that this architecture is transported rather than invented. The stronger
+methodological contribution is the variance audit: it explains why assigning
+\(n-1\) to a nonlinear plug-in variance is unjustified and supplies a
+computable \(O(rc)\) alternative through Eq.~\eqref{eq:varianceif}.
 
 The size of the improvement is mathematically unsurprising. In the hard grid,
 median effective degrees of freedom were approximately 186--812. Student
 critical values at those degrees of freedom are close to normal critical
-values, so few decisions change. This modest effect is a feature of a
-backward-compatible reference correction: the estimate and uncertainty model
-remain untouched.
+values, so few decisions change. The variance-functional candidate lowers
+those degrees of freedom in the regimes where estimated uncertainty is most
+variable. Its nonuniform broad-grid behaviour shows that this is still an
+approximation to a dependent studentized statistic, not a universal pivot.
 
 \subsection{Relationship to standard MI tests}
 
@@ -725,7 +820,9 @@ One-table empirical independence significance; not a direct comparator.\\
 Bias-corrected normal Wald & \(\MI(P)=\MI(Q)\) & \(O(rc)\), deterministic &
 Historical two-sample analytic baseline.\\
 \method & \(\MI(P)=\MI(Q)\) & \(O(rc)\), deterministic &
-Proposed mildly conservative finite-df refinement.\\
+Hutcheson-type MI baseline with heuristic \(n-1\) component df.\\
+Variance-IF candidate & \(\MI(P)=\MI(Q)\) & \(O(rc)\), deterministic &
+Post-hoc MI-specific moment refinement requiring confirmation.\\
 Studentized group permutation & \(\MI(P)=\MI(Q)\) asymptotically; exact if \(P=Q\) &
 \(B\) repeated allocations and evaluations &
 More accurate regular resampling benchmark, with higher cost.\\
@@ -735,21 +832,23 @@ More accurate regular resampling benchmark, with higher cost.\\
 
 \subsection{Novelty boundary}
 
-No broad claim that Welch has never been used with MI is sustainable.
-Published examples use Welch on repeated continuous-MI estimates
-\citep{martin2026}, per-unit MI outcomes \citep{prince2021}, and related
-information measures. Nor are the plugin estimator, \(d/(2n)\) correction,
-influence variance, two-sample studentization, or Satterthwaite formula
-individually new.
+The original construction claim must be narrowed. Hutcheson introduced the
+entropy analogue in 1970 \citep{hutcheson1970}; Mora and Ruiz-Castillo
+developed asymptotic comparison for the MI segregation index
+\citep{mora2009}; and published examples use Welch on repeated continuous-MI
+estimates \citep{martin2026} and per-unit MI outcomes
+\citep{prince2021}. Nor are the plug-in estimator, \(d/(2n)\) correction,
+influence variance, studentization, or Satterthwaite formula individually new.
 
-The defensible contribution is narrower: a complete, deterministic,
-MI-specific procedure for two independent discrete tables under the weak
-equal-MI null, together with unusually broad finite-sample calibration,
-permutation comparison, reproducibility checks, and an adversarial audit of
-the degrees-of-freedom assumption. A structured search did not locate the
-same combination. Before any publication-priority statement, the search
-should be repeated in authenticated Scopus, Web of Science, MathSciNet,
-zbMATH, and ProQuest databases.
+The defensible contribution is therefore methodological transport plus audit:
+an explicit Hutcheson-type procedure for two independent discrete MI values
+under the unrestricted weak null, unusually broad paired finite-sample
+evaluation, and the derivation and preliminary test of variance-functional
+degrees of freedom tailored to the MI uncertainty estimator. The last element
+is more distinctive than the \(n-1\) baseline but remains post-hoc. Before any
+publication-priority statement, the search should be repeated in
+authenticated Scopus, Web of Science, MathSciNet, zbMATH, and ProQuest with
+Hutcheson and diversity-index terms included.
 
 \subsection{Limitations and operating range}
 
@@ -771,39 +870,42 @@ The simulation evidence is extensive in null calibration but less broad in
 power: the five alternatives are \(3\times3\) tables with equal sample sizes.
 The permutation comparison covers 12 hard anchors with 1,000 outer replicates
 each. A final thesis study should broaden power across shapes and unequal
-samples, increase the outer permutation replicates, include
-\(\alpha=0.01\), and add real-data demonstrations. These additions improve
-external validity; simply increasing the existing null replicate counts would
-add little.
+samples, increase the outer permutation replicates, pre-specify
+\(\alpha=0.01\), add multinomial bootstrap-\(t\), test declared versus
+observed support dimensions, and include real-data demonstrations. These
+additions improve external validity; simply increasing the existing null
+replicate counts would add little.
 
 \subsection{Next methodological step}
 
-The variance-functional audit suggests a principled extension. If
-\(\tau_P^2\) denotes the variance of the influence function of
-\(\widehat V_P\), first-order moment matching gives a component degree of
-freedom of approximately \(2n_PV(P)^2/\tau_P^2\), with an analogous term for
-\(Q\). This prediction tracked empirical component degrees of freedom more
-closely than \(n-1\). It must be frozen and tested on untouched populations
-before replacing Eq.~\eqref{eq:df}. Corrected Satterthwaite formulas proposed
-for general variance synthesis may also be relevant \citep{vondavier2026},
-but their assumptions are not yet established for MI.
+The next step is a pre-specified head-to-head study of the local-kurtosis and
+full variance-functional references. Equation~\eqref{eq:varianceif} tracked
+empirical component degrees of freedom more closely than \(n-1\) and produced
+the stronger hard-grid result, whereas local kurtosis had slightly better
+average fresh-grid MAE. Neither may replace Eq.~\eqref{eq:df} until evaluated
+on another untouched population family against studentized permutation and
+bootstrap-\(t\). Corrected Satterthwaite formulas proposed for general
+variance synthesis may also be relevant \citep{vondavier2026}, but their
+assumptions are not yet established for MI.
 
 \section{Conclusion}
 
-\method{} adapts a familiar statistical idea to a distinct information-
-theoretic problem: fast inference for equality of two independent discrete
-mutual information values. It combines leading plug-in bias correction,
-influence-function uncertainty, and a Welch--Satterthwaite-inspired reference
-without resampling. Across a large pre-specified simulation and an independent
-holdout, it produced a small, reproducible conservative calibration
-improvement over normal Wald with negligible power and runtime costs.
-Studentized permutation remained more accurate.
+\method{} transports the Hutcheson--Satterthwaite comparison architecture to
+a distinct information-theoretic problem: equality of two independent
+discrete MI values under a weak null. Leading plug-in bias correction and
+MI-specific influence uncertainty make the transport substantive, but the
+\(n-1\) reference itself is only mildly beneficial. Studentized permutation
+remained more accurate.
 
-The result should be interpreted precisely. This is not an exact Welch theorem
-for MI, not a one-table independence test, and not a solution to severe
-sparsity. Its value is a clean and general regular-case refinement, an
-auditable implementation, and a quantitative map of where the approximation
-helps and where first-order MI inference remains inadequate.
+The audit changes the research emphasis. The estimated MI difference and its
+plug-in uncertainty are dependent, the ordinary component degrees of freedom
+are too large, and no single variance rescaling repairs calibration. A full
+variance-functional influence calculation is deterministic, remains
+\(O(rc)\), and produced materially lower hard-regime error in a new
+diagnostic, especially at \(\alpha=0.01\). Its nonuniform regular-grid
+behaviour demands a fresh confirmatory study. The defensible thesis is thus
+not a new Welch test, but an MI-specific transport, failure analysis, and
+promising moment refinement with clearly defined limits.
 
 \section*{Reproducibility and Data Availability}
 
@@ -813,7 +915,8 @@ stored in the accompanying research repository. The full null replicate
 archive is reproducible from the saved scenario definitions and seeds but is
 not versioned because of its size. The manuscript figures are generated by
 \texttt{article/make\_figures.py}; the decisive experiment is generated by
-\texttt{experiments/run\_validation.py}. The method implementation is
+\texttt{experiments/run\_validation.py}; the post-hoc variance audit is
+\texttt{experiments/audit\_variance\_bias.py}. The baseline implementation is
 \texttt{src/welch\_differential\_mi/welch.py}.
 
 \section*{Acknowledgements}

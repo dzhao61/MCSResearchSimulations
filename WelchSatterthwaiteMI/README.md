@@ -1,8 +1,8 @@
 # Welch-Satterthwaite Differential Mutual Information
 
-This isolated refinement tests a finite-degrees-of-freedom reference
-distribution for the existing bias-corrected differential-MI Wald statistic.
-It does not modify the frozen `DifferentialMI` implementation.
+This project studies finite-degrees-of-freedom references for the existing
+bias-corrected differential-MI Wald statistic. It does not modify the frozen
+`DifferentialMI` implementation.
 
 The target is the independent two-sample weak null
 
@@ -25,19 +25,23 @@ the results.
 
 ## Status
 
-The method is a **go as a focused master's-thesis contribution**. The primary
-Welch reference reduced hard-grid alpha-`0.05` FPR error by `7.9%`, preserved
-broad-grid calibration, incurred negligible power loss, and remained
-deterministic and inexpensive.
+The original `n - 1` Welch reference remains a useful baseline but is not a
+new test architecture: Hutcheson's 1970 Shannon-diversity test is the direct
+entropy-template predecessor. The frozen experiment recorded `NO-GO` under
+its pre-specified 20% materiality rule; it achieved a real but modest 7.9%
+hard-grid error reduction.
 
-The generated report records a `NO-GO` because the original validation
-protocol used an internal requirement of at least `20%` improvement. That
-arbitrary materiality threshold has been retired as a thesis gate, but it is
-retained in the protocol and generated results for audit transparency. The
-scientific claim is deliberately modest: this is a finite-sample refinement,
-not a complete solution to sparse-table MI inference.
+A later post-hoc audit derived full variance-functional component degrees of
+freedom. This candidate reduced alpha-`0.05` hard-grid MAE by about 33-35% in
+the audited populations and helped more strongly at alpha-`0.01`, but it was
+not uniformly better across 72 fresh regular scenarios. It is promising and
+requires a new pre-specified validation against local-kurtosis df,
+studentized permutation, and multinomial bootstrap-t before becoming the
+primary thesis method.
 
-See `FINAL_ASSESSMENT.md` and `results/decisive/REPORT.md`.
+See `FINAL_ASSESSMENT.md` for the historical decision,
+`results/decisive/REPORT.md` for the frozen experiment, and
+`results/variance_bias_audit/REPORT.md` for the new diagnostic.
 
 ## Commands
 
@@ -54,4 +58,11 @@ The decisive experiment is:
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_validation.py \
   --profile decisive \
   --output-dir WelchSatterthwaiteMI/results/decisive
+```
+
+The post-hoc variance audit is:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/audit_variance_bias.py \
+  --output-dir WelchSatterthwaiteMI/results/variance_bias_audit
 ```

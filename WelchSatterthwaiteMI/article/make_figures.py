@@ -161,7 +161,7 @@ def evidence_summary() -> None:
         welch_mae,
         width,
         color=ORANGE,
-        label="Daniel's Method",
+        label="BCW-DMI",
     )
     axes[0].set_ylabel("Mean absolute FPR error at $\\alpha=0.05$")
     axes[0].set_xticks(x, labels)
@@ -171,7 +171,7 @@ def evidence_summary() -> None:
     axes[0].grid(axis="y", color=LIGHT, linewidth=0.8)
     axes[0].set_axisbelow(True)
 
-    methods = ["Normal\nWald", "Daniel\n(Welch)", "Permutation\n(999)"]
+    methods = ["Normal\nWald", "BCW-DMI", "Permutation\n(999)"]
     times = [normal_ms, welch_ms, permutation_ms]
     bars = axes[1].bar(methods, times, color=[BLUE, ORANGE, GREEN])
     axes[1].set_yscale("log")
