@@ -23,6 +23,13 @@ distribution using Welch-Satterthwaite effective degrees of freedom.
 See `VALIDATION_PROTOCOL.md` for the decision rules fixed before inspecting
 the results.
 
+For a short overview of the literature, method, and main results, start with
+[`QUICK_SUMMARY.md`](QUICK_SUMMARY.md).
+
+For a first-principles explanation of the research question, derivations,
+validation design, results, and limitations, see
+[`COMPREHENSIVE_SUMMARY.md`](COMPREHENSIVE_SUMMARY.md).
+
 ## Status
 
 The original `n - 1` Welch reference remains a useful baseline but is not a
