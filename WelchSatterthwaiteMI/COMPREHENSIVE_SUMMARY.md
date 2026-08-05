@@ -28,12 +28,11 @@ Here, the two means are replaced by two mutual information estimates:
 | Difference in means | Difference in MI |
 | Welch-Satterthwaite degrees of freedom | Simple or MI-specific degrees of freedom |
 
-Four methods form the complete comparison:
+Three analytic methods form the comparison:
 
 | Method | How $T$ is calibrated |
 | --- | --- |
 | Normal Wald | Standard normal distribution |
-| Studentized permutation | Empirical distribution from repeated group-label permutations |
 | Simple Welch-Satterthwaite | Student distribution using $n-1$ component degrees of freedom |
 | Expanded Welch-Satterthwaite | Student distribution using MI-specific variance-influence degrees of freedom |
 
@@ -69,10 +68,6 @@ sizes.
 comparison of an MI-based segregation index. It establishes clear prior work
 for comparing MI-type quantities between populations.
 
-**Chung and Romano (2013).** Their general permutation theory supports using
-a studentized statistic when testing equality of a parameter across
-heterogeneous groups. This motivates the studentized permutation benchmark.
-
 The simple Welch method is therefore best viewed as a direct transport of
 existing ideas. The potentially novel part is the expanded
 Welch-Satterthwaite calculation: deriving effective degrees of freedom from
@@ -86,11 +81,10 @@ Key references:
 - Hutcheson: <https://doi.org/10.1016/0022-5193(70)90124-4>
 - Mora and Ruiz-Castillo:
   <https://doi.org/10.1111/j.1467-9531.2011.01237.x>
-- Chung and Romano: <https://doi.org/10.1214/13-AOS1090>
 
 ## 3. Shared Data and Effect Estimate
 
-All four methods begin with the same two count tables:
+All three methods begin with the same two count tables:
 
 $$
 N^P=(N^P_{ij}),
@@ -234,50 +228,7 @@ $$
 O(rc).
 $$
 
-## 5. Method 2: Studentized Permutation
-
-### How it works
-
-Studentized permutation uses the same observed statistic $T_{\mathrm{obs}}$.
-It then:
-
-1. pools the two groups;
-2. randomly permutes group labels while preserving $n_P$ and $n_Q$;
-3. rebuilds both tables;
-4. recomputes the complete bias-corrected, studentized statistic $T_b^*$;
-5. repeats this process $B$ times.
-
-The two-sided Monte Carlo p-value is
-
-$$
-p_{\mathrm{perm}}
-=\frac{
-1+\sum_{b=1}^{B}
-\mathbf 1\{|T_b^*|\ge |T_{\mathrm{obs}}|\}
-}{B+1}.
-$$
-
-Studentization is important because the groups may have different
-distributions and variance structures even when their MI values are equal.
-
-### Interpretation
-
-Permutation constructs a reference distribution from repeated reallocations
-instead of choosing a normal or Student distribution analytically. It can
-capture more finite-sample behaviour, but its p-values are random and have
-resolution approximately $1/(B+1)$.
-
-### Cost
-
-An optimized table-level implementation costs approximately
-
-$$
-O(Brc),
-$$
-
-while explicitly shuffling raw observations can add $O(Bn)$ work.
-
-## 6. Method 3: Simple Welch-Satterthwaite
+## 5. Method 2: Simple Welch-Satterthwaite
 
 ### How it works
 
@@ -334,7 +285,7 @@ $$
 O(rc).
 $$
 
-## 7. Method 4: Expanded Welch-Satterthwaite
+## 6. Method 3: Expanded Welch-Satterthwaite
 
 ### Why expand the simple method?
 
@@ -423,21 +374,21 @@ $$
 Its exact measured constant-factor overhead has not yet been benchmarked in
 the primary implementation.
 
-## 8. Method Map
+## 7. Method Map
 
-| Feature | Normal Wald | Permutation | Simple Welch | Expanded Welch |
-| --- | --- | --- | --- | --- |
-| Effect estimate | Same bias-corrected MI difference | Same statistic recomputed repeatedly | Same | Same |
-| Standard error | MI influence variance | Same formula recomputed repeatedly | Same | Same |
-| Reference | Normal | Empirical | Student | Student |
-| Variance uncertainty | Ignored | Captured through repeated reallocations | Approximated by $n-1$ | Derived from MI variance influence |
-| Deterministic | Yes | No | Yes | Yes |
-| Complexity | $O(rc)$ | Approximately $O(Brc)$ | $O(rc)$ | $O(rc)$ |
-| Main role | Analytic baseline | Resampling baseline | Simple finite-df correction | Proposed analytic method |
+| Feature | Normal Wald | Simple Welch | Expanded Welch |
+| --- | --- | --- | --- |
+| Effect estimate | Same bias-corrected MI difference | Same | Same |
+| Standard error | MI influence variance | Same | Same |
+| Reference | Normal | Student | Student |
+| Variance uncertainty | Ignored | Approximated by $n-1$ | Derived from MI variance influence |
+| Deterministic | Yes | Yes | Yes |
+| Complexity | $O(rc)$ | $O(rc)$ | $O(rc)$ |
+| Main role | Analytic baseline | Simple finite-df correction | Proposed analytic method |
 
-## 9. Experimental Sets
+## 8. Experimental Sets
 
-### 9.1 Broad sets
+### 8.1 Broad sets
 
 A broad population set contains 72 equal-MI pairs:
 
@@ -463,7 +414,7 @@ giving 144 populations with 5,000 table-pair replicates each.
 The expanded-method evaluation used one new 72-population broad set with 10,000
 replicates per population.
 
-### 9.2 Hard set A
+### 8.2 Hard set A
 
 Hard set A contains 12 low-density, unequal-sample population pairs generated
 from two separate population seeds. It uses six shapes:
@@ -482,39 +433,26 @@ $$
 12\times20{,}000=240{,}000.
 $$
 
-### 9.3 Fresh hard subset B
+### 8.3 Fresh hard subset B
 
 Fresh hard subset B contains six difficult design-5 populations selected from
 the new broad 72-set. It is a subset of the broad set, not an extra set.
 
 Each received 10,000 replicates as part of the broad simulation.
 
-### 9.4 Permutation anchors
+### 8.4 Which methods were compared where?
 
-The permutation comparison used the 12 hard set A populations. For each
-population:
-
-- 1,000 outer table pairs were generated;
-- each table pair received 999 studentized permutations.
-
-This experiment compared normal Wald, simple Welch, and permutation on the
-same table pairs. The saved permutation experiment did not include expanded
-Welch.
-
-### 9.5 Which methods were compared where?
-
-| Experiment | Normal | Permutation | Simple Welch | Expanded Welch |
-| --- | ---: | ---: | ---: | ---: |
-| Broad and hard simple-method validation | Yes | Hard anchors only | Yes | No |
-| 960,000-pair expanded-method evaluation | Yes | No | Yes | Yes |
+| Experiment | Normal | Simple Welch | Expanded Welch |
+| --- | ---: | ---: | ---: |
+| Broad and hard simple-method validation | Yes | Yes | No |
+| 960,000-pair expanded-method evaluation | Yes | Yes | Yes |
 
 This separation is important. The current data compare expanded Welch with
-normal and simple Welch, but do not yet compare expanded Welch directly with
-permutation.
+normal and simple Welch on the same simulated population sets.
 
-## 10. Results
+## 9. Results
 
-### 10.1 Accuracy metric
+### 9.1 Accuracy metric
 
 For a nominal level $\alpha$, a calibrated method should reject
 approximately an $\alpha$ fraction of true null cases. For each scenario,
@@ -526,7 +464,7 @@ $$
 
 The tables report mean absolute FPR error across each set. Lower is better.
 
-### 10.2 Normal, simple Welch, and expanded Welch
+### 9.2 Normal, simple Welch, and expanded Welch
 
 | Population set | $\alpha$ | Normal Wald | Simple Welch | Expanded Welch |
 | --- | ---: | ---: | ---: | ---: |
@@ -557,24 +495,7 @@ Relative to simple Welch, expanded Welch reduced hard-regime error by about
 Expanded Welch is therefore strongest in the target difficult regime, but it
 is not uniformly best in every broad scenario or at every significance level.
 
-### 10.3 Permutation comparison
-
-On the 12 hard permutation anchors at $\alpha=0.05$:
-
-| Method | Mean FPR | Mean absolute FPR error | In 0.035-0.065 band |
-| --- | ---: | ---: | ---: |
-| Normal Wald | 0.06208 | 0.01208 | 66.67% |
-| Studentized permutation | **0.05458** | **0.00642** | **100.00%** |
-| Simple Welch | 0.06083 | 0.01100 | 75.00% |
-
-Permutation was more accurate than normal Wald and simple Welch on these hard
-anchors. This establishes permutation as the stronger existing accuracy
-benchmark.
-
-It does not yet show whether permutation is more accurate than expanded
-Welch, because expanded Welch was not included in this run.
-
-### 10.4 Power
+### 9.3 Power
 
 The available power experiment compares normal Wald and simple Welch across
 five $3\times3$ alternatives. Simple Welch's mean absolute power loss was
@@ -587,28 +508,23 @@ only 0.00154, with a maximum loss of 0.0032.
 
 Expanded Welch still needs a comparable power experiment.
 
-### 10.5 Runtime
+### 9.4 Runtime
 
 Measured median single-pair times were:
 
 | Method | Median time |
 | --- | ---: |
 | Normal Wald | 0.117 ms |
-| 999 optimized studentized permutations | 3.006 ms |
 | Simple Welch | 0.128 ms |
 
 Simple Welch added about 0.011 ms over normal Wald. Expanded Welch remains
 $O(rc)$, but its integrated constant-factor runtime has not yet been
-measured. Permutation is slower because it recalculates the test many times.
+measured.
 
-## 11. Final Interpretation
+## 10. Final Interpretation
 
 **Normal Wald** is the clean analytic baseline. It is fast and works well in
 many broad regular cases, but it can be liberal in skewed, low-count tables.
-
-**Studentized permutation** produced the best hard-anchor calibration in the
-available resampling comparison. It is more computationally expensive and has
-not yet been compared directly with expanded Welch.
 
 **Simple Welch-Satterthwaite** adds a small conservative correction with
 almost no computational cost. Its $n-1$ assumption does not accurately
@@ -622,10 +538,10 @@ but close to the simpler methods on average.
 
 The next decisive experiment is therefore straightforward:
 
-> Freeze expanded Welch and compare it head-to-head with normal Wald,
-> studentized permutation, and simple Welch on one untouched set of broad and hard
-> populations, while measuring calibration, power, and runtime.
+> Freeze expanded Welch and compare it head-to-head with normal Wald and
+> simple Welch on one untouched set of broad and hard populations, while
+> measuring calibration, power, and runtime.
 
-That experiment will determine whether expanded Welch provides a useful
-analytic middle ground: much faster than permutation while approaching its
-finite-sample accuracy in the skewed, low-count regime.
+That experiment will determine whether expanded Welch provides a reliable
+finite-sample improvement over the established normal baseline and the simple
+Welch correction in the skewed, low-count regime.

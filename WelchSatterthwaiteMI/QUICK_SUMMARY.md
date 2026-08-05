@@ -275,8 +275,8 @@ standard error, and test statistic. They differ only in the estimated
 uncertainty of the variance.
 
 Both methods are deterministic and require $O(rc)$ time and memory. The
-expanded calculation performs more arithmetic per cell, but it does
-not change the complexity order and requires no permutations.
+expanded calculation performs more arithmetic per cell, but it does not
+change the complexity order.
 
 ## Results
 
@@ -328,6 +328,5 @@ low-expected-cell-count regimes. In broad regular regimes, its average
 accuracy was approximately unchanged.
 
 These results support expanded Welch as the main analytic candidate.
-An independent, pre-specified validation against bootstrap-$t$ and
-studentized permutation is still required before claiming general
-superiority.
+An independent, pre-specified confirmatory validation is still required
+before claiming general superiority.
