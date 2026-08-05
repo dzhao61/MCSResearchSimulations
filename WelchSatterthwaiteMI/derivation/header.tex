@@ -1,0 +1,53 @@
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{titlesec}
+
+\definecolor{MethodBlue}{HTML}{173A5E}
+\definecolor{LinkBlue}{HTML}{1E5A8A}
+
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{0.35em}
+\setlength{\emergencystretch}{3em}
+\setlength{\headheight}{14pt}
+\raggedbottom
+
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries\color{MethodBlue}}
+  {}{0pt}{}
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries\color{MethodBlue}}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{1.4em}
+\titlespacing*{\subsection}{0pt}{2.2em}{0.8em}
+
+\let\originalsection\section
+\renewcommand{\section}{\clearpage\originalsection}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Expanded Welch--Satterthwaite MI}
+\fancyhead[R]{\small Full derivation}
+\fancyfoot[C]{\thepage}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \hypersetup{pageanchor=false}
+  \begin{titlepage}
+  \centering
+  \vspace*{0.17\textheight}
+  {\color{MethodBlue}\Huge\bfseries\@title\par}
+  \vspace{2.5em}
+  {\Large\normalfont\@author\par}
+  \vspace{1.25em}
+  {\large\normalfont\@date\par}
+  \vfill
+  \rule{0.72\textwidth}{0.6pt}
+  \par\vspace{1em}
+  \large Textbook-style mathematical derivation
+  \end{titlepage}
+  \hypersetup{pageanchor=true}
+}
+\makeatother
+
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}

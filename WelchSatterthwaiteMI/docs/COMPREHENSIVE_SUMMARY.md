@@ -859,3 +859,195 @@ The improvement is not universal. In well-sampled tables, normal Wald is
 already accurate and expanded Welch can become mildly conservative. It is
 therefore best interpreted as a targeted finite-sample correction rather
 than a universal replacement for normal Wald.
+
+## Appendix B: Which Variance Does Each Method Calculate?
+
+The easiest way to understand the calculation is to imagine repeating the
+entire experiment many times. There are three levels of variation.
+
+### B.1 Variation between individual observations
+
+Each observation can push the estimated MI up or down. That contribution is
+represented by the MI influence function:
+
+$$
+\psi_P(x,y)
+=\log\!\left(\frac{p_{xy}}{p_{x+}p_{+y}}\right)-I(P).
+$$
+
+Its variance is
+
+$$
+V(P)=\operatorname{Var}_P\{\psi_P(X,Y)\}.
+$$
+
+This answers the question:
+
+> How different are the MI contributions of individual observations?
+
+The population quantity $V(P)$ is estimated by $\widehat V_P$.
+
+### B.2 Variation of the estimated MI
+
+A dataset contains $n_P$ observations. Averaging many observations reduces
+variability, so
+
+$$
+\operatorname{Var}\{\widehat I(P)\}
+\approx\frac{V(P)}{n_P}.
+$$
+
+This is estimated as
+
+$$
+\widehat{\operatorname{Var}}\{\widehat I(P)\}
+=\frac{\widehat V_P}{n_P}.
+$$
+
+It answers the question:
+
+> If we repeatedly collected complete datasets, how much would the estimated
+> MI change?
+
+The corresponding standard error is
+
+$$
+\operatorname{SE}\{\widehat I(P)\}
+=\sqrt{\frac{\widehat V_P}{n_P}}.
+$$
+
+For two independent populations, the variances add:
+
+$$
+\widehat{\operatorname{SE}}^2
+=\frac{\widehat V_P}{n_P}
++\frac{\widehat V_Q}{n_Q}.
+$$
+
+This is the estimated sampling variance of the MI difference. Normal Wald,
+simple Welch, and expanded Welch all use this same quantity in the denominator
+of
+
+$$
+T
+=\frac{\widehat\Delta_{\mathrm{BC}}}
+{\sqrt{\widehat V_P/n_P+\widehat V_Q/n_Q}}.
+$$
+
+### B.3 Variation of the estimated variance
+
+The values $\widehat V_P$ and $\widehat V_Q$ are not known population values.
+They are calculated from finite tables. If the complete experiment were
+repeated, each dataset would produce a different value of $\widehat V_P$.
+Therefore, the variance estimate has its own sampling variance:
+
+$$
+\operatorname{Var}(\widehat V_P).
+$$
+
+This answers the question:
+
+> How much would our estimated MI variance change between repeated datasets?
+
+This is a variance of a variance estimate. It measures how reliable the
+estimated standard error is.
+
+#### Simple Welch-Satterthwaite
+
+Simple Welch assumes approximately
+
+$$
+\operatorname{Var}(\widehat V_P)
+\approx\frac{2V(P)^2}{n_P-1}.
+$$
+
+This is the conventional sample-variance assumption. Equivalently, simple
+Welch assigns
+
+$$
+\nu_{V,P}=n_P-1.
+$$
+
+#### Expanded Welch-Satterthwaite
+
+Expanded Welch derives the uncertainty of the complete MI variance estimator:
+
+$$
+\operatorname{Var}(\widehat V_P)
+\approx\frac{\tau_P^2}{n_P},
+$$
+
+where $\tau_P^2$ measures how sensitive the complete MI variance calculation
+is to individual cells. This produces the MI-specific component degrees of
+freedom
+
+$$
+\nu_{V,P}
+=\frac{2n_PV(P)^2}{\tau_P^2}.
+$$
+
+### B.4 Numerical example
+
+Suppose
+
+$$
+\widehat V_P=0.8,
+\qquad
+n_P=100,
+$$
+
+and
+
+$$
+\widehat V_Q=1.2,
+\qquad
+n_Q=150.
+$$
+
+The estimated variance of the MI difference is
+
+$$
+\begin{aligned}
+\widehat{\operatorname{SE}}^2
+&=\frac{0.8}{100}+\frac{1.2}{150}\\
+&=0.008+0.008\\
+&=0.016.
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\widehat{\operatorname{SE}}
+=\sqrt{0.016}
+\approx0.126.
+$$
+
+Normal Wald, simple Welch, and expanded Welch all use this same standard
+error. They differ only in how confident they are in the estimated values
+$0.8$ and $1.2$:
+
+- normal Wald treats them as sufficiently reliable;
+- simple Welch uses the generic $n-1$ reliability rule;
+- expanded Welch calculates their reliability from the MI table.
+
+### B.5 Complete map
+
+| Level | Quantity | Question |
+| --- | --- | --- |
+| Individual observation | $V(P)$ | How variable are individual MI contributions? |
+| MI estimator | $V(P)/n_P$ | How variable is $\widehat I(P)$? |
+| Variance estimator | $\operatorname{Var}(\widehat V_P)$ | How reliable is the estimated MI variance? |
+| MI difference | $V(P)/n_P+V(Q)/n_Q$ | How variable is $\widehat I(P)-\widehat I(Q)$? |
+
+The crucial distinction is
+
+$$
+\widehat V_P
+\ne
+\operatorname{Var}(\widehat V_P).
+$$
+
+The first quantity is an estimated variance used to construct the MI standard
+error. The second quantity measures how uncertain that estimated variance is.
+Expanded Welch specifically improves the calculation of the second quantity.

@@ -8,6 +8,9 @@
    research story from first principles.
 3. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
    provides the complete line-by-line mathematical derivation.
+4. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
+   textbook-style PDF; [`../derivation/main.tex`](../derivation/main.tex) is
+   its generated LaTeX source.
 
 ## Historical Record
 

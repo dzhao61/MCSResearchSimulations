@@ -33,6 +33,9 @@ validation design, results, and limitations, see
 For the complete line-by-line mathematical derivation of the expanded method,
 see
 [`docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
+The compiled textbook-style edition is available as
+[`derivation/main.pdf`](derivation/main.pdf), with reproducible LaTeX source
+in [`derivation/main.tex`](derivation/main.tex).
 
 ## Status
 
