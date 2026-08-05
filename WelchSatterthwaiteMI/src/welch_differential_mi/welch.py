@@ -28,11 +28,14 @@ class WelchResult:
     normal_p_value: float
     welch_degrees_of_freedom: float
     welch_p_value: float
+    expanded_welch_degrees_of_freedom: float
+    expanded_welch_p_value: float
     unbiased_standard_error: float
     unbiased_statistic: float
     unbiased_welch_degrees_of_freedom: float
     unbiased_welch_p_value: float
     valid: bool
+    expanded_valid: bool
     elapsed_seconds: float
 
     def to_dict(self) -> dict:
@@ -75,10 +78,24 @@ def _welch_df(
     n_p: np.ndarray,
     n_q: np.ndarray,
 ) -> np.ndarray:
+    return _combine_df(
+        component_p,
+        component_q,
+        n_p - 1.0,
+        n_q - 1.0,
+    )
+
+
+def _combine_df(
+    component_p: np.ndarray,
+    component_q: np.ndarray,
+    degrees_of_freedom_p: np.ndarray,
+    degrees_of_freedom_q: np.ndarray,
+) -> np.ndarray:
     numerator = (component_p + component_q) ** 2
     denominator = (
-        component_p**2 / (n_p - 1.0)
-        + component_q**2 / (n_q - 1.0)
+        component_p**2 / degrees_of_freedom_p
+        + component_q**2 / degrees_of_freedom_q
     )
     return np.divide(
         numerator,
@@ -88,9 +105,84 @@ def _welch_df(
     )
 
 
+def _variance_influence_component_df(
+    table: np.ndarray,
+    influence_variance_value: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Estimate component df from the MI-variance influence function."""
+    counts = np.asarray(table, dtype=float)
+    totals = counts.sum(axis=(-2, -1), keepdims=True)
+    probability = counts / totals
+    row = probability.sum(axis=-1, keepdims=True)
+    column = probability.sum(axis=-2, keepdims=True)
+
+    log_probability = np.zeros_like(probability)
+    log_row = np.zeros_like(row)
+    log_column = np.zeros_like(column)
+    np.log(probability, out=log_probability, where=probability > 0)
+    np.log(row, out=log_row, where=row > 0)
+    np.log(column, out=log_column, where=column > 0)
+    score = log_probability - log_row - log_column
+
+    mean = np.sum(probability * score, axis=(-2, -1))
+    centered = score - mean[..., None, None]
+    variance = np.asarray(influence_variance_value, dtype=float)
+    second_moment = variance + mean**2
+
+    row_probability = row[..., 0]
+    column_probability = column[..., 0, :]
+    row_score_mean = np.divide(
+        np.sum(probability * score, axis=-1),
+        row_probability,
+        out=np.zeros_like(row_probability),
+        where=row_probability > 0,
+    )
+    column_score_mean = np.divide(
+        np.sum(probability * score, axis=-2),
+        column_probability,
+        out=np.zeros_like(column_probability),
+        where=column_probability > 0,
+    )
+    variance_influence = (
+        score**2
+        - second_moment[..., None, None]
+        + 2.0
+        * (
+            score
+            - row_score_mean[..., :, None]
+            - column_score_mean[..., None, :]
+            + mean[..., None, None]
+        )
+        - 2.0 * mean[..., None, None] * centered
+    )
+    influence_mean = np.sum(
+        probability * variance_influence,
+        axis=(-2, -1),
+    )
+    influence_variance = np.sum(
+        probability
+        * (variance_influence - influence_mean[..., None, None]) ** 2,
+        axis=(-2, -1),
+    )
+
+    sample_size = totals[..., 0, 0]
+    numerator = 2.0 * sample_size * variance**2
+    component_df = np.divide(
+        numerator,
+        influence_variance,
+        out=np.full_like(variance, np.nan, dtype=float),
+        where=np.isfinite(influence_variance) & (influence_variance > 0),
+    )
+    return component_df, influence_variance
+
+
 def differential_mi_pvalues(
     table_p: np.ndarray,
     table_q: np.ndarray,
+    *,
+    include_simple: bool = True,
+    include_expanded: bool = True,
+    include_unbiased_sensitivity: bool = True,
 ) -> dict[str, np.ndarray]:
     """Vectorized normal and Welch p-values for one pair or table batches."""
     p, q = _validate_pair(table_p, table_q)
@@ -118,48 +210,102 @@ def differential_mi_pvalues(
         where=np.isfinite(standard_error) & (standard_error > 0),
     )
     normal_p = 2.0 * norm.sf(np.abs(statistic))
-    welch_df = _welch_df(component_p, component_q, totals_p, totals_q)
-    welch_p = 2.0 * t.sf(np.abs(statistic), df=welch_df)
+    if include_simple:
+        welch_df = _welch_df(component_p, component_q, totals_p, totals_q)
+        welch_p = 2.0 * t.sf(np.abs(statistic), df=welch_df)
+    else:
+        welch_df = np.full_like(delta, np.nan, dtype=float)
+        welch_p = np.full_like(delta, np.nan, dtype=float)
 
-    unbiased_component_p = variance_p / (totals_p - 1.0)
-    unbiased_component_q = variance_q / (totals_q - 1.0)
-    unbiased_standard_error = np.sqrt(
-        unbiased_component_p + unbiased_component_q
-    )
-    unbiased_statistic = np.divide(
-        delta,
-        unbiased_standard_error,
-        out=np.full_like(delta, np.nan, dtype=float),
-        where=np.isfinite(unbiased_standard_error)
-        & (unbiased_standard_error > 0),
-    )
-    unbiased_df = _welch_df(
-        unbiased_component_p,
-        unbiased_component_q,
-        totals_p,
-        totals_q,
-    )
-    unbiased_p = 2.0 * t.sf(
-        np.abs(unbiased_statistic),
-        df=unbiased_df,
-    )
+    if include_expanded:
+        expanded_df_p, variance_influence_variance_p = (
+            _variance_influence_component_df(p, variance_p)
+        )
+        expanded_df_q, variance_influence_variance_q = (
+            _variance_influence_component_df(q, variance_q)
+        )
+        expanded_df = _combine_df(
+            component_p,
+            component_q,
+            expanded_df_p,
+            expanded_df_q,
+        )
+        expanded_p = 2.0 * t.sf(np.abs(statistic), df=expanded_df)
+    else:
+        expanded_df_p = np.full_like(delta, np.nan, dtype=float)
+        expanded_df_q = np.full_like(delta, np.nan, dtype=float)
+        variance_influence_variance_p = np.full_like(
+            delta, np.nan, dtype=float
+        )
+        variance_influence_variance_q = np.full_like(
+            delta, np.nan, dtype=float
+        )
+        expanded_df = np.full_like(delta, np.nan, dtype=float)
+        expanded_p = np.full_like(delta, np.nan, dtype=float)
+
+    if include_unbiased_sensitivity:
+        unbiased_component_p = variance_p / (totals_p - 1.0)
+        unbiased_component_q = variance_q / (totals_q - 1.0)
+        unbiased_standard_error = np.sqrt(
+            unbiased_component_p + unbiased_component_q
+        )
+        unbiased_statistic = np.divide(
+            delta,
+            unbiased_standard_error,
+            out=np.full_like(delta, np.nan, dtype=float),
+            where=np.isfinite(unbiased_standard_error)
+            & (unbiased_standard_error > 0),
+        )
+        unbiased_df = _welch_df(
+            unbiased_component_p,
+            unbiased_component_q,
+            totals_p,
+            totals_q,
+        )
+        unbiased_p = 2.0 * t.sf(
+            np.abs(unbiased_statistic),
+            df=unbiased_df,
+        )
+    else:
+        unbiased_standard_error = np.full_like(delta, np.nan, dtype=float)
+        unbiased_statistic = np.full_like(delta, np.nan, dtype=float)
+        unbiased_df = np.full_like(delta, np.nan, dtype=float)
+        unbiased_p = np.full_like(delta, np.nan, dtype=float)
     first_order_variance_valid = (
         variance_p + variance_q
     ) > 1e-14
-    valid = (
+    base_valid = (
         np.isfinite(delta)
         & first_order_variance_valid
         & np.isfinite(standard_error)
         & (standard_error > 0)
+        & np.isfinite(normal_p)
+    )
+    simple_valid = (
+        base_valid
         & np.isfinite(welch_df)
         & (welch_df > 0)
-        & np.isfinite(normal_p)
         & np.isfinite(welch_p)
-        & np.isfinite(unbiased_p)
+    )
+    valid = simple_valid if include_simple else base_valid
+    expanded_valid = (
+        base_valid
+        & np.isfinite(expanded_df_p)
+        & (expanded_df_p > 0)
+        & np.isfinite(expanded_df_q)
+        & (expanded_df_q > 0)
+        & np.isfinite(expanded_df)
+        & (expanded_df > 0)
+        & np.isfinite(expanded_p)
     )
     normal_p = np.where(valid, normal_p, np.nan)
     welch_p = np.where(valid, welch_p, np.nan)
-    unbiased_p = np.where(valid, unbiased_p, np.nan)
+    expanded_p = np.where(expanded_valid, expanded_p, np.nan)
+    unbiased_p = np.where(
+        valid & np.isfinite(unbiased_p),
+        unbiased_p,
+        np.nan,
+    )
     return {
         "delta_corrected": delta,
         "influence_variance_p": variance_p,
@@ -169,11 +315,19 @@ def differential_mi_pvalues(
         "normal_p_value": normal_p,
         "welch_degrees_of_freedom": welch_df,
         "welch_p_value": welch_p,
+        "expanded_component_degrees_of_freedom_p": expanded_df_p,
+        "expanded_component_degrees_of_freedom_q": expanded_df_q,
+        "variance_influence_variance_p": variance_influence_variance_p,
+        "variance_influence_variance_q": variance_influence_variance_q,
+        "expanded_welch_degrees_of_freedom": expanded_df,
+        "expanded_welch_p_value": expanded_p,
         "unbiased_standard_error": unbiased_standard_error,
         "unbiased_statistic": unbiased_statistic,
         "unbiased_welch_degrees_of_freedom": unbiased_df,
         "unbiased_welch_p_value": unbiased_p,
         "valid": valid,
+        "simple_valid": simple_valid,
+        "expanded_valid": expanded_valid,
     }
 
 
@@ -202,6 +356,10 @@ def welch_satterthwaite_test(
         normal_p_value=float(values["normal_p_value"]),
         welch_degrees_of_freedom=float(values["welch_degrees_of_freedom"]),
         welch_p_value=float(values["welch_p_value"]),
+        expanded_welch_degrees_of_freedom=float(
+            values["expanded_welch_degrees_of_freedom"]
+        ),
+        expanded_welch_p_value=float(values["expanded_welch_p_value"]),
         unbiased_standard_error=float(values["unbiased_standard_error"]),
         unbiased_statistic=float(values["unbiased_statistic"]),
         unbiased_welch_degrees_of_freedom=float(
@@ -209,5 +367,6 @@ def welch_satterthwaite_test(
         ),
         unbiased_welch_p_value=float(values["unbiased_welch_p_value"]),
         valid=bool(values["valid"]),
+        expanded_valid=bool(values["expanded_valid"]),
         elapsed_seconds=perf_counter() - start,
     )

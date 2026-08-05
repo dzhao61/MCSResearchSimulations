@@ -1,0 +1,29 @@
+{
+  "profile": "full",
+  "settings": {
+    "null_replicates": 10000,
+    "power_replicates": 10000,
+    "batch_size": 1000,
+    "runtime_repetitions": 200,
+    "shape_limit": null
+  },
+  "scenario_seed": 2026080501,
+  "simulation_seed": 2026080502,
+  "scenario_count": 72,
+  "methods": [
+    "normal_wald",
+    "simple_welch",
+    "expanded_welch"
+  ],
+  "alphas": [
+    0.1,
+    0.05,
+    0.01
+  ],
+  "elapsed_seconds": 10.307511999970302,
+  "script_sha256": "58c3ee655f767a0a64a01d6b1fec2a22d77e61e7c1fdab5afab765f83212d670",
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "pandas": "3.0.3"
+}

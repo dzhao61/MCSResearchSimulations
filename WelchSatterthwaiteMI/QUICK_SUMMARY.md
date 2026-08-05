@@ -198,6 +198,15 @@ probability and its associated row and column marginals.
 
 #### Expanded Welch-Satterthwaite
 
+This is an adaptation of Hutcheson's (1970) Welch-style test for comparing
+two Shannon diversities. Hutcheson supplies the basic template of comparing
+two estimated information quantities using their combined variance and
+effective degrees of freedom. The expanded MI method adds a new step: it
+derives the influence function of the complete nonlinear MI variance
+estimator rather than assigning that estimator ordinary $n-1$ degrees of
+freedom. See [COMPREHENSIVE_SUMMARY.md](COMPREHENSIVE_SUMMARY.md) for the
+cell-contamination derivation.
+
 This version measures how much the complete variance estimate
 $\widehat V$ changes after a small change in the table. This first-order
 sensitivity is the variance influence function.
@@ -280,53 +289,65 @@ change the complexity order.
 
 ## Results
 
-The evaluation used 960,000 simulated pairs of tables satisfying
-$I(P)=I(Q)$. It included skewed configurations with low expected cell
-counts and a broader set of positive-support configurations. Accuracy was
-measured by mean absolute false-positive-rate error; lower values are better.
+The simplified evaluation uses one grid of 72 population pairs:
 
-The broad set contains both easy and difficult cases. It is the Cartesian
-product of 12 table shapes, from $2\times2$ to $20\times20$, and six sampling
-designs. The designs range from nearly uniform margins, equal sample sizes,
-and high observations per cell to heterogeneous margins, a $4{:}1$
-sample-size ratio, and low observations per cell. "Fresh hard subset B"
-contains six difficult cases from these 72 populations, not an additional
-collection outside the broad set. Consequently, the broad-set
-result measures whether a method remains safe on average across ordinary
-conditions, while the hard-subset result measures performance in the target
-skewed and low-count regime.
+$$
+12\ \text{table shapes}
+\times 3\ \text{sampling regimes}
+\times 2\ \text{population variants}
+=72.
+$$
+
+Shapes range from $2\times2$ to $20\times20$. Every pair satisfies
+$I(P)=I(Q)$ while allowing $P\ne Q$. Each population pair receives 10,000
+independently simulated table pairs, giving 720,000 null replicates in total.
+
+The three regimes have direct interpretations:
+
+- **Well sampled:** equal sample sizes and high observations per cell;
+- **Moderate:** a $2{:}1$ sample-size ratio and moderate observations per cell;
+- **Sparse and imbalanced:** a $4{:}1$ ratio, low observations per cell, and
+  heterogeneous margins.
+
+Accuracy is measured by mean absolute false-positive-rate error. For example,
+if a nominal $\alpha=0.05$ test rejects 6% of true null cases, its error is
+$|0.06-0.05|=0.01$. Lower values are better.
 
 The normal baseline uses the same $\widehat\Delta_{\mathrm{BC}}$,
 $\widehat{\operatorname{SE}}$, and $T$, but compares $T$ with a standard
 normal distribution instead of a Student distribution.
 
-| Configuration set | $\alpha$ | Normal | Simple Welch | Expanded Welch |
-| --- | ---: | ---: | ---: | ---: |
-| Hard set A, 12 populations | 0.05 | 0.01270 | 0.01169 | **0.00823** |
-| Hard set A, 12 populations | 0.01 | 0.00568 | 0.00506 | **0.00266** |
-| Fresh hard subset B, 6 populations | 0.05 | 0.00993 | 0.00912 | **0.00662** |
-| Fresh hard subset B, 6 populations | 0.01 | 0.00407 | 0.00360 | **0.00232** |
-| Broad set, 72 populations | 0.05 | 0.00463 | **0.00445** | 0.00446 |
+| Regime | Method | FPR at $0.05$ | Error at $0.05$ | FPR at $0.01$ | Error at $0.01$ |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Well sampled | Normal Wald | 0.04651 | **0.00369** | 0.00875 | **0.00137** |
+| Well sampled | Simple Welch | 0.04645 | 0.00375 | 0.00869 | 0.00143 |
+| Well sampled | Expanded Welch | 0.04507 | 0.00510 | 0.00809 | 0.00197 |
+| Moderate | Normal Wald | 0.04790 | 0.00395 | 0.00965 | 0.00158 |
+| Moderate | Simple Welch | 0.04769 | **0.00391** | 0.00954 | **0.00154** |
+| Moderate | Expanded Welch | 0.04543 | 0.00473 | 0.00841 | 0.00176 |
+| Sparse and imbalanced | Normal Wald | 0.05556 | 0.00589 | 0.01266 | 0.00278 |
+| Sparse and imbalanced | Simple Welch | 0.05504 | 0.00538 | 0.01235 | 0.00247 |
+| Sparse and imbalanced | Expanded Welch | 0.05306 | **0.00358** | 0.01115 | **0.00138** |
 
-The expanded Welch method reduced error by approximately 27-47% relative
-to simple Welch in the difficult configurations. Its largest improvement was
-at $\alpha=0.01$. Across the broad configuration set, the two methods were
-effectively tied.
+Expanded Welch reduced sparse-regime error relative to normal Wald by 39.2%
+at $\alpha=0.05$ and 50.6% at $\alpha=0.01$. This was not a universal gain:
+it became mildly conservative and less accurate in well-sampled tables.
 
-The remaining error cannot be explained by a single downward bias in the
-estimated standard error. The finite-sample MI difference and its estimated
-standard error are correlated, so neither Student reference is an exact
-finite-sample distribution.
+Across five power scenarios, expanded Welch lost 0.0102 power on average and
+at most 0.0123 relative to normal Wald. Its median runtime was 0.16-0.18 ms
+per table pair, approximately 1.9 times normal Wald. All methods had a 100%
+valid calculation rate over the null grid.
 
 ## Conclusion
 
-The simple Welch version is transparent and inexpensive, but its $n-1$
-degrees of freedom do not fully describe the uncertainty of an MI variance
-estimate. Expanded Welch provides an MI-specific adjustment
-at the same $O(rc)$ complexity and performed better in skewed,
-low-expected-cell-count regimes. In broad regular regimes, its average
-accuracy was approximately unchanged.
+Normal Wald remains the best default in well-sampled tables. Simple Welch is
+almost identical to it because its effective degrees of freedom are usually
+large. Expanded Welch is the useful finite-sample correction in the intended
+sparse, skewed, and sample-imbalanced regime, where it gives heavier and more
+realistic tails.
 
-These results support expanded Welch as the main analytic candidate.
-An independent, pre-specified confirmatory validation is still required
-before claiming general superiority.
+The clean thesis claim is therefore regime-specific: expanded Welch improves
+calibration in difficult finite samples at negligible absolute computational
+cost, but it should not be described as uniformly more accurate than normal
+Wald. The complete reproducible output is in
+[`results/supervisor_full/REPORT.md`](results/supervisor_full/REPORT.md).

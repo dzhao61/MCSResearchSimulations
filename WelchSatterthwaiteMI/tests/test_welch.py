@@ -50,6 +50,11 @@ class WelchTests(unittest.TestCase):
             result.unbiased_welch_p_value,
             result.normal_p_value,
         )
+        self.assertTrue(result.expanded_valid)
+        self.assertGreaterEqual(
+            result.expanded_welch_p_value,
+            result.normal_p_value,
+        )
 
     def test_group_swap_and_relabelling_invariance(self) -> None:
         p = np.array([[38, 8, 4], [7, 25, 8], [4, 9, 17]])
@@ -65,6 +70,8 @@ class WelchTests(unittest.TestCase):
             "standard_error",
             "welch_degrees_of_freedom",
             "welch_p_value",
+            "expanded_welch_degrees_of_freedom",
+            "expanded_welch_p_value",
             "unbiased_welch_p_value",
         ):
             self.assertAlmostEqual(getattr(baseline, name), getattr(swapped, name))
@@ -79,6 +86,12 @@ class WelchTests(unittest.TestCase):
         result = welch_satterthwaite_test(p, q)
         self.assertGreater(result.welch_degrees_of_freedom, 500_000)
         self.assertLess(abs(result.welch_p_value - result.normal_p_value), 1e-6)
+        self.assertTrue(result.expanded_valid)
+        self.assertGreater(result.expanded_welch_degrees_of_freedom, 100_000)
+        self.assertLess(
+            abs(result.expanded_welch_p_value - result.normal_p_value),
+            1e-5,
+        )
 
     def test_vectorized_batch_matches_scalar_results(self) -> None:
         p = np.array(
@@ -104,6 +117,29 @@ class WelchTests(unittest.TestCase):
                 batch["unbiased_welch_p_value"][index],
                 scalar.unbiased_welch_p_value,
             )
+            self.assertAlmostEqual(
+                batch["expanded_welch_p_value"][index],
+                scalar.expanded_welch_p_value,
+            )
+
+    def test_optional_calibrations_do_not_change_normal_result(self) -> None:
+        p = np.array([[30, 5], [8, 27]])
+        q = np.array([[60, 10], [15, 55]])
+        complete = differential_mi_pvalues(p, q)
+        normal_only = differential_mi_pvalues(
+            p,
+            q,
+            include_simple=False,
+            include_expanded=False,
+            include_unbiased_sensitivity=False,
+        )
+        self.assertTrue(normal_only["valid"])
+        self.assertAlmostEqual(
+            float(normal_only["normal_p_value"]),
+            float(complete["normal_p_value"]),
+        )
+        self.assertTrue(np.isnan(normal_only["welch_p_value"]))
+        self.assertTrue(np.isnan(normal_only["expanded_welch_p_value"]))
 
     def test_degenerate_independence_is_reported_invalid(self) -> None:
         table = np.array([[10, 20], [20, 40]])

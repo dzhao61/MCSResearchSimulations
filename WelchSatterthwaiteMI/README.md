@@ -32,44 +32,41 @@ validation design, results, and limitations, see
 
 ## Status
 
-The original `n - 1` Welch reference remains a useful baseline but is not a
-new test architecture: Hutcheson's 1970 Shannon-diversity test is the direct
-entropy-template predecessor. The frozen experiment recorded `NO-GO` under
-its pre-specified 20% materiality rule; it achieved a real but modest 7.9%
-hard-grid error reduction.
+The primary evidence now comes from one unified experiment with 72 equal-MI
+population pairs and 10,000 independently simulated table pairs per
+population. The grid is divided into well-sampled, moderate, and sparse /
+imbalanced regimes, with the same three analytic methods evaluated on every
+replicate.
 
-A later post-hoc audit derived full variance-functional component degrees of
-freedom. This candidate reduced alpha-`0.05` hard-grid MAE by about 33-35% in
-the audited populations and helped more strongly at alpha-`0.01`, but it was
-not uniformly better across 72 fresh regular scenarios. It is promising and
-requires a new pre-specified validation against local-kurtosis df,
-studentized permutation, and multinomial bootstrap-t before becoming the
-primary thesis method.
+Expanded Welch was most useful in the target sparse and imbalanced regime. It
+reduced mean calibration error relative to normal Wald by 39.2% at
+alpha `0.05` and 50.6% at alpha `0.01`. It was mildly conservative in
+well-sampled tables and lost about 0.010 average power in the five tested
+alternatives. Its measured runtime was 0.16-0.18 ms per table pair, about
+1.9 times the normal Wald implementation but still negligible in absolute
+terms.
 
-See `FINAL_ASSESSMENT.md` for the historical decision,
-`results/decisive/REPORT.md` for the frozen experiment, and
-`results/variance_bias_audit/REPORT.md` for the new diagnostic.
+The result supports expanded Welch as a targeted finite-sample correction,
+not as a uniformly superior replacement for normal Wald. See
+`results/supervisor_full/REPORT.md` for the concise experiment report.
 
 ## Commands
 
 ```bash
 .venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -v
-.venv/bin/python WelchSatterthwaiteMI/experiments/run_validation.py \
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
   --profile smoke \
-  --output-dir WelchSatterthwaiteMI/results/smoke
+  --output-dir WelchSatterthwaiteMI/results/supervisor_smoke
 ```
 
-The decisive experiment is:
+The full supervisor experiment is:
 
 ```bash
-.venv/bin/python WelchSatterthwaiteMI/experiments/run_validation.py \
-  --profile decisive \
-  --output-dir WelchSatterthwaiteMI/results/decisive
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
+  --profile full \
+  --output-dir WelchSatterthwaiteMI/results/supervisor_full
 ```
 
-The post-hoc variance audit is:
-
-```bash
-.venv/bin/python WelchSatterthwaiteMI/experiments/audit_variance_bias.py \
-  --output-dir WelchSatterthwaiteMI/results/variance_bias_audit
-```
+The older validation and audit scripts remain in `experiments/` as historical
+research records, but they are not needed to explain or reproduce the primary
+comparison.
