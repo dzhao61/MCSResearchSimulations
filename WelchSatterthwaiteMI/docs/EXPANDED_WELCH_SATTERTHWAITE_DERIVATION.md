@@ -1,4 +1,4 @@
-# Full Derivation of the Expanded Welch-Satterthwaite MI Test
+# A Direct Derivation of the Expanded Welch-Satterthwaite MI Test
 
 ## Purpose
 
@@ -16,16 +16,47 @@ The construction follows the broad logic of Welch's test:
 3. account for uncertainty in the estimated standard error by using a
    Student distribution with Satterthwaite effective degrees of freedom.
 
-The important difference is that mutual information is a nonlinear
-functional of a complete joint probability table. Its variance estimator is
-therefore not an ordinary sample variance. The expanded method derives the
-first-order sampling uncertainty of that complete variance functional and
-uses it to calculate MI-specific component degrees of freedom.
+Its immediate inspiration is Hutcheson's test for comparing two Shannon
+diversities. The present construction carries that Welch-style idea into a
+mutual-information setting, where the quantity being compared depends on a
+joint table and both of its margins.
+
+The important difference is that mutual information is a nonlinear function
+of a complete joint probability table. Its estimated variance therefore
+changes when a cell, row margin, or column margin changes. The expanded method
+measures this table-specific instability and converts it into effective
+degrees of freedom.
+
+The derivation follows one continuous chain:
+
+$$
+\ell_P
+\longrightarrow
+\psi_P
+\longrightarrow
+V(P)
+\longrightarrow
+g_P
+\longrightarrow
+\tau_P^2
+\longrightarrow
+\nu_{V,P}.
+$$
+
+Each quantity is introduced only when it is needed. The aim is to explain
+where the method comes from and what each step means, rather than to present
+every equivalent algebraic form.
 
 The derivation below is written for natural logarithms, so MI is measured in
 nats.
 
 ## 1. Statistical Setting
+
+The comparison is based on two contingency tables obtained from separate
+populations. Each observation records one value of $X$ and one value of $Y$,
+so a population is described by a joint distribution over the common
+$r\times c$ alphabet. Using the same alphabet for both groups ensures that
+the two MI values describe the same variables on the same category space.
 
 Let
 
@@ -41,7 +72,12 @@ $$
 Z=(X,Y)\in\{1,\ldots,r\}\times\{1,\ldots,c\}.
 $$
 
-The two samples are independent. Write the population cell probabilities as
+The independent and identically distributed (iid) assumption allows the
+observations within each group to be treated as repeated draws from one fixed
+distribution. Independence between the two groups will later allow their
+sampling variances to be added without a covariance term.
+
+Write the population cell probabilities as
 
 $$
 p_{ij}=\Pr_P(X=i,Y=j),
@@ -49,7 +85,9 @@ p_{ij}=\Pr_P(X=i,Y=j),
 q_{ij}=\Pr_Q(X=i,Y=j).
 $$
 
-For population $P$, define the marginal probabilities
+MI compares each joint probability with the probability expected from its
+row and column margins under independence. For population $P$, these margins
+are
 
 $$
 p_{i+}=\sum_{j=1}^{c}p_{ij},
@@ -74,15 +112,20 @@ or the population is at independence.
 
 ## 2. Mutual Information as a Functional
 
-For a distribution $P$, define the local-information score of cell $(i,j)$
-by
+For cell $(i,j)$, independence would assign probability $p_{i+}p_{+j}$.
+The ratio $p_{ij}/(p_{i+}p_{+j})$ therefore measures how much more or less
+often the cell occurs than independence predicts. Taking its logarithm gives
+the local-information score
 
 $$
 \ell_P(i,j)
 =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
 $$
 
-The population mutual information is
+The score is positive for a cell occurring more often than the independence
+baseline, negative for a cell occurring less often, and zero when the two
+probabilities agree. Mutual information averages these cell-level scores
+using the actual joint probabilities as weights:
 
 $$
 \begin{aligned}
@@ -93,18 +136,26 @@ p_{ij}\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)\\
 \end{aligned}
 $$
 
-For notational convenience, write
+For compact notation, set
 
 $$
 \mu_P=I(P).
 $$
 
-The subscript on $\ell_P$ matters. The score is not a fixed value attached
-to a cell independently of the distribution. If $P$ changes, the joint
-probability, both relevant marginal probabilities, and therefore the score
-all change.
+Writing MI as $I(P)$ emphasizes that it is a
+functional: its input is the complete probability table $P$, rather than a
+single scalar parameter. The subscript on $\ell_P$ is equally important.
+If $P$ changes, the joint probability, both relevant margins, and therefore
+every affected local score change as well. This dependence is the reason the
+later derivative must account for more than the perturbed cell alone.
 
 ## 3. Plug-In Estimation
+
+The population probabilities are unknown, but the table counts provide
+their empirical proportions. The plug-in principle estimates a functional
+by replacing its unknown distribution with the empirical distribution. For
+MI, this means evaluating exactly the same formula using observed relative
+frequencies.
 
 Let $N_{ij}^{(P)}$ be the observed count in cell $(i,j)$ of the first table.
 Then
@@ -115,7 +166,9 @@ n_P=\sum_{i=1}^{r}\sum_{j=1}^{c}N_{ij}^{(P)},
 \widehat p_{ij}=\frac{N_{ij}^{(P)}}{n_P}.
 $$
 
-The empirical marginals are
+The row and column margins must be recomputed from the same empirical table,
+because they form the independence baseline for the empirical joint
+probabilities:
 
 $$
 \widehat p_{i+}=\sum_{j=1}^{c}\widehat p_{ij},
@@ -123,17 +176,17 @@ $$
 \widehat p_{+j}=\sum_{i=1}^{r}\widehat p_{ij}.
 $$
 
-The plug-in local-information score and plug-in MI are
+The resulting empirical local scores are
 
 $$
 \widehat\ell_{ij}
 =\log\left(
 \frac{\widehat p_{ij}}
 {\widehat p_{i+}\widehat p_{+j}}
-\right)
+\right).
 $$
 
-and
+Their probability-weighted average is the plug-in MI estimator:
 
 $$
 \widehat I(P)
@@ -151,10 +204,19 @@ The same calculations produce $\widehat I(Q)$ from the second table.
 
 ## 4. Leading Bias Correction
 
+MI is nonlinear in the cell probabilities. Replacing population
+probabilities by noisy empirical proportions therefore introduces
+finite-sample bias. For discrete plug-in MI, the leading bias is upward: random
+table fluctuations create apparent dependence even when the underlying
+association is weaker. Correcting this leading term improves the centre of
+the estimated MI difference before its sampling variability is assessed.
+
 ### 4.1 Bias of plug-in entropy
 
-For a discrete variable with $k$ positive-probability categories, the
-leading bias of the plug-in entropy estimator is
+The MI bias is most directly obtained from the standard plug-in entropy bias,
+because MI is a sum and difference of three entropies. For a discrete
+variable with $k$ positive-probability categories, the leading bias of the
+plug-in entropy estimator is
 
 $$
 \operatorname E(\widehat H)-H
@@ -183,7 +245,9 @@ $$
 \end{aligned}
 $$
 
-Define
+The factor $(r-1)(c-1)$ is also the number of free association directions in
+an $r\times c$ table after the row and column margins are accounted for. To
+keep later expressions compact, define
 
 $$
 d=(r-1)(c-1).
@@ -191,7 +255,8 @@ $$
 
 ### 4.2 Bias-corrected MI difference
 
-The leading-bias-corrected estimators are
+Each group is corrected using its own sample size, because the leading bias
+is larger for the smaller sample. The corrected estimators are
 
 $$
 \widehat I_{\mathrm{BC}}(P)
@@ -205,7 +270,8 @@ $$
 =\widehat I(Q)-\frac{d}{2n_Q}.
 $$
 
-The estimated population difference is
+The parameter of interest is the signed contrast $I(P)-I(Q)$, so its estimate
+is formed by subtracting the two corrected MI values:
 
 $$
 \widehat\Delta_{\mathrm{BC}}
@@ -227,18 +293,28 @@ variance and do not change the influence function derived next.
 
 ## 5. Deriving the Influence Function of MI
 
-### 5.1 Contaminate one cell
+The standard error requires the sampling variance of $\widehat I$. Because
+MI is a nonlinear function of the whole table, this variance is obtained by
+first measuring how a small change in the distribution changes MI. That
+first-order sensitivity is the influence function.
 
-Fix a cell $z=(x,y)$. Define a path of distributions
+### 5.1 A probability-preserving cell perturbation
+
+Changing one cell probability while leaving every other probability fixed
+would make the table sum to something other than one. A valid derivative on
+the probability simplex must preserve total probability. Fixing a cell
+$z=(x,y)$, the path
 
 $$
 P_\varepsilon
 =(1-\varepsilon)P+\varepsilon\delta_z,
 $$
 
-where $\delta_z$ places probability one on cell $z$. At $\varepsilon=0$ the
-distribution is $P$. Increasing $\varepsilon$ moves a small amount of
-probability toward cell $(x,y)$ while preserving total probability one.
+does so by shrinking the original table by the factor $1-\varepsilon$ and
+placing the released mass on cell $z$. Here $\delta_z$ places probability one
+on $z$. At $\varepsilon=0$ the distribution is $P$; increasing
+$\varepsilon$ moves probability toward $(x,y)$ while the table continues to
+sum to one.
 
 For an arbitrary cell $(i,j)$,
 
@@ -248,7 +324,7 @@ p_{ij}(\varepsilon)
 +\varepsilon\mathbf 1\{i=x,j=y\}.
 $$
 
-Therefore,
+Its derivative records the instantaneous change in each cell:
 
 $$
 \left.
@@ -257,7 +333,8 @@ $$
 =\mathbf 1\{i=x,j=y\}-p_{ij}.
 $$
 
-Summing over columns gives
+The perturbation also changes the margins used inside MI. Summing over
+columns gives the perturbed row probability
 
 $$
 p_{i+}(\varepsilon)
@@ -274,7 +351,7 @@ $$
 =\mathbf 1\{i=x\}-p_{i+}.
 $$
 
-Likewise,
+The column margin changes in the same way:
 
 $$
 \left.
@@ -285,7 +362,9 @@ $$
 
 ### 5.2 Differentiate the local-information score
 
-Under $P_\varepsilon$, the score of cell $(i,j)$ is
+The local score contains one joint probability and two marginal
+probabilities. All three may change along the perturbation path, so each term
+must be differentiated. Under $P_\varepsilon$,
 
 $$
 \ell_{P_\varepsilon}(i,j)
@@ -294,7 +373,7 @@ $$
 -\log p_{+j}(\varepsilon).
 $$
 
-Use
+The required logarithmic derivative is
 
 $$
 \frac{\mathrm d}{\mathrm d\varepsilon}\log u(\varepsilon)
@@ -331,7 +410,8 @@ $$
 =\frac{\mathbf 1\{j=y\}}{p_{+j}}-1.
 $$
 
-Subtracting the two marginal derivatives from the joint derivative gives
+Combining the joint, row, and column derivatives with their original signs
+gives
 
 $$
 \boxed{
@@ -354,60 +434,85 @@ $$
 \right|_{\varepsilon=0}.
 $$
 
-### 5.3 A derivative rule for distribution-dependent expectations
+The four terms have a direct interpretation. The first records whether the
+target cell is $(i,j)$; the next two record whether the target lies in row
+$i$ or column $j$; and the final $+1$ is the normalization effect created by
+shrinking the original distribution.
 
-Suppose
+### 5.3 Differentiate MI directly
+
+The contamination path converts the effect of one cell into an ordinary
+derivative with respect to $\varepsilon$. This sensitivity will become the
+contribution of one observation to the sampling error of $\widehat I$.
+
+Under the perturbed distribution,
 
 $$
-F(P_\varepsilon)
-=\sum_{i,j}p_{ij}(\varepsilon)h_{P_\varepsilon}(i,j),
+I(P_\varepsilon)
+=\sum_{i,j}p_{ij}(\varepsilon)
+\ell_{P_\varepsilon}(i,j).
 $$
 
-where both the probabilities and the values $h_{P_\varepsilon}$ depend on
-$\varepsilon$. The product rule gives
+Both parts of each summand change with $\varepsilon$:
+
+- $p_{ij}(\varepsilon)$ changes because probability mass is being moved;
+- $\ell_{P_\varepsilon}(i,j)$ changes because the cell, row, and column
+  probabilities in its logarithm change.
+
+The product rule must therefore include both effects:
 
 $$
 \begin{aligned}
-\left.\frac{\mathrm d}{\mathrm d\varepsilon}F(P_\varepsilon)
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}
-={}&\sum_{i,j}
-\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]h_P(i,j)\\
-&+\sum_{i,j}p_{ij}\dot h_P(i,j;z).
+={}&
+\sum_{i,j}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}
+\ell_P(i,j)\\
+&+
+\sum_{i,j}p_{ij}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\ell_{P_\varepsilon}(i,j)
+\right|_{\varepsilon=0}.
 \end{aligned}
 $$
 
-The first sum is
-
-$$
-h_P(x,y)-\operatorname E_P\{h_P(X,Y)\}.
-$$
-
-Therefore,
-
-$$
-\boxed{
-\operatorname{IF}_{F,P}(z)
-=h_P(z)-\operatorname E_P(h_P)
-+\operatorname E_P\{\dot h_P(Z;z)\}.
-}
-$$
-
-The last term is essential whenever the quantity being averaged changes with
-the underlying distribution.
-
-### 5.4 Apply the rule to MI
-
-For MI, take
-
-$$
-h_P(i,j)=\ell_P(i,j).
-$$
-
-We first evaluate the expectation of the score derivative:
+Using the notation already derived, this becomes
 
 $$
 \begin{aligned}
-\operatorname E_P\{\dot\ell_P(Z;z)\}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+={}&
+\sum_{i,j}
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)\\
+&+\sum_{i,j}p_{ij}\dot\ell_P(i,j;z).
+\end{aligned}
+$$
+
+The first sum measures the direct effect of moving probability toward cell
+$(x,y)$:
+
+$$
+\begin{aligned}
+\sum_{i,j}
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)
+&=\ell_P(x,y)-\sum_{i,j}p_{ij}\ell_P(i,j)\\
+&=\ell_P(x,y)-\mu_P.
+\end{aligned}
+$$
+
+The second sum measures the indirect effect of changing all affected local
+scores. Using the score derivative from Section 5.2 gives
+
+$$
+\begin{aligned}
+\sum_{i,j}p_{ij}\dot\ell_P(i,j;z)
 ={}&\sum_{i,j}p_{ij}
 \left[
 \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
@@ -424,29 +529,83 @@ $$
 \end{aligned}
 $$
 
-The derivative rule therefore yields
-
-$$
-\begin{aligned}
-\operatorname{IF}_{I,P}(x,y)
-&=\ell_P(x,y)-\operatorname E_P(\ell_P)+0\\
-&=\ell_P(x,y)-\mu_P.
-\end{aligned}
-$$
-
-Define
+The indirect effects cancel exactly after averaging over the table. The
+local scores change, but their total first-order contribution to the MI
+average is zero. The remaining effect is therefore the target cell's score
+relative to the population-average score. This derivative is the MI
+influence function, denoted by $\psi_P$:
 
 $$
 \boxed{
-\psi_P(x,y)=\ell_P(x,y)-\mu_P.
+\begin{aligned}
+\psi_P(x,y)
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\ell_P(x,y)-\mu_P.
+\end{aligned}
 }
 $$
 
-This is the influence function of mutual information.
+### 5.4 Interpretation of the MI influence function
 
-### 5.5 First-order sampling variance of plug-in MI
+The quantity $\psi_P(x,y)$ is the first-order effect on MI of moving a very
+small amount of probability toward cell $(x,y)$:
 
-The empirical distribution satisfies a first-order functional expansion:
+- if $\ell_P(x,y)>\mu_P$, then $\psi_P(x,y)>0$ and the cell pushes MI upward;
+- if $\ell_P(x,y)<\mu_P$, then $\psi_P(x,y)<0$ and the cell pushes MI downward;
+- the farther the local score is from the average MI, the more influential
+  the cell is.
+
+The influence function is centred under $P$:
+
+$$
+\begin{aligned}
+\operatorname E_P\{\psi_P(X,Y)\}
+&=\operatorname E_P\{\ell_P(X,Y)-\mu_P\}\\
+&=\mu_P-\mu_P\\
+&=0.
+\end{aligned}
+$$
+
+Thus, $\psi_P$ describes the observation-level fluctuations around the true
+MI value. The next step converts those fluctuations into the sampling
+variance of the complete MI estimator.
+
+### 5.5 From the influence function to a standard error
+
+Section 5.3 derived $\psi_P(z)$ from the change in MI caused by moving
+probability toward one cell $z$. The same derivative determines the leading
+sampling error in an actual random sample.
+
+#### From cell sensitivity to sample error
+
+The empirical distribution can be written as
+
+$$
+\widehat P
+=\frac{1}{n_P}\sum_{k=1}^{n_P}\delta_{Z_k^{(P)}},
+$$
+
+where $\delta_{Z_k^{(P)}}$ places all its probability on the cell containing
+observation $k$. Thus, every observation contributes probability mass
+$1/n_P$ to its observed cell.
+
+Section 5.3 showed that moving probability toward a cell $z$ changes MI at
+first-order rate $\psi_P(z)$. An observation has weight $1/n_P$, so its
+first-order contribution to the MI estimation error is
+$\psi_P(Z_k^{(P)})/n_P$. Adding the contributions from all observations gives
+
+$$
+I(\widehat P)-I(P)
+\approx\frac{1}{n_P}\sum_{k=1}^{n_P}\psi_P(Z_k^{(P)}).
+$$
+
+This is the distributional analogue of the ordinary Taylor approximation
+$f(a+h)-f(a)\approx f'(a)h$. The input is now the whole probability table,
+and $\psi_P$ supplies the relevant derivative for each cell.
+
+More formally,
 
 $$
 I(\widehat P)-I(P)
@@ -454,21 +613,12 @@ I(\widehat P)-I(P)
 +o_p(n_P^{-1/2}).
 $$
 
-Because
+The remainder $o_p(n_P^{-1/2})$ contains higher-order effects that become
+small relative to the leading sampling error as $n_P$ increases.
 
-$$
-\operatorname E_P\{\psi_P(Z)\}=0,
-$$
+#### Sampling variance of plug-in MI
 
-the central limit theorem gives
-
-$$
-\sqrt{n_P}\left\{\widehat I(P)-I(P)\right\}
-\overset{d}{\longrightarrow}
-N\{0,V(P)\},
-$$
-
-where
+For a random observation $Z\sim P$, define
 
 $$
 \begin{aligned}
@@ -478,15 +628,74 @@ V(P)
 \end{aligned}
 $$
 
-Consequently,
+Thus, $V(P)$ measures how different the cell-level MI influences are across
+the population. If all cells have similar influence, $V(P)$ is small. If
+some cells push MI much more strongly than others, $V(P)$ is large.
+
+The leading MI error is an average of $n_P$ independent influence values.
+Each has variance $V(P)$, so
+
+$$
+\begin{aligned}
+\operatorname{Var}\left\{
+\frac{1}{n_P}\sum_{k=1}^{n_P}\psi_P(Z_k^{(P)})
+\right\}
+&=\frac{1}{n_P^2}
+\sum_{k=1}^{n_P}\operatorname{Var}_P\{\psi_P(Z_k^{(P)})\}\\
+&=\frac{1}{n_P^2}\{n_PV(P)\}\\
+&=\frac{V(P)}{n_P},
+\end{aligned}
+$$
+
+where the middle equality uses independence. This is the standard variance
+formula for an average of iid contributions: the variance of one contribution
+is divided by the sample size. Consequently,
 
 $$
 \operatorname{Var}\{\widehat I(P)\}
-\approx\frac{V(P)}{n_P}.
+\approx\frac{V(P)}{n_P},
 $$
 
-The bias correction in Section 4 is a fixed constant at a given sample size,
-so it has the same first-order variance:
+and the corresponding first-order standard error is
+
+$$
+\operatorname{SE}\{\widehat I(P)\}
+\approx\sqrt{\frac{V(P)}{n_P}}.
+$$
+
+#### Normal approximation
+
+The values
+$\psi_P(Z_1^{(P)}),\ldots,\psi_P(Z_{n_P}^{(P)})$ are independent, have mean
+zero, and have variance $V(P)$. The central limit theorem therefore gives an
+approximately normal average for sufficiently large $n_P$. Equivalently,
+
+$$
+\widehat I(P)
+\mathrel{\dot\sim}
+N\left\{I(P),\frac{V(P)}{n_P}\right\},
+$$
+
+or, in the usual asymptotic notation,
+
+$$
+\sqrt{n_P}\left\{\widehat I(P)-I(P)\right\}
+\overset{d}{\longrightarrow}
+N\{0,V(P)\}.
+$$
+
+#### Effect of the bias correction
+
+At fixed $n_P$, $r$, and $c$, the bias correction
+$d/(2n_P)$ is a constant rather than a new random estimate. Subtracting a
+constant shifts the centre of a random variable but does not change its
+spread:
+
+$$
+\operatorname{Var}(X-c)=\operatorname{Var}(X).
+$$
+
+Therefore, the bias-corrected MI estimate has the same first-order variance:
 
 $$
 \operatorname{Var}\{\widehat I_{\mathrm{BC}}(P)\}
@@ -495,8 +704,14 @@ $$
 
 ## 6. The Two-Sample Standardized Statistic
 
-Define the corresponding influence variance $V(Q)$ for the second
-population. Independence of the two samples implies
+Section 5 gives a first-order variance for each estimated MI. The test,
+however, concerns their difference. Under the null hypothesis, the corrected
+difference is centred near zero, and its sampling variance determines how
+large a chance difference should be expected.
+
+For the second population, define $V(Q)$ in the same way as $V(P)$. The two
+samples are independent, so the covariance between their MI estimators is
+zero. The variance of their difference is therefore the sum
 
 $$
 \operatorname{Var}(\widehat\Delta_{\mathrm{BC}})
@@ -504,32 +719,18 @@ $$
 \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
 $$
 
-To estimate $V(P)$, define
+Neither $V(P)$ nor $V(Q)$ is known. The same plug-in principle used for MI
+estimates each one by the empirical variance of its local influence values.
+For group $P$,
 
 $$
-m_{2,P}=\operatorname E_P\{\ell_P(Z)^2\}.
-$$
-
-Since $\mu_P=\operatorname E_P(\ell_P)$,
-
-$$
-V(P)=m_{2,P}-\mu_P^2.
-$$
-
-Its plug-in estimate is
-
-$$
-\begin{aligned}
 \widehat V_P
-&=\sum_{i,j}\widehat p_{ij}
-\left(\widehat\ell_{ij}-\widehat I(P)\right)^2\\
-&=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij}^2
--\widehat I(P)^2.
-\end{aligned}
+=\sum_{i,j}\widehat p_{ij}
+\left\{\widehat\ell_{ij}-\widehat I(P)\right\}^2.
 $$
 
-Define $\widehat V_Q$ analogously. The two estimated contributions to the
-variance of the difference are
+The estimate $\widehat V_Q$ is calculated analogously. It is useful to name
+the two contributions to the squared standard error
 
 $$
 a=\frac{\widehat V_P}{n_P},
@@ -537,7 +738,8 @@ a=\frac{\widehat V_P}{n_P},
 b=\frac{\widehat V_Q}{n_Q}.
 $$
 
-The estimated standard error is
+Their sum estimates the variance of the corrected difference, so taking its
+square root gives the estimated standard error:
 
 $$
 \widehat{\operatorname{SE}}
@@ -548,7 +750,8 @@ $$
 }.
 $$
 
-The standardized statistic is
+Dividing the estimated difference by this standard error expresses the
+difference in units of its expected sampling fluctuation:
 
 $$
 \boxed{
@@ -558,31 +761,44 @@ T
 }
 $$
 
-If $V(P)$ and $V(Q)$ were known, a standard normal reference would follow
-from the two independent asymptotic expansions. In practice, both variances
-are estimated. Expanded Welch-Satterthwaite estimates the uncertainty in
-those variance estimates rather than treating the denominator as known.
+This is a signed, one-dimensional contrast. If $V(P)$ and $V(Q)$ were known,
+the asymptotic normal results from Section 5 would give $T$ a standard normal
+reference under $H_0$. Equivalently, $T^2$ would have a one-degree-of-freedom
+chi-squared reference. The table dimension $(r-1)(c-1)$ does not appear here
+because the hypothesis imposes one scalar restriction, $I(P)-I(Q)=0$, rather
+than testing every association parameter separately.
+
+In practice, the denominator contains the estimated quantities
+$\widehat V_P$ and $\widehat V_Q$. Treating them as known ignores an
+additional source of finite-sample uncertainty. The expanded
+Welch-Satterthwaite construction measures that uncertainty and uses it to
+replace the normal reference with an appropriately heavier-tailed Student
+reference.
 
 ## 7. Deriving the Influence Function of the MI Variance
 
-### 7.1 The target variance functional
+### 7.1 Sampling variation in the estimated MI variance
 
-Recall that
+The statistic $T$ uses $\widehat V_P$ and $\widehat V_Q$ in its denominator.
+These are estimates calculated from finite tables, so they also change from
+sample to sample. A stable variance estimate supports a reference close to
+the normal distribution; an unstable variance estimate requires heavier
+tails. Its stability can be measured by deriving the first-order change in
+$V(P)$ produced by one cell perturbation, using the same path as in Section 5.
+
+Recall that the observation-level influence on MI is
 
 $$
-V(P)=m_{2,P}-\mu_P^2,
+\psi_P(x,y)=\ell_P(x,y)-\mu_P,
 $$
 
-where
+and its variance is
 
 $$
-m_{2,P}=\operatorname E_P\{\ell_P(Z)^2\},
-\qquad
-\mu_P=\operatorname E_P\{\ell_P(Z)\}.
+V(P)=\operatorname E_P\{\psi_P(X,Y)^2\}.
 $$
 
-The goal is to differentiate $V(P_\varepsilon)$ along the same contamination
-path used in Section 5. Define
+The corresponding sensitivity is
 
 $$
 g_P(x,y)
@@ -591,272 +807,159 @@ g_P(x,y)
 \right|_{\varepsilon=0}.
 $$
 
-This $g_P$ is the influence function of the complete MI variance functional.
+Thus, $g_P(x,y)$ is the influence function of the MI variance: it measures
+how strongly probability placed near cell $(x,y)$ changes the variance used
+in the denominator of $T$.
 
-### 7.2 Differentiate the second moment
+### 7.2 Differentiate the variance directly
 
-Under $P_\varepsilon$,
+Under the perturbed distribution,
 
 $$
-m_2(P_\varepsilon)
+V(P_\varepsilon)
 =\sum_{i,j}p_{ij}(\varepsilon)
-\ell_{P_\varepsilon}(i,j)^2.
+\psi_{P_\varepsilon}(i,j)^2.
 $$
 
-Differentiate using the product rule:
+As in the MI derivation, both the probability weights and the values being
+averaged change. The first part of the product rule changes the weights. The
+second changes the squared influence values; differentiating a square
+produces the factor $2\psi_P\dot\psi_P$. Hence,
 
 $$
 \begin{aligned}
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}m_2(P_\varepsilon)
-\right|_{\varepsilon=0}
+g_P(x,y)
 ={}&\sum_{i,j}
-\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)^2\\
-&+\sum_{i,j}p_{ij}
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}
-\ell_{P_\varepsilon}(i,j)^2
-\right|_{\varepsilon=0}.
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\psi_P(i,j)^2\\
+&+2\sum_{i,j}p_{ij}\psi_P(i,j)\dot\psi_P(i,j;z).
 \end{aligned}
 $$
 
-For the first sum,
+The first sum replaces the population-average squared influence with the
+squared influence of the target cell. It therefore reduces to
 
 $$
 \sum_{i,j}
-\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)^2
-=\ell_P(x,y)^2-m_{2,P}.
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\psi_P(i,j)^2
+=\psi_P(x,y)^2-V(P).
 $$
 
-For the second sum, the chain rule gives
+The centred influence $\psi_P=\ell_P-\mu_P$ changes because both the local
+score and its population mean change:
 
 $$
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}
-\ell_{P_\varepsilon}(i,j)^2
-\right|_{\varepsilon=0}
-=2\ell_P(i,j)\dot\ell_P(i,j;z).
+\dot\psi_P(i,j;z)
+=\dot\ell_P(i,j;z)-\dot\mu_P(x,y).
 $$
 
-Therefore,
+The derivative $\dot\mu_P(x,y)$ is common to every cell. Its contribution is
+multiplied by the weighted sum of $\psi_P$, which is zero because $\psi_P$ is
+centred:
 
 $$
-\operatorname{IF}_{m_2,P}(x,y)
-=\ell_P(x,y)^2-m_{2,P}
-+2\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z).
+\sum_{i,j}p_{ij}\psi_P(i,j)=0.
 $$
 
-### 7.3 Evaluate the score-derivative sum
-
-Substitute the expression for $\dot\ell_P$:
-
-$$
-\begin{aligned}
-&\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z)\\
-={}&\sum_{i,j}p_{ij}\ell_P(i,j)
-\left[
-\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
--\frac{\mathbf 1\{i=x\}}{p_{i+}}
--\frac{\mathbf 1\{j=y\}}{p_{+j}}
-+1
-\right].
-\end{aligned}
-$$
-
-Evaluate the four terms separately.
-
-The cell term is
-
-$$
-\sum_{i,j}p_{ij}\ell_P(i,j)
-\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
-=\ell_P(x,y).
-$$
-
-The row term is
-
-$$
-\begin{aligned}
-\sum_{i,j}p_{ij}\ell_P(i,j)
-\frac{\mathbf 1\{i=x\}}{p_{i+}}
-&=\frac{1}{p_{x+}}\sum_j p_{xj}\ell_P(x,j)\\
-&=\operatorname E_P\{\ell_P(X,Y)\mid X=x\}.
-\end{aligned}
-$$
-
-Define
-
-$$
-R_P(x)
-=\operatorname E_P\{\ell_P(X,Y)\mid X=x\}.
-$$
-
-The column term is
-
-$$
-\begin{aligned}
-\sum_{i,j}p_{ij}\ell_P(i,j)
-\frac{\mathbf 1\{j=y\}}{p_{+j}}
-&=\frac{1}{p_{+y}}\sum_i p_{iy}\ell_P(i,y)\\
-&=\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
-\end{aligned}
-$$
-
-Define
-
-$$
-C_P(y)
-=\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
-$$
-
-Finally, the constant term is
-
-$$
-\sum_{i,j}p_{ij}\ell_P(i,j)=\mu_P.
-$$
-
-Remembering the minus signs on the row and column terms,
-
-$$
-\boxed{
-\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z)
-=\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P.
-}
-$$
-
-It follows that
-
-$$
-\boxed{
-\begin{aligned}
-\operatorname{IF}_{m_2,P}(x,y)
-={}&\ell_P(x,y)^2-m_{2,P}\\
-&+2\{\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P\}.
-\end{aligned}
-}
-$$
-
-### 7.4 Differentiate the squared mean
-
-From Section 5,
-
-$$
-\operatorname{IF}_{\mu,P}(x,y)
-=\ell_P(x,y)-\mu_P.
-$$
-
-The ordinary chain rule for $u^2$ gives
-
-$$
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}
-\mu(P_\varepsilon)^2
-\right|_{\varepsilon=0}
-=2\mu_P\operatorname{IF}_{\mu,P}(x,y).
-$$
-
-Therefore,
-
-$$
-\boxed{
-\operatorname{IF}_{\mu^2,P}(x,y)
-=2\mu_P\{\ell_P(x,y)-\mu_P\}.
-}
-$$
-
-### 7.5 Combine the derivatives
-
-Because
-
-$$
-V(P)=m_{2,P}-\mu_P^2,
-$$
-
-linearity of differentiation gives
+Consequently, a common shift in the mean does not directly change the
+variance. Only the changes in the local scores remain:
 
 $$
 g_P(x,y)
-=\operatorname{IF}_{m_2,P}(x,y)
--\operatorname{IF}_{\mu^2,P}(x,y).
+=\psi_P(x,y)^2-V(P)
++2\sum_{i,j}p_{ij}\psi_P(i,j)\dot\ell_P(i,j;z).
 $$
 
-Substituting the two expressions above yields
+### 7.3 The row-and-column adjustment
+
+The remaining term describes how the target cell changes local scores across
+the table:
+
+$$
+\sum_{i,j}p_{ij}\psi_P(i,j)\dot\ell_P(i,j;z).
+$$
+
+The derivative $\dot\ell_P$ from Section 5.2 contains a cell contribution, a
+row contribution, a column contribution, and a normalization contribution.
+After weighting by $p_{ij}\psi_P(i,j)$, these become respectively
+
+$$
+\begin{aligned}
+\sum_{i,j}p_{ij}\psi_P(i,j)\dot\ell_P(i,j;z)
+={}&\psi_P(x,y)
+-\operatorname E_P\{\psi_P(X,Y)\mid X=x\}\\
+&-\operatorname E_P\{\psi_P(X,Y)\mid Y=y\}
++\operatorname E_P\{\psi_P(X,Y)\}.
+\end{aligned}
+$$
+
+The conditional expectations appear because changing the target cell also
+changes the entire row $x$ and column $y$. To express them in terms of the
+original local scores, define the row and column means
+
+$$
+R_P(x)=\operatorname E_P\{\ell_P(X,Y)\mid X=x\},
+\qquad
+C_P(y)=\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
+$$
+
+Since $\psi_P=\ell_P-\mu_P$,
+
+$$
+\operatorname E_P(\psi_P)=0,
+\qquad
+\operatorname E_P(\psi_P\mid X=x)=R_P(x)-\mu_P,
+$$
+
+and similarly
+
+$$
+\operatorname E_P(\psi_P\mid Y=y)=C_P(y)-\mu_P.
+$$
+
+The row-and-column contribution is therefore
+
+$$
+\sum_{i,j}p_{ij}\psi_P(i,j)\dot\ell_P(i,j;z)
+=\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P.
+$$
+
+Combining it with the direct squared-influence contribution from Section 7.2
+gives the complete variance influence:
 
 $$
 \boxed{
-\begin{aligned}
-g_P(x,y)={}&
-\ell_P(x,y)^2-m_{2,P}\\
-&+2\{\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P\}\\
-&-2\mu_P\{\ell_P(x,y)-\mu_P\}.
-\end{aligned}
+g_P(x,y)
+=\psi_P(x,y)^2-V(P)
++2\{\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P\}.
 }
 $$
 
-This is the complete variance-influence formula used by the expanded method.
-No local score is treated as fixed: the middle line accounts for changes to
-the joint cell, its row marginal, its column marginal, and the overall MI.
+This formula has two intuitive parts. The term
+$\psi_P(x,y)^2-V(P)$ measures whether the cell's squared MI influence is
+larger or smaller than average. The second term accounts for the fact that
+changing one cell also changes the local-information scores in its entire
+row and column.
 
-### 7.6 Verify that the influence function has mean zero
-
-An influence function should be centred under its defining distribution. We
-can verify this directly.
-
-For the first line,
+The two parts have zero weighted mean, so $g_P$ is centred under $P$:
 
 $$
-\operatorname E_P\{\ell_P(Z)^2-m_{2,P}\}=m_{2,P}-m_{2,P}=0.
-$$
-
-For the middle line, the law of iterated expectations gives
-
-$$
-\operatorname E_P\{R_P(X)\}
-=\operatorname E_P[\operatorname E_P\{\ell_P(Z)\mid X\}]
-=\mu_P
-$$
-
-and
-
-$$
-\operatorname E_P\{C_P(Y)\}=\mu_P.
-$$
-
-Hence,
-
-$$
-\begin{aligned}
-\operatorname E_P\{\ell_P(Z)-R_P(X)-C_P(Y)+\mu_P\}
-&=\mu_P-\mu_P-\mu_P+\mu_P\\
-&=0.
-\end{aligned}
-$$
-
-For the final line,
-
-$$
-\operatorname E_P[-2\mu_P\{\ell_P(Z)-\mu_P\}]
-=-2\mu_P(\mu_P-\mu_P)
-=0.
-$$
-
-Combining the three results,
-
-$$
-\boxed{
 \operatorname E_P\{g_P(X,Y)\}=0.
-}
 $$
 
-## 8. Sampling Uncertainty of the Estimated MI Variance
+## 8. Sampling Uncertainty of $\widehat V_P$
 
-The plug-in variance estimator can be written as the empirical functional
+The role of $g_P$ for $\widehat V_P$ is exactly parallel to the role of
+$\psi_P$ for $\widehat I(P)$. Each sampled observation contributes mass
+$1/n_P$ to its cell, so its first-order contribution to the error in
+$\widehat V_P$ is $g_P(Z_k^{(P)})/n_P$.
+
+The plug-in MI variance estimate is
 
 $$
 \widehat V_P=V(\widehat P).
 $$
 
-Because $g_P$ is the influence function of $V$, its first-order expansion is
+The first-order sampling error is therefore the average
 
 $$
 V(\widehat P)-V(P)
@@ -864,7 +967,7 @@ V(\widehat P)-V(P)
 +o_p(n_P^{-1/2}).
 $$
 
-Define
+The spread of the cell-level sensitivities is
 
 $$
 \boxed{
@@ -873,57 +976,60 @@ $$
 }
 $$
 
-Since $\operatorname E_P(g_P)=0$, this can also be written as
+Since $g_P$ is centred, its variance equals its second moment:
 
 $$
 \tau_P^2
 =\operatorname E_P\{g_P(X,Y)^2\}.
 $$
 
-Taking the variance of the leading term in the expansion gives
+The same sample-average variance rule used in Section 5 now gives
 
 $$
-\begin{aligned}
-\operatorname{Var}\{\widehat V_P\}
-&\approx
-\operatorname{Var}\left\{
-\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
-\right\}\\
-&=\frac{1}{n_P^2}
-\sum_{k=1}^{n_P}\operatorname{Var}_P\{g_P(Z_k^{(P)})\}\\
-&=\frac{1}{n_P^2}(n_P\tau_P^2)\\
-&=\boxed{\frac{\tau_P^2}{n_P}}.
-\end{aligned}
+\boxed{
+\operatorname{Var}(\widehat V_P)
+\approx\frac{\tau_P^2}{n_P}.
+}
 $$
 
-The covariance terms vanish because observations within the sample are
-independent.
+The quantity $\tau_P^2/n_P$ is therefore the first-order sampling uncertainty
+of the variance estimate itself. A large value means that the denominator of
+$T$ is sensitive to which cells happen to be observed; a small value means
+that the estimated denominator is comparatively stable.
 
-This result answers the key question: $\tau_P^2/n_P$ is the first-order
-sampling variance of the estimated MI influence variance $\widehat V_P$.
+## 9. Empirical Variance-Influence Calculation
 
-## 9. Estimate the Variance-Influence Quantities
+Sections 7 and 8 used population quantities to derive the result. A real test
+has only the observed count tables, so every population quantity is now
+replaced by its empirical version. This produces a deterministic calculation
+from the observed table; no resampling is needed.
 
-All population quantities are replaced by their empirical versions. For the
-first table, calculate
+### 9.1 Estimate the MI influence variance
+
+The empirical MI is the centre of the observed local scores:
 
 $$
 \widehat\mu_P
-=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij},
+=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij}.
 $$
 
+Subtracting this centre gives the empirical influence of each cell:
+
 $$
-\widehat m_{2,P}
-=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij}^2,
+\widehat\psi_P(i,j)
+=\widehat\ell_{ij}-\widehat\mu_P.
 $$
 
-and
+Their weighted variance estimates the sampling-variance numerator $V(P)$:
 
 $$
 \widehat V_P
-=\widehat m_{2,P}-\widehat\mu_P^2.
+=\sum_{i,j}\widehat p_{ij}\widehat\psi_P(i,j)^2.
 $$
 
+### 9.2 Estimate the row-and-column adjustment
+
+The formula for $g_P$ also requires the mean score in each row and column.
 For each nonempty row and column, calculate
 
 $$
@@ -940,28 +1046,29 @@ $$
 {\widehat p_{+j}}.
 $$
 
-For every cell, evaluate
+These quantities measure how much of a cell's local score is shared with its
+row and column. The empirical variance influence for each cell is then
 
 $$
-\begin{aligned}
-\widehat g_P(i,j)={}&
-\widehat\ell_{ij}^2-\widehat m_{2,P}\\
-&+2\{\widehat\ell_{ij}-\widehat R_P(i)
--\widehat C_P(j)+\widehat\mu_P\}\\
-&-2\widehat\mu_P
-\{\widehat\ell_{ij}-\widehat\mu_P\}.
-\end{aligned}
+\widehat g_P(i,j)
+=\widehat\psi_P(i,j)^2-\widehat V_P
++2\{\widehat\ell_{ij}-\widehat R_P(i)
+-\widehat C_P(j)+\widehat\mu_P\}.
 $$
 
-In exact arithmetic the weighted mean of $\widehat g_P$ is zero. The
-implementation nevertheless centres it explicitly for numerical stability:
+### 9.3 Estimate the uncertainty of $\widehat V_P$
+
+The population influence function is centred, and its empirical counterpart
+has weighted mean zero in exact arithmetic. Computing the mean explicitly
+removes any small floating-point residual:
 
 $$
 \overline g_P
 =\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j).
 $$
 
-Then
+The weighted variance of the centred cell sensitivities estimates
+$\tau_P^2$:
 
 $$
 \boxed{
@@ -976,7 +1083,30 @@ $\widehat V_Q$ and $\widehat\tau_Q^2$.
 
 ## 10. Satterthwaite Moment Matching for One Variance Component
 
-### 10.1 The scaled chi-squared approximation
+If the standard error in $T$ were known, the normal approximation from
+Section 6 would be sufficient. It is instead estimated from the same finite
+tables. A Student reference accounts for this additional uncertainty by
+linking the heaviness of its tails to the reliability of the variance
+estimate.
+
+For normally distributed observations, an ordinary sample variance has an
+exact scaled chi-squared distribution. The MI variance estimator is not an
+ordinary sample variance, so that exact result cannot be used. However,
+Sections 8 and 9 provide the two quantities needed for Satterthwaite moment
+matching:
+
+$$
+\operatorname E(\widehat V_P)\approx V(P),
+\qquad
+\operatorname{Var}(\widehat V_P)\approx\frac{\tau_P^2}{n_P}.
+$$
+
+Satterthwaite represents $\widehat V_P$ by a scaled chi-squared variable with
+the same approximate mean and variance. This preserves the relevant amount
+of variance-estimation uncertainty without claiming an exact chi-squared
+law.
+
+### 10.1 Scaled chi-squared representation
 
 A chi-squared random variable $U\sim\chi^2_\nu$ has
 
@@ -986,33 +1116,31 @@ $$
 \operatorname{Var}(U)=2\nu.
 $$
 
-Therefore,
+Scaling it to have mean $m>0$ gives
 
 $$
-Y=m\frac{U}{\nu}
+Y=m\frac{U}{\nu},
 $$
 
-has
+with
 
 $$
-\operatorname E(Y)
-=\frac{m}{\nu}\operatorname E(U)
-=m
+\operatorname E(Y)=m,
+\qquad
+\operatorname{Var}(Y)=\frac{2m^2}{\nu}.
 $$
 
-and
+Its relative variance is
 
 $$
-\begin{aligned}
-\operatorname{Var}(Y)
-&=\frac{m^2}{\nu^2}\operatorname{Var}(U)\\
-&=\frac{m^2}{\nu^2}(2\nu)\\
-&=\frac{2m^2}{\nu}.
-\end{aligned}
+\frac{\operatorname{Var}(Y)}{\operatorname E(Y)^2}
+=\frac{2}{\nu}.
 $$
 
-Solving the last equation for $\nu$ gives the general Satterthwaite
-moment-matching rule
+Thus, $\nu$ controls the uncertainty relative to the size of the estimated
+quantity. A large $\nu$ represents a tightly concentrated variance estimate;
+a small $\nu$ represents a more variable estimate. Solving for $\nu$ gives
+the Satterthwaite moment-matching rule
 
 $$
 \boxed{
@@ -1020,9 +1148,10 @@ $$
 }
 $$
 
-### 10.2 Apply the rule to $\widehat V_P$
+### 10.2 MI-specific component degrees of freedom
 
-Approximate the positive variance estimator by
+For $\widehat V_P$, the target mean is $V(P)$ and the derived variance is
+$\tau_P^2/n_P$. The corresponding scaled chi-squared representation is
 
 $$
 \widehat V_P
@@ -1030,41 +1159,8 @@ $$
 V(P)\frac{\chi^2_{\nu_{V,P}}}{\nu_{V,P}}.
 $$
 
-The scaled chi-squared approximation has
-
-$$
-\operatorname E(\widehat V_P)\approx V(P)
-$$
-
-and
-
-$$
-\operatorname{Var}(\widehat V_P)
-\approx\frac{2V(P)^2}{\nu_{V,P}}.
-$$
-
-Section 8 independently derived
-
-$$
-\operatorname{Var}(\widehat V_P)
-\approx\frac{\tau_P^2}{n_P}.
-$$
-
-Equating the two approximations gives
-
-$$
-\frac{2V(P)^2}{\nu_{V,P}}
-=\frac{\tau_P^2}{n_P}.
-$$
-
-Multiply both sides by $n_P\nu_{V,P}$:
-
-$$
-2n_PV(P)^2
-=\nu_{V,P}\tau_P^2.
-$$
-
-Divide by $\tau_P^2$:
+Here $\mathrel{\dot\sim}$ denotes an approximate distributional model.
+Matching its variance $2V(P)^2/\nu_{V,P}$ to $\tau_P^2/n_P$ gives
 
 $$
 \boxed{
@@ -1073,7 +1169,8 @@ $$
 }
 $$
 
-The empirical component degrees of freedom are therefore
+The population quantities are unknown, so the observed table supplies their
+plug-in estimates:
 
 $$
 \boxed{
@@ -1082,7 +1179,7 @@ $$
 }
 $$
 
-Likewise,
+The same calculation for group $Q$ gives
 
 $$
 \boxed{
@@ -1091,15 +1188,17 @@ $$
 }
 $$
 
-### 10.3 Why dividing by sample size does not change component degrees of freedom
+### 10.3 Invariance under deterministic scaling
 
-The denominator of $T$ uses
+The squared standard error contains $\widehat V_P/n_P$ rather than
+$\widehat V_P$. Dividing by the fixed sample size changes the magnitude of
+the variance component but not its relative uncertainty. Algebraically,
 
 $$
 A=\frac{\widehat V_P}{n_P},
 $$
 
-not $\widehat V_P$ itself. From the scaled chi-squared approximation,
+and the scaled representation becomes
 
 $$
 A
@@ -1108,24 +1207,32 @@ A
 \frac{\chi^2_{\nu_{V,P}}}{\nu_{V,P}}.
 $$
 
-Only the scale has changed. The chi-squared degrees of freedom remain
-$\nu_{V,P}$. The same argument applies to
+The random chi-squared factor is unchanged, so the component retains
+$\nu_{V,P}$ degrees of freedom. The same argument applies to
 
 $$
 B=\frac{\widehat V_Q}{n_Q}.
 $$
 
-## 11. Combine the Two Variance Components
+## 11. Effective Degrees of Freedom for the Combined Denominator
 
-The estimated squared standard error is
+The squared standard error is the sum of two independently estimated
+components,
 
 $$
-S^2=A+B
-=\frac{\widehat V_P}{n_P}
-+\frac{\widehat V_Q}{n_Q}.
+S^2=A+B,
+\qquad
+A=\frac{\widehat V_P}{n_P},
+\qquad
+B=\frac{\widehat V_Q}{n_Q}.
 $$
 
-Let the approximate means of the two components be
+Each component has its own scale and effective degrees of freedom, whereas a
+single Student reference requires one degrees-of-freedom value for the whole
+denominator. Satterthwaite obtains it by matching the mean and variance of
+$S^2$.
+
+The population means of the two components are
 
 $$
 a_0=\frac{V(P)}{n_P},
@@ -1133,68 +1240,33 @@ a_0=\frac{V(P)}{n_P},
 b_0=\frac{V(Q)}{n_Q}.
 $$
 
-Under the component approximations,
+Their scaled chi-squared representations imply
 
 $$
-\operatorname{Var}(A)
-\approx\frac{2a_0^2}{\nu_{V,P}}
+\operatorname{Var}(A)\approx\frac{2a_0^2}{\nu_{V,P}},
+\qquad
+\operatorname{Var}(B)\approx\frac{2b_0^2}{\nu_{V,Q}}.
 $$
 
-and
+Because the samples are independent, these component uncertainties add:
 
 $$
-\operatorname{Var}(B)
-\approx\frac{2b_0^2}{\nu_{V,Q}}.
-$$
-
-Because the $P$ and $Q$ samples are independent, $A$ and $B$ are
-independent. Thus,
-
-$$
-\begin{aligned}
 \operatorname{Var}(S^2)
-&=\operatorname{Var}(A+B)\\
-&=\operatorname{Var}(A)+\operatorname{Var}(B)\\
-&\approx
+\approx
 \frac{2a_0^2}{\nu_{V,P}}
 +\frac{2b_0^2}{\nu_{V,Q}}.
-\end{aligned}
 $$
 
-Now approximate the sum by one scaled chi-squared variable:
+Representing the complete squared standard error by
 
 $$
 S^2
 \mathrel{\dot\sim}
-(a_0+b_0)\frac{\chi^2_{\nu}}{\nu}.
+(a_0+b_0)\frac{\chi^2_{\nu}}{\nu}
 $$
 
-This approximation has variance
-
-$$
-\operatorname{Var}(S^2)
-\approx\frac{2(a_0+b_0)^2}{\nu}.
-$$
-
-Match the two variance expressions:
-
-$$
-\frac{2(a_0+b_0)^2}{\nu}
-=
-\frac{2a_0^2}{\nu_{V,P}}
-+\frac{2b_0^2}{\nu_{V,Q}}.
-$$
-
-Cancel the factor of two:
-
-$$
-\frac{(a_0+b_0)^2}{\nu}
-=
-\frac{a_0^2}{\nu_{V,P}}
-+\frac{b_0^2}{\nu_{V,Q}}.
-$$
-
-Solve for $\nu$:
+gives it the correct mean $a_0+b_0$. Matching its variance
+$2(a_0+b_0)^2/\nu$ to the component variance above yields
 
 $$
 \nu
@@ -1202,16 +1274,15 @@ $$
 {a_0^2/\nu_{V,P}+b_0^2/\nu_{V,Q}}.
 $$
 
-Finally, replace the population components and component degrees of freedom
-by their estimates:
+The unknown population values are replaced by the observed components
 
 $$
 a=\frac{\widehat V_P}{n_P},
 \qquad
-b=\frac{\widehat V_Q}{n_Q}.
+b=\frac{\widehat V_Q}{n_Q},
 $$
 
-The expanded Welch-Satterthwaite degrees of freedom are
+which gives the expanded Welch-Satterthwaite degrees of freedom
 
 $$
 \boxed{
@@ -1222,36 +1293,49 @@ $$
 }
 $$
 
+The weighting in this formula follows the contribution of each group to the
+squared standard error. If one component dominates, the combined degrees of
+freedom lie close to that component's value. If both components are stable,
+the combined value is larger and the Student reference approaches the normal
+reference.
+
 ## 12. The Final Reference Distribution and P-Value
 
-The expanded method compares the observed statistic
+Under $H_0$, the numerator of $T$ is approximately normal and centred at
+zero. The denominator is estimated, with its relative uncertainty summarized
+by $\widehat\nu_{\mathrm{expanded}}$. A Student distribution uses precisely
+this structure: lower degrees of freedom give heavier tails when the
+denominator is less reliable, while large degrees of freedom recover the
+normal reference.
+
+The observed statistic is
 
 $$
 T
-=\frac{\widehat\Delta_{\mathrm{BC}}}{\sqrt{a+b}}
+=\frac{\widehat\Delta_{\mathrm{BC}}}{\sqrt{a+b}}.
 $$
 
-with a Student distribution having
-$\widehat\nu_{\mathrm{expanded}}$ degrees of freedom. The two-sided p-value is
+The alternative permits either $I(P)>I(Q)$ or $I(P)<I(Q)$, so the test is
+two-sided. Its p-value is the probability, under the Student reference, of a
+magnitude at least as large as $|T|$:
 
 $$
 \boxed{
 p_{\mathrm{expanded}}
 =2\left[1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}
-(|T|)\right],
+(|T|)\right].
 }
 $$
 
-where $F_{t_\nu}$ is the cumulative distribution function of a Student
-random variable with $\nu$ degrees of freedom.
-
-At significance level $\alpha$, reject $H_0:I(P)=I(Q)$ when
+Here $F_{t_\nu}$ denotes the cumulative distribution function of a Student
+random variable with $\nu$ degrees of freedom. At significance level
+$\alpha$, reject $H_0:I(P)=I(Q)$ when
 
 $$
-p_{\mathrm{expanded}}<\alpha.
+p_{\mathrm{expanded}}<\alpha,
 $$
 
-Equivalently, reject when
+or equivalently when
 
 $$
 |T|>
@@ -1260,18 +1344,22 @@ $$
 
 ## 13. Complete Calculation from Two Count Tables
 
-For clarity, the entire procedure is collected here without omitting any
-intermediate quantity.
+The complete practical calculation is collected here in the order it is
+performed, with the role of each stage stated before its formula.
 
 ### Step 1: Convert counts to probabilities
 
-For each group $G\in\{P,Q\}$,
+Normalizing the counts removes the raw sample-size scale and estimates each
+group's joint distribution. For $G\in\{P,Q\}$,
 
 $$
 \widehat p^{(G)}_{ij}=\frac{N^{(G)}_{ij}}{n_G}.
 $$
 
 ### Step 2: Calculate row and column marginals
+
+The margins provide the independence probability against which each joint
+cell is compared.
 
 $$
 \widehat p^{(G)}_{i+}=\sum_j\widehat p^{(G)}_{ij},
@@ -1280,6 +1368,8 @@ $$
 $$
 
 ### Step 3: Calculate local-information scores
+
+Each score records the cell's log departure from its independence baseline.
 
 $$
 \widehat\ell^{(G)}_{ij}
@@ -1291,6 +1381,8 @@ $$
 
 ### Step 4: Calculate plug-in MI
 
+The probability-weighted average of the local scores gives the estimated MI.
+
 $$
 \widehat I(G)
 =\sum_{i,j}\widehat p^{(G)}_{ij}
@@ -1299,6 +1391,8 @@ $$
 
 ### Step 5: Correct the leading bias
 
+Subtract the leading upward plug-in bias separately for each sample size.
+
 $$
 \widehat I_{\mathrm{BC}}(G)
 =\widehat I(G)-\frac{(r-1)(c-1)}{2n_G}.
@@ -1306,15 +1400,19 @@ $$
 
 ### Step 6: Form the estimated difference
 
+The signed difference estimates the target contrast $I(P)-I(Q)$.
+
 $$
 \widehat\Delta_{\mathrm{BC}}
 =\widehat I_{\mathrm{BC}}(P)
 -\widehat I_{\mathrm{BC}}(Q).
 $$
 
-### Step 7: Calculate the first two score moments
+### Step 7: Calculate the centred score and its variance
 
-For each group,
+The centred scores are the empirical MI influence values. Their weighted
+variance supplies each group's contribution to the standard error. For each
+group,
 
 $$
 \widehat\mu_G
@@ -1323,19 +1421,22 @@ $$
 $$
 
 $$
-\widehat m_{2,G}
-=\sum_{i,j}\widehat p^{(G)}_{ij}
-\left(\widehat\ell^{(G)}_{ij}\right)^2,
+\widehat\psi_G(i,j)
+=\widehat\ell^{(G)}_{ij}-\widehat\mu_G,
 $$
 
 and
 
 $$
 \widehat V_G
-=\widehat m_{2,G}-\widehat\mu_G^2.
+=\sum_{i,j}\widehat p^{(G)}_{ij}
+\widehat\psi_G(i,j)^2.
 $$
 
 ### Step 8: Calculate conditional score means
+
+The row and column means quantify the marginal-score changes created when a
+cell probability changes.
 
 $$
 \widehat R_G(i)
@@ -1353,21 +1454,22 @@ $$
 
 ### Step 9: Calculate the variance influence in each cell
 
+Combining the direct squared-influence effect with the marginal adjustment
+gives the sensitivity of $\widehat V_G$ to each cell.
+
 $$
-\begin{aligned}
-\widehat g_G(i,j)={}&
-\left(\widehat\ell^{(G)}_{ij}\right)^2
--\widehat m_{2,G}\\
-&+2\left\{
+\widehat g_G(i,j)
+=\widehat\psi_G(i,j)^2-\widehat V_G
++2\left\{
 \widehat\ell^{(G)}_{ij}
 -\widehat R_G(i)-\widehat C_G(j)+\widehat\mu_G
-\right\}\\
-&-2\widehat\mu_G
-\left\{\widehat\ell^{(G)}_{ij}-\widehat\mu_G\right\}.
-\end{aligned}
+\right\}.
 $$
 
 ### Step 10: Calculate variance-influence variability
+
+The weighted spread of these sensitivities measures how uncertain the
+estimated MI variance is across repeated samples.
 
 $$
 \overline g_G
@@ -1382,12 +1484,18 @@ $$
 
 ### Step 11: Calculate component degrees of freedom
 
+Satterthwaite moment matching converts this variance uncertainty into a
+degrees-of-freedom measure of reliability.
+
 $$
 \widehat\nu_{V,G}
 =\frac{2n_G\widehat V_G^2}{\widehat\tau_G^2}.
 $$
 
 ### Step 12: Calculate the two standard-error components
+
+Dividing each MI influence variance by its sample size gives its contribution
+to the variance of the estimated MI difference.
 
 $$
 a=\frac{\widehat V_P}{n_P},
@@ -1396,6 +1504,9 @@ b=\frac{\widehat V_Q}{n_Q}.
 $$
 
 ### Step 13: Calculate the standard error and statistic
+
+The square root of the combined variance is the standard error; dividing the
+estimated contrast by it produces a dimensionless test statistic.
 
 $$
 \widehat{\operatorname{SE}}=\sqrt{a+b},
@@ -1408,6 +1519,9 @@ $$
 
 ### Step 14: Combine the component degrees of freedom
 
+The two component reliability measures are combined in proportion to their
+contributions to the squared standard error.
+
 $$
 \widehat\nu_{\mathrm{expanded}}
 =\frac{(a+b)^2}
@@ -1416,6 +1530,9 @@ $$
 $$
 
 ### Step 15: Calculate the two-sided p-value
+
+The Student reference converts the magnitude of the standardized contrast
+into evidence against equal population MI in either direction.
 
 $$
 p_{\mathrm{expanded}}
@@ -1431,9 +1548,17 @@ $$
 =\frac{2n_P\widehat V_P^2}{\widehat\tau_P^2}.
 $$
 
-Its numerator contains sample size and the squared magnitude of the MI
-variance. Its denominator measures how strongly that estimated variance
-changes when probability mass moves among cells.
+Equivalently,
+
+$$
+\widehat\nu_{V,P}
+=\frac{2n_P}{\widehat\tau_P^2/\widehat V_P^2}.
+$$
+
+The ratio $\widehat\tau_P^2/\widehat V_P^2$ is the variance estimator's
+instability relative to its squared magnitude. The effective degrees of
+freedom therefore increase with sample size and decrease with relative
+instability across cells.
 
 If the cell sensitivities $\widehat g_P(i,j)$ are similar, then
 $\widehat\tau_P^2$ is small. The estimated variance is relatively stable,
@@ -1462,6 +1587,12 @@ $$
 {a^2/(n_P-1)+b^2/(n_Q-1)}.
 $$
 
+Using $n_P-1$ for MI is therefore an analogy to the normal-sample result. It
+treats $\widehat V_P$ as though it were an ordinary sample variance with a
+fixed underlying score. In fact, the local-information scores are themselves
+functions of the estimated joint table and margins, so the uncertainty of
+$\widehat V_P$ need not follow that conventional pattern.
+
 Expanded Welch keeps the same Satterthwaite combination but replaces the
 ordinary component degrees of freedom with quantities derived from the MI
 variance functional:
@@ -1481,11 +1612,17 @@ variance component is.
 
 ## 16. Regularity Conditions and Limits of the Derivation
 
+The construction combines smooth differentiation of the MI functional, a
+first-order central limit theorem, and Satterthwaite moment matching. The
+following conditions identify where those three ingredients apply.
+
 ### 16.1 Fixed finite alphabet
 
 The asymptotic expansions assume that $r$ and $c$ remain fixed as the sample
-sizes increase. The derivation does not establish validity when the alphabet
-grows with sample size.
+sizes increase. This keeps the probability table finite-dimensional while
+the empirical cell probabilities converge at the usual $n^{-1/2}$ rate. The
+derivation does not establish validity when the alphabet grows with sample
+size.
 
 ### 16.2 Positive population support
 
@@ -1577,8 +1714,8 @@ rather than manufacturing a p-value.
 
 ## 17. Computational Complexity
 
-Each quantity is obtained by a fixed number of operations over an $r\times c$
-table:
+Once the two count tables have been constructed, every quantity in the test
+is obtained by a fixed number of passes over their $r\times c$ cells:
 
 - cell probabilities and local scores require $O(rc)$ work;
 - row and column reductions require $O(rc)$ work;
@@ -1595,7 +1732,12 @@ $$
 }
 $$
 
-No permutations, bootstrap samples, or Monte Carlo tables are required.
+If the input consists of raw observation pairs, constructing the tables first
+requires $O(n_P+n_Q)$ work. This aggregation is performed once and is also
+required by ordinary plug-in MI estimation. The subsequent significance test
+depends on the table dimensions rather than repeatedly processing or
+shuffling the raw observations. No permutations, bootstrap samples, or Monte
+Carlo tables are required.
 
 ## 18. Correspondence with the Implementation
 
@@ -1621,7 +1763,19 @@ Its main quantities correspond to the derivation as follows.
 
 ## 19. Derivation in One Chain
 
-The complete mathematical chain is
+The purpose of each quantity in the derivation can be summarized as follows.
+
+| Quantity | Role in the construction |
+| --- | --- |
+| $\ell_P(i,j)$ | Measures the cell's log departure from independence. |
+| $\mu_P=I(P)$ | Averages the local scores to obtain population MI. |
+| $\psi_P(i,j)=\ell_P(i,j)-\mu_P$ | Measures the first-order effect of the cell on MI. |
+| $V(P)=\operatorname{Var}_P(\psi_P)$ | Determines the first-order sampling variance of $\widehat I(P)$. |
+| $g_P(i,j)$ | Measures the first-order effect of the cell on $V(P)$. |
+| $\tau_P^2=\operatorname{Var}_P(g_P)$ | Determines the sampling uncertainty of $\widehat V_P$. |
+| $\nu_{V,P}=2n_PV(P)^2/\tau_P^2$ | Expresses that variance-estimation uncertainty as component degrees of freedom. |
+
+These roles form the mathematical chain
 
 $$
 P
@@ -1640,7 +1794,7 @@ followed by
 $$
 V(P)
 \longrightarrow
-g_P=\operatorname{IF}_{V,P}
+g_P
 \longrightarrow
 \tau_P^2=\operatorname{Var}_P(g_P)
 \longrightarrow
@@ -1659,11 +1813,11 @@ t_{\nu_{\mathrm{expanded}}}
 p_{\mathrm{expanded}}.
 $$
 
-The method therefore uses one influence function to estimate the sampling
-variance of MI and a second influence function to estimate the sampling
-uncertainty of that variance. Satterthwaite moment matching converts the
-second uncertainty calculation into the effective degrees of freedom used to
-interpret the standardized MI difference.
+The first influence function converts cell-level MI sensitivity into a
+standard error. The second converts cell-level variance sensitivity into the
+uncertainty of that standard error. Satterthwaite moment matching then
+expresses the second uncertainty as effective degrees of freedom, allowing
+the standardized MI difference to be interpreted with a Student reference.
 
 ## References
 
