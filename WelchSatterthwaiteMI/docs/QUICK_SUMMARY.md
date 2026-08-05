@@ -350,4 +350,4 @@ The clean thesis claim is therefore regime-specific: expanded Welch improves
 calibration in difficult finite samples at negligible absolute computational
 cost, but it should not be described as uniformly more accurate than normal
 Wald. The complete reproducible output is in
-[`results/supervisor_full/REPORT.md`](results/supervisor_full/REPORT.md).
+[`results/supervisor_full/REPORT.md`](../results/supervisor_full/REPORT.md).

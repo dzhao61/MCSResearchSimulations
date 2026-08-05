@@ -20,15 +20,19 @@ but uses a standard-normal reference. The candidate keeps the estimator and
 standard error unchanged and replaces that reference with a Student
 distribution using Welch-Satterthwaite effective degrees of freedom.
 
-See `VALIDATION_PROTOCOL.md` for the decision rules fixed before inspecting
-the results.
+The current reading path and historical research records are indexed in
+[`docs/README.md`](docs/README.md).
 
 For a short overview of the literature, method, and main results, start with
-[`QUICK_SUMMARY.md`](QUICK_SUMMARY.md).
+[`docs/QUICK_SUMMARY.md`](docs/QUICK_SUMMARY.md).
 
 For a first-principles explanation of the research question, derivations,
 validation design, results, and limitations, see
-[`COMPREHENSIVE_SUMMARY.md`](COMPREHENSIVE_SUMMARY.md).
+[`docs/COMPREHENSIVE_SUMMARY.md`](docs/COMPREHENSIVE_SUMMARY.md).
+
+For the complete line-by-line mathematical derivation of the expanded method,
+see
+[`docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
 
 ## Status
 
@@ -47,8 +51,9 @@ alternatives. Its measured runtime was 0.16-0.18 ms per table pair, about
 terms.
 
 The result supports expanded Welch as a targeted finite-sample correction,
-not as a uniformly superior replacement for normal Wald. See
-`results/supervisor_full/REPORT.md` for the concise experiment report.
+not as a uniformly superior replacement for normal Wald. See the
+[`primary experiment report`](results/supervisor_full/REPORT.md) for the
+concise results.
 
 ## Commands
 
@@ -67,6 +72,6 @@ The full supervisor experiment is:
   --output-dir WelchSatterthwaiteMI/results/supervisor_full
 ```
 
-The older validation and audit scripts remain in `experiments/` as historical
-research records, but they are not needed to explain or reproduce the primary
-comparison.
+See [`experiments/README.md`](experiments/README.md) and
+[`results/README.md`](results/README.md) for the distinction between the
+primary experiment and historical research records.

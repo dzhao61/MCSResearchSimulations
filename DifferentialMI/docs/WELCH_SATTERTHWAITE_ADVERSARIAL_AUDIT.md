@@ -293,9 +293,9 @@ External timestamping or preregistration should occur before that run.
 - Variance-component results:
   `WelchSatterthwaiteMI/results/adversarial_holdout/variance_component_audit.csv`
 - Original protocol:
-  `WelchSatterthwaiteMI/VALIDATION_PROTOCOL.md`
+  `WelchSatterthwaiteMI/docs/history/VALIDATION_PROTOCOL.md`
 - Original immutable conclusion:
-  `WelchSatterthwaiteMI/FINAL_ASSESSMENT.md`
+  `WelchSatterthwaiteMI/docs/history/FINAL_ASSESSMENT.md`
 
 ## Primary Statistical Sources
 

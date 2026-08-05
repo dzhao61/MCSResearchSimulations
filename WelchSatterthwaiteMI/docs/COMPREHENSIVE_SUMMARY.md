@@ -309,12 +309,19 @@ Shannon Formula*, Journal of Theoretical Biology 29 (1970), 151-154,
 
 ### Why expand the simple method?
 
-The simple method assumes that each MI variance estimate has approximately
-$n-1$ degrees of freedom. Empirical diagnostics found that this was much
-too large in difficult tables. The expanded method estimates the effective
-degrees of freedom from the actual uncertainty of the nonlinear MI variance
-functional. The question is therefore not simply how many observations were
-sampled, but how variable $\widehat V$ itself is under repeated sampling.
+The test statistic contains the estimated variance terms $\widehat V_P$ and
+$\widehat V_Q$. Simple Welch assigns each of them ordinary $n-1$ degrees of
+freedom. That assignment is appropriate for a conventional sample variance,
+but $\widehat V$ is a nonlinear function of the full contingency table.
+
+Expanded Welch instead estimates how variable $\widehat V$ is under repeated
+sampling. It then converts that variability into component degrees of
+freedom using the usual Satterthwaite moment-matching argument. The MI
+estimate, bias correction, standard error, and observed statistic are not
+changed.
+
+Here, **IF means influence function**: the first-order change in a statistical
+functional after a small perturbation of the underlying distribution.
 
 ### 6.1 Write MI and its variance as functionals of $P$
 
@@ -417,7 +424,14 @@ incorrectly treated as fixed observations.
 
 ### 6.4 Differentiate the complete variance
 
-Because $V(P)=m_{2,P}-\mu_P^2$, first differentiate the second moment:
+The formula for $g_P$ is not chosen heuristically. It follows by applying the
+chain rule to
+
+$$
+V(P)=m_{2,P}-\mu_P^2.
+$$
+
+First differentiate the second moment:
 
 $$
 \begin{aligned}
@@ -759,11 +773,9 @@ The defensible conclusion is deliberately specific:
 
 This is a simpler and stronger claim than treating the method as a universal
 replacement. The complete reproducible output is in
-[`results/supervisor_full/REPORT.md`](results/supervisor_full/REPORT.md).
+[`results/supervisor_full/REPORT.md`](../results/supervisor_full/REPORT.md).
 
 ## Appendix A: Intuition Behind Expanded Welch-Satterthwaite
-
-### A.1 The denominator is an estimated ruler
 
 The test statistic is
 
@@ -773,225 +785,77 @@ T
 {\sqrt{\widehat V_P/n_P+\widehat V_Q/n_Q}}.
 $$
 
-The numerator is the estimated MI difference. The denominator is the ruler
-used to decide whether that difference is large. However, the ruler is also
-estimated from the data.
+The denominator estimates how much the MI difference should fluctuate under
+repeated sampling. The difficulty is that $\widehat V_P$ and $\widehat V_Q$
+are themselves estimated and can be unstable in finite samples.
 
-If $\widehat V_P$ and $\widehat V_Q$ are stable, treating the denominator as
-almost known is reasonable and the normal reference works well. If the
-variance estimates change substantially across repeated samples, the ruler
-is uncertain. A normal reference then tends to be overconfident because it
-does not represent that additional uncertainty.
-
-Welch-Satterthwaite inference expresses the reliability of the denominator
-through effective degrees of freedom. Many degrees of freedom mean a stable
-variance estimate and a nearly normal reference. Few degrees of freedom mean
-an unstable variance estimate and a heavier-tailed Student reference.
-
-### A.2 Why ordinary $n-1$ degrees of freedom are not enough
-
-For a conventional sample variance, the values whose spread is being
-measured are treated as fixed observations. Under normal sampling, its
-uncertainty is described by a scaled chi-squared distribution with $n-1$
-degrees of freedom.
-
-The MI variance is different. It is calculated from local-information scores
+Normal Wald treats this remaining denominator uncertainty as negligible.
+Simple Welch allows for it, but assumes each MI variance behaves like an
+ordinary sample variance with $n-1$ degrees of freedom. That assumption is
+questionable because
 
 $$
-\ell_P(i,j)
-=\log\!\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right),
+\widehat V
+=\sum_{i,j}\widehat p_{ij}
+\left(\widehat\ell_{ij}-\widehat I\right)^2
 $$
 
-and these scores depend on probabilities estimated from the complete table.
-Adding one observation to cell $(x,y)$ changes:
+is a nonlinear function of the complete table. Changing one cell also
+changes its row margin, column margin, local-information scores, MI, and
+therefore the complete variance estimate.
 
-- the probability of cell $(x,y)$;
-- its row marginal;
-- its column marginal;
-- the local-information scores affected by those margins;
-- the estimated MI around which the scores are centred;
-- the resulting MI variance estimate.
-
-Consequently, $\widehat V_P$ is not an ordinary sample variance. Assigning it
-$n_P-1$ degrees of freedom ignores the cell, row, and column ripple effects.
-
-### A.3 What $g_P(x,y)$ means
-
-Imagine moving an infinitesimal amount of probability into cell $(x,y)$:
-
-$$
-P_\varepsilon
-=(1-\varepsilon)P+\varepsilon\delta_{(x,y)}.
-$$
-
-The function
+Expanded Welch measures this sensitivity directly. For each cell, define
 
 $$
 g_P(x,y)
 =\left.
 \frac{\mathrm d}{\mathrm d\varepsilon}
-V(P_\varepsilon)
-\right|_{\varepsilon=0}
+V\!\left((1-\varepsilon)P+\varepsilon\delta_{(x,y)}\right)
+\right|_{\varepsilon=0}.
 $$
 
-measures how strongly that small change affects the complete MI variance.
-It is therefore a cell-level sensitivity measure for the estimated
-denominator.
-
-A cell with a small $|g_P(x,y)|$ has little effect on the variance estimate.
-A cell with a large $|g_P(x,y)|$ can strongly perturb the variance estimate,
-often because it is rare or because changing it alters an influential row or
-column margin.
-
-### A.4 Why $g_P$ has three terms
-
-Write
-
-$$
-\mu_P=I(P),
-\qquad
-m_{2,P}=\operatorname E_P\{\ell_P(X,Y)^2\}.
-$$
-
-The MI variance is
-
-$$
-V(P)=m_{2,P}-\mu_P^2.
-$$
-
-Its first-order change must therefore satisfy
-
-$$
-\text{change in }V
-=\text{change in }m_2
--2\mu\times\text{change in }\mu.
-$$
-
-This gives
-
-$$
-g_P(x,y)
-=\operatorname{IF}_{m_2,P}(x,y)
--2\mu_P\operatorname{IF}_{\mu,P}(x,y).
-$$
-
-After differentiating the cell, row, and column probabilities, the complete
-formula is
-
-$$
-\begin{aligned}
-g_P(x,y)={}&
-\underbrace{\ell_P(x,y)^2-m_{2,P}}_{
-\text{direct probability-mass effect}}\\
-&+\underbrace{2\Big[
-\ell_P(x,y)
--\operatorname E_P\{\ell_P\mid X=x\}
--\operatorname E_P\{\ell_P\mid Y=y\}
-+\mu_P
-\Big]}_{
-\text{cell, row, and column ripple effect}}\\
-&-\underbrace{2\mu_P\big[\ell_P(x,y)-\mu_P\big]}_{
-\text{change in the MI centre}}.
-\end{aligned}
-$$
-
-The first term represents directly moving probability mass into the cell.
-The second represents the fact that the local scores themselves change when
-the associated row and column margins change. The third represents the
-change in the mean MI used to centre the variance.
-
-### A.5 From cell sensitivity to variance uncertainty
-
-The values $g_P(X,Y)$ differ across possible observations. Their variance is
+Thus, $g_P(x,y)$ measures how strongly cell $(x,y)$ can perturb the MI
+variance. The variability of these cell sensitivities,
 
 $$
 \tau_P^2
-=\operatorname{Var}_P\{g_P(X,Y)\}.
+=\operatorname{Var}_P\{g_P(X,Y)\},
 $$
 
-This quantity measures the sampling instability of $\widehat V_P$:
-
-$$
-\operatorname{Var}(\widehat V_P)
-\approx\frac{\tau_P^2}{n_P}.
-$$
-
-If the $g_P$ values are similar across cells, then $\tau_P^2$ is small and
-different samples produce similar variance estimates. If some cells have
-very different sensitivities, then $\tau_P^2$ is large and the variance
-estimate depends strongly on which cells happen to be sampled.
-
-### A.6 Why this becomes degrees of freedom
-
-Satterthwaite approximates the positive variance estimator by a scaled
-chi-squared variable:
-
-$$
-\widehat V_P
-\ \dot\sim\
-V(P)\frac{\chi^2_{\nu_{V,P}}}{\nu_{V,P}}.
-$$
-
-This approximation has variance
-
-$$
-\operatorname{Var}(\widehat V_P)
-\approx\frac{2V(P)^2}{\nu_{V,P}}.
-$$
-
-The influence calculation gives the alternative expression
+determines the first-order uncertainty of the estimated variance:
 
 $$
 \operatorname{Var}(\widehat V_P)
 \approx\frac{\tau_P^2}{n_P}.
 $$
 
-Equating the two expressions gives
+Satterthwaite moment matching converts this uncertainty into component
+degrees of freedom:
 
 $$
-\boxed{
 \nu_{V,P}
-=\frac{2n_PV(P)^2}{\tau_P^2}}.
+=\frac{2n_PV(P)^2}{\tau_P^2}.
 $$
 
-This has the intended interpretation:
+The interpretation is direct:
 
-- small $\tau_P^2$ gives large degrees of freedom and a nearly normal test;
-- large $\tau_P^2$ gives small degrees of freedom and heavier Student tails.
+- if $g_P$ varies little across cells, $\widehat V_P$ is stable, the degrees
+  of freedom are large, and the reference remains close to normal;
+- if some cells have much greater influence, $\widehat V_P$ is unstable, the
+  degrees of freedom fall, and the reference has heavier Student tails.
 
-For illustration, suppose $V(P)=0.04$ and $n_P=100$. If
-$\tau_P^2=0.0008$, then $\nu_{V,P}=400$, indicating a stable variance
-estimate. If $\tau_P^2=0.016$, then $\nu_{V,P}=20$, indicating substantially
-greater uncertainty.
+The two component degrees of freedom are then combined using the usual
+Satterthwaite formula. Expanded Welch changes neither the estimated MI
+difference nor its standard error; it changes only how cautiously the
+observed statistic is interpreted.
 
-### A.7 Combine the two uncertain variance components
+This is why the method helps in sparse and skewed tables. It responds to the
+actual table-dependent instability of the variance estimate rather than
+assigning degrees of freedom from sample size alone. In the validation grid,
+it reduced sparse-regime calibration error relative to normal Wald by about
+39% at $\alpha=0.05$ and 51% at $\alpha=0.01$.
 
-The total estimated variance of the MI difference is
-
-$$
-a+b
-=\frac{\widehat V_P}{n_P}
-+\frac{\widehat V_Q}{n_Q}.
-$$
-
-After estimating $\widehat\nu_{V,P}$ and $\widehat\nu_{V,Q}$, the usual
-Satterthwaite formula combines them:
-
-$$
-\nu_{\mathrm{expanded}}
-=\frac{(a+b)^2}
-{a^2/\widehat\nu_{V,P}+b^2/\widehat\nu_{V,Q}}.
-$$
-
-The observed statistic $T$ is then compared with
-$t_{\nu_{\mathrm{expanded}}}$.
-
-Expanded Welch does not alter the MI estimates, bias correction, variance
-estimates, standard error, or observed test statistic. It changes only how
-cautiously that statistic is interpreted.
-
-### A.8 One-sentence summary
-
-> Simple Welch assumes the reliability of the MI variance using $n-1$;
-> expanded Welch estimates that reliability by measuring how strongly each
-> cell can perturb the complete MI variance calculation.
+The improvement is not universal. In well-sampled tables, normal Wald is
+already accurate and expanded Welch can become mildly conservative. It is
+therefore best interpreted as a targeted finite-sample correction rather
+than a universal replacement for normal Wald.
