@@ -298,7 +298,7 @@ def differential_mi_pvalues(
         & (expanded_df > 0)
         & np.isfinite(expanded_p)
     )
-    normal_p = np.where(valid, normal_p, np.nan)
+    normal_p = np.where(base_valid, normal_p, np.nan)
     welch_p = np.where(valid, welch_p, np.nan)
     expanded_p = np.where(expanded_valid, expanded_p, np.nan)
     unbiased_p = np.where(
@@ -325,6 +325,7 @@ def differential_mi_pvalues(
         "unbiased_statistic": unbiased_statistic,
         "unbiased_welch_degrees_of_freedom": unbiased_df,
         "unbiased_welch_p_value": unbiased_p,
+        "base_valid": base_valid,
         "valid": valid,
         "simple_valid": simple_valid,
         "expanded_valid": expanded_valid,

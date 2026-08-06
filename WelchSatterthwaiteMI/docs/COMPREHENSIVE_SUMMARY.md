@@ -622,10 +622,12 @@ experiments:
 
 $$
 12\ \text{table shapes}
-\times3\ \text{sampling regimes}
-\times2\ \text{population variants}
-=72\ \text{equal-MI population pairs}.
+\times18\ \text{population designs}
+=216\ \text{equal-MI population pairs}.
 $$
+
+The eighteen designs comprise nine interpretable regimes, with two
+population variants in each regime.
 
 The shapes are
 
@@ -639,18 +641,40 @@ For every pair, $P$ and $Q$ are different joint distributions constructed to
 satisfy $I(P)=I(Q)$ numerically. The largest absolute true MI difference over
 the generated grid was $1.2\times10^{-13}$ nats.
 
-### 8.1 Three regimes
+### 8.1 Nine regimes
 
-| Regime | Target MI | Sample-size ratio | Baseline observations per cell | Purpose |
+| Regime | Target MI | Sample-size ratio | Sparsity control | Purpose |
 | --- | ---: | ---: | ---: | --- |
-| Well sampled | 0.03 | $1{:}1$ | 100 or 200 | Check ordinary tables, including a skewed but densely sampled variant |
-| Moderate | 0.07 | $1{:}2$ | 20 or 50 | Check moderate imbalance and heterogeneous margins |
-| Sparse and imbalanced | 0.15 | $1{:}4$ | 10 or 25 | Target low-count and strongly unequal-sample conditions |
+| Well sampled | 0.03 | $1{:}1$ | Average of 100 or 200 observations per cell | Check ordinary tables, including a skewed but densely sampled variant |
+| Moderate | 0.07 | $1{:}2$ | Average of 20 or 50 observations per cell | Check moderate imbalance and heterogeneous margins |
+| Sparse and imbalanced | 0.15 | $1{:}4$ | Average of 10 or 25 observations per cell | Target low average counts and strongly unequal sample sizes |
+| Highly skewed and sparse | 0.10 or 0.15 | $1{:}1$ or $1{:}4$ | $1\leq E_{\min}<5$ in both populations | Test cells that are observed only a few times on average |
+| Ultra-skewed and sparse | 0.10 or 0.15 | $1{:}1$ or $1{:}4$ | $0<E_{\min}<1$ in both populations | Test rare cells that are more likely to be empty than observed |
+| Widespread sparsity | 0.03 | $1{:}1$ | 25-50% of cells have expected counts below 1 and at least 50% are below 5 in both populations | Test broad support sparsity rather than one isolated rare cell |
+| Equal-MI shape mismatch | 0.07 or 0.15 | $1{:}1$ | Near-uniform margins in $P$ and strongly skewed margins in $Q$ | Compare differently shaped populations with exactly equal MI |
+| Extreme sample imbalance | 0.07 or 0.15 | $1{:}10$ or $1{:}20$ | Average of 25 or 10 observations per cell in the smaller sample | Stress the unequal-variance combination directly |
+| Support instability | 0.02 | $1{:}1$ | One row or column has expected total between 0.20 and 1 in both populations | Make complete sampled margins disappear frequently |
 
-A minimum sample size of 120 is applied to very small tables. Within each
-regime, the two variants use different random margins and association
-patterns. This prevents the conclusion from depending on one particular
-table structure.
+For a population with joint probabilities $p_{ij}$ and sample size $n$, the
+minimum true expected cell count is
+
+$$
+E_{\min}=\min_{i,j}\{n p_{ij}\}.
+$$
+
+For a pair of populations, the stated interval must hold separately for both
+$P$ and $Q$. This is stricter than classifying a table from the average
+$n/(rc)$: a table may have a large sample overall while still containing a
+very rare cell. The ultra-sparse generator targets expected minima between
+0.20 and 1 internally, rather than values arbitrarily close to zero, while
+still satisfying the reported $0<E_{\min}<1$ definition.
+
+A minimum sample size of 120 is applied to the main designs. The explicitly
+labelled support-instability boundary allows sample sizes down to 30 because
+a binary margin that is likely to disappear cannot otherwise sustain the
+target positive MI. Within each regime, the two variants use different random
+margins and association patterns. Near-independence remains outside the main
+scope.
 
 ### 8.2 Replication and fairness
 
@@ -658,13 +682,16 @@ Each population pair receives 10,000 independently sampled pairs of
 multinomial tables:
 
 $$
-72\times10{,}000=720{,}000\ \text{null replicates}.
+216\times10{,}000=2{,}160{,}000\ \text{null replicates}.
 $$
 
 Normal Wald, simple Welch, and expanded Welch are calculated on exactly the
 same table pairs. All three use the same bias-corrected difference,
 $\widehat{\Delta}_{\mathrm{BC}}$, and standard error. Only the reference
-calibration differs.
+calibration differs. Each method's false-positive rate is calculated among
+the replicates for which that method returns a valid result; validity is
+reported separately so boundary failures are not hidden by conditioning on a
+common subset.
 
 The experiment records false-positive rates at $\alpha=0.10$, $0.05$, and
 $0.01$; 95% confidence-interval coverage; valid calculation rates; effective
@@ -685,37 +712,66 @@ $$
 $$
 
 The tables report mean absolute FPR error across each set. Lower is better.
+This calibration error must be interpreted together with the valid rate.
 
 ### 9.2 Null calibration
 
-| Regime | Method | Error at $0.10$ | Error at $0.05$ | Error at $0.01$ | 95% coverage |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Well sampled | Normal Wald | **0.00570** | **0.00369** | **0.00137** | 0.95349 |
-| Well sampled | Simple Welch | 0.00576 | 0.00375 | 0.00143 | 0.95355 |
-| Well sampled | Expanded Welch | 0.00729 | 0.00510 | 0.00197 | 0.95493 |
-| Moderate | Normal Wald | 0.00587 | 0.00395 | 0.00158 | 0.95210 |
-| Moderate | Simple Welch | **0.00580** | **0.00391** | **0.00154** | 0.95231 |
-| Moderate | Expanded Welch | 0.00672 | 0.00473 | 0.00176 | 0.95457 |
-| Sparse and imbalanced | Normal Wald | 0.00760 | 0.00589 | 0.00278 | 0.94444 |
-| Sparse and imbalanced | Simple Welch | 0.00698 | 0.00538 | 0.00248 | 0.94496 |
-| Sparse and imbalanced | Expanded Welch | **0.00515** | **0.00358** | **0.00138** | 0.94694 |
+| Regime | Method | Error at $0.10$ | Error at $0.05$ | Error at $0.01$ | Valid rate | 95% coverage |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Well sampled | Normal Wald | **0.00482** | **0.00326** | **0.00148** | 1.00000 | 0.95260 |
+| Well sampled | Simple Welch | 0.00487 | 0.00332 | 0.00151 | 1.00000 | 0.95267 |
+| Well sampled | Expanded Welch | 0.00650 | 0.00466 | 0.00199 | 1.00000 | 0.95418 |
+| Moderate | Normal Wald | 0.00571 | 0.00370 | **0.00153** | 1.00000 | 0.95174 |
+| Moderate | Simple Welch | **0.00560** | **0.00365** | 0.00155 | 1.00000 | 0.95196 |
+| Moderate | Expanded Welch | 0.00602 | 0.00419 | 0.00172 | 1.00000 | 0.95407 |
+| Sparse and imbalanced | Normal Wald | 0.00830 | 0.00615 | 0.00286 | 1.00000 | 0.94424 |
+| Sparse and imbalanced | Simple Welch | 0.00764 | 0.00565 | 0.00252 | 1.00000 | 0.94474 |
+| Sparse and imbalanced | Expanded Welch | **0.00580** | **0.00395** | **0.00145** | 1.00000 | 0.94668 |
+| Highly skewed and sparse | Normal Wald | 0.00315 | 0.00275 | 0.00162 | 1.00000 | 0.94915 |
+| Highly skewed and sparse | Simple Welch | 0.00303 | 0.00262 | 0.00156 | 1.00000 | 0.94931 |
+| Highly skewed and sparse | Expanded Welch | **0.00255** | **0.00217** | **0.00124** | 1.00000 | 0.94977 |
+| Ultra-skewed and sparse | Normal Wald | 0.00431 | 0.00312 | 0.00133 | 1.00000 | 0.94767 |
+| Ultra-skewed and sparse | Simple Welch | 0.00416 | 0.00296 | 0.00125 | 1.00000 | 0.94785 |
+| Ultra-skewed and sparse | Expanded Welch | **0.00343** | **0.00248** | **0.00098** | 1.00000 | 0.94850 |
+| Widespread sparsity | Normal Wald | 0.01457 | **0.01064** | 0.00500 | 0.99980 | 0.94737 |
+| Widespread sparsity | Simple Welch | **0.01453** | 0.01076 | 0.00504 | 0.99980 | 0.94808 |
+| Widespread sparsity | Expanded Welch | 0.02131 | 0.01439 | **0.00463** | 0.99143 | 0.96087 |
+| Equal-MI shape mismatch | Normal Wald | 0.00690 | **0.00420** | 0.00153 | 1.00000 | 0.94695 |
+| Equal-MI shape mismatch | Simple Welch | **0.00688** | 0.00424 | **0.00149** | 1.00000 | 0.94715 |
+| Equal-MI shape mismatch | Expanded Welch | 0.00715 | 0.00443 | 0.00158 | 1.00000 | 0.94847 |
+| Extreme sample imbalance | Normal Wald | 0.01177 | 0.00876 | 0.00497 | 1.00000 | 0.94384 |
+| Extreme sample imbalance | Simple Welch | 0.01108 | 0.00801 | 0.00452 | 1.00000 | 0.94467 |
+| Extreme sample imbalance | Expanded Welch | **0.00880** | **0.00582** | **0.00205** | 1.00000 | 0.94890 |
+| Support instability | Normal Wald | **0.02162** | **0.01465** | **0.00415** | 0.97569 | 0.96119 |
+| Support instability | Simple Welch | 0.02274 | 0.01606 | 0.00445 | 0.97569 | 0.96262 |
+| Support instability | Expanded Welch | 0.03405 | 0.02074 | 0.00544 | 0.90405 | 0.96839 |
 
-In the sparse and imbalanced regime, expanded Welch reduced mean calibration
-error relative to normal Wald by 32.1% at $\alpha=0.10$, 39.2% at
-$\alpha=0.05$, and 50.6% at $\alpha=0.01$. It improved 22 of 24 sparse
-scenarios at $\alpha=0.05$.
+Expanded Welch continued to improve the three original sparse regimes and
+was especially useful under extreme sample imbalance. At $\alpha=0.05$, it
+reduced error relative to normal Wald by 35.8% in sparse-and-imbalanced
+tables, 21.2% in the highly sparse set, 20.5% in the ultra-sparse set, and
+33.6% under $1{:}10$ or $1{:}20$ imbalance. At $\alpha=0.01$, the respective
+reductions were 49.2%, 23.6%, 26.2%, and 58.7%.
 
-The correction was not uniformly beneficial. In well-sampled tables,
+The additional regimes also identify the boundary. Under widespread
+sparsity, expanded Welch became too conservative at $\alpha=0.05$ and its
+mean valid rate fell to 0.99143. Under support instability it had 0.90405 mean
+validity, with a worst scenario valid rate of 0.2947, and was less calibrated
+than normal Wald when it did return a result. Shape mismatch alone produced
+similar accuracy for all three methods and no advantage for expanded Welch.
+
+The correction was also not beneficial in well-sampled tables,
 expanded Welch rejected too rarely and increased mean error at
-$\alpha=0.05$ from 0.00369 to 0.00510. Simple Welch remained very close to
+$\alpha=0.05$ from 0.00326 to 0.00466. Simple Welch remained very close to
 normal Wald across all regimes because its effective degrees of freedom were
 usually large.
 
-All 720,000 null replicates produced valid calculations. Across scenarios,
-median simple-Welch degrees of freedom ranged from approximately 154 to
-159,967, while median expanded-Welch degrees of freedom ranged from 27 to
-5,250. The expanded reference is therefore meaningfully heavier-tailed in
-finite samples.
+All calculations were valid outside the widespread-sparsity and
+support-instability regimes. Across scenarios, median simple-Welch degrees of
+freedom ranged from 30 to approximately 1,584,000, while median expanded-Welch
+degrees of freedom ranged from 3.6 to 301,000. Very small expanded degrees of
+freedom correctly signal instability, but in the support boundary they can
+also make the method undefined or excessively conservative.
 
 ### 9.3 Power
 
@@ -761,15 +817,17 @@ improvement is limited.
 
 **Expanded Welch-Satterthwaite** directly models uncertainty in the MI
 variance estimator. It remains deterministic and $O(rc)$ and gives the best
-calibration in sparse, skewed, and sample-imbalanced tables. Its heavier tails
-also make it mildly conservative in well-sampled tables and reduce power by
-about one percentage point in the tested alternatives.
+calibration when isolated rare cells or unequal sample sizes make variance
+estimation unstable but the sampled support remains mostly intact. Its
+heavier tails make it conservative in well-sampled tables and fail to repair
+widespread support loss.
 
 The defensible conclusion is deliberately specific:
 
-> Expanded Welch is a low-cost finite-sample correction for difficult
-> differential-MI comparisons. It improves the target sparse regime, but it
-> is not uniformly more accurate than normal Wald across all table regimes.
+> Expanded Welch is a low-cost finite-sample correction for differential-MI
+> comparisons with isolated sparsity or severe sample imbalance. It is not a
+> remedy for widespread sparsity or unstable observed alphabets, where the
+> underlying first-order approximation itself becomes unreliable.
 
 This is a simpler and stronger claim than treating the method as a universal
 replacement. The complete reproducible output is in

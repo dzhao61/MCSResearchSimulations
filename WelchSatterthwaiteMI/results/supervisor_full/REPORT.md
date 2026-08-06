@@ -10,14 +10,20 @@ often each analytic test incorrectly rejects equality.
 
 ## Design
 
-The null grid contains 12 table shapes and six designs, grouped into
-three regimes with two population variants per regime. The full profile
-therefore contains 72 population pairs. Every method sees the same table
-pairs and uses the same bias-corrected MI difference and standard error.
+The null grid contains 216 fixed
+population pairs across 9 regimes. Every method sees
+the same table pairs and uses the same bias-corrected MI difference and
+standard error.
 
 - **Well sampled:** Equal sample sizes and high observations per cell; includes one near-balanced and one skewed-margin variant.
 - **Moderate:** A 2:1 sample-size ratio and moderate observations per cell, with increasingly heterogeneous margins.
 - **Sparse and imbalanced:** A 4:1 sample-size ratio, low observations per cell, and heterogeneous margins.
+- **Highly skewed and sparse:** Both populations have minimum true expected cell counts from 1 (inclusive) to 5 (exclusive), with heterogeneous margins.
+- **Ultra-skewed and sparse:** Both populations have positive minimum true expected cell counts below 1, so their rarest cells are usually unobserved.
+- **Widespread sparsity:** In both populations, 25-50% of cells have true expected counts below 1 and at least half have expected counts below 5.
+- **Equal-MI shape mismatch:** A near-balanced population is compared with a strongly skewed population having exactly the same mutual information.
+- **Extreme sample imbalance:** Sample-size ratios of 1:10 and 1:20 stress the unequal-variance combination beyond the main grid.
+- **Support instability:** At least one complete row or column in each population has a true expected total below 1 and is frequently absent in samples.
 
 The methods differ only in reference calibration: normal Wald uses
 a standard normal distribution, simple Welch uses ordinary `n-1`
@@ -26,39 +32,65 @@ degrees of freedom from the MI-variance influence function.
 
 ## Main calibration results
 
-| Regime | Method | FPR at 0.05 | Error at 0.05 | FPR at 0.01 | Error at 0.01 | 95% coverage |
-| --- | --- | --- | --- | --- | --- | --- |
-| Well sampled | Normal Wald | 0.04651 | 0.00369 | 0.00875 | 0.00137 | 0.95349 |
-| Well sampled | Simple Welch | 0.04645 | 0.00375 | 0.00869 | 0.00143 | 0.95355 |
-| Well sampled | Expanded Welch | 0.04507 | 0.00510 | 0.00809 | 0.00197 | 0.95493 |
-| Moderate | Normal Wald | 0.04790 | 0.00395 | 0.00965 | 0.00158 | 0.95210 |
-| Moderate | Simple Welch | 0.04769 | 0.00391 | 0.00954 | 0.00154 | 0.95231 |
-| Moderate | Expanded Welch | 0.04543 | 0.00473 | 0.00841 | 0.00176 | 0.95457 |
-| Sparse and imbalanced | Normal Wald | 0.05556 | 0.00589 | 0.01266 | 0.00278 | 0.94444 |
-| Sparse and imbalanced | Simple Welch | 0.05504 | 0.00538 | 0.01235 | 0.00247 | 0.94496 |
-| Sparse and imbalanced | Expanded Welch | 0.05306 | 0.00358 | 0.01115 | 0.00138 | 0.94694 |
+| Regime | Method | FPR at 0.05 | Error at 0.05 | FPR at 0.01 | Error at 0.01 | Valid rate | 95% coverage |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Well sampled | Normal Wald | 0.04740 | 0.00326 | 0.00879 | 0.00148 | 1.00000 | 0.95260 |
+| Well sampled | Simple Welch | 0.04733 | 0.00333 | 0.00876 | 0.00151 | 1.00000 | 0.95267 |
+| Well sampled | Expanded Welch | 0.04582 | 0.00466 | 0.00814 | 0.00199 | 1.00000 | 0.95418 |
+| Moderate | Normal Wald | 0.04826 | 0.00370 | 0.00979 | 0.00153 | 1.00000 | 0.95174 |
+| Moderate | Simple Welch | 0.04804 | 0.00365 | 0.00970 | 0.00155 | 1.00000 | 0.95196 |
+| Moderate | Expanded Welch | 0.04593 | 0.00419 | 0.00850 | 0.00172 | 1.00000 | 0.95407 |
+| Sparse and imbalanced | Normal Wald | 0.05576 | 0.00615 | 0.01261 | 0.00286 | 1.00000 | 0.94424 |
+| Sparse and imbalanced | Simple Welch | 0.05526 | 0.00565 | 0.01227 | 0.00252 | 1.00000 | 0.94474 |
+| Sparse and imbalanced | Expanded Welch | 0.05332 | 0.00395 | 0.01105 | 0.00145 | 1.00000 | 0.94668 |
+| Highly skewed and sparse | Normal Wald | 0.05085 | 0.00275 | 0.01063 | 0.00162 | 1.00000 | 0.94915 |
+| Highly skewed and sparse | Simple Welch | 0.05069 | 0.00262 | 0.01057 | 0.00156 | 1.00000 | 0.94931 |
+| Highly skewed and sparse | Expanded Welch | 0.05023 | 0.00217 | 0.01025 | 0.00124 | 1.00000 | 0.94977 |
+| Ultra-skewed and sparse | Normal Wald | 0.05233 | 0.00312 | 0.01081 | 0.00133 | 1.00000 | 0.94767 |
+| Ultra-skewed and sparse | Simple Welch | 0.05215 | 0.00296 | 0.01071 | 0.00125 | 1.00000 | 0.94785 |
+| Ultra-skewed and sparse | Expanded Welch | 0.05150 | 0.00248 | 0.01040 | 0.00098 | 1.00000 | 0.94850 |
+| Widespread sparsity | Normal Wald | 0.05263 | 0.01064 | 0.01110 | 0.00500 | 0.99980 | 0.94737 |
+| Widespread sparsity | Simple Welch | 0.05192 | 0.01076 | 0.01068 | 0.00504 | 0.99980 | 0.94808 |
+| Widespread sparsity | Expanded Welch | 0.03913 | 0.01439 | 0.00586 | 0.00463 | 0.99143 | 0.96087 |
+| Equal-MI shape mismatch | Normal Wald | 0.05305 | 0.00420 | 0.01112 | 0.00153 | 1.00000 | 0.94695 |
+| Equal-MI shape mismatch | Simple Welch | 0.05285 | 0.00424 | 0.01103 | 0.00149 | 1.00000 | 0.94715 |
+| Equal-MI shape mismatch | Expanded Welch | 0.05153 | 0.00443 | 0.01043 | 0.00158 | 1.00000 | 0.94847 |
+| Extreme sample imbalance | Normal Wald | 0.05616 | 0.00876 | 0.01428 | 0.00497 | 1.00000 | 0.94384 |
+| Extreme sample imbalance | Simple Welch | 0.05533 | 0.00801 | 0.01382 | 0.00452 | 1.00000 | 0.94467 |
+| Extreme sample imbalance | Expanded Welch | 0.05110 | 0.00582 | 0.01052 | 0.00205 | 1.00000 | 0.94890 |
+| Support instability | Normal Wald | 0.03881 | 0.01465 | 0.00677 | 0.00415 | 0.97569 | 0.96119 |
+| Support instability | Simple Welch | 0.03738 | 0.01606 | 0.00646 | 0.00445 | 0.97569 | 0.96262 |
+| Support instability | Expanded Welch | 0.03161 | 0.02074 | 0.00505 | 0.00544 | 0.90405 | 0.96839 |
 
 False-positive-rate error is the absolute difference between observed
-and nominal rejection rates, so lower is better.
+and nominal rejection rates among valid calculations, so lower is
+better. Validity is reported separately and is part of method
+performance in the support-instability boundary regime.
 
 ## Overall summary
 
-| Method | MAE at 0.10 | MAE at 0.05 | MAE at 0.01 | 95% coverage |
-| --- | --- | --- | --- | --- |
-| Normal Wald | 0.00639 | 0.00451 | 0.00191 | 0.95001 |
-| Simple Welch | 0.00618 | 0.00435 | 0.00181 | 0.95027 |
-| Expanded Welch | 0.00639 | 0.00447 | 0.00170 | 0.95215 |
+| Method | MAE at 0.10 | MAE at 0.05 | MAE at 0.01 | Mean valid rate | 95% coverage |
+| --- | --- | --- | --- | --- | --- |
+| Normal Wald | 0.00902 | 0.00636 | 0.00272 | 0.99728 | 0.94942 |
+| Simple Welch | 0.00895 | 0.00636 | 0.00265 | 0.99728 | 0.94989 |
+| Expanded Welch | 0.01062 | 0.00698 | 0.00234 | 0.98839 | 0.95331 |
 
 ## Direct interpretation
 
-- In the target sparse and imbalanced regime, expanded Welch reduced
-  mean calibration error relative to normal Wald by
-  **39.2% at alpha 0.05** and
-  **50.6% at alpha 0.01**.
+- Relative calibration changes in the difficult regimes are
+  reported directly below; positive percentages mean that expanded
+  Welch reduced error relative to normal Wald.
+- **Sparse and imbalanced:** 35.8% at alpha 0.05 and 49.2% at alpha 0.01.
+- **Highly skewed and sparse:** 21.2% at alpha 0.05 and 23.6% at alpha 0.01.
+- **Ultra-skewed and sparse:** 20.5% at alpha 0.05 and 26.2% at alpha 0.01.
+- **Widespread sparsity:** -35.3% at alpha 0.05 and 7.3% at alpha 0.01.
+- **Equal-MI shape mismatch:** -5.6% at alpha 0.05 and -3.6% at alpha 0.01.
+- **Extreme sample imbalance:** 33.6% at alpha 0.05 and 58.7% at alpha 0.01.
+- **Support instability:** -41.5% at alpha 0.05 and -31.1% at alpha 0.01.
 - This was not a universal improvement. In well-sampled tables at
   alpha 0.05, expanded Welch increased mean absolute error from
-  `0.00369`
-  to `0.00510`
+  `0.00326`
+  to `0.00466`
   by becoming mildly conservative.
 - Across the five power scenarios, expanded Welch lost
   `0.0102` power on average and at most
@@ -92,18 +124,18 @@ and nominal rejection rates, so lower is better.
 
 | Rows | Columns | Method | Median ms | Relative to Wald |
 | --- | --- | --- | --- | --- |
-| 2 | 2 | Normal Wald | 0.0849 | 1.0000 |
-| 2 | 2 | Simple Welch | 0.1002 | 1.1802 |
-| 2 | 2 | Expanded Welch | 0.1614 | 1.9016 |
-| 5 | 5 | Normal Wald | 0.0864 | 1.0000 |
-| 5 | 5 | Simple Welch | 0.1011 | 1.1710 |
-| 5 | 5 | Expanded Welch | 0.1631 | 1.8888 |
-| 10 | 10 | Normal Wald | 0.0872 | 1.0000 |
-| 10 | 10 | Simple Welch | 0.1015 | 1.1644 |
-| 10 | 10 | Expanded Welch | 0.1643 | 1.8846 |
-| 20 | 20 | Normal Wald | 0.0933 | 1.0000 |
-| 20 | 20 | Simple Welch | 0.1078 | 1.1559 |
-| 20 | 20 | Expanded Welch | 0.1752 | 1.8789 |
+| 2 | 2 | Normal Wald | 0.0855 | 1.0000 |
+| 2 | 2 | Simple Welch | 0.1005 | 1.1756 |
+| 2 | 2 | Expanded Welch | 0.1626 | 1.9016 |
+| 5 | 5 | Normal Wald | 0.0851 | 1.0000 |
+| 5 | 5 | Simple Welch | 0.0998 | 1.1734 |
+| 5 | 5 | Expanded Welch | 0.1614 | 1.8974 |
+| 10 | 10 | Normal Wald | 0.0862 | 1.0000 |
+| 10 | 10 | Simple Welch | 0.1008 | 1.1692 |
+| 10 | 10 | Expanded Welch | 0.1630 | 1.8922 |
+| 20 | 20 | Normal Wald | 0.0931 | 1.0000 |
+| 20 | 20 | Simple Welch | 0.1080 | 1.1597 |
+| 20 | 20 | Expanded Welch | 0.1756 | 1.8859 |
 
 Runtime includes the complete calculation from the two count tables.
 All three timings use the same implementation path. The expanded method

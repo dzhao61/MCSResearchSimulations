@@ -39,18 +39,19 @@ in [`derivation/main.tex`](derivation/main.tex).
 
 ## Status
 
-The primary evidence now comes from one unified experiment with 72 equal-MI
+The primary evidence now comes from one unified experiment with 216 equal-MI
 population pairs and 10,000 independently simulated table pairs per
-population. The grid is divided into well-sampled, moderate, and sparse /
-imbalanced regimes, with the same three analytic methods evaluated on every
+population. The nine regimes include controlled isolated sparsity,
+widespread sparsity, shape mismatch, extreme sample imbalance, and support
+instability, with the same three analytic methods evaluated on every
 replicate.
 
-Expanded Welch was most useful in the target sparse and imbalanced regime. It
-reduced mean calibration error relative to normal Wald by 39.2% at
-alpha `0.05` and 50.6% at alpha `0.01`. It was mildly conservative in
-well-sampled tables and lost about 0.010 average power in the five tested
-alternatives. Its measured runtime was 0.16-0.18 ms per table pair, about
-1.9 times the normal Wald implementation but still negligible in absolute
+Expanded Welch reduced alpha-`0.05` calibration error relative to normal Wald
+by 35.8% in the sparse-and-imbalanced regime and 33.6% under sample-size
+ratios of `1:10` or `1:20`. It also improved the isolated rare-cell regimes.
+It did not improve widespread sparsity or unstable sampled support, where it
+became conservative and less often defined. Its measured runtime remained
+about 1.9 times the normal Wald implementation but negligible in absolute
 terms.
 
 The result supports expanded Welch as a targeted finite-sample correction,

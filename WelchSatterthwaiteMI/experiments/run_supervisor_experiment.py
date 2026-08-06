@@ -24,9 +24,15 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
 from differential_mi.random_validation import (  # noqa: E402
     RandomScenario,
+    SHAPES,
     generate_random_scenarios,
     scenario_diagnostics,
 )
+from differential_mi.distributions import (  # noqa: E402
+    random_interaction_pattern,
+    table_with_target_mi_from_interaction,
+)
+from differential_mi.statistics import influence_variance  # noqa: E402
 from differential_mi.scenarios import (  # noqa: E402
     build_distributions,
     power_curve_scenarios,
@@ -40,16 +46,19 @@ METHODS = {
         "label": "Normal Wald",
         "p_value": "normal_p_value",
         "degrees_of_freedom": None,
+        "validity": "base_valid",
     },
     "simple_welch": {
         "label": "Simple Welch",
         "p_value": "welch_p_value",
         "degrees_of_freedom": "welch_degrees_of_freedom",
+        "validity": "simple_valid",
     },
     "expanded_welch": {
         "label": "Expanded Welch",
         "p_value": "expanded_welch_p_value",
         "degrees_of_freedom": "expanded_welch_degrees_of_freedom",
+        "validity": "expanded_valid",
     },
 }
 REGIMES = {
@@ -77,6 +86,54 @@ REGIMES = {
             "heterogeneous margins."
         ),
     },
+    "highly_sparse": {
+        "label": "Highly skewed and sparse",
+        "designs": (6, 7),
+        "description": (
+            "Both populations have minimum true expected cell counts from "
+            "1 (inclusive) to 5 (exclusive), with heterogeneous margins."
+        ),
+    },
+    "ultra_sparse": {
+        "label": "Ultra-skewed and sparse",
+        "designs": (8, 9),
+        "description": (
+            "Both populations have positive minimum true expected cell counts "
+            "below 1, so their rarest cells are usually unobserved."
+        ),
+    },
+    "widespread_sparse": {
+        "label": "Widespread sparsity",
+        "designs": (10, 11),
+        "description": (
+            "In both populations, 25-50% of cells have true expected counts "
+            "below 1 and at least half have expected counts below 5."
+        ),
+    },
+    "shape_mismatch": {
+        "label": "Equal-MI shape mismatch",
+        "designs": (12, 13),
+        "description": (
+            "A near-balanced population is compared with a strongly skewed "
+            "population having exactly the same mutual information."
+        ),
+    },
+    "extreme_imbalance": {
+        "label": "Extreme sample imbalance",
+        "designs": (14, 15),
+        "description": (
+            "Sample-size ratios of 1:10 and 1:20 stress the unequal-variance "
+            "combination beyond the main grid."
+        ),
+    },
+    "support_instability": {
+        "label": "Support instability",
+        "designs": (16, 17),
+        "description": (
+            "At least one complete row or column in each population has a "
+            "true expected total below 1 and is frequently absent in samples."
+        ),
+    },
 }
 REGIME_ORDER = tuple(REGIMES)
 DESIGN_TO_REGIME = {
@@ -88,6 +145,108 @@ DESIGN_TO_VARIANT = {
     design: f"variant_{index + 1}"
     for specification in REGIMES.values()
     for index, design in enumerate(specification["designs"])
+}
+
+# These designs add controlled sparsity stress tests to the broad randomized
+# grid. The internal lower bound for the ultra-sparse designs keeps the rarest
+# expected count away from numerical zero while remaining strictly below one.
+EXPECTED_COUNT_STRESS_DESIGNS = {
+    6: {
+        "margin_alpha_p": 0.8,
+        "margin_alpha_q": 0.8,
+        "target_mi": 0.10,
+        "sample_size_ratio": 1,
+        "minimum_expected_lower": 1.0,
+        "minimum_expected_upper": 5.0,
+    },
+    7: {
+        "margin_alpha_p": 1.0,
+        "margin_alpha_q": 0.6,
+        "target_mi": 0.15,
+        "sample_size_ratio": 4,
+        "minimum_expected_lower": 1.0,
+        "minimum_expected_upper": 5.0,
+    },
+    8: {
+        "margin_alpha_p": 0.6,
+        "margin_alpha_q": 0.6,
+        "target_mi": 0.10,
+        "sample_size_ratio": 1,
+        "minimum_expected_lower": 0.20,
+        "minimum_expected_upper": 1.0,
+    },
+    9: {
+        "margin_alpha_p": 0.8,
+        "margin_alpha_q": 0.45,
+        "target_mi": 0.15,
+        "sample_size_ratio": 4,
+        "minimum_expected_lower": 0.20,
+        "minimum_expected_upper": 1.0,
+    },
+}
+ADVERSARIAL_DESIGNS = {
+    10: {
+        "kind": "widespread_sparse",
+        "margin_alpha_p": 0.35,
+        "margin_alpha_q": 0.35,
+        "target_mi": 0.03,
+        "sample_size_ratio": 1,
+    },
+    11: {
+        "kind": "widespread_sparse",
+        "margin_alpha_p": 0.50,
+        "margin_alpha_q": 0.25,
+        "target_mi": 0.03,
+        "sample_size_ratio": 1,
+    },
+    12: {
+        "kind": "shape_mismatch",
+        "margin_alpha_p": 50.0,
+        "margin_alpha_q": 0.35,
+        "target_mi": 0.07,
+        "density": 25,
+        "sample_size_ratio": 1,
+    },
+    13: {
+        "kind": "shape_mismatch",
+        "margin_alpha_p": 50.0,
+        "margin_alpha_q": 0.35,
+        "target_mi": 0.15,
+        "density": 50,
+        "sample_size_ratio": 1,
+    },
+    14: {
+        "kind": "extreme_imbalance",
+        "margin_alpha_p": 5.0,
+        "margin_alpha_q": 1.0,
+        "target_mi": 0.07,
+        "density": 25,
+        "sample_size_ratio": 10,
+    },
+    15: {
+        "kind": "extreme_imbalance",
+        "margin_alpha_p": 2.0,
+        "margin_alpha_q": 0.8,
+        "target_mi": 0.15,
+        "density": 10,
+        "sample_size_ratio": 20,
+    },
+    16: {
+        "kind": "support_instability",
+        "support_axis": "row",
+        "margin_alpha_p": 0.25,
+        "margin_alpha_q": 0.25,
+        "target_mi": 0.02,
+        "sample_size_ratio": 1,
+    },
+    17: {
+        "kind": "support_instability",
+        "support_axis": "column",
+        "margin_alpha_p": 0.25,
+        "margin_alpha_q": 0.25,
+        "target_mi": 0.02,
+        "sample_size_ratio": 1,
+    },
 }
 PROFILE_SETTINGS = {
     "smoke": {
@@ -109,11 +268,373 @@ DEFAULT_SCENARIO_SEED = 2_026_080_501
 DEFAULT_SIMULATION_SEED = 2_026_080_502
 
 
+def _draw_stress_margin(
+    size: int,
+    concentration: float,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """Draw a positive heterogeneous margin suitable for stress scenarios."""
+    for _ in range(2_000):
+        margin = rng.dirichlet(np.full(size, concentration))
+        if margin.min() >= 1e-4 and margin.max() <= 0.98:
+            return margin
+    raise RuntimeError("Could not draw a numerically usable stress margin.")
+
+
+def _sample_sizes_in_expected_band(
+    minimum_probability_p: float,
+    minimum_probability_q: float,
+    *,
+    ratio: int,
+    lower: float,
+    upper: float,
+    minimum_n: int = 120,
+) -> tuple[int, int] | None:
+    """Choose integer sample sizes placing both minimum counts in one band."""
+    lower_n_p = max(
+        float(minimum_n),
+        lower / minimum_probability_p,
+        lower / (ratio * minimum_probability_q),
+    )
+    upper_n_p = min(
+        upper / minimum_probability_p,
+        upper / (ratio * minimum_probability_q),
+    )
+    minimum_n_p = int(np.ceil(lower_n_p))
+    maximum_n_p = min(
+        int(np.ceil(upper_n_p) - 1),
+        5_000_000 // ratio,
+    )
+    if minimum_n_p > maximum_n_p:
+        return None
+
+    n_p = (minimum_n_p + maximum_n_p) // 2
+    n_q = ratio * n_p
+    expected_minima = (
+        n_p * minimum_probability_p,
+        n_q * minimum_probability_q,
+    )
+    if not all(lower <= value < upper for value in expected_minima):
+        return None
+    return n_p, n_q
+
+
+def _widespread_sparsity_sample_sizes(
+    probability_p: np.ndarray,
+    probability_q: np.ndarray,
+    *,
+    ratio: int,
+) -> tuple[int, int] | None:
+    """Find sample sizes satisfying cell-wide sparsity constraints."""
+    maximum_n_p = 5_000_000 // ratio
+    boundaries = [120.0, float(maximum_n_p)]
+    boundaries.extend((1.0 / probability_p).reshape(-1).tolist())
+    boundaries.extend((5.0 / probability_p).reshape(-1).tolist())
+    boundaries.extend((1.0 / (ratio * probability_q)).reshape(-1).tolist())
+    boundaries.extend((5.0 / (ratio * probability_q)).reshape(-1).tolist())
+    boundaries = sorted(
+        value for value in boundaries if 120 <= value <= maximum_n_p
+    )
+
+    candidates = {120, maximum_n_p}
+    for boundary in boundaries:
+        candidates.add(int(np.floor(boundary)))
+        candidates.add(int(np.ceil(boundary)))
+    for left, right in zip(boundaries, boundaries[1:]):
+        candidates.add(int(np.floor((left + right) / 2.0)))
+
+    valid_candidates = []
+    for n_p in candidates:
+        if not 120 <= n_p <= maximum_n_p:
+            continue
+        n_q = ratio * n_p
+        expected_p = n_p * probability_p
+        expected_q = n_q * probability_q
+        below_1_p = float(np.mean(expected_p < 1.0))
+        below_1_q = float(np.mean(expected_q < 1.0))
+        below_5_p = float(np.mean(expected_p < 5.0))
+        below_5_q = float(np.mean(expected_q < 5.0))
+        if not (
+            0.25 <= below_1_p <= 0.50
+            and 0.25 <= below_1_q <= 0.50
+            and below_5_p >= 0.50
+            and below_5_q >= 0.50
+        ):
+            continue
+        score = (
+            abs(below_1_p - 0.375)
+            + abs(below_1_q - 0.375)
+            + abs(below_5_p - 0.75)
+            + abs(below_5_q - 0.75)
+        )
+        valid_candidates.append((score, n_p, n_q))
+    if not valid_candidates:
+        return None
+    _, n_p, n_q = min(valid_candidates)
+    return n_p, n_q
+
+
+def _margin_is_near_balanced(margin: np.ndarray) -> bool:
+    uniform = 1.0 / margin.size
+    return bool(
+        margin.max() <= 1.5 * uniform
+        and margin.min() >= 0.5 * uniform
+    )
+
+
+def _margin_is_strongly_skewed(margin: np.ndarray) -> bool:
+    uniform = 1.0 / margin.size
+    return bool(
+        margin.max() >= 1.5 * uniform
+        and margin.min() <= 0.5 * uniform
+    )
+
+
+def generate_expected_count_stress_scenarios(seed: int) -> list[RandomScenario]:
+    """Generate equal-MI pairs with explicitly constrained expected counts."""
+    rng = np.random.default_rng(seed)
+    scenarios = []
+    for shape_index, (rows, columns) in enumerate(SHAPES):
+        for design_index, design in EXPECTED_COUNT_STRESS_DESIGNS.items():
+            last_error: Exception | None = None
+            for attempt in range(1, 5_001):
+                try:
+                    row_p = _draw_stress_margin(
+                        rows,
+                        design["margin_alpha_p"],
+                        rng,
+                    )
+                    column_p = _draw_stress_margin(
+                        columns,
+                        design["margin_alpha_p"],
+                        rng,
+                    )
+                    row_q = _draw_stress_margin(
+                        rows,
+                        design["margin_alpha_q"],
+                        rng,
+                    )
+                    column_q = _draw_stress_margin(
+                        columns,
+                        design["margin_alpha_q"],
+                        rng,
+                    )
+                    probability_p, association_p = (
+                        table_with_target_mi_from_interaction(
+                            row_p,
+                            column_p,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    probability_q, association_q = (
+                        table_with_target_mi_from_interaction(
+                            row_q,
+                            column_q,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    if min(probability_p.min(), probability_q.min()) < 1e-12:
+                        raise ValueError("Generated cell probability is too small.")
+                    sample_sizes = _sample_sizes_in_expected_band(
+                        float(probability_p.min()),
+                        float(probability_q.min()),
+                        ratio=design["sample_size_ratio"],
+                        lower=design["minimum_expected_lower"],
+                        upper=design["minimum_expected_upper"],
+                    )
+                    if sample_sizes is None:
+                        raise ValueError(
+                            "No sample sizes satisfy the expected-count band."
+                        )
+                    if np.abs(probability_p - probability_q).sum() < 0.05:
+                        raise ValueError("Generated weak-null pair is too similar.")
+                    if min(
+                        float(influence_variance(probability_p)),
+                        float(influence_variance(probability_q)),
+                    ) < 1e-6:
+                        raise ValueError(
+                            "Generated influence variance is degenerate."
+                        )
+                except (RuntimeError, ValueError) as error:
+                    last_error = error
+                    continue
+                break
+            else:
+                raise RuntimeError(
+                    f"Failed to generate stress shape={rows}x{columns}, "
+                    f"design={design_index}: {last_error}"
+                )
+
+            n_p, n_q = sample_sizes
+            scenarios.append(
+                RandomScenario(
+                    scenario_id=f"stress_{rows}x{columns}_d{design_index}",
+                    shape_index=shape_index,
+                    design_index=design_index,
+                    rows=rows,
+                    columns=columns,
+                    n_p=n_p,
+                    n_q=n_q,
+                    target_mi=design["target_mi"],
+                    margin_alpha_p=design["margin_alpha_p"],
+                    margin_alpha_q=design["margin_alpha_q"],
+                    association_p=association_p,
+                    association_q=association_q,
+                    generation_attempts=attempt,
+                    probability_p=probability_p,
+                    probability_q=probability_q,
+                )
+            )
+    return scenarios
+
+
+def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
+    """Generate pre-specified difficult equal-MI population pairs."""
+    rng = np.random.default_rng(seed)
+    scenarios = []
+    for shape_index, (rows, columns) in enumerate(SHAPES):
+        cells = rows * columns
+        for design_index, design in ADVERSARIAL_DESIGNS.items():
+            last_error: Exception | None = None
+            for attempt in range(1, 10_001):
+                try:
+                    row_p = _draw_stress_margin(
+                        rows,
+                        design["margin_alpha_p"],
+                        rng,
+                    )
+                    column_p = _draw_stress_margin(
+                        columns,
+                        design["margin_alpha_p"],
+                        rng,
+                    )
+                    row_q = _draw_stress_margin(
+                        rows,
+                        design["margin_alpha_q"],
+                        rng,
+                    )
+                    column_q = _draw_stress_margin(
+                        columns,
+                        design["margin_alpha_q"],
+                        rng,
+                    )
+                    if design["kind"] == "shape_mismatch" and not (
+                        _margin_is_near_balanced(row_p)
+                        and _margin_is_near_balanced(column_p)
+                        and _margin_is_strongly_skewed(row_q)
+                        and _margin_is_strongly_skewed(column_q)
+                    ):
+                        raise ValueError(
+                            "Margins do not satisfy the shape-mismatch rule."
+                        )
+
+                    probability_p, association_p = (
+                        table_with_target_mi_from_interaction(
+                            row_p,
+                            column_p,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    probability_q, association_q = (
+                        table_with_target_mi_from_interaction(
+                            row_q,
+                            column_q,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    if min(probability_p.min(), probability_q.min()) < 1e-12:
+                        raise ValueError("Generated cell probability is too small.")
+
+                    if design["kind"] == "widespread_sparse":
+                        sample_sizes = _widespread_sparsity_sample_sizes(
+                            probability_p,
+                            probability_q,
+                            ratio=design["sample_size_ratio"],
+                        )
+                    elif design["kind"] == "support_instability":
+                        if design["support_axis"] == "row":
+                            minimum_probability_p = float(
+                                probability_p.sum(axis=1).min()
+                            )
+                            minimum_probability_q = float(
+                                probability_q.sum(axis=1).min()
+                            )
+                        else:
+                            minimum_probability_p = float(
+                                probability_p.sum(axis=0).min()
+                            )
+                            minimum_probability_q = float(
+                                probability_q.sum(axis=0).min()
+                            )
+                        sample_sizes = _sample_sizes_in_expected_band(
+                            minimum_probability_p,
+                            minimum_probability_q,
+                            ratio=design["sample_size_ratio"],
+                            lower=0.20,
+                            upper=1.0,
+                            minimum_n=30,
+                        )
+                    else:
+                        n_p = max(120, cells * design["density"])
+                        sample_sizes = (
+                            n_p,
+                            n_p * design["sample_size_ratio"],
+                        )
+                    if sample_sizes is None:
+                        raise ValueError(
+                            "No sample sizes satisfy the adversarial rule."
+                        )
+                    if np.abs(probability_p - probability_q).sum() < 0.05:
+                        raise ValueError("Generated weak-null pair is too similar.")
+                    if min(
+                        float(influence_variance(probability_p)),
+                        float(influence_variance(probability_q)),
+                    ) < 1e-6:
+                        raise ValueError(
+                            "Generated influence variance is degenerate."
+                        )
+                except (RuntimeError, ValueError) as error:
+                    last_error = error
+                    continue
+                break
+            else:
+                raise RuntimeError(
+                    f"Failed to generate adversarial shape={rows}x{columns}, "
+                    f"design={design_index}: {last_error}"
+                )
+
+            n_p, n_q = sample_sizes
+            scenarios.append(
+                RandomScenario(
+                    scenario_id=f"adversarial_{rows}x{columns}_d{design_index}",
+                    shape_index=shape_index,
+                    design_index=design_index,
+                    rows=rows,
+                    columns=columns,
+                    n_p=n_p,
+                    n_q=n_q,
+                    target_mi=design["target_mi"],
+                    margin_alpha_p=design["margin_alpha_p"],
+                    margin_alpha_q=design["margin_alpha_q"],
+                    association_p=association_p,
+                    association_q=association_q,
+                    generation_attempts=attempt,
+                    probability_p=probability_p,
+                    probability_q=probability_q,
+                )
+            )
+    return scenarios
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Compare normal Wald, simple Welch, and expanded Welch on one "
-            "72-population equal-MI grid."
+            "broad equal-MI grid."
         )
     )
     parser.add_argument("--profile", choices=PROFILE_SETTINGS, default="smoke")
@@ -187,10 +708,26 @@ def _population_metadata(scenario: RandomScenario) -> dict:
         "observations_per_cell_p": scenario.n_p / cells,
         "observations_per_cell_q": scenario.n_q / cells,
         "sample_size_ratio_q_to_p": scenario.n_q / scenario.n_p,
+        "minimum_joint_expected_pair": min(
+            scenario.n_p * float(p.min()),
+            scenario.n_q * float(q.min()),
+        ),
         "joint_expected_below_1_p": float(np.mean(scenario.n_p * p < 1.0)),
         "joint_expected_below_1_q": float(np.mean(scenario.n_q * q < 1.0)),
         "joint_expected_below_5_p": float(np.mean(scenario.n_p * p < 5.0)),
         "joint_expected_below_5_q": float(np.mean(scenario.n_q * q < 5.0)),
+        "minimum_row_expected_p": float(
+            scenario.n_p * p.sum(axis=1).min()
+        ),
+        "minimum_row_expected_q": float(
+            scenario.n_q * q.sum(axis=1).min()
+        ),
+        "minimum_column_expected_p": float(
+            scenario.n_p * p.sum(axis=0).min()
+        ),
+        "minimum_column_expected_q": float(
+            scenario.n_q * q.sum(axis=0).min()
+        ),
         "maximum_row_margin_p": float(p.sum(axis=1).max()),
         "maximum_column_margin_p": float(p.sum(axis=0).max()),
         "maximum_row_margin_q": float(q.sum(axis=1).max()),
@@ -211,6 +748,10 @@ def _sample_diagnostics(tables: np.ndarray) -> dict[str, np.ndarray]:
         "expected_below_1": np.mean(expected < 1.0, axis=(1, 2)),
         "expected_below_5": np.mean(expected < 5.0, axis=(1, 2)),
         "minimum_expected": expected.min(axis=(1, 2)),
+        "empty_row_fraction": np.mean(rows == 0, axis=1),
+        "empty_column_fraction": np.mean(columns == 0, axis=1),
+        "has_empty_margin": np.any(rows == 0, axis=1)
+        | np.any(columns == 0, axis=1),
     }
 
 
@@ -234,6 +775,7 @@ def _simulate_null_scenario(
     rng = np.random.default_rng(seed)
     method_counts = {
         method: {
+            "valid": 0,
             "coverage": 0,
             "rejections": {alpha: 0 for alpha in ALPHAS},
             "degrees_of_freedom": [],
@@ -251,6 +793,9 @@ def _simulate_null_scenario(
             "expected_below_1",
             "expected_below_5",
             "minimum_expected",
+            "empty_row_fraction",
+            "empty_column_fraction",
+            "has_empty_margin",
         )
         for group in ("p", "q")
     }
@@ -269,18 +814,22 @@ def _simulate_null_scenario(
             size=count,
         ).reshape(count, scenario.rows, scenario.columns)
         values = _method_values(table_p, table_q)
-        common_valid = values["valid"] & values["expanded_valid"]
-        valid_count += int(np.count_nonzero(common_valid))
+        base_valid = values["base_valid"]
+        valid_count += int(np.count_nonzero(base_valid))
 
-        delta = values["delta_corrected"][common_valid]
-        standard_error = values["standard_error"][common_valid]
+        delta = values["delta_corrected"][base_valid]
+        standard_error = values["standard_error"][base_valid]
         delta_error = delta - true_delta
         delta_sum += float(np.sum(delta_error))
         delta_square_sum += float(np.sum(delta_error**2))
         standard_error_sum += float(np.sum(standard_error))
 
         for method, specification in METHODS.items():
-            p_values = values[specification["p_value"]][common_valid]
+            method_valid = values[specification["validity"]]
+            method_counts[method]["valid"] += int(
+                np.count_nonzero(method_valid)
+            )
+            p_values = values[specification["p_value"]][method_valid]
             for alpha in ALPHAS:
                 method_counts[method]["rejections"][alpha] += int(
                     np.count_nonzero(p_values <= alpha)
@@ -289,13 +838,20 @@ def _simulate_null_scenario(
             if df_column is None:
                 critical = norm.ppf(0.975)
             else:
-                degrees_of_freedom = values[df_column][common_valid]
+                degrees_of_freedom = values[df_column][method_valid]
                 method_counts[method]["degrees_of_freedom"].append(
                     degrees_of_freedom
                 )
                 critical = t.ppf(0.975, df=degrees_of_freedom)
             method_counts[method]["coverage"] += int(
-                np.count_nonzero(np.abs(delta_error) <= critical * standard_error)
+                    np.count_nonzero(
+                        np.abs(
+                            values["delta_corrected"][method_valid]
+                            - true_delta
+                        )
+                        <= critical
+                        * values["standard_error"][method_valid]
+                    )
             )
 
         for group, tables in (("p", table_p), ("q", table_q)):
@@ -310,8 +866,8 @@ def _simulate_null_scenario(
         {
             "simulation_seed": seed,
             "replicates": replicates,
-            "valid_replicates": valid_count,
-            "valid_rate": valid_count / replicates,
+            "estimator_valid_replicates": valid_count,
+            "estimator_valid_rate": valid_count / replicates,
             "mean_delta_error": delta_sum / valid_count,
             "empirical_delta_sd": np.sqrt(
                 max(
@@ -335,11 +891,18 @@ def _simulate_null_scenario(
 
     rows = []
     for method, specification in METHODS.items():
+        method_valid_count = method_counts[method]["valid"]
         row = {
             **common,
             "method": method,
             "method_label": specification["label"],
-            "coverage_95": method_counts[method]["coverage"] / valid_count,
+            "valid_replicates": method_valid_count,
+            "valid_rate": method_valid_count / replicates,
+            "coverage_95": (
+                method_counts[method]["coverage"] / method_valid_count
+                if method_valid_count
+                else np.nan
+            ),
         }
         df_parts = method_counts[method]["degrees_of_freedom"]
         if df_parts:
@@ -356,8 +919,12 @@ def _simulate_null_scenario(
         for alpha in ALPHAS:
             label = f"{int(round(100 * alpha)):02d}"
             rejections = method_counts[method]["rejections"][alpha]
-            fpr = rejections / valid_count
-            low, high = _wilson(rejections, valid_count)
+            fpr = (
+                rejections / method_valid_count
+                if method_valid_count
+                else np.nan
+            )
+            low, high = _wilson(rejections, method_valid_count)
             row[f"fpr_{label}"] = fpr
             row[f"fpr_{label}_low"] = low
             row[f"fpr_{label}_high"] = high
@@ -593,7 +1160,15 @@ def _runtime_audit(
 
 
 def _plot_calibration(summary: pd.DataFrame, output_dir: Path) -> None:
-    figure, axes = plt.subplots(1, 3, figsize=(15, 4.8), sharey=True)
+    columns = 3
+    rows = int(np.ceil(len(REGIME_ORDER) / columns))
+    figure, axes = plt.subplots(
+        rows,
+        columns,
+        figsize=(5 * columns, 4.6 * rows),
+        sharey=True,
+    )
+    axes = np.asarray(axes).reshape(-1)
     colors = ("#355070", "#D97745", "#4F7C64")
     width = 0.24
     x = np.arange(len(ALPHAS))
@@ -618,6 +1193,8 @@ def _plot_calibration(summary: pd.DataFrame, output_dir: Path) -> None:
         axis.set_title(REGIMES[regime]["label"])
         axis.set_xlabel("Nominal alpha")
         axis.grid(axis="y", alpha=0.2)
+    for axis in axes[len(REGIME_ORDER) :]:
+        axis.set_visible(False)
     axes[0].set_ylabel("Mean absolute false-positive-rate error")
     axes[-1].legend(frameon=False)
     figure.suptitle("Equal-MI null calibration by sampling regime")
@@ -663,6 +1240,7 @@ def _write_report(
             "mean_absolute_fpr_error_05",
             "mean_fpr_01",
             "mean_absolute_fpr_error_01",
+            "mean_valid_rate",
             "mean_coverage_95",
         ]
     ].rename(
@@ -673,6 +1251,7 @@ def _write_report(
             "mean_absolute_fpr_error_05": "Error at 0.05",
             "mean_fpr_01": "FPR at 0.01",
             "mean_absolute_fpr_error_01": "Error at 0.01",
+            "mean_valid_rate": "Valid rate",
             "mean_coverage_95": "95% coverage",
         }
     )
@@ -682,6 +1261,7 @@ def _write_report(
             "mean_absolute_fpr_error_10",
             "mean_absolute_fpr_error_05",
             "mean_absolute_fpr_error_01",
+            "mean_valid_rate",
             "mean_coverage_95",
         ]
     ].rename(
@@ -690,6 +1270,7 @@ def _write_report(
             "mean_absolute_fpr_error_10": "MAE at 0.10",
             "mean_absolute_fpr_error_05": "MAE at 0.05",
             "mean_absolute_fpr_error_01": "MAE at 0.01",
+            "mean_valid_rate": "Mean valid rate",
             "mean_coverage_95": "95% coverage",
         }
     )
@@ -715,20 +1296,33 @@ def _write_report(
             "relative_to_normal": "Relative to Wald",
         }
     )
-    difficult = summary[summary["regime"].eq("sparse_imbalanced")].set_index(
-        "method"
-    )
     well_sampled = summary[summary["regime"].eq("well_sampled")].set_index(
         "method"
     )
-    hard_reduction_05 = 1.0 - (
-        difficult.loc["expanded_welch", "mean_absolute_fpr_error_05"]
-        / difficult.loc["normal_wald", "mean_absolute_fpr_error_05"]
+    difficult_regimes = (
+        "sparse_imbalanced",
+        "highly_sparse",
+        "ultra_sparse",
+        "widespread_sparse",
+        "shape_mismatch",
+        "extreme_imbalance",
+        "support_instability",
     )
-    hard_reduction_01 = 1.0 - (
-        difficult.loc["expanded_welch", "mean_absolute_fpr_error_01"]
-        / difficult.loc["normal_wald", "mean_absolute_fpr_error_01"]
-    )
+    target_reductions = {}
+    for regime in difficult_regimes:
+        difficult = summary[summary["regime"].eq(regime)].set_index("method")
+        target_reductions[regime] = {
+            label: 1.0
+            - difficult.loc[
+                "expanded_welch",
+                f"mean_absolute_fpr_error_{label}",
+            ]
+            / difficult.loc[
+                "normal_wald",
+                f"mean_absolute_fpr_error_{label}",
+            ]
+            for label in ("05", "01")
+        }
     power_pivot = power.pivot(
         index="scenario_id",
         columns="method",
@@ -754,10 +1348,10 @@ def _write_report(
         "",
         "## Design",
         "",
-        "The null grid contains 12 table shapes and six designs, grouped into",
-        "three regimes with two population variants per regime. The full profile",
-        "therefore contains 72 population pairs. Every method sees the same table",
-        "pairs and uses the same bias-corrected MI difference and standard error.",
+        f"The null grid contains {scenario_results['scenario_id'].nunique()} fixed",
+        f"population pairs across {len(REGIME_ORDER)} regimes. Every method sees",
+        "the same table pairs and uses the same bias-corrected MI difference and",
+        "standard error.",
         "",
     ]
     for regime in REGIME_ORDER:
@@ -778,7 +1372,9 @@ def _write_report(
             _markdown(key_rows),
             "",
             "False-positive-rate error is the absolute difference between observed",
-            "and nominal rejection rates, so lower is better.",
+            "and nominal rejection rates among valid calculations, so lower is",
+            "better. Validity is reported separately and is part of method",
+            "performance in the support-instability boundary regime.",
             "",
             "## Overall summary",
             "",
@@ -786,10 +1382,15 @@ def _write_report(
             "",
             "## Direct interpretation",
             "",
-            f"- In the target sparse and imbalanced regime, expanded Welch reduced",
-            f"  mean calibration error relative to normal Wald by",
-            f"  **{hard_reduction_05:.1%} at alpha 0.05** and",
-            f"  **{hard_reduction_01:.1%} at alpha 0.01**.",
+            "- Relative calibration changes in the difficult regimes are",
+            "  reported directly below; positive percentages mean that expanded",
+            "  Welch reduced error relative to normal Wald.",
+            *[
+                f"- **{REGIMES[regime]['label']}:** "
+                f"{reductions['05']:.1%} at alpha 0.05 and "
+                f"{reductions['01']:.1%} at alpha 0.01."
+                for regime, reductions in target_reductions.items()
+            ],
             f"- This was not a universal improvement. In well-sampled tables at",
             f"  alpha 0.05, expanded Welch increased mean absolute error from",
             f"  `{well_sampled.loc['normal_wald', 'mean_absolute_fpr_error_05']:.5f}`",
@@ -839,6 +1440,15 @@ def main() -> None:
     run_start = perf_counter()
 
     scenarios = generate_random_scenarios(args.scenario_seed)
+    scenarios.extend(
+        generate_expected_count_stress_scenarios(args.scenario_seed + 1)
+    )
+    scenarios.extend(
+        generate_adversarial_scenarios(args.scenario_seed + 2)
+    )
+    scenarios.sort(
+        key=lambda scenario: (scenario.shape_index, scenario.design_index)
+    )
     if settings["shape_limit"] is not None:
         scenarios = [
             scenario

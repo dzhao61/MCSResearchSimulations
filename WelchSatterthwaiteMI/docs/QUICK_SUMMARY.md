@@ -289,62 +289,80 @@ change the complexity order.
 
 ## Results
 
-The simplified evaluation uses one grid of 72 population pairs:
+The simplified evaluation uses one grid of 216 population pairs:
 
 $$
-12\ \text{table shapes}
-\times 3\ \text{sampling regimes}
-\times 2\ \text{population variants}
-=72.
+12\ \text{table shapes}\times18\ \text{population designs}=216.
 $$
 
 Shapes range from $2\times2$ to $20\times20$. Every pair satisfies
 $I(P)=I(Q)$ while allowing $P\ne Q$. Each population pair receives 10,000
-independently simulated table pairs, giving 720,000 null replicates in total.
+independently simulated table pairs, giving 2,160,000 null replicates in
+total.
 
-The three regimes have direct interpretations:
+The nine regimes have direct interpretations. In addition to the original
+five, the adversarial extension includes:
 
-- **Well sampled:** equal sample sizes and high observations per cell;
-- **Moderate:** a $2{:}1$ sample-size ratio and moderate observations per cell;
-- **Sparse and imbalanced:** a $4{:}1$ ratio, low observations per cell, and
-  heterogeneous margins.
+- **Well sampled:** equal sample sizes and high average observations per cell;
+- **Moderate:** a $2{:}1$ sample-size ratio and moderate average observations
+  per cell;
+- **Sparse and imbalanced:** a $4{:}1$ ratio, low average observations per
+  cell, and heterogeneous margins;
+- **Highly skewed and sparse:** both populations have minimum true expected
+  cell counts $1\leq E_{\min}<5$;
+- **Ultra-skewed and sparse:** both populations have minimum true expected
+  cell counts $0<E_{\min}<1$;
+- **Widespread sparsity:** 25-50% of cells have expected counts below 1;
+- **Equal-MI shape mismatch:** balanced $P$ and strongly skewed $Q$ have the
+  same true MI;
+- **Extreme sample imbalance:** sample-size ratios are $1{:}10$ or $1{:}20$;
+- **Support instability:** a complete row or column has expected total below
+  1 and frequently disappears from the sampled table.
 
-Accuracy is measured by mean absolute false-positive-rate error. For example,
+Here $E_{\min}=\min_{i,j}(n p_{ij})$. Unlike average observations per cell,
+this quantity detects rare cells even when the total sample size is large.
+
+Accuracy is measured by mean absolute false-positive-rate error among valid
+calculations. For example,
 if a nominal $\alpha=0.05$ test rejects 6% of true null cases, its error is
 $|0.06-0.05|=0.01$. Lower values are better.
 
 The normal baseline uses the same $\widehat\Delta_{\mathrm{BC}}$,
 $\widehat{\operatorname{SE}}$, and $T$, but compares $T$ with a standard
-normal distribution instead of a Student distribution.
+normal distribution instead of a Student distribution. Validity is a
+separate performance measure because the support-instability regime can make
+an analytical calculation undefined.
 
-| Regime | Method | FPR at $0.05$ | Error at $0.05$ | FPR at $0.01$ | Error at $0.01$ |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Well sampled | Normal Wald | 0.04651 | **0.00369** | 0.00875 | **0.00137** |
-| Well sampled | Simple Welch | 0.04645 | 0.00375 | 0.00869 | 0.00143 |
-| Well sampled | Expanded Welch | 0.04507 | 0.00510 | 0.00809 | 0.00197 |
-| Moderate | Normal Wald | 0.04790 | 0.00395 | 0.00965 | 0.00158 |
-| Moderate | Simple Welch | 0.04769 | **0.00391** | 0.00954 | **0.00154** |
-| Moderate | Expanded Welch | 0.04543 | 0.00473 | 0.00841 | 0.00176 |
-| Sparse and imbalanced | Normal Wald | 0.05556 | 0.00589 | 0.01266 | 0.00278 |
-| Sparse and imbalanced | Simple Welch | 0.05504 | 0.00538 | 0.01235 | 0.00247 |
-| Sparse and imbalanced | Expanded Welch | 0.05306 | **0.00358** | 0.01115 | **0.00138** |
+| Regime | Normal error at $0.05$ | Simple error | Expanded error | Expanded valid rate |
+| --- | ---: | ---: | ---: | ---: |
+| Well sampled | **0.00326** | 0.00332 | 0.00466 | 1.00000 |
+| Moderate | 0.00370 | **0.00365** | 0.00419 | 1.00000 |
+| Sparse and imbalanced | 0.00615 | 0.00565 | **0.00395** | 1.00000 |
+| Highly skewed and sparse | 0.00275 | 0.00262 | **0.00217** | 1.00000 |
+| Ultra-skewed and sparse | 0.00312 | 0.00296 | **0.00248** | 1.00000 |
+| Widespread sparsity | **0.01064** | 0.01076 | 0.01439 | 0.99143 |
+| Equal-MI shape mismatch | **0.00420** | 0.00424 | 0.00443 | 1.00000 |
+| Extreme sample imbalance | 0.00876 | 0.00801 | **0.00582** | 1.00000 |
+| Support instability | **0.01465** | 0.01606 | 0.02074 | 0.90405 |
 
-Expanded Welch reduced sparse-regime error relative to normal Wald by 39.2%
-at $\alpha=0.05$ and 50.6% at $\alpha=0.01$. This was not a universal gain:
-it became mildly conservative and less accurate in well-sampled tables.
+Expanded Welch improved the isolated-sparsity regimes and reduced error by
+33.6% under extreme sample imbalance. It did not improve shape mismatch by
+itself. Under widespread sparsity it became too conservative, and under
+support instability it was both less accurate and less often defined.
 
 Across five power scenarios, expanded Welch lost 0.0102 power on average and
 at most 0.0123 relative to normal Wald. Its median runtime was 0.16-0.18 ms
-per table pair, approximately 1.9 times normal Wald. All methods had a 100%
-valid calculation rate over the null grid.
+per table pair, approximately 1.9 times normal Wald. All methods were fully
+valid outside the two support-degradation regimes.
 
 ## Conclusion
 
 Normal Wald remains the best default in well-sampled tables. Simple Welch is
 almost identical to it because its effective degrees of freedom are usually
-large. Expanded Welch is the useful finite-sample correction in the intended
-sparse, skewed, and sample-imbalanced regime, where it gives heavier and more
-realistic tails.
+large. Expanded Welch is useful when isolated rare cells or unequal sample
+sizes make variance estimation unstable while the sampled support remains
+mostly intact. It should not be used as a remedy for widespread empty cells
+or disappearing rows and columns.
 
 The clean thesis claim is therefore regime-specific: expanded Welch improves
 calibration in difficult finite samples at negligible absolute computational

@@ -56,6 +56,16 @@ class WelchTests(unittest.TestCase):
             result.normal_p_value,
         )
 
+    def test_method_validity_is_separate_at_unstable_support(self) -> None:
+        p = np.array([[8, 25], [1, 1]])
+        q = np.array([[9, 26], [0, 0]])
+        values = differential_mi_pvalues(p, q)
+        self.assertTrue(values["base_valid"])
+        self.assertTrue(values["simple_valid"])
+        self.assertFalse(values["expanded_valid"])
+        self.assertTrue(np.isfinite(values["normal_p_value"]))
+        self.assertTrue(np.isnan(values["expanded_welch_p_value"]))
+
     def test_group_swap_and_relabelling_invariance(self) -> None:
         p = np.array([[38, 8, 4], [7, 25, 8], [4, 9, 17]])
         q = np.array([[55, 4, 6], [10, 37, 13], [6, 16, 33]])
