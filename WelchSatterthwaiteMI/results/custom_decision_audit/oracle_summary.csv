@@ -1,0 +1,3 @@
+cohort,configurations,mean_oracle_selection_score,oracle_selects_expanded_fraction
+development,1404,1.2723522997797392,0.5733618233618234
+holdout,1404,1.4445927882812315,0.5819088319088319

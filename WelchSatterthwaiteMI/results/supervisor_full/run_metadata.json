@@ -13,15 +13,16 @@
   "methods": [
     "normal_wald",
     "simple_welch",
-    "expanded_welch"
+    "expanded_welch",
+    "custom_welch"
   ],
   "alphas": [
     0.1,
     0.05,
     0.01
   ],
-  "elapsed_seconds": 35.78762066701893,
-  "script_sha256": "b490730e8c8543d1ac0b5e85e8b59c5fa62a3d0f8ec71a1e7566f5fe48d8dea9",
+  "elapsed_seconds": 36.38420862494968,
+  "script_sha256": "d9773f816e8d99b35b0e351b60617a7ff11bfa7f54968bdd6c3df05515cc6fea",
   "python": "3.13.5",
   "numpy": "2.4.4",
   "scipy": "1.17.1",

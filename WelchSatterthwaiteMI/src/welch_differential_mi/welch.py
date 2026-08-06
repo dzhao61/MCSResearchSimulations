@@ -11,6 +11,9 @@ from scipy.stats import norm, t
 from differential_mi.statistics import influence_variance, plugin_mi
 
 
+CUSTOM_WELCH_MIN_SAMPLE_RATIO = 4.0
+
+
 @dataclass(frozen=True)
 class WelchResult:
     """Normal and finite-df inference for one pair of discrete tables."""
@@ -30,12 +33,16 @@ class WelchResult:
     welch_p_value: float
     expanded_welch_degrees_of_freedom: float
     expanded_welch_p_value: float
+    custom_welch_degrees_of_freedom: float
+    custom_welch_p_value: float
+    custom_welch_uses_expanded: bool
     unbiased_standard_error: float
     unbiased_statistic: float
     unbiased_welch_degrees_of_freedom: float
     unbiased_welch_p_value: float
     valid: bool
     expanded_valid: bool
+    custom_valid: bool
     elapsed_seconds: float
 
     def to_dict(self) -> dict:
@@ -298,9 +305,19 @@ def differential_mi_pvalues(
         & (expanded_df > 0)
         & np.isfinite(expanded_p)
     )
+    sample_size_ratio = np.maximum(totals_p, totals_q) / np.minimum(
+        totals_p,
+        totals_q,
+    )
+    custom_prefers_expanded = sample_size_ratio >= CUSTOM_WELCH_MIN_SAMPLE_RATIO
+    custom_uses_expanded = custom_prefers_expanded & expanded_valid
+    custom_df = np.where(custom_uses_expanded, expanded_df, np.nan)
+    custom_p = np.where(custom_uses_expanded, expanded_p, normal_p)
+    custom_valid = base_valid & np.isfinite(custom_p)
     normal_p = np.where(base_valid, normal_p, np.nan)
     welch_p = np.where(valid, welch_p, np.nan)
     expanded_p = np.where(expanded_valid, expanded_p, np.nan)
+    custom_p = np.where(custom_valid, custom_p, np.nan)
     unbiased_p = np.where(
         valid & np.isfinite(unbiased_p),
         unbiased_p,
@@ -321,6 +338,9 @@ def differential_mi_pvalues(
         "variance_influence_variance_q": variance_influence_variance_q,
         "expanded_welch_degrees_of_freedom": expanded_df,
         "expanded_welch_p_value": expanded_p,
+        "custom_welch_degrees_of_freedom": custom_df,
+        "custom_welch_p_value": custom_p,
+        "custom_welch_uses_expanded": custom_uses_expanded,
         "unbiased_standard_error": unbiased_standard_error,
         "unbiased_statistic": unbiased_statistic,
         "unbiased_welch_degrees_of_freedom": unbiased_df,
@@ -329,6 +349,7 @@ def differential_mi_pvalues(
         "valid": valid,
         "simple_valid": simple_valid,
         "expanded_valid": expanded_valid,
+        "custom_valid": custom_valid,
     }
 
 
@@ -361,6 +382,13 @@ def welch_satterthwaite_test(
             values["expanded_welch_degrees_of_freedom"]
         ),
         expanded_welch_p_value=float(values["expanded_welch_p_value"]),
+        custom_welch_degrees_of_freedom=float(
+            values["custom_welch_degrees_of_freedom"]
+        ),
+        custom_welch_p_value=float(values["custom_welch_p_value"]),
+        custom_welch_uses_expanded=bool(
+            values["custom_welch_uses_expanded"]
+        ),
         unbiased_standard_error=float(values["unbiased_standard_error"]),
         unbiased_statistic=float(values["unbiased_statistic"]),
         unbiased_welch_degrees_of_freedom=float(
@@ -369,5 +397,6 @@ def welch_satterthwaite_test(
         unbiased_welch_p_value=float(values["unbiased_welch_p_value"]),
         valid=bool(values["valid"]),
         expanded_valid=bool(values["expanded_valid"]),
+        custom_valid=bool(values["custom_valid"]),
         elapsed_seconds=perf_counter() - start,
     )

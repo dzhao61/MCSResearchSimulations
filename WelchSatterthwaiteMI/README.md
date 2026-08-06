@@ -43,7 +43,7 @@ The primary evidence now comes from one unified experiment with 216 equal-MI
 population pairs and 10,000 independently simulated table pairs per
 population. The nine regimes include controlled isolated sparsity,
 widespread sparsity, shape mismatch, extreme sample imbalance, and support
-instability, with the same three analytic methods evaluated on every
+instability, with the same four analytic methods evaluated on every
 replicate.
 
 Expanded Welch reduced alpha-`0.05` calibration error relative to normal Wald
@@ -58,6 +58,22 @@ The result supports expanded Welch as a targeted finite-sample correction,
 not as a uniformly superior replacement for normal Wald. See the
 [`primary experiment report`](results/supervisor_full/REPORT.md) for the
 concise results.
+
+The fourth method, **Custom Welch**, turns that boundary into a pre-specified
+decision rule. It uses expanded Welch when the larger sample is at least four
+times the smaller sample and the expanded calculation is valid; otherwise it
+uses normal Wald. Across all 216 null scenarios, Custom Welch had the lowest
+mean absolute calibration error at all three tested significance levels while
+retaining Wald's mean valid rate. The ratio cutoff was selected during method
+development and therefore still requires confirmation on a new frozen grid.
+
+A subsequent crossed routing audit found that the benefit of expanded Welch
+begins at a sample-size ratio of `2:1`, not `4:1`. Development and independent
+holdout cohorts both selected `2:1` as the best tested ratio threshold, while
+support, density, and variance-share guards added complexity without a
+meaningful holdout gain. The implementation remains at `4:1` until the revised
+rule receives one frozen confirmation run. See the
+[`Custom Welch decision audit`](docs/CUSTOM_WELCH_DECISION_AUDIT.md).
 
 ## Commands
 

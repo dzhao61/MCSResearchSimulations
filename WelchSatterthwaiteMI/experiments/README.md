@@ -3,9 +3,21 @@
 ## Primary Experiment
 
 `run_supervisor_experiment.py` is the current unified experiment. It compares
-normal Wald, simple Welch-Satterthwaite, and expanded Welch-Satterthwaite on
-the same null and alternative table pairs. Its full output is in
+normal Wald, simple Welch-Satterthwaite, expanded Welch-Satterthwaite, and the
+guarded Custom Welch rule on the same null and alternative table pairs. Its
+full output is in
 [`../results/supervisor_full/`](../results/supervisor_full/).
+
+## Custom Welch Routing Audit
+
+`investigate_custom_welch_decision.py` crosses sample-size ratio, population
+regime, table shape, and allocation direction in separate development and
+holdout cohorts. It compares ratio thresholds and observed-data guards for
+choosing between normal Wald and expanded Welch. The analysis is summarized
+in
+[`../docs/CUSTOM_WELCH_DECISION_AUDIT.md`](../docs/CUSTOM_WELCH_DECISION_AUDIT.md),
+with complete output in
+[`../results/custom_decision_audit/`](../results/custom_decision_audit/).
 
 ## Historical Experiments
 

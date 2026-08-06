@@ -1,0 +1,49 @@
+{
+  "replicates": 3000,
+  "batch_size": 500,
+  "shape_limit": null,
+  "allocations": 2808,
+  "population_pairs_per_cohort": 108,
+  "ratios": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    10,
+    20
+  ],
+  "audit_shapes": [
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      4,
+      6
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      10,
+      10
+    ],
+    [
+      20,
+      20
+    ]
+  ],
+  "cohort_seeds": {
+    "development": 2026080501,
+    "holdout": 2026090501
+  },
+  "simulation_seed": 2026080601,
+  "elapsed_seconds": 131.0950472499244,
+  "script_sha256": "87d25e4bfd9928260fa998d789a187bfe661a1b56b357254e1207278e33c4690"
+}

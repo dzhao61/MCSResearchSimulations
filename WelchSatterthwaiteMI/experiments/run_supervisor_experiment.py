@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one explainable validation of three analytic equal-MI tests."""
+"""Run one explainable validation of four analytic equal-MI tests."""
 
 from __future__ import annotations
 
@@ -37,7 +37,10 @@ from differential_mi.scenarios import (  # noqa: E402
     build_distributions,
     power_curve_scenarios,
 )
-from welch_differential_mi import differential_mi_pvalues  # noqa: E402
+from welch_differential_mi import (  # noqa: E402
+    CUSTOM_WELCH_MIN_SAMPLE_RATIO,
+    differential_mi_pvalues,
+)
 
 
 ALPHAS = (0.10, 0.05, 0.01)
@@ -59,6 +62,12 @@ METHODS = {
         "p_value": "expanded_welch_p_value",
         "degrees_of_freedom": "expanded_welch_degrees_of_freedom",
         "validity": "expanded_valid",
+    },
+    "custom_welch": {
+        "label": "Custom Welch",
+        "p_value": "custom_welch_p_value",
+        "degrees_of_freedom": "custom_welch_degrees_of_freedom",
+        "validity": "custom_valid",
     },
 }
 REGIMES = {
@@ -765,6 +774,30 @@ def _wilson(rejections: int, total: int) -> tuple[float, float]:
     return float(interval.low), float(interval.high)
 
 
+def _critical_values(
+    method: str,
+    values: dict[str, np.ndarray],
+    method_valid: np.ndarray,
+) -> np.ndarray | float:
+    """Return the 95% reference cutoff selected by one method."""
+    if method == "normal_wald":
+        return norm.ppf(0.975)
+    if method == "custom_welch":
+        use_expanded = values["custom_welch_uses_expanded"][method_valid]
+        critical = np.full(np.count_nonzero(method_valid), norm.ppf(0.975))
+        expanded_df = values["expanded_welch_degrees_of_freedom"][method_valid]
+        critical[use_expanded] = t.ppf(
+            0.975,
+            df=expanded_df[use_expanded],
+        )
+        return critical
+    specification = METHODS[method]
+    return t.ppf(
+        0.975,
+        df=values[specification["degrees_of_freedom"]][method_valid],
+    )
+
+
 def _simulate_null_scenario(
     scenario: RandomScenario,
     *,
@@ -779,6 +812,7 @@ def _simulate_null_scenario(
             "coverage": 0,
             "rejections": {alpha: 0 for alpha in ALPHAS},
             "degrees_of_freedom": [],
+            "expanded_route": 0,
         }
         for method in METHODS
     }
@@ -830,19 +864,27 @@ def _simulate_null_scenario(
                 np.count_nonzero(method_valid)
             )
             p_values = values[specification["p_value"]][method_valid]
+            if method == "custom_welch":
+                method_counts[method]["expanded_route"] += int(
+                    np.count_nonzero(
+                        values["custom_welch_uses_expanded"][method_valid]
+                    )
+                )
             for alpha in ALPHAS:
                 method_counts[method]["rejections"][alpha] += int(
                     np.count_nonzero(p_values <= alpha)
                 )
             df_column = specification["degrees_of_freedom"]
-            if df_column is None:
-                critical = norm.ppf(0.975)
-            else:
+            if df_column is not None:
                 degrees_of_freedom = values[df_column][method_valid]
-                method_counts[method]["degrees_of_freedom"].append(
-                    degrees_of_freedom
-                )
-                critical = t.ppf(0.975, df=degrees_of_freedom)
+                finite_df = degrees_of_freedom[
+                    np.isfinite(degrees_of_freedom)
+                ]
+                if finite_df.size:
+                    method_counts[method]["degrees_of_freedom"].append(
+                        finite_df
+                    )
+            critical = _critical_values(method, values, method_valid)
             method_counts[method]["coverage"] += int(
                     np.count_nonzero(
                         np.abs(
@@ -901,6 +943,11 @@ def _simulate_null_scenario(
             "coverage_95": (
                 method_counts[method]["coverage"] / method_valid_count
                 if method_valid_count
+                else np.nan
+            ),
+            "expanded_route_rate": (
+                method_counts[method]["expanded_route"] / method_valid_count
+                if method == "custom_welch" and method_valid_count
                 else np.nan
             ),
         }
@@ -998,10 +1045,15 @@ def _simulate_power(
         scenario_seed = int(child.generate_state(1)[0])
         probability_p, probability_q, diagnostics = build_distributions(scenario)
         method_counts = {
-            method: {"rejections": 0, "coverage": 0, "df": []}
+            method: {
+                "valid": 0,
+                "rejections": 0,
+                "coverage": 0,
+                "df": [],
+                "expanded_route": 0,
+            }
             for method in METHODS
         }
-        valid_count = 0
         rng = np.random.default_rng(scenario_seed)
         for start in range(0, replicates, batch_size):
             count = min(batch_size, replicates - start)
@@ -1016,24 +1068,33 @@ def _simulate_power(
                 size=count,
             ).reshape(count, scenario.rows, scenario.columns)
             values = _method_values(table_p, table_q)
-            valid = values["valid"] & values["expanded_valid"]
-            valid_count += int(np.count_nonzero(valid))
-            delta_error = (
-                values["delta_corrected"][valid] - diagnostics["true_delta"]
-            )
-            standard_error = values["standard_error"][valid]
             for method, specification in METHODS.items():
-                p_values = values[specification["p_value"]][valid]
+                method_valid = values[specification["validity"]]
+                method_counts[method]["valid"] += int(
+                    np.count_nonzero(method_valid)
+                )
+                p_values = values[specification["p_value"]][method_valid]
+                if method == "custom_welch":
+                    method_counts[method]["expanded_route"] += int(
+                        np.count_nonzero(
+                            values["custom_welch_uses_expanded"][method_valid]
+                        )
+                    )
                 method_counts[method]["rejections"] += int(
                     np.count_nonzero(p_values <= 0.05)
                 )
+                delta_error = (
+                    values["delta_corrected"][method_valid]
+                    - diagnostics["true_delta"]
+                )
+                standard_error = values["standard_error"][method_valid]
                 df_column = specification["degrees_of_freedom"]
-                if df_column is None:
-                    critical = norm.ppf(0.975)
-                else:
-                    df = values[df_column][valid]
-                    method_counts[method]["df"].append(df)
-                    critical = t.ppf(0.975, df=df)
+                if df_column is not None:
+                    df = values[df_column][method_valid]
+                    finite_df = df[np.isfinite(df)]
+                    if finite_df.size:
+                        method_counts[method]["df"].append(finite_df)
+                critical = _critical_values(method, values, method_valid)
                 method_counts[method]["coverage"] += int(
                     np.count_nonzero(
                         np.abs(delta_error) <= critical * standard_error
@@ -1041,17 +1102,32 @@ def _simulate_power(
                 )
         for method, specification in METHODS.items():
             df_parts = method_counts[method]["df"]
+            method_valid_count = method_counts[method]["valid"]
             rows.append(
                 {
                     **scenario.to_dict(),
                     **diagnostics,
                     "simulation_seed": scenario_seed,
                     "replicates": replicates,
-                    "valid_rate": valid_count / replicates,
+                    "valid_rate": method_valid_count / replicates,
                     "method": method,
                     "method_label": specification["label"],
-                    "power_05": method_counts[method]["rejections"] / valid_count,
-                    "coverage_95": method_counts[method]["coverage"] / valid_count,
+                    "power_05": (
+                        method_counts[method]["rejections"] / method_valid_count
+                        if method_valid_count
+                        else np.nan
+                    ),
+                    "coverage_95": (
+                        method_counts[method]["coverage"] / method_valid_count
+                        if method_valid_count
+                        else np.nan
+                    ),
+                    "expanded_route_rate": (
+                        method_counts[method]["expanded_route"]
+                        / method_valid_count
+                        if method == "custom_welch" and method_valid_count
+                        else np.nan
+                    ),
                     "median_effective_df": (
                         float(np.median(np.concatenate(df_parts)))
                         if df_parts
@@ -1118,10 +1194,27 @@ def _runtime_audit(
                 include_unbiased_sensitivity=False,
             )
 
+        sample_size_ratio = max(scenario.n_p, scenario.n_q) / min(
+            scenario.n_p,
+            scenario.n_q,
+        )
+
+        def custom_method() -> None:
+            differential_mi_pvalues(
+                table_p,
+                table_q,
+                include_simple=False,
+                include_expanded=(
+                    sample_size_ratio >= CUSTOM_WELCH_MIN_SAMPLE_RATIO
+                ),
+                include_unbiased_sensitivity=False,
+            )
+
         functions = {
             "normal_wald": normal_method,
             "simple_welch": simple_method,
             "expanded_welch": expanded_method,
+            "custom_welch": custom_method,
         }
         for function in functions.values():
             function()
@@ -1143,6 +1236,14 @@ def _runtime_audit(
                     "repetitions": repetitions,
                     "method": method,
                     "method_label": specification["label"],
+                    "reference_route": (
+                        "Expanded Welch"
+                        if method == "custom_welch"
+                        and sample_size_ratio >= CUSTOM_WELCH_MIN_SAMPLE_RATIO
+                        else "Normal Wald"
+                        if method == "custom_welch"
+                        else specification["label"]
+                    ),
                     "median_time_ms": 1_000.0 * float(np.median(values)),
                     "p05_time_ms": 1_000.0 * float(np.quantile(values, 0.05)),
                     "p95_time_ms": 1_000.0 * float(np.quantile(values, 0.95)),
@@ -1169,8 +1270,8 @@ def _plot_calibration(summary: pd.DataFrame, output_dir: Path) -> None:
         sharey=True,
     )
     axes = np.asarray(axes).reshape(-1)
-    colors = ("#355070", "#D97745", "#4F7C64")
-    width = 0.24
+    colors = ("#355070", "#D97745", "#4F7C64", "#A33B20")
+    width = 0.19
     x = np.arange(len(ALPHAS))
     for axis, regime in zip(axes, REGIME_ORDER):
         group = summary[summary["regime"].eq(regime)].set_index("method")
@@ -1183,7 +1284,7 @@ def _plot_calibration(summary: pd.DataFrame, output_dir: Path) -> None:
                 for alpha in ALPHAS
             ]
             axis.bar(
-                x + (index - 1) * width,
+                x + (index - (len(METHODS) - 1) / 2) * width,
                 errors,
                 width,
                 color=colors[index],
@@ -1286,12 +1387,20 @@ def _write_report(
         }
     )
     runtime_view = runtime[
-        ["rows", "columns", "method_label", "median_time_ms", "relative_to_normal"]
+        [
+            "rows",
+            "columns",
+            "method_label",
+            "reference_route",
+            "median_time_ms",
+            "relative_to_normal",
+        ]
     ].rename(
         columns={
             "rows": "Rows",
             "columns": "Columns",
             "method_label": "Method",
+            "reference_route": "Route",
             "median_time_ms": "Median ms",
             "relative_to_normal": "Relative to Wald",
         }
@@ -1309,12 +1418,25 @@ def _write_report(
         "support_instability",
     )
     target_reductions = {}
+    custom_reductions = {}
     for regime in difficult_regimes:
         difficult = summary[summary["regime"].eq(regime)].set_index("method")
         target_reductions[regime] = {
             label: 1.0
             - difficult.loc[
                 "expanded_welch",
+                f"mean_absolute_fpr_error_{label}",
+            ]
+            / difficult.loc[
+                "normal_wald",
+                f"mean_absolute_fpr_error_{label}",
+            ]
+            for label in ("05", "01")
+        }
+        custom_reductions[regime] = {
+            label: 1.0
+            - difficult.loc[
+                "custom_welch",
                 f"mean_absolute_fpr_error_{label}",
             ]
             / difficult.loc[
@@ -1333,6 +1455,12 @@ def _write_report(
     )
     expanded_max_power_loss = float(
         (power_pivot["normal_wald"] - power_pivot["expanded_welch"]).max()
+    )
+    custom_mean_power_loss = float(
+        (power_pivot["normal_wald"] - power_pivot["custom_welch"]).mean()
+    )
+    custom_max_power_loss = float(
+        (power_pivot["normal_wald"] - power_pivot["custom_welch"]).max()
     )
     lines = [
         "# Supervisor Experiment: Differential Mutual Information",
@@ -1365,7 +1493,14 @@ def _write_report(
             "The methods differ only in reference calibration: normal Wald uses",
             "a standard normal distribution, simple Welch uses ordinary `n-1`",
             "component degrees of freedom, and expanded Welch estimates component",
-            "degrees of freedom from the MI-variance influence function.",
+            "degrees of freedom from the MI-variance influence function. Custom",
+            "Welch uses expanded Welch when the larger sample is at least four",
+            "times the smaller sample and that calculation is valid; otherwise it",
+            "uses normal Wald.",
+            "The cutoff was fixed for this rerun after inspecting the development",
+            "grid, so its aggregate advantage requires confirmation on a new grid.",
+            "Severe imbalance and support instability were not fully crossed, so",
+            "the fallback route also needs targeted confirmatory calibration.",
             "",
             "## Main calibration results",
             "",
@@ -1391,6 +1526,14 @@ def _write_report(
                 f"{reductions['01']:.1%} at alpha 0.01."
                 for regime, reductions in target_reductions.items()
             ],
+            "- Custom Welch is a pre-specified guarded combination. Its changes",
+            "  relative to normal Wald in the difficult regimes are:",
+            *[
+                f"- **{REGIMES[regime]['label']}:** "
+                f"{reductions['05']:.1%} at alpha 0.05 and "
+                f"{reductions['01']:.1%} at alpha 0.01."
+                for regime, reductions in custom_reductions.items()
+            ],
             f"- This was not a universal improvement. In well-sampled tables at",
             f"  alpha 0.05, expanded Welch increased mean absolute error from",
             f"  `{well_sampled.loc['normal_wald', 'mean_absolute_fpr_error_05']:.5f}`",
@@ -1399,6 +1542,8 @@ def _write_report(
             f"- Across the five power scenarios, expanded Welch lost",
             f"  `{expanded_mean_power_loss:.4f}` power on average and at most",
             f"  `{expanded_max_power_loss:.4f}` relative to normal Wald.",
+            f"- Custom Welch lost `{custom_mean_power_loss:.4f}` power on average",
+            f"  and at most `{custom_max_power_loss:.4f}` in these alternatives.",
             "- The simple Welch correction changed both calibration and power only",
             "  slightly, consistent with its usually large effective degrees of freedom.",
             "- Scenario-level Wilson intervals, sparsity diagnostics, validity rates,",
@@ -1413,8 +1558,10 @@ def _write_report(
             _markdown(runtime_view, 4),
             "",
             "Runtime includes the complete calculation from the two count tables.",
-            "All three timings use the same implementation path. The expanded method",
-            "remains deterministic and scans each table a fixed number of times.",
+            "All four timings use the same implementation path. Custom Welch costs",
+            "approximately the selected route: normal-Wald cost below the ratio",
+            "threshold and expanded-Welch cost at or above it. Every method remains",
+            "deterministic and scans each table a fixed number of times.",
             "",
             "## Output map",
             "",
