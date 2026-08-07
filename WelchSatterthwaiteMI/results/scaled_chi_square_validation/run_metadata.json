@@ -1,0 +1,23 @@
+{
+  "profile": "focused",
+  "settings": {
+    "replicates": 10000,
+    "batch_size": 1000,
+    "shape_indices": [
+      0,
+      2,
+      5,
+      9
+    ]
+  },
+  "scenario_seed": 2026080701,
+  "simulation_seed": 2026080702,
+  "scenario_count": 64,
+  "component_count": 128,
+  "simulated_table_count": 2560000,
+  "elapsed_seconds": 11.616801208816469,
+  "python_version": "3.13.5",
+  "numpy_version": "2.4.4",
+  "scipy_version": "1.17.1",
+  "pandas_version": "3.0.3"
+}

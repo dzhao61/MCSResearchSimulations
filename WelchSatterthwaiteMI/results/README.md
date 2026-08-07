@@ -6,6 +6,15 @@
 and is the result set to use when presenting the method. Start with its
 [`REPORT.md`](supervisor_full/REPORT.md).
 
+## Mechanism Evidence
+
+[`scaled_chi_square_validation/`](scaled_chi_square_validation/) directly
+tests the scaled chi-squared approximation for the MI variance estimator on
+2.56 million independently generated tables. Start with its
+[`REPORT.md`](scaled_chi_square_validation/REPORT.md). The retained
+`replication_stability.csv` repeats the focused comparison under three
+independent simulation seeds.
+
 ## Historical Evidence
 
 - [`decisive/`](decisive/) contains the earlier frozen validation experiment.

@@ -1467,3 +1467,53 @@ $$
 The first quantity is an estimated variance used to construct the MI standard
 error. The second quantity measures how uncertain that estimated variance is.
 Expanded Welch specifically improves the calculation of the second quantity.
+
+## Appendix C: Validation of the Scaled Chi-Squared Working Model
+
+The scaled chi-squared step was tested directly rather than accepted only as
+a convenient algebraic assumption. The experiment fixed 64 populations
+covering $2\times2$, $3\times3$, $5\times5$, and $10\times10$ tables across
+all eight sampling regimes. For each of the 128 population components, 10,000
+tables estimated the finite-sample mean and variance of $\widehat V(P)$, and
+a separate 10,000 tables evaluated the fitted distributions. The comparison
+therefore used 2.56 million tables without reusing the moment-fitting data for
+validation.
+
+Three shape models received exactly the same empirical mean and variance:
+scaled chi-squared, normal, and lognormal. This isolates the shape assumption
+from errors in the first-order formulas for the moments. The average results
+were:
+
+| Moment-matched model | Mean KS distance | Mean 5% tail error | Mean 1% tail error |
+| --- | ---: | ---: | ---: |
+| Scaled chi-squared | 0.01988 | **0.00447** | **0.00258** |
+| Normal | **0.01958** | 0.00537 | 0.00375 |
+| Lognormal | 0.02915 | 0.00624 | 0.00396 |
+
+The normal and scaled chi-squared models were effectively tied for overall
+distributional fit. The normal model had the slightly smaller mean KS
+distance, while scaled chi-squared gave the more accurate upper tails. The
+scaled chi-squared advantage became clearer for $5\times5$ and $10\times10$
+tables. For $2\times2$ tables it generally predicted more positive skewness
+than was observed and could be unnecessarily conservative.
+
+The first-order influence calculation predicted the sampling variance of
+$\widehat V(P)$ well: the median ratio of empirical to predicted variance was
+0.987. Its finite-sample mean approximation was less reliable, particularly
+when many cells were simultaneously unobserved. This explains why a
+population-centered first-order scaled chi-squared model fitted substantially
+worse than the oracle shape comparison. The actual method estimates its
+degrees of freedom from each observed table; the median plug-in component
+degrees of freedom were 0.970 times the empirical moment degrees of freedom.
+
+Two further runs with independent simulation seeds reproduced the result.
+Across the three runs, scaled chi-squared mean KS distance ranged from 0.01988
+to 0.02036, 5% tail error from 0.00436 to 0.00471, and 1% tail error from
+0.00258 to 0.00275.
+
+The simulation therefore supports scaled chi-squared as a useful
+Satterthwaite working model, especially because it preserves positivity and
+models upper-tail uncertainty better than the normal alternative. It does
+not support treating it as an exact or universally best finite-sample law.
+Its weakest cases are small tables and widespread support loss, which agrees
+with the final test-calibration results.
