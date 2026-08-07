@@ -663,12 +663,16 @@ $$
 Differentiating $V(P)=M_2(P)-I(P)^2$ gives
 
 $$
+\begin{aligned}
 g_P(x,y)
-=\left.\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
+&=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\left.\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
 \right|_{\varepsilon=0}
 -2I(P)
 \left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}.
+\end{aligned}
 $$
 
 Substituting the derivatives of $M_2(P)$ and $I(P)$ gives
@@ -694,43 +698,152 @@ Each line comes from a particular part of the original variance:
 
 ### 6.5 Convert variance-estimation uncertainty into degrees of freedom
 
-Define
+The function $g_P(x,y)$ measures how much one cell can change $V(P)$. Its
+variance measures how differently the cells affect $V(P)$:
 
 $$
 \tau^2(P)
 =\operatorname{Var}_P\{g_P(X,Y)\}.
 $$
 
-First-order influence-function theory then gives
+A small $\tau^2(P)$ means that the cells have similar effects and
+$\widehat V(P)$ is comparatively stable. A large $\tau^2(P)$ means that the
+estimated variance is sensitive to which cells appear in the sample.
+
+#### Sampling variance of $\widehat V(P)$
+
+To first order, the error in $\widehat V(P)$ is the average variance influence
+of the $n_P$ observations:
 
 $$
-\operatorname{Var}(\widehat V(P))
+\widehat V(P)-V(P)
+\approx
+\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)}).
+$$
+
+The observations are independent and each $g_P(Z_k^{(P)})$ has variance
+$\tau^2(P)$. Therefore,
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat V(P)\}
+&=\operatorname{Var}\{\widehat V(P)-V(P)\}\\
+&\approx
+\operatorname{Var}\left\{
+\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
+\right\}\\
+&=\frac{1}{n_P^2}
+\operatorname{Var}\left\{
+\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
+\right\}\\
+&=\frac{1}{n_P^2}\left[
+\sum_{k=1}^{n_P}\operatorname{Var}_P\{g_P(Z_k^{(P)})\}
++2\sum_{1\le k<l\le n_P}\operatorname{Cov}_P
+\{g_P(Z_k^{(P)}),g_P(Z_l^{(P)})\}
+\right]\\
+&=\frac{1}{n_P^2}
+\sum_{k=1}^{n_P}\operatorname{Var}_P\{g_P(Z_k^{(P)})\}\\
+&=\frac{1}{n_P^2}\,n_P\tau^2(P)\\
+&=\frac{\tau^2(P)}{n_P}.
+\end{aligned}
+$$
+
+#### Satterthwaite moment matching
+
+We now know the approximate first two moments of the variance estimator:
+
+$$
+\operatorname E\{\widehat V(P)\}\approx V(P),
+\qquad
+\operatorname{Var}\{\widehat V(P)\}
 \approx\frac{\tau^2(P)}{n_P}.
 $$
 
-Satterthwaite approximates the positive variance estimator by a scaled
-chi-squared variable:
+The complete finite-sample distribution of $\widehat V(P)$ is not known.
+Satterthwaite replaces it with a convenient positive distribution and chooses
+its degrees of freedom so that its mean and variance match the two moments
+above.
+
+A chi-squared variable with $\nu_V(P)$ degrees of freedom satisfies
+
+$$
+\operatorname E\{\chi^2_{\nu_V(P)}\}=\nu_V(P),
+\qquad
+\operatorname{Var}\{\chi^2_{\nu_V(P)}\}=2\nu_V(P).
+$$
+
+Dividing by $\nu_V(P)$ normalizes its mean to one:
+
+$$
+\begin{aligned}
+\operatorname E\left\{
+\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\right\}
+&=\frac{\nu_V(P)}{\nu_V(P)}=1,\\[4pt]
+\operatorname{Var}\left\{
+\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\right\}
+&=\frac{2\nu_V(P)}{\nu_V(P)^2}
+=\frac{2}{\nu_V(P)}.
+\end{aligned}
+$$
+
+Multiplying this normalized variable by $V(P)$ gives it the required mean:
+
+$$
+\begin{aligned}
+\operatorname E\left\{
+V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\right\}
+&=V(P),\\[4pt]
+\operatorname{Var}\left\{
+V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\right\}
+&=V(P)^2\frac{2}{\nu_V(P)}
+=\frac{2V(P)^2}{\nu_V(P)}.
+\end{aligned}
+$$
+
+Satterthwaite therefore uses the working approximation
 
 $$
 \widehat V(P)
 \ \dot\sim\
-V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}.
+V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)},
 $$
 
-This approximation has mean $V(P)$ and variance $2V(P)^2/\nu_V(P)$.
-Matching that variance to $\tau^2(P)/n_P$ gives
+Its mean already matches $V(P)$. Matching its variance to the derived sampling
+variance of $\widehat V(P)$ gives
 
 $$
+\begin{aligned}
 \frac{2V(P)^2}{\nu_V(P)}
-=\frac{\tau^2(P)}{n_P}
-\quad\Longrightarrow\quad
-\boxed{
+&=\frac{\tau^2(P)}{n_P},\\
+2n_PV(P)^2
+&=\nu_V(P)\tau^2(P),\\
 \nu_V(P)
-=\frac{2n_PV(P)^2}{\tau^2(P)}}.
+&=\frac{2n_PV(P)^2}{\tau^2(P)}.
+\end{aligned}
 $$
 
-In practice, the population quantities are replaced by table estimates. The
-weighted mean of the estimated cell sensitivities is
+Equivalently,
+
+$$
+\nu_V(P)
+=\frac{2}{\tau^2(P)/\left\{n_PV(P)^2\right\}},
+$$
+
+so $\nu_V(P)$ is inversely related to the relative sampling variance of
+$\widehat V(P)$. Stable variance estimation produces large $\nu_V(P)$;
+unstable variance estimation produces small $\nu_V(P)$ and a heavier-tailed
+Student reference. This is only a moment-matching approximation, not a claim
+that $\widehat V(P)$ is exactly chi-squared.
+
+#### Calculation from the observed table
+
+The population quantities are unknown, so the observed table supplies their
+plug-in estimates. First calculate the weighted mean of the estimated cell
+sensitivities:
 
 $$
 \overline g_P
@@ -738,7 +851,7 @@ $$
 \widehat p_{ij}\widehat g_P(i,j).
 $$
 
-Their weighted variance estimates the population quantity $\tau^2(P)$:
+Then calculate their weighted variance:
 
 $$
 \widehat\tau^2(P)
