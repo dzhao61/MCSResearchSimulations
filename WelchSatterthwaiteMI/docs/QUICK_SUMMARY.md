@@ -49,14 +49,24 @@ Key references:
 
 ## Method
 
+### Notation convention
+
+One notation rule is used throughout. If $F$ is a population quantity, then
+$F(P)$ denotes its value in population $P$, while
+$\widehat F(P)=F(\widehat P)$ denotes the estimate obtained from $P$'s sample.
+For example, $V(P)$ is the population MI influence variance and
+$\widehat V(P)$ is its table estimate. Subscripts are reserved for sample
+sizes, such as $n_P$, and for functions evaluated at a cell, such as
+$\ell_P(i,j)$ and $g_P(i,j)$.
+
 ### 1. Estimate mutual information
 
 The input is two independent $r\times c$ count tables with sample sizes
 $n_P$ and $n_Q$. Convert the counts to estimated cell probabilities and
-compute plug-in MI in nats:
+compute plug-in MI for group $P$ in nats:
 
 $$
-\widehat I
+\widehat I(P)
 =\sum_{i=1}^{r}\sum_{j=1}^{c}
 \widehat p_{ij}
 \log\!\left(
@@ -80,8 +90,8 @@ Plug-in MI is positively biased in finite samples. For a positive
 $r\times c$ table, its leading bias is approximately
 
 $$
-\operatorname{Bias}(\widehat I)
-\approx \frac{d}{2n},
+\operatorname{Bias}\{\widehat I(P)\}
+\approx \frac{d}{2n_P},
 \qquad
 d=(r-1)(c-1).
 $$
@@ -111,44 +121,36 @@ Under $H_0$, this difference should be close to zero.
 For every cell, define its local-information score:
 
 $$
-\widehat\ell_{ij}
+\widehat\ell_P(i,j)
 =\log\!\left(
 \frac{\widehat p_{ij}}
 {\widehat p_{i+}\widehat p_{+j}}
 \right).
 $$
 
-The influence variance is the probability-weighted spread of these scores
-around the estimated MI:
+The estimated influence variance for group $P$ is the probability-weighted
+spread of these scores around the estimated MI:
 
 $$
-\widehat V
+\widehat V(P)
 =\sum_{i=1}^{r}\sum_{j=1}^{c}
 \widehat p_{ij}
-\left(\widehat\ell_{ij}-\widehat I\right)^2.
+\left\{\widehat\ell_P(i,j)-\widehat I(P)\right\}^2.
 $$
 
-A larger $\widehat V$ means that the MI estimate is more sensitive to which
-observations happened to appear in the sample.
+The same calculation gives $\widehat V(Q)$. A larger estimated influence
+variance means that the MI estimate is more sensitive to which observations
+happened to appear in the sample.
 
 ### 4. Form the test statistic
-
-Define the two contributions to the variance of the MI difference:
-
-$$
-a=\frac{\widehat V_P}{n_P},
-\qquad
-b=\frac{\widehat V_Q}{n_Q}.
-$$
 
 Because the samples are independent, their variances add:
 
 $$
 \widehat{\operatorname{SE}}
-=\sqrt{a+b}
 =\sqrt{
-\frac{\widehat V_P}{n_P}
-+\frac{\widehat V_Q}{n_Q}
+\frac{\widehat V(P)}{n_P}
++\frac{\widehat V(Q)}{n_Q}
 }.
 $$
 
@@ -175,20 +177,18 @@ the normal reference.
 
 #### Simple Welch approximation
 
-Treat $\widehat V_P$ and $\widehat V_Q$ like ordinary sample variances:
+Treat $\widehat V(P)$ and $\widehat V(Q)$ like ordinary sample variances,
+assigning them $n_P-1$ and $n_Q-1$ degrees of freedom. Combining them with
+the Satterthwaite formula gives
 
 $$
-\nu_P=n_P-1,
-\qquad
-\nu_Q=n_Q-1.
-$$
-
-Combine them using the Satterthwaite formula:
-
-$$
-\nu_{\mathrm{simple}}
-=\frac{(a+b)^2}
-{a^2/(n_P-1)+b^2/(n_Q-1)}.
+\widehat\nu_{\mathrm{simple}}
+=\frac{
+\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
+}{
+\left\{\widehat V(P)/n_P\right\}^2/(n_P-1)
++\left\{\widehat V(Q)/n_Q\right\}^2/(n_Q-1)
+}.
 $$
 
 This is easy to calculate, but its assumption is imperfect for MI. In an
@@ -202,77 +202,100 @@ probability and its associated row and column marginals.
 This is an adaptation of Hutcheson's (1970) Welch-style test for comparing
 two Shannon diversities. Hutcheson supplies the basic template of comparing
 two estimated information quantities using their combined variance and
-effective degrees of freedom. The expanded MI method adds a new step: it
-derives the influence function of the complete nonlinear MI variance
-estimator rather than assigning that estimator ordinary $n-1$ degrees of
-freedom. See [COMPREHENSIVE_SUMMARY.md](COMPREHENSIVE_SUMMARY.md) for the
-cell-contamination derivation.
+effective degrees of freedom. Expanded Welch derives the influence function
+of the complete nonlinear MI variance estimator rather than assigning that
+estimator ordinary $n-1$ degrees of freedom.
 
-This version measures how much the complete variance estimate
-$\widehat V$ changes after a small change in the table. This first-order
-sensitivity is the variance influence function.
+The calculation has one objective: determine how uncertain $\widehat V(P)$ is
+so that this uncertainty can be converted into degrees of freedom. It follows
+the chain
+
+$$
+V(P)
+\longrightarrow
+g_P
+\longrightarrow
+\tau^2(P)=\operatorname{Var}_P(g_P)
+\longrightarrow
+\operatorname{Var}\{\widehat V(P)\}\approx\frac{\tau^2(P)}{n_P}
+\longrightarrow
+\nu_V(P).
+$$
+
+Here, $g_P$ measures how much the complete variance $V(P)$ changes after a
+small probability-preserving change in the table. The variance of these
+cell-level sensitivities, $\tau^2(P)$, determines the sampling variance of
+$\widehat V(P)$. Satterthwaite moment matching then converts that sampling
+variance into component degrees of freedom. See
+[COMPREHENSIVE_SUMMARY.md](COMPREHENSIVE_SUMMARY.md) for the direct
+cell-contamination derivation.
 
 For a population $P$, define
 
 $$
-\ell_{xy}=\log\!\left(\frac{p_{xy}}{p_{x+}p_{+y}}\right),
+\ell_P(x,y)=\log\!\left(\frac{p_{xy}}{p_{x+}p_{+y}}\right),
 \qquad
-\mu=I(P),
+I(P)=\operatorname E_P\{\ell_P(X,Y)\},
 \qquad
-m_2=\operatorname E_P(\ell^2).
+M_2(P)=\operatorname E_P\{\ell_P(X,Y)^2\}.
 $$
 
 The influence function of the MI variance is
 
 $$
 \begin{aligned}
-g_P(x,y)={}&\ell_{xy}^2-m_2 \\
+g_P(x,y)={}&\ell_P(x,y)^2-M_2(P) \\
 &+2\left\{
-\ell_{xy}
--\operatorname E_P(\ell\mid X=x)
--\operatorname E_P(\ell\mid Y=y)
-+\mu
+\ell_P(x,y)
+-\operatorname E_P\{\ell_P(X,Y)\mid X=x\}
+-\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}
++I(P)
 \right\} \\
-&-2\mu(\ell_{xy}-\mu).
+&-2I(P)\{\ell_P(x,y)-I(P)\}.
 \end{aligned}
 $$
 
 Its variability determines the component degrees of freedom:
 
 $$
-\tau_P^2
+\tau^2(P)
 =\operatorname{Var}_P\!\left\{g_P(X,Y)\right\},
 \qquad
-\nu_{V,P}
-=\frac{2n_P\widehat V_P^2}{\widehat\tau_P^2},
+\widehat\nu_V(P)
+=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)},
 $$
 
 with the same calculation for $Q$.
 
 The interpretation is straightforward:
 
-- Stable variance estimate: $\widehat\tau^2$ is small and $\nu_V$ is
-  large.
-- Unstable variance estimate: $\widehat\tau^2$ is large and $\nu_V$ is
-  small.
-- Smaller $\nu_V$: heavier Student tails and less overconfident p-values.
+- Stable variance estimate: $\widehat\tau^2(P)$ is small and
+  $\widehat\nu_V(P)$ is large.
+- Unstable variance estimate: $\widehat\tau^2(P)$ is large and
+  $\widehat\nu_V(P)$ is small.
+- Smaller $\widehat\nu_V(P)$: heavier Student tails and less overconfident
+  p-values.
 
 The calculation is analytic. It evaluates $g$ from the observed cells and
 margins rather than repeatedly removing observations or resampling. If a
 small change in a rare cell strongly changes the cell, row, or column scores,
-$\widehat\tau^2$ increases and the method assigns fewer degrees of freedom.
+$\widehat\tau^2(P)$ increases and the method assigns fewer degrees of freedom.
 
 Finally, combine the two variance-component degrees of freedom:
 
 $$
-\nu_{\mathrm{expanded}}
-=\frac{(a+b)^2}
-{a^2/\nu_{V,P}+b^2/\nu_{V,Q}}.
+\widehat\nu_{\mathrm{expanded}}
+=\frac{
+\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
+}{
+\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_V(P)
++\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_V(Q)
+}.
 $$
 
 ### 6. Calculate the p-value
 
-Using $\nu_{\mathrm{simple}}$ or $\nu_{\mathrm{expanded}}$, the
+Using $\widehat\nu_{\mathrm{simple}}$ or $\widehat\nu_{\mathrm{expanded}}$, the
 two-sided p-value is
 
 $$
