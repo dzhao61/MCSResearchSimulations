@@ -95,6 +95,12 @@ A further post-audit sensitivity check used the smaller sample's average
 observations per cell, $\min(n_P,n_Q)/(rc)$. This checked whether an
 interpretable density condition improved on the ratio rule.
 
+For a fair threshold comparison, the audited ratio rules used normal Wald
+when expanded Welch was undefined. Otherwise, a rule could appear better
+merely by dropping its hardest replicates. The final implementation is more
+conservative about validity: when $R_n\geq2$ requires expanded Welch and that
+calculation is undefined, it reports no Custom Welch p-value.
+
 ## 5. Main result
 
 The ratio threshold behaved monotonically: delaying expanded Welch made
@@ -127,6 +133,13 @@ well-sampled, ultra-sparse, and support-instability populations. At
 $R_n\geq2$, its average benefit increased with imbalance. The ratio-2 rule
 therefore captures nearly all of always-expanded's gain while retaining the
 simpler normal reference in the main regime where expanded Welch can hurt.
+
+Applying the final no-fallback validity rule to the saved holdout audit gives
+a mean valid rate of 0.99023 across all regimes, 0.99951 after excluding
+support instability, and 0.99996 in the regular-support subset. The loss is
+therefore concentrated at the deliberately adversarial support boundary. It
+must be reported alongside conditional false-positive-rate accuracy rather
+than hidden by a Wald substitution.
 
 ## 6. Why more elaborate guards were rejected
 
@@ -195,16 +208,14 @@ already beneficial at $2{:}1$ and $3{:}1$ in both independent cohorts. It is
 preferable to a complex adaptive selector because the tested support, density,
 and variance-share rules did not provide a meaningful holdout gain.
 
-The current software still implements the original $4{:}1$ development rule.
-The $2{:}1$ rule should be frozen before changing that implementation and then
-run once on a new confirmatory population cohort. That experiment should not
-be used to alter the threshold again. If it confirms the result, $2{:}1$ can
-replace $4{:}1$ as the final thesis rule.
+This routing proposal was subsequently removed from the active project
+because its regime-selection logic added more complexity than the thesis
+required. The audit is retained as a complete research record rather than as
+the recommended production method.
 
 ## 9. Reproducibility
 
 The executable audit is
-[`experiments/investigate_custom_welch_decision.py`](../experiments/investigate_custom_welch_decision.py).
+[`investigate_custom_welch_decision.py`](investigate_custom_welch_decision.py).
 The complete result tables, metadata, plot, and generated report are in
-[`results/custom_decision_audit/`](../results/custom_decision_audit/).
-
+[`results/`](results/).

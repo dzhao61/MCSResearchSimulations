@@ -23,6 +23,8 @@ The [`history/`](history/) directory preserves earlier decision documents:
 - [`LITERATURE_AND_TECHNICAL_AUDIT_2026-08-03.md`](history/LITERATURE_AND_TECHNICAL_AUDIT_2026-08-03.md)
   records the literature and technical audit that motivated the expanded
   variance-influence method.
+- [`../archive/custom_welch/`](../archive/custom_welch/) preserves the
+  discontinued routing-method study and its complete evidence.
 
 The historical documents are retained for provenance. The current summary
 and primary evidence are the three documents above and

@@ -2,7 +2,7 @@
 
 ## Question
 
-Does the current rule, Expanded Welch at sample-size ratios of at
+Does the original proposal, Expanded Welch at sample-size ratios of at
 least 4 and normal Wald otherwise, generalize when population shape,
 sparsity, ratio, and allocation direction are crossed rather than
 confounded?
@@ -54,7 +54,7 @@ giving the two levels equal weight.
 
 ## Interpretation
 
-- On holdout, the current ratio-4 rule had MAE `0.03507` at alpha 0.05 and `0.02319` at alpha 0.01.
+- On holdout, the original ratio-4 rule had MAE `0.03507` at alpha 0.05 and `0.02319` at alpha 0.01.
 - Holdout normal-Wald MAE was `0.04055` and `0.02805`; expanded-with-fallback MAE was `0.03392` and `0.02230`.
 - The best ratio threshold on development was `Expanded if ratio >= 2`. The best threshold when inspected post hoc on holdout was `Expanded if ratio >= 2`.
 - Agreement between those thresholds supports a stable ratio decision;

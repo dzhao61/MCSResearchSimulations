@@ -170,7 +170,7 @@ of freedom produce heavier tails and a more conservative test. Here,
 effective degrees of freedom measure how reliably the standard error has been
 estimated; they are not the number of rows, columns, or cells.
 
-Three deterministic finite-sample calibrations are considered in addition to
+Two deterministic finite-sample calibrations are considered in addition to
 the normal reference.
 
 #### Simple Welch approximation
@@ -270,52 +270,6 @@ $$
 {a^2/\nu_{V,P}+b^2/\nu_{V,Q}}.
 $$
 
-#### Custom Welch decision rule
-
-Custom Welch combines the normal Wald and expanded Welch calibrations already
-defined above. Let
-
-$$
-R_n=\frac{\max(n_P,n_Q)}{\min(n_P,n_Q)}.
-$$
-
-It applies the rule
-
-$$
-p_{\mathrm{custom}}
-=
-\begin{cases}
-p_{\mathrm{expanded}},
-& R_n\geq4\text{ and expanded Welch is valid},\\
-p_{\mathrm{normal}},
-& \text{otherwise}.
-\end{cases}
-$$
-
-The rule uses expanded Welch in the strongly unequal-sample regime where its
-heavier tails improved calibration. It retains normal Wald for equal or
-moderately unequal samples, where expanded Welch could become unnecessarily
-conservative. If support instability makes the expanded calculation
-undefined, the method falls back to a valid Wald result rather than discarding
-the replicate.
-
-The sample-size ratio is fixed by the study design and does not depend on the
-observed MI difference. The choice therefore does not inspect the test result.
-The cutoff of 4 was selected from the present development experiment,
-however, and must be checked on a new frozen validation grid before it is
-treated as a confirmed general rule.
-The grid also does not fully cross severe sample imbalance with unstable
-support, so the fallback branch requires targeted calibration testing.
-
-**Routing-audit update.** A later experiment crossed all regimes with ratios
-from $1{:}1$ through $20{:}1$ in separate development and holdout cohorts.
-Both cohorts selected $2{:}1$ as the best tested ratio cutoff. Additional
-minimum-support, observations-per-cell, and estimated-variance-share rules did
-not provide a meaningful holdout improvement. The implemented $4{:}1$ rule is
-therefore retained only as the original development version; $2{:}1$ is the
-revision candidate for a final frozen confirmation. Full reasoning is in the
-[Custom Welch decision audit](CUSTOM_WELCH_DECISION_AUDIT.md).
-
 ### 6. Calculate the p-value
 
 Using $\nu_{\mathrm{simple}}$ or $\nu_{\mathrm{expanded}}$, the
@@ -326,9 +280,9 @@ p
 =2\Pr\!\left(t_\nu\ge |T|\right).
 $$
 
-All four methods use the same bias-corrected MI difference, variance estimate,
-standard error, and test statistic. They differ only in reference calibration
-or in Custom Welch's rule for selecting between two references.
+All three methods use the same bias-corrected MI difference, variance
+estimate, standard error, and test statistic. They differ only in reference
+calibration.
 
 All methods are deterministic and require $O(rc)$ time and memory. The
 expanded calculation performs more arithmetic per cell, but it does not
@@ -336,19 +290,18 @@ change the complexity order.
 
 ## Results
 
-The simplified evaluation uses one grid of 216 population pairs:
+The simplified evaluation uses one grid of 192 population pairs:
 
 $$
-12\ \text{table shapes}\times18\ \text{population designs}=216.
+12\ \text{table shapes}\times16\ \text{population designs}=192.
 $$
 
 Shapes range from $2\times2$ to $20\times20$. Every pair satisfies
 $I(P)=I(Q)$ while allowing $P\ne Q$. Each population pair receives 10,000
-independently simulated table pairs, giving 2,160,000 null replicates in
+independently simulated table pairs, giving 1,920,000 null replicates in
 total.
 
-The nine regimes have direct interpretations. In addition to the original
-five, the adversarial extension includes:
+The eight regimes have direct interpretations:
 
 - **Well sampled:** equal sample sizes and high average observations per cell;
 - **Moderate:** a $2{:}1$ sample-size ratio and moderate average observations
@@ -362,9 +315,7 @@ five, the adversarial extension includes:
 - **Widespread sparsity:** 25-50% of cells have expected counts below 1;
 - **Equal-MI shape mismatch:** balanced $P$ and strongly skewed $Q$ have the
   same true MI;
-- **Extreme sample imbalance:** sample-size ratios are $1{:}10$ or $1{:}20$;
-- **Support instability:** a complete row or column has expected total below
-  1 and frequently disappears from the sampled table.
+- **Extreme sample imbalance:** sample-size ratios are $1{:}10$ or $1{:}20$.
 
 Here $E_{\min}=\min_{i,j}(n p_{ij})$. Unlike average observations per cell,
 this quantity detects rare cells even when the total sample size is large.
@@ -376,38 +327,56 @@ $|0.06-0.05|=0.01$. Lower values are better.
 
 The normal baseline uses the same $\widehat\Delta_{\mathrm{BC}}$,
 $\widehat{\operatorname{SE}}$, and $T$, but compares $T$ with a standard
-normal distribution instead of a Student distribution. Validity is a
-separate performance measure because the support-instability regime can make
-an analytical calculation undefined.
+normal distribution instead of a Student distribution. Validity is reported
+separately so undefined calculations are not hidden by conditioning only on
+successful results.
 
-| Regime | Normal error at $0.05$ | Simple error | Expanded error | Custom error |
-| --- | ---: | ---: | ---: | ---: |
-| Well sampled | **0.00326** | 0.00332 | 0.00466 | **0.00326** |
-| Moderate | 0.00370 | **0.00365** | 0.00419 | 0.00370 |
-| Sparse and imbalanced | 0.00615 | 0.00565 | **0.00395** | **0.00395** |
-| Highly skewed and sparse | 0.00275 | 0.00262 | **0.00217** | 0.00239 |
-| Ultra-skewed and sparse | 0.00312 | 0.00296 | **0.00248** | 0.00296 |
-| Widespread sparsity | **0.01064** | 0.01076 | 0.01439 | **0.01064** |
-| Equal-MI shape mismatch | **0.00420** | 0.00424 | 0.00443 | **0.00420** |
-| Extreme sample imbalance | 0.00876 | 0.00801 | **0.00582** | **0.00582** |
-| Support instability | **0.01465** | 0.01606 | 0.02074 | **0.01465** |
+| Regime | Normal error at $0.05$ | Simple error | Expanded error |
+| --- | ---: | ---: | ---: |
+| Well sampled | **0.00377** | 0.00384 | 0.00516 |
+| Moderate | **0.00363** | 0.00366 | 0.00411 |
+| Sparse and imbalanced | 0.00631 | 0.00581 | **0.00410** |
+| Highly skewed and sparse | 0.00298 | 0.00288 | **0.00245** |
+| Ultra-skewed and sparse | 0.00270 | 0.00257 | **0.00220** |
+| Widespread sparsity | **0.01036** | 0.01041 | 0.01730 |
+| Equal-MI shape mismatch | **0.00459** | 0.00463 | 0.00535 |
+| Extreme sample imbalance | 0.00850 | 0.00785 | **0.00546** |
 
 Expanded Welch improved the isolated-sparsity regimes and reduced error by
-33.6% under extreme sample imbalance. It did not improve shape mismatch by
-itself. Under widespread sparsity it became too conservative, and under
-support instability it was both less accurate and less often defined.
+35.8% under extreme sample imbalance. It did not improve shape mismatch by
+itself. Under widespread sparsity it became too conservative.
 
 Across five power scenarios, expanded Welch lost 0.0102 power on average and
 at most 0.0123 relative to normal Wald. Its median runtime was 0.16-0.18 ms
-per table pair, approximately 1.9 times normal Wald. All methods were fully
-valid outside the two support-degradation regimes.
+per table pair, approximately 1.9 times normal Wald. Calculations were fully
+valid in seven regimes. Under widespread sparsity, mean valid rates were
+0.99980 for normal and simple Welch and 0.99154 for expanded Welch.
 
-Across all nine regimes, Custom Welch produced the lowest overall mean
-absolute error: 0.00573 at $\alpha=0.05$ and 0.00220 at $\alpha=0.01$,
-compared with 0.00636 and 0.00272 for normal Wald. Its mean valid rate was
-0.99728, equal to Wald and higher than expanded Welch's 0.98839. The five
-power scenarios had equal sample sizes, so Custom Welch followed Wald and had
-identical power in that limited power check.
+Across all eight regimes, mean absolute error at $\alpha=0.05$ was 0.00535
+for normal Wald, 0.00521 for simple Welch, and 0.00577 for expanded Welch. At
+$\alpha=0.01$, expanded Welch had the lowest error at 0.00207, compared with
+0.00229 for simple Welch and 0.00239 for normal Wald. These aggregate values
+reinforce the regime-specific conclusion rather than supporting universal
+replacement of the normal reference.
+
+### Regime guide
+
+| Method | Regimes where it works well | Why |
+| --- | --- | --- |
+| Normal Wald | Well sampled and moderate tables; equal-MI shape mismatch | The MI difference and its standard error are already stable, so the normal approximation needs no additional tail correction. |
+| Simple Welch | Similar regimes to normal Wald, with small improvements in some imbalanced cases | Its $n-1$ component degrees of freedom add only a mild correction and are usually large, making the method a conservative version of Wald rather than a substantially different calibration. |
+| Expanded Welch | Sparse and imbalanced, isolated highly or ultra-skewed cells, and extreme sample imbalance | Its MI-specific degrees of freedom account for uncertainty in the estimated MI variance, adding heavier tails when normal Wald tends to reject too often. |
+
+Widespread sparsity is a boundary regime rather than a success case for any
+of the three methods. Normal Wald and simple Welch were less inaccurate than
+expanded Welch there, but their errors were still relatively large. When
+many cells are simultaneously rare, the observed support and the MI variance
+estimate change substantially between samples. Expanded Welch then
+overstates the required tail correction and becomes too conservative.
+
+These descriptions characterise where the approximations worked in the
+experiment. They are not a data-dependent rule for selecting whichever
+method gives the most favourable result after observing a table.
 
 ## Conclusion
 
@@ -416,14 +385,7 @@ almost identical to it because its effective degrees of freedom are usually
 large. Expanded Welch is useful when isolated rare cells or unequal sample
 sizes make variance estimation unstable while the sampled support remains
 mostly intact. It should not be used as a remedy for widespread empty cells
-or disappearing rows and columns.
-
-Custom Welch is the practical guarded candidate: it preserves normal Wald in
-the regimes where the expanded correction was harmful and activates expanded
-Welch for sample-size ratios of at least $4{:}1$. In the current experiment it
-had the best aggregate calibration without a validity or equal-sample power
-penalty. This is development evidence rather than final confirmation because
-the switching threshold was chosen after examining the current grid.
+across the table.
 
 The clean thesis claim is therefore regime-specific: expanded Welch improves
 calibration in difficult finite samples at negligible absolute computational

@@ -15,7 +15,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ARCHIVE_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 REPOSITORY_ROOT = PROJECT_ROOT.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
@@ -93,7 +94,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=PROJECT_ROOT / "results" / "custom_decision_audit",
+        default=ARCHIVE_ROOT / "results",
     )
     parser.add_argument(
         "--shape-limit",
@@ -803,7 +804,7 @@ def _write_report(
         "",
         "## Question",
         "",
-        "Does the current rule, Expanded Welch at sample-size ratios of at",
+        "Does the original proposal, Expanded Welch at sample-size ratios of at",
         "least 4 and normal Wald otherwise, generalize when population shape,",
         "sparsity, ratio, and allocation direction are crossed rather than",
         "confounded?",
@@ -828,7 +829,7 @@ def _write_report(
         "",
         "## Interpretation",
         "",
-        f"- On holdout, the current ratio-4 rule had MAE "
+        f"- On holdout, the original ratio-4 rule had MAE "
         f"`{current['mean_absolute_error_05']:.5f}` at alpha 0.05 and "
         f"`{current['mean_absolute_error_01']:.5f}` at alpha 0.01.",
         f"- Holdout normal-Wald MAE was "

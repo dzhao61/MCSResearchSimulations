@@ -9,20 +9,19 @@
   },
   "scenario_seed": 2026080501,
   "simulation_seed": 2026080502,
-  "scenario_count": 216,
+  "scenario_count": 192,
   "methods": [
     "normal_wald",
     "simple_welch",
-    "expanded_welch",
-    "custom_welch"
+    "expanded_welch"
   ],
   "alphas": [
     0.1,
     0.05,
     0.01
   ],
-  "elapsed_seconds": 36.38420862494968,
-  "script_sha256": "d9773f816e8d99b35b0e351b60617a7ff11bfa7f54968bdd6c3df05515cc6fea",
+  "elapsed_seconds": 29.019297583028674,
+  "script_sha256": "8fe49b52feca3e0423b2fbc283c5a49d876eb987e786e30ea4121db51b48fce1",
   "python": "3.13.5",
   "numpy": "2.4.4",
   "scipy": "1.17.1",

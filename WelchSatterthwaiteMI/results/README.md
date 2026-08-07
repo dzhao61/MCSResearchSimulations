@@ -6,15 +6,6 @@
 and is the result set to use when presenting the method. Start with its
 [`REPORT.md`](supervisor_full/REPORT.md).
 
-## Routing Evidence
-
-[`custom_decision_audit/`](custom_decision_audit/) contains the crossed
-development/holdout experiment for selecting between normal Wald and expanded
-Welch. Start with the interpretive
-[`decision audit`](../docs/CUSTOM_WELCH_DECISION_AUDIT.md), then use the
-generated [`REPORT.md`](custom_decision_audit/REPORT.md) and CSV files for the
-complete numerical results.
-
 ## Historical Evidence
 
 - [`decisive/`](decisive/) contains the earlier frozen validation experiment.
@@ -24,6 +15,8 @@ complete numerical results.
   audit that motivated the expanded method.
 - [`smoke/`](smoke/) contains the small pipeline validation for the earlier
   experiment runner.
+- [`../archive/custom_welch/results/`](../archive/custom_welch/results/)
+  contains the discontinued routing experiment.
 
 Historical outputs are retained because they document the development and
 adversarial checking of the method. Generated `supervisor_smoke/` output is

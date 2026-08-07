@@ -13,7 +13,6 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
 from differential_mi.inference import analytic_wald_test
 from welch_differential_mi.welch import (
-    CUSTOM_WELCH_MIN_SAMPLE_RATIO,
     _welch_df,
     differential_mi_pvalues,
     welch_satterthwaite_test,
@@ -67,48 +66,6 @@ class WelchTests(unittest.TestCase):
         self.assertTrue(np.isfinite(values["normal_p_value"]))
         self.assertTrue(np.isnan(values["expanded_welch_p_value"]))
 
-    def test_custom_welch_uses_normal_below_ratio_threshold(self) -> None:
-        p = np.array([[18, 2], [3, 17]])
-        q = np.array([[60, 5], [8, 47]])
-        result = welch_satterthwaite_test(p, q)
-        ratio = max(result.n_p, result.n_q) / min(result.n_p, result.n_q)
-        self.assertLess(ratio, CUSTOM_WELCH_MIN_SAMPLE_RATIO)
-        self.assertTrue(result.custom_valid)
-        self.assertFalse(result.custom_welch_uses_expanded)
-        self.assertAlmostEqual(
-            result.custom_welch_p_value,
-            result.normal_p_value,
-        )
-        self.assertTrue(np.isnan(result.custom_welch_degrees_of_freedom))
-
-    def test_custom_welch_uses_expanded_at_ratio_threshold(self) -> None:
-        p = np.array([[18, 2], [3, 17]])
-        q = 4 * np.array([[18, 2], [3, 17]])
-        result = welch_satterthwaite_test(p, q)
-        self.assertTrue(result.expanded_valid)
-        self.assertTrue(result.custom_valid)
-        self.assertTrue(result.custom_welch_uses_expanded)
-        self.assertAlmostEqual(
-            result.custom_welch_p_value,
-            result.expanded_welch_p_value,
-        )
-        self.assertAlmostEqual(
-            result.custom_welch_degrees_of_freedom,
-            result.expanded_welch_degrees_of_freedom,
-        )
-
-    def test_custom_welch_falls_back_when_expanded_is_invalid(self) -> None:
-        p = np.array([[8, 25], [1, 1]])
-        q = np.array([[36, 104], [0, 0]])
-        result = welch_satterthwaite_test(p, q)
-        self.assertFalse(result.expanded_valid)
-        self.assertTrue(result.custom_valid)
-        self.assertFalse(result.custom_welch_uses_expanded)
-        self.assertAlmostEqual(
-            result.custom_welch_p_value,
-            result.normal_p_value,
-        )
-
     def test_group_swap_and_relabelling_invariance(self) -> None:
         p = np.array([[38, 8, 4], [7, 25, 8], [4, 9, 17]])
         q = np.array([[55, 4, 6], [10, 37, 13], [6, 16, 33]])
@@ -125,7 +82,6 @@ class WelchTests(unittest.TestCase):
             "welch_p_value",
             "expanded_welch_degrees_of_freedom",
             "expanded_welch_p_value",
-            "custom_welch_p_value",
             "unbiased_welch_p_value",
         ):
             self.assertAlmostEqual(getattr(baseline, name), getattr(swapped, name))
@@ -175,15 +131,6 @@ class WelchTests(unittest.TestCase):
                 batch["expanded_welch_p_value"][index],
                 scalar.expanded_welch_p_value,
             )
-            self.assertAlmostEqual(
-                batch["custom_welch_p_value"][index],
-                scalar.custom_welch_p_value,
-            )
-            self.assertEqual(
-                bool(batch["custom_welch_uses_expanded"][index]),
-                scalar.custom_welch_uses_expanded,
-            )
-
     def test_optional_calibrations_do_not_change_normal_result(self) -> None:
         p = np.array([[30, 5], [8, 27]])
         q = np.array([[60, 10], [15, 55]])
