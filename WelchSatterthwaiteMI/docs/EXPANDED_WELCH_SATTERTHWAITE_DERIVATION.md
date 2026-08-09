@@ -56,14 +56,16 @@ The final statistic is
 
 $$
 T
-=\frac{\widehat\Delta_{\mathrm{BC}}}
+=\frac{
+\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
+}
 {\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}},
 $$
 
-where $\widehat\Delta_{\mathrm{BC}}$ is the estimated MI difference and
-$\widehat V(P)/n_P$ and $\widehat V(Q)/n_Q$ are the two estimated
-contributions to its squared standard error. Expanded Welch compares $T$ with
-a Student distribution having
+where $\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)$ is the
+estimated MI difference and $\widehat V(P)/n_P$ and $\widehat V(Q)/n_Q$ are
+the two estimated contributions to its squared standard error. Expanded Welch
+compares $T$ with a Student distribution having
 $\widehat\nu_{\mathrm{expanded}}$ degrees of freedom. Those degrees of freedom
 are defined by the Welch-Satterthwaite equation
 
@@ -81,9 +83,9 @@ $$
 
 Here $\widehat\nu_V(P)$ and $\widehat\nu_V(Q)$ describe the reliability of
 the two estimated variance components. The roadmap is therefore to calculate
-$\widehat\Delta_{\mathrm{BC}}$, $\widehat V(P)$, $\widehat V(Q)$,
-$\widehat\nu_V(P)$, and $\widehat\nu_V(Q)$, then insert them into these two
-final equations.
+$\widehat I_{\mathrm{BC}}(P)$, $\widehat I_{\mathrm{BC}}(Q)$,
+$\widehat V(P)$, $\widehat V(Q)$, $\widehat\nu_V(P)$, and
+$\widehat\nu_V(Q)$, then insert them into these two final equations.
 
 1. **Estimate the MI difference.** The local-information score
    $\ell_P(i,j)$ measures the information associated with cell $(i,j)$, and
@@ -92,8 +94,7 @@ final equations.
    $\widehat I_{\mathrm{BC}}(P)$. Repeating the calculation for $Q$ gives
 
    $$
-   \widehat\Delta_{\mathrm{BC}}
-   =\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
+   \widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
    $$
 
    Section 1 defines $\ell_P(i,j)$, $I(P)$, and their empirical versions.
@@ -145,8 +146,28 @@ final equations.
 
    Section 3 derives $g_P(x,y)$ and $\tau^2(P)$.
 
-4. **Convert that reliability into component degrees of freedom.** For the
-   estimated variance $\widehat V(P)$, the Satterthwaite equation is
+4. **Convert that reliability into component degrees of freedom.**
+   Satterthwaite represents the sampling distribution of $\widehat V(P)$ by
+   a scaled chi-squared distribution because variance estimates are built
+   from squared sampling deviations, and sums of squared approximately normal
+   deviations naturally have chi-squared distributions. Specifically,
+
+   $$
+   \widehat V(P)
+   \quad\text{is modelled by}\quad
+   V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}.
+   $$
+
+   A chi-squared variable with $\nu_V(P)$ degrees of freedom has mean
+   $\nu_V(P)$ and variance $2\nu_V(P)$. The scaled model therefore has mean
+   $V(P)$ and variance
+
+   $$
+   \frac{2V(P)^2}{\nu_V(P)}.
+   $$
+
+   Matching that mean and variance to those of $\widehat V(P)$ gives the
+   Satterthwaite equation
 
    $$
    \boxed{
@@ -324,8 +345,7 @@ $$
 The estimated population difference is
 
 $$
-\widehat\Delta_{\mathrm{BC}}
-=\widehat I_{\mathrm{BC}}(P)
+\widehat I_{\mathrm{BC}}(P)
 -\widehat I_{\mathrm{BC}}(Q).
 $$
 
@@ -559,7 +579,9 @@ The standardized statistic is therefore
 
 $$
 T
-=\frac{\widehat\Delta_{\mathrm{BC}}}
+=\frac{
+\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
+}
 {\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}}.
 $$
 
@@ -1105,7 +1127,9 @@ The final statistic remains
 
 $$
 T
-=\frac{\widehat\Delta_{\mathrm{BC}}}
+=\frac{
+\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
+}
 {\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}}.
 $$
 
@@ -1266,7 +1290,7 @@ The implementation is in
 | --- | --- |
 | $\widehat I(G)$ | `plugin_mi(...)` |
 | $d$ | `mi_df` |
-| $\widehat\Delta_{\mathrm{BC}}$ | `delta` |
+| $\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)$ | `delta` |
 | $\widehat V(P),\widehat V(Q)$ | `variance_p`, `variance_q` |
 | $\widehat V(P)/n_P,\widehat V(Q)/n_Q$ | `component_p`, `component_q` |
 | $T$ | `statistic` |
