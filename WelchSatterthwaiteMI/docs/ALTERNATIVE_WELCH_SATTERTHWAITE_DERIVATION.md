@@ -491,14 +491,35 @@ $$
 
 ## 4. Derive the Component Degrees of Freedom $\nu_P$ and $\nu_Q$
 
-The only quantities still missing from the Welch-Satterthwaite equation are
-$\nu_P$ and $\nu_Q$. We derive $\nu_P$ from the sampling distribution of
-$\widehat V(P)$; the same calculation gives $\nu_Q$.
+Section 3 produced the estimated squared standard error
 
-### 4.1 State the moment-matching target
+$$
+\widehat{\operatorname{SE}}^2
+=\frac{\widehat V(P)}{n_P}+\frac{\widehat V(Q)}{n_Q}.
+$$
 
-Satterthwaite approximates the positive variance estimate $\widehat V(P)$ by
-the scaled chi-squared model
+Because $\widehat V(P)$ and $\widehat V(Q)$ are estimated from data, their
+sampling uncertainty must be reflected in the Student reference
+distribution. The component degrees of freedom $\nu_P$ and $\nu_Q$ provide
+that adjustment. We derive $\nu_P$ first; the same calculation then gives
+$\nu_Q$.
+
+The derivation has four stages:
+
+1. Use Satterthwaite moment matching to identify which properties of
+   $\widehat V(P)$ determine $\nu_P$.
+2. Derive how one observation in cell $(x,y)$ changes $V(P)$. This
+   observation-level change is denoted by $g_P(x,y)$.
+3. Use the variability of $g_P(X,Y)$ to obtain the sampling variance of
+   $\widehat V(P)$ and hence $\nu_P$.
+4. Estimate the required quantities from the two observed tables and combine
+   $\nu_P$ and $\nu_Q$ in the Welch-Satterthwaite equation.
+
+### 4.1 Express $\nu_P$ using the moments of $\widehat V(P)$
+
+The first step is to express $\nu_P$ in terms of the mean and sampling
+variance of $\widehat V(P)$. Satterthwaite approximates this positive variance
+estimate by the scaled chi-squared model
 
 $$
 \widehat V(P)
@@ -569,15 +590,27 @@ $$
 $$
 
 The first-order mean is $\operatorname E\{\widehat V(P)\}\approx V(P)$.
-The remaining task is to calculate
-$\operatorname{Var}\{\widehat V(P)\}$ by determining how one observation
-changes $V(P)$.
+The remaining quantity required by this equation is therefore
+$\operatorname{Var}\{\widehat V(P)\}$.
 
-### 4.2 Calculate how one observation changes PMI and MI
+### 4.2 Plan the calculation of $\operatorname{Var}\{\widehat V(P)\}$
 
-Because $V(P)$ is the variance of the PMI values, its derivative depends on
-how both the PMI values and their mean $I(P)$ change. Fix a cell $(x,y)$ and
-define
+The target is
+
+$$
+\operatorname{Var}\{\widehat V(P)\}
+=\operatorname{Var}\{\widehat V(P)-V(P)\},
+$$
+
+because $V(P)$ is a fixed population quantity. To first order, this estimation
+error is an average of the effects of individual observations. The next
+subsections derive one such effect and then calculate its variance.
+
+### 4.3 Represent the effect of one observation on the table
+
+An observation affects $\widehat V(P)$ by changing the empirical cell
+probabilities. To represent the corresponding population-level change for an
+observation in cell $(x,y)$, define the perturbation
 
 $$
 P_\varepsilon
@@ -585,7 +618,19 @@ P_\varepsilon
 $$
 
 This shifts an $\varepsilon$-fraction of the probability toward cell $(x,y)$;
-$\varepsilon=0$ gives the original distribution. For any cell $(i,j)$,
+$\varepsilon=0$ gives the original distribution. Define the resulting
+first-order change in $V(P)$ by
+
+$$
+g_P(x,y)
+=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}.
+$$
+
+Calculating $g_P(x,y)$ requires the resulting changes in the cell
+probabilities, PMI values, and MI. This subsection supplies the probability
+changes. For any cell $(i,j)$,
 
 $$
 p_{ij}(\varepsilon)
@@ -613,7 +658,10 @@ $$
 \end{aligned}
 $$
 
-The PMI in cell $(i,j)$ along this path is
+### 4.4 Calculate the resulting change in each PMI value
+
+The PMI derivative is needed because every term in $V(P)$ contains a PMI
+value. The PMI in cell $(i,j)$ along the perturbation is
 
 $$
 \ell_{P_\varepsilon}(i,j)
@@ -641,8 +689,66 @@ $$
 \end{aligned}
 $$
 
-Section 3.2 established that the first-order change in MI is the PMI-weighted
-sum of the cell-probability changes. Applying that result to this path gives
+### 4.5 Calculate the resulting change in MI
+
+The MI derivative is needed because $I(P)$ is the mean PMI and therefore
+appears in $V(P)$. Along the same path, MI is
+
+$$
+I(P_\varepsilon)
+=\sum_{i,j}p_{ij}(\varepsilon)\log p_{ij}(\varepsilon)
+-\sum_i p_{i+}(\varepsilon)\log p_{i+}(\varepsilon)
+-\sum_j p_{+j}(\varepsilon)\log p_{+j}(\varepsilon).
+$$
+
+Differentiating the three sums using $(u\log u)'=\log u+1$ gives
+
+$$
+\begin{aligned}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+&=\sum_{i,j}(\log p_{ij}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&\quad-\sum_i(\log p_{i+}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{i+}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&\quad-\sum_j(\log p_{+j}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{+j}(\varepsilon)
+\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+Each marginal change is the sum of its corresponding cell changes. Rewriting
+all three terms as sums over cells and collecting their coefficients gives
+
+$$
+\begin{aligned}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+&=\sum_{i,j}
+\{(\log p_{ij}+1)-(\log p_{i+}+1)-(\log p_{+j}+1)\}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\sum_{i,j}
+\{\ell_P(i,j)-1\}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+Since $\sum_{i,j}p_{ij}(\varepsilon)=1$,
+
+$$
+\sum_{i,j}\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+=\frac{\mathrm d}{\mathrm d\varepsilon}
+\sum_{i,j}p_{ij}(\varepsilon)
+=\frac{\mathrm d}{\mathrm d\varepsilon}1
+=0.
+$$
+
+The constant $-1$ therefore drops out. Substituting the cell-probability
+derivative gives
 
 $$
 \begin{aligned}
@@ -653,42 +759,65 @@ $$
 \right|_{\varepsilon=0}\\
 &=\sum_{i,j}\ell_P(i,j)
 \{\mathbf 1\{i=x,j=y\}-p_{ij}\}\\
+&=\ell_P(x,y)-\sum_{i,j}p_{ij}\ell_P(i,j)\\
 &=\boxed{\ell_P(x,y)-I(P)}.
 \end{aligned}
 $$
 
-### 4.3 Calculate how one observation changes $V(P)$
+### 4.6 Rewrite $V(P)$ in a form that can be differentiated
 
-Section 3.1 established that the PMI variance equals its second moment minus
-the square of its mean. Define the second moment by
-
-$$
-M_2(P)
-=\operatorname E_P\{\ell_P(X,Y)^2\}
-=\sum_{i,j}p_{ij}\ell_P(i,j)^2.
-$$
-
-Since the mean PMI is $I(P)$,
+Along the perturbation,
 
 $$
-V(P)
-=\boxed{M_2(P)-I(P)^2}.
+V(P_\varepsilon)=M_2(P_\varepsilon)-I(P_\varepsilon)^2,
 $$
 
-The derivative of $V(P)$ therefore requires the derivatives of $M_2(P)$ and
-$I(P)$. Section 4.2 supplied the derivative of $I(P)$, so we next calculate
-the derivative of $M_2(P)$.
-
-Along the cell perturbation,
+where
 
 $$
 M_2(P_\varepsilon)
-=\sum_{i,j}p_{ij}(\varepsilon)
-\ell_{P_\varepsilon}(i,j)^2.
+=\operatorname E_{P_\varepsilon}
+\{\ell_{P_\varepsilon}(X,Y)^2\}
+=\sum_{i,j}p_{ij}(\varepsilon)\ell_{P_\varepsilon}(i,j)^2.
 $$
 
-Both factors depend on $\varepsilon$. Applying the product rule and
-$\mathrm d(\ell^2)/\mathrm d\varepsilon=2\ell\ell'$ gives
+We now differentiate the variance identity along the perturbation, which we
+define as $g_P(x,y)$:
+
+$$
+\begin{aligned}
+g_P(x,y)
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\{M_2(P_\varepsilon)-I(P_\varepsilon)^2\}
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
+\right|_{\varepsilon=0}
+-\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)^2
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
+\right|_{\varepsilon=0}
+-2I(P)
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+Section 4.5 calculated
+$\left.\mathrm d I(P_\varepsilon)/\mathrm d\varepsilon\right|_{\varepsilon=0}$,
+so the only remaining quantity is
+$\left.\mathrm d M_2(P_\varepsilon)/\mathrm d\varepsilon\right|_{\varepsilon=0}$.
+
+### 4.7 Calculate the change in the second PMI moment
+
+Applying the product rule gives
 
 $$
 \begin{aligned}
@@ -702,7 +831,7 @@ $$
 \end{aligned}
 $$
 
-The first sum changes only the probability weights:
+The first sum comes from the changing probability weights:
 
 $$
 \begin{aligned}
@@ -714,20 +843,8 @@ $$
 \end{aligned}
 $$
 
-To evaluate the second sum, define the probability-weighted mean PMI in row
-$x$ and column $y$:
-
-$$
-R_P(x)
-=\frac{\sum_jp_{xj}\ell_P(x,j)}{p_{x+}},
-$$
-
-$$
-C_P(y)
-=\frac{\sum_ip_{iy}\ell_P(i,y)}{p_{+y}}.
-$$
-
-Inserting the PMI derivative gives
+The second sum comes from the changing PMI values. Inserting the PMI
+derivative gives
 
 $$
 \begin{aligned}
@@ -743,61 +860,55 @@ $$
 -\frac{\sum_jp_{xj}\ell_P(x,j)}{p_{x+}}
 -\frac{\sum_ip_{iy}\ell_P(i,y)}{p_{+y}}
 +\sum_{i,j}p_{ij}\ell_P(i,j)\\
-&\quad=\ell_P(x,y)-R_P(x)-C_P(y)+I(P).
+&\quad=\ell_P(x,y)
+-\operatorname E_P\{\ell_P(X,Y)\mid X=x\}
+-\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}
++I(P).
 \end{aligned}
 $$
 
-Combining the two sums gives
+Combining the two product-rule terms gives
 
 $$
-\boxed{
 \begin{aligned}
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
 \right|_{\varepsilon=0}
 &=\ell_P(x,y)^2-M_2(P)\\
-&\quad+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}.
+&\quad+2\bigl[\ell_P(x,y)
+-\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\qquad-\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}+I(P)\bigr].
 \end{aligned}
-}
 $$
 
-With both required derivatives available, define the first-order effect of
-cell $(x,y)$ on the complete MI variance by
+### 4.8 Combine the two changes to obtain $g_P(x,y)$
+
+From Section 4.6,
 
 $$
 g_P(x,y)
 =\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
-\right|_{\varepsilon=0}.
-$$
-
-Since $V(P)=M_2(P)-I(P)^2$, the chain rule gives
-
-$$
-\begin{aligned}
-g_P(x,y)
-&=\left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
-\right|_{\varepsilon=0}\\
-&\quad-2I(P)
-\left.
+\right|_{\varepsilon=0}
+-2I(P)\left.
 \frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}.
-\end{aligned}
 $$
 
-Inserting the derivatives of $M_2(P)$ and $I(P)$ gives
+Substituting the two derivatives in this order gives
 
 $$
 \begin{aligned}
 g_P(x,y)
 &=\ell_P(x,y)^2-M_2(P)\\
-&\quad+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}\\
+&\quad+2\ell_P(x,y)+2I(P)\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}\\
 &\quad-2I(P)\{\ell_P(x,y)-I(P)\}.
 \end{aligned}
 $$
 
-The terms in the first and third lines simplify as
+The first and final lines simplify as
 
 $$
 \begin{aligned}
@@ -816,31 +927,14 @@ $$
 \begin{aligned}
 g_P(x,y)
 &=\{\ell_P(x,y)-I(P)\}^2-V(P)\\
-&\quad+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}.
+&\quad+2\ell_P(x,y)+2I(P)\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
 \end{aligned}
 }
 $$
 
-### 4.4 Calculate the sampling variance of $\widehat V(P)$ and obtain $\nu_P$
-
-The population mean of $g_P(X,Y)$ is zero. For the first line of $g_P$,
-
-$$
-\operatorname E_P\left[
-\{\ell_P(X,Y)-I(P)\}^2-V(P)
-\right]
-=V(P)-V(P)=0.
-$$
-
-For the second line,
-
-$$
-\begin{aligned}
-&\operatorname E_P\{\ell_P(X,Y)-R_P(X)-C_P(Y)+I(P)\}\\
-&\qquad=I(P)-I(P)-I(P)+I(P)\\
-&\qquad=0.
-\end{aligned}
-$$
+### 4.9 Calculate the variability of the one-observation effect
 
 Define the variance of these observation-level effects by
 
@@ -850,18 +944,136 @@ $$
 }
 $$
 
-Each observation changes the empirical distribution by $1/n_P$. The
-first-order error of $\widehat V(P)$ is therefore the average of the
-corresponding $g_P$ values:
+Thus $\tau^2(P)$ measures the variability of the observation-level changes
+in $V(P)$.
+
+To calculate it, use
+
+$$
+\tau^2(P)
+=\operatorname E_P\{g_P(X,Y)^2\}
+-\left[\operatorname E_P\{g_P(X,Y)\}\right]^2.
+$$
+
+We first calculate $\operatorname E_P\{g_P(X,Y)\}$ by taking the expectation
+of each of the four lines in $g_P(X,Y)$.
+
+The expectation of the first line is
+
+$$
+\begin{aligned}
+&\operatorname E_P\left[
+\{\ell_P(X,Y)-I(P)\}^2-V(P)
+\right]\\
+&\qquad=\operatorname E_P\left[
+\{\ell_P(X,Y)-I(P)\}^2
+\right]-V(P)\\
+&\qquad=\operatorname{Var}_P\{\ell_P(X,Y)\}-V(P)\\
+&\qquad=V(P)-V(P)\\
+&\qquad=0.
+\end{aligned}
+$$
+
+The expectation of the second line is
+
+$$
+\begin{aligned}
+\operatorname E_P\{2\ell_P(X,Y)+2I(P)\}
+&=2I(P)+2I(P)\\
+&=4I(P).
+\end{aligned}
+$$
+
+The expectation of the third line is
+
+$$
+\begin{aligned}
+&\operatorname E_P\left[
+-2\operatorname E_P\{\ell_P(X,Y)\mid X\}
+\right]\\
+&\qquad=-2\operatorname E_P\{\ell_P(X,Y)\}\\
+&\qquad=-2I(P).
+\end{aligned}
+$$
+
+The expectation of the fourth line is
+
+$$
+\begin{aligned}
+&\operatorname E_P\left[
+-2\operatorname E_P\{\ell_P(X,Y)\mid Y\}
+\right]\\
+&\qquad=-2\operatorname E_P\{\ell_P(X,Y)\}\\
+&\qquad=-2I(P).
+\end{aligned}
+$$
+
+Adding the four expectations gives
+
+$$
+\operatorname E_P\{g_P(X,Y)\}
+=0+4I(P)-2I(P)-2I(P)
+=0.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\tau^2(P)
+&=\operatorname E_P\{g_P(X,Y)^2\}\\
+&=\sum_{i,j}p_{ij}g_P(i,j)^2.
+\end{aligned}
+$$
+
+### 4.10 Calculate the sampling variance of $\widehat V(P)$
+
+The target is
+
+$$
+\operatorname{Var}\{\widehat V(P)\}
+=\operatorname{Var}\{\widehat V(P)-V(P)\},
+$$
+
+because $V(P)$ is a fixed population value. We first express the estimation
+error using a first-order Taylor expansion of $V$ over the cell
+probabilities:
 
 $$
 \widehat V(P)-V(P)
-\approx
-\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
+\approx\sum_{i,j}g_P(i,j)(\widehat p_{ij}-p_{ij}).
 $$
 
-The observations are independent and each term has variance $\tau^2(P)$.
-Hence
+This retains only terms that are linear in the cell-probability errors.
+
+Each empirical cell probability is a sample average. Substituting
+
+$$
+\widehat p_{ij}-p_{ij}
+=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left[\mathbf 1\{Z_a^{(P)}=(i,j)\}-p_{ij}\right]
+$$
+
+into the Taylor expansion gives
+
+$$
+\begin{aligned}
+\widehat V(P)-V(P)
+&\approx\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left[g_P(Z_a^{(P)})-\operatorname E_P\{g_P(X,Y)\}\right]\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)})
+-\frac{1}{n_P}\sum_{a=1}^{n_P}\operatorname E_P\{g_P(X,Y)\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)})
+-\operatorname E_P\{g_P(X,Y)\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)}),
+\end{aligned}
+$$
+
+where the final equality uses $\operatorname E_P\{g_P(X,Y)\}=0$ from Section
+4.9.
+
+The observations are independent, and each $g_P(Z_a^{(P)})$ has variance
+$\tau^2(P)$. Thus
 
 $$
 \begin{aligned}
@@ -872,13 +1084,18 @@ $$
 \right\}\\
 &=\frac{1}{n_P^2}
 \sum_{a=1}^{n_P}\operatorname{Var}_P\{g_P(Z_a^{(P)})\}\\
+&=\frac{1}{n_P^2}\sum_{a=1}^{n_P}\tau^2(P)\\
 &=\frac{1}{n_P^2}\,n_P\tau^2(P)\\
 &=\boxed{\frac{\tau^2(P)}{n_P}}.
 \end{aligned}
 $$
 
-We now have the two moments needed to describe the sampling distribution of
-the variance estimate:
+This supplies the sampling variance required by the Satterthwaite equation
+in Section 4.1.
+
+### 4.11 Obtain the component degrees of freedom $\nu_P$
+
+The first-order mean and sampling variance of the variance estimate are now
 
 $$
 \operatorname E\{\widehat V(P)\}\approx V(P),
@@ -907,57 +1124,57 @@ Thus $\nu_P$ is large when $\widehat V(P)$ has little sampling variation
 relative to its squared size, and small when the estimated variance is
 unstable between samples.
 
-### 4.5 Estimate the component degrees of freedom and combine them
+### 4.12 Calculate the component degrees of freedom from the table
 
-The population quantities in the preceding formula are unknown. Calculate
-their empirical versions directly from the observed table:
-
-$$
-\widehat R_P(i)
-=\frac{\sum_j\widehat p_{ij}\widehat\ell_P(i,j)}
-{\widehat p_{i+}},
-$$
-
-$$
-\widehat C_P(j)
-=\frac{\sum_i\widehat p_{ij}\widehat\ell_P(i,j)}
-{\widehat p_{+j}},
-$$
+For table $P$, substitute each table estimate into $\widehat\nu_P$ one step
+at a time:
 
 $$
 \begin{aligned}
-\widehat g_P(i,j)
-&=\{\widehat\ell_P(i,j)-\widehat I(P)\}^2-\widehat V(P)\\
-&\quad+2\{\widehat\ell_P(i,j)-\widehat R_P(i)
--\widehat C_P(j)+\widehat I(P)\}.
+\widehat\nu_P
+&=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}\\[4pt]
+&=\frac{2n_P\widehat V(P)^2}
+{\displaystyle\sum_{i,j}\widehat p_{ij}
+\{\widehat g_P(i,j)-\overline g_P\}^2}\\[6pt]
+&=\frac{2n_P\widehat V(P)^2}
+{\displaystyle\sum_{i,j}\widehat p_{ij}
+\left\{\widehat g_P(i,j)
+-\sum_{a,b}\widehat p_{ab}\widehat g_P(a,b)\right\}^2}\\[6pt]
+&=\boxed{
+\frac{
+2n_P\left[
+\displaystyle\sum_{i,j}\widehat p_{ij}
+\{\widehat\ell_P(i,j)-\widehat I(P)\}^2
+\right]^2
+}{
+\displaystyle\sum_{i,j}\widehat p_{ij}
+\left\{\widehat g_P(i,j)
+-\sum_{a,b}\widehat p_{ab}\widehat g_P(a,b)\right\}^2
+}
+}.
 \end{aligned}
 $$
 
-Centre the empirical $\widehat g_P$ values and calculate their
-probability-weighted variance:
-
-$$
-\overline g_P
-=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),
-$$
-
-$$
-\widehat\tau^2(P)
-=\sum_{i,j}\widehat p_{ij}
-\{\widehat g_P(i,j)-\overline g_P\}^2.
-$$
-
-Replacing $V(P)$ and $\tau^2(P)$ by $\widehat V(P)$ and
-$\widehat\tau^2(P)$ gives the observed component degrees of freedom
+The remaining cell value in the final line is calculated entirely from the
+same table:
 
 $$
 \boxed{
-\widehat\nu_P
-=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}.
+\begin{aligned}
+\widehat g_P(i,j)
+&=\{\widehat\ell_P(i,j)-\widehat I(P)\}^2
+-\sum_{a,b}\widehat p_{ab}
+\{\widehat\ell_P(a,b)-\widehat I(P)\}^2\\
+&\quad+2\widehat\ell_P(i,j)+2\widehat I(P)\\
+&\quad-2\frac{\sum_b\widehat p_{ib}\widehat\ell_P(i,b)}
+{\widehat p_{i+}}\\
+&\quad-2\frac{\sum_a\widehat p_{aj}\widehat\ell_P(a,j)}
+{\widehat p_{+j}}.
+\end{aligned}
 }
 $$
 
-The same calculation for the second table gives
+Apply the same substitutions to table $Q$ to obtain
 
 $$
 \boxed{
@@ -966,7 +1183,11 @@ $$
 }
 $$
 
-Combining the two component degrees of freedom gives
+### 4.13 Combine the two component degrees of freedom
+
+The estimated squared standard error contains the independent components
+$\widehat V(P)/n_P$ and $\widehat V(Q)/n_Q$. The Welch-Satterthwaite equation
+combines their component degrees of freedom as
 
 $$
 \boxed{
