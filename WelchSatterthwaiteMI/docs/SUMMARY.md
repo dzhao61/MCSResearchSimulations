@@ -1,4 +1,4 @@
-# Comprehensive Summary: Welch-Type Testing for Differential Mutual Information
+# Summary: Welch-Type Testing for Differential Mutual Information
 
 ## 1. Research Story
 
@@ -925,19 +925,7 @@ $$
 In the unified benchmark it cost approximately 1.9 times normal Wald, while
 remaining below 0.2 ms per table pair for tables up to $20\times20$.
 
-## 7. Method Map
-
-| Feature | Normal Wald | Simple Welch | Expanded Welch |
-| --- | --- | --- | --- |
-| Effect estimate | Same bias-corrected MI difference | Same | Same |
-| Standard error | MI influence variance | Same | Same |
-| Reference | Normal | Student | Student |
-| Variance uncertainty | Ignored | Approximated by $n-1$ | Derived from MI variance influence |
-| Deterministic | Yes | Yes | Yes |
-| Complexity | $O(rc)$ | $O(rc)$ | $O(rc)$ |
-| Main role | Analytic baseline | Simple finite-df correction | MI-specific correction |
-
-## 8. Experimental Design
+## 7. Experimental Design
 
 The redesigned validation uses one grid rather than several overlapping
 experiments:
@@ -963,7 +951,7 @@ For every pair, $P$ and $Q$ are different joint distributions constructed to
 satisfy $I(P)=I(Q)$ numerically. The largest absolute true MI difference over
 the generated grid was $1.1\times10^{-13}$ nats.
 
-### 8.1 Eight regimes
+### 7.1 Eight regimes
 
 | Regime | Target MI | Sample-size ratio | Sparsity control | Purpose |
 | --- | ---: | ---: | ---: | --- |
@@ -994,7 +982,7 @@ A minimum sample size of 120 is applied to all designs. Within each regime,
 the two variants use different random margins and association patterns.
 Near-independence remains outside the main scope.
 
-### 8.2 Replication and fairness
+### 7.2 Replication and fairness
 
 Each population pair receives 10,000 independently sampled pairs of
 multinomial tables:
@@ -1017,9 +1005,9 @@ degrees of freedom; sample sparsity; power over five alternatives; and
 end-to-end runtime. Replicates are processed in chunks, so no large replicate
 file is required.
 
-## 9. Results
+## 8. Results
 
-### 9.1 Accuracy metric
+### 8.1 Accuracy metric
 
 For a nominal level $\alpha$, a calibrated method should reject
 approximately an $\alpha$ fraction of true null cases. For each scenario,
@@ -1032,7 +1020,7 @@ $$
 The tables report mean absolute FPR error across each set. Lower is better.
 This calibration error must be interpreted together with the valid rate.
 
-### 9.2 Null calibration
+### 8.2 Null calibration
 
 | Regime | Method | Error at $0.10$ | Error at $0.05$ | Error at $0.01$ | Valid rate | 95% coverage |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
@@ -1091,7 +1079,7 @@ Expanded Welch's mean valid rate was 0.99894, compared with 0.99998 for the
 other two methods. These aggregate results reinforce the need to state its
 regime-specific benefits and limitations together.
 
-### 9.3 Where each method works well
+### 8.3 Where each method works well
 
 | Method | Most suitable regimes | Statistical reason | Main limitation |
 | --- | --- | --- | --- |
@@ -1132,7 +1120,7 @@ should choose and report its calibration procedure before examining the
 result, using the sampling design and expected support structure as
 justification.
 
-### 9.4 Power
+### 8.4 Power
 
 The power experiment uses five $3\times3$ alternatives that vary the true MI
 difference and sample size.
@@ -1150,7 +1138,7 @@ Welch lost 0.0102 on average and at most 0.0123. This is the expected cost of
 its heavier tails. Unequal-sample power remains a necessary confirmatory
 check.
 
-### 9.5 Runtime
+### 8.5 Runtime
 
 The three methods were timed through the same implementation path.
 
@@ -1164,7 +1152,7 @@ The three methods were timed through the same implementation path.
 Expanded Welch was approximately 1.9 times the cost of normal Wald, but the
 absolute cost remained below 0.2 ms per table pair in these measurements.
 
-## 10. Final Interpretation
+## 9. Final Interpretation
 
 **Normal Wald** is the best default in well-sampled conditions. It is the
 fastest method and already has good calibration there, but it becomes liberal

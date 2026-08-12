@@ -23,12 +23,9 @@ distribution using Welch-Satterthwaite effective degrees of freedom.
 The current reading path and historical research records are indexed in
 [`docs/README.md`](docs/README.md).
 
-For a short overview of the literature, method, and main results, start with
-[`docs/QUICK_SUMMARY.md`](docs/QUICK_SUMMARY.md).
-
-For a first-principles explanation of the research question, derivations,
-validation design, results, and limitations, see
-[`docs/COMPREHENSIVE_SUMMARY.md`](docs/COMPREHENSIVE_SUMMARY.md).
+For a first-principles explanation of the literature, research question,
+method, validation design, results, and limitations, see
+[`docs/SUMMARY.md`](docs/SUMMARY.md).
 
 For the complete line-by-line mathematical derivation of the expanded method,
 see

@@ -2,14 +2,12 @@
 
 ## Current Reading Path
 
-1. [`QUICK_SUMMARY.md`](QUICK_SUMMARY.md) gives the shortest explanation of
-   the research question, method, and results.
-2. [`COMPREHENSIVE_SUMMARY.md`](COMPREHENSIVE_SUMMARY.md) presents the full
-   research story from first principles.
-3. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
+1. [`SUMMARY.md`](SUMMARY.md) presents the full research story from first
+   principles.
+2. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
    is the main derivation, mapping the generic Welch-Satterthwaite weights,
    variances, and component degrees of freedom to their MI counterparts.
-4. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
+3. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
    textbook-style PDF; [`../derivation/main.tex`](../derivation/main.tex) is
    its generated LaTeX source.
 
@@ -19,6 +17,8 @@ The [`history/`](history/) directory preserves earlier decision documents:
 
 - [`../archive/ORIGINAL_EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](../archive/ORIGINAL_EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
   preserves the original expanded-method derivation.
+- [`../archive/QUICK_SUMMARY.md`](../archive/QUICK_SUMMARY.md) preserves the
+  earlier abbreviated summary.
 - [`VALIDATION_PROTOCOL.md`](history/VALIDATION_PROTOCOL.md) records the
   original frozen validation rules.
 - [`FINAL_ASSESSMENT.md`](history/FINAL_ASSESSMENT.md) records the conclusion

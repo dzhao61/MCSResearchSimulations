@@ -1331,6 +1331,401 @@ therefore retains the original expanded Welch-Satterthwaite combination.
 The complete comparison is recorded in
 [`../results/corrected_satterthwaite_full/REPORT.md`](../results/corrected_satterthwaite_full/REPORT.md).
 
+## Appendix B. Why These Are the MI-Specific Welch-Satterthwaite Inputs
+
+This appendix explains why each quantity in the method is used. The
+construction has two layers:
+
+1. First-order Taylor theory determines the sampling variance of estimated
+   MI and the sampling uncertainty of that variance estimate. This layer
+   produces $V(P)$, $g_P(x,y)$, and $\tau^2(P)$.
+2. Satterthwaite moment matching represents the estimated denominator by a
+   scaled chi-squared distribution. This layer produces the component and
+   combined degrees of freedom used by the Student reference distribution.
+
+The first layer is specific to mutual information. The second layer is the
+general Welch-Satterthwaite construction.
+
+### B.1 Why the test is based on one signed difference
+
+The null hypothesis places one scalar restriction on the two populations:
+
+$$
+D(P,Q)=I(P)-I(Q)=0.
+$$
+
+The corresponding estimator is the signed scalar difference
+
+$$
+\widehat D
+=\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
+$$
+
+Under the regularity conditions in Section 7, each estimated MI is
+asymptotically normal. The difference of the two independent estimates is
+therefore also asymptotically normal. A signed normal or Student statistic is
+the natural reference form for this one-dimensional restriction. Squaring
+the statistic would give an equivalent one-degree-of-freedom Wald form, but
+would discard the sign of the estimated difference.
+
+### B.2 Why pointwise mutual information is the observation-level quantity
+
+Mutual information is the expectation of pointwise mutual information:
+
+$$
+I(P)=\operatorname E_P\{\ell_P(X,Y)\}.
+$$
+
+This identity alone suggests that PMI is relevant, but the stronger
+justification comes from differentiating the complete MI functional. If a
+small amount of probability is moved toward cell $(x,y)$, Section 4.5 shows
+that
+
+$$
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+=\ell_P(x,y)-I(P).
+$$
+
+Thus the centred PMI
+
+$$
+\psi_P(x,y)=\ell_P(x,y)-I(P)
+$$
+
+is the first-order effect of one observation in cell $(x,y)$ on estimated
+MI. It is the influence function of the MI functional. It is not selected by
+analogy with an ordinary sample mean; it is obtained by differentiating MI
+while allowing the joint probabilities and both margins to change.
+
+The first-order sample expansion is consequently
+
+$$
+\widehat I(P)-I(P)
+\approx
+\frac{1}{n_P}\sum_{a=1}^{n_P}\psi_P(Z_a^{(P)}).
+$$
+
+### B.3 Why the variance of PMI governs the variance of estimated MI
+
+The preceding expansion expresses the estimation error as the average of
+$n_P$ independent centred PMI effects. Therefore,
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat I(P)\}
+&\approx
+\frac{1}{n_P}\operatorname{Var}_P\{\psi_P(X,Y)\}\\
+&=\frac{1}{n_P}
+\operatorname{Var}_P\{\ell_P(X,Y)\}\\
+&=\frac{V(P)}{n_P}.
+\end{aligned}
+$$
+
+This is why $V(P)$ is the variance of PMI rather than the variance of the
+category labels or the raw counts. Numerical variances of categorical labels
+depend on arbitrary label assignments. The PMI influence value instead
+measures how each category pair changes the scalar quantity being estimated.
+The multinomial variability of all cell counts is already incorporated when
+their joint effect is projected through $\psi_P$.
+
+It follows directly that the MI-specific Welch inputs are
+
+$$
+s_P^2=\widehat V(P),
+\qquad
+k_P=\frac{1}{n_P}.
+$$
+
+Here $s_P^2$ estimates the variance of one observation's first-order MI
+effect, while $k_P$ converts that observation-level variance into the
+variance of a sample average.
+
+### B.4 Why the two variance contributions are added
+
+For independent samples,
+
+$$
+\operatorname{Cov}\{\widehat I(P),\widehat I(Q)\}=0.
+$$
+
+Hence
+
+$$
+\operatorname{Var}\{\widehat I(P)-\widehat I(Q)\}
+\approx
+\frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
+$$
+
+Replacing the population quantities by table estimates gives the squared
+standard error used in the test:
+
+$$
+\widehat{\operatorname{SE}}^2
+=\frac{\widehat V(P)}{n_P}+\frac{\widehat V(Q)}{n_Q}.
+$$
+
+No equal-variance assumption is imposed. Each table contributes its own PMI
+variance and sample-size weight.
+
+### B.5 Why the leading MI bias is removed separately
+
+The plug-in MI estimator has leading bias $d/(2n)$ under fixed dimensions and
+full support. When $n_P\ne n_Q$, the two biases need not cancel even when
+$I(P)=I(Q)$. Subtracting the leading bias therefore improves the centring of
+the estimated difference under the null.
+
+At fixed dimensions and sample sizes, $d/(2n_P)$ and $d/(2n_Q)$ are
+constants. Subtracting them changes the mean of the estimator but not its
+first-order variance. The same $\widehat V(P)/n_P+\widehat V(Q)/n_Q$
+denominator is therefore used with the bias-corrected numerator.
+
+### B.6 Why the uncertainty of $\widehat V(P)$ must also be calculated
+
+The denominator does not contain the known population variance $V(P)$; it
+contains the estimate $\widehat V(P)=V(\widehat P)$. Repeated samples change
+the empirical joint probabilities, the empirical margins, the PMI values,
+and therefore $\widehat V(P)$.
+
+Welch-Satterthwaite degrees of freedom describe this second layer of
+uncertainty: not how much $\widehat I(P)$ varies, but how much its estimated
+variance $\widehat V(P)$ varies. Treating $\widehat V(P)$ as known would lead
+back to the normal Wald reference and would not provide a finite effective
+degrees-of-freedom adjustment.
+
+### B.7 Why $g_P(x,y)$ is the required sensitivity
+
+For an observation in cell $(x,y)$, define
+
+$$
+g_P(x,y)
+=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}.
+$$
+
+This is the influence function of the complete PMI-variance functional. It
+is the correct observation-level quantity because the first-order expansion
+of the variance estimator is
+
+$$
+\widehat V(P)-V(P)
+\approx
+\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
+$$
+
+The row- and column-conditional PMI means in $g_P$ are not additional
+modelling choices. They arise when the PMI expression
+
+$$
+\ell_P(i,j)=\log p_{ij}-\log p_{i+}-\log p_{+j}
+$$
+
+is differentiated. An observation changes its joint cell, its row margin,
+and its column margin. A calculation that treated the observed PMI values as
+fixed numbers would omit these margin effects and would not differentiate
+the complete MI variance estimator.
+
+### B.8 Why $\tau^2(P)$ is the sampling uncertainty of $\widehat V(P)$
+
+The influence function is centred:
+
+$$
+\operatorname E_P\{g_P(X,Y)\}=0.
+$$
+
+Define
+
+$$
+\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}.
+$$
+
+Because $\widehat V(P)-V(P)$ is, to first order, an average of independent
+$g_P$ values,
+
+$$
+\operatorname{Var}\{\widehat V(P)\}
+\approx\frac{\tau^2(P)}{n_P}.
+$$
+
+The empirical calculation centres the $\widehat g_P(i,j)$ values before
+taking their probability-weighted variance. This is the direct plug-in form
+of $\operatorname{Var}(G)=\operatorname E(G^2)-\operatorname E(G)^2$ and
+also protects the calculation from small numerical or plug-in deviations
+from exact zero centring.
+
+### B.9 Why a scaled chi-squared distribution is used
+
+A variance estimate is nonnegative. In the classical normal model, a sample
+variance has an exact scaled chi-squared distribution, and the Student
+distribution arises from dividing a normal numerator by the square root of
+such an estimated variance. Satterthwaite extends this mechanism by using a
+scaled chi-squared distribution as a moment-matched model for a more general
+positive variance estimate.
+
+Write the working model as
+
+$$
+\widehat V(P)
+\ \text{is modelled by}\
+\frac{V(P)}{\nu_P}\chi^2_{\nu_P}.
+$$
+
+Its mean and variance are
+
+$$
+V(P)
+\qquad\text{and}\qquad
+\frac{2V(P)^2}{\nu_P}.
+$$
+
+Matching the second quantity to
+$\operatorname{Var}\{\widehat V(P)\}\approx\tau^2(P)/n_P$ gives
+
+$$
+\nu_P
+=\frac{2n_PV(P)^2}{\tau^2(P)}.
+$$
+
+Equivalently,
+
+$$
+\nu_P
+=\frac{2}{
+\operatorname{Var}\{\widehat V(P)\}/V(P)^2
+}.
+$$
+
+The component degrees of freedom therefore measure the stability of the
+variance estimate relative to its size. A stable estimate has large degrees
+of freedom and a reference distribution close to normal; an unstable
+estimate has smaller degrees of freedom and produces heavier Student tails.
+
+In an ordinary Welch test, the component value $n_P-1$ is available because
+the sample variance is calculated from fixed scalar observations and has an
+exact scaled chi-squared distribution under normal sampling. The MI quantity
+$\widehat V(P)$ is different: its PMI values, row margins, column margins,
+and mean are all re-estimated from the same contingency table. Consequently,
+its sampling variance is not generally $2V(P)^2/(n_P-1)$. Replacing
+$n_P-1$ by $2n_PV(P)^2/\tau^2(P)$ uses the actual first-order sampling
+variability of the complete MI variance estimator.
+
+The scaled chi-squared model is a moment-matching approximation. The method
+does not require or claim that the MI variance estimate is exactly
+chi-squared in finite samples.
+
+### B.10 Why the component degrees of freedom are combined this way
+
+Let
+
+$$
+A_P=\frac{\widehat V(P)}{n_P},
+\qquad
+A_Q=\frac{\widehat V(Q)}{n_Q}.
+$$
+
+These are independent because they are calculated from independent tables.
+Multiplication by the fixed factors $1/n_P$ and $1/n_Q$ changes their scales
+but not their relative sampling variability, so their component degrees of
+freedom remain $\nu_P$ and $\nu_Q$.
+
+Their first-order means are
+
+$$
+a_P=\operatorname E(A_P)\approx\frac{V(P)}{n_P},
+\qquad
+a_Q=\operatorname E(A_Q)\approx\frac{V(Q)}{n_Q}.
+$$
+
+Under the component scaled chi-squared models,
+
+$$
+\operatorname{Var}(A_P)\approx\frac{2a_P^2}{\nu_P},
+\qquad
+\operatorname{Var}(A_Q)\approx\frac{2a_Q^2}{\nu_Q}.
+$$
+
+The sum $A_P+A_Q$ has approximate variance
+
+$$
+2\left(\frac{a_P^2}{\nu_P}+\frac{a_Q^2}{\nu_Q}\right).
+$$
+
+Representing the sum by one scaled chi-squared variable with degrees of
+freedom $\nu_{\mathrm{expanded}}$ gives variance
+
+$$
+\frac{2(a_P+a_Q)^2}{\nu_{\mathrm{expanded}}}.
+$$
+
+Equating these two variances yields
+
+$$
+\nu_{\mathrm{expanded}}
+=\frac{(a_P+a_Q)^2}
+{a_P^2/\nu_P+a_Q^2/\nu_Q}.
+$$
+
+Replacing $a_P$ and $a_Q$ by the observed components $A_P$ and $A_Q$ gives
+the Welch-Satterthwaite equation used in Section 4.13.
+
+### B.11 Why the final reference distribution is Student
+
+The numerator is approximately normal after centring and scaling. The
+denominator is the square root of an estimated variance whose sampling
+distribution has been represented by a scaled chi-squared variable. This is
+the same normal-over-estimated-standard-deviation structure that produces a
+Student statistic in the classical setting. The effective degrees of
+freedom determine how much additional tail probability is allowed for
+uncertainty in the denominator.
+
+For MI, this Student law is a working reference distribution rather than an
+exact finite-sample result. In particular, the numerator and its estimated
+standard error are both functions of the same table and need not be exactly
+independent. The first-order theory justifies the quantities entering the
+statistic; the finite-sample calibration of the Student approximation must
+be assessed empirically.
+
+As the sample sizes increase and the variance estimates become more stable,
+the component and combined degrees of freedom increase. The Student
+distribution then approaches the standard normal distribution, so the
+expanded method converges to the normal Wald reference.
+
+### B.12 Scope of the construction
+
+All required empirical quantities are probability-weighted sums over the
+observed cells. The calculation is deterministic and requires no
+permutations or bootstrap samples. For a fixed $r\times c$ table, its time
+and memory costs are both $O(rc)$.
+
+The first-order derivations require a smooth interior distribution and a
+nonzero first-order MI variance. Very sparse samples can contain empirical
+zeros even when the population probabilities are positive, weakening the
+Taylor approximation. At or near a distribution where $V(P)=0$, the
+first-order MI term is degenerate and a second-order analysis is required.
+These are theoretical boundaries of the approximation rather than different
+choices of Welch-Satterthwaite inputs.
+
+The complete logic of the method is therefore
+
+$$
+\begin{aligned}
+\text{MI influence}
+&\longrightarrow \ell_P-I(P)\\
+&\longrightarrow V(P)
+\longrightarrow \operatorname{Var}\{\widehat I(P)\}\approx V(P)/n_P,\\[3pt]
+\text{variance influence}
+&\longrightarrow g_P
+\longrightarrow \tau^2(P)
+\longrightarrow \operatorname{Var}\{\widehat V(P)\}\approx\tau^2(P)/n_P,\\[3pt]
+\text{moment matching}
+&\longrightarrow \nu_P,\nu_Q
+\longrightarrow \nu_{\mathrm{expanded}}
+\longrightarrow \text{Student reference}.
+\end{aligned}
+$$
+
 ## References
 
 - Wikipedia contributors. [Welch-Satterthwaite equation](https://en.wikipedia.org/wiki/Welch%E2%80%93Satterthwaite_equation).
@@ -1343,6 +1738,11 @@ The complete comparison is recorded in
 - Hutcheson, K. (1970). *A Test for Comparing Diversities Based on the Shannon
   Formula*. Journal of Theoretical Biology, 29, 151-154.
   <https://doi.org/10.1016/0022-5193(70)90124-4>.
+- Paninski, L. (2003). *Estimation of Entropy and Mutual Information*.
+  Neural Computation, 15(6), 1191-1253.
+  <https://doi.org/10.1162/089976603321780272>.
+- van der Vaart, A. W. (1998). *Asymptotic Statistics*. Cambridge University
+  Press.
 - von Davier, M. (2025). *An Improved Satterthwaite (1941, 1946) Effective df
   Approximation*. Journal of Educational and Behavioral Statistics.
   <https://doi.org/10.3102/10769986241309329>.

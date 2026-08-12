@@ -1,7 +1,7 @@
 # Testing Equality of Mutual Information Between Two Populations
 
 For a longer first-principles explanation, see
-[COMPREHENSIVE_SUMMARY.md](COMPREHENSIVE_SUMMARY.md).
+[SUMMARY.md](../docs/SUMMARY.md).
 
 ## Research Question
 
@@ -227,7 +227,7 @@ small probability-preserving change in the table. The variance of these
 cell-level sensitivities, $\tau^2(P)$, determines the sampling variance of
 $\widehat V(P)$. Satterthwaite moment matching then converts that sampling
 variance into component degrees of freedom. See
-[COMPREHENSIVE_SUMMARY.md](COMPREHENSIVE_SUMMARY.md) for the direct
+[SUMMARY.md](../docs/SUMMARY.md) for the direct
 cell-contamination derivation.
 
 For a population $P$, define
