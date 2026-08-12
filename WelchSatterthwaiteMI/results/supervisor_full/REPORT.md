@@ -10,8 +10,8 @@ often each analytic test incorrectly rejects equality.
 
 ## Design
 
-The null grid contains 216 fixed
-population pairs across 9 regimes. Every method sees
+The null grid contains 192 fixed
+population pairs across 8 regimes. Every method sees
 the same table pairs and uses the same bias-corrected MI difference and
 standard error.
 
@@ -23,12 +23,21 @@ standard error.
 - **Widespread sparsity:** In both populations, 25-50% of cells have true expected counts below 1 and at least half have expected counts below 5.
 - **Equal-MI shape mismatch:** A near-balanced population is compared with a strongly skewed population having exactly the same mutual information.
 - **Extreme sample imbalance:** Sample-size ratios of 1:10 and 1:20 stress the unequal-variance combination beyond the main grid.
-- **Zero MI (independence):** Both populations are independent product distributions with different margins, so I(P)=I(Q)=0 exactly; the two variants cover dense near-balanced and lower-density skewed tables.
 
 The methods differ only in reference calibration: normal Wald uses
 a standard normal distribution, simple Welch uses ordinary `n-1`
 component degrees of freedom, and expanded Welch estimates component
 degrees of freedom from the MI-variance influence function.
+
+## Rejection calibration
+
+The figure traces the empirical rejection probability over nominal
+significance levels from 0 to 0.10. A calibrated test follows the
+diagonal. Curves above it are liberal and curves below it are
+conservative. Each line is the equal-weight mean across population
+pairs in that regime; shading spans their 10th to 90th percentiles.
+
+![Rejection calibration](rejection_calibration.png)
 
 ## Main calibration results
 
@@ -58,9 +67,6 @@ degrees of freedom from the MI-variance influence function.
 | Extreme sample imbalance | Normal Wald | 0.05628 | 0.00850 | 0.01397 | 0.00450 | 1.00000 | 0.94372 |
 | Extreme sample imbalance | Simple Welch | 0.05556 | 0.00785 | 0.01346 | 0.00399 | 1.00000 | 0.94444 |
 | Extreme sample imbalance | Expanded Welch | 0.05122 | 0.00546 | 0.01013 | 0.00184 | 1.00000 | 0.94878 |
-| Zero MI (independence) | Normal Wald | 0.01381 | 0.03887 | 0.00347 | 0.00948 | 1.00000 | 0.98619 |
-| Zero MI (independence) | Simple Welch | 0.01373 | 0.03891 | 0.00344 | 0.00945 | 1.00000 | 0.98627 |
-| Zero MI (independence) | Expanded Welch | 0.00366 | 0.04634 | 0.00016 | 0.00984 | 0.99994 | 0.99634 |
 
 False-positive-rate error is the absolute difference between observed
 and nominal rejection rates among valid calculations, so lower is
@@ -71,9 +77,9 @@ are not hidden by conditioning only on successful results.
 
 | Method | MAE at 0.10 | MAE at 0.05 | MAE at 0.01 | Mean valid rate | 95% coverage |
 | --- | --- | --- | --- | --- | --- |
-| Normal Wald | 0.01440 | 0.00908 | 0.00317 | 0.99998 | 0.95286 |
-| Simple Welch | 0.01424 | 0.00895 | 0.00308 | 0.99998 | 0.95317 |
-| Expanded Welch | 0.01657 | 0.01028 | 0.00294 | 0.99905 | 0.95676 |
+| Normal Wald | 0.00732 | 0.00535 | 0.00239 | 0.99998 | 0.94869 |
+| Simple Welch | 0.00713 | 0.00521 | 0.00229 | 0.99998 | 0.94904 |
+| Expanded Welch | 0.00801 | 0.00577 | 0.00207 | 0.99894 | 0.95181 |
 
 ## Direct interpretation
 
@@ -91,14 +97,6 @@ are not hidden by conditioning only on successful results.
   `0.00377`
   to `0.00516`
   by becoming mildly conservative.
-- Zero MI is a nonregular boundary: the population first-order MI
-  variance is zero, so the normal and Welch reference arguments do
-  not apply in their regular form. The boundary results are reported
-  as a diagnostic rather than pooled evidence for those arguments.
-- In the zero-MI regime at alpha 0.05, the mean FPRs were
-  `0.01381` for normal Wald,
-  `0.01373` for simple Welch,
-  and `0.00366` for expanded Welch.
 - Across the five power scenarios, expanded Welch lost
   `0.0102` power on average and at most
   `0.0123` relative to normal Wald.
@@ -131,18 +129,18 @@ are not hidden by conditioning only on successful results.
 
 | Rows | Columns | Method | Route | Median ms | Relative to Wald |
 | --- | --- | --- | --- | --- | --- |
-| 2 | 2 | Normal Wald | Normal Wald | 0.0864 | 1.0000 |
-| 2 | 2 | Simple Welch | Simple Welch | 0.1015 | 1.1740 |
-| 2 | 2 | Expanded Welch | Expanded Welch | 0.1642 | 1.8995 |
-| 5 | 5 | Normal Wald | Normal Wald | 0.0867 | 1.0000 |
-| 5 | 5 | Simple Welch | Simple Welch | 0.1014 | 1.1699 |
-| 5 | 5 | Expanded Welch | Expanded Welch | 0.1651 | 1.9039 |
-| 10 | 10 | Normal Wald | Normal Wald | 0.0875 | 1.0000 |
-| 10 | 10 | Simple Welch | Simple Welch | 0.1023 | 1.1698 |
-| 10 | 10 | Expanded Welch | Expanded Welch | 0.1669 | 1.9083 |
-| 20 | 20 | Normal Wald | Normal Wald | 0.0943 | 1.0000 |
-| 20 | 20 | Simple Welch | Simple Welch | 0.1094 | 1.1599 |
-| 20 | 20 | Expanded Welch | Expanded Welch | 0.1774 | 1.8810 |
+| 2 | 2 | Normal Wald | Normal Wald | 0.0850 | 1.0000 |
+| 2 | 2 | Simple Welch | Simple Welch | 0.0984 | 1.1565 |
+| 2 | 2 | Expanded Welch | Expanded Welch | 0.1607 | 1.8895 |
+| 5 | 5 | Normal Wald | Normal Wald | 0.0846 | 1.0000 |
+| 5 | 5 | Simple Welch | Simple Welch | 0.0996 | 1.1775 |
+| 5 | 5 | Expanded Welch | Expanded Welch | 0.1608 | 1.8998 |
+| 10 | 10 | Normal Wald | Normal Wald | 0.0856 | 1.0000 |
+| 10 | 10 | Simple Welch | Simple Welch | 0.1002 | 1.1712 |
+| 10 | 10 | Expanded Welch | Expanded Welch | 0.1625 | 1.8997 |
+| 20 | 20 | Normal Wald | Normal Wald | 0.0925 | 1.0000 |
+| 20 | 20 | Simple Welch | Simple Welch | 0.1075 | 1.1617 |
+| 20 | 20 | Expanded Welch | Expanded Welch | 0.1763 | 1.9057 |
 
 Runtime includes the complete calculation from the two count tables.
 All three timings use the same implementation path. Every method
@@ -154,6 +152,14 @@ remains deterministic and scans each table a fixed number of times.
   difficulty diagnostics.
 - `scenario_results.csv`: every scenario-method result.
 - `regime_summary.csv`: the presentation-level aggregate table.
+- `rejection_calibration_scenarios.csv`: scenario-level rejection
+  curves over 101 nominal significance levels.
+- `rejection_calibration_regimes.csv`: mean curves and population
+  variability bands for each regime and method.
+- `null_pvalues.npz`: complete null p-value arrays for follow-up
+  calibration or Q-Q plots without rerunning the simulation.
 - `power_summary.csv`: alternative-hypothesis power and coverage.
 - `runtime_summary.csv`: end-to-end timing by table size.
 - `calibration_summary.png`: one visual comparison across regimes.
+- `rejection_calibration.png` and `.pdf`: lower-tail rejection
+  calibration with scenario-variability bands.

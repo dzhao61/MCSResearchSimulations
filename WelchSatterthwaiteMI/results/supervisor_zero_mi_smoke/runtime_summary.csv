@@ -1,4 +1,0 @@
-rows,columns,cells,n_p,n_q,repetitions,method,method_label,reference_route,median_time_ms,p05_time_ms,p95_time_ms,relative_to_normal
-2,2,4,120,240,20,normal_wald,Normal Wald,Normal Wald,0.08704152423888445,0.08283182978630066,0.0938480254262686,1.0
-2,2,4,120,240,20,simple_welch,Simple Welch,Simple Welch,0.10222895070910454,0.09772542398422956,0.1080041751265526,1.1744848404600359
-2,2,4,120,240,20,expanded_welch,Expanded Welch,Expanded Welch,0.1657084794715047,0.1586958416737616,0.17349785193800926,1.9037865078823724

@@ -24,8 +24,6 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
 from differential_mi.random_validation import (  # noqa: E402
     RandomScenario,
-    SHAPES,
-    generate_random_scenarios,
     scenario_diagnostics,
 )
 from differential_mi.distributions import (  # noqa: E402
@@ -41,6 +39,17 @@ from welch_differential_mi import differential_mi_pvalues  # noqa: E402
 
 
 ALPHAS = (0.10, 0.05, 0.01)
+CALIBRATION_ALPHAS = tuple(index / 1_000 for index in range(101))
+MINIMUM_SAMPLE_SIZE = 50
+MAXIMUM_SAMPLE_SIZE = 1_000
+SHAPES = (
+    (2, 2),
+    (2, 5),
+    (3, 3),
+    (3, 5),
+    (5, 5),
+    (8, 8),
+)
 METHODS = {
     "normal_wald": {
         "label": "Normal Wald",
@@ -64,75 +73,43 @@ METHODS = {
 REGIMES = {
     "well_sampled": {
         "label": "Well sampled",
-        "designs": (0, 3),
+        "designs": (0, 1),
         "description": (
-            "Equal sample sizes and high observations per cell; includes one "
-            "near-balanced and one skewed-margin variant."
+            "Equal sample sizes, near-balanced margins, "
+            "and approximately 15 observations per cell."
         ),
     },
     "moderate": {
         "label": "Moderate",
-        "designs": (1, 4),
+        "designs": (2, 3),
         "description": (
-            "A 2:1 sample-size ratio and moderate observations per cell, with "
-            "increasingly heterogeneous margins."
-        ),
-    },
-    "sparse_imbalanced": {
-        "label": "Sparse and imbalanced",
-        "designs": (2, 5),
-        "description": (
-            "A 4:1 sample-size ratio, low observations per cell, and "
-            "heterogeneous margins."
+            "Moderately heterogeneous margins, six to eight observations per "
+            "cell, and sample-size ratios of 1:1 or 2:1."
         ),
     },
     "highly_sparse": {
         "label": "Highly skewed and sparse",
-        "designs": (6, 7),
+        "designs": (4, 5),
         "description": (
             "Both populations have minimum true expected cell counts from "
-            "1 (inclusive) to 5 (exclusive), with heterogeneous margins."
+            "1 (inclusive) to 5 (exclusive), with ratios of 1:1 or 2:1."
         ),
     },
     "ultra_sparse": {
         "label": "Ultra-skewed and sparse",
-        "designs": (8, 9),
+        "designs": (6, 7),
         "description": (
             "Both populations have positive minimum true expected cell counts "
-            "below 1, so their rarest cells are usually unobserved."
+            "below 1, with ratios of 1:1 or 10:1."
         ),
     },
     "widespread_sparse": {
         "label": "Widespread sparsity",
-        "designs": (10, 11),
+        "designs": (8, 9),
         "description": (
             "In both populations, 25-50% of cells have true expected counts "
-            "below 1 and at least half have expected counts below 5."
-        ),
-    },
-    "shape_mismatch": {
-        "label": "Equal-MI shape mismatch",
-        "designs": (12, 13),
-        "description": (
-            "A near-balanced population is compared with a strongly skewed "
-            "population having exactly the same mutual information."
-        ),
-    },
-    "extreme_imbalance": {
-        "label": "Extreme sample imbalance",
-        "designs": (14, 15),
-        "description": (
-            "Sample-size ratios of 1:10 and 1:20 stress the unequal-variance "
-            "combination beyond the main grid."
-        ),
-    },
-    "zero_mi": {
-        "label": "Zero MI (independence)",
-        "designs": (16, 17),
-        "description": (
-            "Both populations are independent product distributions with "
-            "different margins, so I(P)=I(Q)=0 exactly; the two variants "
-            "cover dense near-balanced and lower-density skewed tables."
+            "below 1 and at least half have expected counts below 5. This is "
+            "the explicit failure-boundary check."
         ),
     },
 }
@@ -148,105 +125,89 @@ DESIGN_TO_VARIANT = {
     for index, design in enumerate(specification["designs"])
 }
 
-# These designs add controlled sparsity stress tests to the broad randomized
-# grid. The internal lower bound for the ultra-sparse designs keeps the rarest
-# expected count away from numerical zero while remaining strictly below one.
+FIXED_DENSITY_DESIGNS = {
+    0: {
+        "margin_alpha_p": 50.0,
+        "margin_alpha_q": 50.0,
+        "target_mi": 0.10,
+        "density": 15,
+        "minimum_n": 200,
+        "sample_size_ratio": 1,
+    },
+    1: {
+        "margin_alpha_p": 50.0,
+        "margin_alpha_q": 50.0,
+        "target_mi": 0.15,
+        "density": 15,
+        "minimum_n": 200,
+        "sample_size_ratio": 1,
+    },
+    2: {
+        "margin_alpha_p": 8.0,
+        "margin_alpha_q": 4.0,
+        "target_mi": 0.10,
+        "density": 8,
+        "minimum_n": 100,
+        "sample_size_ratio": 1,
+    },
+    3: {
+        "margin_alpha_p": 8.0,
+        "margin_alpha_q": 2.0,
+        "target_mi": 0.15,
+        "density": 6,
+        "minimum_n": 100,
+        "sample_size_ratio": 2,
+    },
+}
+
 EXPECTED_COUNT_STRESS_DESIGNS = {
+    4: {
+        "margin_alpha_p": 2.0,
+        "margin_alpha_q": 2.0,
+        "target_mi": 0.10,
+        "sample_size_ratio": 1,
+        "minimum_expected_lower": 1.0,
+        "minimum_expected_upper": 5.0,
+    },
+    5: {
+        "margin_alpha_p": 10.0,
+        "margin_alpha_q": 2.0,
+        "target_mi": 0.15,
+        "sample_size_ratio": 2,
+        "minimum_expected_lower": 1.0,
+        "minimum_expected_upper": 5.0,
+    },
     6: {
         "margin_alpha_p": 0.8,
         "margin_alpha_q": 0.8,
         "target_mi": 0.10,
         "sample_size_ratio": 1,
-        "minimum_expected_lower": 1.0,
-        "minimum_expected_upper": 5.0,
-    },
-    7: {
-        "margin_alpha_p": 1.0,
-        "margin_alpha_q": 0.6,
-        "target_mi": 0.15,
-        "sample_size_ratio": 4,
-        "minimum_expected_lower": 1.0,
-        "minimum_expected_upper": 5.0,
-    },
-    8: {
-        "margin_alpha_p": 0.6,
-        "margin_alpha_q": 0.6,
-        "target_mi": 0.10,
-        "sample_size_ratio": 1,
-        "minimum_expected_lower": 0.20,
+        "minimum_expected_lower": 0.05,
         "minimum_expected_upper": 1.0,
     },
-    9: {
-        "margin_alpha_p": 0.8,
-        "margin_alpha_q": 0.45,
+    7: {
+        "margin_alpha_p": 10.0,
+        "margin_alpha_q": 0.8,
         "target_mi": 0.15,
-        "sample_size_ratio": 4,
-        "minimum_expected_lower": 0.20,
+        "sample_size_ratio": 10,
+        "minimum_expected_lower": 0.05,
         "minimum_expected_upper": 1.0,
     },
 }
 ADVERSARIAL_DESIGNS = {
-    10: {
+    8: {
         "kind": "widespread_sparse",
         "margin_alpha_p": 0.35,
         "margin_alpha_q": 0.35,
-        "target_mi": 0.03,
+        "target_mi": 0.10,
         "sample_size_ratio": 1,
     },
-    11: {
+    9: {
         "kind": "widespread_sparse",
-        "margin_alpha_p": 0.50,
-        "margin_alpha_q": 0.25,
-        "target_mi": 0.03,
-        "sample_size_ratio": 1,
-    },
-    12: {
-        "kind": "shape_mismatch",
-        "margin_alpha_p": 50.0,
-        "margin_alpha_q": 0.35,
-        "target_mi": 0.07,
-        "density": 25,
-        "sample_size_ratio": 1,
-    },
-    13: {
-        "kind": "shape_mismatch",
-        "margin_alpha_p": 50.0,
+        "margin_alpha_p": 1.0,
         "margin_alpha_q": 0.35,
         "target_mi": 0.15,
-        "density": 50,
-        "sample_size_ratio": 1,
-    },
-    14: {
-        "kind": "extreme_imbalance",
-        "margin_alpha_p": 5.0,
-        "margin_alpha_q": 1.0,
-        "target_mi": 0.07,
-        "density": 25,
-        "sample_size_ratio": 10,
-    },
-    15: {
-        "kind": "extreme_imbalance",
-        "margin_alpha_p": 2.0,
-        "margin_alpha_q": 0.8,
-        "target_mi": 0.15,
-        "density": 10,
-        "sample_size_ratio": 20,
-    },
-}
-ZERO_MI_DESIGNS = {
-    16: {
-        "margin_alpha_p": 50.0,
-        "margin_alpha_q": 20.0,
-        "density": 100,
-        "sample_size_ratio": 1,
-        "margin_rule": "near_balanced",
-    },
-    17: {
-        "margin_alpha_p": 2.0,
-        "margin_alpha_q": 0.8,
-        "density": 25,
-        "sample_size_ratio": 4,
-        "margin_rule": "skewed_q",
+        "sample_size_ratio": 2,
     },
 }
 PROFILE_SETTINGS = {
@@ -289,7 +250,8 @@ def _sample_sizes_in_expected_band(
     ratio: int,
     lower: float,
     upper: float,
-    minimum_n: int = 120,
+    minimum_n: int = MINIMUM_SAMPLE_SIZE,
+    maximum_n: int = MAXIMUM_SAMPLE_SIZE,
 ) -> tuple[int, int] | None:
     """Choose integer sample sizes placing both minimum counts in one band."""
     lower_n_p = max(
@@ -304,7 +266,7 @@ def _sample_sizes_in_expected_band(
     minimum_n_p = int(np.ceil(lower_n_p))
     maximum_n_p = min(
         int(np.ceil(upper_n_p) - 1),
-        5_000_000 // ratio,
+        maximum_n // ratio,
     )
     if minimum_n_p > maximum_n_p:
         return None
@@ -327,17 +289,19 @@ def _widespread_sparsity_sample_sizes(
     ratio: int,
 ) -> tuple[int, int] | None:
     """Find sample sizes satisfying cell-wide sparsity constraints."""
-    maximum_n_p = 5_000_000 // ratio
-    boundaries = [120.0, float(maximum_n_p)]
+    maximum_n_p = MAXIMUM_SAMPLE_SIZE // ratio
+    boundaries = [float(MINIMUM_SAMPLE_SIZE), float(maximum_n_p)]
     boundaries.extend((1.0 / probability_p).reshape(-1).tolist())
     boundaries.extend((5.0 / probability_p).reshape(-1).tolist())
     boundaries.extend((1.0 / (ratio * probability_q)).reshape(-1).tolist())
     boundaries.extend((5.0 / (ratio * probability_q)).reshape(-1).tolist())
     boundaries = sorted(
-        value for value in boundaries if 120 <= value <= maximum_n_p
+        value
+        for value in boundaries
+        if MINIMUM_SAMPLE_SIZE <= value <= maximum_n_p
     )
 
-    candidates = {120, maximum_n_p}
+    candidates = {MINIMUM_SAMPLE_SIZE, maximum_n_p}
     for boundary in boundaries:
         candidates.add(int(np.floor(boundary)))
         candidates.add(int(np.ceil(boundary)))
@@ -346,7 +310,7 @@ def _widespread_sparsity_sample_sizes(
 
     valid_candidates = []
     for n_p in candidates:
-        if not 120 <= n_p <= maximum_n_p:
+        if not MINIMUM_SAMPLE_SIZE <= n_p <= maximum_n_p:
             continue
         n_q = ratio * n_p
         expected_p = n_p * probability_p
@@ -375,20 +339,108 @@ def _widespread_sparsity_sample_sizes(
     return n_p, n_q
 
 
-def _margin_is_near_balanced(margin: np.ndarray) -> bool:
-    uniform = 1.0 / margin.size
-    return bool(
-        margin.max() <= 1.5 * uniform
-        and margin.min() >= 0.5 * uniform
-    )
+def _fixed_density_sample_sizes(
+    cells: int,
+    *,
+    density: int,
+    ratio: int,
+    minimum_n: int = MINIMUM_SAMPLE_SIZE,
+) -> tuple[int, int]:
+    """Choose bounded sample sizes for one fixed-density scenario."""
+    n_p = max(minimum_n, cells * density)
+    n_p = min(n_p, MAXIMUM_SAMPLE_SIZE // ratio)
+    n_q = ratio * n_p
+    if not (
+        MINIMUM_SAMPLE_SIZE <= n_p <= MAXIMUM_SAMPLE_SIZE
+        and MINIMUM_SAMPLE_SIZE <= n_q <= MAXIMUM_SAMPLE_SIZE
+    ):
+        raise ValueError("Fixed-density sample sizes exceed experiment bounds.")
+    return n_p, n_q
 
 
-def _margin_is_strongly_skewed(margin: np.ndarray) -> bool:
-    uniform = 1.0 / margin.size
-    return bool(
-        margin.max() >= 1.5 * uniform
-        and margin.min() <= 0.5 * uniform
-    )
+def generate_fixed_density_scenarios(seed: int) -> list[RandomScenario]:
+    """Generate the well-sampled and moderate equal-MI scenarios."""
+    rng = np.random.default_rng(seed)
+    scenarios = []
+    for shape_index, (rows, columns) in enumerate(SHAPES):
+        cells = rows * columns
+        for design_index, design in FIXED_DENSITY_DESIGNS.items():
+            n_p, n_q = _fixed_density_sample_sizes(
+                cells,
+                density=design["density"],
+                ratio=design["sample_size_ratio"],
+                minimum_n=design["minimum_n"],
+            )
+            last_error: Exception | None = None
+            for attempt in range(1, 5_001):
+                try:
+                    row_p = _draw_stress_margin(
+                        rows, design["margin_alpha_p"], rng
+                    )
+                    column_p = _draw_stress_margin(
+                        columns, design["margin_alpha_p"], rng
+                    )
+                    row_q = _draw_stress_margin(
+                        rows, design["margin_alpha_q"], rng
+                    )
+                    column_q = _draw_stress_margin(
+                        columns, design["margin_alpha_q"], rng
+                    )
+                    probability_p, association_p = (
+                        table_with_target_mi_from_interaction(
+                            row_p,
+                            column_p,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    probability_q, association_q = (
+                        table_with_target_mi_from_interaction(
+                            row_q,
+                            column_q,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    if min(probability_p.min(), probability_q.min()) < 1e-12:
+                        raise ValueError("Generated cell probability is too small.")
+                    if np.abs(probability_p - probability_q).sum() < 0.05:
+                        raise ValueError("Generated equal-MI pair is too similar.")
+                    if min(
+                        float(influence_variance(probability_p)),
+                        float(influence_variance(probability_q)),
+                    ) < 1e-6:
+                        raise ValueError("Generated influence variance is degenerate.")
+                except (RuntimeError, ValueError) as error:
+                    last_error = error
+                    continue
+                break
+            else:
+                raise RuntimeError(
+                    f"Failed to generate fixed-density shape={rows}x{columns}, "
+                    f"design={design_index}: {last_error}"
+                )
+
+            scenarios.append(
+                RandomScenario(
+                    scenario_id=f"fixed_{rows}x{columns}_d{design_index}",
+                    shape_index=shape_index,
+                    design_index=design_index,
+                    rows=rows,
+                    columns=columns,
+                    n_p=n_p,
+                    n_q=n_q,
+                    target_mi=design["target_mi"],
+                    margin_alpha_p=design["margin_alpha_p"],
+                    margin_alpha_q=design["margin_alpha_q"],
+                    association_p=association_p,
+                    association_q=association_q,
+                    generation_attempts=attempt,
+                    probability_p=probability_p,
+                    probability_q=probability_q,
+                )
+            )
+    return scenarios
 
 
 def generate_expected_count_stress_scenarios(seed: int) -> list[RandomScenario]:
@@ -496,7 +548,6 @@ def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
     rng = np.random.default_rng(seed)
     scenarios = []
     for shape_index, (rows, columns) in enumerate(SHAPES):
-        cells = rows * columns
         for design_index, design in ADVERSARIAL_DESIGNS.items():
             last_error: Exception | None = None
             for attempt in range(1, 10_001):
@@ -521,16 +572,6 @@ def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
                         design["margin_alpha_q"],
                         rng,
                     )
-                    if design["kind"] == "shape_mismatch" and not (
-                        _margin_is_near_balanced(row_p)
-                        and _margin_is_near_balanced(column_p)
-                        and _margin_is_strongly_skewed(row_q)
-                        and _margin_is_strongly_skewed(column_q)
-                    ):
-                        raise ValueError(
-                            "Margins do not satisfy the shape-mismatch rule."
-                        )
-
                     probability_p, association_p = (
                         table_with_target_mi_from_interaction(
                             row_p,
@@ -550,18 +591,11 @@ def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
                     if min(probability_p.min(), probability_q.min()) < 1e-12:
                         raise ValueError("Generated cell probability is too small.")
 
-                    if design["kind"] == "widespread_sparse":
-                        sample_sizes = _widespread_sparsity_sample_sizes(
-                            probability_p,
-                            probability_q,
-                            ratio=design["sample_size_ratio"],
-                        )
-                    else:
-                        n_p = max(120, cells * design["density"])
-                        sample_sizes = (
-                            n_p,
-                            n_p * design["sample_size_ratio"],
-                        )
+                    sample_sizes = _widespread_sparsity_sample_sizes(
+                        probability_p,
+                        probability_q,
+                        ratio=design["sample_size_ratio"],
+                    )
                     if sample_sizes is None:
                         raise ValueError(
                             "No sample sizes satisfy the adversarial rule."
@@ -600,78 +634,6 @@ def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
                     margin_alpha_q=design["margin_alpha_q"],
                     association_p=association_p,
                     association_q=association_q,
-                    generation_attempts=attempt,
-                    probability_p=probability_p,
-                    probability_q=probability_q,
-                )
-            )
-    return scenarios
-
-
-def generate_zero_mi_scenarios(seed: int) -> list[RandomScenario]:
-    """Generate product-form population pairs satisfying I(P)=I(Q)=0."""
-    rng = np.random.default_rng(seed)
-    scenarios = []
-    for shape_index, (rows, columns) in enumerate(SHAPES):
-        cells = rows * columns
-        for design_index, design in ZERO_MI_DESIGNS.items():
-            for attempt in range(1, 10_001):
-                row_p = _draw_stress_margin(
-                    rows,
-                    design["margin_alpha_p"],
-                    rng,
-                )
-                column_p = _draw_stress_margin(
-                    columns,
-                    design["margin_alpha_p"],
-                    rng,
-                )
-                row_q = _draw_stress_margin(
-                    rows,
-                    design["margin_alpha_q"],
-                    rng,
-                )
-                column_q = _draw_stress_margin(
-                    columns,
-                    design["margin_alpha_q"],
-                    rng,
-                )
-                probability_p = np.outer(row_p, column_p)
-                probability_q = np.outer(row_q, column_q)
-                if design["margin_rule"] == "near_balanced" and not all(
-                    _margin_is_near_balanced(margin)
-                    for margin in (row_p, column_p, row_q, column_q)
-                ):
-                    continue
-                if design["margin_rule"] == "skewed_q" and not (
-                    _margin_is_strongly_skewed(row_q)
-                    and _margin_is_strongly_skewed(column_q)
-                ):
-                    continue
-                if np.abs(probability_p - probability_q).sum() >= 0.05:
-                    break
-            else:
-                raise RuntimeError(
-                    f"Failed to generate zero-MI shape={rows}x{columns}, "
-                    f"design={design_index}."
-                )
-
-            n_p = max(120, cells * design["density"])
-            n_q = n_p * design["sample_size_ratio"]
-            scenarios.append(
-                RandomScenario(
-                    scenario_id=f"zero_mi_{rows}x{columns}_d{design_index}",
-                    shape_index=shape_index,
-                    design_index=design_index,
-                    rows=rows,
-                    columns=columns,
-                    n_p=n_p,
-                    n_q=n_q,
-                    target_mi=0.0,
-                    margin_alpha_p=design["margin_alpha_p"],
-                    margin_alpha_q=design["margin_alpha_q"],
-                    association_p=0.0,
-                    association_q=0.0,
                     generation_attempts=attempt,
                     probability_p=probability_p,
                     probability_q=probability_q,
@@ -747,22 +709,11 @@ def _scenario_simulation_seeds(
     scenarios: list[RandomScenario],
     seed: int,
 ) -> dict[str, int]:
-    """Assign stable seeds while appending new regimes after the legacy grid."""
-    established = [
-        scenario
-        for scenario in scenarios
-        if scenario.design_index not in ZERO_MI_DESIGNS
-    ]
-    zero_mi = [
-        scenario
-        for scenario in scenarios
-        if scenario.design_index in ZERO_MI_DESIGNS
-    ]
-    seed_order = established + zero_mi
-    children = np.random.SeedSequence(seed).spawn(len(seed_order))
+    """Assign one deterministic simulation seed to each scenario."""
+    children = np.random.SeedSequence(seed).spawn(len(scenarios))
     return {
         scenario.scenario_id: int(child.generate_state(1)[0])
-        for scenario, child in zip(seed_order, children)
+        for scenario, child in zip(scenarios, children)
     }
 
 
@@ -838,6 +789,30 @@ def _wilson(rejections: int, total: int) -> tuple[float, float]:
     return float(interval.low), float(interval.high)
 
 
+def _wilson_many(
+    rejections: np.ndarray,
+    total: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Vectorized 95% Wilson intervals for a rejection-calibration curve."""
+    counts = np.asarray(rejections, dtype=float)
+    if total == 0:
+        missing = np.full(counts.shape, np.nan)
+        return missing, missing.copy()
+    z = float(norm.ppf(0.975))
+    probability = counts / total
+    denominator = 1.0 + z**2 / total
+    center = (probability + z**2 / (2.0 * total)) / denominator
+    half_width = (
+        z
+        * np.sqrt(
+            probability * (1.0 - probability) / total
+            + z**2 / (4.0 * total**2)
+        )
+        / denominator
+    )
+    return center - half_width, center + half_width
+
+
 def _critical_values(
     method: str,
     values: dict[str, np.ndarray],
@@ -859,13 +834,21 @@ def _simulate_null_scenario(
     replicates: int,
     batch_size: int,
     seed: int,
-) -> list[dict]:
+) -> tuple[list[dict], list[dict], dict[str, np.ndarray]]:
     rng = np.random.default_rng(seed)
+    p_value_samples = {
+        method: np.full(replicates, np.nan, dtype=float)
+        for method in METHODS
+    }
     method_counts = {
         method: {
             "valid": 0,
             "coverage": 0,
             "rejections": {alpha: 0 for alpha in ALPHAS},
+            "calibration_rejections": np.zeros(
+                len(CALIBRATION_ALPHAS),
+                dtype=np.int64,
+            ),
             "degrees_of_freedom": [],
         }
         for method in METHODS
@@ -918,10 +901,18 @@ def _simulate_null_scenario(
                 np.count_nonzero(method_valid)
             )
             p_values = values[specification["p_value"]][method_valid]
+            batch_p_values = np.full(count, np.nan, dtype=float)
+            batch_p_values[method_valid] = p_values
+            p_value_samples[method][start : start + count] = batch_p_values
             for alpha in ALPHAS:
                 method_counts[method]["rejections"][alpha] += int(
                     np.count_nonzero(p_values <= alpha)
                 )
+            method_counts[method]["calibration_rejections"] += np.searchsorted(
+                np.sort(p_values),
+                CALIBRATION_ALPHAS,
+                side="right",
+            )
             df_column = specification["degrees_of_freedom"]
             if df_column is not None:
                 degrees_of_freedom = values[df_column][method_valid]
@@ -984,6 +975,7 @@ def _simulate_null_scenario(
     )
 
     rows = []
+    calibration_rows = []
     for method, specification in METHODS.items():
         method_valid_count = method_counts[method]["valid"]
         row = {
@@ -1024,7 +1016,101 @@ def _simulate_null_scenario(
             row[f"fpr_{label}_high"] = high
             row[f"absolute_fpr_error_{label}"] = abs(fpr - alpha)
         rows.append(row)
-    return rows
+
+        calibration_rejections = method_counts[method][
+            "calibration_rejections"
+        ]
+        calibration_rates = (
+            calibration_rejections / method_valid_count
+            if method_valid_count
+            else np.full(len(CALIBRATION_ALPHAS), np.nan)
+        )
+        calibration_low, calibration_high = _wilson_many(
+            calibration_rejections,
+            method_valid_count,
+        )
+        calibration_common = {
+            "scenario_id": scenario.scenario_id,
+            "shape_index": scenario.shape_index,
+            "design_index": scenario.design_index,
+            "rows": scenario.rows,
+            "columns": scenario.columns,
+            "n_p": scenario.n_p,
+            "n_q": scenario.n_q,
+            "target_mi": scenario.target_mi,
+            "regime": common["regime"],
+            "regime_label": common["regime_label"],
+            "variant": common["variant"],
+            "method": method,
+            "method_label": specification["label"],
+            "valid_replicates": method_valid_count,
+            "valid_rate": method_valid_count / replicates,
+        }
+        for index, nominal_alpha in enumerate(CALIBRATION_ALPHAS):
+            rejection_rate = float(calibration_rates[index])
+            calibration_rows.append(
+                {
+                    **calibration_common,
+                    "nominal_alpha": nominal_alpha,
+                    "rejections": int(calibration_rejections[index]),
+                    "rejection_rate": rejection_rate,
+                    "rejection_rate_low": float(calibration_low[index]),
+                    "rejection_rate_high": float(calibration_high[index]),
+                    "absolute_calibration_error": abs(
+                        rejection_rate - nominal_alpha
+                    ),
+                }
+            )
+    return rows, calibration_rows, p_value_samples
+
+
+def _aggregate_rejection_calibration(
+    scenario_calibration: pd.DataFrame,
+) -> pd.DataFrame:
+    """Summarize rejection curves while retaining population heterogeneity."""
+    summary = (
+        scenario_calibration.groupby(
+            [
+                "regime",
+                "regime_label",
+                "method",
+                "method_label",
+                "nominal_alpha",
+            ],
+            sort=False,
+        )
+        .agg(
+            population_pairs=("scenario_id", "nunique"),
+            mean_rejection_rate=("rejection_rate", "mean"),
+            median_rejection_rate=("rejection_rate", "median"),
+            p10_rejection_rate=(
+                "rejection_rate",
+                lambda values: values.quantile(0.10),
+            ),
+            p90_rejection_rate=(
+                "rejection_rate",
+                lambda values: values.quantile(0.90),
+            ),
+            minimum_rejection_rate=("rejection_rate", "min"),
+            maximum_rejection_rate=("rejection_rate", "max"),
+            mean_absolute_calibration_error=(
+                "absolute_calibration_error",
+                "mean",
+            ),
+        )
+        .reset_index()
+    )
+    regime_order = {regime: index for index, regime in enumerate(REGIME_ORDER)}
+    method_order = {method: index for index, method in enumerate(METHODS)}
+    summary["_regime_order"] = summary["regime"].map(regime_order)
+    summary["_method_order"] = summary["method"].map(method_order)
+    return (
+        summary.sort_values(
+            ["_regime_order", "_method_order", "nominal_alpha"]
+        )
+        .drop(columns=["_regime_order", "_method_order"])
+        .reset_index(drop=True)
+    )
 
 
 def _aggregate_scenarios(scenario_results: pd.DataFrame) -> pd.DataFrame:
@@ -1178,14 +1264,14 @@ def _runtime_audit(
     repetitions: int,
     seed: int,
 ) -> pd.DataFrame:
-    target_shapes = ((2, 2), (5, 5), (10, 10), (20, 20))
+    target_shapes = ((2, 2), (3, 3), (5, 5), (8, 8))
     selected = []
     for shape in target_shapes:
         matches = [
             scenario
             for scenario in scenarios
             if (scenario.rows, scenario.columns) == shape
-            and scenario.design_index == 4
+            and scenario.design_index == 0
         ]
         if matches:
             selected.append(matches[0])
@@ -1317,6 +1403,119 @@ def _plot_calibration(summary: pd.DataFrame, output_dir: Path) -> None:
     plt.close(figure)
 
 
+def _plot_rejection_calibration(
+    calibration: pd.DataFrame,
+    output_dir: Path,
+) -> None:
+    """Plot empirical null rejection rates over the lower p-value tail."""
+    columns = 3
+    rows = int(np.ceil(len(REGIME_ORDER) / columns))
+    figure, axes = plt.subplots(
+        rows,
+        columns,
+        figsize=(14.4, 13.2),
+        sharex=True,
+        sharey=True,
+    )
+    axes = np.asarray(axes).reshape(-1)
+    styles = {
+        "normal_wald": {"color": "#24557A", "linewidth": 2.0},
+        "simple_welch": {
+            "color": "#D17A22",
+            "linewidth": 1.8,
+            "linestyle": "--",
+        },
+        "expanded_welch": {"color": "#23856D", "linewidth": 2.4},
+    }
+    axis_limit = 0.115
+
+    for axis, regime in zip(axes, REGIME_ORDER):
+        regime_frame = calibration[calibration["regime"].eq(regime)]
+        axis.plot(
+            [0.0, axis_limit],
+            [0.0, axis_limit],
+            color="#787878",
+            linewidth=1.2,
+            linestyle=":",
+            label="Ideal",
+            zorder=1,
+        )
+        for method, specification in METHODS.items():
+            curve = regime_frame[regime_frame["method"].eq(method)].sort_values(
+                "nominal_alpha"
+            )
+            alpha = curve["nominal_alpha"].to_numpy()
+            mean = curve["mean_rejection_rate"].to_numpy()
+            lower = curve["p10_rejection_rate"].to_numpy()
+            upper = curve["p90_rejection_rate"].to_numpy()
+            style = styles[method]
+            axis.fill_between(
+                alpha,
+                lower,
+                upper,
+                color=style["color"],
+                alpha=0.075,
+                linewidth=0,
+                zorder=2,
+            )
+            axis.plot(
+                alpha,
+                mean,
+                label=specification["label"],
+                markevery=10,
+                marker="o",
+                markersize=2.6,
+                zorder=3,
+                **style,
+            )
+        axis.axvline(0.05, color="#B6B6B6", linewidth=0.8, linestyle="--")
+        axis.set_title(REGIMES[regime]["label"], fontsize=11.5, pad=8)
+        axis.set_xlim(0.0, axis_limit)
+        axis.set_ylim(0.0, axis_limit)
+        axis.set_aspect("equal", adjustable="box")
+        axis.grid(color="#D9D9D9", linewidth=0.5, alpha=0.45)
+        axis.set_axisbelow(True)
+
+    for axis in axes[len(REGIME_ORDER) :]:
+        axis.set_axis_off()
+    for index, axis in enumerate(axes[: len(REGIME_ORDER)]):
+        if index % columns == 0:
+            axis.set_ylabel("Actual rejection rate")
+        if index // columns == rows - 1:
+            axis.set_xlabel("Nominal significance level")
+        axis.set_xticks((0.00, 0.025, 0.05, 0.075, 0.10))
+        axis.set_yticks((0.00, 0.025, 0.05, 0.075, 0.10))
+
+    handles, labels = axes[0].get_legend_handles_labels()
+    figure.legend(
+        handles,
+        labels,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.965),
+        ncol=4,
+        frameon=False,
+    )
+    figure.suptitle(
+        "Rejection calibration under the equal-MI null",
+        fontsize=17,
+        fontweight="semibold",
+        y=0.995,
+    )
+    figure.text(
+        0.5,
+        0.972,
+        "Diagonal = perfect calibration; shading = 10th-90th percentile across population pairs",
+        ha="center",
+        va="top",
+        fontsize=10.5,
+        color="#4D4D4D",
+    )
+    figure.tight_layout(rect=(0.02, 0.02, 0.98, 0.94))
+    figure.savefig(output_dir / "rejection_calibration.png", dpi=220)
+    figure.savefig(output_dir / "rejection_calibration.pdf")
+    plt.close(figure)
+
+
 def _markdown(frame: pd.DataFrame, digits: int = 5) -> str:
     headers = [str(column) for column in frame.columns]
     lines = [
@@ -1421,14 +1620,10 @@ def _write_report(
     well_sampled = summary[summary["regime"].eq("well_sampled")].set_index(
         "method"
     )
-    zero_mi = summary[summary["regime"].eq("zero_mi")].set_index("method")
     difficult_regimes = (
-        "sparse_imbalanced",
         "highly_sparse",
         "ultra_sparse",
         "widespread_sparse",
-        "shape_mismatch",
-        "extreme_imbalance",
     )
     target_reductions = {}
     for regime in difficult_regimes:
@@ -1489,6 +1684,16 @@ def _write_report(
             "component degrees of freedom, and expanded Welch estimates component",
             "degrees of freedom from the MI-variance influence function.",
             "",
+            "## Rejection calibration",
+            "",
+            "The figure traces the empirical rejection probability over nominal",
+            "significance levels from 0 to 0.10. A calibrated test follows the",
+            "diagonal. Curves above it are liberal and curves below it are",
+            "conservative. Each line is the equal-weight mean across population",
+            "pairs in that regime; shading spans their 10th to 90th percentiles.",
+            "",
+            "![Rejection calibration](rejection_calibration.png)",
+            "",
             "## Main calibration results",
             "",
             _markdown(key_rows),
@@ -1518,14 +1723,6 @@ def _write_report(
             f"  `{well_sampled.loc['normal_wald', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  to `{well_sampled.loc['expanded_welch', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  by becoming mildly conservative.",
-            "- Zero MI is a nonregular boundary: the population first-order MI",
-            "  variance is zero, so the normal and Welch reference arguments do",
-            "  not apply in their regular form. The boundary results are reported",
-            "  as a diagnostic rather than pooled evidence for those arguments.",
-            f"- In the zero-MI regime at alpha 0.05, the mean FPRs were",
-            f"  `{zero_mi.loc['normal_wald', 'mean_fpr_05']:.5f}` for normal Wald,",
-            f"  `{zero_mi.loc['simple_welch', 'mean_fpr_05']:.5f}` for simple Welch,",
-            f"  and `{zero_mi.loc['expanded_welch', 'mean_fpr_05']:.5f}` for expanded Welch.",
             f"- Across the five power scenarios, expanded Welch lost",
             f"  `{expanded_mean_power_loss:.4f}` power on average and at most",
             f"  `{expanded_max_power_loss:.4f}` relative to normal Wald.",
@@ -1552,9 +1749,17 @@ def _write_report(
             "  difficulty diagnostics.",
             "- `scenario_results.csv`: every scenario-method result.",
             "- `regime_summary.csv`: the presentation-level aggregate table.",
+            "- `rejection_calibration_scenarios.csv`: scenario-level rejection",
+            "  curves over 101 nominal significance levels.",
+            "- `rejection_calibration_regimes.csv`: mean curves and population",
+            "  variability bands for each regime and method.",
+            "- `null_pvalues.npz`: complete null p-value arrays for follow-up",
+            "  calibration or Q-Q plots without rerunning the simulation.",
             "- `power_summary.csv`: alternative-hypothesis power and coverage.",
             "- `runtime_summary.csv`: end-to-end timing by table size.",
             "- `calibration_summary.png`: one visual comparison across regimes.",
+            "- `rejection_calibration.png` and `.pdf`: lower-tail rejection",
+            "  calibration with scenario-variability bands.",
         ]
     )
     (output_dir / "REPORT.md").write_text(
@@ -1569,15 +1774,12 @@ def main() -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     run_start = perf_counter()
 
-    scenarios = generate_random_scenarios(args.scenario_seed)
+    scenarios = generate_fixed_density_scenarios(args.scenario_seed)
     scenarios.extend(
         generate_expected_count_stress_scenarios(args.scenario_seed + 1)
     )
     scenarios.extend(
         generate_adversarial_scenarios(args.scenario_seed + 2)
-    )
-    scenarios.extend(
-        generate_zero_mi_scenarios(args.scenario_seed + 3)
     )
     scenarios.sort(
         key=lambda scenario: (scenario.shape_index, scenario.design_index)
@@ -1588,6 +1790,14 @@ def main() -> None:
             for scenario in scenarios
             if scenario.shape_index < int(settings["shape_limit"])
         ]
+    if any(
+        not (
+            MINIMUM_SAMPLE_SIZE <= scenario.n_p <= MAXIMUM_SAMPLE_SIZE
+            and MINIMUM_SAMPLE_SIZE <= scenario.n_q <= MAXIMUM_SAMPLE_SIZE
+        )
+        for scenario in scenarios
+    ):
+        raise RuntimeError("Generated scenario violates the sample-size bounds.")
     population_frame = pd.DataFrame(
         [_population_metadata(scenario) for scenario in scenarios]
     )
@@ -1596,14 +1806,24 @@ def main() -> None:
         args.simulation_seed,
     )
     scenario_rows = []
+    calibration_rows = []
+    raw_p_values = []
     for index, scenario in enumerate(scenarios):
         seed = scenario_seeds[scenario.scenario_id]
-        scenario_rows.extend(
+        scenario_result, scenario_calibration, scenario_p_values = (
             _simulate_null_scenario(
                 scenario,
                 replicates=int(settings["null_replicates"]),
                 batch_size=int(settings["batch_size"]),
                 seed=seed,
+            )
+        )
+        scenario_rows.extend(scenario_result)
+        calibration_rows.extend(scenario_calibration)
+        raw_p_values.append(
+            np.stack(
+                [scenario_p_values[method] for method in METHODS],
+                axis=0,
             )
         )
         print(
@@ -1614,7 +1834,11 @@ def main() -> None:
         )
 
     scenario_results = pd.DataFrame(scenario_rows)
+    scenario_calibration = pd.DataFrame(calibration_rows)
     regime_summary = _aggregate_scenarios(scenario_results)
+    rejection_calibration = _aggregate_rejection_calibration(
+        scenario_calibration
+    )
     power_summary = _simulate_power(
         replicates=int(settings["power_replicates"]),
         batch_size=int(settings["batch_size"]),
@@ -1638,6 +1862,26 @@ def main() -> None:
         args.output_dir / "regime_summary.csv",
         index=False,
     )
+    scenario_calibration.to_csv(
+        args.output_dir / "rejection_calibration_scenarios.csv",
+        index=False,
+    )
+    rejection_calibration.to_csv(
+        args.output_dir / "rejection_calibration_regimes.csv",
+        index=False,
+    )
+    np.savez_compressed(
+        args.output_dir / "null_pvalues.npz",
+        p_values=np.stack(raw_p_values, axis=0),
+        scenario_ids=np.asarray(
+            [scenario.scenario_id for scenario in scenarios]
+        ),
+        methods=np.asarray(list(METHODS)),
+        simulation_seeds=np.asarray(
+            [scenario_seeds[scenario.scenario_id] for scenario in scenarios],
+            dtype=np.uint32,
+        ),
+    )
     power_summary.to_csv(
         args.output_dir / "power_summary.csv",
         index=False,
@@ -1647,6 +1891,7 @@ def main() -> None:
         index=False,
     )
     _plot_calibration(regime_summary, args.output_dir)
+    _plot_rejection_calibration(rejection_calibration, args.output_dir)
     _write_report(
         args.output_dir,
         profile=args.profile,
@@ -1665,6 +1910,12 @@ def main() -> None:
         "scenario_count": len(scenarios),
         "methods": list(METHODS),
         "alphas": list(ALPHAS),
+        "calibration_alphas": {
+            "minimum": min(CALIBRATION_ALPHAS),
+            "maximum": max(CALIBRATION_ALPHAS),
+            "points": len(CALIBRATION_ALPHAS),
+        },
+        "null_pvalue_archive_dtype": "float64",
         "elapsed_seconds": perf_counter() - run_start,
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "python": platform.python_version(),

@@ -2,9 +2,10 @@
 
 ## Primary Evidence
 
-[`supervisor_full/`](supervisor_full/) contains the current unified experiment
+[`supervisor_practical/`](supervisor_practical/) contains the current unified experiment
 and is the result set to use when presenting the method. Start with its
-[`REPORT.md`](supervisor_full/REPORT.md).
+[`REPORT.md`](supervisor_practical/REPORT.md) and
+[`rejection_calibration.png`](supervisor_practical/rejection_calibration.png).
 
 ## Mechanism Evidence
 

@@ -295,26 +295,145 @@ because it derives the sampling uncertainty of the complete MI variance
 estimate $\widehat V(P)$, including the dependence of pointwise mutual
 information on the joint and marginal probabilities.
 
-### 6.1 Start from the Satterthwaite target
+### 6.1 Begin with the Welch-Satterthwaite equation
 
-Satterthwaite approximates the positive variance estimate $\widehat V(P)$
-by a scaled chi-squared variable:
+For independent variance estimates $s_i^2$, positive weights $k_i$, and
+component degrees of freedom $\nu_i$, the original Welch-Satterthwaite
+equation is
 
 $$
-\widehat V(P)
-\ \text{is modelled by}\
+\nu
+=
+\frac{
+\left(\sum_i k_i s_i^2\right)^2
+}{
+\sum_i (k_i s_i^2)^2/\nu_i
+}.
+$$
+
+For two MI estimates this becomes
+
+$$
+\nu
+=
+\frac{
+(k_Ps_P^2+k_Qs_Q^2)^2
+}{
+(k_Ps_P^2)^2/\nu_P+(k_Qs_Q^2)^2/\nu_Q
+}.
+$$
+
+The derivation therefore has two tasks. First, identify the variance
+contributions $k_Ps_P^2$ and $k_Qs_Q^2$. Second, calculate the component
+degrees of freedom $\nu_P$ and $\nu_Q$ that describe the reliability of those
+variance estimates.
+
+### 6.2 Identify the MI variance contributions
+
+For population $P$, define pointwise mutual information, MI, and the variance
+of pointwise mutual information by
+
+$$
+\ell_P(i,j)
+=
+\log\!\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right),
+\qquad
+I(P)=\sum_{i,j}p_{ij}\ell_P(i,j),
+$$
+
+and
+
+$$
+V(P)
+=
+\operatorname{Var}_P\{\ell_P(X,Y)\}
+=
+\sum_{i,j}p_{ij}\{\ell_P(i,j)-I(P)\}^2.
+$$
+
+A first-order Taylor expansion of plug-in MI gives
+
+$$
+\widehat I(P)-I(P)
+\approx
+\sum_{i,j}\ell_P(i,j)(\widehat p_{ij}-p_{ij})
+=
+\frac{1}{n_P}
+\sum_{a=1}^{n_P}
+\{\ell_P(Z_a^{(P)})-I(P)\}.
+$$
+
+The terms in this average are independent and each has variance $V(P)$.
+Consequently,
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat I(P)\}
+&\approx
+\operatorname{Var}\!\left[
+\frac{1}{n_P}\sum_{a=1}^{n_P}
+\{\ell_P(Z_a^{(P)})-I(P)\}
+\right]\\
+&=
+\frac{1}{n_P^2}\sum_{a=1}^{n_P}V(P)
+=
+\frac{V(P)}{n_P}.
+\end{aligned}
+$$
+
+The observed table replaces $V(P)$ by $\widehat V(P)$. Thus the quantities
+in the original Welch-Satterthwaite equation are
+
+$$
+s_P^2=\widehat V(P),
+\qquad
+k_P=\frac{1}{n_P},
+\qquad
+k_Ps_P^2
+=
+\frac{\widehat V(P)}{n_P}
+=
+\widehat{\operatorname{Var}}\{\widehat I(P)\}.
+$$
+
+The two independent samples therefore give
+
+$$
+\widehat{\operatorname{SE}}^2
+=
+k_Ps_P^2+k_Qs_Q^2
+=
+\frac{\widehat V(P)}{n_P}
++
+\frac{\widehat V(Q)}{n_Q}.
+$$
+
+### 6.3 Express each component degree of freedom by moment matching
+
+The remaining quantity for population $P$ is $\nu_P$. Satterthwaite models
+the positive variance estimate $\widehat V(P)$ by
+
+$$
 \operatorname E\{\widehat V(P)\}
-\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}.
+\frac{\chi^2_{\nu_P}}{\nu_P}.
 $$
 
-This family is used because a scaled chi-squared variable is positive and has
-an adjustable variance controlled by its degrees of freedom. Its first two
-moments are
+A chi-squared model is used because classical variance estimators have this
+form, while its degrees of freedom directly control the relative variability
+of a positive variance estimate. Since
+
+$$
+\operatorname E(\chi^2_{\nu_P})=\nu_P,
+\qquad
+\operatorname{Var}(\chi^2_{\nu_P})=2\nu_P,
+$$
+
+the scaled model has
 
 $$
 \operatorname E\!\left[
 \operatorname E\{\widehat V(P)\}
-\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\frac{\chi^2_{\nu_P}}{\nu_P}
 \right]
 =
 \operatorname E\{\widehat V(P)\},
@@ -325,72 +444,129 @@ and
 $$
 \operatorname{Var}\!\left[
 \operatorname E\{\widehat V(P)\}
-\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}
+\frac{\chi^2_{\nu_P}}{\nu_P}
 \right]
 =
-\frac{2[\operatorname E\{\widehat V(P)\}]^2}{\nu_V(P)}.
+\frac{2[\operatorname E\{\widehat V(P)\}]^2}{\nu_P}.
 $$
 
 Matching this variance to the sampling variance of $\widehat V(P)$ gives
 
 $$
-\nu_V(P)
+\boxed{
+\nu_P
 =
 \frac{
 2[\operatorname E\{\widehat V(P)\}]^2
 }{
 \operatorname{Var}\{\widehat V(P)\}
 }.
+}
 $$
 
-To first order, $\operatorname E\{\widehat V(P)\}\approx V(P)$. The remaining
-task is therefore to calculate $\operatorname{Var}\{\widehat V(P)\}$.
+To first order, $\operatorname E\{\widehat V(P)\}\approx V(P)$. Deriving
+$\nu_P$ therefore reduces to finding
+$\operatorname{Var}\{\widehat V(P)\}$.
 
-### 6.2 Calculate how the MI variance changes
+### 6.4 Calculate the effect of one observation
 
-For population $P$, pointwise mutual information and its variance are
+Move a small amount of probability toward cell $(x,y)$ through
 
 $$
-\ell_P(i,j)
+P_\varepsilon
 =
-\log\!\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right),
+(1-\varepsilon)P+\varepsilon\delta_{(x,y)}.
+$$
+
+For any cell $(i,j)$,
+
+$$
+p_{ij}(\varepsilon)
+=
+(1-\varepsilon)p_{ij}
++
+\varepsilon\mathbf 1\{i=x,j=y\},
+$$
+
+so the joint and marginal probability changes at $\varepsilon=0$ are
+
+$$
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}
+p_{ij}(\varepsilon)\right|_{\varepsilon=0}
+=
+\mathbf 1\{i=x,j=y\}-p_{ij},
+$$
+
+$$
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}
+p_{i+}(\varepsilon)\right|_{\varepsilon=0}
+=
+\mathbf 1\{i=x\}-p_{i+},
 \qquad
-V(P)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}
+p_{+j}(\varepsilon)\right|_{\varepsilon=0}
 =
-\sum_{i,j}p_{ij}\{\ell_P(i,j)-I(P)\}^2.
+\mathbf 1\{j=y\}-p_{+j}.
 $$
 
-To measure how $V(P)$ responds to one observation in cell $(x,y)$, move a
-small amount of probability toward that cell:
+Differentiating the three logarithms in PMI gives
 
 $$
-P_\varepsilon=(1-\varepsilon)P+\varepsilon\delta_{(x,y)}.
-$$
-
-Define the resulting first-order change in $V(P)$ by
-
-$$
-g_P(x,y)
-=
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}
-V(P_\varepsilon)
-\right|_{\varepsilon=0}.
-$$
-
-Writing
-
-$$
-M_2(P)=\operatorname E_P\{\ell_P(X,Y)^2\},
-\qquad
-V(P)=M_2(P)-I(P)^2,
-$$
-
-gives
-
-$$
-g_P(x,y)
+\ell_{P_\varepsilon}(i,j)
+\right|_{\varepsilon=0}
 =
+\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+-
+\frac{\mathbf 1\{i=x\}}{p_{i+}}
+-
+\frac{\mathbf 1\{j=y\}}{p_{+j}}
++1.
+$$
+
+When MI is differentiated, the probability changes contribute
+
+$$
+\sum_{i,j}\ell_P(i,j)
+\{\mathbf 1\{i=x,j=y\}-p_{ij}\}
+=
+\ell_P(x,y)-I(P),
+$$
+
+while the probability-weighted PMI derivatives sum to
+$1-1-1+1=0$. Therefore,
+
+$$
+\boxed{
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+=
+\ell_P(x,y)-I(P).
+}
+$$
+
+### 6.5 Differentiate the MI variance
+
+Write the PMI variance as
+
+$$
+V(P)=M_2(P)-I(P)^2,
+\qquad
+M_2(P)=\operatorname E_P\{\ell_P(X,Y)^2\}.
+$$
+
+The change in $V(P)$ caused by an observation in cell $(x,y)$ is
+
+$$
+\begin{aligned}
+g_P(x,y)
+&=
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}\\
+&=
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
 \right|_{\varepsilon=0}
@@ -399,36 +575,59 @@ g_P(x,y)
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}.
+\end{aligned}
 $$
 
-The two derivatives are
+Differentiate
 
 $$
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
-\right|_{\varepsilon=0}
+M_2(P_\varepsilon)
 =
-\ell_P(x,y)-I(P),
+\sum_{i,j}p_{ij}(\varepsilon)
+\ell_{P_\varepsilon}(i,j)^2
 $$
 
-and
+with the product rule:
 
 $$
+\begin{aligned}
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
 \right|_{\varepsilon=0}
-=
-\ell_P(x,y)^2-M_2(P)
-+
-2\left[
+={}&
+\sum_{i,j}
+\left.\frac{\mathrm d p_{ij}(\varepsilon)}{\mathrm d\varepsilon}
+\right|_{\varepsilon=0}
+\ell_P(i,j)^2\\
+&+
+2\sum_{i,j}p_{ij}\ell_P(i,j)
+\left.\frac{\mathrm d\ell_{P_\varepsilon}(i,j)}
+{\mathrm d\varepsilon}\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+The first sum is
+
+$$
+\ell_P(x,y)^2-M_2(P).
+$$
+
+Substituting the PMI derivative into the second sum gives
+
+$$
+\begin{aligned}
+&\sum_{i,j}p_{ij}\ell_P(i,j)
+\left.\frac{\mathrm d\ell_{P_\varepsilon}(i,j)}
+{\mathrm d\varepsilon}\right|_{\varepsilon=0}\\
+&\qquad=
 \ell_P(x,y)
 -\operatorname E_P\{\ell_P(X,Y)\mid X=x\}
 -\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}
-+I(P)
-\right].
++I(P).
+\end{aligned}
 $$
 
-Substitution gives the MI-variance influence function
+Combining these results with the MI derivative produces
 
 $$
 \boxed{
@@ -447,12 +646,12 @@ g_P(x,y)
 }
 $$
 
-The conditional row and column means appear because changing one cell changes
-both marginal probabilities inside the PMI calculation.
+The conditional row and column means account for the marginal probabilities
+that change when one cell changes.
 
-### 6.3 Obtain the component degrees of freedom
+### 6.6 Convert variance sensitivity into component degrees of freedom
 
-Define the population variability of these observation-level changes by
+The variability of the observation-level effects is
 
 $$
 \tau^2(P)
@@ -460,36 +659,48 @@ $$
 \operatorname{Var}_P\{g_P(X,Y)\}.
 $$
 
-A first-order Taylor expansion of the variance estimator gives
+A first-order expansion of the complete variance estimate gives
 
 $$
 \widehat V(P)-V(P)
 \approx
 \frac{1}{n_P}
-\sum_{a=1}^{n_P}g_P(Z_a^{(P)}),
+\sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
 $$
 
-so independence of the observations gives
+The observations are independent, so
 
 $$
+\begin{aligned}
 \operatorname{Var}\{\widehat V(P)\}
-\approx
+&\approx
+\frac{1}{n_P^2}
+\sum_{a=1}^{n_P}\operatorname{Var}_P\{g_P(Z_a^{(P)})\}\\
+&=
+\frac{n_P\tau^2(P)}{n_P^2}
+=
 \frac{\tau^2(P)}{n_P}.
+\end{aligned}
 $$
 
-Substituting this result into the Satterthwaite equation produces the
-MI-specific component degrees of freedom:
+Substitution into the component moment-matching equation gives
 
 $$
 \boxed{
-\nu_V(P)
+\nu_P
 \approx
 \frac{2n_PV(P)^2}{\tau^2(P)}.
 }
 $$
 
-For calculation from an observed table, replace every population quantity by
-its empirical counterpart. For each occupied cell $\widehat p_{ij}>0$, calculate
+Thus a stable estimate of $V(P)$ has large component degrees of freedom,
+whereas an estimate that changes strongly between samples has small component
+degrees of freedom.
+
+### 6.7 Calculate the component degrees of freedom from the table
+
+Replace the population quantities by values calculated from the observed
+table. For each occupied cell $\widehat p_{ij}>0$, calculate
 
 $$
 \begin{aligned}
@@ -504,17 +715,19 @@ $$
 -\frac{\sum_{i'}\widehat p_{i'j}\widehat\ell_P(i',j)}
        {\widehat p_{+j}}
 +\widehat I(P)
-\right],
+\right].
 \end{aligned}
 $$
 
-followed by
+Then calculate
 
 $$
 \overline g_P
 =
 \sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),
-\qquad
+$$
+
+$$
 \widehat\tau^2(P)
 =
 \sum_{i,j}\widehat p_{ij}
@@ -525,18 +738,18 @@ and
 
 $$
 \boxed{
-\widehat\nu_V(P)
+\widehat\nu_P
 =
 \frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}.
 }
 $$
 
-Apply the same calculation to the second table to obtain
-$\widehat\nu_V(Q)$.
+Applying the same calculation to the second table gives $\widehat\nu_Q$.
 
-### 6.4 Combine the two variance components
+### 6.8 Combine the components and complete the test
 
-The effective degrees of freedom for the complete standard error are
+Substitute the MI variance contributions and their component degrees of
+freedom into the original Welch-Satterthwaite equation:
 
 $$
 \boxed{
@@ -545,9 +758,9 @@ $$
 \frac{
 \left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
 }{
-\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_V(P)
+\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_P
 +
-\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_V(Q)
+\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_Q
 }.
 }
 $$
@@ -562,160 +775,334 @@ p_{\mathrm{expanded}}
 \right].
 $$
 
-If $\widehat V(P)$ and $\widehat V(Q)$ are stable between samples, their
-component degrees of freedom are large and the Student reference approaches
-the normal reference. Greater variance-estimation uncertainty lowers the
-degrees of freedom and produces heavier tails.
+Large component degrees of freedom make the Student reference approach the
+normal reference. Greater uncertainty in either MI variance estimate lowers
+the effective degrees of freedom and gives the reference distribution heavier
+tails.
 
 The calculation is deterministic, requires $O(rc)$ time, and cost
-approximately 1.9 times normal Wald in the unified benchmark while remaining
-below 0.2 ms per table pair for tables up to $20\times20$.
+approximately 1.9 times Normal Wald in the unified benchmark while remaining
+below 0.2 ms per table pair for the tested tables up to $8\times8$.
 
 The complete cell-by-cell derivation and theoretical justification are given
 in [Expanded Welch-Satterthwaite Derivation](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
 
 ## 7. Experimental Design
 
-### 7.1 Main question
+### 7.1 Question and repeated-sampling experiment
 
-The main experiment asks a direct question:
-
-> When two independent samples come from populations with the same true MI,
-> which analytic method keeps its false-positive rate closest to the nominal
-> significance level?
-
-The primary significance level is $\alpha=0.05$. A correctly calibrated test
-should therefore reject approximately 5% of the time. A rate above 0.05 is
-liberal and produces too many false positives; a rate below 0.05 is
-conservative.
-
-All three methods use exactly the same sampled tables, bias-corrected MI
-difference, and standard error. They differ only in the reference
-distribution used to calculate the p-value. This isolates the effect of the
-degrees-of-freedom correction.
-
-### 7.2 Calibration grid
-
-Each null scenario contains two different population tables $P$ and $Q$
-constructed so that $I(P)=I(Q)$. The largest numerical discrepancy between
-their true MI values was $1.1\times10^{-13}$ nats. Every rejection is
-therefore a false positive.
-
-The grid contains 12 table shapes from $2\times2$ to $20\times20$, nine
-sampling regimes, and two variants of each regime:
+The null hypothesis is
 
 $$
-12\times9\times2=216\ \text{fixed population pairs}.
+H_0:I(P)=I(Q),
 $$
 
-The nine regimes have five clear roles.
-
-| Role in the experiment | Regimes | What they test |
-| --- | --- | --- |
-| Controls | Well sampled; moderate | Whether a correction harms cases where normal Wald should already work |
-| Intended difficult cases | Sparse and imbalanced; highly skewed and sparse; ultra-skewed and sparse; extreme sample imbalance | Whether Expanded Welch improves the low-count or unequal-sample conditions it was designed for |
-| Shape robustness | Equal-MI shape mismatch | Whether equal MI remains testable when the two joint distributions have very different shapes |
-| Failure stress test | Widespread sparsity | What happens when many cells, rather than a few isolated cells, lose sampled support |
-| Boundary diagnostic | Zero MI | What happens at independence, where the first-order MI variance is zero |
-
-The highly sparse regime constrains the smallest expected cell count to lie
-between 1 and 5. The ultra-sparse regime places it below 1. In the widespread
-sparsity regime, 25-50% of cells have expected counts below 1 and at least
-half are below 5. Sample-size ratios range from $1{:}1$ to $1{:}20$.
-
-For each population pair, 10,000 independent pairs of count tables are
-sampled. Each pair is analysed by all three methods, producing
+where MI is measured in nats. For every scenario, $P$ and $Q$ are fixed
+$r\times c$ population probability tables. Independent count tables are then
+drawn as
 
 $$
-216\times10{,}000=2{,}160{,}000\ \text{null replicates}.
+N^{(P)}\sim\operatorname{Multinomial}(n_P,P),
+\qquad
+N^{(Q)}\sim\operatorname{Multinomial}(n_Q,Q).
 $$
 
-The primary result is the false-positive rate at $\alpha=0.05$. Results at
-$\alpha=0.10$ and $0.01$, confidence-interval coverage, valid-result rates,
-and scenario-level calibration errors are retained as supporting checks.
-The exact population tables and all diagnostics are available in
-[`population_scenarios.csv`](../results/supervisor_full/population_scenarios.csv).
+Normal Wald, Simple Welch, and Expanded Welch analyse the same two sampled
+tables in every replicate. They use the same bias-corrected MI difference and
+the same estimated standard error; only the reference distribution changes.
+The primary significance level is $\alpha=0.05$. Under the null, a calibrated
+test should reject in approximately 5% of repeated samples.
 
-### 7.3 Power and runtime checks
+### 7.2 Common table grid and population construction
 
-The power experiment uses five $3\times3$ alternatives with nonzero true MI
-differences. It varies the absolute difference through 0.02, 0.05, and 0.10
-at 300 observations per group, then varies the sample size through 150, 300,
-and 600 at an absolute difference of 0.05. Each alternative receives 10,000
-replicates.
+Every regime uses six practical table shapes:
 
-The runtime experiment measures complete inference from two count tables.
-It tests four table sizes from $2\times2$ to $20\times20$, repeats each method
-200 times after warm-up, and reports the median elapsed time. Data loading
-and construction of the count tables are excluded.
+$$
+(2,2),\ (2,5),\ (3,3),\ (3,5),\ (5,5),\ (8,8).
+$$
+
+Each regime has two variants, giving
+
+$$
+6\ \text{shapes}\times5\ \text{regimes}\times2\ \text{variants}
+=60\ \text{fixed population pairs}.
+$$
+
+Every generated scenario is required to satisfy
+
+$$
+50\le n_P\le1000,
+\qquad
+50\le n_Q\le1000.
+$$
+
+The two variants in every regime use the same positive-MI targets,
+$I(P)=I(Q)=0.10$ and $0.15$ nats. This keeps the comparison away from the
+near-zero boundary and prevents MI magnitude from being confounded with the
+sampling regime.
+
+For each population, the row and column margins are drawn independently from
+a symmetric Dirichlet distribution with concentration $a_P$ or $a_Q$. A
+large concentration, such as 50, produces margins close to uniform; values
+below 1 produce increasingly uneven margins with rare categories. A random
+log-linear interaction pattern is then scaled numerically until the joint
+table has the required MI. The two tables use independently generated
+margins and interactions, but both are tuned to the same target:
+
+$$
+I(P)=I(Q).
+$$
+
+Accepted pairs have strictly positive population probabilities, differ by at
+least 0.05 in $L^1$ distance, and have nondegenerate first-order MI variance.
+The largest numerical difference between $I(P)$ and $I(Q)$ in the accepted
+grid was $8.5\times10^{-14}$ nats.
+
+For fixed-density designs, the sample sizes are
+
+$$
+n_P=\max(n_{\min},drc),
+\qquad
+n_Q=\rho n_P,
+$$
+
+where $d$ is the planned number of observations per cell in the smaller
+sample, $n_{\min}$ is the regime-specific lower bound, and
+$\rho=n_Q/n_P$. Every design is chosen so that $n_Q\le1000$.
+
+For the expected-count designs, define the true expected count in cell
+$(i,j)$ by
+
+$$
+E^{(P)}_{ij}=n_Pp_{ij},
+\qquad
+E^{(Q)}_{ij}=n_Qq_{ij}.
+$$
+
+The sample sizes are chosen after the two population tables are generated so
+that their minimum expected counts, or their fractions of low-count cells,
+satisfy the stated constraints.
+
+### 7.3 Exact regime specifications
+
+The complete generating settings are shown below. The pair $(a_P,a_Q)$ gives
+the two Dirichlet concentrations, $\rho$ is the sample-size ratio
+$n_Q:n_P$, and $d$ is used in the fixed-density formula above.
+
+| Regime and variant | $I(P)=I(Q)$ | $(a_P,a_Q)$ | $n_Q:n_P$ | Sample-size or sparsity rule |
+| --- | ---: | ---: | ---: | --- |
+| Well sampled 1 | 0.10 | $(50,50)$ | $1{:}1$ | $d=15$, $n_{\min}=200$ |
+| Well sampled 2 | 0.15 | $(50,50)$ | $1{:}1$ | $d=15$, $n_{\min}=200$ |
+| Moderate 1 | 0.10 | $(8,4)$ | $1{:}1$ | $d=8$, $n_{\min}=100$ |
+| Moderate 2 | 0.15 | $(8,2)$ | $2{:}1$ | $d=6$, $n_{\min}=100$ |
+| Highly skewed and sparse 1 | 0.10 | $(2,2)$ | $1{:}1$ | Both minimum expected counts in $[1,5)$ |
+| Highly skewed and sparse 2 | 0.15 | $(10,2)$ | $2{:}1$ | Both minimum expected counts in $[1,5)$ |
+| Ultra-skewed and sparse 1 | 0.10 | $(0.8,0.8)$ | $1{:}1$ | Both minimum expected counts in $[0.05,1)$ |
+| Ultra-skewed and sparse 2 | 0.15 | $(10,0.8)$ | $10{:}1$ | Both minimum expected counts in $[0.05,1)$ |
+| Widespread sparsity 1 | 0.10 | $(0.35,0.35)$ | $1{:}1$ | In both tables, 25-50% of cells have $E_{ij}<1$ and at least 50% have $E_{ij}<5$ |
+| Widespread sparsity 2 | 0.15 | $(1,0.35)$ | $2{:}1$ | Same cell-wide constraints with unequal samples |
+
+The first four regimes form the main practical comparison. Widespread
+sparsity is retained as a boundary check because losing support in many cells
+can make the first-order variance calculation undefined.
+
+### 7.4 Realized sample sizes and expected counts
+
+The previous table states the construction rules. The following table reports
+the values actually realized across the six shapes in each variant. The final
+column is
+
+$$
+\min_{i,j}\{n_Pp_{ij},n_Qq_{ij}\},
+$$
+
+the smallest true joint expected count across the two populations.
+
+| Regime and variant | Realized $n_P$ | Realized $n_Q$ | $n_P/(rc)$ | Smallest expected count |
+| --- | ---: | ---: | ---: | ---: |
+| Well sampled 1 | 200-960 | 200-960 | 15.00-50.00 | 2.140-18.228 |
+| Well sampled 2 | 200-960 | 200-960 | 15.00-50.00 | 1.385-15.015 |
+| Moderate 1 | 100-512 | 100-512 | 8.00-25.00 | 0.790-6.927 |
+| Moderate 2 | 100-384 | 200-768 | 6.00-25.00 | 0.057-1.178 |
+| Highly skewed and sparse 1 | 52-975 | 52-975 | 13.00-30.78 | 1.025-4.072 |
+| Highly skewed and sparse 2 | 54-460 | 108-920 | 7.19-48.11 | 1.096-4.201 |
+| Ultra-skewed and sparse 1 | 64-604 | 64-604 | 7.11-35.67 | 0.052-0.413 |
+| Ultra-skewed and sparse 2 | 51-75 | 510-750 | 1.17-12.75 | 0.057-0.632 |
+| Widespread sparsity 1 | 50-435 | 50-435 | 3.67-17.40 | $<0.001$-0.042 |
+| Widespread sparsity 2 | 50-414 | 100-828 | 4.23-16.56 | $<0.001$-0.312 |
+
+The exact $P$, $Q$, $n_P$, and $n_Q$ for every shape are recorded in
+[`population_scenarios.csv`](../results/supervisor_practical/population_scenarios.csv).
+
+### 7.5 Replication and reported metrics
+
+Each of the 60 fixed population pairs receives 10,000 independently sampled
+table pairs:
+
+$$
+60\times10{,}000=600{,}000\ \text{null replicates}.
+$$
+
+Each replicate contains one table from $P$ and one from $Q$, so this is
+600,000 table pairs, or 1.2 million individual sampled tables.
+
+The population-generation seed is 2,026,080,501 and the sampling seed is
+2,026,080,502. Scenario-specific seeds are derived deterministically from
+these values, so the complete experiment is reproducible. The seeds,
+replicate counts, software versions, and experiment-script hash are recorded
+in [`run_metadata.json`](../results/supervisor_practical/run_metadata.json).
+
+At a true rejection probability of 0.05, 10,000 replicates give a Monte Carlo
+standard error of approximately 0.00218 for an individual scenario. The
+following quantities are reported:
+
+- **Scenario false-positive rate:** the fraction of valid null replicates
+  with p-value below $\alpha$.
+- **Regime mean false-positive rate:** the arithmetic mean of the 12 scenario
+  rates in that regime. Every shape and variant receives equal weight.
+- **Mean absolute calibration error:** the mean, over the 12 scenarios, of
+  $|\widehat{\mathrm{FPR}}-\alpha|$. This avoids cancellation between liberal
+  and conservative scenarios.
+- **95% coverage:** the fraction of valid null replicates whose method-specific
+  95% confidence interval contains the true difference, zero.
+- **Valid rate:** the fraction of replicates with a finite statistic and
+  p-value and, where required, positive finite effective degrees of freedom.
+
+The primary comparison uses $\alpha=0.05$. The tabulated checks at 0.10 and
+0.01 use the same replicates. Rejection-calibration curves evaluate nominal
+levels from 0 to 0.10 in increments of 0.001; their bands show the 10th and
+90th percentiles of the 12 scenario-specific rejection rates.
+
+### 7.6 Power and runtime designs
+
+The power experiment uses $3\times3$ tables. Population $P$ has uniform row
+and column margins $(1/3,1/3,1/3)$ and $I(P)=0.05$. Population $Q$ has row
+and column margins $(0.9,0.05,0.05)$ and a larger MI. Both use the same
+ordinal interaction pattern. The five alternatives are:
+
+| Purpose | $I(P)$ | $I(Q)$ | $n_P$ | $n_Q$ | Minimum $n_Pp_{ij}$ | Minimum $n_Qq_{ij}$ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Effect size 0.02 | 0.05 | 0.07 | 300 | 300 | 18.217 | 1.543 |
+| Effect size 0.05 | 0.05 | 0.10 | 300 | 300 | 18.217 | 1.853 |
+| Effect size 0.10 | 0.05 | 0.15 | 300 | 300 | 18.217 | 1.143 |
+| Smaller sample | 0.05 | 0.10 | 150 | 150 | 9.108 | 0.926 |
+| Larger sample | 0.05 | 0.10 | 600 | 600 | 36.433 | 3.705 |
+
+Each alternative receives 10,000 replicates. Power is the fraction of valid
+replicates rejected at $\alpha=0.05$. The power experiment therefore contains
+50,000 independently sampled table pairs.
+
+The runtime experiment measures one complete method call after the count
+tables have been constructed. It uses $(r,c,n_P,n_Q)$ equal to
+$(2,2,200,200)$, $(3,3,200,200)$, $(5,5,375,375)$, and
+$(8,8,960,960)$. Each method is warmed up and then timed 200 times on
+each fixed table pair; the reported value is the median. This gives 2,400
+timed complete method calls.
 
 ## 8. Results
 
-### 8.1 Primary calibration result
+### 8.1 Calibration across regimes
 
-The table reports the mean false-positive rate at the primary level
-$\alpha=0.05$. The target is 0.05.
+![Rejection calibration across nominal significance levels](../results/supervisor_practical/rejection_calibration.png)
 
-| Regime | Normal Wald | Simple Welch | Expanded Welch | Main interpretation |
-| --- | ---: | ---: | ---: | --- |
-| Well sampled | 0.04660 | 0.04653 | 0.04505 | All work; Expanded Welch is slightly conservative |
-| Moderate | 0.04865 | 0.04840 | 0.04645 | All three remain close to nominal |
-| Sparse and imbalanced | 0.05598 | 0.05545 | 0.05350 | Expanded Welch reduces false-positive inflation |
-| Highly skewed and sparse | 0.05063 | 0.05050 | 0.05002 | Expanded Welch is almost exactly nominal |
-| Ultra-skewed and sparse | 0.05243 | 0.05224 | 0.05159 | Expanded Welch gives the closest calibration |
-| Extreme sample imbalance | 0.05628 | 0.05556 | 0.05122 | Expanded Welch removes most inflation |
-| Equal-MI shape mismatch | 0.05257 | 0.05237 | 0.05095 | All are close; no consistent advantage |
-| Widespread sparsity | 0.04732 | 0.04665 | 0.03673 | Expanded Welch overcorrects |
-| Zero MI | 0.01381 | 0.01373 | 0.00366 | All are conservative; first-order theory is nonregular |
+The diagonal represents perfect calibration. Each method's line is the mean
+rejection rate across the 12 population pairs in that regime, and the shaded
+band spans the 10th to 90th percentiles across those populations. A curve
+above the diagonal is liberal; a curve below it is conservative. The vertical
+dashed line marks the primary level $\alpha=0.05$.
 
-This table gives the central result. Expanded Welch helps in the four
-positive-MI regimes it was intended to address: sparse and imbalanced,
-highly sparse, ultra-sparse, and extremely unequal sample sizes. At
-$\alpha=0.05$, it reduces mean absolute calibration error by approximately
-18-36% relative to normal Wald in those regimes. At $\alpha=0.01$, the
-corresponding reductions are approximately 25-59%.
+The curves show the complete lower-tail result rather than only three selected
+significance levels. Expanded Welch changes little in the well-sampled
+control and moves the moderate and sparse curves toward the diagonal.
 
-The correction is not universal. It is unnecessary in well-sampled tables,
-fails when sparsity is spread across much of the table, and is unsuitable at
-the exact zero-MI boundary. Simple Welch remains very close to normal Wald
-throughout, so using ordinary $n-1$ component degrees of freedom adds little.
+The regime table reports two complementary quantities at $\alpha=0.05$.
+Mean FPR describes the overall direction of calibration, while mean absolute
+error measures scenario-by-scenario accuracy without allowing liberal and
+conservative errors to cancel. In the final column, a positive percentage
+means Expanded Welch reduced mean absolute error relative to Normal Wald.
 
-Valid-result rates were 1.000 in the regular regimes. The main exception was
-Expanded Welch under widespread sparsity, with a valid rate of 0.99154. The
-full results at $\alpha=0.10$ and $0.01$, together with coverage and
-scenario-level error, are retained in
-[`regime_summary.csv`](../results/supervisor_full/regime_summary.csv).
+| Regime | Normal FPR | Simple FPR | Expanded FPR | Normal mean error | Expanded mean error | Error change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Well sampled | 0.05174 | 0.05112 | 0.04913 | 0.00317 | 0.00332 | $-4.5\%$ |
+| Moderate | 0.06158 | 0.06025 | 0.05623 | 0.01158 | 0.00720 | $+37.8\%$ |
+| Highly skewed and sparse | 0.05547 | 0.05445 | 0.05198 | 0.00645 | 0.00456 | $+29.3\%$ |
+| Ultra-skewed and sparse | 0.07504 | 0.07208 | 0.06305 | 0.02504 | 0.01340 | $+46.5\%$ |
+| Widespread sparsity | 0.07431 | 0.07096 | 0.05689 | 0.02431 | 0.01278 | $+47.4\%$ |
 
-### 8.2 Power
+Normal Wald is already well calibrated in the well-sampled control. Expanded
+Welch changes its mean FPR from 0.05174 to 0.04913, but its scenario-level
+mean absolute error is 4.5% larger because the correction is not needed in
+every control table.
 
-Power is the fraction of non-null replicates rejected at $\alpha=0.05$.
+Expanded Welch reduces mean absolute error by 37.8% in the moderate regime,
+29.3% when minimum expected counts are between 1 and 5, and 46.5% when the
+minimum expected count is below 1. At $\alpha=0.01$, the corresponding
+reductions are 54.2%, 51.6%, and 66.3%.
 
-| Absolute MI difference | Sample size per group | Normal Wald | Simple Welch | Expanded Welch |
+Under widespread sparsity, Expanded Welch reduces error among valid results,
+but its valid rate falls to 0.97450. This remains a boundary regime rather
+than evidence of universally reliable operation. Simple Welch improves only
+part of the calibration error and remains closer to Normal Wald than to
+Expanded Welch.
+
+### 8.2 Calibration by regime variant
+
+Each entry below is the mean FPR across the six table shapes for one fully
+specified variant in Section 7.3. The target remains 0.05.
+
+| Regime and variant | $I(P)=I(Q)$ | $n_Q:n_P$ | Normal Wald | Simple Welch | Expanded Welch |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Well sampled 1 | 0.10 | $1{:}1$ | 0.04942 | 0.04882 | 0.04612 |
+| Well sampled 2 | 0.15 | $1{:}1$ | 0.05407 | 0.05342 | 0.05215 |
+| Moderate 1 | 0.10 | $1{:}1$ | 0.05772 | 0.05647 | 0.05222 |
+| Moderate 2 | 0.15 | $2{:}1$ | 0.06545 | 0.06403 | 0.06025 |
+| Highly skewed and sparse 1 | 0.10 | $1{:}1$ | 0.05185 | 0.05077 | 0.04797 |
+| Highly skewed and sparse 2 | 0.15 | $2{:}1$ | 0.05908 | 0.05813 | 0.05598 |
+| Ultra-skewed and sparse 1 | 0.10 | $1{:}1$ | 0.05775 | 0.05638 | 0.05267 |
+| Ultra-skewed and sparse 2 | 0.15 | $10{:}1$ | 0.09233 | 0.08778 | 0.07343 |
+| Widespread sparsity 1 | 0.10 | $1{:}1$ | 0.07148 | 0.06672 | 0.05058 |
+| Widespread sparsity 2 | 0.15 | $2{:}1$ | 0.07714 | 0.07520 | 0.06320 |
+
+Expanded Welch improves both variants of the moderate, highly sparse,
+ultra-sparse, and widespread regimes. Its largest remaining error is the
+$10{:}1$ ultra-sparse variant, where it reduces FPR from 0.09233 to 0.07343
+but does not restore nominal calibration.
+
+Complete scenario-level results, including Wilson intervals and validity
+diagnostics, are available in
+[`scenario_results.csv`](../results/supervisor_practical/scenario_results.csv).
+
+### 8.3 Power
+
+The table repeats the exact alternative settings alongside the resulting
+power at $\alpha=0.05$.
+
+| $I(P)$ | $I(Q)$ | $(n_P,n_Q)$ | Minimum expected counts $(P,Q)$ | Normal Wald | Simple Welch | Expanded Welch |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.05 | 0.07 | $(300,300)$ | $(18.217,1.543)$ | 0.0768 | 0.0759 | 0.0689 |
+| 0.05 | 0.10 | $(150,150)$ | $(9.108,0.926)$ | 0.1523 | 0.1498 | 0.1402 |
+| 0.05 | 0.10 | $(300,300)$ | $(18.217,1.853)$ | 0.2775 | 0.2761 | 0.2652 |
+| 0.05 | 0.10 | $(600,600)$ | $(36.433,3.705)$ | 0.5161 | 0.5151 | 0.5063 |
+| 0.05 | 0.15 | $(300,300)$ | $(18.217,1.143)$ | 0.7449 | 0.7437 | 0.7362 |
+
+Power increases with both the true MI difference and sample size. Simple
+Welch is almost indistinguishable from Normal Wald. Expanded Welch loses
+1.02 percentage points of power on average and at most 1.23 percentage
+points. All methods are valid in every power replicate, and 95% coverage
+ranges from 0.9453 to 0.9614.
+
+### 8.4 Computational cost
+
+| Shape | $(n_P,n_Q)$ | Normal Wald | Simple Welch | Expanded Welch |
 | ---: | ---: | ---: | ---: | ---: |
-| 0.02 | 300 | 0.0768 | 0.0759 | 0.0689 |
-| 0.05 | 150 | 0.1523 | 0.1498 | 0.1402 |
-| 0.05 | 300 | 0.2775 | 0.2761 | 0.2652 |
-| 0.05 | 600 | 0.5161 | 0.5151 | 0.5063 |
-| 0.10 | 300 | 0.7449 | 0.7437 | 0.7362 |
+| $2\times2$ | $(200,200)$ | 0.0880 ms | 0.1033 ms | 0.1688 ms |
+| $3\times3$ | $(200,200)$ | 0.0875 ms | 0.1029 ms | 0.1666 ms |
+| $5\times5$ | $(375,375)$ | 0.0875 ms | 0.1027 ms | 0.1666 ms |
+| $8\times8$ | $(960,960)$ | 0.0883 ms | 0.1038 ms | 0.1685 ms |
 
-Power increases as expected with effect size and sample size. Simple Welch
-is almost indistinguishable from normal Wald. Expanded Welch loses 1.02
-percentage points of power on average and at most 1.23 percentage points,
-consistent with its more conservative calibration. All methods were valid in
-every power replicate, and 95% coverage ranged from 0.9453 to 0.9614.
-
-### 8.3 Computational cost
-
-| Method | Median time across tested shapes | Relative to normal Wald |
-| --- | ---: | ---: |
-| Normal Wald | 0.086-0.094 ms | 1.00 times |
-| Simple Welch | 0.101-0.109 ms | 1.16-1.17 times |
-| Expanded Welch | 0.164-0.177 ms | 1.88-1.91 times |
-
-Expanded Welch is roughly twice as expensive as normal Wald but remains
-below 0.2 ms per table pair. All three methods are deterministic and require
-$O(rc)$ time, so runtime is not a practical distinction among them and none
-requires resampling.
+Expanded Welch takes 1.89-1.91 times as long as Normal Wald in this benchmark
+but remains below 0.2 ms per table pair. All three methods are deterministic
+and require $O(rc)$ time; none requires resampling.
 
 ## 9. Conclusion for Supervisor Discussion
 
@@ -728,9 +1115,9 @@ The experiment supports a narrow but coherent story:
 3. **Expanded Welch helps in its intended regime.** It improves calibration
    when isolated rare cells or unequal sample sizes make the estimated MI
    variance unstable, while sacrificing little power.
-4. **Expanded Welch has clear limits.** It overcorrects under widespread
-   support loss and at exact independence. Those cases require different
-   theory rather than a stronger degrees-of-freedom correction.
+4. **Expanded Welch has clear limits.** The most difficult $10{:}1$
+   ultra-sparse variant remains liberal, and its valid rate falls to 0.97450
+   under widespread sparsity. It improves rather than solves these cases.
 5. **The computational cost is negligible.** The method is deterministic,
    $O(rc)$, and below 0.2 ms per tested table pair.
 
@@ -740,22 +1127,22 @@ A defensible thesis claim is therefore:
 > Welch-Satterthwaite correction can improve finite-sample calibration in
 > sparse, skewed, or unequal-sample settings when sampled support remains
 > sufficiently stable. It retains near-Wald power and deterministic
-> sub-millisecond runtime, but it is not intended for widespread support loss
-> or the exact-independence boundary.
+> sub-millisecond runtime. It is a targeted correction rather than a complete
+> solution for every sparse-table configuration.
 
 The main question for supervisor discussion is whether this targeted regime
 is sufficiently important for the thesis contribution, and whether the next
 experiment should be a pre-specified confirmatory grid restricted to the
 regular positive-MI setting. The complete results remain available in
-[`REPORT.md`](../results/supervisor_full/REPORT.md) and the accompanying CSV
+[`REPORT.md`](../results/supervisor_practical/REPORT.md) and the accompanying CSV
 files.
 
 ## Appendix A: Validation of the Scaled Chi-Squared Working Model
 
-The scaled chi-squared step was tested directly rather than accepted only as
-a convenient algebraic assumption. The experiment fixed 64 populations
-covering $2\times2$, $3\times3$, $5\times5$, and $10\times10$ tables across
-all eight sampling regimes. For each of the 128 population components, 10,000
+The scaled chi-squared step was also tested in a separate mechanism audit,
+distinct from the bounded primary experiment above. The audit fixed 64
+populations covering $2\times2$, $3\times3$, $5\times5$, and $10\times10$
+tables across an earlier broad regime set. For each of the 128 population components, 10,000
 tables estimated the finite-sample mean and variance of $\widehat V(P)$, and
 a separate 10,000 tables evaluated the fitted distributions. The comparison
 therefore used 2.56 million tables without reusing the moment-fitting data for

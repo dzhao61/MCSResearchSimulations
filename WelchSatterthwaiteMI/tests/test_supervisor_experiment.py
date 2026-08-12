@@ -2,27 +2,71 @@ from __future__ import annotations
 
 import sys
 import unittest
-from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
 from run_supervisor_experiment import (
-    SHAPES,
-    _margin_is_near_balanced,
-    _margin_is_strongly_skewed,
+    CALIBRATION_ALPHAS,
+    MAXIMUM_SAMPLE_SIZE,
+    MINIMUM_SAMPLE_SIZE,
+    _aggregate_rejection_calibration,
+    _fixed_density_sample_sizes,
     _sample_sizes_in_expected_band,
-    _scenario_simulation_seeds,
+    _wilson,
+    _wilson_many,
     _widespread_sparsity_sample_sizes,
-    generate_zero_mi_scenarios,
 )
-from differential_mi.distributions import mutual_information_probability
 
 
 class ExpectedCountDesignTests(unittest.TestCase):
+    def test_calibration_grid_covers_lower_tail_in_thousandths(self) -> None:
+        self.assertEqual(len(CALIBRATION_ALPHAS), 101)
+        self.assertEqual(CALIBRATION_ALPHAS[0], 0.0)
+        self.assertEqual(CALIBRATION_ALPHAS[-1], 0.1)
+        self.assertIn(0.01, CALIBRATION_ALPHAS)
+        self.assertIn(0.05, CALIBRATION_ALPHAS)
+
+    def test_vectorized_wilson_matches_scalar_calculation(self) -> None:
+        counts = np.array([0, 5, 25, 50])
+        low, high = _wilson_many(counts, 100)
+        for index, count in enumerate(counts):
+            expected_low, expected_high = _wilson(int(count), 100)
+            self.assertAlmostEqual(low[index], expected_low)
+            self.assertAlmostEqual(high[index], expected_high)
+
+    def test_rejection_calibration_aggregation_retains_spread(self) -> None:
+        rows = []
+        for scenario_id, rates in (
+            ("scenario_a", (0.0, 0.04)),
+            ("scenario_b", (0.0, 0.06)),
+        ):
+            for alpha, rate in zip((0.0, 0.05), rates):
+                rows.append(
+                    {
+                        "scenario_id": scenario_id,
+                        "regime": "well_sampled",
+                        "regime_label": "Well sampled",
+                        "method": "normal_wald",
+                        "method_label": "Normal Wald",
+                        "nominal_alpha": alpha,
+                        "rejection_rate": rate,
+                        "absolute_calibration_error": abs(rate - alpha),
+                    }
+                )
+        summary = _aggregate_rejection_calibration(pd.DataFrame(rows))
+        at_five_percent = summary[summary["nominal_alpha"].eq(0.05)].iloc[0]
+        self.assertEqual(at_five_percent["population_pairs"], 2)
+        self.assertAlmostEqual(at_five_percent["mean_rejection_rate"], 0.05)
+        self.assertLess(
+            at_five_percent["p10_rejection_rate"],
+            at_five_percent["p90_rejection_rate"],
+        )
+
     def test_highly_sparse_band_holds_for_both_populations(self) -> None:
         sample_sizes = _sample_sizes_in_expected_band(
             0.01,
@@ -37,6 +81,8 @@ class ExpectedCountDesignTests(unittest.TestCase):
         self.assertLess(n_p * 0.01, 5.0)
         self.assertGreaterEqual(n_q * 0.005, 1.0)
         self.assertLess(n_q * 0.005, 5.0)
+        self.assertGreaterEqual(n_p, MINIMUM_SAMPLE_SIZE)
+        self.assertLessEqual(n_q, MAXIMUM_SAMPLE_SIZE)
 
     def test_ultra_sparse_band_preserves_requested_ratio(self) -> None:
         sample_sizes = _sample_sizes_in_expected_band(
@@ -64,6 +110,16 @@ class ExpectedCountDesignTests(unittest.TestCase):
         )
         self.assertIsNone(sample_sizes)
 
+    def test_fixed_density_sizes_respect_global_bounds(self) -> None:
+        n_p, n_q = _fixed_density_sample_sizes(
+            64,
+            density=6,
+            ratio=2,
+        )
+        self.assertEqual((n_p, n_q), (384, 768))
+        self.assertGreaterEqual(n_p, MINIMUM_SAMPLE_SIZE)
+        self.assertLessEqual(n_q, MAXIMUM_SAMPLE_SIZE)
+
     def test_widespread_sparsity_rule_controls_many_cells(self) -> None:
         probability_p = np.array([[0.95, 0.035], [0.01, 0.005]])
         probability_q = np.array([[0.94, 0.045], [0.01, 0.005]])
@@ -78,90 +134,6 @@ class ExpectedCountDesignTests(unittest.TestCase):
             self.assertGreaterEqual(float(np.mean(expected < 1.0)), 0.25)
             self.assertLessEqual(float(np.mean(expected < 1.0)), 0.50)
             self.assertGreaterEqual(float(np.mean(expected < 5.0)), 0.50)
-
-    def test_shape_mismatch_margin_rules_are_distinct(self) -> None:
-        balanced = np.array([0.34, 0.33, 0.33])
-        skewed = np.array([0.80, 0.15, 0.05])
-        self.assertTrue(_margin_is_near_balanced(balanced))
-        self.assertFalse(_margin_is_near_balanced(skewed))
-        self.assertTrue(_margin_is_strongly_skewed(skewed))
-        self.assertFalse(_margin_is_strongly_skewed(balanced))
-
-    def test_zero_mi_scenarios_are_distinct_product_distributions(self) -> None:
-        scenarios = generate_zero_mi_scenarios(20260812)
-        self.assertEqual(len(scenarios), 2 * len(SHAPES))
-        self.assertEqual(
-            {scenario.design_index for scenario in scenarios},
-            {16, 17},
-        )
-
-        for scenario in scenarios:
-            for probability in (
-                scenario.probability_p,
-                scenario.probability_q,
-            ):
-                product = np.outer(
-                    probability.sum(axis=1),
-                    probability.sum(axis=0),
-                )
-                np.testing.assert_allclose(probability, product, atol=1e-14)
-                self.assertLess(
-                    abs(mutual_information_probability(probability)),
-                    1e-12,
-                )
-            self.assertGreater(
-                float(
-                    np.abs(
-                        scenario.probability_p - scenario.probability_q
-                    ).sum()
-                ),
-                0.05 - 1e-14,
-            )
-            self.assertEqual(scenario.target_mi, 0.0)
-            margins = (
-                scenario.probability_p.sum(axis=1),
-                scenario.probability_p.sum(axis=0),
-                scenario.probability_q.sum(axis=1),
-                scenario.probability_q.sum(axis=0),
-            )
-            if scenario.design_index == 16:
-                self.assertTrue(
-                    all(_margin_is_near_balanced(margin) for margin in margins)
-                )
-            else:
-                self.assertTrue(_margin_is_strongly_skewed(margins[2]))
-                self.assertTrue(_margin_is_strongly_skewed(margins[3]))
-
-    def test_new_regime_does_not_shift_established_scenario_seeds(self) -> None:
-        scenarios = generate_zero_mi_scenarios(20260812)
-        established = [
-            replace(
-                scenario,
-                scenario_id=f"established_{scenario.scenario_id}",
-                design_index=0,
-            )
-            for scenario in scenarios
-            if scenario.design_index == 16
-        ]
-        additional = [
-            scenario
-            for scenario in scenarios
-            if scenario.design_index == 17
-        ]
-        original = _scenario_simulation_seeds(established, 12345)
-        extended_scenarios = sorted(
-            established + additional,
-            key=lambda scenario: (
-                scenario.shape_index,
-                scenario.design_index,
-            ),
-        )
-        extended = _scenario_simulation_seeds(extended_scenarios, 12345)
-        self.assertEqual(
-            original,
-            {scenario_id: extended[scenario_id] for scenario_id in original},
-        )
-
 
 if __name__ == "__main__":
     unittest.main()
