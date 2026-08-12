@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -10,11 +11,15 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
 from run_supervisor_experiment import (
+    SHAPES,
     _margin_is_near_balanced,
     _margin_is_strongly_skewed,
     _sample_sizes_in_expected_band,
+    _scenario_simulation_seeds,
     _widespread_sparsity_sample_sizes,
+    generate_zero_mi_scenarios,
 )
+from differential_mi.distributions import mutual_information_probability
 
 
 class ExpectedCountDesignTests(unittest.TestCase):
@@ -81,6 +86,81 @@ class ExpectedCountDesignTests(unittest.TestCase):
         self.assertFalse(_margin_is_near_balanced(skewed))
         self.assertTrue(_margin_is_strongly_skewed(skewed))
         self.assertFalse(_margin_is_strongly_skewed(balanced))
+
+    def test_zero_mi_scenarios_are_distinct_product_distributions(self) -> None:
+        scenarios = generate_zero_mi_scenarios(20260812)
+        self.assertEqual(len(scenarios), 2 * len(SHAPES))
+        self.assertEqual(
+            {scenario.design_index for scenario in scenarios},
+            {16, 17},
+        )
+
+        for scenario in scenarios:
+            for probability in (
+                scenario.probability_p,
+                scenario.probability_q,
+            ):
+                product = np.outer(
+                    probability.sum(axis=1),
+                    probability.sum(axis=0),
+                )
+                np.testing.assert_allclose(probability, product, atol=1e-14)
+                self.assertLess(
+                    abs(mutual_information_probability(probability)),
+                    1e-12,
+                )
+            self.assertGreater(
+                float(
+                    np.abs(
+                        scenario.probability_p - scenario.probability_q
+                    ).sum()
+                ),
+                0.05 - 1e-14,
+            )
+            self.assertEqual(scenario.target_mi, 0.0)
+            margins = (
+                scenario.probability_p.sum(axis=1),
+                scenario.probability_p.sum(axis=0),
+                scenario.probability_q.sum(axis=1),
+                scenario.probability_q.sum(axis=0),
+            )
+            if scenario.design_index == 16:
+                self.assertTrue(
+                    all(_margin_is_near_balanced(margin) for margin in margins)
+                )
+            else:
+                self.assertTrue(_margin_is_strongly_skewed(margins[2]))
+                self.assertTrue(_margin_is_strongly_skewed(margins[3]))
+
+    def test_new_regime_does_not_shift_established_scenario_seeds(self) -> None:
+        scenarios = generate_zero_mi_scenarios(20260812)
+        established = [
+            replace(
+                scenario,
+                scenario_id=f"established_{scenario.scenario_id}",
+                design_index=0,
+            )
+            for scenario in scenarios
+            if scenario.design_index == 16
+        ]
+        additional = [
+            scenario
+            for scenario in scenarios
+            if scenario.design_index == 17
+        ]
+        original = _scenario_simulation_seeds(established, 12345)
+        extended_scenarios = sorted(
+            established + additional,
+            key=lambda scenario: (
+                scenario.shape_index,
+                scenario.design_index,
+            ),
+        )
+        extended = _scenario_simulation_seeds(extended_scenarios, 12345)
+        self.assertEqual(
+            original,
+            {scenario_id: extended[scenario_id] for scenario_id in original},
+        )
 
 
 if __name__ == "__main__":

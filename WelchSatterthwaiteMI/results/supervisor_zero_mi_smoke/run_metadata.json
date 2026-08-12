@@ -1,15 +1,15 @@
 {
-  "profile": "full",
+  "profile": "smoke",
   "settings": {
-    "null_replicates": 10000,
-    "power_replicates": 10000,
-    "batch_size": 1000,
-    "runtime_repetitions": 200,
-    "shape_limit": null
+    "null_replicates": 300,
+    "power_replicates": 500,
+    "batch_size": 150,
+    "runtime_repetitions": 20,
+    "shape_limit": 3
   },
   "scenario_seed": 2026080501,
   "simulation_seed": 2026080502,
-  "scenario_count": 216,
+  "scenario_count": 54,
   "methods": [
     "normal_wald",
     "simple_welch",
@@ -20,7 +20,7 @@
     0.05,
     0.01
   ],
-  "elapsed_seconds": 33.48347987513989,
+  "elapsed_seconds": 4.455602416070178,
   "script_sha256": "d3861f15ddc7ecda779936826c858a6ad40158b484de1953a9103b810c428870",
   "python": "3.13.5",
   "numpy": "2.4.4",

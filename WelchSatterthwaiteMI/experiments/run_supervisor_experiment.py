@@ -126,6 +126,15 @@ REGIMES = {
             "combination beyond the main grid."
         ),
     },
+    "zero_mi": {
+        "label": "Zero MI (independence)",
+        "designs": (16, 17),
+        "description": (
+            "Both populations are independent product distributions with "
+            "different margins, so I(P)=I(Q)=0 exactly; the two variants "
+            "cover dense near-balanced and lower-density skewed tables."
+        ),
+    },
 }
 REGIME_ORDER = tuple(REGIMES)
 DESIGN_TO_REGIME = {
@@ -222,6 +231,22 @@ ADVERSARIAL_DESIGNS = {
         "target_mi": 0.15,
         "density": 10,
         "sample_size_ratio": 20,
+    },
+}
+ZERO_MI_DESIGNS = {
+    16: {
+        "margin_alpha_p": 50.0,
+        "margin_alpha_q": 20.0,
+        "density": 100,
+        "sample_size_ratio": 1,
+        "margin_rule": "near_balanced",
+    },
+    17: {
+        "margin_alpha_p": 2.0,
+        "margin_alpha_q": 0.8,
+        "density": 25,
+        "sample_size_ratio": 4,
+        "margin_rule": "skewed_q",
     },
 }
 PROFILE_SETTINGS = {
@@ -583,6 +608,78 @@ def generate_adversarial_scenarios(seed: int) -> list[RandomScenario]:
     return scenarios
 
 
+def generate_zero_mi_scenarios(seed: int) -> list[RandomScenario]:
+    """Generate product-form population pairs satisfying I(P)=I(Q)=0."""
+    rng = np.random.default_rng(seed)
+    scenarios = []
+    for shape_index, (rows, columns) in enumerate(SHAPES):
+        cells = rows * columns
+        for design_index, design in ZERO_MI_DESIGNS.items():
+            for attempt in range(1, 10_001):
+                row_p = _draw_stress_margin(
+                    rows,
+                    design["margin_alpha_p"],
+                    rng,
+                )
+                column_p = _draw_stress_margin(
+                    columns,
+                    design["margin_alpha_p"],
+                    rng,
+                )
+                row_q = _draw_stress_margin(
+                    rows,
+                    design["margin_alpha_q"],
+                    rng,
+                )
+                column_q = _draw_stress_margin(
+                    columns,
+                    design["margin_alpha_q"],
+                    rng,
+                )
+                probability_p = np.outer(row_p, column_p)
+                probability_q = np.outer(row_q, column_q)
+                if design["margin_rule"] == "near_balanced" and not all(
+                    _margin_is_near_balanced(margin)
+                    for margin in (row_p, column_p, row_q, column_q)
+                ):
+                    continue
+                if design["margin_rule"] == "skewed_q" and not (
+                    _margin_is_strongly_skewed(row_q)
+                    and _margin_is_strongly_skewed(column_q)
+                ):
+                    continue
+                if np.abs(probability_p - probability_q).sum() >= 0.05:
+                    break
+            else:
+                raise RuntimeError(
+                    f"Failed to generate zero-MI shape={rows}x{columns}, "
+                    f"design={design_index}."
+                )
+
+            n_p = max(120, cells * design["density"])
+            n_q = n_p * design["sample_size_ratio"]
+            scenarios.append(
+                RandomScenario(
+                    scenario_id=f"zero_mi_{rows}x{columns}_d{design_index}",
+                    shape_index=shape_index,
+                    design_index=design_index,
+                    rows=rows,
+                    columns=columns,
+                    n_p=n_p,
+                    n_q=n_q,
+                    target_mi=0.0,
+                    margin_alpha_p=design["margin_alpha_p"],
+                    margin_alpha_q=design["margin_alpha_q"],
+                    association_p=0.0,
+                    association_q=0.0,
+                    generation_attempts=attempt,
+                    probability_p=probability_p,
+                    probability_q=probability_q,
+                )
+            )
+    return scenarios
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
@@ -644,6 +741,29 @@ def _method_values(
 
 def _regime_for(scenario: RandomScenario) -> str:
     return DESIGN_TO_REGIME[scenario.design_index]
+
+
+def _scenario_simulation_seeds(
+    scenarios: list[RandomScenario],
+    seed: int,
+) -> dict[str, int]:
+    """Assign stable seeds while appending new regimes after the legacy grid."""
+    established = [
+        scenario
+        for scenario in scenarios
+        if scenario.design_index not in ZERO_MI_DESIGNS
+    ]
+    zero_mi = [
+        scenario
+        for scenario in scenarios
+        if scenario.design_index in ZERO_MI_DESIGNS
+    ]
+    seed_order = established + zero_mi
+    children = np.random.SeedSequence(seed).spawn(len(seed_order))
+    return {
+        scenario.scenario_id: int(child.generate_state(1)[0])
+        for scenario, child in zip(seed_order, children)
+    }
 
 
 def _population_metadata(scenario: RandomScenario) -> dict:
@@ -838,7 +958,9 @@ def _simulate_null_scenario(
             "replicates": replicates,
             "estimator_valid_replicates": valid_count,
             "estimator_valid_rate": valid_count / replicates,
-            "mean_delta_error": delta_sum / valid_count,
+            "mean_delta_error": (
+                delta_sum / valid_count if valid_count else np.nan
+            ),
             "empirical_delta_sd": np.sqrt(
                 max(
                     0.0,
@@ -851,7 +973,9 @@ def _simulate_null_scenario(
             )
             if valid_count > 1
             else np.nan,
-            "mean_standard_error": standard_error_sum / valid_count,
+            "mean_standard_error": (
+                standard_error_sum / valid_count if valid_count else np.nan
+            ),
             **{
                 f"mean_sample_{name}": total / replicates
                 for name, total in diagnostic_sums.items()
@@ -1297,6 +1421,7 @@ def _write_report(
     well_sampled = summary[summary["regime"].eq("well_sampled")].set_index(
         "method"
     )
+    zero_mi = summary[summary["regime"].eq("zero_mi")].set_index("method")
     difficult_regimes = (
         "sparse_imbalanced",
         "highly_sparse",
@@ -1393,6 +1518,14 @@ def _write_report(
             f"  `{well_sampled.loc['normal_wald', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  to `{well_sampled.loc['expanded_welch', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  by becoming mildly conservative.",
+            "- Zero MI is a nonregular boundary: the population first-order MI",
+            "  variance is zero, so the normal and Welch reference arguments do",
+            "  not apply in their regular form. The boundary results are reported",
+            "  as a diagnostic rather than pooled evidence for those arguments.",
+            f"- In the zero-MI regime at alpha 0.05, the mean FPRs were",
+            f"  `{zero_mi.loc['normal_wald', 'mean_fpr_05']:.5f}` for normal Wald,",
+            f"  `{zero_mi.loc['simple_welch', 'mean_fpr_05']:.5f}` for simple Welch,",
+            f"  and `{zero_mi.loc['expanded_welch', 'mean_fpr_05']:.5f}` for expanded Welch.",
             f"- Across the five power scenarios, expanded Welch lost",
             f"  `{expanded_mean_power_loss:.4f}` power on average and at most",
             f"  `{expanded_max_power_loss:.4f}` relative to normal Wald.",
@@ -1443,6 +1576,9 @@ def main() -> None:
     scenarios.extend(
         generate_adversarial_scenarios(args.scenario_seed + 2)
     )
+    scenarios.extend(
+        generate_zero_mi_scenarios(args.scenario_seed + 3)
+    )
     scenarios.sort(
         key=lambda scenario: (scenario.shape_index, scenario.design_index)
     )
@@ -1455,12 +1591,13 @@ def main() -> None:
     population_frame = pd.DataFrame(
         [_population_metadata(scenario) for scenario in scenarios]
     )
-    children = np.random.SeedSequence(args.simulation_seed).spawn(
-        len(scenarios)
+    scenario_seeds = _scenario_simulation_seeds(
+        scenarios,
+        args.simulation_seed,
     )
     scenario_rows = []
-    for index, (scenario, child) in enumerate(zip(scenarios, children)):
-        seed = int(child.generate_state(1)[0])
+    for index, scenario in enumerate(scenarios):
+        seed = scenario_seeds[scenario.scenario_id]
         scenario_rows.extend(
             _simulate_null_scenario(
                 scenario,
