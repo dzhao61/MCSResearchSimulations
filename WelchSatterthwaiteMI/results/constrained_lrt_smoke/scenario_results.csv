@@ -1,0 +1,129 @@
+scenario_id,configuration_id,rows,columns,condition,condition_label,n_p,n_q,population_replication,target_mi,simulation_seed,replicates,method,method_label,valid_replicates,valid_rate,fpr_10,fpr_05,fpr_01
+config_2x2_d0_p00,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,0,0.1,2477831945,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.0
+config_2x2_d0_p00,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,0,0.1,2477831945,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d0_p00,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,0,0.1,2477831945,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d0_p00,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,0,0.1,2477831945,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.05,0.0
+config_2x2_d0_p01,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,1,0.1,2764902787,20,normal_wald,Normal Wald,20,1.0,0.15,0.05,0.0
+config_2x2_d0_p01,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,1,0.1,2764902787,20,simple_welch,Simple Welch,20,1.0,0.15,0.05,0.0
+config_2x2_d0_p01,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,1,0.1,2764902787,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.05,0.0
+config_2x2_d0_p01,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,1,0.1,2764902787,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.05,0.05
+config_2x2_d1_p00,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,0,0.1,3881087075,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p00,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,0,0.1,3881087075,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p00,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,0,0.1,3881087075,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p00,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,0,0.1,3881087075,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p01,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,1,0.1,2198623536,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p01,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,1,0.1,2198623536,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p01,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,1,0.1,2198623536,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d1_p01,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,1,0.1,2198623536,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.05,0.0
+config_2x2_d2_p00,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2768931447,20,normal_wald,Normal Wald,20,1.0,0.0,0.0,0.0
+config_2x2_d2_p00,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2768931447,20,simple_welch,Simple Welch,20,1.0,0.0,0.0,0.0
+config_2x2_d2_p00,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2768931447,20,expanded_welch,Expanded Welch,19,0.95,0.0,0.0,0.0
+config_2x2_d2_p00,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2768931447,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.05,0.0
+config_2x2_d2_p01,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,1,0.1,880372142,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.0
+config_2x2_d2_p01,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,1,0.1,880372142,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.0
+config_2x2_d2_p01,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,1,0.1,880372142,20,expanded_welch,Expanded Welch,19,0.95,0.05263157894736842,0.0,0.0
+config_2x2_d2_p01,2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,1,0.1,880372142,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.05,0.05
+config_2x2_d3_p00,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,3260596029,20,normal_wald,Normal Wald,20,1.0,0.3,0.3,0.15
+config_2x2_d3_p00,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,3260596029,20,simple_welch,Simple Welch,20,1.0,0.3,0.3,0.15
+config_2x2_d3_p00,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,3260596029,20,expanded_welch,Expanded Welch,20,1.0,0.25,0.25,0.15
+config_2x2_d3_p00,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,3260596029,20,constrained_lrt,Constrained LRT,20,1.0,0.25,0.25,0.15
+config_2x2_d3_p01,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,3227718042,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.05
+config_2x2_d3_p01,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,3227718042,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.05
+config_2x2_d3_p01,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,3227718042,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.05,0.05
+config_2x2_d3_p01,2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,3227718042,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.0
+config_3x3_d0_p00,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,0,0.1,1814125591,20,normal_wald,Normal Wald,20,1.0,0.1,0.05,0.0
+config_3x3_d0_p00,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,0,0.1,1814125591,20,simple_welch,Simple Welch,20,1.0,0.1,0.05,0.0
+config_3x3_d0_p00,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,0,0.1,1814125591,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.05,0.0
+config_3x3_d0_p00,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,0,0.1,1814125591,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.0
+config_3x3_d0_p01,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,1,0.1,3974158138,20,normal_wald,Normal Wald,20,1.0,0.05,0.0,0.0
+config_3x3_d0_p01,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,1,0.1,3974158138,20,simple_welch,Simple Welch,20,1.0,0.05,0.0,0.0
+config_3x3_d0_p01,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,1,0.1,3974158138,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.0,0.0
+config_3x3_d0_p01,3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,1,0.1,3974158138,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.0,0.0
+config_3x3_d1_p00,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,0,0.1,3229974002,20,normal_wald,Normal Wald,20,1.0,0.1,0.1,0.0
+config_3x3_d1_p00,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,0,0.1,3229974002,20,simple_welch,Simple Welch,20,1.0,0.1,0.1,0.0
+config_3x3_d1_p00,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,0,0.1,3229974002,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.05,0.0
+config_3x3_d1_p00,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,0,0.1,3229974002,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.1,0.0
+config_3x3_d1_p01,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,1,0.1,606157434,20,normal_wald,Normal Wald,20,1.0,0.15,0.1,0.0
+config_3x3_d1_p01,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,1,0.1,606157434,20,simple_welch,Simple Welch,20,1.0,0.15,0.1,0.0
+config_3x3_d1_p01,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,1,0.1,606157434,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.1,0.0
+config_3x3_d1_p01,3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,1,0.1,606157434,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.1,0.0
+config_3x3_d2_p00,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2674302760,20,normal_wald,Normal Wald,20,1.0,0.2,0.1,0.1
+config_3x3_d2_p00,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2674302760,20,simple_welch,Simple Welch,20,1.0,0.2,0.1,0.1
+config_3x3_d2_p00,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2674302760,20,expanded_welch,Expanded Welch,17,0.85,0.11764705882352941,0.058823529411764705,0.058823529411764705
+config_3x3_d2_p00,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,0,0.1,2674302760,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.1,0.05
+config_3x3_d2_p01,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,1,0.1,3380239290,20,normal_wald,Normal Wald,20,1.0,0.15,0.05,0.0
+config_3x3_d2_p01,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,1,0.1,3380239290,20,simple_welch,Simple Welch,20,1.0,0.15,0.05,0.0
+config_3x3_d2_p01,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,1,0.1,3380239290,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.05,0.0
+config_3x3_d2_p01,3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,1,0.1,3380239290,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.0
+config_3x3_d3_p00,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,65349617,20,normal_wald,Normal Wald,20,1.0,0.15,0.15,0.1
+config_3x3_d3_p00,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,65349617,20,simple_welch,Simple Welch,20,1.0,0.15,0.15,0.1
+config_3x3_d3_p00,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,65349617,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.1,0.1
+config_3x3_d3_p00,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,65349617,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.0
+config_3x3_d3_p01,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,796464720,20,normal_wald,Normal Wald,20,1.0,0.15,0.1,0.0
+config_3x3_d3_p01,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,796464720,20,simple_welch,Simple Welch,20,1.0,0.15,0.1,0.0
+config_3x3_d3_p01,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,796464720,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.1,0.0
+config_3x3_d3_p01,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,796464720,20,constrained_lrt,Constrained LRT,20,1.0,0.2,0.15,0.1
+config_5x5_d0_p00,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,0,0.1,478364860,20,normal_wald,Normal Wald,20,1.0,0.05,0.05,0.0
+config_5x5_d0_p00,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,0,0.1,478364860,20,simple_welch,Simple Welch,20,1.0,0.05,0.05,0.0
+config_5x5_d0_p00,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,0,0.1,478364860,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.05,0.0
+config_5x5_d0_p00,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,0,0.1,478364860,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.05,0.0
+config_5x5_d0_p01,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,1,0.1,1317290562,20,normal_wald,Normal Wald,20,1.0,0.1,0.05,0.05
+config_5x5_d0_p01,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,1,0.1,1317290562,20,simple_welch,Simple Welch,20,1.0,0.1,0.05,0.05
+config_5x5_d0_p01,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,1,0.1,1317290562,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.05,0.0
+config_5x5_d0_p01,5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,1,0.1,1317290562,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.05
+config_5x5_d1_p00,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,0,0.1,4095152891,20,normal_wald,Normal Wald,20,1.0,0.15,0.1,0.05
+config_5x5_d1_p00,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,0,0.1,4095152891,20,simple_welch,Simple Welch,20,1.0,0.15,0.1,0.05
+config_5x5_d1_p00,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,0,0.1,4095152891,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.1,0.05
+config_5x5_d1_p00,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,0,0.1,4095152891,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.1,0.05
+config_5x5_d1_p01,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,1,0.1,3564677104,20,normal_wald,Normal Wald,20,1.0,0.05,0.0,0.0
+config_5x5_d1_p01,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,1,0.1,3564677104,20,simple_welch,Simple Welch,20,1.0,0.05,0.0,0.0
+config_5x5_d1_p01,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,1,0.1,3564677104,20,expanded_welch,Expanded Welch,20,1.0,0.05,0.0,0.0
+config_5x5_d1_p01,5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,1,0.1,3564677104,20,constrained_lrt,Constrained LRT,20,1.0,0.05,0.0,0.0
+config_5x5_d2_p00,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,0,0.1,3875519215,20,normal_wald,Normal Wald,20,1.0,0.2,0.15,0.05
+config_5x5_d2_p00,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,0,0.1,3875519215,20,simple_welch,Simple Welch,20,1.0,0.2,0.15,0.05
+config_5x5_d2_p00,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,0,0.1,3875519215,20,expanded_welch,Expanded Welch,19,0.95,0.15789473684210525,0.10526315789473684,0.0
+config_5x5_d2_p00,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,0,0.1,3875519215,20,constrained_lrt,Constrained LRT,20,1.0,0.2,0.15,0.0
+config_5x5_d2_p01,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,1,0.1,2786888119,20,normal_wald,Normal Wald,20,1.0,0.25,0.1,0.05
+config_5x5_d2_p01,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,1,0.1,2786888119,20,simple_welch,Simple Welch,20,1.0,0.25,0.1,0.05
+config_5x5_d2_p01,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,1,0.1,2786888119,20,expanded_welch,Expanded Welch,20,1.0,0.2,0.05,0.0
+config_5x5_d2_p01,5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,1,0.1,2786888119,20,constrained_lrt,Constrained LRT,20,1.0,0.2,0.1,0.05
+config_5x5_d3_p00,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,0,0.1,4287286767,20,normal_wald,Normal Wald,20,1.0,0.15,0.05,0.0
+config_5x5_d3_p00,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,0,0.1,4287286767,20,simple_welch,Simple Welch,20,1.0,0.15,0.05,0.0
+config_5x5_d3_p00,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,0,0.1,4287286767,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.0,0.0
+config_5x5_d3_p00,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,0,0.1,4287286767,20,constrained_lrt,Constrained LRT,20,1.0,0.3,0.2,0.1
+config_5x5_d3_p01,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,1,0.1,2851230002,20,normal_wald,Normal Wald,20,1.0,0.4,0.3,0.1
+config_5x5_d3_p01,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,1,0.1,2851230002,20,simple_welch,Simple Welch,20,1.0,0.4,0.25,0.1
+config_5x5_d3_p01,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,1,0.1,2851230002,20,expanded_welch,Expanded Welch,20,1.0,0.4,0.15,0.05
+config_5x5_d3_p01,5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,1,0.1,2851230002,20,constrained_lrt,Constrained LRT,20,1.0,0.25,0.1,0.05
+config_8x8_d0_p00,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,0,0.1,1014955703,20,normal_wald,Normal Wald,20,1.0,0.0,0.0,0.0
+config_8x8_d0_p00,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,0,0.1,1014955703,20,simple_welch,Simple Welch,20,1.0,0.0,0.0,0.0
+config_8x8_d0_p00,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,0,0.1,1014955703,20,expanded_welch,Expanded Welch,20,1.0,0.0,0.0,0.0
+config_8x8_d0_p00,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,0,0.1,1014955703,20,constrained_lrt,Constrained LRT,20,1.0,0.0,0.0,0.0
+config_8x8_d0_p01,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,1,0.1,1303512339,20,normal_wald,Normal Wald,20,1.0,0.15,0.15,0.05
+config_8x8_d0_p01,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,1,0.1,1303512339,20,simple_welch,Simple Welch,20,1.0,0.15,0.15,0.05
+config_8x8_d0_p01,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,1,0.1,1303512339,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.15,0.05
+config_8x8_d0_p01,8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,1,0.1,1303512339,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.15,0.05
+config_8x8_d1_p00,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,0,0.1,3155669485,20,normal_wald,Normal Wald,20,1.0,0.2,0.15,0.05
+config_8x8_d1_p00,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,0,0.1,3155669485,20,simple_welch,Simple Welch,20,1.0,0.2,0.15,0.05
+config_8x8_d1_p00,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,0,0.1,3155669485,20,expanded_welch,Expanded Welch,20,1.0,0.2,0.15,0.05
+config_8x8_d1_p00,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,0,0.1,3155669485,20,constrained_lrt,Constrained LRT,20,1.0,0.2,0.15,0.05
+config_8x8_d1_p01,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,1,0.1,3915028103,20,normal_wald,Normal Wald,20,1.0,0.15,0.1,0.0
+config_8x8_d1_p01,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,1,0.1,3915028103,20,simple_welch,Simple Welch,20,1.0,0.15,0.1,0.0
+config_8x8_d1_p01,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,1,0.1,3915028103,20,expanded_welch,Expanded Welch,20,1.0,0.15,0.1,0.0
+config_8x8_d1_p01,8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,1,0.1,3915028103,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.1,0.0
+config_8x8_d2_p00,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,0,0.1,1035720000,20,normal_wald,Normal Wald,20,1.0,0.1,0.05,0.0
+config_8x8_d2_p00,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,0,0.1,1035720000,20,simple_welch,Simple Welch,20,1.0,0.1,0.05,0.0
+config_8x8_d2_p00,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,0,0.1,1035720000,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.05,0.0
+config_8x8_d2_p00,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,0,0.1,1035720000,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.05,0.0
+config_8x8_d2_p01,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,1,0.1,127500412,20,normal_wald,Normal Wald,20,1.0,0.1,0.1,0.0
+config_8x8_d2_p01,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,1,0.1,127500412,20,simple_welch,Simple Welch,20,1.0,0.1,0.1,0.0
+config_8x8_d2_p01,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,1,0.1,127500412,20,expanded_welch,Expanded Welch,20,1.0,0.1,0.1,0.0
+config_8x8_d2_p01,8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,1,0.1,127500412,20,constrained_lrt,Constrained LRT,20,1.0,0.1,0.1,0.0
+config_8x8_d3_p00,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,0,0.1,2766434811,20,normal_wald,Normal Wald,20,1.0,0.4,0.3,0.1
+config_8x8_d3_p00,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,0,0.1,2766434811,20,simple_welch,Simple Welch,20,1.0,0.35,0.3,0.1
+config_8x8_d3_p00,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,0,0.1,2766434811,20,expanded_welch,Expanded Welch,20,1.0,0.35,0.3,0.05
+config_8x8_d3_p00,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,0,0.1,2766434811,20,constrained_lrt,Constrained LRT,20,1.0,0.15,0.05,0.05
+config_8x8_d3_p01,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,1,0.1,3202765758,20,normal_wald,Normal Wald,20,1.0,0.2,0.15,0.0
+config_8x8_d3_p01,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,1,0.1,3202765758,20,simple_welch,Simple Welch,20,1.0,0.2,0.15,0.0
+config_8x8_d3_p01,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,1,0.1,3202765758,20,expanded_welch,Expanded Welch,20,1.0,0.2,0.15,0.0
+config_8x8_d3_p01,8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,1,0.1,3202765758,20,constrained_lrt,Constrained LRT,20,1.0,0.2,0.15,0.0

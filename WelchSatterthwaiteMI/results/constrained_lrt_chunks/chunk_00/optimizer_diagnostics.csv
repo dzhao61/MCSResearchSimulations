@@ -1,0 +1,11 @@
+scenario_id,configuration_id,rows,columns,condition,condition_label,n_p,n_q,population_replication,target_mi,simulation_seed,replicates,lrt_convergence_rate,lrt_fallback_rate,lrt_median_iterations,lrt_max_constraint_residual,lrt_mean_seconds_per_fit,audited_replicates,audit_max_statistic_difference,audit_mean_statistic_difference
+config_2x2_d0_p00,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,0,0.1,2477831945,200,1.0,0.0,12.0,9.477429951942895e-11,0.00401592975249514,10,0.0,0.0
+config_2x2_d0_p01,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,1,0.1,2764902787,200,1.0,0.0,12.0,8.040275389920026e-11,0.003395403331378475,10,0.0,0.0
+config_2x2_d0_p02,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,2,0.1,3881087075,200,1.0,0.0,12.0,3.5893232830375155e-11,0.003689419598085806,10,0.0,0.0
+config_2x2_d0_p03,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,3,0.1,2198623536,200,1.0,0.0,12.0,5.20210818866218e-11,0.003731041271239519,10,0.0,0.0
+config_2x2_d0_p04,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,4,0.1,2768931447,200,1.0,0.0,12.0,2.7421898085577823e-11,0.0042313637363258745,10,0.0,0.0
+config_2x2_d0_p05,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,5,0.1,880372142,200,1.0,0.0,12.0,2.901920370668165e-11,0.0038742943108081816,10,0.0,0.0
+config_2x2_d0_p06,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,6,0.1,3260596029,200,1.0,0.0,12.0,1.4136802839459506e-11,0.0034612687642220407,10,6.536993168992922e-11,6.536993168992922e-12
+config_2x2_d0_p07,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,7,0.1,3227718042,200,1.0,0.0,12.0,9.161318925698936e-11,0.003869564001215622,10,0.0,0.0
+config_2x2_d0_p08,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,8,0.1,1814125591,200,1.0,0.0,12.0,6.84541312523379e-11,0.0035167876514606176,10,0.0,0.0
+config_2x2_d0_p09,2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,9,0.1,3974158138,200,1.0,0.0,12.0,2.8303678845098545e-11,0.0033013712160754947,10,0.0,0.0

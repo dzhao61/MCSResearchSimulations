@@ -109,6 +109,18 @@ def _variance_influence_component_df(
     influence_variance_value: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Estimate component df from the MI-variance influence function."""
+    component_df, influence_variance, _, _ = _joint_influence_moments(
+        table,
+        influence_variance_value,
+    )
+    return component_df, influence_variance
+
+
+def _joint_influence_moments(
+    table: np.ndarray,
+    influence_variance_value: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return variance-IF df, variance, MI skew moment, and cross-moment."""
     counts = np.asarray(table, dtype=float)
     totals = counts.sum(axis=(-2, -1), keepdims=True)
     probability = counts / totals
@@ -163,6 +175,16 @@ def _variance_influence_component_df(
         * (variance_influence - influence_mean[..., None, None]) ** 2,
         axis=(-2, -1),
     )
+    third_moment = np.sum(
+        probability * centered**3,
+        axis=(-2, -1),
+    )
+    cross_moment = np.sum(
+        probability
+        * centered
+        * (variance_influence - influence_mean[..., None, None]),
+        axis=(-2, -1),
+    )
 
     sample_size = totals[..., 0, 0]
     numerator = 2.0 * sample_size * variance**2
@@ -172,7 +194,139 @@ def _variance_influence_component_df(
         out=np.full_like(variance, np.nan, dtype=float),
         where=np.isfinite(influence_variance) & (influence_variance > 0),
     )
-    return component_df, influence_variance
+    return component_df, influence_variance, third_moment, cross_moment
+
+
+def _edgeworth_cdf(
+    statistic: np.ndarray,
+    baseline_cdf: np.ndarray,
+    standardized_third_cumulant: np.ndarray,
+    studentization_covariance: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Apply the first-order correction for a generally studentized pivot."""
+    statistic = np.asarray(statistic, dtype=float)
+    adjustment = (
+        standardized_third_cumulant * (1.0 - statistic**2) / 6.0
+        + studentization_covariance * statistic**2 / 2.0
+    )
+    cdf = np.asarray(baseline_cdf, dtype=float) + norm.pdf(statistic) * adjustment
+    return cdf, adjustment
+
+
+def joint_influence_pvalues(
+    table_p: np.ndarray,
+    table_q: np.ndarray,
+) -> dict[str, np.ndarray]:
+    """Experimental joint-influence corrections for differential MI.
+
+    The first-order CDF correction accounts for both numerator skewness and
+    covariance between the MI difference and its estimated squared standard
+    error. The normal version isolates this correction; the Welch version adds
+    it to the existing expanded finite-df reference.
+    """
+    p, q = _validate_pair(table_p, table_q)
+    base = differential_mi_pvalues(
+        p,
+        q,
+        include_simple=True,
+        include_expanded=True,
+        include_unbiased_sensitivity=False,
+    )
+    totals_p = p.sum(axis=(-2, -1))
+    totals_q = q.sum(axis=(-2, -1))
+    variance_p = base["influence_variance_p"]
+    variance_q = base["influence_variance_q"]
+    _, _, third_moment_p, cross_moment_p = _joint_influence_moments(
+        p,
+        variance_p,
+    )
+    _, _, third_moment_q, cross_moment_q = _joint_influence_moments(
+        q,
+        variance_q,
+    )
+
+    standard_error = base["standard_error"]
+    standard_error_cubed = standard_error**3
+    third_cumulant = (
+        third_moment_p / totals_p**2 - third_moment_q / totals_q**2
+    )
+    numerator_denominator_covariance = (
+        cross_moment_p / totals_p**2 - cross_moment_q / totals_q**2
+    )
+    standardized_third_cumulant = np.divide(
+        third_cumulant,
+        standard_error_cubed,
+        out=np.full_like(standard_error, np.nan, dtype=float),
+        where=np.isfinite(standard_error_cubed) & (standard_error_cubed > 0),
+    )
+    studentization_covariance = np.divide(
+        numerator_denominator_covariance,
+        standard_error_cubed,
+        out=np.full_like(standard_error, np.nan, dtype=float),
+        where=np.isfinite(standard_error_cubed) & (standard_error_cubed > 0),
+    )
+
+    statistic = base["statistic"]
+    normal_cdf, edgeworth_adjustment = _edgeworth_cdf(
+        statistic,
+        norm.cdf(statistic),
+        standardized_third_cumulant,
+        studentization_covariance,
+    )
+    expanded_df = base["expanded_welch_degrees_of_freedom"]
+    expanded_cdf, _ = _edgeworth_cdf(
+        statistic,
+        t.cdf(statistic, df=expanded_df),
+        standardized_third_cumulant,
+        studentization_covariance,
+    )
+
+    moment_valid = (
+        base["base_valid"]
+        & np.isfinite(standardized_third_cumulant)
+        & np.isfinite(studentization_covariance)
+        & np.isfinite(edgeworth_adjustment)
+    )
+    edgeworth_valid = (
+        moment_valid
+        & np.isfinite(normal_cdf)
+        & (normal_cdf >= 0.0)
+        & (normal_cdf <= 1.0)
+    )
+    joint_welch_valid = (
+        moment_valid
+        & base["expanded_valid"]
+        & np.isfinite(expanded_cdf)
+        & (expanded_cdf >= 0.0)
+        & (expanded_cdf <= 1.0)
+    )
+    edgeworth_p = 2.0 * np.minimum(normal_cdf, 1.0 - normal_cdf)
+    joint_welch_p = 2.0 * np.minimum(expanded_cdf, 1.0 - expanded_cdf)
+
+    return {
+        **base,
+        "mi_third_moment_p": third_moment_p,
+        "mi_third_moment_q": third_moment_q,
+        "mi_variance_cross_moment_p": cross_moment_p,
+        "mi_variance_cross_moment_q": cross_moment_q,
+        "standardized_third_cumulant": standardized_third_cumulant,
+        "studentization_covariance": studentization_covariance,
+        "edgeworth_adjustment": edgeworth_adjustment,
+        "edgeworth_normal_cdf": normal_cdf,
+        "edgeworth_normal_p_value": np.where(
+            edgeworth_valid,
+            edgeworth_p,
+            np.nan,
+        ),
+        "joint_influence_welch_cdf": expanded_cdf,
+        "joint_influence_welch_p_value": np.where(
+            joint_welch_valid,
+            joint_welch_p,
+            np.nan,
+        ),
+        "edgeworth_valid": edgeworth_valid,
+        "joint_influence_welch_valid": joint_welch_valid,
+    }
 
 
 def differential_mi_pvalues(

@@ -1,0 +1,11 @@
+scenario_id,configuration_id,rows,columns,condition,condition_label,n_p,n_q,population_replication,target_mi,simulation_seed,replicates,lrt_convergence_rate,lrt_fallback_rate,lrt_median_iterations,lrt_max_constraint_residual,lrt_mean_seconds_per_fit,audited_replicates,audit_max_statistic_difference,audit_mean_statistic_difference
+config_2x2_d1_p00,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,0,0.1,3229974002,200,1.0,0.0,12.0,2.35851754792904e-11,0.004580383319407701,10,7.128164725145325e-11,2.190461145801237e-11
+config_2x2_d1_p01,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,1,0.1,606157434,200,1.0,0.0,12.0,1.8982176941406692e-11,0.004631737292511389,10,0.0,0.0
+config_2x2_d1_p02,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,2,0.1,2674302760,200,1.0,0.0,11.0,2.8543209462661423e-11,0.0061892242229077965,10,2.9274360713316128e-12,2.927436071331613e-13
+config_2x2_d1_p03,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,3,0.1,3380239290,200,1.0,0.0,11.0,8.038811283306302e-11,0.006082236438523978,10,2.1032064978498966e-12,2.1884716261411086e-13
+config_2x2_d1_p04,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,4,0.1,65349617,200,1.0,0.0,12.0,7.055803163957819e-11,0.0054978770785965025,10,6.494360604847316e-11,1.6208900888159404e-11
+config_2x2_d1_p05,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,5,0.1,796464720,200,1.0,0.0,12.0,3.1610852824215385e-11,0.0047032410278916355,10,3.186073627148289e-11,6.698996912746224e-12
+config_2x2_d1_p06,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,6,0.1,478364860,200,1.0,0.0,12.0,8.224115832788925e-11,0.0047001201950479295,10,0.0,0.0
+config_2x2_d1_p07,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,7,0.1,1317290562,200,1.0,0.0,12.0,1.54122548057245e-11,0.005057252123951912,10,5.1954884838778526e-11,5.195488483877853e-12
+config_2x2_d1_p08,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,8,0.1,4095152891,200,1.0,0.0,12.0,4.515711415908896e-11,0.006304823736427352,10,4.6270542952697724e-11,1.113846792577533e-11
+config_2x2_d1_p09,2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,9,0.1,3564677104,200,1.0,0.0,12.0,3.187067276755329e-11,0.004306512696202845,10,0.0,0.0

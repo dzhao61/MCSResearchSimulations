@@ -1,0 +1,6 @@
+scenario_id,configuration_id,rows,columns,condition,condition_label,n_p,n_q,population_replication,target_mi,simulation_seed,replicates,lrt_convergence_rate,lrt_fallback_rate,lrt_median_iterations,lrt_max_constraint_residual,lrt_mean_seconds_per_fit,audited_replicates,audit_max_statistic_difference,audit_mean_statistic_difference
+config_3x3_d3_p00,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,0,0.1,101742221,200,1.0,0.0,56.0,4.985656332223698e-11,0.05904892731225118,0,,
+config_3x3_d3_p01,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,1,0.1,2150972521,200,1.0,0.0,53.0,4.5126680170426425e-11,0.04718787794932723,0,,
+config_3x3_d3_p02,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,2,0.1,1023806098,200,1.0,0.0,53.5,5.500309929740155e-11,0.042265203956048936,0,,
+config_3x3_d3_p03,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,3,0.1,856206566,200,1.0,0.0,59.0,9.967801584132019e-11,0.046388082527555524,0,,
+config_3x3_d3_p04,3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,4,0.1,2353828250,200,1.0,0.0,46.0,2.7797597557110976e-11,0.036959621275309475,0,,

@@ -1,0 +1,5 @@
+method,method_label,configurations,mean_valid_rate,mean_fpr_10,configuration_mae_10,wins_vs_normal_10,mean_fpr_05,configuration_mae_05,wins_vs_normal_05,mean_fpr_01,configuration_mae_01,wins_vs_normal_01
+normal_wald,Normal Wald,1,1.0,0.092,0.008000000000000007,0,0.0425,0.0075,0,0.0055,0.0045000000000000005,0
+simple_welch,Simple Welch,1,1.0,0.0915,0.008500000000000008,0,0.0415,0.0085,0,0.0045,0.0055000000000000005,0
+expanded_welch,Expanded Welch,1,1.0,0.089,0.01100000000000001,0,0.0405,0.009500000000000001,0,0.003,0.007,0
+constrained_lrt,Constrained LRT,1,1.0,0.093,0.007000000000000006,1,0.0425,0.0075,0,0.0055,0.0045000000000000005,0

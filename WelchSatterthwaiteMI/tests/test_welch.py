@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+from scipy.stats import norm
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = PROJECT_ROOT.parent
@@ -12,9 +13,13 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
 from differential_mi.inference import analytic_wald_test
+from differential_mi.statistics import influence_variance
 from welch_differential_mi.welch import (
+    _edgeworth_cdf,
+    _joint_influence_moments,
     _welch_df,
     differential_mi_pvalues,
+    joint_influence_pvalues,
     welch_satterthwaite_test,
 )
 
@@ -101,6 +106,88 @@ class WelchTests(unittest.TestCase):
         self.assertLess(
             abs(result.expanded_welch_p_value - result.normal_p_value),
             1e-5,
+        )
+
+    def test_edgeworth_formula_recovers_studentized_mean_correction(self) -> None:
+        statistic = np.array([-1.5, 0.0, 2.0])
+        skewness = np.full(3, 0.2)
+        _, adjustment = _edgeworth_cdf(
+            statistic,
+            norm.cdf(statistic),
+            skewness,
+            skewness,
+        )
+        expected = skewness * (1.0 + 2.0 * statistic**2) / 6.0
+        np.testing.assert_allclose(adjustment, expected)
+
+    def test_joint_moments_match_numerical_variance_derivative(self) -> None:
+        probability = np.array(
+            [
+                [0.28, 0.07, 0.05],
+                [0.06, 0.31, 0.08],
+                [0.04, 0.03, 0.08],
+            ]
+        )
+        variance = np.asarray(influence_variance(probability))
+        _, influence_variance_value, _, cross_moment = (
+            _joint_influence_moments(probability, variance)
+        )
+        row = probability.sum(axis=1, keepdims=True)
+        column = probability.sum(axis=0, keepdims=True)
+        score = np.log(probability) - np.log(row) - np.log(column)
+        centered_score = score - np.sum(probability * score)
+        epsilon = 1e-6
+        derivative = np.empty_like(probability)
+        for i, j in np.ndindex(probability.shape):
+            point_mass = np.zeros_like(probability)
+            point_mass[i, j] = 1.0
+            plus = (1.0 - epsilon) * probability + epsilon * point_mass
+            minus = (1.0 + epsilon) * probability - epsilon * point_mass
+            derivative[i, j] = (
+                float(influence_variance(plus))
+                - float(influence_variance(minus))
+            ) / (2.0 * epsilon)
+        derivative -= np.sum(probability * derivative)
+        expected_cross_moment = np.sum(
+            probability * centered_score * derivative
+        )
+        expected_influence_variance = np.sum(probability * derivative**2)
+        self.assertAlmostEqual(
+            float(cross_moment),
+            float(expected_cross_moment),
+            places=8,
+        )
+        self.assertAlmostEqual(
+            float(influence_variance_value),
+            float(expected_influence_variance),
+            places=8,
+        )
+
+    def test_joint_influence_is_swap_and_relabelling_invariant(self) -> None:
+        p = np.array([[38, 8, 4], [7, 25, 8], [4, 9, 17]])
+        q = np.array([[55, 4, 6], [10, 37, 13], [6, 16, 33]])
+        baseline = joint_influence_pvalues(p, q)
+        swapped = joint_influence_pvalues(q, p)
+        relabelled = joint_influence_pvalues(
+            p[np.ix_([2, 0, 1], [1, 2, 0])],
+            q[np.ix_([2, 0, 1], [1, 2, 0])],
+        )
+        for name in (
+            "edgeworth_normal_p_value",
+            "joint_influence_welch_p_value",
+        ):
+            self.assertAlmostEqual(float(baseline[name]), float(swapped[name]))
+            self.assertAlmostEqual(
+                float(baseline[name]),
+                float(relabelled[name]),
+            )
+        self.assertAlmostEqual(
+            float(baseline["standardized_third_cumulant"]),
+            -float(swapped["standardized_third_cumulant"]),
+        )
+        self.assertAlmostEqual(
+            float(baseline["studentization_covariance"]),
+            -float(swapped["studentization_covariance"]),
         )
 
     def test_vectorized_batch_matches_scalar_results(self) -> None:

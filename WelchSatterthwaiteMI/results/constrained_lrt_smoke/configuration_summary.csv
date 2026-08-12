@@ -1,0 +1,65 @@
+configuration_id,rows,columns,condition,condition_label,n_p,n_q,method,method_label,population_pairs,mean_valid_rate,mean_fpr_10,configuration_mae_10,population_sd_fpr_10,mean_fpr_05,configuration_mae_05,population_sd_fpr_05,mean_fpr_01,configuration_mae_01,population_sd_fpr_01
+2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,normal_wald,Normal Wald,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,simple_welch,Simple Welch,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,expanded_welch,Expanded Welch,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_balanced_control,2,2,balanced_control,Balanced control,100,100,constrained_lrt,Constrained LRT,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.0,0.0,0.025,0.025,0.03535533905932738
+2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,normal_wald,Normal Wald,2,1.0,0.05,0.05,0.0,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,simple_welch,Simple Welch,2,1.0,0.05,0.05,0.0,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,expanded_welch,Expanded Welch,2,1.0,0.05,0.05,0.0,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_moderate_sparse,2,2,moderate_sparse,Moderate sparsity,50,50,constrained_lrt,Constrained LRT,2,1.0,0.05,0.05,0.0,0.05,0.0,0.0,0.0,0.01,0.0
+2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,normal_wald,Normal Wald,2,1.0,0.025,0.07500000000000001,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,simple_welch,Simple Welch,2,1.0,0.025,0.07500000000000001,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,expanded_welch,Expanded Welch,2,0.95,0.02631578947368421,0.0736842105263158,0.03721614637823934,0.0,0.05,0.0,0.0,0.01,0.0
+2x2_ultra_sparse,2,2,ultra_sparse,Ultra-sparsity,50,50,constrained_lrt,Constrained LRT,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.0,0.0,0.025,0.025,0.03535533905932738
+2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,normal_wald,Normal Wald,2,1.0,0.175,0.125,0.17677669529663687,0.175,0.125,0.17677669529663687,0.1,0.09,0.07071067811865475
+2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,simple_welch,Simple Welch,2,1.0,0.175,0.125,0.17677669529663687,0.175,0.125,0.17677669529663687,0.1,0.09,0.07071067811865475
+2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,expanded_welch,Expanded Welch,2,1.0,0.15,0.1,0.1414213562373095,0.15,0.1,0.1414213562373095,0.1,0.09,0.07071067811865475
+2x2_ultra_imbalanced,2,2,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,constrained_lrt,Constrained LRT,2,1.0,0.175,0.075,0.10606601717798213,0.15,0.1,0.1414213562373095,0.075,0.075,0.10606601717798213
+3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,normal_wald,Normal Wald,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,simple_welch,Simple Welch,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,expanded_welch,Expanded Welch,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+3x3_balanced_control,3,3,balanced_control,Balanced control,135,135,constrained_lrt,Constrained LRT,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.025,0.025,0.03535533905932738,0.0,0.01,0.0
+3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,normal_wald,Normal Wald,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.1,0.05,0.0,0.0,0.01,0.0
+3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,simple_welch,Simple Welch,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.1,0.05,0.0,0.0,0.01,0.0
+3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,expanded_welch,Expanded Welch,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.07500000000000001,0.025,0.03535533905932738,0.0,0.01,0.0
+3x3_moderate_sparse,3,3,moderate_sparse,Moderate sparsity,72,72,constrained_lrt,Constrained LRT,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.1,0.05,0.0,0.0,0.01,0.0
+3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,normal_wald,Normal Wald,2,1.0,0.175,0.075,0.03535533905932738,0.07500000000000001,0.025,0.03535533905932738,0.05,0.05,0.07071067811865477
+3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,simple_welch,Simple Welch,2,1.0,0.175,0.075,0.03535533905932738,0.07500000000000001,0.025,0.03535533905932738,0.05,0.05,0.07071067811865477
+3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,expanded_welch,Expanded Welch,2,0.925,0.1338235294117647,0.0338235294117647,0.02287698409721183,0.054411764705882354,0.004411764705882351,0.00623917748105777,0.029411764705882353,0.029411764705882353,0.04159451654038515
+3x3_ultra_sparse,3,3,ultra_sparse,Ultra-sparsity,50,50,constrained_lrt,Constrained LRT,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.07500000000000001,0.025,0.03535533905932738,0.025,0.025,0.03535533905932738
+3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,normal_wald,Normal Wald,2,1.0,0.15,0.04999999999999999,0.0,0.125,0.075,0.03535533905932737,0.05,0.05,0.07071067811865477
+3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,simple_welch,Simple Welch,2,1.0,0.15,0.04999999999999999,0.0,0.125,0.075,0.03535533905932737,0.05,0.05,0.07071067811865477
+3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,expanded_welch,Expanded Welch,2,1.0,0.125,0.024999999999999994,0.03535533905932737,0.1,0.05,0.0,0.05,0.05,0.07071067811865477
+3x3_ultra_imbalanced,3,3,ultra_imbalanced,Ultra-sparsity with imbalance,50,250,constrained_lrt,Constrained LRT,2,1.0,0.15000000000000002,0.05,0.07071067811865477,0.1,0.049999999999999996,0.07071067811865475,0.05,0.05,0.07071067811865477
+5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,normal_wald,Normal Wald,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.05,0.0,0.0,0.025,0.025,0.03535533905932738
+5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,simple_welch,Simple Welch,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.05,0.0,0.0,0.025,0.025,0.03535533905932738
+5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,expanded_welch,Expanded Welch,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.05,0.0,0.0,0.0,0.01,0.0
+5x5_balanced_control,5,5,balanced_control,Balanced control,375,375,constrained_lrt,Constrained LRT,2,1.0,0.07500000000000001,0.025,0.03535533905932738,0.05,0.0,0.0,0.025,0.025,0.03535533905932738
+5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,normal_wald,Normal Wald,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.05,0.07071067811865477,0.025,0.025,0.03535533905932738
+5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,simple_welch,Simple Welch,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.05,0.07071067811865477,0.025,0.025,0.03535533905932738
+5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,expanded_welch,Expanded Welch,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.05,0.07071067811865477,0.025,0.025,0.03535533905932738
+5x5_moderate_sparse,5,5,moderate_sparse,Moderate sparsity,200,200,constrained_lrt,Constrained LRT,2,1.0,0.1,0.049999999999999996,0.07071067811865475,0.05,0.05,0.07071067811865477,0.025,0.025,0.03535533905932738
+5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,normal_wald,Normal Wald,2,1.0,0.225,0.125,0.03535533905932737,0.125,0.075,0.03535533905932737,0.05,0.04,0.0
+5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,simple_welch,Simple Welch,2,1.0,0.225,0.125,0.03535533905932737,0.125,0.075,0.03535533905932737,0.05,0.04,0.0
+5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,expanded_welch,Expanded Welch,2,0.975,0.17894736842105263,0.07894736842105263,0.02977291710259149,0.07763157894736841,0.027631578947368417,0.039076953697151307,0.0,0.01,0.0
+5x5_ultra_sparse,5,5,ultra_sparse,Ultra-sparsity,75,75,constrained_lrt,Constrained LRT,2,1.0,0.2,0.1,0.0,0.125,0.075,0.03535533905932737,0.025,0.025,0.03535533905932738
+5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,normal_wald,Normal Wald,2,1.0,0.275,0.17500000000000002,0.1767766952966369,0.175,0.125,0.17677669529663687,0.05,0.05,0.07071067811865477
+5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,simple_welch,Simple Welch,2,1.0,0.275,0.17500000000000002,0.1767766952966369,0.15,0.1,0.1414213562373095,0.05,0.05,0.07071067811865477
+5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,expanded_welch,Expanded Welch,2,1.0,0.275,0.17500000000000002,0.1767766952966369,0.075,0.075,0.10606601717798213,0.025,0.025,0.03535533905932738
+5x5_ultra_imbalanced,5,5,ultra_imbalanced,Ultra-sparsity with imbalance,75,375,constrained_lrt,Constrained LRT,2,1.0,0.275,0.175,0.03535533905932737,0.15000000000000002,0.1,0.07071067811865477,0.07500000000000001,0.065,0.03535533905932738
+8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,normal_wald,Normal Wald,2,1.0,0.075,0.075,0.10606601717798213,0.075,0.075,0.10606601717798213,0.025,0.025,0.03535533905932738
+8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,simple_welch,Simple Welch,2,1.0,0.075,0.075,0.10606601717798213,0.075,0.075,0.10606601717798213,0.025,0.025,0.03535533905932738
+8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,expanded_welch,Expanded Welch,2,1.0,0.075,0.075,0.10606601717798213,0.075,0.075,0.10606601717798213,0.025,0.025,0.03535533905932738
+8x8_balanced_control,8,8,balanced_control,Balanced control,960,960,constrained_lrt,Constrained LRT,2,1.0,0.075,0.075,0.10606601717798213,0.075,0.075,0.10606601717798213,0.025,0.025,0.03535533905932738
+8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,normal_wald,Normal Wald,2,1.0,0.175,0.075,0.03535533905932738,0.125,0.075,0.03535533905932737,0.025,0.025,0.03535533905932738
+8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,simple_welch,Simple Welch,2,1.0,0.175,0.075,0.03535533905932738,0.125,0.075,0.03535533905932737,0.025,0.025,0.03535533905932738
+8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,expanded_welch,Expanded Welch,2,1.0,0.175,0.075,0.03535533905932738,0.125,0.075,0.03535533905932737,0.025,0.025,0.03535533905932738
+8x8_moderate_sparse,8,8,moderate_sparse,Moderate sparsity,512,512,constrained_lrt,Constrained LRT,2,1.0,0.175,0.075,0.03535533905932738,0.125,0.075,0.03535533905932737,0.025,0.025,0.03535533905932738
+8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,normal_wald,Normal Wald,2,1.0,0.1,0.0,0.0,0.07500000000000001,0.025,0.03535533905932738,0.0,0.01,0.0
+8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,simple_welch,Simple Welch,2,1.0,0.1,0.0,0.0,0.07500000000000001,0.025,0.03535533905932738,0.0,0.01,0.0
+8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,expanded_welch,Expanded Welch,2,1.0,0.1,0.0,0.0,0.07500000000000001,0.025,0.03535533905932738,0.0,0.01,0.0
+8x8_ultra_sparse,8,8,ultra_sparse,Ultra-sparsity,192,192,constrained_lrt,Constrained LRT,2,1.0,0.1,0.0,0.0,0.07500000000000001,0.025,0.03535533905932738,0.0,0.01,0.0
+8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,normal_wald,Normal Wald,2,1.0,0.30000000000000004,0.2,0.14142135623730953,0.22499999999999998,0.175,0.10606601717798213,0.05,0.05,0.07071067811865477
+8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,simple_welch,Simple Welch,2,1.0,0.275,0.175,0.10606601717798211,0.22499999999999998,0.175,0.10606601717798213,0.05,0.05,0.07071067811865477
+8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,expanded_welch,Expanded Welch,2,1.0,0.275,0.175,0.10606601717798211,0.22499999999999998,0.175,0.10606601717798213,0.025,0.025,0.03535533905932738
+8x8_ultra_imbalanced,8,8,ultra_imbalanced,Ultra-sparsity with imbalance,192,960,constrained_lrt,Constrained LRT,2,1.0,0.175,0.075,0.03535533905932738,0.1,0.049999999999999996,0.07071067811865475,0.025,0.025,0.03535533905932738

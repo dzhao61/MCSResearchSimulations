@@ -1,0 +1,22 @@
+{
+  "scenario_seed": 2026080501,
+  "simulation_seed": 2026080502,
+  "configurations": 16,
+  "population_replicates": 10,
+  "scenarios": 160,
+  "null_replicates_per_scenario": 5000,
+  "total_table_pairs": 800000,
+  "batch_size": 1000,
+  "methods": [
+    "normal_wald",
+    "simple_welch",
+    "expanded_welch",
+    "edgeworth_normal",
+    "joint_influence_welch"
+  ],
+  "elapsed_seconds": 6.452374666929245,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "pandas": "3.0.3"
+}

@@ -1,0 +1,2021 @@
+condition,condition_label,method,method_label,nominal_alpha,actual_rejection_rate
+balanced_control,Balanced control,normal_wald,Normal Wald,0.0,0.0
+balanced_control,Balanced control,normal_wald,Normal Wald,0.001,0.0008333333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.002,0.0020833333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.003,0.0033333333333333335
+balanced_control,Balanced control,normal_wald,Normal Wald,0.004,0.0037500000000000003
+balanced_control,Balanced control,normal_wald,Normal Wald,0.005,0.004166666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.006,0.005416666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.007,0.006666666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.008,0.007083333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.009000000000000001,0.007916666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.01,0.008333333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.011,0.00875
+balanced_control,Balanced control,normal_wald,Normal Wald,0.012,0.009166666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.013000000000000001,0.009583333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.014,0.010833333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.015,0.01125
+balanced_control,Balanced control,normal_wald,Normal Wald,0.016,0.012083333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.017,0.01375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.018000000000000002,0.014583333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.019,0.015
+balanced_control,Balanced control,normal_wald,Normal Wald,0.02,0.015416666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.021,0.01583333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.022,0.016666666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.023,0.017083333333333332
+balanced_control,Balanced control,normal_wald,Normal Wald,0.024,0.017916666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.025,0.017916666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.026000000000000002,0.019166666666666665
+balanced_control,Balanced control,normal_wald,Normal Wald,0.027,0.021666666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.028,0.022083333333333337
+balanced_control,Balanced control,normal_wald,Normal Wald,0.029,0.022083333333333337
+balanced_control,Balanced control,normal_wald,Normal Wald,0.03,0.023333333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.031,0.024583333333333336
+balanced_control,Balanced control,normal_wald,Normal Wald,0.032,0.025833333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.033,0.02625
+balanced_control,Balanced control,normal_wald,Normal Wald,0.034,0.02708333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.035,0.027916666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.036000000000000004,0.028749999999999998
+balanced_control,Balanced control,normal_wald,Normal Wald,0.037,0.028749999999999998
+balanced_control,Balanced control,normal_wald,Normal Wald,0.038,0.030000000000000002
+balanced_control,Balanced control,normal_wald,Normal Wald,0.039,0.03166666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.04,0.03291666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.041,0.034583333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.042,0.035
+balanced_control,Balanced control,normal_wald,Normal Wald,0.043000000000000003,0.035
+balanced_control,Balanced control,normal_wald,Normal Wald,0.044,0.03541666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.045,0.03541666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.046,0.037083333333333336
+balanced_control,Balanced control,normal_wald,Normal Wald,0.047,0.03791666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.048,0.04
+balanced_control,Balanced control,normal_wald,Normal Wald,0.049,0.04083333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.05,0.04125
+balanced_control,Balanced control,normal_wald,Normal Wald,0.051000000000000004,0.042916666666666665
+balanced_control,Balanced control,normal_wald,Normal Wald,0.052000000000000005,0.04375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.053,0.04375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.054,0.04416666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.055,0.04499999999999999
+balanced_control,Balanced control,normal_wald,Normal Wald,0.056,0.04583333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.057,0.04833333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.058,0.049999999999999996
+balanced_control,Balanced control,normal_wald,Normal Wald,0.059000000000000004,0.050416666666666665
+balanced_control,Balanced control,normal_wald,Normal Wald,0.06,0.05125
+balanced_control,Balanced control,normal_wald,Normal Wald,0.061,0.05208333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.062,0.0525
+balanced_control,Balanced control,normal_wald,Normal Wald,0.063,0.05375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.064,0.05458333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.065,0.05458333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.066,0.055
+balanced_control,Balanced control,normal_wald,Normal Wald,0.067,0.057499999999999996
+balanced_control,Balanced control,normal_wald,Normal Wald,0.068,0.058333333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.069,0.058333333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.07,0.058333333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.07100000000000001,0.05916666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.07200000000000001,0.060416666666666674
+balanced_control,Balanced control,normal_wald,Normal Wald,0.073,0.060833333333333336
+balanced_control,Balanced control,normal_wald,Normal Wald,0.074,0.06291666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.075,0.06375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.076,0.06458333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.077,0.06541666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.078,0.06583333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.079,0.06791666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.08,0.07041666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.081,0.07166666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.082,0.07375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.083,0.07458333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.084,0.07583333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.085,0.07708333333333332
+balanced_control,Balanced control,normal_wald,Normal Wald,0.08600000000000001,0.0775
+balanced_control,Balanced control,normal_wald,Normal Wald,0.08700000000000001,0.07916666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.088,0.08000000000000002
+balanced_control,Balanced control,normal_wald,Normal Wald,0.089,0.08208333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.09,0.08291666666666668
+balanced_control,Balanced control,normal_wald,Normal Wald,0.091,0.08458333333333333
+balanced_control,Balanced control,normal_wald,Normal Wald,0.092,0.0875
+balanced_control,Balanced control,normal_wald,Normal Wald,0.093,0.08916666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.094,0.09083333333333334
+balanced_control,Balanced control,normal_wald,Normal Wald,0.095,0.09166666666666667
+balanced_control,Balanced control,normal_wald,Normal Wald,0.096,0.09375
+balanced_control,Balanced control,normal_wald,Normal Wald,0.097,0.09416666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.098,0.095
+balanced_control,Balanced control,normal_wald,Normal Wald,0.099,0.09541666666666666
+balanced_control,Balanced control,normal_wald,Normal Wald,0.1,0.09625
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.0,0.0
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.001,0.0004166666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.002,0.0004166666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.003,0.00125
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.004,0.0020833333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.005,0.0020833333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.006,0.0020833333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.007,0.002916666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.008,0.0037500000000000003
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.009000000000000001,0.004166666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.01,0.005833333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.011,0.00625
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.012,0.007500000000000001
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.013000000000000001,0.008333333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.014,0.008333333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.015,0.009999999999999998
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.016,0.010416666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.017,0.010833333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.018000000000000002,0.01125
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.019,0.012083333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.02,0.012083333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.021,0.013333333333333332
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.022,0.01375
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.023,0.01375
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.024,0.014166666666666668
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.025,0.014583333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.026000000000000002,0.015833333333333335
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.027,0.016666666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.028,0.016666666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.029,0.017083333333333332
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.03,0.017916666666666664
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.031,0.017916666666666664
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.032,0.01875
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.033,0.01875
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.034,0.019166666666666665
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.035,0.019999999999999997
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.036000000000000004,0.020416666666666663
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.037,0.021666666666666664
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.038,0.023333333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.039,0.02375
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.04,0.02416666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.041,0.024583333333333336
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.042,0.025416666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.043000000000000003,0.025416666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.044,0.026250000000000002
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.045,0.02666666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.046,0.027083333333333338
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.047,0.02791666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.048,0.03041666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.049,0.03125
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.05,0.03208333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.051000000000000004,0.034166666666666665
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.052000000000000005,0.03583333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.053,0.03625
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.054,0.03666666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.055,0.03666666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.056,0.0375
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.057,0.03833333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.058,0.03916666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.059000000000000004,0.03916666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.06,0.04041666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.061,0.042083333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.062,0.04291666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.063,0.045000000000000005
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.064,0.04583333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.065,0.04583333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.066,0.046666666666666676
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.067,0.04791666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.068,0.04875
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.069,0.05
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.07,0.052500000000000005
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.07100000000000001,0.05458333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.07200000000000001,0.055
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.073,0.05583333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.074,0.057083333333333326
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.075,0.057916666666666665
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.076,0.05875
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.077,0.06041666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.078,0.06125
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.079,0.0625
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.08,0.0625
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.081,0.06333333333333332
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.082,0.06374999999999999
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.083,0.06416666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.084,0.06541666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.085,0.06624999999999999
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.08600000000000001,0.06624999999999999
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.08700000000000001,0.06749999999999999
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.088,0.06791666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.089,0.06958333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.09,0.07041666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.091,0.07041666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.092,0.07166666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.093,0.07291666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.094,0.07416666666666667
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.095,0.07458333333333333
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.096,0.07583333333333334
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.097,0.07666666666666666
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.098,0.0775
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.099,0.07833333333333332
+moderate_sparse,Moderate sparsity,normal_wald,Normal Wald,0.1,0.07875
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.0,0.0
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.001,0.002084726867335563
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.002,0.0037527870680044598
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.003,0.004586120401337793
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.004,0.0075055741360089195
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.005,0.009172240802675584
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.006,0.010006967670011146
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.007,0.012091694537346709
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.008,0.015011148272017836
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.009000000000000001,0.016680602006688965
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.01,0.018348662207357862
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.011,0.018765328874024528
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.012,0.021266722408026757
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.013000000000000001,0.02293478260869565
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.014,0.024186176142697878
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.015,0.02627090301003344
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.016,0.027520903010033446
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.017,0.02835423634336678
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.018000000000000002,0.02960562987736901
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.019,0.0312736900780379
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.02,0.031690356744704565
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.021,0.03377508361204013
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.022,0.03419314381270903
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.023,0.035443143812709035
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.024,0.035443143812709035
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.025,0.0358598104793757
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.026000000000000002,0.03711120401337793
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.027,0.037527870680044595
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.028,0.03794453734671126
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.029,0.03919453734671125
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.03,0.04002787068004459
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.031,0.04211259754738016
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.032,0.043363991081382385
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.033,0.044197324414715716
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.034,0.045032051282051275
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.035,0.04711677814938685
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.036000000000000004,0.04795011148272017
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.037,0.050036231884057966
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.038,0.05295707915273132
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.039,0.053790412486064657
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.04,0.05504041248606465
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.041,0.05587374581939799
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.042,0.05587374581939799
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.043000000000000003,0.058793199554069114
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.044,0.059209866220735784
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.045,0.06171404682274247
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.046,0.0625473801560758
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.047,0.06338210702341138
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.048,0.06463210702341138
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.049,0.06713210702341137
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.05,0.06838210702341137
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.051000000000000004,0.06880016722408026
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.052000000000000005,0.0700515607580825
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.053,0.0700515607580825
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.054,0.07171962095875141
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.055,0.07338628762541806
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.056,0.07338628762541806
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.057,0.07463628762541806
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.058,0.07630434782608694
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.059000000000000004,0.0788057413600892
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.06,0.07922240802675586
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.061,0.08047519509476031
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.062,0.08130992196209587
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.063,0.08214325529542921
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.064,0.08506270903010034
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.065,0.08672937569676702
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.066,0.08756270903010034
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.067,0.08964743589743589
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.068,0.09131410256410256
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.069,0.0921474358974359
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.07,0.09298216276477146
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.07100000000000001,0.09464882943143813
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.07200000000000001,0.09548216276477148
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.073,0.09715022296544037
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.074,0.09840022296544035
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.075,0.0992335562987737
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.076,0.10006828316610925
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.077,0.10131828316610925
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.078,0.10215161649944257
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.079,0.10465440356744704
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.08,0.10590440356744704
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.081,0.10715440356744704
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.082,0.10965440356744705
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.083,0.11048773690078037
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.084,0.11132107023411371
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.085,0.11215440356744705
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.08600000000000001,0.11340440356744703
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.08700000000000001,0.1142391304347826
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.088,0.11590579710144927
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.089,0.11590579710144927
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.09,0.11757385730211817
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.091,0.11924191750278708
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.092,0.12007664437012265
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.093,0.12090997770345598
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.094,0.12340997770345596
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.095,0.12466137123745819
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.096,0.12507943143812708
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.097,0.12674609810479376
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.098,0.12674609810479376
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.099,0.12757943143812708
+ultra_sparse,Ultra-sparsity,normal_wald,Normal Wald,0.1,0.1284127647714604
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.0,0.0
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.001,0.050833333333333335
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.002,0.058333333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.003,0.06333333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.004,0.07125000000000001
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.005,0.07541666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.006,0.08
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.007,0.08249999999999999
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.008,0.08666666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.009000000000000001,0.09125
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.01,0.09625
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.011,0.09958333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.012,0.10166666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.013000000000000001,0.1025
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.014,0.10458333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.015,0.1075
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.016,0.11041666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.017,0.11416666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.018000000000000002,0.11624999999999999
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.019,0.11833333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.02,0.11875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.021,0.12208333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.022,0.12458333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.023,0.12666666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.024,0.12833333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.025,0.12875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.026000000000000002,0.13041666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.027,0.13208333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.028,0.13541666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.029,0.1375
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.03,0.14041666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.031,0.1416666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.032,0.14375
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.033,0.145
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.034,0.14625000000000002
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.035,0.14875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.036000000000000004,0.15083333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.037,0.15208333333333335
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.038,0.15250000000000002
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.039,0.15375
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.04,0.15583333333333335
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.041,0.15791666666666665
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.042,0.15875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.043000000000000003,0.15958333333333335
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.044,0.16041666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.045,0.16291666666666665
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.046,0.16541666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.047,0.16708333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.048,0.16875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.049,0.17
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.05,0.17083333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.051000000000000004,0.17125
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.052000000000000005,0.1720833333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.053,0.17416666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.054,0.17500000000000002
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.055,0.17625
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.056,0.17625
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.057,0.17666666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.058,0.17791666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.059000000000000004,0.17875
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.06,0.18166666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.061,0.18333333333333335
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.062,0.18416666666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.063,0.18625000000000003
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.064,0.18750000000000003
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.065,0.18791666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.066,0.19083333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.067,0.1925
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.068,0.19416666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.069,0.19541666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.07,0.19625
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.07100000000000001,0.19708333333333336
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.07200000000000001,0.1975
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.073,0.19874999999999998
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.074,0.20124999999999998
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.075,0.20166666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.076,0.20291666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.077,0.20333333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.078,0.205
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.079,0.20583333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.08,0.20833333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.081,0.20958333333333334
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.082,0.2104166666666667
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.083,0.21375
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.084,0.21583333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.085,0.21666666666666665
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.08600000000000001,0.21833333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.08700000000000001,0.21833333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.088,0.21833333333333332
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.089,0.22041666666666668
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.09,0.22125
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.091,0.2225
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.092,0.22375
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.093,0.22583333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.094,0.22708333333333336
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.095,0.22833333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.096,0.22958333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.097,0.23041666666666666
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.098,0.23083333333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.099,0.2320833333333333
+ultra_imbalanced,Ultra-sparsity with imbalance,normal_wald,Normal Wald,0.1,0.23291666666666666
+balanced_control,Balanced control,simple_welch,Simple Welch,0.0,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.002,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.003,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.004,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.005,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.006,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.007,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.008,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.009000000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.01,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.011,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.012,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.013000000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.014,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.015,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.016,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.017,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.018000000000000002,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.019,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.02,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.021,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.022,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.023,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.024,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.025,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.026000000000000002,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.027,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.028,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.029,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.03,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.031,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.032,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.033,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.034,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.035,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.036000000000000004,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.037,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.038,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.039,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.04,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.041,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.042,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.043000000000000003,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.044,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.045,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.046,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.047,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.048,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.049,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.05,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.051000000000000004,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.052000000000000005,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.053,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.054,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.055,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.056,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.057,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.058,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.059000000000000004,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.06,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.061,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.062,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.063,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.064,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.065,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.066,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.067,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.068,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.069,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.07,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.07100000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.07200000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.073,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.074,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.075,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.076,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.077,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.078,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.079,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.08,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.081,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.082,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.083,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.084,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.085,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.08600000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.08700000000000001,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.088,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.089,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.09,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.091,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.092,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.093,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.094,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.095,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.096,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.097,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.098,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.099,
+balanced_control,Balanced control,simple_welch,Simple Welch,0.1,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.0,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.002,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.003,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.004,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.005,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.006,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.007,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.008,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.009000000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.01,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.011,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.012,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.013000000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.014,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.015,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.016,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.017,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.018000000000000002,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.019,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.02,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.021,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.022,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.023,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.024,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.025,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.026000000000000002,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.027,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.028,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.029,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.03,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.031,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.032,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.033,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.034,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.035,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.036000000000000004,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.037,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.038,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.039,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.04,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.041,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.042,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.043000000000000003,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.044,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.045,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.046,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.047,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.048,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.049,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.05,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.051000000000000004,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.052000000000000005,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.053,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.054,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.055,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.056,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.057,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.058,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.059000000000000004,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.06,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.061,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.062,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.063,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.064,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.065,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.066,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.067,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.068,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.069,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.07,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.07100000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.07200000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.073,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.074,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.075,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.076,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.077,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.078,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.079,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.08,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.081,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.082,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.083,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.084,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.085,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.08600000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.08700000000000001,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.088,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.089,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.09,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.091,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.092,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.093,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.094,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.095,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.096,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.097,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.098,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.099,
+moderate_sparse,Moderate sparsity,simple_welch,Simple Welch,0.1,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.0,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.002,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.003,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.004,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.005,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.006,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.007,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.008,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.009000000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.01,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.011,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.012,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.013000000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.014,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.015,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.016,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.017,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.018000000000000002,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.019,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.02,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.021,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.022,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.023,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.024,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.025,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.026000000000000002,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.027,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.028,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.029,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.03,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.031,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.032,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.033,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.034,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.035,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.036000000000000004,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.037,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.038,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.039,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.04,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.041,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.042,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.043000000000000003,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.044,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.045,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.046,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.047,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.048,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.049,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.05,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.051000000000000004,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.052000000000000005,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.053,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.054,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.055,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.056,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.057,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.058,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.059000000000000004,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.06,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.061,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.062,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.063,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.064,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.065,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.066,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.067,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.068,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.069,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.07,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.07100000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.07200000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.073,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.074,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.075,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.076,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.077,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.078,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.079,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.08,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.081,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.082,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.083,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.084,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.085,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.08600000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.08700000000000001,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.088,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.089,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.09,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.091,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.092,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.093,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.094,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.095,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.096,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.097,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.098,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.099,
+ultra_sparse,Ultra-sparsity,simple_welch,Simple Welch,0.1,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.0,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.002,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.003,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.004,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.005,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.006,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.007,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.008,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.009000000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.01,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.011,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.012,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.013000000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.014,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.015,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.016,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.017,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.018000000000000002,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.019,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.02,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.021,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.022,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.023,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.024,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.025,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.026000000000000002,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.027,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.028,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.029,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.03,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.031,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.032,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.033,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.034,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.035,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.036000000000000004,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.037,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.038,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.039,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.04,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.041,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.042,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.043000000000000003,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.044,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.045,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.046,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.047,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.048,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.049,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.05,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.051000000000000004,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.052000000000000005,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.053,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.054,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.055,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.056,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.057,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.058,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.059000000000000004,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.06,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.061,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.062,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.063,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.064,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.065,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.066,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.067,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.068,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.069,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.07,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.07100000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.07200000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.073,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.074,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.075,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.076,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.077,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.078,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.079,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.08,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.081,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.082,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.083,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.084,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.085,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.08600000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.08700000000000001,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.088,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.089,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.09,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.091,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.092,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.093,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.094,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.095,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.096,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.097,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.098,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.099,
+ultra_imbalanced,Ultra-sparsity with imbalance,simple_welch,Simple Welch,0.1,
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.0,0.0
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.001,0.0008333333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.002,0.0016666666666666668
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.003,0.0025
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.004,0.0033333333333333335
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.005,0.004166666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.006,0.004583333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.007,0.005833333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.008,0.006666666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.009000000000000001,0.006666666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.01,0.007083333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.011,0.007916666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.012,0.008333333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.013000000000000001,0.00875
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.014,0.009166666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.015,0.01
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.016,0.010416666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.017,0.010833333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.018000000000000002,0.012083333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.019,0.0125
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.02,0.012916666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.021,0.012916666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.022,0.014166666666666668
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.023,0.015
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.024,0.01625
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.025,0.01625
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.026000000000000002,0.01625
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.027,0.018333333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.028,0.01916666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.029,0.019583333333333338
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.03,0.02041666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.031,0.02125
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.032,0.02291666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.033,0.023333333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.034,0.02375
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.035,0.024583333333333332
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.036000000000000004,0.024999999999999998
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.037,0.025833333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.038,0.025833333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.039,0.027916666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.04,0.029166666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.041,0.03
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.042,0.03083333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.043000000000000003,0.03250000000000001
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.044,0.03291666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.045,0.03291666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.046,0.03375
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.047,0.035
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.048,0.03666666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.049,0.03875
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.05,0.03916666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.051000000000000004,0.04
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.052000000000000005,0.04
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.053,0.04083333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.054,0.041666666666666664
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.055,0.04208333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.056,0.04208333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.057,0.044583333333333336
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.058,0.04541666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.059000000000000004,0.04791666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.06,0.04875
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.061,0.049999999999999996
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.062,0.050416666666666665
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.063,0.050416666666666665
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.064,0.05125
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.065,0.05249999999999999
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.066,0.05333333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.067,0.05375
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.068,0.055
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.069,0.05583333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.07,0.05625
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.07100000000000001,0.05708333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.07200000000000001,0.0575
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.073,0.05833333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.074,0.059166666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.075,0.059166666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.076,0.06
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.077,0.06125
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.078,0.06166666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.079,0.06166666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.08,0.06333333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.081,0.06458333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.082,0.06583333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.083,0.06875
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.084,0.07
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.085,0.07125
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.08600000000000001,0.07291666666666666
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.08700000000000001,0.075
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.088,0.075
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.089,0.07583333333333334
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.09,0.07625
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.091,0.07833333333333335
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.092,0.08
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.093,0.08
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.094,0.08083333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.095,0.08541666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.096,0.08541666666666667
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.097,0.08625000000000001
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.098,0.08750000000000001
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.099,0.08958333333333333
+balanced_control,Balanced control,expanded_welch,Expanded Welch,0.1,0.09041666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.0,0.0
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.001,0.0004166666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.002,0.0004166666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.003,0.0008333333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.004,0.0008333333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.005,0.0016666666666666668
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.006,0.0020833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.007,0.0020833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.008,0.0025
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.009000000000000001,0.002916666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.01,0.002916666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.011,0.004166666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.012,0.005416666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.013000000000000001,0.005833333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.014,0.005833333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.015,0.006666666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.016,0.008333333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.017,0.008749999999999999
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.018000000000000002,0.009166666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.019,0.009583333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.02,0.01
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.021,0.010416666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.022,0.010833333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.023,0.01125
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.024,0.012083333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.025,0.012499999999999999
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.026000000000000002,0.013333333333333332
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.027,0.013749999999999998
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.028,0.014166666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.029,0.014583333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.03,0.014583333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.031,0.015416666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.032,0.01625
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.033,0.01625
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.034,0.017083333333333332
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.035,0.017083333333333332
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.036000000000000004,0.017499999999999998
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.037,0.017499999999999998
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.038,0.01833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.039,0.01833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.04,0.01833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.041,0.019583333333333335
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.042,0.019583333333333335
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.043000000000000003,0.020416666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.044,0.02125
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.045,0.022083333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.046,0.0225
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.047,0.023333333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.048,0.023333333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.049,0.02375
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.05,0.025416666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.051000000000000004,0.025833333333333337
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.052000000000000005,0.026250000000000002
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.053,0.0275
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.054,0.02875
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.055,0.030416666666666668
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.056,0.03166666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.057,0.03291666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.058,0.03375
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.059000000000000004,0.03458333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.06,0.036250000000000004
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.061,0.036250000000000004
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.062,0.03666666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.063,0.0375
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.064,0.03791666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.065,0.03875
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.066,0.04
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.067,0.04041666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.068,0.04125
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.069,0.042083333333333334
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.07,0.042916666666666665
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.07100000000000001,0.045416666666666675
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.07200000000000001,0.04666666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.073,0.0475
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.074,0.048333333333333325
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.075,0.049166666666666664
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.076,0.049999999999999996
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.077,0.0525
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.078,0.0525
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.079,0.05375
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.08,0.05416666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.081,0.05666666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.082,0.057499999999999996
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.083,0.05791666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.084,0.059583333333333335
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.085,0.059583333333333335
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.08600000000000001,0.060833333333333336
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.08700000000000001,0.06166666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.088,0.06291666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.089,0.06375
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.09,0.06416666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.091,0.06458333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.092,0.065
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.093,0.06541666666666666
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.094,0.06666666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.095,0.06708333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.096,0.06708333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.097,0.06749999999999999
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.098,0.06791666666666667
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.099,0.06833333333333333
+moderate_sparse,Moderate sparsity,expanded_welch,Expanded Welch,0.1,0.06958333333333333
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.0,0.0
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.001,0.0016780821917808221
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.002,0.002534246575342466
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.003,0.002962328767123288
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.004,0.0038070776255707765
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.005,0.00466324200913242
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.006,0.0063527397260273975
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.007,0.006780821917808219
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.008,0.009337899543378995
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.009000000000000001,0.009337899543378995
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.01,0.011455479452054792
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.011,0.013577268114939346
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.012,0.0157062635487293
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.013000000000000001,0.01655101240717679
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.014,0.016971887828052208
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.015,0.01822188782805221
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.016,0.021612298786956318
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.017,0.02204038097873714
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.018000000000000002,0.022873714312070473
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.019,0.02454038097873714
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.02,0.025389338591393383
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.021,0.02580600525806005
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.022,0.026662169641621696
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.023,0.027506918500069186
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.024,0.027506918500069186
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.025,0.028772542779392094
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.026000000000000002,0.03002675153360085
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.027,0.030882915917162496
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.028,0.030882915917162496
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.029,0.032137124671371246
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.03,0.03256520686315207
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.031,0.032993289054932894
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.032,0.033409955721599556
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.033,0.033409955721599556
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.034,0.03425470458004704
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.035,0.0355089133342558
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.036000000000000004,0.035936995526036616
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.037,0.037603662192703294
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.038,0.03928595313869286
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.039,0.04012349522623494
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.04,0.041396326276463266
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.041,0.042657741801577415
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.042,0.04307440846824409
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.043000000000000003,0.04476390618513906
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.044,0.04562007056870071
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.045,0.04604815276048152
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.046,0.048570983810709845
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.047,0.049825192564918595
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.048,0.050669941423366074
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.049,0.051935565702688986
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.05,0.054064561136478936
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.051000000000000004,0.05448543655735436
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.052000000000000005,0.0553187698906877
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.053,0.055746852082468525
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.054,0.05617493427424934
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.055,0.05744776532447765
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.056,0.058709180849591806
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.057,0.05997059637470596
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.058,0.06039147179558138
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.059000000000000004,0.061236220654028874
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.06,0.0616643028458097
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.061,0.06334238503759052
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.062,0.06460800931691342
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.063,0.066290300262903
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.064,0.06797259120889257
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.065,0.06923821548821549
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.066,0.07092771320511046
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.067,0.07092771320511046
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.068,0.07219333748443338
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.069,0.07430371062220377
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.07,0.07515266823486001
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.07100000000000001,0.07558075042664084
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.07200000000000001,0.07641408375997416
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.073,0.07811499700198331
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.074,0.07811499700198331
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.075,0.07981591024399244
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.076,0.0802325769106591
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.077,0.08107732576910659
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.078,0.08236157234444906
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.079,0.08406248558645818
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.08,0.08618427424934275
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.081,0.08660514967021815
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.082,0.0874613140537798
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.083,0.08872272957889396
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.084,0.08998835385821688
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.085,0.09040502052488353
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.08600000000000001,0.09251539366265393
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.08700000000000001,0.09418206032932062
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.088,0.09544768460864352
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.089,0.09711435127531018
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.09,0.09753101794197684
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.091,0.09836856002951892
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.092,0.09962997555463309
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.093,0.10004664222129975
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.094,0.10088418430884183
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.095,0.10171751764217518
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.096,0.10256226650062268
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.097,0.10466122411327891
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.098,0.10676560121765602
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.099,0.10845930768875975
+ultra_sparse,Ultra-sparsity,expanded_welch,Expanded Welch,0.1,0.10930405654720723
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.0,0.0
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.001,0.02269872337668948
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.002,0.030677432054550702
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.003,0.03487226151421067
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.004,0.03991169520830538
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.005,0.04116875735519803
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.006,0.043257721319162
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.007,0.04535231591375659
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.008,0.04870397265524384
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.009000000000000001,0.05162626995254114
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.01,0.0545527760040472
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.011,0.05705698475825595
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.012,0.05872365142492262
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.013000000000000001,0.06206682414309533
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.014,0.0654057881070593
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.015,0.0666557881070593
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.016,0.07083514755124926
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.017,0.07251728423338592
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.018000000000000002,0.07502570174180344
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.019,0.07711466570576739
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.02,0.07753696300306469
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.021,0.0796273584832907
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.022,0.08129965578058798
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.023,0.08339005126081396
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.024,0.0863109266816894
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.025,0.08798322397898668
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.026000000000000002,0.08839989064565336
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.027,0.09175012551071873
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.028,0.09342385432427805
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.029,0.09509052099094471
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.03,0.09592385432427805
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.031,0.09718091647117072
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.032,0.09843091647117072
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.033,0.10178114169639593
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.034,0.10344780836306261
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.035,0.10511447502972929
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.036000000000000004,0.10511447502972929
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.037,0.1076201056603599
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.038,0.10928677232702655
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.039,0.11137010566035989
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.04,0.11220343899369323
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.041,0.11387431441456866
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.042,0.11596327837853261
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.043000000000000003,0.11679661171186595
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.044,0.11804661171186595
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.045,0.11971327837853261
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.046,0.12138415379940803
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.047,0.12263415379940804
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.048,0.12430645109670532
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.049,0.124723117763372
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.05,0.1259872420571573
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.051000000000000004,0.12807620602112127
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.052000000000000005,0.1293332681680139
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.053,0.13099993483468061
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.054,0.13350699698157326
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.055,0.1364335030330793
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.056,0.13685016969974598
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.057,0.13769056517997197
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.058,0.139367071231478
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.059000000000000004,0.14103794665235342
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.06,0.14271167546591274
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.061,0.14313397276321005
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.062,0.14355063942987673
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.063,0.14396730609654337
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.064,0.1456480209022582
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.065,0.1468980209022582
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.066,0.1489940470131148
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.067,0.14982738034644816
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.068,0.14982738034644816
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.069,0.15274967764374545
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.07,0.15274967764374545
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.07100000000000001,0.15441634431041212
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.07200000000000001,0.15609285036191817
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.073,0.15775951702858484
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.074,0.15859848099254878
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.075,0.16069023183429962
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.076,0.1615277739218417
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.077,0.16319444058850838
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.078,0.1640277739218417
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.079,0.16486816940206772
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.08,0.1657057114896098
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.081,0.16778904482294313
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.082,0.16820992024381856
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.083,0.17031863913219844
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.084,0.17073530579886512
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.085,0.17282284788640723
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.08600000000000001,0.1736632433666332
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.08700000000000001,0.17449657669996654
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.088,0.17533974941813926
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.089,0.17659681156503193
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.09,0.17869426919215053
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.091,0.18161514461302597
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.092,0.18370973920762057
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.093,0.1845430725409539
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.094,0.1845430725409539
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.095,0.18622806261577446
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.096,0.18749495450766637
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.097,0.188750585138297
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.098,0.19085224187978425
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.099,0.1916912058437482
+ultra_imbalanced,Ultra-sparsity with imbalance,expanded_welch,Expanded Welch,0.1,0.1916912058437482
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.0,0.0
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.001,0.0029307246357725357
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.002,0.0029307246357725357
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.003,0.0037753288702072787
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.004,0.004612870957749367
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.005,0.005447597825084929
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.006,0.007965930873078994
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.007,0.008382597539745662
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.008,0.008382597539745662
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.009000000000000001,0.009646721833530972
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.01,0.01048711731375696
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.011,0.01048711731375696
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.012,0.010910846127316283
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.013000000000000001,0.012167908274208938
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.014,0.012584574940875604
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.015,0.013841637087768258
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.016,0.015094424155772718
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.017,0.016775215116224693
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.018000000000000002,0.016775215116224693
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.019,0.017615610596450684
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.02,0.01803367079711958
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.021,0.01845033746378625
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.022,0.018874066277345572
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.023,0.020132521958240456
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.024,0.02097291743846644
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.025,0.02181045952600853
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.026000000000000002,0.02349260584798536
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.027,0.02515927251465203
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.028,0.025575939181318695
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.029,0.02599260584798536
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.03,0.026409272514652027
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.031,0.027243999381987592
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.032,0.028077332715320924
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.033,0.028077332715320924
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.034,0.028914874802863012
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.035,0.029756663817091227
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.036000000000000004,0.03059705929731722
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.037,0.03227078811087654
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.038,0.03394591045843809
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.039,0.03394591045843809
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.04,0.03520151274664908
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.041,0.03645151274664908
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.042,0.037708574893541735
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.043000000000000003,0.03854897037376772
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.044,0.03897269918732704
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.045,0.03980742605466261
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.046,0.04148961054911682
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.047,0.04191333936267614
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.048,0.04233000602934281
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.049,0.043999459764013926
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.05,0.04483558016535172
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.051000000000000004,0.04525224683201838
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.052000000000000005,0.04608558016535171
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.053,0.04650224683201838
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.054,0.04817170056668951
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.055,0.0494301562475844
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.056,0.05195269804978722
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.057,0.05321396895088863
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.058,0.05447103109778128
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.059000000000000004,0.056153177419758116
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.06,0.058243572899984095
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.061,0.058660239566650764
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.062,0.05950769719376941
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.063,0.06076190594797816
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.064,0.06076190594797816
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.065,0.062033092388656126
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.066,0.062453967809531545
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.067,0.06287063447619821
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.068,0.06328730114286488
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.069,0.06412063447619822
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.07,0.06579290343107587
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.07100000000000001,0.06706123647906993
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.07200000000000001,0.06831829862596259
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.073,0.0691572342475069
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.074,0.0699976297277329
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.075,0.07166429639439956
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.076,0.07166429639439956
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.077,0.07291850514860831
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.078,0.07500462554994611
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.079,0.0783534385385896
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.08,0.07877431395946502
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.081,0.07960904082680058
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.082,0.08128551853588699
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.083,0.08212024540322256
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.084,0.08337730755011521
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.085,0.08463436969700787
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.08600000000000001,0.08505242989767677
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.08700000000000001,0.08589282537790276
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.088,0.08756655419146207
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.089,0.08841115842589682
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.09,0.0892515539061228
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.091,0.0913560736801341
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.092,0.09262019797391942
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.093,0.09430519768858016
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.094,0.09472186435524682
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.095,0.09598313525634823
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.096,0.09681646858968156
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.097,0.09723313525634822
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.098,0.09849019740324089
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.099,0.0989139262168002
+balanced_control,Balanced control,edgeworth_normal,Joint Edgeworth,0.1,0.09974725955013355
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.0,0.0
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.001,0.00042517006802721087
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.002,0.002100254243111386
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.003,0.003361554065053586
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.004,0.003361554065053586
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.005,0.00463574048493393
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.006,0.005473282572476017
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.007,0.006734582394418217
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.008,0.007576419129112095
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.009000000000000001,0.008422639060383572
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.01,0.009255972393716906
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.011,0.010512977568507316
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.012,0.01219936156553369
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.013000000000000001,0.013039700073657432
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.014,0.014293908827866186
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.015,0.014293908827866186
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.016,0.016397133933928075
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.017,0.016397133933928075
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.018000000000000002,0.017672732687435515
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.019,0.018510274774977603
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.02,0.01934360810831094
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.021,0.01934360810831094
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.022,0.01976448352918636
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.023,0.020597816862519693
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.024,0.021027370127124502
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.025,0.022297173350427246
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.026000000000000002,0.022722343418454458
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.027,0.02314180650570278
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.028,0.02397513983903611
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.029,0.0252421466417572
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.03,0.025658813308423865
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.031,0.026078276395672187
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.032,0.026078276395672187
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.033,0.026920113130366068
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.034,0.02733957621761439
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.035,0.02733957621761439
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.036000000000000004,0.02860087603955659
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.037,0.029455599372188612
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.038,0.029876474793064035
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.039,0.029876474793064035
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.04,0.030715400967560678
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.041,0.03154873430089401
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.042,0.032382067634227345
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.043000000000000003,0.0340872196523396
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.044,0.036599931807908895
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.045,0.03701659847457556
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.046,0.03744176854260277
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.047,0.03870877534532387
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.048,0.03955499527659534
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.049,0.04039533378471908
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.05,0.04206200045138574
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.051000000000000004,0.04206200045138574
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.052000000000000005,0.042916723784017764
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.053,0.043333390450684434
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.054,0.043750057117351096
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.055,0.045432406802537566
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.056,0.0462770399578131
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.057,0.04753124871202186
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.058,0.04795212413289728
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.059000000000000004,0.049209129307687685
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.06,0.05004667139522977
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.061,0.05131376674737668
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.062,0.05215981223627931
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.063,0.05426024092175955
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.064,0.055942416164577166
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.065,0.05719662491878592
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.066,0.05761608800603424
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.067,0.05970501418053088
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.068,0.06263439300276685
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.069,0.06473043849166947
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.07,0.06641120140086
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.07100000000000001,0.06641120140086
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.07200000000000001,0.06810346682103412
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.073,0.0693534668210341
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.074,0.06977863688906133
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.075,0.0706147666429763
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.076,0.07144809997630965
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.077,0.07229414546521228
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.078,0.07313027521912727
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.079,0.07397490837440279
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.08,0.07397490837440279
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.081,0.07397490837440279
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.082,0.0752249083744028
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.083,0.07607533705988301
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.084,0.07818444358909266
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.085,0.07818444358909266
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.08600000000000001,0.07943724000967431
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.08700000000000001,0.08027478209721639
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.088,0.0807043353618212
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.089,0.0807043353618212
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.09,0.0807043353618212
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.091,0.08113388862642601
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.092,0.08155055529309267
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.093,0.08239677522436416
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.094,0.08281765064523958
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.095,0.08365519273278166
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.096,0.08491807933071982
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.097,0.08660184134953337
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.098,0.08787314545588903
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.099,0.0895568189252768
+moderate_sparse,Moderate sparsity,edgeworth_normal,Joint Edgeworth,0.1,0.09080961534585844
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.0,0.0
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.001,0.0034332418230723313
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.002,0.004728145964460697
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.003,0.006467418712111297
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.004,0.00778476333931508
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.005,0.009510701963462063
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.006,0.010786331040815281
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.007,0.013388041930833601
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.008,0.016881722242750922
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.009000000000000001,0.018192911053939734
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.01,0.019472015862974118
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.011,0.021199755180233606
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.012,0.022487353652422673
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.013000000000000001,0.02461774602609383
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.014,0.027594562334295296
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.015,0.028016859631592592
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.016,0.030184983316229146
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.017,0.03363004023277029
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.018000000000000002,0.035806745094334305
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.019,0.03752857211788547
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.02,0.038822442566685496
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.021,0.040532979682152186
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.022,0.04270352872770124
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.023,0.04356739838633098
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.024,0.04528755037131347
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.025,0.04657794508843232
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.026000000000000002,0.04701808593350274
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.027,0.049596720468790996
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.028,0.050442746579647625
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.029,0.050442746579647625
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.03,0.050442746579647625
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.031,0.05214417733280251
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.032,0.05214417733280251
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.033,0.05258124026986545
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.034,0.05429137956165844
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.035,0.05600590091601032
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.036000000000000004,0.056442963853073264
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.037,0.056859630519739926
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.038,0.05858453545129856
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.039,0.06117729428037212
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.04,0.0629051497582276
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.041,0.0650169752014382
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.042,0.06761600600712273
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.043000000000000003,0.06976976187566733
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.044,0.07020682481273026
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.045,0.07106015659278618
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.046,0.07193736037491955
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.047,0.07278506152434483
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.048,0.0736591873984707
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.049,0.0749397237237671
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.05,0.07623359417256714
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.051000000000000004,0.07751835825905537
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.052000000000000005,0.07837208786278498
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.053,0.08138881902772449
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.054,0.08181254784128382
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.055,0.08480182058893443
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.056,0.08565658388525237
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.057,0.08608761836801099
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.058,0.08694134797174058
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.059000000000000004,0.08824650832862507
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.06,0.089514831736779
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.061,0.09081433281620964
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.062,0.09252422858569602
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.063,0.09382208327338122
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.064,0.09597802268769848
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.065,0.0972718931364985
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.066,0.09899113879060331
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.067,0.10110920756360167
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.068,0.10412450721227917
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.069,0.10456157014934211
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.07,0.10498386744663941
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.07100000000000001,0.10583759705036902
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.07200000000000001,0.10627773789543943
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.073,0.10671480083250237
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.074,0.10888690875602408
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.075,0.10888690875602408
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.076,0.1097406383597537
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.077,0.11016293565705101
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.078,0.11016293565705101
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.079,0.1123218256176651
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.08,0.1144572127530522
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.081,0.11575108320185226
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.082,0.11745854240931144
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.083,0.11745854240931144
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.084,0.11789560534637439
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.085,0.11789560534637439
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.08600000000000001,0.1191894757951744
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.08700000000000001,0.12045384361126638
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.088,0.12173693265918593
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.089,0.12257026599251927
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.09,0.12342399559624886
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.091,0.12556811991709732
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.092,0.12556811991709732
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.093,0.1264085153973233
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.094,0.12769160444524288
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.095,0.1281317452903133
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.096,0.12942816846173646
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.097,0.1298652313987994
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.098,0.13030229433586235
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.099,0.1320505460841141
+ultra_sparse,Ultra-sparsity,edgeworth_normal,Joint Edgeworth,0.1,0.13421251395273567
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.0,0.0
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.001,0.009203418655597833
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.002,0.012206103066405436
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.003,0.015631218279161606
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.004,0.01688828042605426
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.005,0.019021969937230876
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.006,0.022025025388812
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.007,0.02286686212350588
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.008,0.024576822821123175
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.009000000000000001,0.026742638245914514
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.01,0.030140821362577546
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.011,0.03187687001143758
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.012,0.03229353667810425
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.013000000000000001,0.03314574341445733
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.014,0.036940923408163
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.015,0.039456488956416194
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.016,0.04165438426564856
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.017,0.04377439419132702
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.018000000000000002,0.045459934261013434
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.019,0.04675114305222223
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.02,0.04934192838546433
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.021,0.051848990532356976
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.022,0.05355233379136877
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.023,0.055283405533077985
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.024,0.05656963741713596
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.025,0.0586670950442546
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.026000000000000002,0.059944471848634884
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.027,0.06209971711219058
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.028,0.06209971711219058
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.029,0.06251638377885724
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.03,0.06380759257006603
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.031,0.06551755326768334
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.032,0.06677605666904388
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.033,0.06851563181211363
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.034,0.06935746854680752
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.035,0.07019080188014085
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.036000000000000004,0.07189190749808046
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.037,0.07230857416474712
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.038,0.0727252408314138
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.039,0.07357558096746822
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.04,0.07612076096117389
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.041,0.07700114088851154
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.042,0.07915161856296607
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.043000000000000003,0.08086799742220206
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.044,0.08211799742220206
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.045,0.0829513307555354
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.046,0.08340920621341086
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.047,0.08382587288007753
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.048,0.08465920621341086
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.049,0.08592807961643059
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.05,0.08719695301945035
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.051000000000000004,0.09014805863738995
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.052000000000000005,0.09189116943314266
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.053,0.09314823158003531
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.054,0.0948493371979749
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.055,0.09527306601153424
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.056,0.0956897326782009
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.057,0.0990786160068991
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.058,0.09949528267356576
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.059000000000000004,0.09991194934023244
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.06,0.10117045274159298
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.061,0.10376267932930297
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.062,0.10509509691172055
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.063,0.10596963903626268
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.064,0.1089793119264493
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.065,0.10983151866280237
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.066,0.11154523192347336
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.067,0.11238562740369935
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.068,0.11324713392801726
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.069,0.1145323692658945
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.07,0.11540193448328581
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.07100000000000001,0.11666043788464636
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.07200000000000001,0.11883180053434884
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.073,0.12054673813911694
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.074,0.12183297002317492
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.075,0.12268186890476143
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.076,0.12397891549876577
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.077,0.1257077495994028
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.078,0.12657731481679413
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.079,0.12746036034269678
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.08,0.13083698770698074
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.081,0.131281827564632
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.082,0.1325765628500505
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.083,0.1338421283983037
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.084,0.13558623574023712
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.085,0.13737241276902407
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.08600000000000001,0.13906314838530448
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.08700000000000001,0.13906314838530448
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.088,0.1403272726790898
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.089,0.1420713800210232
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.09,0.14248804668768988
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.091,0.1429409452384145
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.092,0.1438105104558058
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.093,0.14468505258034794
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.094,0.14641512777587642
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.095,0.14767925206966173
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.096,0.1480959187363284
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.097,0.14851258540299506
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.098,0.14938921276727904
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.099,0.15111265377340768
+ultra_imbalanced,Ultra-sparsity with imbalance,edgeworth_normal,Joint Edgeworth,0.1,0.15195304925363368
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.0,0.0
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.001,0.0020861204013377928
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.002,0.0029194537346711263
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.003,0.003340329155546547
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.004,0.0046029554181728095
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.005,0.005437682285508372
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.006,0.007941891039717127
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.007,0.008780826661261443
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.008,0.010453095616139094
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.009000000000000001,0.010873971037014514
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.01,0.012125364571016746
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.011,0.012125364571016746
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.012,0.012546239991892166
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.013000000000000001,0.012546239991892166
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.014,0.012962906658558834
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.015,0.014633782079434252
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.016,0.015054657500309673
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.017,0.01630886625451843
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.018000000000000002,0.01630886625451843
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.019,0.017146408342060514
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.02,0.01797974167539385
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.021,0.018396408342060515
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.022,0.018817283762935937
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.023,0.019233950429602607
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.024,0.01965061709626927
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.025,0.020904825850478027
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.026000000000000002,0.021321492517144693
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.027,0.02299236793802011
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.028,0.02424657669222887
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.029,0.025913243358895534
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.03,0.026754994200646375
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.031,0.027589721067981937
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.032,0.027589721067981937
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.033,0.028845323356192918
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.034,0.030099532110401676
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.035,0.030934258977737238
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.036000000000000004,0.030934258977737238
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.037,0.03135092564440391
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.038,0.0326009256444039
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.039,0.0338509256444039
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.04,0.03426759231107057
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.041,0.035523194599281556
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.042,0.036777403353490314
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.043000000000000003,0.038031612107699064
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.044,0.039281612107699065
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.045,0.039281612107699065
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.046,0.039698278774365735
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.047,0.040114945441032404
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.048,0.04095248752857449
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.049,0.04179002961611658
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.05,0.04429563190432755
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.051000000000000004,0.04471650732520298
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.052000000000000005,0.04471650732520298
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.053,0.04596650732520297
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.054,0.04679984065853631
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.055,0.04721650732520298
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.056,0.04805404941274506
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.057,0.04930404941274507
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.058,0.05139159150028715
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.059000000000000004,0.05347913358782924
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.06,0.053895800254495904
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.061,0.055566675675371324
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.062,0.056404217762913406
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.063,0.05807788025179329
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.064,0.059754357960879696
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.065,0.059754357960879696
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.066,0.060171024627546366
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.067,0.06142381169555082
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.068,0.06226135378309291
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.069,0.06268222920396833
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.07,0.06351977129151043
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.07100000000000001,0.06560589169284822
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.07200000000000001,0.0664434337803903
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.073,0.06728097586793239
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.074,0.06811851795547448
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.075,0.06937272670968322
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.076,0.06979360213055864
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.077,0.07104360213055866
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.078,0.0731283289978942
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.079,0.07521444939923201
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.08,0.076464449399232
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.081,0.07814374232852493
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.082,0.0785604089951916
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.083,0.07939374232852493
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.084,0.08064795108273369
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.085,0.08148128441606702
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.08600000000000001,0.08231461774940037
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.08700000000000001,0.08314934461673593
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.088,0.08482019188540928
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.089,0.08649385437428916
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.09,0.08857718770762249
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.091,0.08899385437428915
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.092,0.09066893854937333
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.093,0.09150227188270667
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.094,0.09150227188270667
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.095,0.09192033208337556
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.096,0.09317454083758432
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.097,0.09484541625845974
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.098,0.09736225127529476
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.099,0.09862066878371226
+balanced_control,Balanced control,joint_influence_welch,Joint-Influence Welch,0.1,0.09903872898438115
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.0,0.0
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.001,0.0012527870680044593
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.002,0.001669453734671126
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.003,0.0020861204013377928
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.004,0.002925084365301757
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.005,0.0033417510319684236
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.006,0.0033417510319684236
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.007,0.005432108529934618
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.008,0.006265441863267951
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.009000000000000001,0.006683502063936847
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.01,0.007933502063936847
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.011,0.008766835397270181
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.012,0.010440526228569707
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.013000000000000001,0.011280883726535901
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.014,0.011697550393202567
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.015,0.013364217059869234
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.016,0.01503227726053813
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.017,0.01586700412787369
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.018000000000000002,0.016700337461207027
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.019,0.017533670794540362
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.02,0.017955968091837658
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.021,0.018372634758504324
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.022,0.02004493205580162
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.023,0.020879658923137184
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.024,0.021296325589803853
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.025,0.02171299225647052
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.026000000000000002,0.02171299225647052
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.027,0.02255195622043448
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.028,0.022970016421103377
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.029,0.02380334975443671
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.03,0.02505334975443671
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.031,0.025888076621772272
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.032,0.026304743288438938
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.033,0.026721409955105604
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.034,0.02713807662177227
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.035,0.028807530356443397
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.036000000000000004,0.028807530356443397
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.037,0.029225590557112293
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.038,0.03131734158908072
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.039,0.03131734158908072
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.04,0.03131734158908072
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.041,0.03131734158908072
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.042,0.031735401789749616
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.043000000000000003,0.03298540178974962
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.044,0.03340769908704691
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.045,0.03424103242038025
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.046,0.03632575928771581
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.047,0.03716048615505138
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.048,0.037993819488384706
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.049,0.038827152821718044
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.05,0.0396618796890536
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.051000000000000004,0.0400841769863509
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.052000000000000005,0.04133417698635089
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.053,0.04259120115098376
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.054,0.04300926135165266
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.055,0.04426489198228329
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.056,0.04468718927958058
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.057,0.045526153243544545
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.058,0.046359486576877884
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.059000000000000004,0.046776153243544547
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.06,0.04803178387417518
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.061,0.04844845054084185
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.062,0.05011511720750852
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.063,0.05094845054084185
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.064,0.05178457094217964
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.065,0.052201237608846304
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.066,0.0538735349061436
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.067,0.05595686823947694
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.068,0.056791595106812504
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.069,0.05929159510681249
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.07,0.05970826177347916
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.07100000000000001,0.06054159510681249
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.07200000000000001,0.061374928440145825
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.073,0.06346104884148361
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.074,0.06554577570881918
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.075,0.06679577570881919
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.076,0.06721244237548585
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.077,0.06721244237548585
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.078,0.06804577570881919
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.079,0.06929577570881919
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.08,0.06971383590948808
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.081,0.07054716924282142
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.082,0.07138050257615475
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.083,0.07263468317816145
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.084,0.07430274337883033
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.085,0.07555413691283255
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.08600000000000001,0.07680413691283257
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.08700000000000001,0.07764310087679654
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.088,0.07764310087679654
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.089,0.07847643421012988
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.09,0.07973206484076051
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.091,0.08014873150742717
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.092,0.0809820648407605
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.093,0.0814043621380578
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.094,0.08265999276868842
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.095,0.08349332610202176
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.096,0.08390999276868842
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.097,0.08390999276868842
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.098,0.08474332610202176
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.099,0.08515999276868844
+moderate_sparse,Moderate sparsity,joint_influence_welch,Joint-Influence Welch,0.1,0.08641562339931906
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.0,0.0
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.001,0.002096074895080682
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.002,0.005509690252350501
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.003,0.005509690252350501
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.004,0.006374783586641724
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.005,0.008084200332475203
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.006,0.008513753597080015
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.007,0.011952171810411959
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.008,0.012818746362856992
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.009000000000000001,0.014532934380575731
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.01,0.01666378906496114
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.011,0.01751703138578025
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.012,0.018823651594839483
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.013000000000000001,0.019656984928172815
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.014,0.02007365159483948
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.015,0.021796938470565384
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.016,0.022641619831643835
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.017,0.025167335675480906
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.018000000000000002,0.02645197042859484
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.019,0.029427594158210276
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.02,0.03154686809450819
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.021,0.03238159496184375
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.022,0.0344920950250556
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.023,0.03745029623769274
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.024,0.037866962904359404
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.025,0.039158585134481456
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.026000000000000002,0.04085241853102665
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.027,0.04213669533460438
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.028,0.04298890207095746
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.029,0.04340556873762413
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.03,0.04470021533652016
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.031,0.04470021533652016
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.032,0.045135755406206575
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.033,0.04726818357332452
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.034,0.04893485023999118
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.035,0.05021809145910287
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.036000000000000004,0.051064311390374345
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.037,0.05278107356275215
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.038,0.053197740229418825
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.039,0.05362436138982837
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.04,0.05362436138982837
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.041,0.0544909359422734
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.042,0.05576525825210825
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.043000000000000003,0.05789922498941921
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.044,0.05873395185675478
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.045,0.05998395185675478
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.046,0.06041057301716434
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.047,0.06167944642018409
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.048,0.062106067580593644
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.049,0.06295827431694671
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.05,0.0642460211229862
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.051000000000000004,0.06507935445631954
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.052000000000000005,0.06635948362250568
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.053,0.06934962478483102
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.054,0.07019291261190723
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.055,0.07144291261190724
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.056,0.07445737608406743
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.057,0.0753050772334927
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.058,0.07616418376270231
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.059000000000000004,0.07788296505150043
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.06,0.07872918498277191
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.061,0.07872918498277191
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.062,0.07914585164943859
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.063,0.08129116183406751
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.064,0.08341043577036543
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.065,0.08426264250671851
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.066,0.08637912937501195
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.067,0.08679718957568085
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.068,0.08679718957568085
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.069,0.08679718957568085
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.07,0.08936056454140583
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.07100000000000001,0.09104159902416445
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.07200000000000001,0.0927559669906135
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.073,0.0948635349496301
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.074,0.09615524944433088
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.075,0.09700295059375616
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.076,0.09869844515718548
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.077,0.09953317202452103
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.078,0.09996420650727963
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.079,0.10123447344430161
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.08,0.1029357748640822
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.081,0.10379636261144565
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.082,0.10423190268113205
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.083,0.10636275736551748
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.084,0.10721635763587278
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.085,0.10721635763587278
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.08600000000000001,0.1084936120499029
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.08700000000000001,0.1097664531415839
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.088,0.11018311980825057
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.089,0.11102640763532678
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.09,0.11144446783599568
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.091,0.11313104349014814
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.092,0.11397726342141963
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.093,0.11439532362208853
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.094,0.11565527811583143
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.095,0.11648861144916475
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.096,0.11905906157604941
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.097,0.12117658402880892
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.098,0.12203275845382329
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.099,0.12245937961423285
+ultra_sparse,Ultra-sparsity,joint_influence_welch,Joint-Influence Welch,0.1,0.12288893287883766
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.0,0.0
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.001,0.012371623161974238
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.002,0.01658834872145598
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.003,0.01786337816786352
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.004,0.01953004483453019
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.005,0.019946711501196857
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.006,0.02161337816786352
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.007,0.022030044834530187
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.008,0.022863378167863525
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.009000000000000001,0.024160424761867846
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.01,0.02585526461951909
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.011,0.02799494433482158
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.012,0.028847151071174658
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.013000000000000001,0.029699357807527735
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.014,0.0313660244741944
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.015,0.03265377128023389
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.016,0.03348710461356722
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.017,0.035570437946900554
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.018000000000000002,0.03809861113788514
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.019,0.04066138739033216
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.02,0.04235941606416729
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.021,0.043609416064167295
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.022,0.04575228459565366
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.023,0.046613791119971576
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.024,0.04833051667945332
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.025,0.04999718334611999
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.026000000000000002,0.05213075208964152
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.027,0.05340578153604905
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.028,0.05465578153604907
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.029,0.055924654939068806
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.03,0.05675798827240214
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.031,0.0584246549390688
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.032,0.06011949479672005
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.033,0.06098419013722184
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.034,0.06267902999487308
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.035,0.06392902999487309
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.036000000000000004,0.06517902999487309
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.037,0.06642902999487309
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.038,0.06809569666153975
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.039,0.06981875478178241
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.04,0.07151045089485662
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.041,0.07192711756152328
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.042,0.07234378422818995
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.043000000000000003,0.07276045089485661
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.044,0.07404181290202508
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.045,0.07531998609300966
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.046,0.07659815928399424
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.047,0.07704299914164549
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.048,0.07790769448214728
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.049,0.07877238982264907
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.05,0.08046722968030032
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.051000000000000004,0.08171722968030032
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.052000000000000005,0.0829672296803003
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.053,0.08380056301363364
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.054,0.08463389634696698
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.055,0.08631943641665338
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.056,0.0867549764863398
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.057,0.08758830981967314
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.058,0.08842164315300646
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.059000000000000004,0.08967164315300646
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.06,0.0905049764863398
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.061,0.09094981634399105
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.062,0.09222798953497562
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.063,0.09352503612897994
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.064,0.09562724286533304
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.065,0.09729390953199969
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.066,0.09942747827552123
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.067,0.0998441449421879
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.068,0.10070565146650581
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.069,0.10329021611106638
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.07,0.10412354944439971
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.07100000000000001,0.10623505596871764
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.07200000000000001,0.10790172263538429
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.073,0.10873505596871762
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.074,0.10959656249303555
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.075,0.11129459116687067
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.076,0.11129459116687067
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.077,0.112127924500204
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.078,0.11298628727994488
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.079,0.1138196206132782
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.08,0.11506962061327819
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.081,0.116789489917337
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.082,0.116789489917337
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.083,0.11852508887983847
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.084,0.11980645088700692
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.085,0.12108781289417539
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.08600000000000001,0.12197138163769694
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.08700000000000001,0.12449025504071667
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.088,0.12743195115379086
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.089,0.12868195115379086
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.09,0.1295152844871242
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.091,0.13123201004660595
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.092,0.1328986767132726
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.093,0.13373201004660595
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.094,0.13501337205377442
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.095,0.136291545244759
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.096,0.1371248785780923
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.097,0.13884160413757407
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.098,0.14098447266906045
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.099,0.14098447266906045
+ultra_imbalanced,Ultra-sparsity with imbalance,joint_influence_welch,Joint-Influence Welch,0.1,0.14098447266906045
