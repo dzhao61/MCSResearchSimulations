@@ -46,15 +46,15 @@ pairs in that regime; shading spans their 10th to 90th percentiles.
 | Moderate | Normal Wald | 0.06158 | 0.01158 | 0.01540 | 0.00540 | 1.00000 | 0.93842 |
 | Moderate | Simple Welch | 0.06025 | 0.01025 | 0.01456 | 0.00464 | 1.00000 | 0.93975 |
 | Moderate | Expanded Welch | 0.05623 | 0.00720 | 0.01208 | 0.00247 | 1.00000 | 0.94377 |
-| Highly skewed and sparse | Normal Wald | 0.05547 | 0.00645 | 0.01271 | 0.00287 | 1.00000 | 0.94453 |
-| Highly skewed and sparse | Simple Welch | 0.05445 | 0.00563 | 0.01211 | 0.00228 | 1.00000 | 0.94555 |
-| Highly skewed and sparse | Expanded Welch | 0.05198 | 0.00456 | 0.01094 | 0.00139 | 1.00000 | 0.94802 |
+| Highly skewed and sparse | Normal Wald | 0.05547 | 0.00645 | 0.01271 | 0.00288 | 0.99999 | 0.94453 |
+| Highly skewed and sparse | Simple Welch | 0.05445 | 0.00563 | 0.01211 | 0.00228 | 0.99999 | 0.94555 |
+| Highly skewed and sparse | Expanded Welch | 0.05198 | 0.00456 | 0.01094 | 0.00139 | 0.99999 | 0.94802 |
 | Ultra-skewed and sparse | Normal Wald | 0.07504 | 0.02504 | 0.02192 | 0.01210 | 1.00000 | 0.92496 |
 | Ultra-skewed and sparse | Simple Welch | 0.07208 | 0.02208 | 0.01992 | 0.01012 | 1.00000 | 0.92792 |
 | Ultra-skewed and sparse | Expanded Welch | 0.06305 | 0.01340 | 0.01313 | 0.00407 | 1.00000 | 0.93695 |
-| Widespread sparsity | Normal Wald | 0.07431 | 0.02431 | 0.02092 | 0.01092 | 0.99832 | 0.92569 |
-| Widespread sparsity | Simple Welch | 0.07096 | 0.02096 | 0.01920 | 0.00920 | 0.99832 | 0.92904 |
-| Widespread sparsity | Expanded Welch | 0.05689 | 0.01278 | 0.01269 | 0.00439 | 0.97450 | 0.94311 |
+| Widespread sparsity | Normal Wald | 0.06621 | 0.02087 | 0.01748 | 0.00852 | 0.97447 | 0.93379 |
+| Widespread sparsity | Simple Welch | 0.06400 | 0.01888 | 0.01608 | 0.00725 | 0.97447 | 0.93600 |
+| Widespread sparsity | Expanded Welch | 0.05687 | 0.01277 | 0.01267 | 0.00438 | 0.97447 | 0.94313 |
 
 False-positive-rate error is the absolute difference between observed
 and nominal rejection rates among valid calculations, so lower is
@@ -65,9 +65,9 @@ are not hidden by conditioning only on successful results.
 
 | Method | MAE at 0.10 | MAE at 0.05 | MAE at 0.01 | Mean valid rate | 95% coverage |
 | --- | --- | --- | --- | --- | --- |
-| Normal Wald | 0.01753 | 0.01411 | 0.00656 | 0.99966 | 0.93637 |
-| Simple Welch | 0.01588 | 0.01236 | 0.00553 | 0.99966 | 0.93823 |
-| Expanded Welch | 0.01180 | 0.00825 | 0.00278 | 0.99490 | 0.94454 |
+| Normal Wald | 0.01716 | 0.01342 | 0.00608 | 0.99489 | 0.93799 |
+| Simple Welch | 0.01560 | 0.01194 | 0.00514 | 0.99489 | 0.93962 |
+| Expanded Welch | 0.01179 | 0.00825 | 0.00278 | 0.99489 | 0.94455 |
 
 ## Direct interpretation
 
@@ -76,7 +76,7 @@ are not hidden by conditioning only on successful results.
   Welch reduced error relative to normal Wald.
 - **Highly skewed and sparse:** 29.3% at alpha 0.05 and 51.6% at alpha 0.01.
 - **Ultra-skewed and sparse:** 46.5% at alpha 0.05 and 66.3% at alpha 0.01.
-- **Widespread sparsity:** 47.4% at alpha 0.05 and 59.8% at alpha 0.01.
+- **Widespread sparsity:** 38.8% at alpha 0.05 and 48.5% at alpha 0.01.
 - This was not a universal improvement. In well-sampled tables at
   alpha 0.05, expanded Welch increased mean absolute error from
   `0.00317`
@@ -114,18 +114,18 @@ are not hidden by conditioning only on successful results.
 
 | Rows | Columns | Method | Route | Median ms | Relative to Wald |
 | --- | --- | --- | --- | --- | --- |
-| 2 | 2 | Normal Wald | Normal Wald | 0.0880 | 1.0000 |
-| 2 | 2 | Simple Welch | Simple Welch | 0.1033 | 1.1737 |
-| 2 | 2 | Expanded Welch | Expanded Welch | 0.1688 | 1.9179 |
-| 3 | 3 | Normal Wald | Normal Wald | 0.0875 | 1.0000 |
-| 3 | 3 | Simple Welch | Simple Welch | 0.1029 | 1.1760 |
-| 3 | 3 | Expanded Welch | Expanded Welch | 0.1666 | 1.9043 |
-| 5 | 5 | Normal Wald | Normal Wald | 0.0875 | 1.0000 |
-| 5 | 5 | Simple Welch | Simple Welch | 0.1027 | 1.1728 |
-| 5 | 5 | Expanded Welch | Expanded Welch | 0.1666 | 1.9034 |
-| 8 | 8 | Normal Wald | Normal Wald | 0.0883 | 1.0000 |
-| 8 | 8 | Simple Welch | Simple Welch | 0.1038 | 1.1758 |
-| 8 | 8 | Expanded Welch | Expanded Welch | 0.1685 | 1.9091 |
+| 2 | 2 | Normal Wald | Normal Wald | 0.0842 | 1.0000 |
+| 2 | 2 | Simple Welch | Simple Welch | 0.0991 | 1.1761 |
+| 2 | 2 | Expanded Welch | Expanded Welch | 0.1451 | 1.7222 |
+| 3 | 3 | Normal Wald | Normal Wald | 0.0844 | 1.0000 |
+| 3 | 3 | Simple Welch | Simple Welch | 0.0995 | 1.1790 |
+| 3 | 3 | Expanded Welch | Expanded Welch | 0.1456 | 1.7257 |
+| 5 | 5 | Normal Wald | Normal Wald | 0.0837 | 1.0000 |
+| 5 | 5 | Simple Welch | Simple Welch | 0.0987 | 1.1795 |
+| 5 | 5 | Expanded Welch | Expanded Welch | 0.1452 | 1.7358 |
+| 8 | 8 | Normal Wald | Normal Wald | 0.0858 | 1.0000 |
+| 8 | 8 | Simple Welch | Simple Welch | 0.1009 | 1.1755 |
+| 8 | 8 | Expanded Welch | Expanded Welch | 0.1481 | 1.7257 |
 
 Runtime includes the complete calculation from the two count tables.
 All three timings use the same implementation path. Every method

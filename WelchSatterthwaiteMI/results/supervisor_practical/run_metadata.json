@@ -26,8 +26,8 @@
     "points": 101
   },
   "null_pvalue_archive_dtype": "float64",
-  "elapsed_seconds": 28.94216633308679,
-  "script_sha256": "1db0514be23fa4c6f095017cfce847b7de9b31cd8a388d2ec4b7b6a89a27a3ff",
+  "elapsed_seconds": 27.691546624992043,
+  "script_sha256": "9e654a849ff100eedd57c2703ee5617a32d7c35b3400ef37be718adca35f9123",
   "python": "3.13.5",
   "numpy": "2.4.4",
   "scipy": "1.17.1",

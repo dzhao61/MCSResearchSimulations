@@ -842,36 +842,94 @@ near-zero boundary and prevents MI magnitude from being confounded with the
 sampling regime.
 
 For each population, the row and column margins are drawn independently from
-a symmetric Dirichlet distribution with concentration $a_P$ or $a_Q$. A
-large concentration, such as 50, produces margins close to uniform; values
-below 1 produce increasingly uneven margins with rare categories. A random
-log-linear interaction pattern is then scaled numerically until the joint
-table has the required MI. The two tables use independently generated
-margins and interactions, but both are tuned to the same target:
+a symmetric Dirichlet distribution. The Dirichlet distribution generates a
+probability vector
+
+$$
+(p_1,\ldots,p_m),
+\qquad p_i\geq0,
+\qquad \sum_{i=1}^{m}p_i=1,
+$$
+
+and is the multivariate generalization of the beta distribution. It can be
+constructed by drawing independent gamma variables and normalizing them:
+
+$$
+G_i\sim\operatorname{Gamma}(\alpha_i,1),
+\qquad
+p_i=\frac{G_i}{\sum_{j=1}^{m}G_j}.
+$$
+
+The experiment uses the symmetric case
+
+$$
+(p_1,\ldots,p_m)\sim\operatorname{Dirichlet}(a,\ldots,a),
+$$
+
+where the concentration $a$ controls marginal unevenness. The values used in
+the experiment have the following interpretation:
+
+- $a=50$: margins are close to uniform;
+- $a=10$, $8$, or $4$: category probabilities differ moderately;
+- $a=2$: margins are noticeably heterogeneous;
+- $a=1$: probability vectors are spread uniformly over the simplex;
+- $a=0.8$: margins are skewed and contain small probabilities;
+- $a=0.35$: margins are extremely skewed and commonly contain several rare
+  categories.
+
+The margins specify how often each row and column category occurs, but they do
+not specify how the two variables are associated. If the variables were
+independent, their joint probabilities would be
+
+$$
+p_{ij}=p_{i+}p_{+j},
+$$
+
+and their MI would be zero. To construct a population with positive MI, the
+generator performs the following steps:
+
+1. Start from the independence table determined by the selected margins.
+2. Draw a random pattern indicating which cells should occur more or less
+   often than independence predicts.
+3. Increase the strength of that pattern while readjusting the table so that
+   the selected row and column margins remain unchanged.
+4. Stop when the table's MI equals the required value, either 0.10 or 0.15
+   nats.
+
+This procedure is performed independently for $P$ and $Q$. Their margins and
+cell-association patterns are therefore different, but both tables have the
+same target MI:
 
 $$
 I(P)=I(Q).
 $$
 
-Accepted pairs have strictly positive population probabilities, differ by at
-least 0.05 in $L^1$ distance, and have nondegenerate first-order MI variance.
-The largest numerical difference between $I(P)$ and $I(Q)$ in the accepted
-grid was $8.5\times10^{-14}$ nats.
+A generated pair is retained only if every cell has positive probability, the
+two joint tables are meaningfully different, and both produce a positive
+first-order MI variance. Table difference is measured by
 
-For fixed-density designs, the sample sizes are
+$$
+\sum_{i,j}|p_{ij}-q_{ij}|,
+$$
+
+which must be at least 0.05. The largest numerical difference between the two
+target MI values in the accepted grid was $8.5\times10^{-14}$ nats.
+
+Once $P$ and $Q$ have been constructed, their sample sizes are selected. In
+the well-sampled and moderate regimes,
 
 $$
 n_P=\max(n_{\min},drc),
 \qquad
-n_Q=\rho n_P,
+n_Q=\rho n_P.
 $$
 
-where $d$ is the planned number of observations per cell in the smaller
-sample, $n_{\min}$ is the regime-specific lower bound, and
-$\rho=n_Q/n_P$. Every design is chosen so that $n_Q\le1000$.
+Here $rc$ is the number of cells, $d$ is the planned average number of
+observations per cell in the smaller sample, $n_{\min}$ is its minimum sample
+size, and $\rho=n_Q/n_P$ is the sample-size ratio.
 
-For the expected-count designs, define the true expected count in cell
-$(i,j)$ by
+In the sparse regimes, sample size is chosen using the expected count in each
+cell:
 
 $$
 E^{(P)}_{ij}=n_Pp_{ij},
@@ -879,9 +937,10 @@ E^{(P)}_{ij}=n_Pp_{ij},
 E^{(Q)}_{ij}=n_Qq_{ij}.
 $$
 
-The sample sizes are chosen after the two population tables are generated so
-that their minimum expected counts, or their fractions of low-count cells,
-satisfy the stated constraints.
+For example, a cell with probability 0.002 has expected count 1 when the
+sample size is 500. The experiment chooses $n_P$ and $n_Q$ between 50 and
+1,000 so that the rare-cell expected counts satisfy the definition of the
+required sparse regime.
 
 ### 7.3 Exact regime specifications
 
@@ -973,32 +1032,6 @@ The primary comparison uses $\alpha=0.05$. The tabulated checks at 0.10 and
 levels from 0 to 0.10 in increments of 0.001; their bands show the 10th and
 90th percentiles of the 12 scenario-specific rejection rates.
 
-### 7.6 Power and runtime designs
-
-The power experiment uses $3\times3$ tables. Population $P$ has uniform row
-and column margins $(1/3,1/3,1/3)$ and $I(P)=0.05$. Population $Q$ has row
-and column margins $(0.9,0.05,0.05)$ and a larger MI. Both use the same
-ordinal interaction pattern. The five alternatives are:
-
-| Purpose | $I(P)$ | $I(Q)$ | $n_P$ | $n_Q$ | Minimum $n_Pp_{ij}$ | Minimum $n_Qq_{ij}$ |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Effect size 0.02 | 0.05 | 0.07 | 300 | 300 | 18.217 | 1.543 |
-| Effect size 0.05 | 0.05 | 0.10 | 300 | 300 | 18.217 | 1.853 |
-| Effect size 0.10 | 0.05 | 0.15 | 300 | 300 | 18.217 | 1.143 |
-| Smaller sample | 0.05 | 0.10 | 150 | 150 | 9.108 | 0.926 |
-| Larger sample | 0.05 | 0.10 | 600 | 600 | 36.433 | 3.705 |
-
-Each alternative receives 10,000 replicates. Power is the fraction of valid
-replicates rejected at $\alpha=0.05$. The power experiment therefore contains
-50,000 independently sampled table pairs.
-
-The runtime experiment measures one complete method call after the count
-tables have been constructed. It uses $(r,c,n_P,n_Q)$ equal to
-$(2,2,200,200)$, $(3,3,200,200)$, $(5,5,375,375)$, and
-$(8,8,960,960)$. Each method is warmed up and then timed 200 times on
-each fixed table pair; the reported value is the median. This gives 2,400
-timed complete method calls.
-
 ## 8. Results
 
 ### 8.1 Calibration across regimes
@@ -1027,7 +1060,7 @@ means Expanded Welch reduced mean absolute error relative to Normal Wald.
 | Moderate | 0.06158 | 0.06025 | 0.05623 | 0.01158 | 0.00720 | $+37.8\%$ |
 | Highly skewed and sparse | 0.05547 | 0.05445 | 0.05198 | 0.00645 | 0.00456 | $+29.3\%$ |
 | Ultra-skewed and sparse | 0.07504 | 0.07208 | 0.06305 | 0.02504 | 0.01340 | $+46.5\%$ |
-| Widespread sparsity | 0.07431 | 0.07096 | 0.05689 | 0.02431 | 0.01278 | $+47.4\%$ |
+| Widespread sparsity | 0.06621 | 0.06400 | 0.05687 | 0.02087 | 0.01277 | $+38.8\%$ |
 
 Normal Wald is already well calibrated in the well-sampled control. Expanded
 Welch changes its mean FPR from 0.05174 to 0.04913, but its scenario-level
@@ -1039,11 +1072,14 @@ Expanded Welch reduces mean absolute error by 37.8% in the moderate regime,
 minimum expected count is below 1. At $\alpha=0.01$, the corresponding
 reductions are 54.2%, 51.6%, and 66.3%.
 
-Under widespread sparsity, Expanded Welch reduces error among valid results,
-but its valid rate falls to 0.97450. This remains a boundary regime rather
-than evidence of universally reliable operation. Simple Welch improves only
-part of the calibration error and remains closer to Normal Wald than to
-Expanded Welch.
+Under widespread sparsity, all three methods' valid rate falls to 0.97447:
+a table pair is excluded whenever either population's first-order MI
+variance estimate is exactly zero, which discards the same replicates for
+every method and keeps the comparison on equal footing. Expanded Welch
+reduces error among the remaining valid results, but this remains a boundary
+regime rather than evidence of universally reliable operation. Simple Welch
+improves only part of the calibration error and remains closer to Normal
+Wald than to Expanded Welch.
 
 ### 8.2 Calibration by regime variant
 
@@ -1060,8 +1096,8 @@ specified variant in Section 7.3. The target remains 0.05.
 | Highly skewed and sparse 2 | 0.15 | $2{:}1$ | 0.05908 | 0.05813 | 0.05598 |
 | Ultra-skewed and sparse 1 | 0.10 | $1{:}1$ | 0.05775 | 0.05638 | 0.05267 |
 | Ultra-skewed and sparse 2 | 0.15 | $10{:}1$ | 0.09233 | 0.08778 | 0.07343 |
-| Widespread sparsity 1 | 0.10 | $1{:}1$ | 0.07148 | 0.06672 | 0.05058 |
-| Widespread sparsity 2 | 0.15 | $2{:}1$ | 0.07714 | 0.07520 | 0.06320 |
+| Widespread sparsity 1 | 0.10 | $1{:}1$ | 0.06190 | 0.05926 | 0.05057 |
+| Widespread sparsity 2 | 0.15 | $2{:}1$ | 0.07053 | 0.06874 | 0.06317 |
 
 Expanded Welch improves both variants of the moderate, highly sparse,
 ultra-sparse, and widespread regimes. Its largest remaining error is the
@@ -1074,8 +1110,14 @@ diagnostics, are available in
 
 ### 8.3 Power
 
-The table repeats the exact alternative settings alongside the resulting
-power at $\alpha=0.05$.
+Power is the probability that a test correctly rejects the null hypothesis
+when the two populations genuinely have different mutual information.
+
+Both populations use $3\times3$ tables with the same ordinal interaction
+pattern; $P$ has uniform row and column margins and $I(P)=0.05$, while $Q$
+has row and column margins $(0.9,0.05,0.05)$ and a larger MI. The table below
+lists the exact alternative settings alongside the resulting power at
+$\alpha=0.05$; each row uses 10,000 replicates.
 
 | $I(P)$ | $I(Q)$ | $(n_P,n_Q)$ | Minimum expected counts $(P,Q)$ | Normal Wald | Simple Welch | Expanded Welch |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -1093,14 +1135,18 @@ ranges from 0.9453 to 0.9614.
 
 ### 8.4 Computational cost
 
+Each shape times one complete method call on a fixed table pair: the method
+is warmed up once, then timed 200 times, and the reported value is the
+median.
+
 | Shape | $(n_P,n_Q)$ | Normal Wald | Simple Welch | Expanded Welch |
 | ---: | ---: | ---: | ---: | ---: |
-| $2\times2$ | $(200,200)$ | 0.0880 ms | 0.1033 ms | 0.1688 ms |
-| $3\times3$ | $(200,200)$ | 0.0875 ms | 0.1029 ms | 0.1666 ms |
-| $5\times5$ | $(375,375)$ | 0.0875 ms | 0.1027 ms | 0.1666 ms |
-| $8\times8$ | $(960,960)$ | 0.0883 ms | 0.1038 ms | 0.1685 ms |
+| $2\times2$ | $(200,200)$ | 0.0842 ms | 0.0991 ms | 0.1451 ms |
+| $3\times3$ | $(200,200)$ | 0.0844 ms | 0.0995 ms | 0.1456 ms |
+| $5\times5$ | $(375,375)$ | 0.0837 ms | 0.0987 ms | 0.1452 ms |
+| $8\times8$ | $(960,960)$ | 0.0858 ms | 0.1009 ms | 0.1481 ms |
 
-Expanded Welch takes 1.89-1.91 times as long as Normal Wald in this benchmark
+Expanded Welch takes 1.72-1.74 times as long as Normal Wald in this benchmark
 but remains below 0.2 ms per table pair. All three methods are deterministic
 and require $O(rc)$ time; none requires resampling.
 
@@ -1116,8 +1162,10 @@ The experiment supports a narrow but coherent story:
    when isolated rare cells or unequal sample sizes make the estimated MI
    variance unstable, while sacrificing little power.
 4. **Expanded Welch has clear limits.** The most difficult $10{:}1$
-   ultra-sparse variant remains liberal, and its valid rate falls to 0.97450
-   under widespread sparsity. It improves rather than solves these cases.
+   ultra-sparse variant remains liberal, and every method's valid rate falls
+   to 0.97447 under widespread sparsity because either population's MI
+   variance estimate can vanish exactly. It improves rather than solves
+   these cases.
 5. **The computational cost is negligible.** The method is deterministic,
    $O(rc)$, and below 0.2 ms per tested table pair.
 

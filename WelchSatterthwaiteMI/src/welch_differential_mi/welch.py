@@ -271,8 +271,8 @@ def differential_mi_pvalues(
         unbiased_df = np.full_like(delta, np.nan, dtype=float)
         unbiased_p = np.full_like(delta, np.nan, dtype=float)
     first_order_variance_valid = (
-        variance_p + variance_q
-    ) > 1e-14
+        np.minimum(variance_p, variance_q) > 1e-14
+    )
     base_valid = (
         np.isfinite(delta)
         & first_order_variance_valid

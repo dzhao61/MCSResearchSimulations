@@ -57,9 +57,14 @@ class WelchTests(unittest.TestCase):
         )
 
     def test_method_validity_is_separate_at_unstable_support(self) -> None:
-        p = np.array([[8, 25], [1, 1]])
-        q = np.array([[9, 26], [0, 0]])
+        # Both tables have well-defined, positive first-order MI variance, but
+        # q's checkerboard zero pattern makes its variance-of-variance
+        # (the expanded-method component df) degenerate.
+        p = np.array([[13, 2, 6], [0, 13, 11]])
+        q = np.array([[0, 13, 13], [13, 0, 13]])
         values = differential_mi_pvalues(p, q)
+        self.assertGreater(float(values["influence_variance_p"]), 0.0)
+        self.assertGreater(float(values["influence_variance_q"]), 0.0)
         self.assertTrue(values["base_valid"])
         self.assertTrue(values["simple_valid"])
         self.assertFalse(values["expanded_valid"])
@@ -155,6 +160,16 @@ class WelchTests(unittest.TestCase):
         result = welch_satterthwaite_test(table, table)
         self.assertFalse(result.valid)
         self.assertTrue(np.isnan(result.welch_p_value))
+
+    def test_one_sided_degenerate_variance_is_reported_invalid(self) -> None:
+        """A single zero-variance side must invalidate the pair, not just the mean."""
+        p = np.array([[0, 0], [12, 38]])
+        q = np.array([[9, 26], [8, 7]])
+        values = differential_mi_pvalues(p, q)
+        self.assertAlmostEqual(float(values["influence_variance_p"]), 0.0)
+        self.assertGreater(float(values["influence_variance_q"]), 0.0)
+        self.assertFalse(values["base_valid"])
+        self.assertTrue(np.isnan(values["normal_p_value"]))
 
     def test_invalid_inputs_are_rejected(self) -> None:
         valid = np.array([[3, 2], [1, 4]])

@@ -43,9 +43,9 @@ sample sizes between 50 and 1,000. The same three analytic methods are
 evaluated on every replicate.
 
 Expanded Welch left the well-sampled control essentially unchanged and
-reduced alpha-`0.05` calibration error relative to Normal Wald by 29% to 47%
+reduced alpha-`0.05` calibration error relative to Normal Wald by 29% to 46%
 across the moderate, rare-cell, ultra-sparse, and widespread-sparsity
-regimes. Its measured runtime remained about 1.9 times the Normal Wald
+regimes. Its measured runtime remained about 1.7 times the Normal Wald
 implementation but negligible in absolute terms.
 
 The result supports expanded Welch as a targeted finite-sample correction,

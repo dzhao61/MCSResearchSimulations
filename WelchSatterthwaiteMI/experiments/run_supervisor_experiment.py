@@ -1309,7 +1309,7 @@ def _runtime_audit(
             differential_mi_pvalues(
                 table_p,
                 table_q,
-                include_simple=True,
+                include_simple=False,
                 include_expanded=True,
                 include_unbiased_sensitivity=False,
             )
