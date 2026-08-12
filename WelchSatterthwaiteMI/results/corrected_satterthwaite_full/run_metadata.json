@@ -1,0 +1,13 @@
+{
+  "profile": "full",
+  "settings": {
+    "null_replicates": 10000,
+    "power_replicates": 10000,
+    "batch_size": 1000,
+    "shape_limit": null
+  },
+  "scenario_seed": 2026080501,
+  "simulation_seed": 2026080502,
+  "scenario_count": 192,
+  "elapsed_seconds": 25.962806958006695
+}
