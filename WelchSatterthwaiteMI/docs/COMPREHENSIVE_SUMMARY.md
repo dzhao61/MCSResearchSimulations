@@ -158,7 +158,7 @@ $$
 
 ### 3.3 Estimate the standard error
 
-Define the local-information score for a cell:
+Define the pointwise mutual information (PMI) for a cell:
 
 $$
 \widehat\ell_P(i,j)
@@ -271,7 +271,7 @@ intervals than normal Wald.
 The limitation is that $n-1$ is exact for a conventional sample variance
 under classical assumptions, but $\widehat V(P)$ is a nonlinear function of
 the full contingency table. Changing one observation changes cell
-probabilities, marginal probabilities, local-information scores, MI, and its
+probabilities, marginal probabilities, PMI values, MI, and its
 estimated variance.
 
 ### Cost
@@ -373,14 +373,15 @@ underlying distribution.
 
 ### 6.1 Identify the variance estimator in the denominator
 
-Let $Z=(X,Y)\sim P$. For a cell $(i,j)$, define its local-information score
+Let $Z=(X,Y)\sim P$. For a cell $(i,j)$, define its pointwise mutual
+information (PMI)
 
 $$
 \ell_P(i,j)
 =\log\!\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
 $$
 
-The MI and its second local-information moment are
+The MI and its second PMI moment are
 
 $$
 I(P)=\operatorname E_P\{\ell_P(Z)\},
@@ -393,7 +394,7 @@ second moment minus a squared mean. This form makes it possible to
 differentiate \(V(P)\) by differentiating two explicit sums.
 
 Consequently, the first-order variance governing the MI estimator is the
-variance of the local-information score:
+variance of the PMI values:
 
 $$
 V(P)
@@ -437,7 +438,7 @@ $$
 Thus, $g_P(x,y)$ is the first-order change in the complete MI variance after
 slightly increasing the probability of cell $(x,y)$. It includes more than
 the direct effect on that cell: changing one cell also changes its row
-margin, its column margin, every affected local-information score, and MI
+margin, its column margin, every affected PMI value, and MI
 itself.
 
 Once $g_P$ is known, first-order influence-function theory represents the
@@ -490,8 +491,8 @@ g_P(x,y)
 $$
 
 We therefore need the derivative of the MI mean $I(P)$ and the derivative
-of the second moment $M_2(P)$. Both contain the local-information score, so
-we first record how that score changes.
+of the second moment $M_2(P)$. Both contain the PMI value, so
+we first record how that PMI value changes.
 
 Along the contamination path,
 
@@ -530,7 +531,7 @@ $$
 +1.
 $$
 
-The derivatives of $I(P)$ and $M_2(P)$ follow by substituting this local-score
+The derivatives of $I(P)$ and $M_2(P)$ follow by substituting this PMI
 derivative into their defining probability-weighted sums.
 
 #### Derivative of the MI mean
@@ -618,7 +619,7 @@ $$
 \end{aligned}
 $$
 
-The second sum changes the local-information values. Substituting
+The second sum changes the PMI values. Substituting
 $\ell_P'(i,j;x,y)$ directly gives
 
 $$
@@ -632,7 +633,7 @@ $$
 $$
 
 The second and third terms in the preceding expansion are the
-probability-weighted mean local-information scores within row $x$ and column
+probability-weighted mean PMI values within row $x$ and column
 $y$. Define them by
 
 $$
@@ -691,7 +692,7 @@ Each line comes from a particular part of the original variance:
 
 - $\ell_P(x,y)^2-M_2(P)$ comes from changing the probability weights in
   the second moment;
-- $2[\ell_P(x,y)-R_P(x)-C_P(y)+I(P)]$ comes from changing the local scores
+- $2[\ell_P(x,y)-R_P(x)-C_P(y)+I(P)]$ comes from changing the PMI values
   inside the second moment;
 - $-2I(P)[\ell_P(x,y)-I(P)]$ comes from differentiating the centring term
   $-I(P)^2$.
@@ -1217,7 +1218,7 @@ $$
 $$
 
 is a nonlinear function of the complete table. Changing one cell also
-changes its row margin, column margin, local-information scores, MI, and
+changes its row margin, column margin, PMI values, MI, and
 therefore the complete variance estimate.
 
 Expanded Welch measures this sensitivity directly. For each cell, define

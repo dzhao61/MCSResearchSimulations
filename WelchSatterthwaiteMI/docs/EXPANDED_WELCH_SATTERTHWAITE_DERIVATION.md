@@ -87,7 +87,7 @@ $\widehat I_{\mathrm{BC}}(P)$, $\widehat I_{\mathrm{BC}}(Q)$,
 $\widehat V(P)$, $\widehat V(Q)$, $\widehat\nu_V(P)$, and
 $\widehat\nu_V(Q)$, then insert them into these two final equations.
 
-1. **Estimate the MI difference.** The local-information score
+1. **Estimate the MI difference.** The pointwise mutual information (PMI)
    $\ell_P(i,j)$ measures the information associated with cell $(i,j)$, and
    its population mean is the mutual information $I(P)$. The observed table
    gives the plug-in estimate $\widehat I(P)$ and its bias-corrected version
@@ -99,7 +99,7 @@ $\widehat\nu_V(Q)$, then insert them into these two final equations.
 
    Section 1 defines $\ell_P(i,j)$, $I(P)$, and their empirical versions.
 
-2. **Estimate the sampling variance of the MI difference.** The local score
+2. **Estimate the sampling variance of the MI difference.** The PMI value
    $\ell_P(X,Y)$ is the observation-level quantity whose mean is $I(P)$. Its
    population variance is
 
@@ -254,17 +254,17 @@ $$
 
 The same definitions apply to $Q$.
 
-### 1.2 Calculate population MI from cell-level information
+### 1.2 Calculate population MI from pointwise mutual information
 
 Under independence with the same margins, cell $(i,j)$ would have probability
-$p_{i+}p_{+j}$. Its local-information score is therefore
+$p_{i+}p_{+j}$. Its pointwise mutual information (PMI) is therefore
 
 $$
 \ell_P(i,j)
 =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
 $$
 
-Mutual information is the probability-weighted mean of these local scores:
+Mutual information is the probability-weighted mean of these PMI values:
 
 $$
 \begin{aligned}
@@ -275,7 +275,7 @@ I(P)
 $$
 
 This expectation form is important because the sampling error of plug-in MI
-will be determined by how individual local scores vary around their mean.
+will be determined by how individual PMI values vary around their mean.
 
 ### 1.3 Estimate MI from the observed counts and correct its leading bias
 
@@ -296,7 +296,7 @@ $$
 \widehat p_{+j}=\sum_i\widehat p_{ij}.
 $$
 
-The empirical local scores and plug-in MI are
+The empirical PMI values and plug-in MI are
 
 $$
 \widehat\ell_P(i,j)
@@ -419,7 +419,7 @@ $$
 The marginal derivatives are required because changing one joint cell changes
 the independence baseline for its entire row and column.
 
-### 2.2 Calculate how that observation changes the local-information scores
+### 2.2 Calculate how that observation changes the PMI values
 
 Along the path,
 
@@ -483,7 +483,7 @@ $$
 \end{aligned}
 $$
 
-Substituting the local-score derivative into the second sum gives
+Substituting the PMI derivative into the second sum gives
 
 $$
 \begin{aligned}
@@ -516,11 +516,11 @@ $$
 }
 $$
 
-This centred local-information score is the influence function of MI.
+This centred PMI value is the influence function of MI.
 
 ### 2.4 Average the observation effects to obtain the variance of estimated MI
 
-The probability-weighted variance of the local-information score is
+The probability-weighted variance of PMI is
 
 $$
 \begin{aligned}
@@ -636,7 +636,7 @@ M_2(P_\varepsilon)
 \ell_{P_\varepsilon}(i,j)^2.
 $$
 
-Differentiating both the probability weight and the squared score gives
+Differentiating both the probability weight and the squared PMI value gives
 
 $$
 \begin{aligned}
@@ -656,7 +656,7 @@ $$
 \ell_P(x,y)^2-M_2(P).
 $$
 
-For the second sum, define the probability-weighted local-score means in row
+For the second sum, define the probability-weighted PMI means in row
 $x$ and column $y$:
 
 $$
@@ -671,7 +671,7 @@ C_P(y)
 =\frac{\sum_ip_{iy}\ell_P(i,y)}{p_{+y}}.
 $$
 
-Substituting the local-score derivative from Section 2.2 gives
+Substituting the PMI derivative from Section 2.2 gives
 
 $$
 \begin{aligned}
@@ -1216,7 +1216,7 @@ applying the derivation.
 
 Observed zero-count cells are assigned zero weight under $0\log 0=0$. For an
 empty empirical row or column, the implementation assigns zero to the unused
-conditional score mean because every cell in that margin also has zero weight.
+conditional PMI mean because every cell in that margin also has zero weight.
 These conventions keep the calculation finite. The smooth population
 approximation applies when the sampled support remains sufficiently stable.
 
@@ -1235,7 +1235,7 @@ $$
 p_{ij}=p_{i+}p_{+j},
 $$
 
-so every local score and $V(P)$ are zero. The first-order normal expansion
+so every PMI value and $V(P)$ are zero. The first-order normal expansion
 then degenerates. This test concerns regular comparisons of two MI values with
 a positive combined first-order variance. Testing independence itself requires
 second-order theory.

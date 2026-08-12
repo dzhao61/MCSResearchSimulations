@@ -118,7 +118,7 @@ Under $H_0$, this difference should be close to zero.
 
 ### 3. Estimate the uncertainty of each MI value
 
-For every cell, define its local-information score:
+For every cell, define its pointwise mutual information (PMI):
 
 $$
 \widehat\ell_P(i,j)
@@ -129,7 +129,7 @@ $$
 $$
 
 The estimated influence variance for group $P$ is the probability-weighted
-spread of these scores around the estimated MI:
+spread of these PMI values around the estimated MI:
 
 $$
 \widehat V(P)
@@ -193,7 +193,7 @@ $$
 
 This is easy to calculate, but its assumption is imperfect for MI. In an
 ordinary variance calculation, the value attached to each observation is
-fixed. For MI, every local-information score depends on probabilities
+fixed. For MI, every PMI value depends on probabilities
 estimated from the full table. Changing one observation changes a cell
 probability and its associated row and column marginals.
 
@@ -278,7 +278,7 @@ The interpretation is straightforward:
 
 The calculation is analytic. It evaluates $g$ from the observed cells and
 margins rather than repeatedly removing observations or resampling. If a
-small change in a rare cell strongly changes the cell, row, or column scores,
+small change in a rare cell strongly changes the cell, row, or column PMI values,
 $\widehat\tau^2(P)$ increases and the method assigns fewer degrees of freedom.
 
 Finally, combine the two variance-component degrees of freedom:
