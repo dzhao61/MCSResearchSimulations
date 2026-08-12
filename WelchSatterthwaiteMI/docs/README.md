@@ -7,11 +7,9 @@
 2. [`COMPREHENSIVE_SUMMARY.md`](COMPREHENSIVE_SUMMARY.md) presents the full
    research story from first principles.
 3. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
-   provides the complete line-by-line mathematical derivation.
-4. [`ALTERNATIVE_WELCH_SATTERTHWAITE_DERIVATION.md`](ALTERNATIVE_WELCH_SATTERTHWAITE_DERIVATION.md)
-   derives the method by mapping the generic Welch-Satterthwaite weights,
+   is the main derivation, mapping the generic Welch-Satterthwaite weights,
    variances, and component degrees of freedom to their MI counterparts.
-5. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
+4. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
    textbook-style PDF; [`../derivation/main.tex`](../derivation/main.tex) is
    its generated LaTeX source.
 
@@ -19,6 +17,8 @@
 
 The [`history/`](history/) directory preserves earlier decision documents:
 
+- [`../archive/ORIGINAL_EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](../archive/ORIGINAL_EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
+  preserves the original expanded-method derivation.
 - [`VALIDATION_PROTOCOL.md`](history/VALIDATION_PROTOCOL.md) records the
   original frozen validation rules.
 - [`FINAL_ASSESSMENT.md`](history/FINAL_ASSESSMENT.md) records the conclusion

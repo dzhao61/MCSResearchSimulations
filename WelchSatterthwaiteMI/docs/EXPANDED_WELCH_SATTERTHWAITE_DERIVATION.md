@@ -1,6 +1,52 @@
-# How the Expanded Welch-Satterthwaite MI Test Is Derived
+# Derivation of the Expanded Welch-Satterthwaite MI Test
 
-## What Expanded Welch Is Trying to Correct
+## Purpose
+
+This document derives the expanded Welch-Satterthwaite mutual-information
+test directly from the general Welch-Satterthwaite equation. The general
+equation combines independent estimated variances. To apply it to two mutual
+information estimates, we must determine exactly what its variance estimates,
+weights, and component degrees of freedom mean for two contingency tables.
+
+For two independent variance estimates, the general equation is
+
+$$
+\nu
+=
+\frac{(k_Ps_P^2+k_Qs_Q^2)^2}
+{(k_Ps_P^2)^2/\nu_P+(k_Qs_Q^2)^2/\nu_Q}.
+$$
+
+The derivation will calculate each input in the order in which it is needed:
+
+1. The two tables give the estimated MI difference in the numerator of the
+   test statistic.
+2. The variability of pointwise mutual information and the sample sizes give
+   the two variance contributions $k_Ps_P^2$ and $k_Qs_Q^2$.
+3. The sampling variability of the two estimated MI variances gives the
+   component degrees of freedom $\nu_P$ and $\nu_Q$.
+4. These quantities determine the Student degrees of freedom and the final
+   p-value.
+
+Each section completes one of these calculations before the next calculation
+begins. Population quantities are written without a hat, and quantities
+calculated from observed tables are written with a hat.
+
+Natural logarithms are used throughout, so mutual information is measured in
+nats.
+
+## 1. Estimate the Difference in Mutual Information
+
+The numerator of the final test statistic is
+
+$$
+\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
+$$
+
+It is obtained from the plug-in estimates $\widehat I(P)$ and
+$\widehat I(Q)$ after correcting their leading biases.
+
+### 1.1 Define the two populations
 
 Suppose two independent populations, $P$ and $Q$, describe the same pair of
 discrete variables $(X,Y)$. The aim is to test
@@ -11,215 +57,7 @@ H_0:I(P)=I(Q)
 H_1:I(P)\ne I(Q).
 $$
 
-All analytic methods considered here begin with the same standardized MI
-difference:
-
-$$
-T
-=\frac{
-\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
-}{
-\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}
-}.
-$$
-
-The numerator estimates the population MI difference. The denominator
-estimates its sampling standard deviation. Normal Wald treats this estimated
-denominator as sufficiently reliable and compares $T$ with a standard normal
-distribution.
-
-Expanded Welch goes one step further by quantifying the uncertainty of the
-estimated variance components $\widehat V(P)$ and $\widehat V(Q)$ inside the
-denominator. Each variance component is calculated from the same sampled
-table as its MI estimate and is a nonlinear function of the joint
-probabilities and both margins.
-
-The architecture comes from Welch's unequal-variance test and
-Satterthwaite's approximation for uncertain variance components. Hutcheson
-adapted this architecture to comparisons of Shannon diversity. Expanded
-Welch applies the same principle to mutual information, but derives the
-variance-component uncertainty from the complete MI table functional rather
-than assigning ordinary sample-variance degrees of freedom.
-
-### Roadmap
-
-The overall aim is to calculate an MI difference, divide it by its estimated
-standard error, and choose a Student reference distribution that reflects how
-reliably that standard error has been estimated.
-
-Throughout the document, $P$ and $Q$ denote the two population joint
-distributions, while $n_P$ and $n_Q$ denote their sample sizes. Population
-quantities are written without a hat; a hat marks a quantity calculated from
-a sampled contingency table.
-
-The final statistic is
-
-$$
-T
-=\frac{
-\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
-}
-{\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}},
-$$
-
-where $\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)$ is the
-estimated MI difference and $\widehat V(P)/n_P$ and $\widehat V(Q)/n_Q$ are
-the two estimated contributions to its squared standard error. Expanded Welch
-compares $T$ with a Student distribution having
-$\widehat\nu_{\mathrm{expanded}}$ degrees of freedom. Those degrees of freedom
-are defined by the Welch-Satterthwaite equation
-
-$$
-\boxed{
-\widehat\nu_{\mathrm{expanded}}
-=\frac{
-\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
-}{
-\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_V(P)
-+\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_V(Q)
-}.
-}
-$$
-
-Here $\widehat\nu_V(P)$ and $\widehat\nu_V(Q)$ describe the reliability of
-the two estimated variance components. The roadmap is therefore to calculate
-$\widehat I_{\mathrm{BC}}(P)$, $\widehat I_{\mathrm{BC}}(Q)$,
-$\widehat V(P)$, $\widehat V(Q)$, $\widehat\nu_V(P)$, and
-$\widehat\nu_V(Q)$, then insert them into these two final equations.
-
-1. **Estimate the MI difference.** The pointwise mutual information (PMI)
-   $\ell_P(i,j)$ measures the information associated with cell $(i,j)$, and
-   its population mean is the mutual information $I(P)$. The observed table
-   gives the plug-in estimate $\widehat I(P)$ and its bias-corrected version
-   $\widehat I_{\mathrm{BC}}(P)$. Repeating the calculation for $Q$ gives
-
-   $$
-   \widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
-   $$
-
-   Section 1 defines $\ell_P(i,j)$, $I(P)$, and their empirical versions.
-
-2. **Estimate the sampling variance of the MI difference.** The PMI value
-   $\ell_P(X,Y)$ is the observation-level quantity whose mean is $I(P)$. Its
-   population variance is
-
-   $$
-   V(P)=\operatorname{Var}_P\{\ell_P(X,Y)\},
-   $$
-
-   so the first-order sampling variance of the MI estimate is
-
-   $$
-   \operatorname{Var}\{\widehat I_{\mathrm{BC}}(P)\}
-   \approx\frac{V(P)}{n_P}.
-   $$
-
-   The observed table gives the plug-in estimate $\widehat V(P)$, so
-   $\widehat V(P)/n_P$ is population $P$'s contribution to the squared
-   standard error. Section 2 derives $V(P)$ and $\widehat V(P)$. Repeating the
-   calculation for $Q$ gives $\widehat V(Q)/n_Q$.
-
-3. **Calculate how reliable each estimated variance is.** The variance
-   influence function
-
-   $$
-   g_P(x,y)
-   =\left.
-   \frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
-   \right|_{\varepsilon=0}
-   $$
-
-   measures how an observation in cell $(x,y)$ changes $V(P)$ to first order.
-   Here $P_\varepsilon$ is the population distribution after an infinitesimal
-   shift of probability toward that cell. The variance of these effects is
-
-   $$
-   \tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}.
-   $$
-
-   It determines the sampling variance of $\widehat V(P)$:
-
-   $$
-   \operatorname{Var}\{\widehat V(P)\}
-   \approx\frac{\tau^2(P)}{n_P}.
-   $$
-
-   Section 3 derives $g_P(x,y)$ and $\tau^2(P)$.
-
-4. **Convert that reliability into component degrees of freedom.**
-   Satterthwaite represents the sampling distribution of $\widehat V(P)$ by
-   a scaled chi-squared distribution because variance estimates are built
-   from squared sampling deviations, and sums of squared approximately normal
-   deviations naturally have chi-squared distributions. Specifically,
-
-   $$
-   \widehat V(P)
-   \quad\text{is modelled by}\quad
-   V(P)\frac{\chi^2_{\nu_V(P)}}{\nu_V(P)}.
-   $$
-
-   A chi-squared variable with $\nu_V(P)$ degrees of freedom has mean
-   $\nu_V(P)$ and variance $2\nu_V(P)$. The scaled model therefore has mean
-   $V(P)$ and variance
-
-   $$
-   \frac{2V(P)^2}{\nu_V(P)}.
-   $$
-
-   Matching that mean and variance to those of $\widehat V(P)$ gives the
-   Satterthwaite equation
-
-   $$
-   \boxed{
-   \nu_V(P)
-   =\frac{2\left[\operatorname E\{\widehat V(P)\}\right]^2}
-   {\operatorname{Var}\{\widehat V(P)\}}.
-   }
-   $$
-
-   Using
-
-   $$
-   \operatorname E\{\widehat V(P)\}\approx V(P),
-   \qquad
-   \operatorname{Var}\{\widehat V(P)\}
-   \approx\frac{\tau^2(P)}{n_P},
-   $$
-
-   gives
-
-   $$
-   \nu_V(P)
-   =\frac{2V(P)^2}{\tau^2(P)/n_P}
-   =\frac{2n_PV(P)^2}{\tau^2(P)}.
-   $$
-
-   Replacing $V(P)$ and $\tau^2(P)$ with their empirical estimates gives
-
-   $$
-   \widehat\nu_V(P)
-   =\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}.
-   $$
-
-   Section 4 derives this moment matching. Repeating it for $Q$ gives
-   $\widehat\nu_V(Q)$.
-
-5. **Complete the test.** Repeat the calculations for both populations, insert
-   the resulting quantities into the equations at the start of this roadmap,
-   and compare $T$ with $t_{\widehat\nu_{\mathrm{expanded}}}$. Section 5
-   derives the combined degrees of freedom and the final two-sided p-value.
-
-The remainder of the document proves each result used in this roadmap. The
-derivation uses natural logarithms, so MI is measured in nats.
-
-## 1. Estimate the Difference in Mutual Information
-
-The first step is to define the population quantity being compared and its
-sample estimate.
-
-### 1.1 Start with two independent contingency tables
-
-Let
+The two samples are
 
 $$
 Z_1^{(P)},\ldots,Z_{n_P}^{(P)}\overset{\mathrm{iid}}{\sim}P,
@@ -233,18 +71,11 @@ $$
 Z=(X,Y)\in\{1,\ldots,r\}\times\{1,\ldots,c\}.
 $$
 
-The samples are independent of one another. Within each sample, observations
-are independent draws from one fixed population table. These assumptions will
-later allow sampling variances to be added and covariance terms between
-observations to be removed.
-
-For population $P$, write
+For population $P$, write the joint and marginal probabilities as
 
 $$
 p_{ij}=\Pr_P(X=i,Y=j),
 $$
-
-with margins
 
 $$
 p_{i+}=\sum_jp_{ij},
@@ -252,19 +83,20 @@ p_{i+}=\sum_jp_{ij},
 p_{+j}=\sum_ip_{ij}.
 $$
 
-The same definitions apply to $Q$.
+The corresponding probabilities for population $Q$ are denoted by $q_{ij}$,
+$q_{i+}$, and $q_{+j}$.
 
-### 1.2 Calculate population MI from pointwise mutual information
+### 1.2 Define pointwise mutual information and population MI
 
-Under independence with the same margins, cell $(i,j)$ would have probability
-$p_{i+}p_{+j}$. Its pointwise mutual information (PMI) is therefore
+The pointwise mutual information (PMI) for cell $(i,j)$ under population $P$
+is
 
 $$
 \ell_P(i,j)
 =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
 $$
 
-Mutual information is the probability-weighted mean of these PMI values:
+Mutual information is the probability-weighted mean of the PMI values:
 
 $$
 \begin{aligned}
@@ -274,21 +106,20 @@ I(P)
 \end{aligned}
 $$
 
-This expectation form is important because the sampling error of plug-in MI
-will be determined by how individual PMI values vary around their mean.
+The same definitions give $\ell_Q(i,j)$ and $I(Q)$ for population $Q$.
 
-### 1.3 Estimate MI from the observed counts and correct its leading bias
+### 1.3 Estimate MI from each contingency table
 
-Let $N_{ij}^{(P)}$ be the observed counts from population $P$. The empirical
-probabilities are
+Let $N_{ij}^{(P)}$ be the observed count in cell $(i,j)$ of the first table.
+The empirical probabilities are
 
 $$
 \widehat p_{ij}=\frac{N_{ij}^{(P)}}{n_P},
 \qquad
-n_P=\sum_{i,j}N_{ij}^{(P)}.
+n_P=\sum_{i,j}N_{ij}^{(P)},
 $$
 
-Recalculate the margins from the same table:
+with empirical margins
 
 $$
 \widehat p_{i+}=\sum_j\widehat p_{ij},
@@ -296,7 +127,7 @@ $$
 \widehat p_{+j}=\sum_i\widehat p_{ij}.
 $$
 
-The empirical PMI values and plug-in MI are
+The empirical PMI values and plug-in MI estimate are
 
 $$
 \widehat\ell_P(i,j)
@@ -306,70 +137,500 @@ $$
 \right),
 $$
 
-and
-
 $$
 \widehat I(P)
 =\sum_{i,j}\widehat p_{ij}\widehat\ell_P(i,j).
 $$
 
+The second table gives $\widehat I(Q)$ by the same calculation with its
+empirical probabilities $\widehat q_{ij}$. Zero-probability terms contribute
+zero under the convention $0\log 0=0$.
+
+### 1.4 Correct the leading plug-in bias
+
 For a fixed $r\times c$ alphabet with full population support, the leading
-plug-in MI bias is
+plug-in bias is
 
 $$
 \operatorname{Bias}\{\widehat I(P)\}
 \approx\frac{(r-1)(c-1)}{2n_P}.
 $$
 
-This follows from the usual leading plug-in entropy bias applied to
-$I(X;Y)=H(X)+H(Y)-H(X,Y)$. Define
+Define
 
 $$
 d=(r-1)(c-1).
 $$
 
-The bias-corrected estimates are
+The bias-corrected MI estimates are
 
 $$
 \widehat I_{\mathrm{BC}}(P)
 =\widehat I(P)-\frac{d}{2n_P},
 $$
 
-and
-
 $$
 \widehat I_{\mathrm{BC}}(Q)
 =\widehat I(Q)-\frac{d}{2n_Q}.
 $$
 
-The estimated population difference is
+The estimated MI difference is therefore
 
 $$
-\widehat I_{\mathrm{BC}}(P)
--\widehat I_{\mathrm{BC}}(Q).
+\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q).
 $$
 
-The bias correction improves the centre of the numerator. At fixed sample
-sizes and dimensions it is a constant, so the first-order sampling variance
-remains unchanged.
+At fixed sample sizes and table dimensions, the bias corrections are
+constants. They change the centre of the estimated difference while leaving
+its first-order sampling variance unchanged.
 
-## 2. Calculate How Much Estimated MI Varies Between Samples
+## 2. State the Welch-Satterthwaite Equation We Need to Complete
 
-To standardize the MI difference, we calculate its sampling variance. Because
-MI is a nonlinear functional of the whole table, this variance is obtained
-from its influence function: the first-order change in MI caused by one
-possible observation.
+The general construction follows the
+[Welch-Satterthwaite equation](https://en.wikipedia.org/wiki/Welch%E2%80%93Satterthwaite_equation).
+Suppose $s_1^2,\ldots,s_m^2$ are independent estimated variances. The $i$th
+variance is multiplied by a positive weight $k_i$ and has component degrees
+of freedom $\nu_i$. Their weighted sum is
 
-### 2.1 Represent the effect of adding an observation to one cell
+$$
+\chi'=\sum_{i=1}^m k_i s_i^2.
+$$
 
-Fix a cell $z=(x,y)$ and define the probability-preserving path
+Welch-Satterthwaite approximates the sampling distribution of this sum by one
+scaled chi-squared distribution. Its effective degrees of freedom are
+
+$$
+\boxed{
+\nu_{\chi'}
+\approx
+\frac{
+\left(\displaystyle\sum_{i=1}^m k_i s_i^2\right)^2
+}{
+\displaystyle\sum_{i=1}^m
+\frac{(k_i s_i^2)^2}{\nu_i}
+}.
+}
+$$
+
+For the present problem, the squared standard error of the MI difference has
+one contribution from population $P$ and one from population $Q$. There are
+therefore two terms, so the equation becomes
+
+$$
+\boxed{
+\nu_{\mathrm{expanded}}
+=
+\frac{(k_Ps_P^2+k_Qs_Q^2)^2}
+{(k_Ps_P^2)^2/\nu_P+(k_Qs_Q^2)^2/\nu_Q}.
+}
+$$
+
+Evaluating this expression requires the variance estimates $s_P^2$ and
+$s_Q^2$, their weights $k_P$ and $k_Q$, and their component degrees of
+freedom $\nu_P$ and $\nu_Q$.
+
+## 3. Calculate the Variance Contributions and Weights
+
+Population $P$ contributes the term $k_Ps_P^2$ to the squared standard
+error. We will show that
+
+$$
+\boxed{
+k_Ps_P^2
+=\widehat{\operatorname{Var}}\{\widehat I(P)\}
+=\frac{\widehat V(P)}{n_P},
+}
+$$
+
+where $\widehat V(P)$ estimates the variance of the pointwise mutual
+information values and $n_P$ is the sample size.
+
+### 3.1 Calculate the variance of pointwise mutual information
+
+For a random observation $(X,Y)\sim P$, the pointwise mutual information is
+$\ell_P(X,Y)$. Its first moment is
+
+$$
+\begin{aligned}
+\operatorname E_P\{\ell_P(X,Y)\}
+&=\sum_{i,j}p_{ij}\ell_P(i,j)\\
+&=I(P),
+\end{aligned}
+$$
+
+and its second moment is
+
+$$
+\operatorname E_P\{\ell_P(X,Y)^2\}
+=\sum_{i,j}p_{ij}\ell_P(i,j)^2.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+V(P)
+&=\operatorname{Var}_P\{\ell_P(X,Y)\}\\
+&=\operatorname E_P\{\ell_P(X,Y)^2\}
+-\left[\operatorname E_P\{\ell_P(X,Y)\}\right]^2\\
+&=\sum_{i,j}p_{ij}\ell_P(i,j)^2-I(P)^2\\
+&=\sum_{i,j}p_{ij}\ell_P(i,j)^2
+-2I(P)\sum_{i,j}p_{ij}\ell_P(i,j)
++I(P)^2\sum_{i,j}p_{ij}\\
+&=\sum_{i,j}p_{ij}
+\left\{\ell_P(i,j)^2-2I(P)\ell_P(i,j)+I(P)^2\right\}\\
+&=\boxed{
+\sum_{i,j}p_{ij}\{\ell_P(i,j)-I(P)\}^2
+}.
+\end{aligned}
+$$
+
+### 3.2 Calculate the sampling variance of $\widehat I(P)$
+
+The target is
+
+$$
+\operatorname{Var}\{\widehat I(P)\}
+=\operatorname{Var}\{\widehat I(P)-I(P)\},
+$$
+
+because $I(P)$ is a fixed population value. We first express the estimation
+error $\widehat I(P)-I(P)$ in terms of the cell-probability errors. Write MI
+as
+
+$$
+I(P)
+=\sum_{i,j}p_{ij}\log p_{ij}
+-\sum_i p_{i+}\log p_{i+}
+-\sum_j p_{+j}\log p_{+j}.
+$$
+
+Using $(u\log u)'=\log u+1$, the first-order Taylor expansion of the three
+sums is
+
+$$
+\begin{aligned}
+\widehat I(P)-I(P)
+&\approx
+\sum_{i,j}(\log p_{ij}+1)(\widehat p_{ij}-p_{ij})\\
+&\quad-\sum_i(\log p_{i+}+1)(\widehat p_{i+}-p_{i+})\\
+&\quad-\sum_j(\log p_{+j}+1)(\widehat p_{+j}-p_{+j}).
+\end{aligned}
+$$
+
+The row- and column-margin errors are sums of the cell errors:
+
+$$
+\widehat p_{i+}-p_{i+}
+=\sum_j(\widehat p_{ij}-p_{ij}),
+\qquad
+\widehat p_{+j}-p_{+j}
+=\sum_i(\widehat p_{ij}-p_{ij}).
+$$
+
+Substituting these margin errors and collecting the coefficient of each
+$\widehat p_{ij}-p_{ij}$ gives
+
+$$
+\begin{aligned}
+\widehat I(P)-I(P)
+&\approx\sum_{i,j}
+\left\{
+(\log p_{ij}+1)
+-(\log p_{i+}+1)
+-(\log p_{+j}+1)
+\right\}
+(\widehat p_{ij}-p_{ij})\\
+&=\sum_{i,j}\{\ell_P(i,j)-1\}
+(\widehat p_{ij}-p_{ij}).
+\end{aligned}
+$$
+
+Both probability tables sum to one, so
+
+$$
+\sum_{i,j}\{\widehat p_{ij}-p_{ij}\}=1-1=0.
+$$
+
+The constant $-1$ therefore contributes zero, leaving
+
+$$
+\widehat I(P)-I(P)
+\approx\sum_{i,j}\ell_P(i,j)(\widehat p_{ij}-p_{ij}).
+$$
+
+Each empirical cell probability is a sample average, so
+
+$$
+\widehat p_{ij}-p_{ij}
+=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left[\mathbf 1\{Z_a^{(P)}=(i,j)\}-p_{ij}\right].
+$$
+
+Substituting this expression gives
+
+$$
+\begin{aligned}
+\widehat I(P)-I(P)
+&\approx\sum_{i,j}\ell_P(i,j)
+\left\{
+\frac{1}{n_P}\sum_{a=1}^{n_P}
+[\mathbf 1\{Z_a^{(P)}=(i,j)\}-p_{ij}]
+\right\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left\{
+\sum_{i,j}\ell_P(i,j)\mathbf 1\{Z_a^{(P)}=(i,j)\}
+-\sum_{i,j}p_{ij}\ell_P(i,j)
+\right\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\{\ell_P(Z_a^{(P)})-I(P)\}.
+\end{aligned}
+$$
+
+The observations are independent, and each centred PMI value has variance
+$V(P)$. Thus
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat I(P)\}
+&\approx
+\operatorname{Var}\left[
+\frac{1}{n_P}\sum_{a=1}^{n_P}
+\{\ell_P(Z_a^{(P)})-I(P)\}
+\right]\\
+&=\frac{1}{n_P^2}
+\sum_{a=1}^{n_P}
+\operatorname{Var}_P\{\ell_P(Z_a^{(P)})-I(P)\}\\
+&=\frac{1}{n_P^2}
+\sum_{a=1}^{n_P}
+\operatorname{Var}_P\{\ell_P(Z_a^{(P)})\}\\
+&=\frac{1}{n_P^2}
+\sum_{a=1}^{n_P}V(P)\\
+&=\frac{1}{n_P^2}\,n_PV(P)\\
+&=\boxed{\frac{V(P)}{n_P}}.
+\end{aligned}
+$$
+
+### 3.3 Estimate the variance and identify $s_P^2$ and $k_P$
+
+The observed table estimates $V(P)$ by
+
+$$
+\widehat V(P)
+=\sum_{i,j}\widehat p_{ij}
+\{\widehat\ell_P(i,j)-\widehat I(P)\}^2.
+$$
+
+The estimated sampling variance is therefore
+
+$$
+\widehat{\operatorname{Var}}\{\widehat I(P)\}
+=\frac{\widehat V(P)}{n_P}.
+$$
+
+Comparing this with the generic component $k_Ps_P^2$ gives
+
+$$
+\boxed{s_P^2=\widehat V(P),}
+\qquad
+\boxed{k_P=\frac{1}{n_P},}
+$$
+
+and therefore
+
+$$
+\boxed{
+k_Ps_P^2
+=\widehat{\operatorname{Var}}\{\widehat I(P)\}
+=\frac{\widehat V(P)}{n_P}.
+}
+$$
+
+### 3.4 Combine the two variance contributions
+
+The same calculation for the second population gives
+
+$$
+k_Qs_Q^2=\frac{\widehat V(Q)}{n_Q}.
+$$
+
+Because the two samples are independent,
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat I(P)-\widehat I(Q)\}
+&=\operatorname{Var}\{\widehat I(P)\}
++\operatorname{Var}\{\widehat I(Q)\}\\
+&\approx\frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
+\end{aligned}
+$$
+
+The squared standard error is consequently
+
+$$
+\boxed{
+\widehat{\operatorname{SE}}^2
+=\frac{\widehat V(P)}{n_P}
++\frac{\widehat V(Q)}{n_Q}.
+}
+$$
+
+The Welch-Satterthwaite equation becomes
+
+$$
+\boxed{
+\nu_{\mathrm{expanded}}
+=\frac{
+\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
+}{
+\left\{\widehat V(P)/n_P\right\}^2/\nu_P
++\left\{\widehat V(Q)/n_Q\right\}^2/\nu_Q
+}.
+}
+$$
+
+## 4. Derive the Component Degrees of Freedom $\nu_P$ and $\nu_Q$
+
+Section 3 produced the estimated squared standard error
+
+$$
+\widehat{\operatorname{SE}}^2
+=\frac{\widehat V(P)}{n_P}+\frac{\widehat V(Q)}{n_Q}.
+$$
+
+Because $\widehat V(P)$ and $\widehat V(Q)$ are estimated from data, their
+sampling uncertainty must be reflected in the Student reference
+distribution. The component degrees of freedom $\nu_P$ and $\nu_Q$ provide
+that adjustment. We derive $\nu_P$ first; the same calculation then gives
+$\nu_Q$.
+
+The derivation has four stages:
+
+1. Use Satterthwaite moment matching to identify which properties of
+   $\widehat V(P)$ determine $\nu_P$.
+2. Derive how one observation in cell $(x,y)$ changes $V(P)$. This
+   observation-level change is denoted by $g_P(x,y)$.
+3. Use the variability of $g_P(X,Y)$ to obtain the sampling variance of
+   $\widehat V(P)$ and hence $\nu_P$.
+4. Estimate the required quantities from the two observed tables and combine
+   $\nu_P$ and $\nu_Q$ in the Welch-Satterthwaite equation.
+
+### 4.1 Express $\nu_P$ using the moments of $\widehat V(P)$
+
+The first step is to express $\nu_P$ in terms of the mean and sampling
+variance of $\widehat V(P)$. Satterthwaite approximates this positive variance
+estimate by the scaled chi-squared model
+
+$$
+\widehat V(P)
+\quad\text{is modelled by}\quad
+\frac{\operatorname E\{\widehat V(P)\}}{\nu_P}
+\chi^2_{\nu_P}.
+$$
+
+A variance estimate is nonnegative, and ordinary sample variances have exact
+scaled chi-squared distributions under normal sampling. Satterthwaite uses
+the same family as a working approximation for a more general variance
+estimate.
+
+For a chi-squared variable with $\nu_P$ degrees of freedom,
+
+$$
+\operatorname E\{\chi^2_{\nu_P}\}=\nu_P,
+\qquad
+\operatorname{Var}\{\chi^2_{\nu_P}\}=2\nu_P.
+$$
+
+The scale factor is chosen so that the model has the same mean as
+$\widehat V(P)$:
+
+$$
+\operatorname E\left\{
+\frac{\operatorname E\{\widehat V(P)\}}{\nu_P}
+\chi^2_{\nu_P}
+\right\}
+=\frac{\operatorname E\{\widehat V(P)\}}{\nu_P}\nu_P
+=\operatorname E\{\widehat V(P)\}.
+$$
+
+Its variance is
+
+$$
+\begin{aligned}
+\operatorname{Var}\left\{
+\frac{\operatorname E\{\widehat V(P)\}}{\nu_P}
+\chi^2_{\nu_P}
+\right\}
+&=\frac{\left[\operatorname E\{\widehat V(P)\}\right]^2}
+{\nu_P^2}
+2\nu_P\\
+&=\frac{2\left[\operatorname E\{\widehat V(P)\}\right]^2}
+{\nu_P}.
+\end{aligned}
+$$
+
+The means already agree. Equating the model variance to the sampling variance
+of $\widehat V(P)$ gives
+
+$$
+\frac{2\left[\operatorname E\{\widehat V(P)\}\right]^2}
+{\nu_P}
+=\operatorname{Var}\{\widehat V(P)\},
+$$
+
+and hence
+
+$$
+\nu_P
+=\frac{
+2\left[\operatorname E\{\widehat V(P)\}\right]^2
+}{
+\operatorname{Var}\{\widehat V(P)\}
+}.
+$$
+
+The first-order mean is $\operatorname E\{\widehat V(P)\}\approx V(P)$.
+The remaining quantity required by this equation is therefore
+$\operatorname{Var}\{\widehat V(P)\}$.
+
+### 4.2 Plan the calculation of $\operatorname{Var}\{\widehat V(P)\}$
+
+The target is
+
+$$
+\operatorname{Var}\{\widehat V(P)\}
+=\operatorname{Var}\{\widehat V(P)-V(P)\},
+$$
+
+because $V(P)$ is a fixed population quantity. To first order, this estimation
+error is an average of the effects of individual observations. The next
+subsections derive one such effect and then calculate its variance.
+
+### 4.3 Represent the effect of one observation on the table
+
+An observation affects $\widehat V(P)$ by changing the empirical cell
+probabilities. To represent the corresponding population-level change for an
+observation in cell $(x,y)$, define the perturbation
 
 $$
 P_\varepsilon
-=(1-\varepsilon)P+\varepsilon\delta_{(x,y)},
+=(1-\varepsilon)P+\varepsilon\delta_{(x,y)}.
 $$
 
-where $\delta_{(x,y)}$ puts probability one on $(x,y)$. Thus
+This shifts an $\varepsilon$-fraction of the probability toward cell $(x,y)$;
+$\varepsilon=0$ gives the original distribution. Define the resulting
+first-order change in $V(P)$ by
+
+$$
+g_P(x,y)
+=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}.
+$$
+
+Calculating $g_P(x,y)$ requires the resulting changes in the cell
+probabilities, PMI values, and MI. This subsection supplies the probability
+changes. For any cell $(i,j)$,
 
 $$
 p_{ij}(\varepsilon)
@@ -377,60 +638,39 @@ p_{ij}(\varepsilon)
 +\varepsilon\mathbf 1\{i=x,j=y\}.
 $$
 
-This path represents the infinitesimal effect of adding an observation at
-$(x,y)$ while preserving total probability. The influence function of a
-functional $F$ is the directional derivative
+Differentiating the joint probability and its margins at $\varepsilon=0$
+gives
 
 $$
-\operatorname{IF}_{F,P}(x,y)
-=\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}F(P_\varepsilon)
-\right|_{\varepsilon=0}.
-$$
-
-The derivative is evaluated at zero because the required sensitivity is local
-to the original population $P$.
-
-Differentiating the cell and marginal probabilities gives
-
-$$
+\begin{aligned}
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{i=x,j=y\}-p_{ij},
-$$
-
-$$
+&=\mathbf 1\{i=x,j=y\}-p_{ij},\\
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{i+}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{i=x\}-p_{i+},
-$$
-
-and
-
-$$
+&=\mathbf 1\{i=x\}-p_{i+},\\
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{+j}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{j=y\}-p_{+j}.
+&=\mathbf 1\{j=y\}-p_{+j}.
+\end{aligned}
 $$
 
-The marginal derivatives are required because changing one joint cell changes
-the independence baseline for its entire row and column.
+### 4.4 Calculate the resulting change in each PMI value
 
-### 2.2 Calculate how that observation changes the PMI values
-
-Along the path,
+The PMI derivative is needed because every term in $V(P)$ contains a PMI
+value. The PMI in cell $(i,j)$ along the perturbation is
 
 $$
 \ell_{P_\varepsilon}(i,j)
 =\log p_{ij}(\varepsilon)
 -\log p_{i+}(\varepsilon)
--\log p_{+j}(\varepsilon).
+-\log p_{+j}(\varepsilon),
 $$
 
-Using $\mathrm d\log u/\mathrm d\varepsilon=u'/u$,
+so applying $\mathrm d(\log u)/\mathrm d\varepsilon=u'/u$ gives
 
 $$
 \begin{aligned}
@@ -449,194 +689,135 @@ $$
 \end{aligned}
 $$
 
-### 2.3 Calculate how that observation changes MI
+### 4.5 Calculate the resulting change in MI
 
-Since
+The MI derivative is needed because $I(P)$ is the mean PMI and therefore
+appears in $V(P)$. Along the same path, MI is
 
 $$
 I(P_\varepsilon)
-=\sum_{i,j}p_{ij}(\varepsilon)
-\ell_{P_\varepsilon}(i,j),
+=\sum_{i,j}p_{ij}(\varepsilon)\log p_{ij}(\varepsilon)
+-\sum_i p_{i+}(\varepsilon)\log p_{i+}(\varepsilon)
+-\sum_j p_{+j}(\varepsilon)\log p_{+j}(\varepsilon).
 $$
 
-the product rule gives
+Differentiating the three sums using $(u\log u)'=\log u+1$ gives
 
 $$
 \begin{aligned}
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}
+&=\sum_{i,j}(\log p_{ij}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&\quad-\sum_i(\log p_{i+}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{i+}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&\quad-\sum_j(\log p_{+j}+1)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{+j}(\varepsilon)
+\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+Each marginal change is the sum of its corresponding cell changes. Rewriting
+all three terms as sums over cells and collecting their coefficients gives
+
+$$
+\begin{aligned}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}
 &=\sum_{i,j}
-\{\mathbf 1\{i=x,j=y\}-p_{ij}\}\ell_P(i,j)\\
-&\quad+\sum_{i,j}p_{ij}\ell'_P(i,j;x,y).
+\{(\log p_{ij}+1)-(\log p_{i+}+1)-(\log p_{+j}+1)\}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\sum_{i,j}
+\{\ell_P(i,j)-1\}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}.
 \end{aligned}
 $$
 
-The first sum is
+Since $\sum_{i,j}p_{ij}(\varepsilon)=1$,
+
+$$
+\sum_{i,j}\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+=\frac{\mathrm d}{\mathrm d\varepsilon}
+\sum_{i,j}p_{ij}(\varepsilon)
+=\frac{\mathrm d}{\mathrm d\varepsilon}1
+=0.
+$$
+
+The constant $-1$ therefore drops out. Substituting the cell-probability
+derivative gives
 
 $$
 \begin{aligned}
-\sum_{i,j}
-\{\mathbf 1\{i=x,j=y\}-p_{ij}\}\ell_P(i,j)
-&=\ell_P(x,y)-\sum_{i,j}p_{ij}\ell_P(i,j)\\
-&=\ell_P(x,y)-I(P).
-\end{aligned}
-$$
-
-Substituting the PMI derivative into the second sum gives
-
-$$
-\begin{aligned}
-\sum_{i,j}p_{ij}\ell'_P(i,j;x,y)
-&=\sum_{i,j}p_{ij}
-\left\{
-\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
--\frac{\mathbf 1\{i=x\}}{p_{i+}}
--\frac{\mathbf 1\{j=y\}}{p_{+j}}
-+1
-\right\}\\
-&=1
--\frac{\sum_jp_{xj}}{p_{x+}}
--\frac{\sum_ip_{iy}}{p_{+y}}
-+\sum_{i,j}p_{ij}\\
-&=1-1-1+1\\
-&=0.
-\end{aligned}
-$$
-
-Therefore, the first-order change in MI produced by an observation in cell
-$(x,y)$ is
-
-$$
-\boxed{
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}
-=\ell_P(x,y)-I(P).
-}
-$$
-
-This centred PMI value is the influence function of MI.
-
-### 2.4 Average the observation effects to obtain the variance of estimated MI
-
-The probability-weighted variance of PMI is
-
-$$
-\begin{aligned}
-V(P)
-&=\operatorname{Var}_P\{\ell_P(X,Y)\}\\
-&=\sum_{i,j}p_{ij}\{\ell_P(i,j)-I(P)\}^2.
+&=\sum_{i,j}\ell_P(i,j)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\sum_{i,j}\ell_P(i,j)
+\{\mathbf 1\{i=x,j=y\}-p_{ij}\}\\
+&=\ell_P(x,y)-\sum_{i,j}p_{ij}\ell_P(i,j)\\
+&=\boxed{\ell_P(x,y)-I(P)}.
 \end{aligned}
 $$
 
-Under a fixed finite alphabet, positive support, and finite nonzero $V(P)$,
-the functional delta method gives
+### 4.6 Rewrite $V(P)$ in a form that can be differentiated
+
+Along the perturbation,
 
 $$
-\widehat I(P)-I(P)
-=\frac{1}{n_P}\sum_{k=1}^{n_P}
-\{\ell_P(Z_k^{(P)})-I(P)\}
-+o_p(n_P^{-1/2}).
+V(P_\varepsilon)=M_2(P_\varepsilon)-I(P_\varepsilon)^2,
 $$
 
-The leading term is an average of iid, mean-zero contributions. Hence
-
-$$
-\begin{aligned}
-\operatorname{Var}\{\widehat I(P)\}
-&\approx
-\operatorname{Var}\left\{
-\frac{1}{n_P}\sum_{k=1}^{n_P}
-\{\ell_P(Z_k^{(P)})-I(P)\}
-\right\}\\
-&=\frac{1}{n_P^2}
-\sum_{k=1}^{n_P}
-\operatorname{Var}_P\{\ell_P(Z_k^{(P)})-I(P)\}\\
-&=\frac{1}{n_P^2}n_PV(P)\\
-&=\boxed{\frac{V(P)}{n_P}}.
-\end{aligned}
-$$
-
-The plug-in estimate of $V(P)$ is
-
-$$
-\widehat V(P)
-=\sum_{i,j}\widehat p_{ij}
-\{\widehat\ell_P(i,j)-\widehat I(P)\}^2.
-$$
-
-Repeating the calculation for $Q$ and using independence between the two
-samples gives
-
-$$
-\widehat{\operatorname{SE}}^2
-=\frac{\widehat V(P)}{n_P}
-+\frac{\widehat V(Q)}{n_Q}.
-$$
-
-The standardized statistic is therefore
-
-$$
-T
-=\frac{
-\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
-}
-{\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}}.
-$$
-
-This completes the usual normal-Wald construction. Expanded Welch begins at
-the point where normal Wald stops: it examines how much
-$\widehat V(P)$ and $\widehat V(Q)$ themselves fluctuate across samples.
-
-## 3. Calculate How Much the Estimated MI Variance Changes Between Samples
-
-Satterthwaite needs the first two moments of each estimated variance
-component. To first order,
-
-$$
-\operatorname E\{\widehat V(P)\}\approx V(P).
-$$
-
-The missing quantity is
-
-$$
-\operatorname{Var}\{\widehat V(P)\}.
-$$
-
-We obtain it by differentiating the variance functional $V(P)$ along the same
-cell-contamination path. The resulting influence function is denoted
-$g_P(x,y)$.
-
-### 3.1 Rewrite $V(P)$ in a form that can be differentiated
-
-Define
-
-$$
-M_2(P)
-=\sum_{i,j}p_{ij}\ell_P(i,j)^2.
-$$
-
-Then
-
-$$
-V(P)=M_2(P)-I(P)^2.
-$$
-
-Writing the variance in this two-moment form allows it to be differentiated
-directly with the product and chain rules.
-
-### 3.2 Calculate how one observation changes the second moment
-
-Along the path,
+where
 
 $$
 M_2(P_\varepsilon)
-=\sum_{i,j}p_{ij}(\varepsilon)
-\ell_{P_\varepsilon}(i,j)^2.
+=\operatorname E_{P_\varepsilon}
+\{\ell_{P_\varepsilon}(X,Y)^2\}
+=\sum_{i,j}p_{ij}(\varepsilon)\ell_{P_\varepsilon}(i,j)^2.
 $$
 
-Differentiating both the probability weight and the squared PMI value gives
+We now differentiate the variance identity along the perturbation, which we
+define as $g_P(x,y)$:
+
+$$
+\begin{aligned}
+g_P(x,y)
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\{M_2(P_\varepsilon)-I(P_\varepsilon)^2\}
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
+\right|_{\varepsilon=0}
+-\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)^2
+\right|_{\varepsilon=0}\\
+&=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
+\right|_{\varepsilon=0}
+-2I(P)
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\right|_{\varepsilon=0}.
+\end{aligned}
+$$
+
+Section 4.5 calculated
+$\left.\mathrm d I(P_\varepsilon)/\mathrm d\varepsilon\right|_{\varepsilon=0}$,
+so the only remaining quantity is
+$\left.\mathrm d M_2(P_\varepsilon)/\mathrm d\varepsilon\right|_{\varepsilon=0}$.
+
+### 4.7 Calculate the change in the second PMI moment
+
+Applying the product rule gives
 
 $$
 \begin{aligned}
@@ -650,461 +831,363 @@ $$
 \end{aligned}
 $$
 
-The first sum is
-
-$$
-\ell_P(x,y)^2-M_2(P).
-$$
-
-For the second sum, define the probability-weighted PMI means in row
-$x$ and column $y$:
-
-$$
-R_P(x)
-=\frac{\sum_jp_{xj}\ell_P(x,j)}{p_{x+}},
-$$
-
-and
-
-$$
-C_P(y)
-=\frac{\sum_ip_{iy}\ell_P(i,y)}{p_{+y}}.
-$$
-
-Substituting the PMI derivative from Section 2.2 gives
+The first sum comes from the changing probability weights:
 
 $$
 \begin{aligned}
-\sum_{i,j}p_{ij}\ell_P(i,j)\ell'_P(i,j;x,y)
-&=\sum_{i,j}p_{ij}\ell_P(i,j)
+\sum_{i,j}
+\{\mathbf 1\{i=x,j=y\}-p_{ij}\}\ell_P(i,j)^2
+&=\ell_P(x,y)^2
+-\sum_{i,j}p_{ij}\ell_P(i,j)^2\\
+&=\ell_P(x,y)^2-M_2(P).
+\end{aligned}
+$$
+
+The second sum comes from the changing PMI values. Inserting the PMI
+derivative gives
+
+$$
+\begin{aligned}
+&\sum_{i,j}p_{ij}\ell_P(i,j)\ell'_P(i,j;x,y)\\
+&\quad=\sum_{i,j}p_{ij}\ell_P(i,j)
 \left\{
 \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
 -\frac{\mathbf 1\{i=x\}}{p_{i+}}
 -\frac{\mathbf 1\{j=y\}}{p_{+j}}
 +1
 \right\}\\
-&=\ell_P(x,y)
+&\quad=\ell_P(x,y)
 -\frac{\sum_jp_{xj}\ell_P(x,j)}{p_{x+}}
 -\frac{\sum_ip_{iy}\ell_P(i,y)}{p_{+y}}
 +\sum_{i,j}p_{ij}\ell_P(i,j)\\
-&=\ell_P(x,y)-R_P(x)-C_P(y)+I(P).
+&\quad=\ell_P(x,y)
+-\operatorname E_P\{\ell_P(X,Y)\mid X=x\}
+-\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}
++I(P).
 \end{aligned}
 $$
 
-Therefore,
+Combining the two product-rule terms gives
 
 $$
-\boxed{
 \begin{aligned}
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
 \right|_{\varepsilon=0}
 &=\ell_P(x,y)^2-M_2(P)\\
-&\quad+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}.
+&\quad+2\bigl[\ell_P(x,y)
+-\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\qquad-\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}+I(P)\bigr].
 \end{aligned}
-}
 $$
 
-The row and column terms account for the changes in marginal probabilities
-produced by the cell perturbation.
+### 4.8 Combine the two changes to obtain $g_P(x,y)$
 
-### 3.3 Combine the derivatives to obtain $g_P(x,y)$
-
-Define the influence function of the MI variance functional:
+From Section 4.6,
 
 $$
 g_P(x,y)
 =\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
-\right|_{\varepsilon=0}.
-$$
-
-Since $V(P)=M_2(P)-I(P)^2$,
-
-$$
-\begin{aligned}
-g_P(x,y)
-&=\left.
 \frac{\mathrm d}{\mathrm d\varepsilon}M_2(P_\varepsilon)
-\right|_{\varepsilon=0}\\
-&\quad-2I(P)
-\left.
+\right|_{\varepsilon=0}
+-2I(P)\left.
 \frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}.
-\end{aligned}
 $$
 
-Substituting the two derivatives gives
+Substituting the two derivatives in this order gives
 
 $$
 \begin{aligned}
 g_P(x,y)
 &=\ell_P(x,y)^2-M_2(P)\\
-&\quad+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}\\
+&\quad+2\ell_P(x,y)+2I(P)\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}\\
 &\quad-2I(P)\{\ell_P(x,y)-I(P)\}.
 \end{aligned}
 $$
 
-The first and third lines simplify as follows:
+The first and final lines simplify as
 
 $$
 \begin{aligned}
 &\ell_P(x,y)^2-M_2(P)
 -2I(P)\{\ell_P(x,y)-I(P)\}\\
-&\qquad
-=\{\ell_P(x,y)-I(P)\}^2
+&\qquad=\{\ell_P(x,y)-I(P)\}^2
 -\{M_2(P)-I(P)^2\}\\
-&\qquad
-=\{\ell_P(x,y)-I(P)\}^2-V(P).
+&\qquad=\{\ell_P(x,y)-I(P)\}^2-V(P).
 \end{aligned}
 $$
 
-Hence
+Therefore,
 
 $$
 \boxed{
+\begin{aligned}
 g_P(x,y)
-=\{\ell_P(x,y)-I(P)\}^2-V(P)
-+2\{\ell_P(x,y)-R_P(x)-C_P(y)+I(P)\}.
+&=\{\ell_P(x,y)-I(P)\}^2-V(P)\\
+&\quad+2\ell_P(x,y)+2I(P)\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\quad-2\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
+\end{aligned}
 }
 $$
 
-The first part measures the direct change in squared MI influence. The second
-part measures the indirect change caused by the row and column margins. Their
-sum is the complete first-order sensitivity of the MI variance.
+### 4.9 Calculate the variability of the one-observation effect
 
-The population mean of $g_P$ is zero. The first part has mean zero by the
-definition of $V(P)$, while
+Define the variance of these observation-level effects by
 
 $$
-\operatorname E_P\{\ell_P(X,Y)\}
--\operatorname E_P\{R_P(X)\}
--\operatorname E_P\{C_P(Y)\}
-+I(P)
-=I(P)-I(P)-I(P)+I(P)=0.
+\boxed{
+\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}.
+}
 $$
 
-### 3.4 Average the $g_P$ values to obtain the variance of $\widehat V(P)$
+Thus $\tau^2(P)$ measures the variability of the observation-level changes
+in $V(P)$.
 
-Define
+To calculate it, use
 
 $$
 \tau^2(P)
-=\operatorname{Var}_P\{g_P(X,Y)\}.
+=\operatorname E_P\{g_P(X,Y)^2\}
+-\left[\operatorname E_P\{g_P(X,Y)\}\right]^2.
 $$
 
-The functional delta method now gives
+We first calculate $\operatorname E_P\{g_P(X,Y)\}$ by taking the expectation
+of each of the four lines in $g_P(X,Y)$.
 
-$$
-\widehat V(P)-V(P)
-=\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
-+o_p(n_P^{-1/2}).
-$$
-
-Because the observations are iid and $g_P$ has mean zero,
+The expectation of the first line is
 
 $$
 \begin{aligned}
-\operatorname{Var}\{\widehat V(P)\}
-&\approx
-\operatorname{Var}\left\{
-\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
-\right\}\\
-&=\frac{1}{n_P^2}
-\left[
-\sum_{k=1}^{n_P}\operatorname{Var}_P\{g_P(Z_k^{(P)})\}
-+2\sum_{1\le k<l\le n_P}
-\operatorname{Cov}_P\{g_P(Z_k^{(P)}),g_P(Z_l^{(P)})\}
+&\operatorname E_P\left[
+\{\ell_P(X,Y)-I(P)\}^2-V(P)
 \right]\\
-&=\frac{1}{n_P^2}\sum_{k=1}^{n_P}\tau^2(P)\\
-&=\frac{1}{n_P^2}n_P\tau^2(P)\\
-&=\boxed{\frac{\tau^2(P)}{n_P}}.
+&\qquad=\operatorname E_P\left[
+\{\ell_P(X,Y)-I(P)\}^2
+\right]-V(P)\\
+&\qquad=\operatorname{Var}_P\{\ell_P(X,Y)\}-V(P)\\
+&\qquad=V(P)-V(P)\\
+&\qquad=0.
 \end{aligned}
 $$
 
-The covariance terms vanish because the observations are independent. This is
-the quantity the derivation set out to find. We can now convert denominator
-uncertainty into Satterthwaite degrees of freedom.
-
-## 4. Use the Uncertainty of $\widehat V(P)$ to Choose Degrees of Freedom
-
-We have established the first-order moments
-
-$$
-\operatorname E\{\widehat V(P)\}\approx V(P),
-$$
-
-and
-
-$$
-\operatorname{Var}\{\widehat V(P)\}
-\approx\frac{\tau^2(P)}{n_P}.
-$$
-
-Satterthwaite represents the finite-sample distribution of $\widehat V(P)$ by
-a positive distribution with these same two moments.
-
-### 4.1 Why approximate $\widehat V(P)$ with a scaled chi-squared distribution?
-
-The chi-squared model comes from the classical structure of variance
-estimation. For normal observations, a sample variance is a sum of squared
-independent standardized residuals, giving the exact result
-
-$$
-\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.
-$$
-
-More general estimated variances often behave like nonnegative quadratic
-forms in approximately Gaussian estimation errors. Such a quadratic form is
-typically a weighted sum of chi-squared components. Satterthwaite represents
-that weighted sum by a single scaled chi-squared variable whose mean and
-variance agree with the target variance estimate.
-
-For the MI variance estimator, this scaled chi-squared distribution is a
-moment-matched working model. It has nonnegative support, allows finite-sample
-right skewness, becomes more symmetric as its degrees of freedom increase,
-and connects denominator uncertainty to a Student reference.
-
-### 4.2 Choose the scale so the means match
-
-Let
-
-$$
-X\sim\chi^2_{\nu_V(P)}.
-$$
-
-Then
-
-$$
-\operatorname E(X)=\nu_V(P),
-\qquad
-\operatorname{Var}(X)=2\nu_V(P).
-$$
-
-Dividing by $\nu_V(P)$ gives a variable with mean one. Multiplying by $V(P)$
-therefore gives
-
-$$
-W_P
-=V(P)\frac{X}{\nu_V(P)},
-$$
-
-with
+The expectation of the second line is
 
 $$
 \begin{aligned}
-\operatorname E(W_P)
-&=V(P)\frac{\operatorname E(X)}{\nu_V(P)}\\
-&=V(P).
+\operatorname E_P\{2\ell_P(X,Y)+2I(P)\}
+&=2I(P)+2I(P)\\
+&=4I(P).
 \end{aligned}
 $$
 
-Satterthwaite uses the distribution of $W_P$ as the working distribution for
-$\widehat V(P)$.
-
-### 4.3 Choose the degrees of freedom so the variances match
-
-The variance of $W_P$ is
+The expectation of the third line is
 
 $$
 \begin{aligned}
-\operatorname{Var}(W_P)
-&=V(P)^2
-\operatorname{Var}\left\{\frac{X}{\nu_V(P)}\right\}\\
-&=V(P)^2
-\frac{2\nu_V(P)}{\nu_V(P)^2}\\
-&=\frac{2V(P)^2}{\nu_V(P)}.
+&\operatorname E_P\left[
+-2\operatorname E_P\{\ell_P(X,Y)\mid X\}
+\right]\\
+&\qquad=-2\operatorname E_P\{\ell_P(X,Y)\}\\
+&\qquad=-2I(P).
 \end{aligned}
 $$
 
-Set this equal to the derived sampling variance of $\widehat V(P)$:
+The expectation of the fourth line is
 
 $$
-\frac{2V(P)^2}{\nu_V(P)}
-=\frac{\tau^2(P)}{n_P}.
+\begin{aligned}
+&\operatorname E_P\left[
+-2\operatorname E_P\{\ell_P(X,Y)\mid Y\}
+\right]\\
+&\qquad=-2\operatorname E_P\{\ell_P(X,Y)\}\\
+&\qquad=-2I(P).
+\end{aligned}
 $$
 
-Solving gives
+Adding the four expectations gives
 
 $$
-\boxed{
-\nu_V(P)
-=\frac{2n_PV(P)^2}{\tau^2(P)}.
-}
-$$
-
-Equivalently,
-
-$$
-\nu_V(P)
-=\frac{2}
-{\tau^2(P)/\{n_PV(P)^2\}}.
-$$
-
-The denominator is the relative sampling variance of the estimated MI
-variance. A stable estimate has small relative variance and many effective
-degrees of freedom. An unstable estimate has large relative variance and few
-effective degrees of freedom. The factor $2$ comes directly from
-$\operatorname{Var}(\chi^2_\nu)=2\nu$.
-
-### 4.4 Estimate the component degrees of freedom from the observed table
-
-The population quantities are unknown, so substitute their empirical
-counterparts. For population $P$, calculate
-
-$$
-\widehat V(P)
-=\sum_{i,j}\widehat p_{ij}
-\{\widehat\ell_P(i,j)-\widehat I(P)\}^2,
-$$
-
-$$
-\widehat R_P(i)
-=\frac{\sum_j\widehat p_{ij}\widehat\ell_P(i,j)}
-{\widehat p_{i+}},
-$$
-
-and
-
-$$
-\widehat C_P(j)
-=\frac{\sum_i\widehat p_{ij}\widehat\ell_P(i,j)}
-{\widehat p_{+j}}.
-$$
-
-Insert these estimates into the derived variance influence function:
-
-$$
-\widehat g_P(i,j)
-=\{\widehat\ell_P(i,j)-\widehat I(P)\}^2-\widehat V(P)
-+2\{\widehat\ell_P(i,j)-\widehat R_P(i)
--\widehat C_P(j)+\widehat I(P)\}.
-$$
-
-Although the population influence function has mean zero, explicitly centre
-the empirical values:
-
-$$
-\overline g_P
-=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),
-$$
-
-$$
-\widehat\tau^2(P)
-=\sum_{i,j}\widehat p_{ij}
-\{\widehat g_P(i,j)-\overline g_P\}^2.
-$$
-
-The observed component degrees of freedom are
-
-$$
-\boxed{
-\widehat\nu_V(P)
-=\frac{2n_P\widehat V(P)^2}
-{\widehat\tau^2(P)}.
-}
-$$
-
-The same calculation gives $\widehat\nu_V(Q)$ from the second table.
-
-This plug-in step uses the empirical table as a local representation of its
-population. Under fixed dimensions and positive support, consistency of the
-empirical distribution establishes this property asymptotically. Extensive
-empirical support loss places the calculation outside this smooth
-finite-sample regime.
-
-## 5. Combine the Two Populations and Calculate the P-Value
-
-Each population now contributes both an estimated variance component and an
-effective reliability for that component. The final step combines them.
-
-### 5.1 Form each population's contribution to the squared standard error
-
-Dividing a variance estimate by a fixed sample size changes its scale while
-preserving its Satterthwaite degrees of freedom. For example,
-
-$$
-\operatorname E\left\{\frac{\widehat V(P)}{n_P}\right\}
-\approx\frac{V(P)}{n_P},
-$$
-
-and
-
-$$
-\operatorname{Var}\left\{\frac{\widehat V(P)}{n_P}\right\}
-\approx\frac{1}{n_P^2}
-\frac{\tau^2(P)}{n_P}
-=\frac{\tau^2(P)}{n_P^3}.
+\operatorname E_P\{g_P(X,Y)\}
+=0+4I(P)-2I(P)-2I(P)
+=0.
 $$
 
 Therefore,
 
 $$
 \begin{aligned}
-\frac{
-2\left[\operatorname E\{\widehat V(P)/n_P\}\right]^2
-}{
-\operatorname{Var}\{\widehat V(P)/n_P\}
-}
-&\approx
-\frac{2\{V(P)/n_P\}^2}{\tau^2(P)/n_P^3}\\
-&=\frac{2n_PV(P)^2}{\tau^2(P)}\\
-&=\nu_V(P).
+\tau^2(P)
+&=\operatorname E_P\{g_P(X,Y)^2\}\\
+&=\sum_{i,j}p_{ij}g_P(i,j)^2.
 \end{aligned}
 $$
 
-Thus $\widehat V(P)/n_P$ retains component degrees of freedom $\nu_V(P)$,
-and $\widehat V(Q)/n_Q$ retains $\nu_V(Q)$.
+### 4.10 Calculate the sampling variance of $\widehat V(P)$
 
-### 5.2 Choose degrees of freedom for the sum of those contributions
-
-The samples are independent, so
+The target is
 
 $$
+\operatorname{Var}\{\widehat V(P)\}
+=\operatorname{Var}\{\widehat V(P)-V(P)\},
+$$
+
+because $V(P)$ is a fixed population value. We first express the estimation
+error using a first-order Taylor expansion of $V$ over the cell
+probabilities:
+
+$$
+\widehat V(P)-V(P)
+\approx\sum_{i,j}g_P(i,j)(\widehat p_{ij}-p_{ij}).
+$$
+
+This retains only terms that are linear in the cell-probability errors.
+
+Each empirical cell probability is a sample average. Substituting
+
+$$
+\widehat p_{ij}-p_{ij}
+=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left[\mathbf 1\{Z_a^{(P)}=(i,j)\}-p_{ij}\right]
+$$
+
+into the Taylor expansion gives
+
+$$
+\begin{aligned}
+\widehat V(P)-V(P)
+&\approx\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left[g_P(Z_a^{(P)})-\operatorname E_P\{g_P(X,Y)\}\right]\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)})
+-\frac{1}{n_P}\sum_{a=1}^{n_P}\operatorname E_P\{g_P(X,Y)\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)})
+-\operatorname E_P\{g_P(X,Y)\}\\
+&=\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)}),
+\end{aligned}
+$$
+
+where the final equality uses $\operatorname E_P\{g_P(X,Y)\}=0$ from Section
+4.9.
+
+The observations are independent, and each $g_P(Z_a^{(P)})$ has variance
+$\tau^2(P)$. Thus
+
+$$
+\begin{aligned}
+\operatorname{Var}\{\widehat V(P)\}
+&\approx
 \operatorname{Var}\left\{
-\frac{\widehat V(P)}{n_P}+\frac{\widehat V(Q)}{n_Q}
-\right\}
-=\operatorname{Var}\left\{\frac{\widehat V(P)}{n_P}\right\}
-+\operatorname{Var}\left\{\frac{\widehat V(Q)}{n_Q}\right\}.
+\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(Z_a^{(P)})
+\right\}\\
+&=\frac{1}{n_P^2}
+\sum_{a=1}^{n_P}\operatorname{Var}_P\{g_P(Z_a^{(P)})\}\\
+&=\frac{1}{n_P^2}\sum_{a=1}^{n_P}\tau^2(P)\\
+&=\frac{1}{n_P^2}\,n_P\tau^2(P)\\
+&=\boxed{\frac{\tau^2(P)}{n_P}}.
+\end{aligned}
 $$
 
-Under the component scaled chi-squared models,
+This supplies the sampling variance required by the Satterthwaite equation
+in Section 4.1.
+
+### 4.11 Obtain the component degrees of freedom $\nu_P$
+
+The first-order mean and sampling variance of the variance estimate are now
 
 $$
-\operatorname{Var}\left\{\frac{\widehat V(P)}{n_P}\right\}
-\approx
+\operatorname E\{\widehat V(P)\}\approx V(P),
+\qquad
+\operatorname{Var}\{\widehat V(P)\}
+\approx\frac{\tau^2(P)}{n_P}.
+$$
+
+Substituting these moments into the Satterthwaite equation from Section 4.1
+gives
+
+$$
+\begin{aligned}
+\nu_P
+&=\frac{
+2\left[\operatorname E\{\widehat V(P)\}\right]^2
+}{
+\operatorname{Var}\{\widehat V(P)\}
+}\\
+&\approx\frac{2V(P)^2}{\tau^2(P)/n_P}\\
+&=\boxed{\frac{2n_PV(P)^2}{\tau^2(P)}}.
+\end{aligned}
+$$
+
+Thus $\nu_P$ is large when $\widehat V(P)$ has little sampling variation
+relative to its squared size, and small when the estimated variance is
+unstable between samples.
+
+### 4.12 Calculate the component degrees of freedom from the table
+
+For table $P$, substitute each table estimate into $\widehat\nu_P$ one step
+at a time:
+
+$$
+\begin{aligned}
+\widehat\nu_P
+&=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}\\[4pt]
+&=\frac{2n_P\widehat V(P)^2}
+{\displaystyle\sum_{i,j}\widehat p_{ij}
+\{\widehat g_P(i,j)-\overline g_P\}^2}\\[6pt]
+&=\frac{2n_P\widehat V(P)^2}
+{\displaystyle\sum_{i,j}\widehat p_{ij}
+\left\{\widehat g_P(i,j)
+-\sum_{a,b}\widehat p_{ab}\widehat g_P(a,b)\right\}^2}\\[6pt]
+&=\boxed{
 \frac{
-2\left[\operatorname E\{\widehat V(P)/n_P\}\right]^2
-}{\nu_V(P)},
-$$
-
-and
-
-$$
-\operatorname{Var}\left\{\frac{\widehat V(Q)}{n_Q}\right\}
-\approx
-\frac{
-2\left[\operatorname E\{\widehat V(Q)/n_Q\}\right]^2
-}{\nu_V(Q)}.
-$$
-
-Moment matching the sum to one scaled chi-squared variable gives
-
-$$
-\nu_{\mathrm{expanded}}
-=\frac{
-\left[
-\operatorname E\{\widehat V(P)/n_P\}
-+\operatorname E\{\widehat V(Q)/n_Q\}
+2n_P\left[
+\displaystyle\sum_{i,j}\widehat p_{ij}
+\{\widehat\ell_P(i,j)-\widehat I(P)\}^2
 \right]^2
 }{
-\left[\operatorname E\{\widehat V(P)/n_P\}\right]^2/\nu_V(P)
-+\left[\operatorname E\{\widehat V(Q)/n_Q\}\right]^2/\nu_V(Q)
+\displaystyle\sum_{i,j}\widehat p_{ij}
+\left\{\widehat g_P(i,j)
+-\sum_{a,b}\widehat p_{ab}\widehat g_P(a,b)\right\}^2
+}
 }.
+\end{aligned}
 $$
 
-Replacing the unknown expectations and degrees of freedom with their observed
-estimates gives
+The remaining cell value in the final line is calculated entirely from the
+same table:
+
+$$
+\boxed{
+\begin{aligned}
+\widehat g_P(i,j)
+&=\{\widehat\ell_P(i,j)-\widehat I(P)\}^2
+-\sum_{a,b}\widehat p_{ab}
+\{\widehat\ell_P(a,b)-\widehat I(P)\}^2\\
+&\quad+2\widehat\ell_P(i,j)+2\widehat I(P)\\
+&\quad-2\frac{\sum_b\widehat p_{ib}\widehat\ell_P(i,b)}
+{\widehat p_{i+}}\\
+&\quad-2\frac{\sum_a\widehat p_{aj}\widehat\ell_P(a,j)}
+{\widehat p_{+j}}.
+\end{aligned}
+}
+$$
+
+Apply the same substitutions to table $Q$ to obtain
+
+$$
+\boxed{
+\widehat\nu_Q
+=\frac{2n_Q\widehat V(Q)^2}{\widehat\tau^2(Q)}.
+}
+$$
+
+### 4.13 Combine the two component degrees of freedom
+
+The estimated squared standard error contains the independent components
+$\widehat V(P)/n_P$ and $\widehat V(Q)/n_Q$. The Welch-Satterthwaite equation
+combines their component degrees of freedom as
 
 $$
 \boxed{
@@ -1112,37 +1195,35 @@ $$
 =\frac{
 \left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
 }{
-\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_V(P)
-+\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_V(Q)
+\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_P
++\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_Q
 }.
 }
 $$
 
-The squared weights appear because the variance of a scaled random variable
-depends on the square of its scale.
+## 5. Complete the Test
 
-### 5.3 Compare the statistic with a Student distribution
-
-The final statistic remains
+Dividing the estimated MI difference by its estimated standard error gives
 
 $$
+\boxed{
 T
 =\frac{
 \widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
+}{
+\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}
+}.
 }
-{\sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}}.
 $$
 
-In classical normal theory, a standard normal numerator divided by the square
-root of an independent normalized chi-squared variance estimate has an exact
-Student distribution. That normal-over-estimated-variance structure explains
-why the scaled chi-squared denominator model leads to a Student reference.
+The numerator is asymptotically normal. The denominator is an estimated
+standard deviation whose two variance components have been represented by
+scaled chi-squared distributions and combined through the
+Welch-Satterthwaite equation. This normal-over-estimated-variance structure
+leads to a Student reference distribution.
 
-Expanded Welch uses this Student distribution as a finite-sample reference.
-The numerator is asymptotically normal, and the two denominator components
-are combined by moment matching. The resulting statistic is interpreted
-using a Student distribution with $\widehat\nu_{\mathrm{expanded}}$ degrees
-of freedom. The two-sided p-value is
+Expanded Welch therefore compares $T$ with a Student distribution having
+$\widehat\nu_{\mathrm{expanded}}$ degrees of freedom. The two-sided p-value is
 
 $$
 \boxed{
@@ -1153,166 +1234,117 @@ p_{\mathrm{expanded}}
 }
 $$
 
-When the denominator is stable, the effective degrees of freedom are large
-and the Student reference approaches the normal reference. When it is
-unstable, the degrees of freedom fall and the reference acquires heavier
-tails.
+## 6. Summary of the Derived Inputs
 
-## 6. Summary of the Calculation
+The complete connection between the general equation and the MI test is
 
-The complete calculation is:
+| General input | MI definition | How it is obtained |
+| --- | --- | --- |
+| $s_P^2$ | $\widehat V(P)$ | Probability-weighted variance of empirical PMI values |
+| $s_Q^2$ | $\widehat V(Q)$ | Same calculation for population $Q$ |
+| $k_P$ | $1/n_P$ | Variance of a sample mean is observation-level variance divided by sample size |
+| $k_Q$ | $1/n_Q$ | Same calculation for population $Q$ |
+| $\nu_P$ | $\widehat\nu_P=2n_P\widehat V(P)^2/\widehat\tau^2(P)$ | Satterthwaite moment matching for $\widehat V(P)$ |
+| $\nu_Q$ | $\widehat\nu_Q=2n_Q\widehat V(Q)^2/\widehat\tau^2(Q)$ | Same calculation for population $Q$ |
+| $\chi'$ | $\widehat V(P)/n_P+\widehat V(Q)/n_Q$ | Estimated sampling variance of the MI difference |
+| $\nu_{\chi'}$ | $\widehat\nu_{\mathrm{expanded}}$ | Effective degrees of freedom of the combined denominator |
 
-$$
-\begin{aligned}
-\ell_P(i,j)
-&=\log\frac{p_{ij}}{p_{i+}p_{+j}},\\[3pt]
-I(P)
-&=\operatorname E_P\{\ell_P(X,Y)\},\\[3pt]
-V(P)
-&=\operatorname{Var}_P\{\ell_P(X,Y)\},\\[3pt]
-\operatorname{Var}\{\widehat I(P)\}
-&\approx\frac{V(P)}{n_P},\\[3pt]
-g_P(i,j)
-&=\{\ell_P(i,j)-I(P)\}^2-V(P)
-+2\{\ell_P(i,j)-R_P(i)-C_P(j)+I(P)\},\\[3pt]
-\tau^2(P)
-&=\operatorname{Var}_P\{g_P(X,Y)\},\\[3pt]
-\operatorname{Var}\{\widehat V(P)\}
-&\approx\frac{\tau^2(P)}{n_P},\\[3pt]
-\nu_V(P)
-&=\frac{2n_PV(P)^2}{\tau^2(P)},\\[3pt]
-\widehat\nu_{\mathrm{expanded}}
-&=\frac{
-\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
-}{
-\left\{\widehat V(P)/n_P\right\}^2/\widehat\nu_V(P)
-+\left\{\widehat V(Q)/n_Q\right\}^2/\widehat\nu_V(Q)
-},\\[3pt]
-p_{\mathrm{expanded}}
-&=2\left[
-1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}(|T|)
-\right].
-\end{aligned}
-$$
-
-The formulas from $\ell_P$ through $\operatorname{Var}\{\widehat I(P)\}$
-describe the MI estimate and its sampling variance. The formulas from $g_P$
-through $\nu_V(P)$ describe the uncertainty of the estimated variance. The
-final formulas combine the two populations and calibrate the standardized MI
-difference.
-
-## 7. Assumptions and Limitations
-
-The argument relies on several conditions introduced at the points where they
-are needed.
-
-### 7.1 Fixed finite alphabet and positive population support
-
-The influence derivatives assume $r$ and $c$ remain fixed as sample sizes
-increase and that modelled population cells have positive probability. These
-conditions keep the logarithms finite and the MI and variance functionals
-smooth. Structural zeros require defining a smaller fixed support before
-applying the derivation.
-
-Observed zero-count cells are assigned zero weight under $0\log 0=0$. For an
-empty empirical row or column, the implementation assigns zero to the unused
-conditional PMI mean because every cell in that margin also has zero weight.
-These conventions keep the calculation finite. The smooth population
-approximation applies when the sampled support remains sufficiently stable.
-
-### 7.2 Independent observations and independent samples
-
-The $1/n$ variance derivations use iid observations. The addition of the $P$
-and $Q$ variance components uses independence between samples. Paired,
-clustered, longitudinal, or overlapping samples require covariance terms and
-a different derivation.
-
-### 7.3 Nondegenerate first-order MI variance
-
-At exact independence,
-
-$$
-p_{ij}=p_{i+}p_{+j},
-$$
-
-so every PMI value and $V(P)$ are zero. The first-order normal expansion
-then degenerates. This test concerns regular comparisons of two MI values with
-a positive combined first-order variance. Testing independence itself requires
-second-order theory.
-
-### 7.4 Which parts are approximations
-
-The formulas for the influence functions are directional derivatives on
-positive support. The formulas $V(P)/n_P$ and $\tau^2(P)/n_P$ are first-order
-functional delta-method results. The scaled chi-squared and Student
-distributions provide moment-matched finite-sample references.
-
-The leading bias correction is the first-order full-support correction for
-fixed table dimensions. Its configured dimensions are chosen before observing
-the data.
-
-### 7.5 What the simulations show about the limits
-
-Direct simulation found that the scaled chi-squared model was close to the
-finite-sample distribution of $\widehat V(P)$ when supplied with the correct
-moments, with mean KS distance 0.0199 across the focused grid. It was
-especially effective for upper-tail calibration and for $5\times5$ and
-$10\times10$ tables. It was less accurate in some $2\times2$ cases.
-
-The complete expanded-Welch test improved calibration in sparse, skewed, and
-unequal-sample regimes when sampled support remained mostly informative. In
-well-sampled tables and under widespread support loss, normal Wald or simple
-Welch was often better calibrated. These results characterize expanded Welch
-as a targeted finite-sample correction for the regimes in which estimated
-variance uncertainty is consequential.
-
-## 8. Runtime and Source Code
-
-Once the two count tables have been formed, every quantity is calculated by a
-fixed number of cell scans and row or column reductions:
+In compact form,
 
 $$
 \boxed{
-\text{time complexity }O(rc),
-\qquad
-\text{memory complexity }O(rc).
+\begin{aligned}
+s_P^2&=\widehat V(P),
+&k_P&=\frac{1}{n_P},
+&\widehat\nu_P&=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)},\\[4pt]
+s_Q^2&=\widehat V(Q),
+&k_Q&=\frac{1}{n_Q},
+&\widehat\nu_Q&=\frac{2n_Q\widehat V(Q)^2}{\widehat\tau^2(Q)}.
+\end{aligned}
 }
 $$
 
-If the input consists of raw observations, constructing the two tables first
-costs $O(n_P+n_Q)$. No permutations, bootstrap samples, or Monte Carlo tables
-are needed by the test itself.
+These six quantities are the complete MI-specific input to the general
+Welch-Satterthwaite equation.
 
-The implementation is in
-[`src/welch_differential_mi/welch.py`](../src/welch_differential_mi/welch.py).
+## 7. Assumptions
 
-| Mathematical quantity | Implementation name |
-| --- | --- |
-| $\widehat I(G)$ | `plugin_mi(...)` |
-| $d$ | `mi_df` |
-| $\widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)$ | `delta` |
-| $\widehat V(P),\widehat V(Q)$ | `variance_p`, `variance_q` |
-| $\widehat V(P)/n_P,\widehat V(Q)/n_Q$ | `component_p`, `component_q` |
-| $T$ | `statistic` |
-| $\widehat R_G(i)$ | `row_score_mean` |
-| $\widehat C_G(j)$ | `column_score_mean` |
-| $\widehat g_G(i,j)$ | `variance_influence` |
-| $\widehat\tau^2(G)$ | `influence_variance` inside `_variance_influence_component_df` |
-| $\widehat\nu_V(P),\widehat\nu_V(Q)$ | `expanded_df_p`, `expanded_df_q` |
-| $\widehat\nu_{\mathrm{expanded}}$ | `expanded_df` |
-| $p_{\mathrm{expanded}}$ | `expanded_p` |
+The derivation uses:
 
-The direct scaled chi-squared validation is reported in
-[`../results/scaled_chi_square_validation/REPORT.md`](../results/scaled_chi_square_validation/REPORT.md).
+- independent observations within each table;
+- independence between the samples from $P$ and $Q$;
+- fixed finite table dimensions;
+- positive population support for the differentiability calculations;
+- a nonzero first-order MI variance;
+- first-order Taylor approximations for the distribution-dependent quantities
+  $\widehat I$ and $\widehat V$;
+- a scaled chi-squared working model for each estimated variance component;
+- a Student reference distribution after combining the components.
+
+Widespread empirical support loss places the calculation outside the smooth
+finite-sample regime represented by these approximations.
+
+## Appendix A. Optional Bias-Corrected Combination Formula
+
+A proposed fourth-moment correction changes only the final rule for combining
+the two variance components; it does not change $\widehat V(P)$,
+$\widehat\tau^2(P)$, $\widehat\nu_P$, or any corresponding quantity for $Q$.
+The corrected general formula is
+
+$$
+\nu_{\chi'}^{(\mathrm{corr})}
+\approx
+\frac{
+\left(\displaystyle\sum_{i=1}^m k_i s_i^2\right)^2
+}{
+\displaystyle\sum_{i=1}^m
+\frac{(k_i s_i^2)^2}{\nu_i+2}
+}
+-2.
+$$
+
+Using the same MI inputs gives
+
+$$
+\boxed{
+\widehat\nu_{\mathrm{corrected}}
+=\frac{
+\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
+}{
+\left\{\widehat V(P)/n_P\right\}^2/
+\{\widehat\nu_P+2\}
++\left\{\widehat V(Q)/n_Q\right\}^2/
+\{\widehat\nu_Q+2\}
+}
+-2.
+}
+$$
+
+This correction was tested on 192 null configurations with 10,000 simulated
+table pairs per configuration. It reduced aggregate mean absolute
+false-positive-rate error by 2.6%, 1.7%, and 1.2% at alpha levels 0.10, 0.05,
+and 0.01. Almost all of that improvement came from the widespread-sparsity
+regime. Outside that regime it was effectively tied and slightly worse,
+including in the sparse and skewed target regimes. The primary method
+therefore retains the original expanded Welch-Satterthwaite combination.
+
+The complete comparison is recorded in
+[`../results/corrected_satterthwaite_full/REPORT.md`](../results/corrected_satterthwaite_full/REPORT.md).
 
 ## References
 
-- Hutcheson, K. (1970). *A Test for Comparing Diversities Based on the
-  Shannon Formula*. Journal of Theoretical Biology, 29, 151-154.
-  <https://doi.org/10.1016/0022-5193(70)90124-4>
+- Wikipedia contributors. [Welch-Satterthwaite equation](https://en.wikipedia.org/wiki/Welch%E2%80%93Satterthwaite_equation).
 - Satterthwaite, F. E. (1946). *An Approximate Distribution of Estimates of
-  Variance Components*. Biometrics Bulletin, 2, 110-114.
-  <https://doi.org/10.2307/3002019>
+  Variance Components*. Biometrics Bulletin, 2(6), 110-114.
+  <https://doi.org/10.2307/3002019>.
 - Welch, B. L. (1947). *The Generalization of Student's Problem When Several
-  Different Population Variances Are Involved*. Biometrika, 34, 28-35.
-  <https://doi.org/10.1093/biomet/34.1-2.28>
+  Different Population Variances Are Involved*. Biometrika, 34(1/2), 28-35.
+  <https://doi.org/10.2307/2332510>.
+- Hutcheson, K. (1970). *A Test for Comparing Diversities Based on the Shannon
+  Formula*. Journal of Theoretical Biology, 29, 151-154.
+  <https://doi.org/10.1016/0022-5193(70)90124-4>.
+- von Davier, M. (2025). *An Improved Satterthwaite (1941, 1946) Effective df
+  Approximation*. Journal of Educational and Behavioral Statistics.
+  <https://doi.org/10.3102/10769986241309329>.
+- von Davier, M. (2026). *A Corrected Welch Satterthwaite Equation*.
+  <https://arxiv.org/abs/2602.20912>.
