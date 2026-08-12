@@ -915,8 +915,8 @@ $$
 which must be at least 0.05. The largest numerical difference between the two
 target MI values in the accepted grid was $8.5\times10^{-14}$ nats.
 
-Once $P$ and $Q$ have been constructed, their sample sizes are selected. In
-the well-sampled and moderate regimes,
+In the well-sampled and moderate regimes, sample size is fixed by the design
+before $P$ and $Q$ are drawn:
 
 $$
 n_P=\max(n_{\min},drc),
@@ -926,10 +926,11 @@ $$
 
 Here $rc$ is the number of cells, $d$ is the planned average number of
 observations per cell in the smaller sample, $n_{\min}$ is its minimum sample
-size, and $\rho=n_Q/n_P$ is the sample-size ratio.
+size, and $\rho=n_Q/n_P$ is the sample-size ratio. This formula depends only
+on the table shape and the design constants, not on the realized $P$ and $Q$.
 
-In the sparse regimes, sample size is chosen using the expected count in each
-cell:
+In the sparse regimes, sample size is instead chosen after $P$ and $Q$ are
+constructed, using the expected count in each cell:
 
 $$
 E^{(P)}_{ij}=n_Pp_{ij},
