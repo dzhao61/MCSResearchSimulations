@@ -575,14 +575,17 @@ changes $V(P)$.
 
 ### 4.2 Calculate how one observation changes PMI and MI
 
-For an observation in cell $(x,y)$, define
+Because $V(P)$ is the variance of the PMI values, its derivative depends on
+how both the PMI values and their mean $I(P)$ change. Fix a cell $(x,y)$ and
+define
 
 $$
 P_\varepsilon
 =(1-\varepsilon)P+\varepsilon\delta_{(x,y)}.
 $$
 
-For an arbitrary cell $(i,j)$,
+This shifts an $\varepsilon$-fraction of the probability toward cell $(x,y)$;
+$\varepsilon=0$ gives the original distribution. For any cell $(i,j)$,
 
 $$
 p_{ij}(\varepsilon)
@@ -590,33 +593,27 @@ p_{ij}(\varepsilon)
 +\varepsilon\mathbf 1\{i=x,j=y\}.
 $$
 
-The changes in the joint and marginal probabilities at the original
-distribution are
+Differentiating the joint probability and its margins at $\varepsilon=0$
+gives
 
 $$
+\begin{aligned}
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{i=x,j=y\}-p_{ij},
-$$
-
-$$
+&=\mathbf 1\{i=x,j=y\}-p_{ij},\\
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{i+}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{i=x\}-p_{i+},
-$$
-
-and
-
-$$
+&=\mathbf 1\{i=x\}-p_{i+},\\
 \left.
 \frac{\mathrm d}{\mathrm d\varepsilon}p_{+j}(\varepsilon)
 \right|_{\varepsilon=0}
-=\mathbf 1\{j=y\}-p_{+j}.
+&=\mathbf 1\{j=y\}-p_{+j}.
+\end{aligned}
 $$
 
-Along this path,
+The PMI in cell $(i,j)$ along this path is
 
 $$
 \ell_{P_\varepsilon}(i,j)
@@ -625,7 +622,7 @@ $$
 -\log p_{+j}(\varepsilon),
 $$
 
-so
+so applying $\mathrm d(\log u)/\mathrm d\varepsilon=u'/u$ gives
 
 $$
 \begin{aligned}
@@ -634,6 +631,9 @@ $$
 \frac{\mathrm d}{\mathrm d\varepsilon}
 \ell_{P_\varepsilon}(i,j)
 \right|_{\varepsilon=0}\\
+&=\frac{\mathbf 1\{i=x,j=y\}-p_{ij}}{p_{ij}}
+-\frac{\mathbf 1\{i=x\}-p_{i+}}{p_{i+}}
+-\frac{\mathbf 1\{j=y\}-p_{+j}}{p_{+j}}\\
 &=\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
 -\frac{\mathbf 1\{i=x\}}{p_{i+}}
 -\frac{\mathbf 1\{j=y\}}{p_{+j}}
@@ -641,22 +641,26 @@ $$
 \end{aligned}
 $$
 
-The Taylor expansion in Section 3.2 gives the corresponding first-order
-change in MI:
+Section 3.2 established that the first-order change in MI is the PMI-weighted
+sum of the cell-probability changes. Applying that result to this path gives
 
 $$
-\boxed{
-\left.
-\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
+\begin{aligned}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}I(P_\varepsilon)
 \right|_{\varepsilon=0}
-=\ell_P(x,y)-I(P).
-}
+&=\sum_{i,j}\ell_P(i,j)
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}\\
+&=\sum_{i,j}\ell_P(i,j)
+\{\mathbf 1\{i=x,j=y\}-p_{ij}\}\\
+&=\boxed{\ell_P(x,y)-I(P)}.
+\end{aligned}
 $$
 
 ### 4.3 Calculate how one observation changes $V(P)$
 
-To differentiate the PMI variance, write it in terms of the first and second
-PMI moments. The first moment is $I(P)$; define the second moment by
+Section 3.1 established that the PMI variance equals its second moment minus
+the square of its mean. Define the second moment by
 
 $$
 M_2(P)
@@ -664,20 +668,11 @@ M_2(P)
 =\sum_{i,j}p_{ij}\ell_P(i,j)^2.
 $$
 
-Expanding the variance of PMI gives
+Since the mean PMI is $I(P)$,
 
 $$
-\begin{aligned}
 V(P)
-&=\operatorname E_P\left[
-\{\ell_P(X,Y)-I(P)\}^2
-\right]\\
-&=\operatorname E_P\{\ell_P(X,Y)^2\}
--2I(P)\operatorname E_P\{\ell_P(X,Y)\}
-+I(P)^2\\
-&=M_2(P)-2I(P)^2+I(P)^2\\
-&=\boxed{M_2(P)-I(P)^2}.
-\end{aligned}
+=\boxed{M_2(P)-I(P)^2}.
 $$
 
 The derivative of $V(P)$ therefore requires the derivatives of $M_2(P)$ and
@@ -855,7 +850,9 @@ $$
 }
 $$
 
-The first-order error of $\widehat V(P)$ is the average of the $g_P$ values:
+Each observation changes the empirical distribution by $1/n_P$. The
+first-order error of $\widehat V(P)$ is therefore the average of the
+corresponding $g_P$ values:
 
 $$
 \widehat V(P)-V(P)
