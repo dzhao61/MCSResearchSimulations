@@ -7,3 +7,4 @@ WelchSatterthwaiteMI/results/decisive/null_replicates.csv.gz
 
 # The smoke profile is an intermediate pipeline check; keep only full results.
 WelchSatterthwaiteMI/results/supervisor_smoke/
+WelchSatterthwaiteMI/results/supervisor_16_smoke*/

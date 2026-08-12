@@ -22,17 +22,13 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
-from differential_mi.random_validation import (  # noqa: E402
-    RandomScenario,
-    generate_random_scenarios,
-)
+from differential_mi.random_validation import RandomScenario  # noqa: E402
 from differential_mi.statistics import influence_variance  # noqa: E402
 from run_supervisor_experiment import (  # noqa: E402
     DESIGN_TO_REGIME,
     REGIMES,
     _population_metadata,
-    generate_adversarial_scenarios,
-    generate_expected_count_stress_scenarios,
+    generate_configuration_scenarios,
 )
 from welch_differential_mi.welch import (  # noqa: E402
     _variance_influence_component_df,
@@ -56,7 +52,7 @@ PROFILE_SETTINGS = {
     "focused": {
         "replicates": 10_000,
         "batch_size": 1_000,
-        "shape_indices": (0, 2, 5, 9),
+        "shape_indices": None,
     },
     "full": {
         "replicates": 10_000,
@@ -102,9 +98,7 @@ def _settings(args: argparse.Namespace) -> dict:
 
 
 def _all_scenarios(seed: int) -> list[RandomScenario]:
-    scenarios = generate_random_scenarios(seed)
-    scenarios.extend(generate_expected_count_stress_scenarios(seed + 1))
-    scenarios.extend(generate_adversarial_scenarios(seed + 2))
+    scenarios = generate_configuration_scenarios(seed, 1)
     return sorted(
         scenarios,
         key=lambda scenario: (scenario.shape_index, scenario.design_index),

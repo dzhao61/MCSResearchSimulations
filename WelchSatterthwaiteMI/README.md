@@ -36,23 +36,23 @@ in [`derivation/main.tex`](derivation/main.tex).
 
 ## Status
 
-The primary evidence comes from one unified experiment with 60 equal-MI
-population pairs and 10,000 independently simulated table pairs per
-population. It covers five regimes and six table shapes while keeping both
-sample sizes between 50 and 1,000. The same three analytic methods are
-evaluated on every replicate.
+The primary evidence uses 16 pre-specified configurations: four table shapes
+crossed with balanced, moderately sparse, ultra-sparse, and ultra-sparse 5:1
+sample-imbalance conditions. Each configuration has ten seeded population
+repetitions and 5,000 sampled table pairs per repetition, giving 800,000 null
+table pairs. Both sample sizes remain between 50 and 1,000.
 
-Expanded Welch left the well-sampled control essentially unchanged and
-reduced alpha-`0.05` calibration error relative to Normal Wald by 29% to 47%
-across the moderate, rare-cell, ultra-sparse, and widespread-sparsity
-regimes. Its measured runtime remained about 1.9 times the Normal Wald
-implementation but negligible in absolute terms.
+At alpha `0.05`, Expanded Welch changed the mean ultra-sparse FPR from
+`0.06373` to `0.05153` and the ultra-sparse 5:1 FPR from `0.16851` to
+`0.12687`. It was mildly conservative in easier controls and did not fully
+calibrate the widest sparse, unequal-sample case. Runtime was about 1.9 times
+Normal Wald but only about 0.15 ms per table pair.
 
 The result supports expanded Welch as a targeted finite-sample correction,
 not as a uniformly superior replacement for normal Wald. See the
-[`primary experiment report`](results/supervisor_practical/REPORT.md) for the
+[`primary experiment report`](results/supervisor_16_config/REPORT.md) for the
 concise results and its
-[`rejection-calibration figure`](results/supervisor_practical/rejection_calibration.png)
+[`rejection-calibration figure`](results/supervisor_16_config/rejection_calibration.png)
 for the complete lower-tail comparison.
 
 ## Commands
@@ -69,7 +69,7 @@ The full supervisor experiment is:
 ```bash
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
   --profile full \
-  --output-dir WelchSatterthwaiteMI/results/supervisor_practical
+  --output-dir WelchSatterthwaiteMI/results/supervisor_16_config
 ```
 
 See [`experiments/README.md`](experiments/README.md) and

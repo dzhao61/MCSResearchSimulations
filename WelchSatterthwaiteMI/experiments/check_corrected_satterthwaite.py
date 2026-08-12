@@ -18,9 +18,6 @@ REPOSITORY_ROOT = PROJECT_ROOT.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
-from differential_mi.random_validation import (  # noqa: E402
-    generate_random_scenarios,
-)
 from differential_mi.scenarios import (  # noqa: E402
     build_distributions,
     power_curve_scenarios,
@@ -35,8 +32,7 @@ from run_supervisor_experiment import (  # noqa: E402
     _markdown,
     _population_metadata,
     _regime_for,
-    generate_adversarial_scenarios,
-    generate_expected_count_stress_scenarios,
+    generate_configuration_scenarios,
 )
 
 
@@ -145,9 +141,7 @@ def method_values(
 
 
 def build_null_scenarios(seed: int, shape_limit: int | None) -> list:
-    scenarios = generate_random_scenarios(seed)
-    scenarios.extend(generate_expected_count_stress_scenarios(seed + 1))
-    scenarios.extend(generate_adversarial_scenarios(seed + 2))
+    scenarios = generate_configuration_scenarios(seed, 1)
     scenarios.sort(key=lambda scenario: (scenario.shape_index, scenario.design_index))
     if shape_limit is not None:
         scenarios = [

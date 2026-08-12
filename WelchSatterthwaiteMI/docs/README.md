@@ -31,4 +31,4 @@ The [`history/`](history/) directory preserves earlier decision documents:
 
 The historical documents are retained for provenance. The current summary
 and primary evidence are the three documents above and
-[`results/supervisor_full/REPORT.md`](../results/supervisor_full/REPORT.md).
+[`results/supervisor_16_config/REPORT.md`](../results/supervisor_16_config/REPORT.md).

@@ -12,18 +12,21 @@ sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
 from run_supervisor_experiment import (
     CALIBRATION_ALPHAS,
+    CONFIGURATIONS,
     MAXIMUM_SAMPLE_SIZE,
     MINIMUM_SAMPLE_SIZE,
+    SHAPES,
     _aggregate_rejection_calibration,
-    _fixed_density_sample_sizes,
-    _sample_sizes_in_expected_band,
+    _configuration_sample_sizes,
+    _fixed_margin,
     _wilson,
     _wilson_many,
-    _widespread_sparsity_sample_sizes,
+    generate_configuration_scenarios,
 )
+from differential_mi.distributions import mutual_information_probability
 
 
-class ExpectedCountDesignTests(unittest.TestCase):
+class ConfigurationDesignTests(unittest.TestCase):
     def test_calibration_grid_covers_lower_tail_in_thousandths(self) -> None:
         self.assertEqual(len(CALIBRATION_ALPHAS), 101)
         self.assertEqual(CALIBRATION_ALPHAS[0], 0.0)
@@ -49,8 +52,8 @@ class ExpectedCountDesignTests(unittest.TestCase):
                 rows.append(
                     {
                         "scenario_id": scenario_id,
-                        "regime": "well_sampled",
-                        "regime_label": "Well sampled",
+                        "regime": "balanced_control",
+                        "regime_label": "Balanced control",
                         "method": "normal_wald",
                         "method_label": "Normal Wald",
                         "nominal_alpha": alpha,
@@ -67,73 +70,65 @@ class ExpectedCountDesignTests(unittest.TestCase):
             at_five_percent["p90_rejection_rate"],
         )
 
-    def test_highly_sparse_band_holds_for_both_populations(self) -> None:
-        sample_sizes = _sample_sizes_in_expected_band(
-            0.01,
-            0.005,
-            ratio=1,
-            lower=1.0,
-            upper=5.0,
-        )
-        self.assertIsNotNone(sample_sizes)
-        n_p, n_q = sample_sizes
-        self.assertGreaterEqual(n_p * 0.01, 1.0)
-        self.assertLess(n_p * 0.01, 5.0)
-        self.assertGreaterEqual(n_q * 0.005, 1.0)
-        self.assertLess(n_q * 0.005, 5.0)
-        self.assertGreaterEqual(n_p, MINIMUM_SAMPLE_SIZE)
-        self.assertLessEqual(n_q, MAXIMUM_SAMPLE_SIZE)
+    def test_fixed_margin_templates_are_exact(self) -> None:
+        balanced = _fixed_margin(5, None, 3)
+        moderate = _fixed_margin(5, 0.70, 2)
+        strong = _fixed_margin(5, 0.90, 4)
+        np.testing.assert_allclose(balanced, np.full(5, 0.20))
+        self.assertAlmostEqual(moderate[2], 0.70)
+        np.testing.assert_allclose(np.delete(moderate, 2), 0.075)
+        self.assertAlmostEqual(strong[4], 0.90)
+        np.testing.assert_allclose(np.delete(strong, 4), 0.025)
 
-    def test_ultra_sparse_band_preserves_requested_ratio(self) -> None:
-        sample_sizes = _sample_sizes_in_expected_band(
-            0.003,
-            0.002,
-            ratio=4,
-            lower=0.2,
-            upper=1.0,
-        )
-        self.assertIsNotNone(sample_sizes)
-        n_p, n_q = sample_sizes
-        self.assertEqual(n_q, 4 * n_p)
-        self.assertGreater(n_p * 0.003, 0.0)
-        self.assertLess(n_p * 0.003, 1.0)
-        self.assertGreater(n_q * 0.002, 0.0)
-        self.assertLess(n_q * 0.002, 1.0)
+    def test_all_16_sample_size_formulas_are_exact_and_bounded(self) -> None:
+        expected = {
+            (2, 2): ((100, 100), (50, 50), (50, 50), (50, 250)),
+            (3, 3): ((135, 135), (72, 72), (50, 50), (50, 250)),
+            (5, 5): ((375, 375), (200, 200), (75, 75), (75, 375)),
+            (8, 8): ((960, 960), (512, 512), (192, 192), (192, 960)),
+        }
+        for shape in SHAPES:
+            cells = shape[0] * shape[1]
+            actual = []
+            for design in CONFIGURATIONS.values():
+                sample_sizes = _configuration_sample_sizes(
+                    cells,
+                    density=design["density"],
+                    ratio=design["sample_size_ratio"],
+                    minimum_n=design["minimum_n"],
+                )
+                actual.append(sample_sizes)
+                self.assertGreaterEqual(sample_sizes[0], MINIMUM_SAMPLE_SIZE)
+                self.assertLessEqual(sample_sizes[1], MAXIMUM_SAMPLE_SIZE)
+            self.assertEqual(tuple(actual), expected[shape])
 
-    def test_returns_none_when_integer_sample_sizes_cannot_fit(self) -> None:
-        sample_sizes = _sample_sizes_in_expected_band(
-            0.1,
-            0.1,
-            ratio=1,
-            lower=0.2,
-            upper=1.0,
+    def test_generator_materializes_each_design_cell_and_seed(self) -> None:
+        scenarios = generate_configuration_scenarios(2026080501, 1)
+        self.assertEqual(len(scenarios), 16)
+        self.assertEqual(
+            len({scenario.configuration_id for scenario in scenarios}),
+            16,
         )
-        self.assertIsNone(sample_sizes)
-
-    def test_fixed_density_sizes_respect_global_bounds(self) -> None:
-        n_p, n_q = _fixed_density_sample_sizes(
-            64,
-            density=6,
-            ratio=2,
-        )
-        self.assertEqual((n_p, n_q), (384, 768))
-        self.assertGreaterEqual(n_p, MINIMUM_SAMPLE_SIZE)
-        self.assertLessEqual(n_q, MAXIMUM_SAMPLE_SIZE)
-
-    def test_widespread_sparsity_rule_controls_many_cells(self) -> None:
-        probability_p = np.array([[0.95, 0.035], [0.01, 0.005]])
-        probability_q = np.array([[0.94, 0.045], [0.01, 0.005]])
-        sample_sizes = _widespread_sparsity_sample_sizes(
-            probability_p,
-            probability_q,
-            ratio=1,
-        )
-        self.assertIsNotNone(sample_sizes)
-        n_p, n_q = sample_sizes
-        for expected in (n_p * probability_p, n_q * probability_q):
-            self.assertGreaterEqual(float(np.mean(expected < 1.0)), 0.25)
-            self.assertLessEqual(float(np.mean(expected < 1.0)), 0.50)
-            self.assertGreaterEqual(float(np.mean(expected < 5.0)), 0.50)
+        self.assertEqual(len({scenario.population_seed for scenario in scenarios}), 16)
+        for scenario in scenarios:
+            self.assertAlmostEqual(scenario.probability_p.sum(), 1.0)
+            self.assertAlmostEqual(scenario.probability_q.sum(), 1.0)
+            self.assertAlmostEqual(
+                mutual_information_probability(scenario.probability_p),
+                0.10,
+                places=11,
+            )
+            self.assertAlmostEqual(
+                mutual_information_probability(scenario.probability_q),
+                0.10,
+                places=11,
+            )
+            self.assertGreater(
+                np.abs(scenario.probability_p - scenario.probability_q).sum(),
+                0.05,
+            )
+            self.assertGreaterEqual(scenario.n_p, MINIMUM_SAMPLE_SIZE)
+            self.assertLessEqual(scenario.n_q, MAXIMUM_SAMPLE_SIZE)
 
 if __name__ == "__main__":
     unittest.main()
