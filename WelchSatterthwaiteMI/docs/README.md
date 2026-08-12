@@ -8,7 +8,10 @@
    research story from first principles.
 3. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
    provides the complete line-by-line mathematical derivation.
-4. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
+4. [`ALTERNATIVE_WELCH_SATTERTHWAITE_DERIVATION.md`](ALTERNATIVE_WELCH_SATTERTHWAITE_DERIVATION.md)
+   derives the method by mapping the generic Welch-Satterthwaite weights,
+   variances, and component degrees of freedom to their MI counterparts.
+5. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
    textbook-style PDF; [`../derivation/main.tex`](../derivation/main.tex) is
    its generated LaTeX source.
 
