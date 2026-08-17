@@ -292,13 +292,20 @@ This is the likelihood-ratio, or $G$-test, statistic for independence. A
 deterministic construction of $\widehat Q$ from the observed marginals
 therefore returns the classical independence statistic exactly.
 
+By the standard large-sample result for the $G$-test (Wilks' theorem), under
+independence
+
+$$
+G\ \xrightarrow{d}\ \chi^2_{(r-1)(c-1)},
+\qquad
+p=\Pr\!\left\{\chi^2_{(r-1)(c-1)}\geq G_{\mathrm{obs}}\right\}.
+$$
+
+Thus $G$ is the observed statistic and the chi-squared distribution is its
+reference distribution.
+
 
 ## 6. Why Expanded Welch Cannot Calibrate It
-
-Sections 1 to 5 settle what the construction *is*. It remains to ask whether
-the Expanded Welch reference could be used to calibrate it, since that
-reference is designed for exactly this statistic's numerator. It cannot, and
-the reason needs no new machinery.
 
 The differential-MI test statistic is
 
@@ -315,9 +322,7 @@ V(P)=\operatorname{Var}_P\{\ell_P(X,Y)\}.
 $$
 
 Its denominator is built from the variance of the pointwise mutual
-information. Section 2.3 already showed that a table which factorises has
-$\ell=\log(1)=0$ in every cell. Under the null that argument applies to $P$
-itself, so
+information. Under independence, $p_{ij}=p_{i+}p_{+j}$, so
 
 $$
 \boxed{
@@ -328,57 +333,33 @@ V(P)=0.
 }
 $$
 
-The estimated standard error is therefore zero and $T$ is undefined. This is
-not a matter of choosing better degrees of freedom: the Welch construction
-adjusts the *reference distribution* for a statistic whose denominator is
-assumed positive, and here the denominator degenerates before any reference
-is chosen. A finite-df correction has nothing to act on.
+The population first-order variance is therefore zero. MI is at its minimum at
+independence, so its first derivative vanishes and its leading random term is
+second order. This second-order behaviour produces the chi-squared limit for
+$2N\widehat I(P)$; changing Welch degrees of freedom cannot restore a missing
+first-order term.
 
-Two further points follow.
-
-The degeneracy is unavoidable rather than incidental. Mutual information
-satisfies $I\geq0$ with equality exactly at independence, so an independent
-table is a global minimum of $I$. A differentiable function has zero
-derivative at an interior minimum, so the first-order term of any expansion
-of MI about independence is necessarily absent. No reparametrisation or
-alternative variance estimator recovers it. The correct leading behaviour is
-quadratic, which is why the classical reference for $2N\widehat I(P)$ is a
-chi-squared law on the $N$ scale rather than a normal or Student law on the
-$\sqrt N$ scale.
-
-There is also no second independent sample. Because
-$\widehat Q=\widehat P_X\widehat P_Y$ is computed from the same observations
-as $\widehat P$, treating the two as independent Welch components would
-violate the derivation even if the variances were positive.
-
-Expanded Welch therefore applies to the regular weak null $I(P)=I(Q)>0$, but
-not to $I(P)=I(Q)=0$.
+Moreover, $\widehat Q=\widehat P_X\widehat P_Y$ is calculated from the same
+table as $\widehat P$. They are not two independent samples, as required by the
+two-sample Welch derivation. Expanded Welch therefore applies to regular
+equal-MI comparisons away from independence, not to this independence test.
 
 ## 7. What Different Constructions of Q Produce
 
 Since the statistic is fixed at $2N\widehat I(P)$, all that remains is the
-choice of null distribution. How $\widehat Q$ is built determines which
-classical test is recovered.
+choice of how to calibrate its null distribution.
 
 | Construction of $\widehat Q$ | Resulting test |
 | --- | --- |
 | Deterministic, $\widehat q_{ij}=\widehat p_{i+}\widehat p_{+j}$ | Likelihood-ratio statistic $2N\widehat I(P)$ with its $\chi^2_{(r-1)(c-1)}$ limit |
 | Shuffle $Y$ against fixed $X$, repeatedly | Conditional permutation test, marginals held fixed |
 | Simulate new tables from $\widehat P_X\widehat P_Y$ | Parametric bootstrap, marginals free to vary |
-| A genuinely separate population | Two-sample test, but see below |
+| A separate sampled reference population | Two-sample equal-MI test, not the standard one-table independence test |
 
-Two caveats attach to this table.
-
-Using only a *single* simulated reference table adds simulation noise without
-providing a calibrated null distribution, and both MI estimates still have
-second-order behaviour when their population MIs are zero, so the ordinary
-two-sample Student argument does not apply.
-
-For an external reference population the two samples genuinely are
-independent. But if the scientific null requires $I(P)=I(Q)=0$, both
-estimators sit at the same degeneracy of Section 6. If instead $I(Q)>0$, the
-regular differential-MI framework applies, but equality with $Q$ is no longer
-a test of independence.
+A single simulated reference table is not sufficient because it adds Monte
+Carlo noise without estimating a null distribution. Repeated shuffling or
+simulation gives a valid resampling reference, while the deterministic choice
+returns the usual analytic $G$-test.
 
 ## 8. Final Interpretation
 
@@ -391,15 +372,10 @@ D_{\mathrm{KL}}(P\|Q)=I(P),
 $$
 
 Constructing it does not create a new two-population test. It reproduces the
-classical independence test, and the inferential method chosen in Section 7
-determines which form that test takes. The Welch architecture is unavailable
-because the quantity it calibrates, the first-order MI variance, is exactly
-zero at independence.
+classical $G$-test when it is constructed deterministically, or a standard
+resampling test when it is repeatedly sampled. Expanded Welch does not apply
+because its first-order MI variance vanishes at independence.
 
-This does not rule out a different deterministic approximation. The classical
-chi-squared reference is itself a large-sample approximation, and it degrades
-when expected cell counts are small, which is the regime of interest
-elsewhere in this project. A better finite-sample reference for
-$2N\widehat I(P)$ in sparse tables remains open, but it would require a
-second-order derivation; it would not be an extension of the current
-first-order Expanded Welch method.
+The chi-squared reference can still be inaccurate in sparse tables. Improving
+that approximation would require a finite-sample, second-order treatment of
+$G$, rather than an extension of the current first-order Welch method.
