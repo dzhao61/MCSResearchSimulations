@@ -7,7 +7,11 @@
 2. [`EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
    is the main derivation, mapping the generic Welch-Satterthwaite weights,
    variances, and component degrees of freedom to their MI counterparts.
-3. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
+3. [`INDEPENDENCE_REFERENCE_DISTRIBUTION_DERIVATION.md`](INDEPENDENCE_REFERENCE_DISTRIBUTION_DERIVATION.md)
+   derives what happens when a distribution is compared with an independent
+   reference having the same marginals, including the first-order degeneracy
+   and resulting chi-squared limit.
+4. [`../derivation/main.pdf`](../derivation/main.pdf) is the formatted
    textbook-style PDF; [`../derivation/main.tex`](../derivation/main.tex) is
    its generated LaTeX source.
 

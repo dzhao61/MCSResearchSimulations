@@ -1,0 +1,12 @@
+{
+  "population_file": "WelchSatterthwaiteMI/results/supervisor_full/population_scenarios.csv",
+  "population_pairs": 192,
+  "replicates_per_population": 10000,
+  "batch_size": 1000,
+  "simulation_seed": 2026080502,
+  "elapsed_seconds": 26.715720750158653,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "pandas": "3.0.3"
+}
