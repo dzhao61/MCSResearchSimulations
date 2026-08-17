@@ -1,0 +1,159 @@
+\chapter{Additional Derivation Details}
+\label{app:derivation-details}
+
+This appendix records algebra that supports Chapters~\ref{chap:baselines}
+and~\ref{chap:expanded} but is not required to follow the main argument.
+
+\section{Gradient of mutual information on the probability simplex}
+
+Mutual information can be written as
+\begin{equation}
+  I(P)
+  =\sum_{i,j}p_{ij}\log p_{ij}
+  -\sum_i p_{i+}\log p_{i+}
+  -\sum_j p_{+j}\log p_{+j}.
+  \label{eq:appendix-mi-entropy-form}
+\end{equation}
+Treating the cell probabilities as coordinates gives
+\begin{align}
+  \frac{\partial I(P)}{\partial p_{ij}}
+  &=(\log p_{ij}+1)
+    -(\log p_{i+}+1)
+    -(\log p_{+j}+1)\\
+  &=\log\frac{p_{ij}}{p_{i+}p_{+j}}-1\\
+  &=\pmi_P(i,j)-1.
+  \label{eq:appendix-mi-gradient}
+\end{align}
+Any valid probability perturbation $h=(h_{ij})$ satisfies
+$\sum_{i,j}h_{ij}=0$. Its directional derivative is therefore
+\begin{align}
+  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+  I(P+\varepsilon h)\right|_{\varepsilon=0}
+  &=\sum_{i,j}\{\pmi_P(i,j)-1\}h_{ij}\\
+  &=\sum_{i,j}\pmi_P(i,j)h_{ij}.
+  \label{eq:appendix-mi-directional}
+\end{align}
+The constant in the unconstrained gradient disappears on the simplex. For
+the one-cell direction $h_{ij}=\mathbf 1\{i=x,j=y\}-p_{ij}$, Equation
+\eqref{eq:appendix-mi-directional} becomes
+\begin{equation}
+  \pmi_P(x,y)-\sum_{i,j}p_{ij}\pmi_P(i,j)
+  =\pmi_P(x,y)-I(P),
+\end{equation}
+which is Equation~\eqref{eq:mi-derivative}.
+
+\section{Why the variance of pointwise MI appears}
+
+For empirical cell probabilities,
+\begin{equation}
+  \widehat p_{ij}-p_{ij}
+  =\frac{1}{n_P}\sum_{a=1}^{n_P}
+  \{\mathbf 1(Z_a^{(P)}=(i,j))-p_{ij}\}.
+\end{equation}
+Substitution into the first-order expansion of MI gives
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \sum_{i,j}\pmi_P(i,j)(\widehat p_{ij}-p_{ij})\\
+  &=\frac{1}{n_P}\sum_{a=1}^{n_P}
+  \left[
+  \sum_{i,j}\pmi_P(i,j)
+  \{\mathbf 1(Z_a^{(P)}=(i,j))-p_{ij}\}
+  \right]\\
+  &=\frac{1}{n_P}\sum_{a=1}^{n_P}
+  \{\pmi_P(Z_a^{(P)})-I(P)\}.
+  \label{eq:appendix-mi-linear}
+\end{align}
+The observation-level summand has variance
+\begin{align}
+  \Var_P\{\pmi_P(X,Y)-I(P)\}
+  &=\E_P\left[\{\pmi_P(X,Y)-I(P)\}^2\right]\\
+  &=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2\\
+  &=V(P).
+\end{align}
+This is why the first-order variance of the complete MI estimator is
+$V(P)/n_P$, rather than a variance of the numerical category labels.
+
+\section{Mean of the variance influence function}
+
+The influence function $g_P(x,y)$ is centred at the population level. This
+can be shown without expanding its individual terms. The weighted average of
+the one-cell perturbation directions is
+\begin{equation}
+  \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
+\end{equation}
+Directional differentiation is linear in its direction. Hence
+\begin{align}
+  \E_P\{g_P(X,Y)\}
+  &=\sum_{x,y}p_{xy}
+    \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+    V\{(1-\varepsilon)P+\varepsilon\delta_{(x,y)}\}
+    \right|_{0}\\
+  &=D V_P\left[
+    \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}
+    \right]\\
+  &=D V_P[0]=0.
+\end{align}
+The empirical implementation nevertheless subtracts
+$\overline g_P$ in Equation~\eqref{eq:tau-hat}. This removes floating-point
+and plug-in centring error without changing the population definition.
+
+\section{Direct table substitutions}
+
+For observed counts $N^P=(N^P_{ij})$, the quantities used by expanded
+Welch are calculated as
+\begin{align}
+  \widehat p_{ij}&=\frac{N^P_{ij}}{n_P},
+  &\widehat p_{i+}&=\sum_j\widehat p_{ij},
+  &\widehat p_{+j}&=\sum_i\widehat p_{ij},\\
+  \widehat\pmi_P(i,j)
+  &=\log\frac{\widehat p_{ij}}
+  {\widehat p_{i+}\widehat p_{+j}},
+  &\Ihat(P)&=\sum_{i,j}\widehat p_{ij}\widehat\pmi_P(i,j),\\
+  \Vhat(P)&=\sum_{i,j}\widehat p_{ij}
+  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
+\end{align}
+All sums involving pointwise MI are restricted to cells with
+$\widehat p_{ij}>0$. The probability-weighted row and column means are
+\begin{align}
+  \widehat R_P(i)
+  &=\frac{\sum_j\widehat p_{ij}\widehat\pmi_P(i,j)}
+          {\widehat p_{i+}},\\
+  \widehat C_P(j)
+  &=\frac{\sum_i\widehat p_{ij}\widehat\pmi_P(i,j)}
+          {\widehat p_{+j}}.
+\end{align}
+Consequently,
+\begin{align}
+  \widehat g_P(i,j)
+  ={}&\{\widehat\pmi_P(i,j)-\Ihat(P)\}^2-\Vhat(P)\\
+  &+2\{\widehat\pmi_P(i,j)-\widehat R_P(i)
+  -\widehat C_P(j)+\Ihat(P)\},\\
+  \overline g_P
+  ={}&\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),\\
+  \widehat\tau^2(P)
+  ={}&\sum_{i,j}\widehat p_{ij}
+  \{\widehat g_P(i,j)-\overline g_P\}^2,\\
+  \widehat\nu_P
+  ={}&\frac{2n_P\Vhat(P)^2}{\widehat\tau^2(P)}.
+\end{align}
+These expressions are the direct $O(rc)$ implementation of the population
+derivation.
+
+\section{Numerical derivative checks}
+
+The implementation tests the analytic derivatives against centred finite
+differences on positive probability tables. For a selected cell, define
+\begin{equation}
+  P_{\pm h}=(1\mp h)P\pm h\delta_{(x,y)}.
+\end{equation}
+For sufficiently small $h$, the checks compare
+\begin{align}
+  \frac{I(P_h)-I(P_{-h})}{2h}
+  &\quad\text{with}\quad \pmi_P(x,y)-I(P),\\
+  \frac{V(P_h)-V(P_{-h})}{2h}
+  &\quad\text{with}\quad g_P(x,y).
+\end{align}
+The finite-difference step is selected so that both perturbed tables retain
+positive probabilities. These checks test the algebra independently of the
+Monte Carlo calibration experiment.

@@ -1,0 +1,187 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+\section{Comparing dependence across populations}
+
+Many empirical studies ask whether the relationship between two variables
+changes across populations. A treatment may alter the association between a
+biomarker and an outcome; environmental conditions may change the dependence
+between two species; or two periods may exhibit different coupling between
+components of a complex system. In each case, the quantity of interest is the
+strength of association, not only the marginal behaviour of either variable.
+
+Mutual information (MI) provides a general measure of statistical dependence
+\citep{shannon1948}. For categorical variables, it compares the observed joint
+distribution with the joint distribution that would arise under independence.
+Unlike correlation, MI does not restrict dependence to a linear or monotone
+form. This generality makes MI useful in complex-systems research and in
+applications where the structure of an association is not known in advance
+\citep{brillinger2004,lizier2014}.
+
+The most familiar significance test for categorical MI asks whether two
+variables are independent within one population. The corresponding null is
+\(
+I(X;Y)=0
+\), and the likelihood-ratio statistic has an asymptotic chi-squared
+distribution under standard fixed-alphabet conditions. A permutation test can
+address the same question by shuffling one variable and thereby destroying its
+association with the other.
+
+Comparing dependence across two populations is a different inferential
+problem. Let \(P\) and \(Q\) denote the joint distributions of the same aligned
+categorical variables in two independent populations. This thesis studies
+\begin{equation}
+  H_0:I(P)=I(Q)
+  \quad\text{against}\quad
+  H_1:I(P)\ne I(Q).
+  \label{eq:intro-null}
+\end{equation}
+The complete distributions may differ under this null. Their margins, cell
+probabilities, and patterns of association need not be equal. Equation
+\eqref{eq:intro-null} therefore defines a weak null about one scalar functional
+of each distribution.
+
+This distinction determines the appropriate analysis. Applying a separate
+chi-squared independence test to each table does not test whether the two MI
+values are equal. Shuffling one variable within either population also targets
+independence rather than Equation~\eqref{eq:intro-null}. The required method
+must estimate the signed difference \(I(P)-I(Q)\) and quantify its sampling
+uncertainty.
+
+\section{The finite-sample problem}
+
+For an \(r\times c\) contingency table, the plug-in MI estimator replaces each
+population probability by its observed proportion. The estimator is simple
+and consistent, but it is nonlinear and has positive finite-sample bias
+\citep{miller1955,moddemeijer1989,paninski2003}. The leading bias depends on
+the alphabet dimensions and sample size. Consequently, two groups with equal
+population MI can have differently biased estimates when their sample sizes
+differ.
+
+Away from independence, MI is a smooth functional of the cell probabilities.
+A first-order Taylor expansion expresses the estimation error as an average of
+centred pointwise-MI contributions. This representation gives an analytic
+standard error and leads to a normal Wald test for Equation
+\eqref{eq:intro-null}. The calculation is deterministic and requires one pass
+over each table.
+
+The normal Wald test treats the estimated standard error as sufficiently
+stable. That approximation becomes less reliable when the sample is small,
+the margins are skewed, or many cells have low expected counts. In these
+settings, repeated samples can produce substantially different estimates of
+the MI variance. Ignoring that second layer of uncertainty can make the
+normal-reference test reject too often.
+
+Welch's unequal-variance test addresses an analogous issue when comparing two
+means. It forms a Student statistic and uses effective degrees of freedom that
+depend on the two estimated variance contributions
+\citep{satterthwaite1946,welch1947}. Hutcheson transported this architecture
+to the comparison of Shannon diversity values \citep{hutcheson1970}. A direct
+transport to MI, however, does not fully describe the uncertainty of the MI
+variance estimate. Changing one observation alters the joint probabilities,
+the margins, every affected pointwise-MI value, and the estimated MI variance.
+
+\section{Aim and research questions}
+
+This thesis develops and evaluates an MI-specific Welch--Satterthwaite
+reference for the weak null in Equation~\eqref{eq:intro-null}. The proposed
+test keeps the bias-corrected MI difference and first-order standard error of
+the normal Wald test. It changes only the reference distribution used to
+calibrate the standardized statistic.
+
+Figure~\ref{fig:intro-method-overview} gives the high-level calculation. The
+two tables are processed separately until their bias-corrected MI estimates
+and variance contributions are combined. The proposed contribution lies in
+the final Welch-type calibration: its degrees of freedom are derived from the
+sampling stability of the complete MI variance estimator.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\textwidth]{method_overview.pdf}
+  \caption{High-level analytic pipeline for comparing MI between two
+  independent count tables. Expanded Welch uses the same effect estimate and
+  standard error as the two baselines but supplies MI-specific component
+  degrees of freedom for the final Student reference.}
+  \label{fig:intro-method-overview}
+\end{figure}
+
+The study addresses three research questions.
+
+\begin{enumerate}[leftmargin=*,label=\textbf{RQ\arabic*:}]
+  \item \textbf{Method construction.}
+  How can the Welch--Satterthwaite principle be adapted to the nonlinear
+  plug-in MI variance estimator?
+
+  \item \textbf{Statistical performance.}
+  Does the expanded method improve type-I error calibration and confidence
+  interval coverage relative to normal Wald and simple
+  Welch--Satterthwaite inference across well-sampled, skewed, sparse, and
+  unequal-sample regimes?
+
+  \item \textbf{Practical trade-offs.}
+  What power, computational cost, validity-rate, and operating-range trade-offs
+  accompany the correction?
+\end{enumerate}
+
+\section{Contributions}
+
+The thesis makes four contributions.
+
+First, it derives component degrees of freedom for the estimated first-order
+MI variance. The derivation treats that variance as a complete functional of
+the joint distribution, including the dependence of pointwise MI on the row
+and column margins.
+
+Second, it combines these component degrees of freedom into a deterministic
+expanded Welch--Satterthwaite test. The complete calculation requires
+\(O(rc)\) operations for an \(r\times c\) table and does not require
+resampling.
+
+Third, it evaluates normal Wald, simple Welch--Satterthwaite, and expanded
+Welch--Satterthwaite inference on a common grid of exactly equal-MI population
+pairs. The grid separates well-sampled controls from skewed, rare-cell,
+ultra-sparse, and widespread-sparsity regimes.
+
+Fourth, it characterises the method's operating range. The results identify
+regimes in which the correction improves calibration, quantify its power and
+runtime costs, and show where first-order inference remains unreliable.
+
+The contribution is deliberately bounded. Welch--Satterthwaite moment
+matching, influence-function theory, bias correction for plug-in information
+measures, and comparisons of MI-related indices all have established
+literatures. The new element is the MI-specific variance-influence
+degrees-of-freedom construction and its controlled finite-sample evaluation
+for the equal-MI weak null.
+
+\section{Scope}
+
+The analysis assumes two independent samples of aligned categorical pairs.
+The principal theory concerns fixed finite alphabets, positive population cell
+probabilities, and positive first-order MI variances. The target MI values in
+the primary validation are positive and bounded away from zero.
+
+Testing independence is outside the method's regular operating range. At
+\(I(P)=0\), the first-order MI influence function is zero and the usual
+normal expansion degenerates. The chi-squared independence limit then arises
+from a second-order expansion. Appendix~\ref{app:independence-boundary} derives this
+boundary explicitly.
+
+The thesis does not develop paired-sample inference, conditional MI, transfer
+entropy, or a universal sparse-table correction. These extensions require
+additional dependence structures or different asymptotic arguments.
+
+\section{Thesis structure}
+
+Chapter~\ref{chap:background} introduces the information-theoretic and
+statistical foundations, reviews prior comparison methods, and identifies the
+specific methodological gap. Chapter~\ref{chap:baselines} defines the
+two-sample problem and derives the shared bias-corrected statistic, normal Wald
+baseline, and simple Welch baseline. Chapter~\ref{chap:expanded} derives the
+expanded MI-specific degrees of freedom.
+
+Chapter~\ref{chap:design} presents the population construction, simulation
+grid, evaluation metrics, and reproducibility controls. Chapter
+\ref{chap:results} reports calibration, coverage, power, validity, and runtime.
+Chapter~\ref{chap:discussion} interprets the findings, defines the operating
+range, and discusses limitations. Chapter~\ref{chap:conclusion} answers the
+research questions and concludes the thesis.

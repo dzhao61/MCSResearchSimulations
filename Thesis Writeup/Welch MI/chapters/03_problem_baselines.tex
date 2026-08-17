@@ -1,0 +1,261 @@
+\chapter{Statistical Problem and Analytic Baselines}
+\label{chap:baselines}
+
+This chapter fixes the estimand, effect estimate, standard error, and two
+analytic baselines. All three methods evaluated in the thesis use the same
+bias-corrected MI difference and the same first-order standard error. They
+differ only in the reference distribution used to convert the standardized
+statistic into a p-value and confidence interval.
+
+\section{Data, estimand, and assumptions}
+
+Let
+\begin{equation}
+  N^P=(N^P_{ij}),
+  \qquad
+  N^Q=(N^Q_{ij})
+\end{equation}
+be independent \(r\times c\) count tables with totals \(n_P\) and \(n_Q\).
+The row and column categories have the same definitions in both populations.
+The empirical probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N^P_{ij}}{n_P},
+  \qquad
+  \widehat q_{ij}=\frac{N^Q_{ij}}{n_Q}.
+\end{equation}
+
+The population parameter is the signed difference
+\begin{equation}
+  \Delta=I(P)-I(Q).
+  \label{eq:delta-population}
+\end{equation}
+The principal test is two-sided:
+\begin{equation}
+  H_0:\Delta=0
+  \quad\text{against}\quad
+  H_1:\Delta\ne0.
+  \label{eq:two-sample-null}
+\end{equation}
+
+The first-order construction uses the following assumptions.
+
+\begin{assumption}[Sampling]
+Observations are independent and identically distributed within each
+population, and the two population samples are independent.
+\end{assumption}
+
+\begin{assumption}[Aligned fixed alphabets]
+The row and column categories are fixed in advance and aligned between the two
+tables.
+\end{assumption}
+
+\begin{assumption}[Positive support]
+Every population cell has positive probability. Empirical zero cells are
+allowed, but widespread observed support loss is recorded as a diagnostic.
+\end{assumption}
+
+\begin{assumption}[Regular MI]
+The first-order influence variances \(V(P)\) and \(V(Q)\) are positive. This
+excludes exact independence and other degenerate cases from the regular
+Student approximation.
+\end{assumption}
+
+All logarithms are natural. MI differences and standard errors are therefore
+reported in nats. Changing the logarithm base scales both by the same positive
+constant and leaves the standardized statistic unchanged.
+
+\section{Plug-in and bias-corrected MI}
+
+For the first table, define empirical pointwise MI by
+\begin{equation}
+  \widehat\pmi_P(i,j)
+  =\log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right)
+  \qquad\text{when }\widehat p_{ij}>0.
+  \label{eq:empirical-pmi}
+\end{equation}
+The plug-in MI estimate is
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}\widehat\pmi_P(i,j).
+  \label{eq:plugin-mi}
+\end{equation}
+The same calculation gives \(\Ihat(Q)\).
+
+Let
+\begin{equation}
+  d=(r-1)(c-1).
+\end{equation}
+Under fixed positive support, the leading bias correction gives
+\begin{equation}
+  \widehat I_{\mathrm{BC}}(P)
+  =\Ihat(P)-\frac{d}{2n_P},
+  \qquad
+  \widehat I_{\mathrm{BC}}(Q)
+  =\Ihat(Q)-\frac{d}{2n_Q}.
+  \label{eq:bias-corrected-mi}
+\end{equation}
+The estimated effect is
+\begin{equation}
+  \Deltahat
+  =\widehat I_{\mathrm{BC}}(P)
+  -\widehat I_{\mathrm{BC}}(Q).
+  \label{eq:bias-corrected-difference}
+\end{equation}
+
+The correction uses the declared alphabet dimensions rather than the observed
+nonempty dimensions. It may produce a negative corrected MI estimate in a
+sparse sample. The implementation does not clip that estimate at zero because
+clipping would alter both the estimand and the sampling distribution.
+
+\section{First-order variance of plug-in MI}
+
+For population \(P\), define
+\begin{equation}
+  V(P)
+  =\sum_{i,j}p_{ij}
+  \{\pmi_P(i,j)-I(P)\}^2.
+  \label{eq:population-mi-variance}
+\end{equation}
+This is the population variance of pointwise MI. It governs the sampling
+variance of the complete plug-in estimator because the first-order MI error is
+an average of centred pointwise-MI contributions.
+
+To see this directly, write one observation as
+\(Z_a^{(P)}=(X_a^{(P)},Y_a^{(P)})\). A first-order expansion gives
+\begin{equation}
+  \Ihat(P)-I(P)
+  =
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}
+  \{\pmi_P(Z_a^{(P)})-I(P)\}
+  +o_p(n_P^{-1/2}).
+  \label{eq:mi-asymptotic-linear}
+\end{equation}
+The summands are independent, have mean zero, and have variance \(V(P)\).
+Therefore,
+\begin{align}
+  \Var\{\Ihat(P)\}
+  &\approx
+  \Var\left[
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}
+  \{\pmi_P(Z_a^{(P)})-I(P)\}
+  \right]\\
+  &=\frac{1}{n_P^2}
+  \sum_{a=1}^{n_P}V(P)\\
+  &=\frac{V(P)}{n_P}.
+  \label{eq:mi-sampling-variance}
+\end{align}
+Subtracting the fixed leading bias term in Equation
+\eqref{eq:bias-corrected-mi} does not change this first-order variance.
+
+The observed table estimates \(V(P)\) by
+\begin{equation}
+  \Vhat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
+  \label{eq:estimated-mi-variance}
+\end{equation}
+Define \(\Vhat(Q)\) analogously.
+
+\section{Shared standard error and test statistic}
+
+Because the two samples are independent, their estimated variance
+contributions add:
+\begin{equation}
+  \SEhat^2
+  =\frac{\Vhat(P)}{n_P}
+  +\frac{\Vhat(Q)}{n_Q}.
+  \label{eq:shared-se}
+\end{equation}
+The common standardized statistic is
+\begin{equation}
+  T=\frac{\Deltahat}{\SEhat}.
+  \label{eq:shared-t}
+\end{equation}
+Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
+by normal Wald, simple Welch, and expanded Welch. This controlled comparison
+isolates the effect of the reference distribution.
+
+\section{Baseline 1: normal Wald}
+
+Under the regular first-order asymptotics,
+\begin{equation}
+  T\xrightarrow{d}N(0,1)
+  \qquad\text{under }H_0.
+\end{equation}
+The two-sided normal Wald p-value is
+\begin{equation}
+  p_{\mathrm{Wald}}
+  =2\{1-\Phi(|T|)\},
+  \label{eq:wald-pvalue}
+\end{equation}
+where \(\Phi\) is the standard normal distribution function. A
+\(100(1-\alpha)\%\) confidence interval for \(\Delta\) is
+\begin{equation}
+  \Deltahat
+  \ \pm\
+  z_{1-\alpha/2}\SEhat.
+  \label{eq:wald-ci}
+\end{equation}
+
+The normal reference is the large-sample limit shared by all three analytic
+methods. It does not assign a separate finite-sample uncertainty to
+\(\Vhat(P)\) or \(\Vhat(Q)\).
+
+\section{Baseline 2: simple Welch--Satterthwaite}
+
+Simple Welch treats each empirical MI influence variance as though it had the
+same component degrees of freedom as an ordinary sample variance:
+\begin{equation}
+  \nu_P^{\mathrm{simple}}=n_P-1,
+  \qquad
+  \nu_Q^{\mathrm{simple}}=n_Q-1.
+\end{equation}
+Substitution into the Welch--Satterthwaite equation gives
+\begin{equation}
+  \widehat\nu_{\mathrm{simple}}
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \left\{\Vhat(P)/n_P\right\}^2/(n_P-1)
+  +
+  \left\{\Vhat(Q)/n_Q\right\}^2/(n_Q-1)
+  }.
+  \label{eq:simple-welch-df}
+\end{equation}
+The two-sided p-value is
+\begin{equation}
+  p_{\mathrm{simple}}
+  =2\{1-F_{t_{\widehat\nu_{\mathrm{simple}}}}(|T|)\}.
+  \label{eq:simple-welch-p}
+\end{equation}
+
+The Student reference has heavier tails than the normal reference, so simple
+Welch is weakly more conservative at a fixed observed \(|T|\). Its limitation
+is the component degrees of freedom. The value \(n-1\) has a classical basis
+for an ordinary sample variance under normal sampling. The quantity
+\(\Vhat(P)\) is instead a nonlinear plug-in functional whose pointwise scores
+change with the empirical table.
+
+\section{What the expanded method must calculate}
+
+The shared statistic already supplies the estimated effect and its first-order
+standard error. The remaining task is to replace the generic values
+\(n_P-1\) and \(n_Q-1\) by component degrees of freedom that describe the
+sampling reliability of \(\Vhat(P)\) and \(\Vhat(Q)\).
+
+Satterthwaite moment matching requires the first two moments of each positive
+variance estimate. To first order,
+\begin{equation}
+  \E\{\Vhat(P)\}\approx V(P).
+\end{equation}
+Chapter~\ref{chap:expanded} derives
+\(\Var\{\Vhat(P)\}\) by calculating how the complete variance functional
+changes when one observation changes the joint table.

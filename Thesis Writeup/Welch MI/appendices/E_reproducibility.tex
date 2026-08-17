@@ -1,0 +1,97 @@
+\chapter{Reproducibility}
+\label{app:reproducibility}
+
+\section{Software and random seeds}
+
+The primary experiment was run with Python 3.13.5, NumPy 2.4.4, SciPy
+1.17.1, and pandas 3.0.3. Its population-generation seed was 2,026,080,501
+and its simulation seed was 2,026,080,502. The scaled chi-squared audit used
+seeds 2,026,080,701 and 2,026,080,702. The exact settings and software
+versions are stored beside each output in \texttt{run\_metadata.json}.
+
+\section{Primary experiment}
+
+From the repository root, the primary experiment is reproduced with
+\begin{verbatim}
+MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache \
+  .venv/bin/python \
+  WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
+  --profile full \
+  --output-dir WelchSatterthwaiteMI/results/supervisor_practical
+\end{verbatim}
+The full profile uses 10,000 null replicates per scenario, 10,000 replicates
+per power setting, batches of 1,000, and 200 timing repetitions. The recorded
+SHA-256 hash of the experiment script was
+\begin{verbatim}
+9e654a849ff100eedd57c2703ee5617a32d7c35b3400ef37be718adca35f9123
+\end{verbatim}
+
+The output directory contains the following principal artefacts:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{population\_scenarios.csv}:\\
+  Fixed population probabilities, sample sizes, generating parameters, and
+  expected-count diagnostics for all 60 null scenarios.
+
+  \item \texttt{scenario\_results.csv}:\\
+  Scenario-level FPRs, calibration errors, Wilson intervals, coverage, and
+  validity diagnostics.
+
+  \item \texttt{regime\_summary.csv}:\\
+  Equal-weight summaries over the 12 population pairs in each regime.
+
+  \item \texttt{null\_pvalues.npz}:\\
+  Replicate-level p-values used to construct the rejection-calibration curves.
+
+  \item Calibration-grid files:\\
+  \texttt{rejection\_calibration\_scenarios.csv} and\\
+  \texttt{rejection\_calibration\_regimes.csv}.\\
+  Actual rejection rates over the complete nominal-alpha grid.
+
+  \item \texttt{power\_summary.csv} and \texttt{runtime\_summary.csv}:\\
+  Alternative-hypothesis and computational results.
+\end{itemize}
+
+\section{Scaled chi-squared audit}
+
+The component audit is reproduced with
+\begin{verbatim}
+MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache \
+  .venv/bin/python \
+  WelchSatterthwaiteMI/experiments/validate_scaled_chi_square.py \
+  --profile focused \
+  --replicates 10000 \
+  --output-dir \
+  WelchSatterthwaiteMI/results/scaled_chi_square_validation
+\end{verbatim}
+The corresponding output directory contains component-, regime-, shape-, and
+model-level summaries together with the fixed populations and metadata.
+
+\section{Automated checks}
+
+The implementation tests are run with
+\begin{verbatim}
+.venv/bin/python -m unittest discover \
+  -s WelchSatterthwaiteMI/tests -v
+\end{verbatim}
+The tests cover MI calculation, bias correction, normal and Welch references,
+the variance influence calculation, table validation, reproducibility of the
+experiment profiles, and scaled chi-squared audit utilities.
+
+\section{Building this document}
+
+The scenario-calibration, effective-degrees-of-freedom, and power figures are
+generated from the accepted CSV outputs. From
+\texttt{Thesis Writeup/Welch MI}, run
+\begin{verbatim}
+MPLBACKEND=Agg MPLCONFIGDIR=/tmp/welch-mi-mpl \
+  ../../.venv/bin/python figures/make_thesis_figures.py
+\end{verbatim}
+The thesis is then built with
+\begin{verbatim}
+/Library/TeX/texbin/latexmk -pdf \
+  -interaction=nonstopmode -halt-on-error main.tex
+\end{verbatim}
+The bibliography is read from
+\texttt{WelchSatterthwaiteMI/article/references.bib}. The calibration figure
+and all thesis-specific summary figures are generated from the accepted
+experiment outputs rather than from separately edited values.

@@ -1,0 +1,518 @@
+\chapter{Expanded Welch--Satterthwaite Method}
+\label{chap:expanded}
+
+The expanded method retains the bias-corrected difference, standard error, and
+test statistic from Chapter~\ref{chap:baselines}. It changes only the component
+degrees of freedom used in the Welch--Satterthwaite reference. This chapter
+derives those degrees of freedom from the sampling variability of the complete
+MI variance estimator.
+
+\section{Roadmap from the Welch--Satterthwaite equation}
+
+For independent variance estimates \(s_i^2\), positive weights \(k_i\), and
+component degrees of freedom \(\nu_i\), the Welch--Satterthwaite equation is
+\begin{equation}
+  \nu
+  =
+  \frac{
+  \left(\sum_i k_i s_i^2\right)^2
+  }{
+  \sum_i(k_i s_i^2)^2/\nu_i
+  }.
+  \label{eq:ws-general}
+\end{equation}
+For the two MI estimates, the variance contributions are
+\begin{equation}
+  k_Ps_P^2=\frac{\Vhat(P)}{n_P},
+  \qquad
+  k_Qs_Q^2=\frac{\Vhat(Q)}{n_Q}.
+  \label{eq:ws-mi-components}
+\end{equation}
+These are the two terms in the squared standard error. The remaining quantities
+are the component degrees of freedom \(\nu_P\) and \(\nu_Q\), which should
+measure how reliably \(\Vhat(P)\) and \(\Vhat(Q)\) estimate their population
+counterparts.
+
+The derivation proceeds in four stages. First, Satterthwaite moment matching
+expresses \(\nu_P\) in terms of the mean and variance of \(\Vhat(P)\). Second,
+a one-cell perturbation gives the observation-level sensitivity of \(V(P)\).
+Third, the variability of these sensitivities gives the sampling variance of
+\(\Vhat(P)\). Finally, the two estimated component degrees of freedom are
+combined through Equation~\eqref{eq:ws-general}.
+
+\section{Component degrees of freedom by moment matching}
+
+Satterthwaite represents a positive variance estimate by a scaled chi-squared
+variable. For the first population, write the working model as
+\begin{equation}
+  \Vhat(P)
+  \ \dot\sim\
+  \E\{\Vhat(P)\}
+  \frac{\chi^2_{\nu_P}}{\nu_P}.
+  \label{eq:scaled-chi-working}
+\end{equation}
+The model is a moment-matching approximation. It does not assert that the
+finite-sample distribution of \(\Vhat(P)\) is exactly chi-squared.
+
+For \(X\sim\chi^2_{\nu_P}\),
+\begin{equation}
+  \E(X)=\nu_P,
+  \qquad
+  \Var(X)=2\nu_P.
+\end{equation}
+The scaling in Equation~\eqref{eq:scaled-chi-working} therefore matches the
+mean automatically:
+\begin{equation}
+  \E\left[
+  \E\{\Vhat(P)\}\frac{X}{\nu_P}
+  \right]
+  =\E\{\Vhat(P)\}.
+\end{equation}
+Its variance is
+\begin{align}
+  \Var\left[
+  \E\{\Vhat(P)\}\frac{X}{\nu_P}
+  \right]
+  &=
+  \frac{[\E\{\Vhat(P)\}]^2}{\nu_P^2}
+  \Var(X)\\
+  &=
+  \frac{2[\E\{\Vhat(P)\}]^2}{\nu_P}.
+\end{align}
+Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
+\begin{equation}
+  \boxed{
+  \nu_P
+  =
+  \frac{2[\E\{\Vhat(P)\}]^2}
+       {\Var\{\Vhat(P)\}}
+  }.
+  \label{eq:component-df-moments}
+\end{equation}
+To first order, \(\E\{\Vhat(P)\}\approx V(P)\). The required calculation is
+therefore the sampling variance of \(\Vhat(P)\).
+
+\section{A one-cell perturbation of the distribution}
+
+The sampling behaviour of a smooth plug-in functional can be obtained by
+measuring its first-order response to one observation. Fix a cell
+\((x,y)\) and define the perturbed distribution
+\begin{equation}
+  P_\varepsilon
+  =(1-\varepsilon)P+\varepsilon\delta_{(x,y)},
+  \label{eq:contamination-path}
+\end{equation}
+where \(\delta_{(x,y)}\) places probability one on cell \((x,y)\). At
+\(\varepsilon=0\), the distribution is \(P\). Increasing \(\varepsilon\)
+moves a small amount of probability toward the selected cell while preserving
+total probability one.
+
+For an arbitrary cell \((i,j)\),
+\begin{equation}
+  p_{ij}(\varepsilon)
+  =(1-\varepsilon)p_{ij}
+  +\varepsilon\mathbf 1\{i=x,j=y\}.
+\end{equation}
+The joint and marginal probability derivatives at the original distribution
+are
+\begin{align}
+  \left.\frac{\mathrm d p_{ij}(\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  &=\mathbf 1\{i=x,j=y\}-p_{ij},
+  \label{eq:joint-perturbation-derivative}\\
+  \left.\frac{\mathrm d p_{i+}(\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  &=\mathbf 1\{i=x\}-p_{i+},\\
+  \left.\frac{\mathrm d p_{+j}(\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  &=\mathbf 1\{j=y\}-p_{+j}.
+\end{align}
+The derivatives of the joint probabilities sum to zero because
+\begin{equation}
+  \sum_{i,j}
+  \{\mathbf 1(i=x,j=y)-p_{ij}\}
+  =1-1=0.
+\end{equation}
+
+\section{Change in pointwise mutual information and MI}
+
+Along the perturbation path, pointwise MI is
+\begin{equation}
+  \pmi_{P_\varepsilon}(i,j)
+  =\log p_{ij}(\varepsilon)
+  -\log p_{i+}(\varepsilon)
+  -\log p_{+j}(\varepsilon).
+\end{equation}
+Differentiating the three logarithms and substituting the probability
+derivatives gives
+\begin{equation}
+  \left.
+  \frac{\mathrm d}{\mathrm d\varepsilon}
+  \pmi_{P_\varepsilon}(i,j)
+  \right|_{0}
+  =
+  \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+  -\frac{\mathbf 1\{i=x\}}{p_{i+}}
+  -\frac{\mathbf 1\{j=y\}}{p_{+j}}
+  +1.
+  \label{eq:pmi-derivative}
+\end{equation}
+
+MI along the path is
+\begin{equation}
+  I(P_\varepsilon)
+  =\sum_{i,j}p_{ij}(\varepsilon)
+  \pmi_{P_\varepsilon}(i,j).
+\end{equation}
+The product rule separates its derivative into the change in probability
+weights and the change in pointwise-MI values:
+\begin{align}
+  \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  ={}&
+  \sum_{i,j}
+  \{\mathbf 1(i=x,j=y)-p_{ij}\}\pmi_P(i,j)
+  \notag\\
+  &+
+  \sum_{i,j}p_{ij}
+  \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
+  {\mathrm d\varepsilon}\right|_{0}.
+\end{align}
+The first sum is \(\pmi_P(x,y)-I(P)\). Substitution of Equation
+\eqref{eq:pmi-derivative} into the second sum gives \(1-1-1+1=0\). Hence
+\begin{equation}
+  \boxed{
+  \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  =\pmi_P(x,y)-I(P)
+  }.
+  \label{eq:mi-derivative}
+\end{equation}
+This result recovers the centred pointwise-MI influence function used in
+Chapter~\ref{chap:baselines}.
+
+\section{Change in the MI variance}
+
+The target is the first-order change in
+\begin{equation}
+  V(P)
+  =\Var_P\{\pmi_P(X,Y)\}.
+\end{equation}
+Write this variance as
+\begin{equation}
+  V(P)=M_2(P)-I(P)^2,
+  \qquad
+  M_2(P)=\E_P\{\pmi_P(X,Y)^2\}.
+  \label{eq:v-second-moment}
+\end{equation}
+Define the observation-level variance sensitivity by
+\begin{equation}
+  g_P(x,y)
+  =
+  \left.
+  \frac{\mathrm d V(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}.
+  \label{eq:g-definition}
+\end{equation}
+Differentiating Equation~\eqref{eq:v-second-moment} gives
+\begin{equation}
+  g_P(x,y)
+  =
+  \left.\frac{\mathrm d M_2(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  -2I(P)
+  \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}.
+  \label{eq:g-decomposition}
+\end{equation}
+
+It remains to differentiate
+\begin{equation}
+  M_2(P_\varepsilon)
+  =\sum_{i,j}p_{ij}(\varepsilon)
+  \pmi_{P_\varepsilon}(i,j)^2.
+\end{equation}
+The product rule gives
+\begin{align}
+  \left.\frac{\mathrm d M_2(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  ={}&
+  \sum_{i,j}
+  \left.\frac{\mathrm d p_{ij}(\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  \pmi_P(i,j)^2
+  \notag\\
+  &+
+  2\sum_{i,j}p_{ij}\pmi_P(i,j)
+  \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
+  {\mathrm d\varepsilon}\right|_{0}.
+  \label{eq:m2-product-rule}
+\end{align}
+The first sum is
+\begin{equation}
+  \pmi_P(x,y)^2-M_2(P).
+  \label{eq:m2-weight-term}
+\end{equation}
+
+For the second sum, define the probability-weighted row and column means
+\begin{align}
+  \E_P\{\pmi_P(X,Y)\mid X=x\}
+  &=\frac{\sum_j p_{xj}\pmi_P(x,j)}{p_{x+}},\\
+  \E_P\{\pmi_P(X,Y)\mid Y=y\}
+  &=\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}}.
+\end{align}
+Substitution of Equation~\eqref{eq:pmi-derivative} gives
+\begin{align}
+  &\sum_{i,j}p_{ij}\pmi_P(i,j)
+  \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
+  {\mathrm d\varepsilon}\right|_{0}
+  \notag\\
+  &\quad=
+  \pmi_P(x,y)
+  -\E_P\{\pmi_P(X,Y)\mid X=x\}
+  -\E_P\{\pmi_P(X,Y)\mid Y=y\}
+  +I(P).
+  \label{eq:m2-score-term}
+\end{align}
+
+Combining Equations~\eqref{eq:mi-derivative},
+\eqref{eq:g-decomposition}, \eqref{eq:m2-weight-term}, and
+\eqref{eq:m2-score-term} yields
+\begin{equation}
+\boxed{
+\begin{aligned}
+g_P(x,y)
+={}&\{\pmi_P(x,y)-I(P)\}^2-V(P)\\
+&+2\bigl[
+\pmi_P(x,y)
+-\E_P\{\pmi_P(X,Y)\mid X=x\}\\
+&\hspace{18mm}
+-\E_P\{\pmi_P(X,Y)\mid Y=y\}
++I(P)
+\bigr].
+\end{aligned}
+}
+\label{eq:g-final}
+\end{equation}
+The first line is the change that would arise from the centred squared
+pointwise-MI value. The remaining terms account for the row and column margins
+that change with the selected cell.
+
+\section{Sampling variance of the MI variance estimator}
+
+Define the population variability of the observation-level sensitivities by
+\begin{equation}
+  \tau^2(P)=\Var_P\{g_P(X,Y)\}.
+  \label{eq:tau-definition}
+\end{equation}
+The mean of an influence function is zero. Centring explicitly gives the same
+variance if numerical substitution produces a small nonzero mean.
+
+A first-order expansion of the variance estimator is
+\begin{equation}
+  \Vhat(P)-V(P)
+  \approx
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
+  \label{eq:vhat-linearization}
+\end{equation}
+The observations are independent, so
+\begin{align}
+  \Var\{\Vhat(P)\}
+  &\approx
+  \frac{1}{n_P^2}
+  \sum_{a=1}^{n_P}
+  \Var_P\{g_P(Z_a^{(P)})\}\\
+  &=\frac{\tau^2(P)}{n_P}.
+  \label{eq:vhat-sampling-variance}
+\end{align}
+Substitution into Equation~\eqref{eq:component-df-moments} gives the
+population component degree of freedom
+\begin{equation}
+  \boxed{
+  \nu_P
+  \approx
+  \frac{2n_PV(P)^2}{\tau^2(P)}
+  }.
+  \label{eq:population-component-df}
+\end{equation}
+When \(\Vhat(P)\) is stable between samples, \(\tau^2(P)\) is small and the
+component degrees of freedom are large. An unstable variance estimate produces
+smaller degrees of freedom and a heavier-tailed final reference.
+
+\section{Table-based component degrees of freedom}
+
+The observed table replaces every population quantity in Equation
+\eqref{eq:g-final} by its empirical counterpart. For each occupied cell,
+\begin{equation}
+\begin{aligned}
+\widehat g_P(i,j)
+={}&\{\widehat\pmi_P(i,j)-\Ihat(P)\}^2-\Vhat(P)\\
+&+2\left[
+\widehat\pmi_P(i,j)
+-\frac{\sum_{j'}\widehat p_{ij'}\widehat\pmi_P(i,j')}
+       {\widehat p_{i+}}
+-\frac{\sum_{i'}\widehat p_{i'j}\widehat\pmi_P(i',j)}
+       {\widehat p_{+j}}
++\Ihat(P)
+\right].
+\end{aligned}
+\label{eq:g-hat}
+\end{equation}
+The empirical mean and variance of these cell sensitivities are
+\begin{align}
+  \overline g_P
+  &=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),\\
+  \widehat\tau^2(P)
+  &=\sum_{i,j}\widehat p_{ij}
+  \{\widehat g_P(i,j)-\overline g_P\}^2.
+  \label{eq:tau-hat}
+\end{align}
+The estimated component degree of freedom is
+\begin{equation}
+  \boxed{
+  \widehat\nu_P
+  =\frac{2n_P\Vhat(P)^2}{\widehat\tau^2(P)}
+  }.
+  \label{eq:nu-p-hat}
+\end{equation}
+Repeating the same calculation for the second table gives
+\(\widehat\nu_Q\).
+
+\section{Combined degrees of freedom and final test}
+
+Substituting the two variance contributions and component degrees of freedom
+into Equation~\eqref{eq:ws-general} gives
+\begin{equation}
+  \boxed{
+  \widehat\nu_{\mathrm{expanded}}
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \left\{\Vhat(P)/n_P\right\}^2/\widehat\nu_P
+  +
+  \left\{\Vhat(Q)/n_Q\right\}^2/\widehat\nu_Q
+  }
+  }.
+  \label{eq:expanded-df}
+\end{equation}
+The expanded two-sided p-value is
+\begin{equation}
+  p_{\mathrm{expanded}}
+  =2\left\{1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}(|T|)\right\},
+  \label{eq:expanded-p}
+\end{equation}
+and the corresponding confidence interval is
+\begin{equation}
+  \Deltahat
+  \ \pm\
+  t_{\widehat\nu_{\mathrm{expanded}},1-\alpha/2}\SEhat.
+  \label{eq:expanded-ci}
+\end{equation}
+
+The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
+\(T\). It changes only the quantile used to evaluate that statistic.
+
+\section{Worked count-table example}
+
+Consider the two observed \(3\times3\) tables
+\begin{equation}
+  N^P=
+  \begin{pmatrix}
+  35&10&5\\
+  10&20&5\\
+  5&5&10
+  \end{pmatrix},
+  \qquad
+  N^Q=
+  \begin{pmatrix}
+  30&5&5\\
+  5&30&5\\
+  5&5&10
+  \end{pmatrix}.
+  \label{eq:worked-tables}
+\end{equation}
+Their totals are \(n_P=105\) and \(n_Q=100\). The plug-in MI estimates are
+0.13693 and 0.25848 nats. With \(d=(3-1)(3-1)=4\), the corrected difference is
+\begin{equation}
+  \Deltahat
+  =\left(0.13693-\frac{4}{2(105)}\right)
+  -\left(0.25848-\frac{4}{2(100)}\right)
+  =-0.12059.
+\end{equation}
+
+The empirical influence variances are
+\(\Vhat(P)=0.27189\) and \(\Vhat(Q)=0.43371\). Hence
+\begin{equation}
+  \SEhat
+  =\left(\frac{0.27189}{105}+\frac{0.43371}{100}\right)^{1/2}
+  =0.08323,
+  \qquad
+  T=-1.44898.
+\end{equation}
+Normal Wald gives \(p=0.14734\). Simple Welch uses total effective degrees of
+freedom 188.53 and gives \(p=0.14900\).
+
+For expanded Welch, the table-based sensitivity calculation gives component
+degrees of freedom
+\begin{equation}
+  \widehat\nu_P=16.65,
+  \qquad
+  \widehat\nu_Q=45.86.
+\end{equation}
+Equation~\eqref{eq:expanded-df} combines them into
+\(\widehat\nu_{\mathrm{expanded}}=59.03\), giving \(p=0.15264\). The three
+methods reach the same substantive conclusion for these tables, but the
+example shows where the expanded reference differs: it regards the two MI
+variance estimates as less stable than the generic \(n-1\) assignment does.
+
+\section{Operational algorithm and complexity}
+
+Table~\ref{tab:expanded-algorithm} summarises one complete comparison.
+
+\begin{table}[htbp]
+\centering
+\caption{Operational expanded Welch--Satterthwaite algorithm.}
+\label{tab:expanded-algorithm}
+\begin{tabularx}{\textwidth}{@{}cX@{}}
+\toprule
+Step & Calculation \\
+\midrule
+1 & Validate the two aligned independent count tables and their declared alphabet dimensions. \\
+2 & Compute empirical probabilities, pointwise MI, plug-in MI, and the leading bias-corrected difference. \\
+3 & Compute \(\Vhat(P)\), \(\Vhat(Q)\), the shared standard error, and \(T\). \\
+4 & Compute the row and column pointwise-MI means needed in \(\widehat g_P\) and \(\widehat g_Q\). \\
+5 & Compute \(\widehat\tau^2(P)\), \(\widehat\tau^2(Q)\), and the two component degrees of freedom. \\
+6 & Combine the components using Equation~\eqref{eq:expanded-df}. \\
+7 & Return the Student p-value, confidence interval, effective degrees of freedom, and validity diagnostics. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Each empirical probability, pointwise-MI value, row mean, column mean, and
+variance contribution is calculated by a fixed number of table scans. The
+time complexity is therefore \(O(rc)\), and the working memory is also
+\(O(rc)\). The method is deterministic once the two count tables are given.
+
+\section{Theoretical status}
+
+The influence-function calculations in Equations~\eqref{eq:mi-derivative}
+and \eqref{eq:g-final} are directional derivatives of the corresponding
+population functionals. Under fixed positive support, they provide the usual
+first-order asymptotic linear representations.
+
+The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and the
+final Student reference are working approximations. They match the first two
+moments of the estimated variance rather than providing an exact finite-sample
+law. Under regular large-sample conditions,
+\(\widehat\nu_P\), \(\widehat\nu_Q\), and
+\(\widehat\nu_{\mathrm{expanded}}\) increase, so the Student reference
+approaches the same normal limit as Wald inference.
+
+The method can fail when the empirical table loses too much support, when the
+estimated MI variance is zero, or when the estimated sensitivity variance is
+not positive and finite. These cases are recorded as invalid calculations
+rather than silently replaced by a different test. The validation in Chapters
+\ref{chap:design} and \ref{chap:results} evaluates how often these conditions
+occur and whether the finite-sample correction improves calibration.

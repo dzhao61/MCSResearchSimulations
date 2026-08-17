@@ -1,0 +1,104 @@
+\chapter{Complete Scenario Specifications}
+\label{app:scenario-specifications}
+
+Table~\ref{tab:appendix-scenario-map} records the realised sample sizes and
+minimum true joint expected counts for every fixed population pair in the
+primary calibration experiment. The population tables themselves contain
+many cell probabilities and are retained without rounding in
+\texttt{population\_scenarios.csv}. That file is the authoritative
+machine-readable specification.
+
+In the table, $E_{\min}^{P}=\min_{i,j}n_Pp_{ij}$ and
+$E_{\min}^{Q}=\min_{i,j}n_Qq_{ij}$. Every row represents 10,000 independently
+sampled table pairs under the exact equal-MI null. The largest numerical
+departure from $I(P)=I(Q)$ was $8.5\times10^{-14}$ nats.
+
+\begin{longtable}{@{}>{$}l<{$}p{49mm}rr>{$}r<{$}>{$}r<{$}@{}}
+\caption{Realised design of all 60 equal-MI population pairs.}
+\label{tab:appendix-scenario-map}\\
+\toprule
+\text{Shape} & Regime variant & $n_P$ & $n_Q$ & E_{\min}^{P} & E_{\min}^{Q} \\
+\midrule
+\endfirsthead
+\multicolumn{6}{c}{\tablename\ \thetable\ continued}\\
+\toprule
+\text{Shape} & Regime variant & $n_P$ & $n_Q$ & E_{\min}^{P} & E_{\min}^{Q} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+(2\times2) & Well sampled 1 & 200 & 200 & 18.228 & 19.953 \\
+(2\times2) & Well sampled 2 & 200 & 200 & 15.015 & 19.561 \\
+(2\times2) & Moderate 1 & 100 & 100 & 10.697 & 6.927 \\
+(2\times2) & Moderate 2 & 100 & 200 & 4.427 & 0.942 \\
+(2\times2) & Highly skewed and sparse 1 & 52 & 52 & 4.660 & 4.072 \\
+(2\times2) & Highly skewed and sparse 2 & 54 & 108 & 4.201 & 4.622 \\
+(2\times2) & Ultra-skewed and sparse 1 & 142 & 142 & 0.961 & 0.052 \\
+(2\times2) & Ultra-skewed and sparse 2 & 51 & 510 & 0.964 & 0.073 \\
+(2\times2) & Widespread sparsity 1 & 50 & 50 & 0.042 & 0.048 \\
+(2\times2) & Widespread sparsity 2 & 50 & 100 & 0.506 & 0.312 \\
+\addlinespace
+(2\times5) & Well sampled 1 & 200 & 200 & 5.597 & 6.526 \\
+(2\times5) & Well sampled 2 & 200 & 200 & 1.385 & 4.203 \\
+(2\times5) & Moderate 1 & 100 & 100 & 1.702 & 1.738 \\
+(2\times5) & Moderate 2 & 100 & 200 & 1.656 & 0.528 \\
+(2\times5) & Highly skewed and sparse 1 & 190 & 190 & 1.575 & 3.653 \\
+(2\times5) & Highly skewed and sparse 2 & 158 & 316 & 3.580 & 1.632 \\
+(2\times5) & Ultra-skewed and sparse 1 & 121 & 121 & 0.630 & 0.129 \\
+(2\times5) & Ultra-skewed and sparse 2 & 69 & 690 & 0.771 & 0.632 \\
+(2\times5) & Widespread sparsity 1 & 50 & 50 & (3.33\times10^{-6}) & 0.038 \\
+(2\times5) & Widespread sparsity 2 & 50 & 100 & (1.09\times10^{-6}) & 0.011 \\
+\addlinespace
+(3\times3) & Well sampled 1 & 200 & 200 & 9.084 & 6.111 \\
+(3\times3) & Well sampled 2 & 200 & 200 & 7.214 & 3.666 \\
+(3\times3) & Moderate 1 & 100 & 100 & 1.758 & 2.727 \\
+(3\times3) & Moderate 2 & 100 & 200 & 1.178 & 3.135 \\
+(3\times3) & Highly skewed and sparse 1 & 277 & 277 & 1.365 & 3.940 \\
+(3\times3) & Highly skewed and sparse 2 & 433 & 866 & 4.177 & 1.181 \\
+(3\times3) & Ultra-skewed and sparse 1 & 64 & 64 & 0.808 & 0.168 \\
+(3\times3) & Ultra-skewed and sparse 2 & 70 & 700 & 0.768 & 0.610 \\
+(3\times3) & Widespread sparsity 1 & 50 & 50 & 0.268 & (5.11\times10^{-4}) \\
+(3\times3) & Widespread sparsity 2 & 59 & 118 & (4.20\times10^{-4}) & 0.002 \\
+\addlinespace
+(3\times5) & Well sampled 1 & 225 & 225 & 2.442 & 2.507 \\
+(3\times5) & Well sampled 2 & 225 & 225 & 3.597 & 5.426 \\
+(3\times5) & Moderate 1 & 120 & 120 & 1.752 & 2.675 \\
+(3\times5) & Moderate 2 & 100 & 200 & 0.437 & 2.007 \\
+(3\times5) & Highly skewed and sparse 1 & 414 & 414 & 2.086 & 3.290 \\
+(3\times5) & Highly skewed and sparse 2 & 337 & 674 & 1.460 & 3.797 \\
+(3\times5) & Ultra-skewed and sparse 1 & 535 & 535 & 0.711 & 0.084 \\
+(3\times5) & Ultra-skewed and sparse 2 & 69 & 690 & 0.881 & 0.057 \\
+(3\times5) & Widespread sparsity 1 & 55 & 55 & (3.47\times10^{-4}) & 0.216 \\
+(3\times5) & Widespread sparsity 2 & 87 & 174 & 0.147 & (5.34\times10^{-10}) \\
+\addlinespace
+(5\times5) & Well sampled 1 & 375 & 375 & 4.830 & 2.140 \\
+(5\times5) & Well sampled 2 & 375 & 375 & 1.923 & 2.192 \\
+(5\times5) & Moderate 1 & 200 & 200 & 1.487 & 0.820 \\
+(5\times5) & Moderate 2 & 150 & 300 & 0.474 & 2.101 \\
+(5\times5) & Highly skewed and sparse 1 & 619 & 619 & 2.591 & 2.768 \\
+(5\times5) & Highly skewed and sparse 2 & 297 & 594 & 1.544 & 3.700 \\
+(5\times5) & Ultra-skewed and sparse 1 & 473 & 473 & 0.413 & 0.533 \\
+(5\times5) & Ultra-skewed and sparse 2 & 75 & 750 & 0.304 & 0.139 \\
+(5\times5) & Widespread sparsity 1 & 435 & 435 & (6.06\times10^{-6}) & 0.025 \\
+(5\times5) & Widespread sparsity 2 & 414 & 828 & 0.015 & (3.28\times10^{-6}) \\
+\addlinespace
+(8\times8) & Well sampled 1 & 960 & 960 & 3.464 & 4.233 \\
+(8\times8) & Well sampled 2 & 960 & 960 & 2.379 & 2.341 \\
+(8\times8) & Moderate 1 & 512 & 512 & 1.525 & 0.790 \\
+(8\times8) & Moderate 2 & 384 & 768 & 0.351 & 0.057 \\
+(8\times8) & Highly skewed and sparse 1 & 975 & 975 & 1.373 & 1.025 \\
+(8\times8) & Highly skewed and sparse 2 & 460 & 920 & 1.441 & 1.096 \\
+(8\times8) & Ultra-skewed and sparse 1 & 604 & 604 & 0.145 & 0.213 \\
+(8\times8) & Ultra-skewed and sparse 2 & 75 & 750 & 0.255 & 0.212 \\
+(8\times8) & Widespread sparsity 1 & 417 & 417 & (6.28\times10^{-5}) & 0.003 \\
+(8\times8) & Widespread sparsity 2 & 271 & 542 & 0.003 & 0.015 \\
+\end{longtable}
+
+The sparse sample sizes were selected from the true population probabilities
+to satisfy the predeclared expected-count constraints. They were fixed before
+replicate tables were sampled. No replicate-level outcome was used to choose
+its sample size, population, or analysis method.
