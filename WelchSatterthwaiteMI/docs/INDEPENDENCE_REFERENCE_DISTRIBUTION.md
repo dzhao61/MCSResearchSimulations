@@ -1,313 +1,120 @@
-# Testing Independence by Comparing a Joint Distribution with an Independent Reference
+# Why a Reference Distribution Cannot Turn Expanded Welch into an Independence Test
 
 ## Purpose
 
-Suppose $P$ is the joint distribution of two discrete variables $X$ and $Y$.
-The proposed construction forms a second distribution $Q$ in which $X$ and
-$Y$ have the same marginal distributions as under $P$, but are independent.
-The intended comparison is
+Let $P$ be the joint distribution of two discrete variables $X$ and $Y$.
+The question is whether we can construct a reference distribution $Q$ and
+use the Expanded Welch--Satterthwaite test
 
 $$
 H_0:I(P)=I(Q)
 \qquad\text{against}\qquad
-H_1:I(P)>I(Q).
+H_1:I(P)>I(Q)
 $$
 
-The conclusion of this document is that the construction is well defined but
-does not produce a new two-sample test. Specifically:
+as a test of whether $X$ and $Y$ are independent under $P$.
 
-1. The reference $Q=P_XP_Y$ exists and has $I(Q)=0$, so the proposed null
-   $I(P)=I(Q)$ is the ordinary null of independence in $P$ (Sections 1-2).
-2. The comparison of $P$ with $Q$ is exactly mutual information, and on an
-   observed table it returns exactly the classical likelihood-ratio statistic
-   $G=2N\widehat I(P)$ (Sections 3-5).
-3. The Expanded Welch reference cannot calibrate it, because the first-order
-   MI variance is identically zero at independence (Section 6).
-4. What remains is a choice of null distribution for a classical statistic:
-   asymptotic, permutation, or bootstrap (Section 7).
+This document shows that this is not possible. The obstacle is not the choice
+of $Q$. It is the behaviour of the MI estimator at independence.
 
-Natural logarithms are used throughout, so mutual information is measured in
-nats.
+Natural logarithms are used throughout, so MI is measured in nats.
 
-## 1. Define the Distribution of Interest
+## 1. What the Reference Distribution Would Need to Do
 
-Let $P$ be an $r\times c$ joint probability distribution with cell
-probabilities
-
-$$
-p_{ij}=\Pr_P(X=i,Y=j),
-$$
-
-where
-
-$$
-p_{ij}\geq 0,
-\qquad
-\sum_{i=1}^r\sum_{j=1}^c p_{ij}=1.
-$$
-
-Its row and column marginal probabilities are
-
-$$
-p_{i+}=\sum_{j=1}^c p_{ij},
-\qquad
-p_{+j}=\sum_{i=1}^r p_{ij}.
-$$
-
-The pointwise mutual information in cell $(i,j)$ is
-
-$$
-\ell_P(i,j)
-=
-\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
-$$
-
-Mutual information is its probability-weighted mean:
+Mutual information satisfies
 
 $$
 \begin{aligned}
-I(P)
-&=\operatorname E_P\{\ell_P(X,Y)\}\\
-&=\sum_{i=1}^r\sum_{j=1}^c
-p_{ij}\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
+I(P)&\geq 0,\\
+I(P)=0
+&\quad\Longleftrightarrow\quad
+X\ \text{and}\ Y\ \text{are independent under }P.
 \end{aligned}
 $$
 
-The aim is to determine whether the association represented by $I(P)$ is
-statistically distinguishable from independence.
-
-## 2. Construct the Independent Reference Distribution
-
-Define $Q$ by multiplying the marginal probabilities of $P$:
-
-$$
-\boxed{q_{ij}=p_{i+}p_{+j}.}
-$$
-
-### 2.1 Verify that $Q$ is a probability distribution
-
-Every cell probability is nonnegative because
-
-$$
-q_{ij}=p_{i+}p_{+j}\geq 0.
-$$
-
-The probabilities sum to one:
-
-$$
-\begin{aligned}
-\sum_{i,j}q_{ij}
-&=\sum_{i,j}p_{i+}p_{+j}\\
-&=\left(\sum_i p_{i+}\right)
-  \left(\sum_j p_{+j}\right)\\
-&=1\times 1\\
-&=1.
-\end{aligned}
-$$
-
-### 2.2 Verify that $Q$ has the same marginals as $P$
-
-The row margins of $Q$ are
-
-$$
-\begin{aligned}
-q_{i+}
-&=\sum_j q_{ij}\\
-&=\sum_j p_{i+}p_{+j}\\
-&=p_{i+}\sum_jp_{+j}\\
-&=p_{i+}.
-\end{aligned}
-$$
-
-Similarly,
-
-$$
-\begin{aligned}
-q_{+j}
-&=\sum_i q_{ij}\\
-&=\sum_i p_{i+}p_{+j}\\
-&=p_{+j}\sum_ip_{i+}\\
-&=p_{+j}.
-\end{aligned}
-$$
-
-Thus $P$ and $Q$ have identical row and column marginals.
-
-### 2.3 Verify independence under $Q$
-
-Under $Q$,
-
-$$
-q_{ij}=q_{i+}q_{+j}.
-$$
-
-Therefore, $X$ and $Y$ are independent under $Q$. Its pointwise mutual
-information is
-
-$$
-\ell_Q(i,j)
-=\log\left(\frac{q_{ij}}{q_{i+}q_{+j}}\right)
-=\log(1)
-=0,
-$$
-
-and hence
+For the equal-MI null to represent independence, the reference must therefore
+have
 
 $$
 \boxed{I(Q)=0.}
 $$
 
-The proposed equal-MI null is consequently
+The desired null is consequently
 
 $$
-I(P)=I(Q)
-\quad\Longleftrightarrow\quad
-I(P)=0.
+\boxed{I(P)=I(Q)=0.}
 $$
 
-Because mutual information is zero exactly when $X$ and $Y$ are independent,
-this is the ordinary null hypothesis of independence in $P$.
+Expanded Welch also requires two independent samples and a nonzero
+first-order sampling variance for each MI estimator. The next section shows
+that the desired null necessarily violates the variance requirement.
 
-## 3. Show that the Comparison Is Exactly Mutual Information
+## 2. Why Expanded Welch Fails at Independence
 
-The Kullback-Leibler divergence from $P$ to $Q$ is
+### 2.1 Zero MI gives zero first-order variance
 
-$$
-D_{\mathrm{KL}}(P\|Q)
-=\sum_{i,j}p_{ij}\log\left(\frac{p_{ij}}{q_{ij}}\right).
-$$
-
-Substituting $q_{ij}=p_{i+}p_{+j}$ gives
+For any joint distribution $R$, define its pointwise mutual information by
 
 $$
-\begin{aligned}
-D_{\mathrm{KL}}(P\|Q)
-&=\sum_{i,j}p_{ij}
-\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)\\
-&=I(P).
-\end{aligned}
+\ell_R(x,y)
+=
+\log\left(\frac{r(x,y)}{r(x)r(y)}\right),
 $$
 
-Therefore,
+and define the first-order MI variance by
 
 $$
-\boxed{D_{\mathrm{KL}}(P\|P_XP_Y)=I(P).}
+V(R)=\operatorname{Var}_R\{\ell_R(X,Y)\}.
 $$
 
-The distance between the joint distribution and its independent reference is
-not merely related to MI; it is the definition of MI.
-
-## 4. Construct the Reference from an Observed Table
-
-Suppose the observed contingency table contains counts $N_{ij}$ with total
+If $I(R)=0$, then $R$ is independent. Hence
 
 $$
-N=\sum_{i,j}N_{ij}.
+r(x,y)=r(x)r(y)
+\quad\Longrightarrow\quad
+\ell_R(x,y)=\log(1)=0
 $$
 
-The empirical probabilities are
+in every cell with positive probability. It follows that
 
 $$
-\widehat p_{ij}=\frac{N_{ij}}{N},
-\qquad
-\widehat p_{i+}=\frac{N_{i+}}{N},
-\qquad
-\widehat p_{+j}=\frac{N_{+j}}{N}.
+\boxed{I(R)=0\quad\Longrightarrow\quad V(R)=0.}
 $$
 
-The empirical independent reference is
+Applying this result to the desired null gives
 
 $$
-\boxed{
-\widehat q_{ij}
-=\widehat p_{i+}\widehat p_{+j}
-=\frac{N_{i+}N_{+j}}{N^2}.
-}
+I(P)=I(Q)=0
+\quad\Longrightarrow\quad
+V(P)=V(Q)=0.
 $$
 
-The expected count under this fitted independence model is
+For population $P$, a first-order Taylor expansion of MI as a function of the
+cell probabilities gives
 
 $$
-\begin{aligned}
-E_{ij}
-&=N\widehat q_{ij}\\
-&=N\frac{N_{i+}N_{+j}}{N^2}\\
-&=\frac{N_{i+}N_{+j}}{N}.
-\end{aligned}
+\widehat I(P)-I(P)
+\approx
+\frac{1}{n_P}\sum_{a=1}^{n_P}
+\left\{\ell_P(X_a,Y_a)-I(P)\right\}.
 $$
 
-The divergence from the empirical joint distribution to the empirical
-reference is
+At independence, every term inside the sum is
 
 $$
-\begin{aligned}
-D_{\mathrm{KL}}(\widehat P\|\widehat Q)
-&=\sum_{i,j}\widehat p_{ij}
-\log\left(\frac{\widehat p_{ij}}{\widehat q_{ij}}\right)\\
-&=\sum_{i,j}\widehat p_{ij}
-\log\left(
-\frac{\widehat p_{ij}}
-{\widehat p_{i+}\widehat p_{+j}}
-\right)\\
-&=\widehat I(P).
-\end{aligned}
+\ell_P(X_a,Y_a)-I(P)=0-0=0.
 $$
 
-Thus the empirical reference comparison gives exactly the plug-in MI
-estimate.
-
-## 5. Recover the Likelihood-Ratio Statistic
-
-Multiply the empirical divergence by $2N$:
+This first-order Taylor approximation therefore contains no random variation,
+and its variance is
 
 $$
-\begin{aligned}
-2N D_{\mathrm{KL}}(\widehat P\|\widehat Q)
-&=2N\sum_{i,j}\frac{N_{ij}}{N}
-\log\left(
-\frac{N_{ij}/N}{N_{i+}N_{+j}/N^2}
-\right)\\
-&=2\sum_{i,j}N_{ij}
-\log\left(
-\frac{N_{ij}}{N_{i+}N_{+j}/N}
-\right)\\
-&=2\sum_{i,j}N_{ij}
-\log\left(\frac{N_{ij}}{E_{ij}}\right).
-\end{aligned}
+\operatorname{Var}\{\widehat I(P)\}
+\approx\frac{V(P)}{n_P}=0.
 $$
 
-Define
-
-$$
-G=2\sum_{i,j}N_{ij}\log\left(\frac{N_{ij}}{E_{ij}}\right).
-$$
-
-Then
-
-$$
-\boxed{G=2N\widehat I(P).}
-$$
-
-This is the likelihood-ratio, or $G$-test, statistic for independence. A
-deterministic construction of $\widehat Q$ from the observed marginals
-therefore returns the classical independence statistic exactly.
-
-By the standard large-sample result for the $G$-test (Wilks' theorem), under
-independence
-
-$$
-G\ \xrightarrow{d}\ \chi^2_{(r-1)(c-1)},
-\qquad
-p=\Pr\!\left\{\chi^2_{(r-1)(c-1)}\geq G_{\mathrm{obs}}\right\}.
-$$
-
-Thus $G$ is the observed statistic and the chi-squared distribution is its
-reference distribution.
-
-
-## 6. Why Expanded Welch Cannot Calibrate It
-
-The differential-MI test statistic is
+The same result holds for $Q$. Expanded Welch places these two variance
+estimates in the denominator of
 
 $$
 T
@@ -316,66 +123,351 @@ T
 \widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
 }{
 \sqrt{\widehat V(P)/n_P+\widehat V(Q)/n_Q}
-},
-\qquad
-V(P)=\operatorname{Var}_P\{\ell_P(X,Y)\}.
+}.
 $$
 
-Its denominator is built from the variance of the pointwise mutual
-information. Under independence, $p_{ij}=p_{i+}p_{+j}$, so
+A finite table can still give nonzero $\widehat I(P)$ and $\widehat V(P)$,
+but that variation is absent from the first-order Taylor approximation above.
+It comes from the second-order Taylor term derived next. The Satterthwaite
+correction only changes the degrees of freedom used after forming $T$; it
+cannot supply the missing second-order variation.
+
+### 2.2 Why the leading term is quadratic
+
+At independence, MI is at its minimum value of zero. The usual normal
+approximation is built from a first-order Taylor expansion and requires a
+nonzero slope at this point, but that slope vanishes. The remaining change in
+MI is determined by the second-order Taylor term, which describes the local
+curvature of the function.
+
+Define the observed departure from independence in cell $(x,y)$ by
+
+$$
+\delta(x,y)=\widehat p(x,y)-\widehat p(x)\widehat p(y).
+$$
+
+Substituting
+$\widehat p(x,y)=\widehat p(x)\widehat p(y)+\delta(x,y)$ into the complete
+plug-in MI expression and applying a second-order Taylor approximation gives
+
+$$
+\widehat I(X;Y)
+\approx
+\sum_{x,y}\delta(x,y)
++
+\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}.
+$$
+
+The **first-order contribution** is the sum of the signed cell departures:
+
+$$
+\sum_{x,y}\delta(x,y)=1-1=0.
+$$
+
+The **second-order contribution** is the probability-weighted sum of their
+squares:
+
+$$
+\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}.
+$$
+
+Only the second-order contribution remains, so
 
 $$
 \boxed{
-\ell_P(i,j)=0
-\ \text{for every cell},
-\qquad
-V(P)=0.
+\widehat I(X;Y)
+\approx
+\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}.
 }
 $$
 
-The population first-order variance is therefore zero. MI is at its minimum at
-independence, so its first derivative vanishes and its leading random term is
-second order. This second-order behaviour produces the chi-squared limit for
-$2N\widehat I(P)$; changing Welch degrees of freedom cannot restore a missing
-first-order term.
+Each $\delta(x,y)$ is a random cell-probability error. Such errors typically
+shrink like $1/\sqrt N$ as the sample size grows. In the boxed equation these
+errors are squared, so their contribution to MI shrinks like
 
-Moreover, $\widehat Q=\widehat P_X\widehat P_Y$ is calculated from the same
-table as $\widehat P$. They are not two independent samples, as required by the
-two-sample Welch derivation. Expanded Welch therefore applies to regular
-equal-MI comparisons away from independence, not to this independence test.
+$$
+\left(\frac{1}{\sqrt N}\right)^2=\frac{1}{N}.
+$$
 
-## 7. What Different Constructions of Q Produce
+Therefore, $\widehat I(X;Y)$ shrinks like $1/N$. Multiplying it by $2N$
+cancels this shrinkage. If $O_{xy}$ is the observed count and $E_{xy}$ is the
+count expected under independence, the boxed expression becomes
 
-Since the statistic is fixed at $2N\widehat I(P)$, all that remains is the
-choice of how to calibrate its null distribution.
+$$
+2N\widehat I(X;Y)
+\approx
+\sum_{x,y}\frac{(O_{xy}-E_{xy})^2}{E_{xy}}.
+$$
 
-| Construction of $\widehat Q$ | Resulting test |
+This is Pearson's chi-squared statistic: each cell's count error is squared,
+standardised by its expected count, and then added across the table. Under the
+usual large-sample conditions, it has the
+$\chi^2_{(r-1)(c-1)}$ limit.
+
+The first-order Taylor contribution shown above is
+$\sum_{x,y}\delta(x,y)$. These errors retain their signs, so positive and
+negative cell departures cancel and the sum is zero. Expanded Welch relies on
+this type of first-order linear behaviour. The chi-squared statistic instead
+squares the departures before adding them, so they cannot cancel. Changing
+the Student degrees of freedom adjusts the reference distribution for the
+first-order statistic, but it does not turn the cancelled linear sum into this
+sum of squared errors.
+
+### 2.3 Changing the reference does not avoid the problem
+
+Changing $Q$ does not remove the conflict:
+
+- If $I(Q)>0$, then $I(P)=I(Q)$ tests whether $P$ has that positive MI,
+  not whether $P$ is independent.
+- If $Q$ is calculated from the same observations as $P$, then the two
+  estimates are not independent samples, which also violates the Welch
+  derivation.
+
+**Therefore, no construction of $Q$ can make the equal-MI Expanded Welch test
+a regular test of independence.**
+
+## 3. What the Natural Construction Produces
+
+The most natural reference keeps the margins of $P$ but removes its
+association:
+
+$$
+\boxed{q(x,y)=p(x)p(y).}
+$$
+
+This distribution is independent, so $I(Q)=0$. Its divergence from $P$ is
+
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(P\|Q)
+&=\sum_{x,y}p(x,y)\log\left(\frac{p(x,y)}{q(x,y)}\right)\\
+&=\sum_{x,y}p(x,y)
+\log\left(\frac{p(x,y)}{p(x)p(y)}\right)\\
+&=I(P).
+\end{aligned}
+$$
+
+For an observed table of size $N$, let
+
+$$
+O_{xy}=N\widehat p(x,y)
+\qquad\text{and}\qquad
+E_{xy}=N\widehat p(x)\widehat p(y),
+$$
+
+be the observed and independence-expected counts in cell $(x,y)$. The
+empirical comparison becomes
+
+$$
+\begin{aligned}
+2N D_{\mathrm{KL}}(\widehat P\|\widehat Q)
+&=2\sum_{x,y}O_{xy}\log\left(\frac{O_{xy}}{E_{xy}}\right)\\
+&=2N\widehat I(P).
+\end{aligned}
+$$
+
+The quantity
+
+$$
+G=2\sum_{x,y}O_{xy}\log\left(\frac{O_{xy}}{E_{xy}}\right)
+$$
+
+is the classical likelihood-ratio, or $G$-test, statistic. By the standard
+large-sample result for this test,
+
+$$
+G\xrightarrow{d}\chi^2_{(r-1)(c-1)}
+$$
+
+under independence. Thus the natural deterministic construction of $Q$
+returns the standard $G$-test; it does not turn Expanded Welch into that
+test.
+
+## 4. Available Tests After Constructing $Q$
+
+Once $Q$ represents independence, the remaining choice is how to obtain the
+null distribution of $G$:
+
+| Procedure | Result |
 | --- | --- |
-| Deterministic, $\widehat q_{ij}=\widehat p_{i+}\widehat p_{+j}$ | Likelihood-ratio statistic $2N\widehat I(P)$ with its $\chi^2_{(r-1)(c-1)}$ limit |
-| Shuffle $Y$ against fixed $X$, repeatedly | Conditional permutation test, marginals held fixed |
-| Simulate new tables from $\widehat P_X\widehat P_Y$ | Parametric bootstrap, marginals free to vary |
-| A separate sampled reference population | Two-sample equal-MI test, not the standard one-table independence test |
+| Compare $G$ with $\chi^2_{(r-1)(c-1)}$ | Classical analytic $G$-test |
+| Repeatedly shuffle $Y$ relative to $X$ | Permutation test |
+| Repeatedly simulate tables from $\widehat P_X\widehat P_Y$ | Parametric bootstrap |
 
-A single simulated reference table is not sufficient because it adds Monte
-Carlo noise without estimating a null distribution. Repeated shuffling or
-simulation gives a valid resampling reference, while the deterministic choice
-returns the usual analytic $G$-test.
+A single sampled table from $Q$ is not enough to estimate a null
+distribution. Repeated sampling gives a resampling test, while the
+deterministic construction gives the analytic $G$-test.
 
-## 8. Final Interpretation
+## 5. Conclusion
 
-The independent reference $Q=P_XP_Y$ is well defined, and it satisfies
+The proposed reference distribution is mathematically valid, but it cannot
+make Expanded Welch a test of independence. Any equal-MI construction that
+represents independence forces both population MI values to zero, where the
+first-order variances used by Expanded Welch also vanish.
+
+The same-margin construction $Q=P_XP_Y$ instead recovers the classical
+$G$-test. Improving inference for sparse tables would therefore require a
+better finite-sample treatment of $G$'s second-order null distribution, not
+an Expanded Welch degrees-of-freedom correction.
+
+## Appendix A. Why Sampling Error Enters MI Quadratically at Independence
+
+Suppose the population distribution is independent, so that
 
 $$
-D_{\mathrm{KL}}(P\|Q)=I(P),
+p(x,y)=p(x)p(y).
+$$
+
+From a sample of size $N$, the observed cell probability is
+
+$$
+\widehat p(x,y)=\frac{N_{xy}}{N}.
+$$
+
+The independence probability fitted from the same table is
+$\widehat p(x)\widehat p(y)$. Their difference,
+
+$$
+\delta(x,y)
+=
+\widehat p(x,y)-\widehat p(x)\widehat p(y),
+$$
+
+is the cell's observed association after accounting for its row and column
+margins. If the empirical table were exactly independent, every
+$\delta(x,y)$ would be zero.
+
+These departures satisfy
+
+$$
+\begin{aligned}
+\sum_y\delta(x,y)
+&=\sum_y\widehat p(x,y)
+-\widehat p(x)\sum_y\widehat p(y)=0,\\
+\sum_x\delta(x,y)
+&=\sum_x\widehat p(x,y)
+-\widehat p(y)\sum_x\widehat p(x)=0.
+\end{aligned}
+$$
+
+Now write the plug-in MI using
+$\widehat p(x,y)=\widehat p(x)\widehat p(y)+\delta(x,y)$:
+
+$$
+\widehat I(X;Y)
+=
+\sum_{x,y}
+\left\{\widehat p(x)\widehat p(y)+\delta(x,y)\right\}
+\log\left
+\{1+\frac{\delta(x,y)}{\widehat p(x)\widehat p(y)}\right\}.
+$$
+
+Applying a second-order Taylor approximation to this complete cell
+contribution gives
+
+$$
+\left\{\widehat p(x)\widehat p(y)+\delta(x,y)\right\}
+\log\left
+\{1+\frac{\delta(x,y)}{\widehat p(x)\widehat p(y)}\right\}
+\approx
+\delta(x,y)
++\frac{\delta(x,y)^2}{2\widehat p(x)\widehat p(y)}.
+$$
+
+The second-order Taylor approximation has two contributions. The
+**first-order contribution** is the sum of the signed cell departures:
+
+$$
+\sum_{x,y}\delta(x,y)=0.
+$$
+
+The **second-order contribution** is the probability-weighted sum of their
+squares:
+
+$$
+\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\widehat I(X;Y)
+&\approx
+\sum_{x,y}\delta(x,y)
++\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}\\
+&=
+\boxed{
+\frac{1}{2}\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}
+}.
+\end{aligned}
+$$
+
+The first-order, signed errors disappear because their sum is zero. The
+leading MI value is therefore determined by squared cell errors, which are
+nonnegative and do not cancel.
+
+The scale of these errors follows from multinomial sampling. Under the
+population distribution,
+
+$$
+\operatorname{Var}\{\widehat p(x,y)\}
+=
+\frac{p(x,y)\{1-p(x,y)\}}{N}.
+$$
+
+Thus a cell-probability error typically has size $N^{-1/2}$. The fitted
+margins are sample proportions as well, so $\delta(x,y)$ has the same order.
+Its square has size $N^{-1}$, giving
+
+$$
+\widehat I(X;Y)=O_p(N^{-1})
+\qquad\text{and}\qquad
+2N\widehat I(X;Y)=O_p(1).
+$$
+
+This scaling can also be seen directly from the observed and expected counts.
+Define
+
+$$
+O_{xy}=N\widehat p(x,y),
 \qquad
-2N D_{\mathrm{KL}}(\widehat P\|\widehat Q)=2N\widehat I(P).
+E_{xy}=N\widehat p(x)\widehat p(y).
 $$
 
-Constructing it does not create a new two-population test. It reproduces the
-classical $G$-test when it is constructed deterministically, or a standard
-resampling test when it is repeatedly sampled. Expanded Welch does not apply
-because its first-order MI variance vanishes at independence.
+Then
 
-The chi-squared reference can still be inaccurate in sparse tables. Improving
-that approximation would require a finite-sample, second-order treatment of
-$G$, rather than an extension of the current first-order Welch method.
+$$
+O_{xy}-E_{xy}=N\delta(x,y).
+$$
+
+Using the second-order Taylor approximation derived above therefore gives
+
+$$
+\begin{aligned}
+2N\widehat I(X;Y)
+&\approx
+N\sum_{x,y}
+\frac{\delta(x,y)^2}{\widehat p(x)\widehat p(y)}\\
+&=
+\sum_{x,y}\frac{(O_{xy}-E_{xy})^2}{E_{xy}}.
+\end{aligned}
+$$
+
+The final expression is Pearson's chi-squared statistic. Under the usual
+large-sample conditions, this quadratic statistic converges to
+$\chi^2_{(r-1)(c-1)}$.
+
+Expanded Welch uses a first-order representation in which sampling error is
+an average of centred pointwise information values. At independence, every
+population pointwise information value is zero, so that first-order term has
+zero variance. The remaining variation is the quadratic cell-error variation
+derived above. Altering the Student degrees of freedom changes the reference
+distribution for a first-order statistic; it does not convert that statistic
+into the required quadratic form.
