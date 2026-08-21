@@ -161,15 +161,19 @@ class WelchTests(unittest.TestCase):
         self.assertFalse(result.valid)
         self.assertTrue(np.isnan(result.welch_p_value))
 
-    def test_one_sided_degenerate_variance_is_reported_invalid(self) -> None:
-        """A single zero-variance side must invalidate the pair, not just the mean."""
+    def test_one_sided_zero_variance_keeps_computable_baselines(self) -> None:
+        """Normal and simple Welch remain defined when the other side supplies variance."""
         p = np.array([[0, 0], [12, 38]])
         q = np.array([[9, 26], [8, 7]])
         values = differential_mi_pvalues(p, q)
         self.assertAlmostEqual(float(values["influence_variance_p"]), 0.0)
         self.assertGreater(float(values["influence_variance_q"]), 0.0)
-        self.assertFalse(values["base_valid"])
-        self.assertTrue(np.isnan(values["normal_p_value"]))
+        self.assertTrue(values["base_valid"])
+        self.assertTrue(values["simple_valid"])
+        self.assertFalse(values["expanded_valid"])
+        self.assertTrue(np.isfinite(values["normal_p_value"]))
+        self.assertTrue(np.isfinite(values["welch_p_value"]))
+        self.assertTrue(np.isnan(values["expanded_welch_p_value"]))
 
     def test_invalid_inputs_are_rejected(self) -> None:
         valid = np.array([[3, 2], [1, 4]])

@@ -1,0 +1,19 @@
+{
+  "profile": "screening",
+  "seed": 2026082101,
+  "replicates_per_configuration": 10000,
+  "blocks": 5,
+  "sections": "all",
+  "null_configurations": 385,
+  "power_configurations": 378,
+  "power_calibration_configurations": 51,
+  "infeasible_requests": 1,
+  "elapsed_seconds": 16.981131500098854,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "scipy": "1.17.1",
+  "script_sha256": "826c84783d1d9eca3d9f38fe355593d714f43c934573d1cbd6b36819237ee4ce",
+  "welch_implementation_sha256": "ec82b965d210816f39921262fc7999a388e26f98d8917d39ab684d688e3f9d20",
+  "differential_statistics_sha256": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5"
+}

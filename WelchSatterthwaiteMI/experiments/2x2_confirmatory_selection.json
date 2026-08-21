@@ -1,0 +1,28 @@
+{
+  "screening_seed": 2026082101,
+  "confirmatory_seed": 2026082201,
+  "selection_rule": "Predefined ordinary, transition, improvement, overcorrection, residual-failure, boundary, and validity-breakdown cases; selected before examining the confirmatory seed.",
+  "null_configuration_ids": [
+    "C1_N0_n10",
+    "C1_N0_n50",
+    "C1_N0_n1000",
+    "C1_N3_n50",
+    "C1_N6_n100",
+    "C1_N6_n200",
+    "C1_N7_n1000",
+    "C2_N0_np20_nq200",
+    "C2_N3_np500_nq50",
+    "C2_N5_np200_nq2000",
+    "C3_C3_same_balanced_i0p005_n1000",
+    "C4_C4_s0p1_i0p0001_n100",
+    "C4_C4_s0p05_i0p0001_n500"
+  ],
+  "power_configuration_ids": [
+    "P1_balanced_mild_di0p05_n200",
+    "P1_sparse_di0p02_n200",
+    "P1_extreme_rare_di0p005_n1000",
+    "P2_balanced_mild_di0p05_np50_nq500",
+    "P2_sparse_di0p02_np50_nq500",
+    "P2_extreme_rare_di0p005_np100_nq1000"
+  ]
+}

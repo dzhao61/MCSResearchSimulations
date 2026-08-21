@@ -1,8 +1,20 @@
 # Experiments
 
-## Primary Experiment
+## Current 2x2 Program
 
-`run_supervisor_experiment.py` is the current unified experiment. It compares
+The supervisor-guided experiment is specified in
+[`2X2_EXPERIMENT_PLAN.md`](2X2_EXPERIMENT_PLAN.md), and its interpreted results
+are in [`2X2_EXPERIMENT_RESULTS.md`](2X2_EXPERIMENT_RESULTS.md). It uses
+deterministic `2x2` population pairs to map calibration, validity, breakdown,
+and power without imposing an expected-cell-count floor.
+
+The complete screening and independent confirmatory outputs are retained in
+[`../results/2x2_screening/`](../results/2x2_screening/) and
+[`../results/2x2_confirmatory/`](../results/2x2_confirmatory/).
+
+## Prior Broad Experiment
+
+`run_supervisor_experiment.py` is the earlier broad experiment. It compares
 normal Wald, simple Welch-Satterthwaite, and expanded
 Welch-Satterthwaite on the same null and alternative table pairs. Its full
 output is in
