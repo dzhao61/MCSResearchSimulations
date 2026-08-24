@@ -1,0 +1,18 @@
+{
+  "seed": 2026082602,
+  "replicates_per_configuration": 5000,
+  "configuration_count": 66,
+  "effects": [
+    0.005,
+    0.05
+  ],
+  "sample_scales": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "workers": 4,
+  "elapsed_seconds": 402.2826550831087,
+  "python": "3.13.5",
+  "null_threshold_source": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/results/2x2_constrained_lr_confirmatory/null_thresholds.csv"
+}

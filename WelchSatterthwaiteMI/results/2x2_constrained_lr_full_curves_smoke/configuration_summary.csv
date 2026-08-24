@@ -1,0 +1,53 @@
+anchor_configuration_id,configuration_label,candidate,baseline,feasible_nonzero_effects,mean_power_difference,median_power_difference,candidate_higher_count,candidate_lower_count,candidate_null_rejection_rate,baseline_null_rejection_rate
+C1_N0_n10,"Balanced, very small sample",constrained_lr,normal_wald,10,-0.07999999999999999,-0.09999999999999999,0,6,0.0,0.3
+C1_N0_n10,"Balanced, very small sample",constrained_lr,expanded_welch,10,0.03888888888888889,0.0,1,0,0.0,0.1
+C1_N0_n10,"Balanced, very small sample",empirical_lr,normal_wald,10,-0.09,-0.1,0,6,0.0,0.3
+C1_N0_n10,"Balanced, very small sample",empirical_lr,expanded_welch,10,0.02888888888888889,0.0,1,0,0.0,0.1
+C1_N0_n1000,"Balanced, large sample",constrained_lr,normal_wald,10,0.0,0.0,0,0,0.0,0.0
+C1_N0_n1000,"Balanced, large sample",constrained_lr,expanded_welch,10,0.0,0.0,0,0,0.0,0.0
+C1_N0_n1000,"Balanced, large sample",empirical_lr,normal_wald,10,0.0,0.0,0,0,0.0,0.0
+C1_N0_n1000,"Balanced, large sample",empirical_lr,expanded_welch,10,0.0,0.0,0,0,0.0,0.0
+C1_N0_n50,"Balanced, moderate sample",constrained_lr,normal_wald,10,0.01,0.0,1,0,0.1,0.1
+C1_N0_n50,"Balanced, moderate sample",constrained_lr,expanded_welch,10,0.030000000000000006,0.0,3,0,0.1,0.1
+C1_N0_n50,"Balanced, moderate sample",empirical_lr,normal_wald,10,0.01,0.0,1,0,0.1,0.1
+C1_N0_n50,"Balanced, moderate sample",empirical_lr,expanded_welch,10,0.030000000000000006,0.0,3,0,0.1,0.1
+C1_N3_n50,One skewed population,constrained_lr,normal_wald,8,0.0125,0.0,1,0,0.1,0.0
+C1_N3_n50,One skewed population,constrained_lr,expanded_welch,8,0.025,0.0,2,0,0.1,0.0
+C1_N3_n50,One skewed population,empirical_lr,normal_wald,8,0.0125,0.0,1,0,0.1,0.0
+C1_N3_n50,One skewed population,empirical_lr,expanded_welch,8,0.025,0.0,2,0,0.1,0.0
+C1_N6_n100,"Sparse, smaller sample",constrained_lr,normal_wald,4,-0.05,-0.1,1,3,0.0,0.1
+C1_N6_n100,"Sparse, smaller sample",constrained_lr,expanded_welch,4,0.025,0.0,1,0,0.0,0.0
+C1_N6_n100,"Sparse, smaller sample",empirical_lr,normal_wald,4,0.025,0.0,1,1,0.1,0.1
+C1_N6_n100,"Sparse, smaller sample",empirical_lr,expanded_welch,4,0.1,0.1,3,0,0.1,0.0
+C1_N6_n200,"Sparse, larger sample",constrained_lr,normal_wald,4,-0.175,-0.15000000000000002,0,4,0.1,0.2
+C1_N6_n200,"Sparse, larger sample",constrained_lr,expanded_welch,4,-0.025,0.0,0,1,0.1,0.1
+C1_N6_n200,"Sparse, larger sample",empirical_lr,normal_wald,4,-0.15000000000000002,-0.15000000000000002,0,3,0.2,0.2
+C1_N6_n200,"Sparse, larger sample",empirical_lr,expanded_welch,4,0.0,0.0,1,1,0.2,0.1
+C1_N7_n1000,Ultra-rare categories,constrained_lr,normal_wald,4,0.025,0.0,1,0,0.0,0.0
+C1_N7_n1000,Ultra-rare categories,constrained_lr,expanded_welch,4,0.05,0.0,1,0,0.0,0.0
+C1_N7_n1000,Ultra-rare categories,empirical_lr,normal_wald,4,0.1,0.09999999999999999,2,0,0.0,0.0
+C1_N7_n1000,Ultra-rare categories,empirical_lr,expanded_welch,4,0.125,0.1,2,0,0.0,0.0
+C2_N0_np20_nq200,"Balanced, unequal samples",constrained_lr,normal_wald,10,-0.16999999999999998,-0.2,0,9,0.0,0.3
+C2_N0_np20_nq200,"Balanced, unequal samples",constrained_lr,expanded_welch,10,-0.02,0.0,0,2,0.0,0.0
+C2_N0_np20_nq200,"Balanced, unequal samples",empirical_lr,normal_wald,10,-0.19,-0.2,0,9,0.0,0.3
+C2_N0_np20_nq200,"Balanced, unequal samples",empirical_lr,expanded_welch,10,-0.04,0.0,0,4,0.0,0.0
+C2_N3_np500_nq50,"Skewed, unequal samples",constrained_lr,normal_wald,8,0.02499999999999999,0.0,3,2,0.1,0.2
+C2_N3_np500_nq50,"Skewed, unequal samples",constrained_lr,expanded_welch,8,0.062499999999999986,0.0,3,0,0.1,0.1
+C2_N3_np500_nq50,"Skewed, unequal samples",empirical_lr,normal_wald,8,0.03749999999999999,0.0,3,2,0.1,0.2
+C2_N3_np500_nq50,"Skewed, unequal samples",empirical_lr,expanded_welch,8,0.075,0.0,3,0,0.1,0.1
+C2_N5_np200_nq2000,Rare and highly unequal,constrained_lr,normal_wald,6,-0.3666666666666667,-0.35,0,5,0.0,0.7
+C2_N5_np200_nq2000,Rare and highly unequal,constrained_lr,expanded_welch,6,-0.19999999999999998,-0.2,0,5,0.0,0.4
+C2_N5_np200_nq2000,Rare and highly unequal,empirical_lr,normal_wald,6,-0.30000000000000004,-0.25,0,5,0.0,0.7
+C2_N5_np200_nq2000,Rare and highly unequal,empirical_lr,expanded_welch,6,-0.13333333333333333,-0.15,0,5,0.0,0.4
+C3_C3_same_balanced_i0p005_n1000,Near independence,constrained_lr,normal_wald,10,0.02,0.0,1,0,0.1,0.0
+C3_C3_same_balanced_i0p005_n1000,Near independence,constrained_lr,expanded_welch,10,0.06999999999999999,0.0,4,0,0.1,0.0
+C3_C3_same_balanced_i0p005_n1000,Near independence,empirical_lr,normal_wald,10,0.02,0.0,1,0,0.1,0.0
+C3_C3_same_balanced_i0p005_n1000,Near independence,empirical_lr,expanded_welch,10,0.06999999999999999,0.0,4,0,0.1,0.0
+C4_C4_s0p05_i0p0001_n500,Rare-cell case B,constrained_lr,normal_wald,7,0.07142857142857144,0.0,3,1,0.0,0.3
+C4_C4_s0p05_i0p0001_n500,Rare-cell case B,constrained_lr,expanded_welch,7,0.1285714285714286,0.0,3,0,0.0,0.0
+C4_C4_s0p05_i0p0001_n500,Rare-cell case B,empirical_lr,normal_wald,7,0.19999999999999998,0.1,4,1,0.1,0.3
+C4_C4_s0p05_i0p0001_n500,Rare-cell case B,empirical_lr,expanded_welch,7,0.2571428571428572,0.1,5,0,0.1,0.0
+C4_C4_s0p1_i0p0001_n100,Rare-cell case A,constrained_lr,normal_wald,7,0.028571428571428574,0.0,2,1,0.0,0.2
+C4_C4_s0p1_i0p0001_n100,Rare-cell case A,constrained_lr,expanded_welch,7,0.07142857142857142,0.0,2,0,0.0,0.0
+C4_C4_s0p1_i0p0001_n100,Rare-cell case A,empirical_lr,normal_wald,7,0.14285714285714285,0.1,4,0,0.0,0.2
+C4_C4_s0p1_i0p0001_n100,Rare-cell case A,empirical_lr,expanded_welch,7,0.18571428571428572,0.1,5,0,0.0,0.0

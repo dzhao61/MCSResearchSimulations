@@ -1,0 +1,13 @@
+mi_difference,method,method_label,configurations,mean_power,median_power,minimum_valid_rate
+0.005,bartlett_lr,Constrained LR (oracle Bartlett),39,0.10869781964067678,0.0494,0.9996
+0.005,constrained_lr,Constrained LR (chi-squared),39,0.07278515098347031,0.051,0.9996
+0.005,empirical_lr,Constrained LR (split empirical),39,0.11681583813012385,0.056,0.9996
+0.005,expanded_welch,Expanded Welch,39,0.05932794658480742,0.03918810289389067,0.5306
+0.005,normal_wald,Normal Wald,39,0.1254783359020535,0.0748,0.9378
+0.005,simple_welch,Simple Welch,39,0.12050003222072007,0.0702,0.9378
+0.05,bartlett_lr,Constrained LR (oracle Bartlett),27,0.4314312748460498,0.2038,0.9994
+0.05,constrained_lr,Constrained LR (chi-squared),27,0.4031133714503706,0.2082,0.9994
+0.05,empirical_lr,Constrained LR (split empirical),27,0.43769083946007475,0.23,0.9994
+0.05,expanded_welch,Expanded Welch,27,0.34174478681147924,0.1056,0.7996
+0.05,normal_wald,Normal Wald,27,0.40007059397417044,0.2212,0.9872
+0.05,simple_welch,Simple Welch,27,0.39028163444892894,0.2078,0.9872

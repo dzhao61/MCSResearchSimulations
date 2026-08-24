@@ -1,0 +1,24 @@
+{
+  "seed": 2026082701,
+  "replicates_per_configuration": 5000,
+  "configuration_count": 111,
+  "candidate_effects": [
+    0.0,
+    1e-05,
+    0.0001,
+    0.001,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1.0
+  ],
+  "workers": 4,
+  "elapsed_seconds": 1009.1866624169052,
+  "python": "3.13.5",
+  "threshold_source": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/results/2x2_constrained_lr_confirmatory_fullstarts/null_thresholds.csv",
+  "existing_curve_source": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/results/2x2_power_curves/power_curves.csv"
+}
