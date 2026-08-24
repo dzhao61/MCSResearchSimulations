@@ -1,0 +1,34 @@
+{
+  "seed": 2026082401,
+  "replicates_per_configuration": 50000,
+  "blocks": 5,
+  "anchors": 13,
+  "sample_scales": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "candidate_mi_differences": [
+    0.0,
+    1e-05,
+    0.0001,
+    0.001,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1.0
+  ],
+  "binary_mi_upper_bound_nats": 0.6931471805599453,
+  "requested_configurations": 468,
+  "simulated_configurations": 333,
+  "omitted_infeasible_configurations": 135,
+  "elapsed_seconds": 24.703079041093588,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "script_sha256": "724ebcd2bbe94c5eef2f7a04366d3a7c84670c6de5f9069b9c3f166bf75281d5"
+}

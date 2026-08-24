@@ -1,0 +1,17 @@
+{
+  "seed": 2026082501,
+  "replicates_per_configuration": 200000,
+  "blocks": 10,
+  "configurations": 39,
+  "sample_scales": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "alpha": 0.05,
+  "elapsed_seconds": 11.995416207937524,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "script_sha256": "efd0516e24a5c7c51a6f8f2d9d0c007ac3669b5f687bb7e12c77126b5e115527"
+}
