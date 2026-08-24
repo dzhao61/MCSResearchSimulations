@@ -13,6 +13,9 @@ design, results, and limitations.
 
 - [`theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
   gives the main line-by-line derivation of the expanded method.
+- [`theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md`](theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md)
+  derives the equal-MI constrained likelihood-ratio statistic, its numerical
+  fit, and its one-degree-of-freedom reference distribution.
 - [`theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md`](theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md)
   explains why comparison with an independent reference does not turn the
   method into a regular independence test.
