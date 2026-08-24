@@ -314,6 +314,8 @@ POWER_FAMILIES = {
     },
 }
 
+MIRRORED_POWER_EFFECT = 0.005
+
 
 def _power_pair(family: str, effect: float) -> PopulationPair:
     specification = POWER_FAMILIES[family]
@@ -368,6 +370,39 @@ def build_power_configurations() -> list[Configuration]:
                                 calibration_key=key,
                             )
                         )
+
+    # Give every null configuration a directly comparable alternative by
+    # changing only Q's MI while preserving margins and sample sizes.
+    null_configurations, _ = build_null_configurations()
+    for null_config in null_configurations:
+        null_pair = null_config.pair
+        try:
+            pair = make_pair(
+                null_config.configuration_id,
+                f"Mirrored alternative for {null_pair.purpose}",
+                (null_pair.u_p, null_pair.v_p),
+                (null_pair.u_q, null_pair.v_q),
+                null_pair.mi_p,
+                null_pair.mi_q + MIRRORED_POWER_EFFECT,
+                directions=(null_pair.direction_p, null_pair.direction_q),
+            )
+        except ValueError:
+            # Some screening-grid margins cannot support the fixed MI increase.
+            # Confirmatory selections are restricted to feasible mirrors.
+            continue
+        key = f"mirror_{null_config.configuration_id}"
+        result.append(
+            _configuration(
+                "PM",
+                pair,
+                null_config.n_p,
+                null_config.n_q,
+                f"di{_token(MIRRORED_POWER_EFFECT)}",
+                effect_delta_i=MIRRORED_POWER_EFFECT,
+                power_family="mirrored",
+                calibration_key=key,
+            )
+        )
     identifiers = [item.configuration_id for item in result]
     if len(identifiers) != len(set(identifiers)):
         raise RuntimeError("Power configuration identifiers are not unique.")
@@ -377,15 +412,16 @@ def build_power_configurations() -> list[Configuration]:
 def power_calibration_configuration(config: Configuration) -> Configuration:
     if config.power_family is None or config.calibration_key is None:
         raise ValueError("Expected a power configuration.")
-    specification = POWER_FAMILIES[config.power_family]
-    target = float(specification["mi_p"])
+    pair = config.pair
+    target = pair.mi_p
     pair = make_pair(
         f"PCAL_{config.calibration_key}",
-        f"{specification['label']} size-adjustment null",
-        specification["margins_p"],
-        specification["margins_q"],
+        f"{pair.purpose} size-adjustment null",
+        (pair.u_p, pair.v_p),
+        (pair.u_q, pair.v_q),
         target,
         target,
+        directions=(pair.direction_p, pair.direction_q),
     )
     return _configuration(
         "PCAL",
@@ -943,7 +979,8 @@ def write_case_sheets(
         ]
         (directory / f"{pair_id}.md").write_text("\n".join(lines), encoding="utf-8")
 
-    for family, specification in POWER_FAMILIES.items():
+    families = sorted(power_summary["power_family"].dropna().unique())
+    for family in families:
         results = power_summary[power_summary["power_family"].eq(family)]
         view = results[
             [
@@ -955,18 +992,29 @@ def write_case_sheets(
                 "method_label",
                 "truth",
                 "nominal_rejection_rate_05",
-                "size_adjusted_rejection_rate",
                 "valid_rate",
             ]
         ].sort_values(
             ["experiment", "n_p", "n_q", "effect_delta_i_q_minus_p", "method_label"]
         )
+        if family in POWER_FAMILIES:
+            specification = POWER_FAMILIES[family]
+            heading = specification["label"]
+            details = [
+                f"P margins: `{specification['margins_p']}`; Q margins: `{specification['margins_q']}`.",
+                f"Baseline I(P): `{specification['mi_p']}` nats.",
+                "",
+            ]
+        else:
+            heading = "Mirrored alternatives"
+            details = [
+                "Each alternative preserves its matched null configuration's margins and sample sizes.",
+                "",
+            ]
         lines = [
-            f"# Power family: {specification['label']}",
+            f"# Power family: {heading}",
             "",
-            f"P margins: `{specification['margins_p']}`; Q margins: `{specification['margins_q']}`.",
-            f"Baseline I(P): `{specification['mi_p']}` nats.",
-            "",
+            *details,
             "## Configuration-level rejection results",
             "",
             _markdown(view),
@@ -980,7 +1028,7 @@ def write_case_sheets(
 COLORS = {
     "normal_wald": "#24557A",
     "simple_welch": "#D87928",
-    "expanded_welch": "#16806A",
+    "expanded_welch": "#A23B72",
 }
 
 
@@ -1131,14 +1179,17 @@ def write_report(
             "",
             "Power rows distinguish the null point from true alternatives and include",
             "false-positive, true-negative, true-positive, and false-negative counts.",
-            "Nominal and size-adjusted rejection rates are both retained.",
+            "Detection power uses the fixed p <= 0.05 rejection threshold.",
             "",
         ]
     )
-    for family, specification in POWER_FAMILIES.items():
-        lines.append(
-            f"- [{specification['label']}](case_sheets/POWER_{family}.md)"
+    for family in sorted(power_summary["power_family"].dropna().unique()):
+        label = (
+            POWER_FAMILIES[family]["label"]
+            if family in POWER_FAMILIES
+            else "Mirrored alternatives"
         )
+        lines.append(f"- [{label}](case_sheets/POWER_{family}.md)")
     if not infeasible.empty:
         lines.extend(
             [

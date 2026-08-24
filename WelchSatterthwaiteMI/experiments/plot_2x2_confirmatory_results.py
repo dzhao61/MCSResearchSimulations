@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create exact-configuration presentation figures for the 2x2 holdout."""
+"""Create exact-configuration presentation figures for the 2x2 experiment."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ METHODS = ("normal_wald", "simple_welch", "expanded_welch")
 COLORS = {
     "normal_wald": "#22577a",
     "simple_welch": "#d97706",
-    "expanded_welch": "#20866f",
+    "expanded_welch": "#A23B72",
 }
 LABELS = {
     "normal_wald": "Normal Wald",
@@ -38,29 +38,9 @@ NULL_LABELS = {
     "C4_C4_s0p05_i0p0001_n500": "Rare-cell ladder, s=.05, MI=.0001, 500:500",
 }
 POWER_LABELS = {
-    "P1_balanced_mild_di0p05_n200": "Balanced/mild, delta=.05, 200:200",
-    "P1_sparse_di0p02_n200": "Sparse, delta=.02, 200:200",
-    "P1_extreme_rare_di0p005_n1000": "Extreme rare, delta=.005, 1000:1000",
-    "P2_balanced_mild_di0p05_np50_nq500": "Balanced/mild, delta=.05, 50:500",
-    "P2_sparse_di0p02_np50_nq500": "Sparse, delta=.02, 50:500",
-    "P2_extreme_rare_di0p005_np100_nq1000": "Extreme rare, delta=.005, 100:1000",
+    f"PM_{configuration_id}_di0p005": label
+    for configuration_id, label in NULL_LABELS.items()
 }
-
-
-def _method_legend(axis: plt.Axes) -> None:
-    handles = [
-        plt.Line2D(
-            [0],
-            [0],
-            marker="o",
-            linestyle="none",
-            color=COLORS[method],
-            label=LABELS[method],
-        )
-        for method in METHODS
-    ]
-    axis.legend(handles=handles, loc="best", frameon=False)
-
 
 def plot_null(input_dir: Path, output_dir: Path) -> None:
     frame = pd.read_csv(input_dir / "null_summary.csv")
@@ -104,7 +84,7 @@ def plot_null(input_dir: Path, output_dir: Path) -> None:
 
     calibration_axis.axvline(0.05, color="#333333", linestyle=":", linewidth=1.5)
     calibration_axis.set_xlabel("False-positive rate at nominal alpha = 0.05")
-    calibration_axis.set_ylabel("Exact holdout configuration")
+    calibration_axis.set_ylabel("Configuration")
     calibration_axis.legend(frameon=False, loc="lower right")
     calibration_axis.grid(axis="x", alpha=0.2)
 
@@ -127,12 +107,7 @@ def plot_power(input_dir: Path, output_dir: Path) -> None:
     order = [configuration_id for configuration_id in POWER_LABELS if configuration_id in set(frame["configuration_id"])]
     positions = np.arange(len(order), dtype=float)
     offsets = dict(zip(METHODS, (-0.20, 0.0, 0.20), strict=True))
-    figure, (nominal_axis, adjusted_axis) = plt.subplots(
-        1,
-        2,
-        figsize=(14, 5.4),
-        sharey=True,
-    )
+    figure, power_axis = plt.subplots(figsize=(10.5, 7.2))
     for method in METHODS:
         selected = (
             frame[frame["method"].eq(method)]
@@ -143,7 +118,7 @@ def plot_power(input_dir: Path, output_dir: Path) -> None:
         rate = selected["true_positive_rate_05"].to_numpy()
         low = selected["rejection_wilson_low_05"].to_numpy()
         high = selected["rejection_wilson_high_05"].to_numpy()
-        nominal_axis.errorbar(
+        power_axis.errorbar(
             rate,
             y,
             xerr=np.vstack((rate - low, high - rate)),
@@ -151,26 +126,19 @@ def plot_power(input_dir: Path, output_dir: Path) -> None:
             markersize=5,
             capsize=2,
             color=COLORS[method],
-        )
-        adjusted_axis.scatter(
-            selected["size_adjusted_power"],
-            y,
-            s=28,
-            color=COLORS[method],
+            label=LABELS[method],
         )
 
-    nominal_axis.set_xlabel("Nominal power at alpha = 0.05")
-    nominal_axis.set_ylabel("Exact holdout configuration")
-    nominal_axis.grid(axis="x", alpha=0.2)
-    adjusted_axis.set_xlabel("Size-adjusted power")
-    adjusted_axis.grid(axis="x", alpha=0.2)
-    _method_legend(adjusted_axis)
-    nominal_axis.set_yticks(positions)
-    nominal_axis.set_yticklabels([POWER_LABELS[value] for value in order])
-    nominal_axis.invert_yaxis()
-    figure.suptitle("2x2 confirmatory detection results (50,000 replicates per row)")
+    power_axis.set_xlabel("Detection power at p <= 0.05")
+    power_axis.set_ylabel("Configuration")
+    power_axis.grid(axis="x", alpha=0.2)
+    power_axis.legend(frameon=False, loc="lower right")
+    power_axis.set_yticks(positions)
+    power_axis.set_yticklabels([POWER_LABELS[value] for value in order])
+    power_axis.invert_yaxis()
+    figure.suptitle("2x2 detection power (50,000 replicates per configuration)")
     figure.tight_layout()
-    figure.savefig(output_dir / "CONFIRM_nominal_and_adjusted_power.png", dpi=180)
+    figure.savefig(output_dir / "CONFIRM_detection_power.png", dpi=180)
     plt.close(figure)
 
 

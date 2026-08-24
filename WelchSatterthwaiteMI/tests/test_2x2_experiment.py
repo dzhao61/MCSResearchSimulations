@@ -10,6 +10,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
 from run_2x2_experiment import (  # noqa: E402
+    MIRRORED_POWER_EFFECT,
     _size_adjustment_thresholds,
     build_null_configurations,
     build_power_configurations,
@@ -65,6 +66,38 @@ class TwoByTwoExperimentTests(unittest.TestCase):
             ),
             0.01,
         )
+
+    def test_mirrored_power_cases_preserve_their_null_configuration(self) -> None:
+        null = {
+            config.configuration_id: config
+            for config in build_null_configurations()[0]
+        }
+        mirrored = [
+            config
+            for config in build_power_configurations()
+            if config.experiment == "PM"
+        ]
+        self.assertTrue(mirrored)
+        for config in mirrored:
+            matched_null = null[config.pair.pair_id]
+            self.assertEqual(
+                (config.n_p, config.n_q),
+                (matched_null.n_p, matched_null.n_q),
+            )
+            self.assertEqual(
+                (config.pair.u_p, config.pair.v_p, config.pair.u_q, config.pair.v_q),
+                (
+                    matched_null.pair.u_p,
+                    matched_null.pair.v_p,
+                    matched_null.pair.u_q,
+                    matched_null.pair.v_q,
+                ),
+            )
+            self.assertAlmostEqual(config.pair.mi_p, matched_null.pair.mi_p)
+            self.assertAlmostEqual(
+                config.pair.mi_q - matched_null.pair.mi_q,
+                MIRRORED_POWER_EFFECT,
+            )
 
     def test_simulation_summary_partitions_valid_null_decisions(self) -> None:
         config = build_null_configurations()[0][0]
