@@ -20,17 +20,14 @@ the next primary method. Its confirmatory output is in
 [`../results/2x2_joint_cf_confirmatory/`](../results/2x2_joint_cf_confirmatory/).
 
 `run_constrained_lr_audit.py`, `run_constrained_lr_power.py`, and
-`run_constrained_lr_full_curves.py` test the constrained likelihood-ratio
-statistic for equal MI. `run_lr_size_matched_comparison.py` compares power after
-independently matching the methods' null rejection rates. The final five-start
-calibration and power outputs are in
+`run_constrained_lr_full_curves.py` test the directly usable constrained
+likelihood-ratio statistic for equal MI using its \(\chi^2_1\) reference. The
+final five-start calibration and power outputs are in
 [`../results/2x2_constrained_lr_confirmatory_fullstarts/`](../results/2x2_constrained_lr_confirmatory_fullstarts/)
 and
 [`../results/2x2_constrained_lr_power_fullstarts/`](../results/2x2_constrained_lr_power_fullstarts/).
-The full feasible-range and size-matched results are in
-[`../results/2x2_constrained_lr_full_curves/`](../results/2x2_constrained_lr_full_curves/)
-and
-[`../results/2x2_lr_size_matched/`](../results/2x2_lr_size_matched/).
+The full feasible-range results are in
+[`../results/2x2_constrained_lr_full_curves/`](../results/2x2_constrained_lr_full_curves/).
 
 ## Prior Broad Experiment
 

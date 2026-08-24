@@ -38,32 +38,14 @@ METHOD_LABELS = {
     "normal_wald": "Normal Wald",
     "simple_welch": "Simple Welch",
     "expanded_welch": "Expanded Welch",
-    "constrained_lr": "Constrained LR",
-    "bartlett_lr": "Oracle Bartlett LR",
-    "empirical_lr": "Oracle-calibrated LR",
+    "constrained_lr": "Constrained LR (chi-squared)",
 }
 METHOD_STYLES = {
     "normal_wald": {"color": "#24557A", "linestyle": "-"},
     "expanded_welch": {"color": "#A23B72", "linestyle": "-"},
     "constrained_lr": {"color": "#D87928", "linestyle": "-"},
-    "empirical_lr": {"color": "#228833", "linestyle": "--"},
 }
 PLOTTED_METHODS = tuple(METHOD_STYLES)
-
-
-def _thresholds(path: Path) -> dict[str, dict[str, float]]:
-    values = pd.read_csv(path)
-    values = values[
-        np.isclose(values["alpha"], 0.05)
-        & values["configuration_id"].str.endswith("scale1")
-    ]
-    return {
-        row.configuration_id.removeprefix("LR_").removesuffix("_scale1"): {
-            "bartlett": float(row.bartlett_threshold),
-            "empirical": float(row.empirical_threshold),
-        }
-        for row in values.itertuples()
-    }
 
 
 def _simulate(config: Configuration, replicates: int, seed: int) -> tuple[np.ndarray, np.ndarray]:
@@ -113,9 +95,9 @@ def _row(
 
 
 def _run_configuration(
-    task: tuple[Configuration, int, int, dict[str, dict[str, float]]]
+    task: tuple[Configuration, int, int]
 ) -> dict:
-    config, replicates, seed, thresholds = task
+    config, replicates, seed = task
     table_p, table_q = _simulate(config, replicates, seed)
     values = differential_mi_pvalues(table_p, table_q)
     lr_statistic, diagnostics = _fit_lr_batch(table_p, table_q)
@@ -126,13 +108,14 @@ def _run_configuration(
         rows.append(_row(config, method, p_value <= 0.05, valid))
 
     valid_lr = np.isfinite(lr_statistic)
-    anchor_thresholds = thresholds[config.power_family]
-    for method, threshold in (
-        ("constrained_lr", float(chi2.ppf(0.95, 1))),
-        ("bartlett_lr", anchor_thresholds["bartlett"]),
-        ("empirical_lr", anchor_thresholds["empirical"]),
-    ):
-        rows.append(_row(config, method, lr_statistic >= threshold, valid_lr))
+    rows.append(
+        _row(
+            config,
+            "constrained_lr",
+            lr_statistic >= float(chi2.ppf(0.95, 1)),
+            valid_lr,
+        )
+    )
     return {
         "rows": rows,
         "diagnostics": {"configuration_id": config.configuration_id, **diagnostics},
@@ -205,24 +188,25 @@ def _configuration_summary(results: pd.DataFrame) -> pd.DataFrame:
     for anchor_id, group in results.groupby("anchor_configuration_id", sort=False):
         wide = group.pivot(index="mi_difference", columns="method", values="rejection_rate")
         alternatives = wide[wide.index > 0]
-        for candidate in ("constrained_lr", "empirical_lr"):
-            for baseline in ("normal_wald", "expanded_welch"):
-                difference = alternatives[candidate] - alternatives[baseline]
-                rows.append(
-                    {
-                        "anchor_configuration_id": anchor_id,
-                        "configuration_label": CONFIGURATION_LABELS[anchor_id],
-                        "candidate": candidate,
-                        "baseline": baseline,
-                        "feasible_nonzero_effects": len(difference),
-                        "mean_power_difference": float(difference.mean()),
-                        "median_power_difference": float(difference.median()),
-                        "candidate_higher_count": int(np.count_nonzero(difference > 0)),
-                        "candidate_lower_count": int(np.count_nonzero(difference < 0)),
-                        "candidate_null_rejection_rate": float(wide.loc[0.0, candidate]),
-                        "baseline_null_rejection_rate": float(wide.loc[0.0, baseline]),
-                    }
-                )
+        for baseline in ("normal_wald", "expanded_welch"):
+            difference = alternatives["constrained_lr"] - alternatives[baseline]
+            rows.append(
+                {
+                    "anchor_configuration_id": anchor_id,
+                    "configuration_label": CONFIGURATION_LABELS[anchor_id],
+                    "candidate": "constrained_lr",
+                    "baseline": baseline,
+                    "feasible_nonzero_effects": len(difference),
+                    "mean_power_difference": float(difference.mean()),
+                    "median_power_difference": float(difference.median()),
+                    "candidate_higher_count": int(np.count_nonzero(difference > 0)),
+                    "candidate_lower_count": int(np.count_nonzero(difference < 0)),
+                    "candidate_null_rejection_rate": float(
+                        wide.loc[0.0, "constrained_lr"]
+                    ),
+                    "baseline_null_rejection_rate": float(wide.loc[0.0, baseline]),
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -253,14 +237,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--seed", type=int, default=2_026_082_701)
     parser.add_argument(
-        "--thresholds",
-        type=Path,
-        default=PROJECT_ROOT
-        / "results"
-        / "2x2_constrained_lr_confirmatory_fullstarts"
-        / "null_thresholds.csv",
-    )
-    parser.add_argument(
         "--existing-curves",
         type=Path,
         default=PROJECT_ROOT / "results" / "2x2_power_curves" / "power_curves.csv",
@@ -281,8 +257,7 @@ def main() -> None:
         effects=CANDIDATE_EFFECTS,
         sample_scales=(1.0,),
     )
-    thresholds = _thresholds(args.thresholds)
-    tasks = [(config, args.replicates, args.seed, thresholds) for config in configurations]
+    tasks = [(config, args.replicates, args.seed) for config in configurations]
     start = perf_counter()
     completed = []
     if args.workers == 1:
@@ -325,7 +300,6 @@ def main() -> None:
         "workers": args.workers,
         "elapsed_seconds": perf_counter() - start,
         "python": platform.python_version(),
-        "threshold_source": str(args.thresholds),
         "existing_curve_source": str(args.existing_curves),
     }
     (args.output_dir / "run_metadata.json").write_text(

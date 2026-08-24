@@ -14,5 +14,10 @@
   "workers": 4,
   "elapsed_seconds": 1020.877599749947,
   "python": "3.13.5",
-  "null_threshold_source": "WelchSatterthwaiteMI/results/2x2_constrained_lr_confirmatory_fullstarts/null_thresholds.csv"
+  "methods": [
+    "constrained_lr",
+    "expanded_welch",
+    "normal_wald",
+    "simple_welch"
+  ]
 }

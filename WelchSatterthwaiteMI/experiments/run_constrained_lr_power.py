@@ -37,8 +37,6 @@ METHOD_LABELS = {
     "simple_welch": "Simple Welch",
     "expanded_welch": "Expanded Welch",
     "constrained_lr": "Constrained LR (chi-squared)",
-    "bartlett_lr": "Constrained LR (oracle Bartlett)",
-    "empirical_lr": "Constrained LR (split empirical)",
 }
 EFFECTS = (0.005, 0.05)
 SAMPLE_SCALES = (0.5, 1.0, 2.0)
@@ -96,21 +94,13 @@ def _power_row(
 
 
 def _run_configuration(
-    task: tuple[Configuration, int, int, dict[str, dict[str, float]]]
+    task: tuple[Configuration, int, int]
 ) -> dict:
-    config, replicates, seed, thresholds = task
+    config, replicates, seed = task
     table_p, table_q = _simulate(config, replicates, seed)
     values = differential_mi_pvalues(table_p, table_q)
     lr_statistic, diagnostics = _fit_lr_batch(table_p, table_q)
 
-    anchor = next(
-        anchor
-        for anchor in selected_anchor_configurations()
-        if anchor.configuration_id == config.power_family
-    )
-    scale = config.n_p / anchor.n_p
-    null_id = f"LR_{config.power_family}_scale{scale:g}"
-    critical = thresholds[null_id]
     rows = []
     for method, specification in METHODS.items():
         valid = np.asarray(values[specification["valid"]], dtype=bool)
@@ -126,35 +116,7 @@ def _run_configuration(
             valid_lr,
         )
     )
-    rows.append(
-        _power_row(
-            config,
-            "bartlett_lr",
-            lr_statistic >= critical["bartlett_threshold"],
-            valid_lr,
-        )
-    )
-    rows.append(
-        _power_row(
-            config,
-            "empirical_lr",
-            lr_statistic >= critical["empirical_threshold"],
-            valid_lr,
-        )
-    )
     return {"rows": rows, "diagnostics": {"configuration_id": config.configuration_id, **diagnostics}}
-
-
-def _read_thresholds(path: Path) -> dict[str, dict[str, float]]:
-    data = pd.read_csv(path)
-    data = data[np.isclose(data["alpha"], 0.05)]
-    return {
-        row.configuration_id: {
-            "bartlett_threshold": float(row.bartlett_threshold),
-            "empirical_threshold": float(row.empirical_threshold),
-        }
-        for row in data.itertuples()
-    }
 
 
 def _summary(results: pd.DataFrame) -> pd.DataFrame:
@@ -176,20 +138,19 @@ def _paired_differences(
     wide = results.pivot(index="configuration_id", columns="method", values="power")
     metadata = results.drop_duplicates("configuration_id").set_index("configuration_id")
     rows = []
-    for candidate in ("constrained_lr", "bartlett_lr", "empirical_lr"):
-        for baseline in ("normal_wald", "expanded_welch"):
-            difference = wide[candidate] - wide[baseline]
-            rows.append(
-                {
-                    "candidate": candidate,
-                    "baseline": baseline,
-                    "mean_power_difference": float(difference.mean()),
-                    "median_power_difference": float(difference.median()),
-                    "candidate_higher_count": int(np.count_nonzero(difference > 0)),
-                    "candidate_lower_count": int(np.count_nonzero(difference < 0)),
-                    "configurations": len(difference),
-                }
-            )
+    for baseline in ("normal_wald", "expanded_welch"):
+        difference = wide["constrained_lr"] - wide[baseline]
+        rows.append(
+            {
+                "candidate": "constrained_lr",
+                "baseline": baseline,
+                "mean_power_difference": float(difference.mean()),
+                "median_power_difference": float(difference.median()),
+                "candidate_higher_count": int(np.count_nonzero(difference > 0)),
+                "candidate_lower_count": int(np.count_nonzero(difference < 0)),
+                "configurations": len(difference),
+            }
+        )
     detailed = wide.reset_index().merge(
         metadata[["configuration_label", "sample_scale", "mi_difference"]].reset_index(),
         on="configuration_id",
@@ -198,7 +159,7 @@ def _paired_differences(
 
 
 def _plot(results: pd.DataFrame, output_dir: Path) -> None:
-    methods = ("normal_wald", "expanded_welch", "constrained_lr", "bartlett_lr")
+    methods = ("normal_wald", "expanded_welch", "constrained_lr")
     figure, axes = plt.subplots(1, 2, figsize=(11.5, 5.0), sharex=True, sharey=True)
     for axis, effect in zip(axes, EFFECTS, strict=True):
         selected = results[np.isclose(results["mi_difference"], effect)]
@@ -229,14 +190,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--seed", type=int, default=2_026_082_602)
     parser.add_argument(
-        "--thresholds",
-        type=Path,
-        default=PROJECT_ROOT
-        / "results"
-        / "2x2_constrained_lr_confirmatory_fullstarts"
-        / "null_thresholds.csv",
-    )
-    parser.add_argument(
         "--output-dir",
         type=Path,
         default=PROJECT_ROOT / "results" / "2x2_constrained_lr_power_fullstarts",
@@ -247,13 +200,12 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    thresholds = _read_thresholds(args.thresholds)
     configurations = build_curve_configurations(
         selected_anchor_configurations(),
         effects=EFFECTS,
         sample_scales=SAMPLE_SCALES,
     )
-    tasks = [(config, args.replicates, args.seed, thresholds) for config in configurations]
+    tasks = [(config, args.replicates, args.seed) for config in configurations]
     start = perf_counter()
     completed = []
     if args.workers == 1:
@@ -287,7 +239,6 @@ def main() -> None:
         "workers": args.workers,
         "elapsed_seconds": perf_counter() - start,
         "python": platform.python_version(),
-        "null_threshold_source": str(args.thresholds),
     }
     (args.output_dir / "run_metadata.json").write_text(
         json.dumps(metadata, indent=2) + "\n", encoding="utf-8"

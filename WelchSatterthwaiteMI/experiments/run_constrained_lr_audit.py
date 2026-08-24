@@ -41,15 +41,12 @@ METHOD_LABELS = {
     "simple_welch": "Simple Welch",
     "expanded_welch": "Expanded Welch",
     "constrained_lr": "Constrained LR (chi-squared)",
-    "bartlett_lr": "Constrained LR (oracle Bartlett)",
-    "empirical_lr": "Constrained LR (split empirical)",
 }
 PROFILE_SETTINGS = {
-    "smoke": {"development": 100, "validation": 100, "scales": (1.0,)},
-    "screen": {"development": 1_000, "validation": 2_000, "scales": (1.0,)},
+    "smoke": {"replicates": 100, "scales": (1.0,)},
+    "screen": {"replicates": 2_000, "scales": (1.0,)},
     "confirmatory": {
-        "development": 5_000,
-        "validation": 5_000,
+        "replicates": 5_000,
         "scales": SAMPLE_SCALES,
     },
 }
@@ -172,45 +169,19 @@ def selected_anchor_configurations_by_id() -> dict[str, Configuration]:
     return {config.configuration_id: config for config in selected_anchor_configurations()}
 
 
-def _run_configuration(task: tuple[Configuration, int, int, int]) -> dict:
-    config, development_replicates, validation_replicates, seed = task
+def _run_configuration(task: tuple[Configuration, int, int]) -> dict:
+    config, replicates, seed = task
     start = perf_counter()
-    development_p, development_q = _simulate_tables(
-        config, development_replicates, seed, "development"
-    )
     validation_p, validation_q = _simulate_tables(
-        config, validation_replicates, seed, "validation"
-    )
-
-    development_lr, development_diagnostics = _fit_lr_batch(
-        development_p, development_q
+        config, replicates, seed, "validation"
     )
     validation_lr, validation_diagnostics = _fit_lr_batch(validation_p, validation_q)
     validation_values = differential_mi_pvalues(validation_p, validation_q)
 
-    usable_development = development_lr[np.isfinite(development_lr)]
-    bartlett_scale = float(np.mean(usable_development))
-    thresholds: list[dict] = []
     rows: list[dict] = []
 
     for alpha in ALPHAS:
         chi_threshold = float(chi2.ppf(1.0 - alpha, df=1))
-        empirical_threshold = float(
-            np.quantile(usable_development, 1.0 - alpha, method="higher")
-        )
-        bartlett_threshold = bartlett_scale * chi_threshold
-        thresholds.append(
-            {
-                "configuration_id": config.configuration_id,
-                "alpha": alpha,
-                "chi_squared_threshold": chi_threshold,
-                "bartlett_scale": bartlett_scale,
-                "bartlett_threshold": bartlett_threshold,
-                "empirical_threshold": empirical_threshold,
-                "development_valid_count": len(usable_development),
-            }
-        )
-
         for method, specification in METHODS.items():
             valid = np.asarray(validation_values[specification["valid"]], dtype=bool)
             p_values = np.asarray(
@@ -228,24 +199,6 @@ def _run_configuration(task: tuple[Configuration, int, int, int]) -> dict:
                 valid_lr,
             )
         )
-        rows.append(
-            _row(
-                config,
-                "bartlett_lr",
-                alpha,
-                validation_lr >= bartlett_threshold,
-                valid_lr,
-            )
-        )
-        rows.append(
-            _row(
-                config,
-                "empirical_lr",
-                alpha,
-                validation_lr >= empirical_threshold,
-                valid_lr,
-            )
-        )
 
     diagnostics = {
         "configuration_id": config.configuration_id,
@@ -253,10 +206,9 @@ def _run_configuration(task: tuple[Configuration, int, int, int]) -> dict:
         "n_p": config.n_p,
         "n_q": config.n_q,
         "wall_seconds": perf_counter() - start,
-        **{f"development_{key}": value for key, value in development_diagnostics.items()},
         **{f"validation_{key}": value for key, value in validation_diagnostics.items()},
     }
-    return {"rows": rows, "thresholds": thresholds, "diagnostics": diagnostics}
+    return {"rows": rows, "diagnostics": diagnostics}
 
 
 def _summarize(results: pd.DataFrame) -> pd.DataFrame:
@@ -281,7 +233,7 @@ def _summarize(results: pd.DataFrame) -> pd.DataFrame:
 
 def _plot(results: pd.DataFrame, output_dir: Path) -> None:
     selected = results[np.isclose(results["alpha"], 0.05)].copy()
-    methods = ("normal_wald", "expanded_welch", "constrained_lr", "bartlett_lr")
+    methods = ("normal_wald", "expanded_welch", "constrained_lr")
     figure, axis = plt.subplots(figsize=(10.5, 6.0))
     x = np.arange(len(selected["configuration_id"].unique()))
     width = 0.19
@@ -312,8 +264,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--seed", type=int, default=2_026_082_601)
-    parser.add_argument("--development-replicates", type=int)
-    parser.add_argument("--validation-replicates", type=int)
+    parser.add_argument("--replicates", type=int)
     parser.add_argument(
         "--output-dir",
         type=Path,
@@ -327,13 +278,12 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     settings = PROFILE_SETTINGS[args.profile]
-    development = args.development_replicates or settings["development"]
-    validation = args.validation_replicates or settings["validation"]
+    replicates = args.replicates or settings["replicates"]
     configurations = build_configurations(settings["scales"])
     args.output_dir.mkdir(parents=True, exist_ok=True)
     started = perf_counter()
 
-    tasks = [(config, development, validation, args.seed) for config in configurations]
+    tasks = [(config, replicates, args.seed) for config in configurations]
     completed = []
     if args.workers == 1:
         completed = [_run_configuration(task) for task in tasks]
@@ -344,18 +294,13 @@ def main() -> None:
                 completed.append(future.result())
 
     result_rows = [row for result in completed for row in result["rows"]]
-    threshold_rows = [row for result in completed for row in result["thresholds"]]
     diagnostic_rows = [result["diagnostics"] for result in completed]
     results = pd.DataFrame(result_rows).sort_values(
         ["sample_scale", "anchor_configuration_id", "alpha", "method"]
     )
-    thresholds = pd.DataFrame(threshold_rows).sort_values(
-        ["configuration_id", "alpha"]
-    )
     diagnostics = pd.DataFrame(diagnostic_rows).sort_values("configuration_id")
     summary = _summarize(results)
     results.to_csv(args.output_dir / "configuration_results.csv", index=False)
-    thresholds.to_csv(args.output_dir / "null_thresholds.csv", index=False)
     diagnostics.to_csv(args.output_dir / "optimizer_diagnostics.csv", index=False)
     summary.to_csv(args.output_dir / "method_summary.csv", index=False)
     _plot(results, args.output_dir)
@@ -363,15 +308,13 @@ def main() -> None:
     metadata = {
         "profile": args.profile,
         "seed": args.seed,
-        "development_replicates_per_configuration": development,
-        "validation_replicates_per_configuration": validation,
+        "replicates_per_configuration": replicates,
         "configuration_count": len(configurations),
         "workers": args.workers,
         "elapsed_seconds": perf_counter() - started,
         "python": platform.python_version(),
         "candidate": "constrained multinomial LR for I(P)=I(Q)",
         "candidate_reference": "chi-squared with one degree of freedom",
-        "oracle_diagnostics": ["split empirical threshold", "Bartlett mean scaling"],
     }
     (args.output_dir / "run_metadata.json").write_text(
         json.dumps(metadata, indent=2) + "\n", encoding="utf-8"

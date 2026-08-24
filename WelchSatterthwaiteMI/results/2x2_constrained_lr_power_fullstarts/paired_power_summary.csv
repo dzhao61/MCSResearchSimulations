@@ -1,7 +1,3 @@
 candidate,baseline,mean_power_difference,median_power_difference,candidate_higher_count,candidate_lower_count,configurations
-constrained_lr,normal_wald,-0.029895139696474886,0.0004999999999999935,36,27,66
-constrained_lr,expanded_welch,0.033054284193907844,0.013864722988432013,53,11,66
-bartlett_lr,normal_wald,0.0030711855961674233,0.0,31,32,66
-bartlett_lr,expanded_welch,0.06602060948655016,0.018548496993987973,48,14,66
-empirical_lr,normal_wald,0.010368321439608467,9.99999999999994e-05,33,31,66
-empirical_lr,expanded_welch,0.07331774532999118,0.028200000000000003,49,15,66
+constrained_lr,normal_wald,-0.029895139696474872,0.0004999999999999935,36,27,66
+constrained_lr,expanded_welch,0.033054284193907865,0.01386472298843205,53,11,66
