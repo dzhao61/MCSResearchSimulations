@@ -1329,7 +1329,7 @@ including in the sparse and skewed target regimes. The primary method
 therefore retains the original expanded Welch-Satterthwaite combination.
 
 The complete comparison is recorded in
-[`../results/corrected_satterthwaite_full/REPORT.md`](../results/corrected_satterthwaite_full/REPORT.md).
+[`../../results/corrected_satterthwaite_full/REPORT.md`](../../results/corrected_satterthwaite_full/REPORT.md).
 
 ## Appendix B. Why These Are the MI-Specific Welch-Satterthwaite Inputs
 

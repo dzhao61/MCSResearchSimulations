@@ -785,7 +785,7 @@ approximately 1.9 times Normal Wald in the unified benchmark while remaining
 below 0.2 ms per table pair for the tested tables up to $8\times8$.
 
 The complete cell-by-cell derivation and theoretical justification are given
-in [Expanded Welch-Satterthwaite Derivation](EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
+in [Expanded Welch-Satterthwaite Derivation](../theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
 
 ## 7. Experimental Design
 
@@ -992,7 +992,7 @@ the smallest true joint expected count across the two populations.
 | Widespread sparsity 2 | 50-414 | 100-828 | 4.23-16.56 | $<0.001$-0.312 |
 
 The exact $P$, $Q$, $n_P$, and $n_Q$ for every shape are recorded in
-[`population_scenarios.csv`](../results/supervisor_practical/population_scenarios.csv).
+[`population_scenarios.csv`](../../results/supervisor_practical/population_scenarios.csv).
 
 ### 7.5 Replication and reported metrics
 
@@ -1010,7 +1010,7 @@ The population-generation seed is 2,026,080,501 and the sampling seed is
 2,026,080,502. Scenario-specific seeds are derived deterministically from
 these values, so the complete experiment is reproducible. The seeds,
 replicate counts, software versions, and experiment-script hash are recorded
-in [`run_metadata.json`](../results/supervisor_practical/run_metadata.json).
+in [`run_metadata.json`](../../results/supervisor_practical/run_metadata.json).
 
 At a true rejection probability of 0.05, 10,000 replicates give a Monte Carlo
 standard error of approximately 0.00218 for an individual scenario. The
@@ -1037,7 +1037,7 @@ levels from 0 to 0.10 in increments of 0.001; their bands show the 10th and
 
 ### 8.1 Calibration across regimes
 
-![Rejection calibration across nominal significance levels](../results/supervisor_practical/rejection_calibration.png)
+![Rejection calibration across nominal significance levels](../../results/supervisor_practical/rejection_calibration.png)
 
 The diagonal represents perfect calibration. Each method's line is the mean
 rejection rate across the 12 population pairs in that regime, and the shaded
@@ -1107,7 +1107,7 @@ but does not restore nominal calibration.
 
 Complete scenario-level results, including Wilson intervals and validity
 diagnostics, are available in
-[`scenario_results.csv`](../results/supervisor_practical/scenario_results.csv).
+[`scenario_results.csv`](../../results/supervisor_practical/scenario_results.csv).
 
 ### 8.3 Power
 
@@ -1183,7 +1183,7 @@ The main question for supervisor discussion is whether this targeted regime
 is sufficiently important for the thesis contribution, and whether the next
 experiment should be a pre-specified confirmatory grid restricted to the
 regular positive-MI setting. The complete results remain available in
-[`REPORT.md`](../results/supervisor_practical/REPORT.md) and the accompanying CSV
+[`REPORT.md`](../../results/supervisor_practical/REPORT.md) and the accompanying CSV
 files.
 
 ## Appendix A: Validation of the Scaled Chi-Squared Working Model

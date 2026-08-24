@@ -2,9 +2,9 @@
 
 ## Current 2x2 Program
 
-The supervisor-guided experiment is specified in
-[`2X2_EXPERIMENT_PLAN.md`](2X2_EXPERIMENT_PLAN.md), and its interpreted results
-are in [`2X2_EXPERIMENT_RESULTS.md`](2X2_EXPERIMENT_RESULTS.md). It uses
+The supervisor-guided design and its interpreted results are documented in
+[`../docs/experiments/2X2_EXPERIMENT.md`](../docs/experiments/2X2_EXPERIMENT.md).
+It uses
 deterministic `2x2` population pairs to map calibration, validity, breakdown,
 and power without imposing an expected-cell-count floor.
 

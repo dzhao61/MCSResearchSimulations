@@ -1,4 +1,4 @@
-# Expanded Welch-Satterthwaite: 2x2 Experimental Results
+# Expanded Welch-Satterthwaite: 2x2 Experiment
 
 ## 1. Research question
 
@@ -21,10 +21,8 @@ the same estimated standard error. Only the reference distribution changes.
 Consequently, differences between the methods isolate the effect of the
 degrees-of-freedom correction.
 
-The full design is specified before the results in
-[`2X2_EXPERIMENT_PLAN.md`](2X2_EXPERIMENT_PLAN.md). Every reported row is one
-exact $(P,Q,n_P,n_Q)$ configuration. Results are not averaged across
-population pairs, sample sizes, or descriptive regimes.
+Every reported row is one exact $(P,Q,n_P,n_Q)$ configuration. Results are not
+averaged across population pairs, sample sizes, or descriptive regimes.
 
 ## 2. How to read the results
 
@@ -83,7 +81,7 @@ took 16.98 seconds and the selected confirmatory run took 2.91 seconds,
 including generation of the saved summaries and figures.
 
 The holdout selection and its pre-specified rationale are saved in
-[`2x2_confirmatory_selection.json`](2x2_confirmatory_selection.json). Code
+[`2x2_confirmatory_selection.json`](../../experiments/2x2_confirmatory_selection.json). Code
 hashes, software versions, seeds, replicate counts, and elapsed times are in
 the run metadata.
 
@@ -138,7 +136,7 @@ imply that the method is acceptably calibrated. For example, Expanded Welch
 substantially improves N5 at $200:2000$, but an FPR of 0.2085 remains a clear
 failure.
 
-![Confirmatory null calibration and validity](../results/2x2_confirmatory/figures/CONFIRM_null_calibration_and_validity.png)
+![Confirmatory null calibration and validity](../../results/2x2_confirmatory/figures/CONFIRM_null_calibration_and_validity.png)
 
 ### 5.1 Main calibration findings
 
@@ -179,7 +177,7 @@ nominal power followed by size-adjusted power in parentheses.
 | Extreme rare, $\Delta_I=0.005$, $1000:1000$ | 0.0475 (0.3405) | 0.0472 (0.3406) | 0.0166 (**0.3565**) | 0.9999 |
 | Extreme rare, $\Delta_I=0.005$, $100:1000$ | 0.8396 (0.0047) | 0.8391 (0.0040) | 0.1458 (0.0763) | 0.7551 |
 
-![Confirmatory nominal and size-adjusted power](../results/2x2_confirmatory/figures/CONFIRM_nominal_and_adjusted_power.png)
+![Confirmatory nominal and size-adjusted power](../../results/2x2_confirmatory/figures/CONFIRM_nominal_and_adjusted_power.png)
 
 Nominal Expanded Welch power is lower in every selected case because its
 reference distribution is heavier-tailed. This is a genuine operational cost
@@ -221,12 +219,12 @@ boundary rather than concealing it behind an average performance measure.
 
 | Artefact | Location |
 | --- | --- |
-| Screening report | [`results/2x2_screening/REPORT.md`](../results/2x2_screening/REPORT.md) |
-| Confirmatory report | [`results/2x2_confirmatory/REPORT.md`](../results/2x2_confirmatory/REPORT.md) |
-| Exact configuration definitions | [`results/2x2_confirmatory/configurations.csv`](../results/2x2_confirmatory/configurations.csv) |
-| Null decisions and confidence intervals | [`results/2x2_confirmatory/null_summary.csv`](../results/2x2_confirmatory/null_summary.csv) |
-| Power and false-negative results | [`results/2x2_confirmatory/power_summary.csv`](../results/2x2_confirmatory/power_summary.csv) |
-| Independent power thresholds | [`results/2x2_confirmatory/power_null_thresholds.csv`](../results/2x2_confirmatory/power_null_thresholds.csv) |
-| Invalidity and mechanism diagnostics | [`results/2x2_confirmatory/mechanism_diagnostics.csv`](../results/2x2_confirmatory/mechanism_diagnostics.csv) |
-| Seed-block stability | [`results/2x2_confirmatory/replicate_blocks.csv`](../results/2x2_confirmatory/replicate_blocks.csv) |
-| Reproducibility metadata | [`results/2x2_confirmatory/run_metadata.json`](../results/2x2_confirmatory/run_metadata.json) |
+| Screening report | [`results/2x2_screening/REPORT.md`](../../results/2x2_screening/REPORT.md) |
+| Confirmatory report | [`results/2x2_confirmatory/REPORT.md`](../../results/2x2_confirmatory/REPORT.md) |
+| Exact configuration definitions | [`results/2x2_confirmatory/configurations.csv`](../../results/2x2_confirmatory/configurations.csv) |
+| Null decisions and confidence intervals | [`results/2x2_confirmatory/null_summary.csv`](../../results/2x2_confirmatory/null_summary.csv) |
+| Power and false-negative results | [`results/2x2_confirmatory/power_summary.csv`](../../results/2x2_confirmatory/power_summary.csv) |
+| Independent power thresholds | [`results/2x2_confirmatory/power_null_thresholds.csv`](../../results/2x2_confirmatory/power_null_thresholds.csv) |
+| Invalidity and mechanism diagnostics | [`results/2x2_confirmatory/mechanism_diagnostics.csv`](../../results/2x2_confirmatory/mechanism_diagnostics.csv) |
+| Seed-block stability | [`results/2x2_confirmatory/replicate_blocks.csv`](../../results/2x2_confirmatory/replicate_blocks.csv) |
+| Reproducibility metadata | [`results/2x2_confirmatory/run_metadata.json`](../../results/2x2_confirmatory/run_metadata.json) |

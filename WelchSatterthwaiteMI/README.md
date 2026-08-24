@@ -25,11 +25,11 @@ The current reading path and historical research records are indexed in
 
 For a first-principles explanation of the literature, research question,
 method, validation design, results, and limitations, see
-[`docs/SUMMARY.md`](docs/SUMMARY.md).
+[`docs/overview/SUMMARY.md`](docs/overview/SUMMARY.md).
 
 For the complete line-by-line mathematical derivation of the expanded method,
 see
-[`docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
+[`docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
 The compiled textbook-style edition is available as
 [`derivation/main.pdf`](derivation/main.pdf), with reproducible LaTeX source
 in [`derivation/main.tex`](derivation/main.tex).

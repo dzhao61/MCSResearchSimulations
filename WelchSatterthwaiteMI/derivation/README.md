@@ -2,7 +2,7 @@
 
 This folder contains the LaTeX and PDF edition of the complete derivation.
 The canonical mathematical content is
-[`../docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](../docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
+[`../docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](../docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
 
 ## Files
 
@@ -19,7 +19,7 @@ Every top-level section starts on a new page.
 From the repository root, generate the LaTeX source with:
 
 ```bash
-pandoc WelchSatterthwaiteMI/docs/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md \
+pandoc WelchSatterthwaiteMI/docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md \
   --from=markdown+tex_math_dollars \
   --to=latex \
   --standalone \
