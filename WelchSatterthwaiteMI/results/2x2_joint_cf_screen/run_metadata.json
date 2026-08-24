@@ -1,0 +1,13 @@
+{
+  "seed": 2026082601,
+  "development_replicates_per_configuration": 20000,
+  "validation_replicates_per_configuration": 20000,
+  "blocks": 4,
+  "configurations": 39,
+  "alpha": 0.05,
+  "elapsed_seconds": 2.4864281660411507,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "script_sha256": "87a6a1dd026c3d811654ef4b676ab6d690dc90a83a524e4f2a98396a24e759e0"
+}

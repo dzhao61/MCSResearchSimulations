@@ -98,12 +98,11 @@ This dependence shifts and distorts the ratio $T$, but the Expanded Welch
 formula uses only the variability of the estimated variance. It does not
 model the joint movement of the numerator and denominator.
 
-## 5. Required Next Correction
+## 5. Follow-up Result
 
-The evidence does not support adding a stronger Student correction. The next
-analytical refinement should model the studentized statistic directly. A
-principled candidate is a higher-order Edgeworth or Cornish-Fisher correction
-derived from the joint influence functions of
+The evidence did not support adding a stronger Student correction. A follow-up
+experiment therefore tested a joint Edgeworth and Cornish-Fisher correction
+derived from the influence functions of
 
 $$
 \widehat I_{\mathrm{BC}}(P)-\widehat I_{\mathrm{BC}}(Q)
@@ -111,18 +110,17 @@ $$
 \widehat V(P)/n_P+\widehat V(Q)/n_Q.
 $$
 
-Unlike a Student degrees-of-freedom adjustment, this correction can:
+The deployable plug-in correction failed decisively: its mean absolute
+false-positive-rate error was 0.360, compared with 0.076 for Normal Wald and
+0.033 for Expanded Welch. Even a diagnostic version supplied with the true
+population moments had error 0.128. Skewness and kurtosis corrections were
+also unstable in the sparse configurations.
 
-- move the critical value either above or below 1.96;
-- account for correlation between the numerator and denominator;
-- correct asymmetric finite-sample tails; and
-- converge back to Normal Wald in regular large-sample regimes.
-
-The immediate theoretical target is therefore the covariance between the MI
-influence function and the variance influence function, together with the
-third cumulant of the studentized statistic. Extreme discrete cases may still
-require an exact or resampling fallback, but they should not determine the
-calibration used for regular tables.
+The [joint Cornish-Fisher audit](2X2_JOINT_CORNISH_FISHER_AUDIT.md) therefore
+concludes that this route should not be pursued as the primary thesis method.
+Extreme discrete cases may require an exact or resampling fallback; a further
+deterministic method would need to approximate the full null distribution
+rather than a small set of estimated cumulants.
 
 ## 6. Files
 

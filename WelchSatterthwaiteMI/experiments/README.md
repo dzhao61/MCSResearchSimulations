@@ -12,6 +12,13 @@ The complete screening and independent confirmatory outputs are retained in
 [`../results/2x2_screening/`](../results/2x2_screening/) and
 [`../results/2x2_confirmatory/`](../results/2x2_confirmatory/).
 
+`run_critical_value_audit.py` diagnoses the location, scale, shape, and
+numerator-denominator dependence of the current statistic.
+`run_joint_cornish_fisher_audit.py` performs the independent development and
+validation experiment that rejected a joint higher-order moment correction as
+the next primary method. Its confirmatory output is in
+[`../results/2x2_joint_cf_confirmatory/`](../results/2x2_joint_cf_confirmatory/).
+
 ## Prior Broad Experiment
 
 `run_supervisor_experiment.py` is the earlier broad experiment. It compares

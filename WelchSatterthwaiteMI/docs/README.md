@@ -26,6 +26,10 @@ design, results, and limitations.
 - [`experiments/2X2_EXPERIMENT.md`](experiments/2X2_EXPERIMENT.md) documents
   the interpretable 2x2 design and its calibration, validity, power, and
   breakdown results.
+- [`experiments/2X2_CRITICAL_VALUE_AUDIT.md`](experiments/2X2_CRITICAL_VALUE_AUDIT.md)
+  diagnoses the finite-sample distortion of the studentized statistic.
+- [`experiments/2X2_JOINT_CORNISH_FISHER_AUDIT.md`](experiments/2X2_JOINT_CORNISH_FISHER_AUDIT.md)
+  records the confirmatory no-go result for a joint higher-order correction.
 - [`../experiments/README.md`](../experiments/README.md) indexes executable
   experiment scripts and earlier studies.
 
