@@ -1,4 +1,4 @@
-# Differential Mutual Information: 2x2 Experiments
+# Equal-MI Testing: 2x2 Analytic Baseline
 
 ## 1. Research question
 

@@ -1,4 +1,4 @@
-# Multi-Alphabet Equal-MI Experiment
+# Constrained Likelihood-Ratio Validation Across Alphabet Sizes
 
 ## 1. Research question
 
@@ -183,7 +183,48 @@ that LR uniformly dominates Wald; they support a more limited claim that LR
 can improve calibration without a material power loss once the tables are not
 at the extreme low-sample boundary.
 
-### 4.3 Numerical validity and runtime
+### 4.3 Power curves across MI differences
+
+The fixed-effect comparison above is extended over
+
+\[
+|I(P)-I(Q)|\in\{0,0.005,0.01,0.02,0.035,0.05\}\text{ nats}.
+\]
+
+In every figure, rows are the four marginal regimes and columns are the exact
+sample sizes. All panels use the same horizontal range and the same rejection
+rate scale from zero to one. The point at zero is the false-positive rate under
+the equal-MI null; the positive points are power against increasingly different
+population MI values. The horizontal reference line is the nominal level
+$\alpha=0.05$.
+
+#### 3x3 tables
+
+![3x3 power curves](../../results/multialphabet_lr_power_curves/POWER_CURVES_3x3.png)
+
+#### 4x4 tables
+
+![4x4 power curves](../../results/multialphabet_lr_power_curves/POWER_CURVES_4x4.png)
+
+#### 5x5 tables
+
+![5x5 power curves](../../results/multialphabet_lr_power_curves/POWER_CURVES_5x5.png)
+
+#### 8x8 tables
+
+![8x8 power curves](../../results/multialphabet_lr_power_curves/POWER_CURVES_8x8.png)
+
+At small sample sizes, all methods have low power and their null calibration
+differs appreciably. Normal Wald usually has the highest raw rejection rate,
+but it is also the most liberal method overall under the null. LR is generally
+more conservative at this boundary. From $N=250$ onward, the three curves are
+close across most regimes; LR's mean rejection rate is then within about 0.2
+percentage points of Wald and is slightly above Expanded Welch. The curves do
+not support uniform dominance by any method, but they show that LR's improved
+calibration usually does not require a material power loss outside the smallest
+samples.
+
+### 4.4 Numerical validity and runtime
 
 LR converges on every 3x3 and 4x4 replicate. Its minimum valid rate is 0.998
 for 5x5 and 0.968 for 8x8. Every accepted fit has an equal-MI constraint
@@ -222,7 +263,13 @@ largest method differences with at least 2,000--5,000 replicates each.
 - [LR diagnostics](../../results/multialphabet_lr_screen/lr_diagnostics.csv)
 - [Run metadata](../../results/multialphabet_lr_screen/run_metadata.json)
 - [Experiment runner](../../experiments/run_multialphabet_lr_experiment.py)
+- [Power-curve report](../../results/multialphabet_lr_power_curves/REPORT.md)
+- [Power-curve results](../../results/multialphabet_lr_power_curves/power_curves.csv)
+- [Power-curve LR diagnostics](../../results/multialphabet_lr_power_curves/lr_diagnostics_interior.csv)
+- [Power-curve runner](../../experiments/run_multialphabet_lr_power_curves.py)
 
 The complete screen contains 128 population/sample configurations and 160,000
 independently sampled table pairs. It completed in 1,446.6 seconds with eight
-worker processes.
+worker processes. The power-curve extension adds four interior MI differences
+for every configuration, comprising 320,000 newly sampled table pairs. It
+completed in 2,632.5 seconds with eight worker processes.

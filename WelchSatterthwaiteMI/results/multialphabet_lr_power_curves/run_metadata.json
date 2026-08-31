@@ -1,0 +1,80 @@
+{
+  "profile": "screen",
+  "seed": 2026083102,
+  "workers": 8,
+  "shapes": [
+    3,
+    4,
+    5,
+    8
+  ],
+  "regimes": [
+    "balanced",
+    "mild",
+    "strong",
+    "ultra"
+  ],
+  "sample_sizes": {
+    "3": [
+      25,
+      50,
+      75,
+      100,
+      150,
+      250,
+      500,
+      1000
+    ],
+    "4": [
+      25,
+      50,
+      75,
+      100,
+      150,
+      250,
+      500,
+      1000
+    ],
+    "5": [
+      25,
+      50,
+      75,
+      100,
+      150,
+      250,
+      500,
+      1000
+    ],
+    "8": [
+      25,
+      50,
+      75,
+      100,
+      150,
+      250,
+      500,
+      1000
+    ]
+  },
+  "mi_differences": [
+    0.0,
+    0.005,
+    0.01,
+    0.02,
+    0.035,
+    0.05
+  ],
+  "replicates_by_shape": {
+    "3": 1000,
+    "4": 750,
+    "5": 500,
+    "8": 250
+  },
+  "endpoint_results": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/results/multialphabet_lr_screen/results.csv",
+  "simulated_configuration_count": 512,
+  "simulated_table_pair_count": 320000,
+  "elapsed_seconds": 2632.4739146670327,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3"
+}

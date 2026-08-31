@@ -67,7 +67,7 @@ distributions have heavier tails than the normal distribution.
 | Rare-cell case A | 0.0602 | 2.029 | 53.967 | 35.64 | 0.778 | 0.005 | Slightly larger |
 | Rare-cell case B | 0.1227 | 2.918 | 181.483 | 3.56 | 0.766 | 0.003 | Larger |
 
-![Critical-value diagnostic](../../results/2x2_critical_value_audit/CRITICAL_VALUE_AUDIT.png)
+![Critical-value diagnostic](../../../results/2x2_critical_value_audit/CRITICAL_VALUE_AUDIT.png)
 
 ## 4. What the Audit Establishes
 
@@ -116,7 +116,7 @@ false-positive-rate error was 0.360, compared with 0.076 for Normal Wald and
 population moments had error 0.128. Skewness and kurtosis corrections were
 also unstable in the sparse configurations.
 
-The [joint Cornish-Fisher audit](2X2_JOINT_CORNISH_FISHER_AUDIT.md) therefore
+The [joint Cornish-Fisher audit](JOINT_CORNISH_FISHER_NO_GO.md) therefore
 concludes that this route should not be pursued as the primary thesis method.
 Extreme discrete cases may require an exact or resampling fallback; a further
 deterministic method would need to approximate the full null distribution
@@ -126,7 +126,7 @@ rather than a small set of estimated cumulants.
 
 | Output | File |
 | --- | --- |
-| All 39 configurations | [`critical_value_audit.csv`](../../results/2x2_critical_value_audit/critical_value_audit.csv) |
-| Baseline sample sizes | [`baseline_critical_value_audit.csv`](../../results/2x2_critical_value_audit/baseline_critical_value_audit.csv) |
-| Figure | [`CRITICAL_VALUE_AUDIT.png`](../../results/2x2_critical_value_audit/CRITICAL_VALUE_AUDIT.png) |
-| Reproducibility metadata | [`run_metadata.json`](../../results/2x2_critical_value_audit/run_metadata.json) |
+| All 39 configurations | [`critical_value_audit.csv`](../../../results/2x2_critical_value_audit/critical_value_audit.csv) |
+| Baseline sample sizes | [`baseline_critical_value_audit.csv`](../../../results/2x2_critical_value_audit/baseline_critical_value_audit.csv) |
+| Figure | [`CRITICAL_VALUE_AUDIT.png`](../../../results/2x2_critical_value_audit/CRITICAL_VALUE_AUDIT.png) |
+| Reproducibility metadata | [`run_metadata.json`](../../../results/2x2_critical_value_audit/run_metadata.json) |

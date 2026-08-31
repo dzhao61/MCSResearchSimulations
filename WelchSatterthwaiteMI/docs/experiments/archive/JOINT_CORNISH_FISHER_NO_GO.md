@@ -59,7 +59,7 @@ so it is an oracle diagnostic for this particular first-order formula.
 ## 3. Experimental design
 
 The experiment uses the same 13 interpretable binary configurations as the
-[main 2x2 experiment](2X2_EXPERIMENT.md). Each is evaluated at half, baseline,
+[main 2x2 experiment](../EQUAL_MI_2X2_BASELINE.md). Each is evaluated at half, baseline,
 and double sample size, giving 39 exact equal-MI null configurations.
 
 Each configuration receives two independent simulations:
@@ -102,7 +102,7 @@ Selected baseline-sample results illustrate the failure modes:
 | Skewed, unequal samples | 0.1709 | 0.0452 | 0.2539 | 0.3875 | 0.0634 | 0.0503 |
 | Rare and highly unequal | 0.4920 | 0.2115 | 0.9144 | 0.5016 | 0.0022 | 0.0497 |
 
-![Joint Cornish-Fisher calibration audit](../../results/2x2_joint_cf_confirmatory/JOINT_CF_AUDIT.png)
+![Joint Cornish-Fisher calibration audit](../../../results/2x2_joint_cf_confirmatory/JOINT_CF_AUDIT.png)
 
 ## 5. Interpretation
 
@@ -153,8 +153,8 @@ one of two clearer paths:
 
 | Output | File |
 | --- | --- |
-| All 39 configurations | [`configuration_results.csv`](../../results/2x2_joint_cf_confirmatory/configuration_results.csv) |
-| Baseline configurations | [`baseline_results.csv`](../../results/2x2_joint_cf_confirmatory/baseline_results.csv) |
-| Aggregate comparison | [`method_summary.csv`](../../results/2x2_joint_cf_confirmatory/method_summary.csv) |
-| Figure | [`JOINT_CF_AUDIT.png`](../../results/2x2_joint_cf_confirmatory/JOINT_CF_AUDIT.png) |
-| Run metadata | [`run_metadata.json`](../../results/2x2_joint_cf_confirmatory/run_metadata.json) |
+| All 39 configurations | [`configuration_results.csv`](../../../results/2x2_joint_cf_confirmatory/configuration_results.csv) |
+| Baseline configurations | [`baseline_results.csv`](../../../results/2x2_joint_cf_confirmatory/baseline_results.csv) |
+| Aggregate comparison | [`method_summary.csv`](../../../results/2x2_joint_cf_confirmatory/method_summary.csv) |
+| Figure | [`JOINT_CF_AUDIT.png`](../../../results/2x2_joint_cf_confirmatory/JOINT_CF_AUDIT.png) |
+| Run metadata | [`run_metadata.json`](../../../results/2x2_joint_cf_confirmatory/run_metadata.json) |

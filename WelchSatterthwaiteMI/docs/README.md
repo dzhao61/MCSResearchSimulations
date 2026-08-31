@@ -26,21 +26,18 @@ design, results, and limitations.
 
 ## Experiments
 
-- [`experiments/2X2_EXPERIMENT.md`](experiments/2X2_EXPERIMENT.md) documents
-  the interpretable 2x2 design and its calibration, validity, power, and
-  breakdown results.
-- [`experiments/2X2_CRITICAL_VALUE_AUDIT.md`](experiments/2X2_CRITICAL_VALUE_AUDIT.md)
-  diagnoses the finite-sample distortion of the studentized statistic.
-- [`experiments/2X2_JOINT_CORNISH_FISHER_AUDIT.md`](experiments/2X2_JOINT_CORNISH_FISHER_AUDIT.md)
-  records the confirmatory no-go result for a joint higher-order correction.
-- [`experiments/2X2_CONSTRAINED_LIKELIHOOD_RATIO_AUDIT.md`](experiments/2X2_CONSTRAINED_LIKELIHOOD_RATIO_AUDIT.md)
-  records the constrained likelihood-ratio calibration and full-range power
-  audit, including the regimes where its advantage does and does not persist.
-- [`experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md`](experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md)
-  extends that audit to exact 3x3, 4x4, 5x5, and 8x8 configurations across a
-  detailed sample-size and marginal-skewness grid.
+- [`experiments/EQUAL_MI_2X2_BASELINE.md`](experiments/EQUAL_MI_2X2_BASELINE.md)
+  establishes the 2x2 Normal Wald and Expanded Welch baselines.
+- [`experiments/CONSTRAINED_LR_2X2_VALIDATION.md`](experiments/CONSTRAINED_LR_2X2_VALIDATION.md)
+  evaluates constrained LR calibration, power, runtime, and failure regimes
+  for 2x2 tables.
+- [`experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md`](experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md)
+  extends the comparison to 3x3, 4x4, 5x5, and 8x8 tables.
 - [`../experiments/README.md`](../experiments/README.md) indexes executable
   experiment scripts and earlier studies.
+
+Superseded calibration investigations are retained under
+[`experiments/archive/`](experiments/archive/).
 
 Generated reports remain beside their CSV and figure artefacts under
 [`../results/`](../results/).

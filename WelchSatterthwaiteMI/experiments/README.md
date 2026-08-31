@@ -3,7 +3,7 @@
 ## Current 2x2 Program
 
 The supervisor-guided design and its interpreted results are documented in
-[`../docs/experiments/2X2_EXPERIMENT.md`](../docs/experiments/2X2_EXPERIMENT.md).
+[`../docs/experiments/EQUAL_MI_2X2_BASELINE.md`](../docs/experiments/EQUAL_MI_2X2_BASELINE.md).
 It uses
 deterministic `2x2` population pairs to map calibration, validity, breakdown,
 and power without imposing an expected-cell-count floor.
@@ -28,13 +28,15 @@ and
 [`../results/2x2_constrained_lr_power_fullstarts/`](../results/2x2_constrained_lr_power_fullstarts/).
 The full feasible-range results are in
 [`../results/2x2_constrained_lr_full_curves/`](../results/2x2_constrained_lr_full_curves/).
+The interpreted LR validation is in
+[`../docs/experiments/CONSTRAINED_LR_2X2_VALIDATION.md`](../docs/experiments/CONSTRAINED_LR_2X2_VALIDATION.md).
 
 ## Multi-Alphabet LR Experiment
 
 `run_multialphabet_lr_experiment.py` extends the equal-MI comparison to 3x3,
 4x4, 5x5, and 8x8 tables. It records each exact shape, marginal regime, and
 sample size separately. The interpreted design and results are in
-[`../docs/experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md`](../docs/experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md),
+[`../docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md`](../docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md),
 with generated outputs in
 [`../results/multialphabet_lr_screen/`](../results/multialphabet_lr_screen/).
 

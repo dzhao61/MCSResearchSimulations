@@ -1,4 +1,4 @@
-# Constrained Likelihood-Ratio Audit for Equal Mutual Information
+# Constrained Likelihood-Ratio Validation for 2x2 Equal-MI Testing
 
 ## 1. Research question
 
@@ -9,7 +9,7 @@ tested more reliably by fitting the null hypothesis directly:
 H_0:I(P)=I(Q).
 \]
 
-The candidate is a constrained likelihood-ratio (LR) test. The audit is limited
+The candidate is a constrained likelihood-ratio (LR) test. The validation is limited
 to \(2\times2\) tables so that the method can be understood and tested before
 considering larger alphabets.
 
