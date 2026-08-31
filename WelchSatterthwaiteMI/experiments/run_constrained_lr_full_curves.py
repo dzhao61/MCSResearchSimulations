@@ -41,9 +41,26 @@ METHOD_LABELS = {
     "constrained_lr": "Constrained LR (chi-squared)",
 }
 METHOD_STYLES = {
-    "normal_wald": {"color": "#24557A", "linestyle": "-"},
-    "expanded_welch": {"color": "#A23B72", "linestyle": "-"},
-    "constrained_lr": {"color": "#D87928", "linestyle": "-"},
+    "normal_wald": {
+        "color": "#24557A",
+        "linestyle": "-",
+        "marker": "o",
+        "zorder": 1,
+    },
+    "expanded_welch": {
+        "color": "#A23B72",
+        "linestyle": "--",
+        "marker": "s",
+        "markerfacecolor": "white",
+        "zorder": 2,
+    },
+    "constrained_lr": {
+        "color": "#D87928",
+        "linestyle": ":",
+        "marker": "^",
+        "markerfacecolor": "white",
+        "zorder": 3,
+    },
 }
 PLOTTED_METHODS = tuple(METHOD_STYLES)
 
@@ -130,7 +147,23 @@ def _plot(
     effect_cap: float | None = None,
     logarithmic: bool = False,
 ) -> None:
-    figure, axes = plt.subplots(3, 5, figsize=(20, 11))
+    plot_data = results
+    if effect_cap is not None:
+        plot_data = plot_data[plot_data["mi_difference"] <= effect_cap]
+    common_effect_maximum = float(plot_data["mi_difference"].max())
+    common_rejection_maximum = float(plot_data["rejection_rate"].max())
+    common_rejection_upper = min(
+        1.0,
+        max(0.12, common_rejection_maximum * 1.08),
+    )
+
+    figure, axes = plt.subplots(
+        3,
+        5,
+        figsize=(20, 11),
+        sharex=True,
+        sharey=True,
+    )
     flat_axes = axes.ravel()
     for axis, (anchor_id, label) in zip(
         flat_axes, CONFIGURATION_LABELS.items(), strict=False
@@ -143,7 +176,6 @@ def _plot(
             axis.plot(
                 curve["mi_difference"],
                 curve["rejection_rate"],
-                marker="o",
                 linewidth=1.6,
                 markersize=3.5,
                 label=METHOD_LABELS[method],
@@ -151,10 +183,9 @@ def _plot(
             )
         axis.axhline(0.05, color="#555555", linestyle=":", linewidth=1)
         _format_effect_axis(
-            axis, float(selected["mi_difference"].max()), logarithmic=logarithmic
+            axis, common_effect_maximum, logarithmic=logarithmic
         )
-        upper = max(0.12, float(selected["rejection_rate"].max()) * 1.08)
-        axis.set_ylim(0.0, min(1.0, upper))
+        axis.set_ylim(0.0, common_rejection_upper)
         axis.set_title(label, fontsize=10)
         axis.grid(alpha=0.18)
     for axis in flat_axes[len(CONFIGURATION_LABELS) :]:
@@ -174,7 +205,7 @@ def _plot(
         frameon=False,
     )
     figure.suptitle(
-        "2x2 constrained-LR power curves: full feasible range",
+        "2x2 constrained-LR power curves: full feasible range (shared axes)",
         fontsize=16,
         y=0.995,
     )

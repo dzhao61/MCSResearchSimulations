@@ -55,6 +55,28 @@ COLORS = {
     "simple_welch": "#D87928",
     "expanded_welch": "#A23B72",
 }
+OVERVIEW_STYLES = {
+    "normal_wald": {
+        "color": COLORS["normal_wald"],
+        "linestyle": "-",
+        "marker": "o",
+        "zorder": 1,
+    },
+    "simple_welch": {
+        "color": COLORS["simple_welch"],
+        "linestyle": "--",
+        "marker": "s",
+        "markerfacecolor": "white",
+        "zorder": 2,
+    },
+    "expanded_welch": {
+        "color": COLORS["expanded_welch"],
+        "linestyle": ":",
+        "marker": "^",
+        "markerfacecolor": "white",
+        "zorder": 3,
+    },
+}
 SCALE_COLORS = {
     0.5: "#4477AA",
     1.0: "#CC6677",
@@ -231,7 +253,23 @@ def _plot_overview(
     logarithmic: bool = False,
 ) -> None:
     baseline = summary[np.isclose(summary["sample_scale"], 1.0)]
-    figure, axes = plt.subplots(3, 5, figsize=(20, 11))
+    plot_data = baseline
+    if effect_cap is not None:
+        plot_data = plot_data[plot_data["mi_difference"] <= effect_cap]
+    common_effect_maximum = float(plot_data["mi_difference"].max())
+    common_rejection_maximum = float(plot_data["rejection_rate"].max())
+    common_rejection_upper = min(
+        1.0,
+        max(0.12, common_rejection_maximum * 1.12),
+    )
+
+    figure, axes = plt.subplots(
+        3,
+        5,
+        figsize=(20, 11),
+        sharex=True,
+        sharey=True,
+    )
     flat_axes = axes.ravel()
     for axis, (anchor_id, label) in zip(flat_axes, CONFIGURATION_LABELS.items(), strict=False):
         selected = baseline[baseline["anchor_configuration_id"].eq(anchor_id)]
@@ -242,20 +280,18 @@ def _plot_overview(
             axis.plot(
                 method_rows["mi_difference"],
                 method_rows["rejection_rate"],
-                marker="o",
                 linewidth=1.6,
                 markersize=3.5,
-                color=COLORS[method],
                 label=specification["label"],
+                **OVERVIEW_STYLES[method],
             )
         axis.axhline(0.05, color="#555555", linestyle=":", linewidth=1)
         _format_effect_axis(
             axis,
-            float(selected["mi_difference"].max()),
+            common_effect_maximum,
             logarithmic=logarithmic,
         )
-        upper = max(0.12, float(selected["rejection_rate"].max()) * 1.12)
-        axis.set_ylim(0.0, min(1.0, upper))
+        axis.set_ylim(0.0, common_rejection_upper)
         axis.set_title(label, fontsize=10)
         axis.grid(alpha=0.18)
     for axis in flat_axes[len(CONFIGURATION_LABELS) :]:
@@ -275,7 +311,7 @@ def _plot_overview(
         frameon=False,
     )
     figure.suptitle(
-        title,
+        f"{title} (shared axes)",
         fontsize=16,
         y=0.995,
     )

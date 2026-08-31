@@ -181,6 +181,11 @@ independent table pairs.
 
 ![Power over MI differences](../../results/2x2_power_curves/figures/POWER_CURVES_overview.png)
 
+All panels use the same horizontal and vertical scales. A curve that ends
+early has reached the largest MI difference attainable under that
+configuration's fixed margins. Every panel contains all three methods;
+different line styles and markers identify curves that overlap.
+
 [Open the small-effect logarithmic view.](../../results/2x2_power_curves/figures/POWER_CURVES_small_effects.png)
 
 Differences below 0.005 nats are generally difficult to detect at the tested

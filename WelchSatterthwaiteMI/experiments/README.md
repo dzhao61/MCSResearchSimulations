@@ -29,6 +29,15 @@ and
 The full feasible-range results are in
 [`../results/2x2_constrained_lr_full_curves/`](../results/2x2_constrained_lr_full_curves/).
 
+## Multi-Alphabet LR Experiment
+
+`run_multialphabet_lr_experiment.py` extends the equal-MI comparison to 3x3,
+4x4, 5x5, and 8x8 tables. It records each exact shape, marginal regime, and
+sample size separately. The interpreted design and results are in
+[`../docs/experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md`](../docs/experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md),
+with generated outputs in
+[`../results/multialphabet_lr_screen/`](../results/multialphabet_lr_screen/).
+
 ## Prior Broad Experiment
 
 `run_supervisor_experiment.py` is the earlier broad experiment. It compares

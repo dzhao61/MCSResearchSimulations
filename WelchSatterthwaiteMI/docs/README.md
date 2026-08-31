@@ -36,6 +36,9 @@ design, results, and limitations.
 - [`experiments/2X2_CONSTRAINED_LIKELIHOOD_RATIO_AUDIT.md`](experiments/2X2_CONSTRAINED_LIKELIHOOD_RATIO_AUDIT.md)
   records the constrained likelihood-ratio calibration and full-range power
   audit, including the regimes where its advantage does and does not persist.
+- [`experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md`](experiments/MULTIALPHABET_CONSTRAINED_LR_EXPERIMENT.md)
+  extends that audit to exact 3x3, 4x4, 5x5, and 8x8 configurations across a
+  detailed sample-size and marginal-skewness grid.
 - [`../experiments/README.md`](../experiments/README.md) indexes executable
   experiment scripts and earlier studies.
 

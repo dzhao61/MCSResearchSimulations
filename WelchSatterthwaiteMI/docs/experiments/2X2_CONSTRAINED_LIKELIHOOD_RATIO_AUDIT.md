@@ -130,6 +130,11 @@ or 555,000 table pairs in total.
 
 ![Full feasible-range power curves](../../results/2x2_constrained_lr_full_curves/FULL_FEASIBLE_POWER_CURVES.png)
 
+All panels use the same horizontal and vertical scales. Curves end at the
+largest MI difference attainable under each configuration's fixed margins.
+Different line styles and markers identify displayed methods whose curves
+overlap.
+
 Across all nonzero curve points, the raw LR rejection rate exceeded Expanded
 Welch at 77 points and was lower at 16. Its mean rejection rate was 0.202,
 compared with 0.184 for Expanded Welch. Relative to nominal Wald, raw LR was
