@@ -50,6 +50,24 @@ class ConstrainedLikelihoodRatioTests(unittest.TestCase):
         np.testing.assert_allclose(nll_gradient, numerical_nll, rtol=1e-7, atol=1e-7)
         np.testing.assert_allclose(mi_gradient, numerical_mi, rtol=1e-7, atol=1e-8)
 
+    def test_3x3_analytic_gradients_match_finite_differences(self) -> None:
+        logits = np.array([0.4, -0.7, 0.2, 0.1, -0.3, 0.8, -0.5, 0.6])
+        counts = np.array([17.0, 5.0, 9.0, 31.0, 4.0, 12.0, 8.0, 15.0, 6.0])
+        _, nll_gradient = _multinomial_nll_and_gradient(logits, counts)
+        numerical_nll = _finite_difference(
+            lambda value: _multinomial_nll_and_gradient(value, counts)[0], logits
+        )
+        probability = _softmax_reference(logits)
+        _, mi_gradient = _mi_and_logit_gradient(probability, 3, 3)
+        numerical_mi = _finite_difference(
+            lambda value: _mi_and_logit_gradient(
+                _softmax_reference(value), 3, 3
+            )[0],
+            logits,
+        )
+        np.testing.assert_allclose(nll_gradient, numerical_nll, rtol=1e-7, atol=1e-7)
+        np.testing.assert_allclose(mi_gradient, numerical_mi, rtol=1e-7, atol=1e-8)
+
     def test_identical_positive_tables_have_zero_statistic(self) -> None:
         table = np.array([[30, 10], [8, 52]])
         result = constrained_likelihood_ratio_test(table, table)
@@ -73,6 +91,24 @@ class ConstrainedLikelihoodRatioTests(unittest.TestCase):
         self.assertAlmostEqual(base.statistic, swapped.statistic, places=7)
         self.assertAlmostEqual(base.statistic, relabelled.statistic, places=7)
         self.assertAlmostEqual(base.p_value, chi2.sf(base.statistic, 1), places=13)
+
+    def test_3x3_group_swap_and_relabelling_invariance(self) -> None:
+        table_p = np.array([[18, 4, 2], [3, 12, 5], [1, 7, 20]])
+        table_q = np.array([[10, 6, 3], [5, 17, 2], [4, 3, 20]])
+        row_order = np.array([2, 0, 1])
+        column_order = np.array([1, 2, 0])
+        base = constrained_likelihood_ratio_test(table_p, table_q)
+        swapped = constrained_likelihood_ratio_test(table_q, table_p)
+        relabelled = constrained_likelihood_ratio_test(
+            table_p[np.ix_(row_order, column_order)],
+            table_q[np.ix_(row_order, column_order)],
+        )
+        for result in (base, swapped, relabelled):
+            self.assertTrue(result.converged)
+            self.assertLess(result.constraint_residual, 1e-7)
+            self.assertGreaterEqual(result.statistic, 0.0)
+        self.assertAlmostEqual(base.statistic, swapped.statistic, places=6)
+        self.assertAlmostEqual(base.statistic, relabelled.statistic, places=6)
 
     def test_scaling_counts_scales_the_likelihood_ratio(self) -> None:
         table_p = np.array([[30, 10], [8, 52]])

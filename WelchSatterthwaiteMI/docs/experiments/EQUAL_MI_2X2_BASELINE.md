@@ -34,6 +34,11 @@ $p$-value.
 The purpose is to determine whether Expanded Welch improves finite-sample
 calibration without an unacceptable loss of power.
 
+This report establishes the analytic baseline used by the later constrained-LR
+experiments. Its conclusion remains current: Expanded Welch is informative as
+a finite-sample comparison, but the evidence does not support it as a general
+replacement for Normal Wald.
+
 ## 2. Quantities reported
 
 The significance level is fixed at $\alpha=0.05$. Two measurements answer the

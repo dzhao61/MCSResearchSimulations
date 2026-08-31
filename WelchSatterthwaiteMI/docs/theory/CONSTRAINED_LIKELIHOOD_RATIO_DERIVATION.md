@@ -59,6 +59,10 @@ Population quantities are written without a hat. Unrestricted empirical
 estimates are written with a hat, and constrained estimates are written with
 a tilde. Natural logarithms are used throughout, so MI is measured in nats.
 
+The corresponding empirical evidence is reported for
+[2x2 tables](../experiments/CONSTRAINED_LR_2X2_VALIDATION.md) and
+[larger alphabets](../experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md).
+
 ## 1. Define the Two Populations and the Hypothesis
 
 ### 1.1 Define the populations and samples
@@ -779,6 +783,10 @@ $$
 \sum_{k=1}^Kp_k=1.
 $$
 
+The implementation bounds each fitted logit to the interval $[-32,32]$ to
+avoid numerically extreme probabilities. This retains an effectively interior
+probability table while making the optimization stable.
+
 The same transformation uses $K-1$ parameters for $Q$. The full numerical
 problem therefore has
 
@@ -950,7 +958,8 @@ Each acceptable fit must have:
 
 - successful numerical convergence;
 - a finite objective value;
-- an equal-MI residual within tolerance;
+- an equal-MI residual no larger than the numerical acceptance threshold
+  $\max(10\,\text{tolerance},10^{-7})$;
 - a constrained objective no better than the unrestricted objective, apart
   from numerical tolerance.
 
@@ -1155,9 +1164,14 @@ the current SLSQP implementation solves a dense constrained optimisation from
 multiple starts. Its total cost therefore grows much faster than the $O(rc)$
 closed-form Expanded Welch calculation.
 
-The method is computationally practical for the current $2\times2$
-experiments. Larger tables require benchmarking and may require a more
-specialised optimiser that exploits the single equal-MI constraint.
+The method is computationally practical for the current $2\times2$ through
+$8\times8$ experiments. Median measured time per table pair increased from
+approximately 5--8 ms for $2\times2$ to 151--169 ms for $8\times8$, with some
+difficult $8\times8$ fits taking more than one second. The five deterministic
+starts reduce observed local-optimum failures, but they do not prove that the
+global constrained maximum has been found. Larger tables or high-throughput
+use may require a specialised optimiser that exploits the single equal-MI
+constraint.
 
 ## References
 

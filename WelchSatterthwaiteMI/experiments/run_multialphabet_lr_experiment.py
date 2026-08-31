@@ -189,8 +189,9 @@ def _method_row(
     valid: np.ndarray,
     replicates: int,
 ) -> dict:
-    valid_count = int(np.count_nonzero(valid))
-    rejected = valid & np.isfinite(p_values) & (p_values <= ALPHA)
+    finite_valid = valid & np.isfinite(p_values)
+    valid_count = int(np.count_nonzero(finite_valid))
+    rejected = finite_valid & (p_values <= ALPHA)
     reject_count = int(np.count_nonzero(rejected))
     rate = reject_count / valid_count if valid_count else np.nan
     low, high = _wilson(reject_count, valid_count)

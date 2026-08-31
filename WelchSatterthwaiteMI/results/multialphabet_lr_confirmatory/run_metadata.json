@@ -1,0 +1,48 @@
+{
+  "replicates": 2000,
+  "workers": 4,
+  "seed": 2026090101,
+  "configurations": [
+    [
+      3,
+      "balanced",
+      250,
+      "ordinary control"
+    ],
+    [
+      3,
+      "ultra",
+      25,
+      "screening LR loss"
+    ],
+    [
+      5,
+      "balanced",
+      50,
+      "screening LR gain"
+    ],
+    [
+      5,
+      "ultra",
+      50,
+      "screening LR loss"
+    ],
+    [
+      8,
+      "mild",
+      25,
+      "largest screening LR gain"
+    ],
+    [
+      8,
+      "strong",
+      50,
+      "screening LR gain"
+    ]
+  ],
+  "table_pair_count": 12000,
+  "elapsed_seconds": 612.0875900839455,
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3"
+}

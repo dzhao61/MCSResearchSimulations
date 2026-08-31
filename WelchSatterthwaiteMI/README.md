@@ -1,77 +1,77 @@
-# Welch-Satterthwaite Differential Mutual Information
+# Equal-MI Significance Testing
 
-This project studies finite-degrees-of-freedom references for the existing
-bias-corrected differential-MI Wald statistic. It does not modify the frozen
-`DifferentialMI` implementation.
-
-The target is the independent two-sample weak null
+This project studies analytic tests for the independent two-sample weak null
 
 ```text
 H0: I(P) = I(Q), allowing P != Q.
 ```
 
-The current method combines influence variances as
+Three methods form the current comparison:
 
-```text
-SE^2 = V_P / n_P + V_Q / n_Q
-```
+1. **Normal Wald** uses the bias-corrected plug-in MI difference, its
+   influence-function standard error, and a standard-normal reference.
+2. **Expanded Welch** keeps the same statistic but uses MI-specific
+   Satterthwaite degrees of freedom.
+3. **Constrained likelihood ratio (LR)** directly maximises the two-sample
+   multinomial likelihood under `I(P) = I(Q)` and compares the loss of fit with
+   the regular asymptotic `chi-squared(1)` reference.
 
-but uses a standard-normal reference. The candidate keeps the estimator and
-standard error unchanged and replaces that reference with a Student
-distribution using Welch-Satterthwaite effective degrees of freedom.
+## Current status
 
-The current reading path and historical research records are indexed in
-[`docs/README.md`](docs/README.md).
+The constrained LR is the leading current research direction. In the final
+2x2 null experiment, its mean absolute false-positive-rate error at
+`alpha = 0.05` was `0.0210`, compared with `0.0329` for Expanded Welch and
+`0.0762` for Normal Wald. It was numerically valid for at least 99.9% of
+replicates, but remained conservative in several severe rare-cell cases.
 
-For a first-principles explanation of the literature, research question,
-method, validation design, results, and limitations, see
-[`docs/overview/SUMMARY.md`](docs/overview/SUMMARY.md).
+A subsequent screen covered 3x3, 4x4, 5x5, and 8x8 tables. LR had the lowest
+aggregate calibration error, often reduced severe liberal Wald behaviour, and
+usually had similar power once `N >= 250`. It did not dominate every exact
+configuration. The 8x8 estimates use only 250 replicates per configuration and
+remain preliminary screening evidence.
 
-For the complete line-by-line mathematical derivation of the expanded method,
-see
-[`docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md).
-The compiled textbook-style edition is available as
-[`derivation/main.pdf`](derivation/main.pdf), with reproducible LaTeX source
-in [`derivation/main.tex`](derivation/main.tex).
+A focused 2,000-replicate confirmation then reran six prespecified cases. LR
+was close to the nominal 0.05 rate in the ordinary control and three cases in
+which Wald was liberal, but was strongly conservative in two ultra-skewed
+cases. This confirms both the useful regime and the principal failure mode.
 
-## Status
+Expanded Welch remains an important baseline and mechanism study, not the
+primary current candidate. Its finite-degrees-of-freedom correction improved
+some difficult null configurations but was often conservative and could be
+undefined in highly sparse tables.
 
-The primary evidence comes from one unified experiment with 60 equal-MI
-population pairs and 10,000 independently simulated table pairs per
-population. It covers five regimes and six table shapes while keeping both
-sample sizes between 50 and 1,000. The same three analytic methods are
-evaluated on every replicate.
+The current evidence is reported directly in the
+[`2x2 LR validation`](docs/experiments/CONSTRAINED_LR_2X2_VALIDATION.md) and
+[`multi-alphabet LR validation`](docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md).
 
-Expanded Welch left the well-sampled control essentially unchanged and
-reduced alpha-`0.05` calibration error relative to Normal Wald by 29% to 46%
-across the moderate, rare-cell, ultra-sparse, and widespread-sparsity
-regimes. Its measured runtime remained about 1.7 times the Normal Wald
-implementation but negligible in absolute terms.
+## Theory
 
-The result supports expanded Welch as a targeted finite-sample correction,
-not as a uniformly superior replacement for normal Wald. See the
-[`primary experiment report`](results/supervisor_practical/REPORT.md) for the
-concise results and its
-[`rejection-calibration figure`](results/supervisor_practical/rejection_calibration.png)
-for the complete lower-tail comparison.
+- [`docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md`](docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md)
+  derives the current LR method.
+- [`docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
+  derives the Expanded Welch baseline.
+- [`docs/theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md`](docs/theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md)
+  explains why the first-order Expanded Welch construction does not become an
+  independence test by introducing a reference distribution.
 
-## Commands
+## Verification
 
-```bash
-.venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -v
-.venv/bin/python WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
-  --profile smoke \
-  --output-dir WelchSatterthwaiteMI/results/supervisor_smoke
-```
-
-The full supervisor experiment is:
+Run the complete automated suite from the repository root:
 
 ```bash
-.venv/bin/python WelchSatterthwaiteMI/experiments/run_supervisor_experiment.py \
-  --profile full \
-  --output-dir WelchSatterthwaiteMI/results/supervisor_practical
+MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
+  .venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -v
+```
+
+Run a small end-to-end LR experiment with:
+
+```bash
+MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
+  .venv/bin/python WelchSatterthwaiteMI/experiments/run_multialphabet_lr_experiment.py \
+  --profile smoke --shape-limit 1 --workers 1 \
+  --output-dir /tmp/multialphabet_lr_smoke
 ```
 
 See [`experiments/README.md`](experiments/README.md) and
-[`results/README.md`](results/README.md) for the distinction between the
-primary experiment and historical research records.
+[`results/README.md`](results/README.md) for executable and generated artefact
+indexes.

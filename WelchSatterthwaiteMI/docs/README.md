@@ -3,12 +3,6 @@
 This directory separates the current research narrative, mathematical theory,
 experimental records, and historical material.
 
-## Overview
-
-[`overview/SUMMARY.md`](overview/SUMMARY.md) presents the complete research
-story from first principles, including the literature, methods, experiment
-design, results, and limitations.
-
 ## Theory
 
 - [`theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)

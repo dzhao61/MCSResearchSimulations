@@ -196,6 +196,11 @@ the expansion point is zero. The signed first-order departures cancel across
 the table. The squared second-order departures do not cancel and therefore
 determine the leading sampling behaviour of MI.
 
+The approximation requires positive fitted independence probabilities and
+departures $\delta(x,y)$ that are small relative to those probabilities. It is
+therefore a large-sample local approximation; very small expected cells can
+make the omitted higher-order terms important.
+
 ## 7. Presentation Convention
 
 Future Taylor derivations in this project should follow the same sequence:

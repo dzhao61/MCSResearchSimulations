@@ -1,9 +1,25 @@
 # Results
 
-## Primary Evidence
+## Current LR Evidence
 
-[`supervisor_practical/`](supervisor_practical/) contains the current unified experiment
-and is the result set to use when presenting the method. Start with its
+- [`2x2_constrained_lr_confirmatory_fullstarts/`](2x2_constrained_lr_confirmatory_fullstarts/)
+  is the final 2x2 null-calibration run.
+- [`2x2_constrained_lr_power_fullstarts/`](2x2_constrained_lr_power_fullstarts/)
+  is the final two-effect 2x2 power run.
+- [`2x2_constrained_lr_full_curves/`](2x2_constrained_lr_full_curves/)
+  contains the complete feasible-range 2x2 power curves.
+- [`multialphabet_lr_screen/`](multialphabet_lr_screen/) contains the 3x3 to
+  8x8 calibration and fixed-effect screen.
+- [`multialphabet_lr_power_curves/`](multialphabet_lr_power_curves/) contains
+  the corresponding multi-alphabet power curves.
+- [`multialphabet_lr_confirmatory/`](multialphabet_lr_confirmatory/) contains
+  the focused 2,000-replicate confirmation of six prespecified screening
+  cases.
+
+## Expanded Welch Evidence
+
+[`supervisor_practical/`](supervisor_practical/) contains the earlier unified
+Expanded Welch experiment. Start with its
 [`REPORT.md`](supervisor_practical/REPORT.md) and
 [`rejection_calibration.png`](supervisor_practical/rejection_calibration.png).
 

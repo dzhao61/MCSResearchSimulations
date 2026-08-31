@@ -1,6 +1,13 @@
 # Experiments
 
-## Current 2x2 Program
+## Current Constrained-LR Program
+
+The current candidate directly fits the null $I(P)=I(Q)$ by constrained
+multinomial likelihood. Its derivation, 2x2 validation, and multi-alphabet
+screen are the primary active work. Expanded Welch remains a comparison method
+and an earlier finite-sample correction study.
+
+### 2x2 experiments
 
 The supervisor-guided design and its interpreted results are documented in
 [`../docs/experiments/EQUAL_MI_2X2_BASELINE.md`](../docs/experiments/EQUAL_MI_2X2_BASELINE.md).
@@ -39,6 +46,11 @@ sample size separately. The interpreted design and results are in
 [`../docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md`](../docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md),
 with generated outputs in
 [`../results/multialphabet_lr_screen/`](../results/multialphabet_lr_screen/).
+
+`run_multialphabet_lr_confirmatory.py` reruns six prespecified favorable,
+unfavorable, and control configurations with higher replication. Its outputs
+are in
+[`../results/multialphabet_lr_confirmatory/`](../results/multialphabet_lr_confirmatory/).
 
 ## Prior Broad Experiment
 

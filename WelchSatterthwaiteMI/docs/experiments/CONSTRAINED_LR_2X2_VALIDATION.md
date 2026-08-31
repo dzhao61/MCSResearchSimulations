@@ -9,9 +9,10 @@ tested more reliably by fitting the null hypothesis directly:
 H_0:I(P)=I(Q).
 \]
 
-The candidate is a constrained likelihood-ratio (LR) test. The validation is limited
-to \(2\times2\) tables so that the method can be understood and tested before
-considering larger alphabets.
+The candidate is a constrained likelihood-ratio (LR) test. This report gives
+the foundational \(2\times2\) validation. The subsequent larger-alphabet
+experiment is reported in
+[Constrained LR Validation Across Alphabet Sizes](CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md).
 
 ## 2. Method
 
@@ -152,9 +153,10 @@ single average power value would conceal this regime dependence.
 
 Across the final runs, the median complete constrained fit took approximately
 5.0 ms under the null and 8.4 ms under the alternatives on this machine. The
-LR fit was valid for at least 99.9% of replicates. The 16 invalid fits among
-720,000 final table pairs occurred in the smallest balanced-sample family and
-were excluded from method-specific denominators.
+LR fit was valid for at least 99.9% of replicates. There were 11 invalid fits
+among the 525,000 table pairs in the final null and two-effect power runs. They
+occurred in the smallest balanced-sample family and were excluded from the LR
+denominators.
 
 In the separate full-range experiment, the median fit took 5.8 ms. There were
 34 invalid fits among 555,000 table pairs, the minimum configuration-level
@@ -171,10 +173,11 @@ is not a uniformly better general test.**
 
 The evidence supports a targeted rather than general conclusion:
 
-1. retain the analytic LR as a candidate for ultra-rare and rare-cell regimes;
+1. retain analytic LR as a candidate equal-MI test;
 2. do not describe it as a universal replacement for Wald or Expanded Welch;
-3. investigate why ordinary sparse and rare highly unequal-sample cases lose
-   power before extending the method to larger tables.
+3. interpret sparse-case power only beside the corresponding null calibration;
+4. use the larger-alphabet study to assess whether the same gains and failures
+   persist beyond binary tables.
 
 ## 10. Reproducible artefacts
 

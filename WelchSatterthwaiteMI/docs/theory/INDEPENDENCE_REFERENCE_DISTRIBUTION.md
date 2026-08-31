@@ -14,8 +14,10 @@ $$
 
 as a test of whether $X$ and $Y$ are independent under $P$.
 
-This document shows that this is not possible. The obstacle is not the choice
-of $Q$. It is the behaviour of the MI estimator at independence.
+This document shows that this cannot produce a regular Expanded Welch
+independence test without replacing its first-order approximation. The
+obstacle is not the choice of $Q$; it is the behaviour of the MI estimator at
+independence.
 
 Natural logarithms are used throughout, so MI is measured in nats.
 
@@ -226,8 +228,10 @@ Changing $Q$ does not remove the conflict:
   estimates are not independent samples, which also violates the Welch
   derivation.
 
-**Therefore, no construction of $Q$ can make the equal-MI Expanded Welch test
-a regular test of independence.**
+**Therefore, no construction of $Q$ can make the unmodified, first-order
+equal-MI Expanded Welch test a regular test of independence.** A valid method
+at this null must instead model the second-order behaviour or obtain the null
+distribution by resampling.
 
 ## 3. What the Natural Construction Produces
 

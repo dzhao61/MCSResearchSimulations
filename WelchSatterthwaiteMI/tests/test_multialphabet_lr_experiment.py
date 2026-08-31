@@ -13,9 +13,11 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "DifferentialMI" / "src"))
 
 from differential_mi.distributions import mutual_information_probability  # noqa: E402
 from run_multialphabet_lr_experiment import (  # noqa: E402
+    ALPHA,
     ALTERNATIVE_MI,
     NULL_STAGE,
     BASE_MI,
+    _method_row,
     _simulate_stage,
     _stable_seed,
     build_population_design,
@@ -77,6 +79,22 @@ class MultiAlphabetExperimentTests(unittest.TestCase):
         self.assertTrue(all(row["replicates"] == 4 for row in rows))
         self.assertGreater(diagnostics["lr_valid_rate"], 0.0)
         self.assertGreaterEqual(diagnostics["minimum_expected_count"], 0.0)
+
+    def test_nonfinite_p_value_is_excluded_from_valid_denominator(self) -> None:
+        design = build_population_design(3, "balanced")
+        row = _method_row(
+            design=design,
+            sample_size=100,
+            stage=NULL_STAGE,
+            method="normal_wald",
+            p_values=np.array([ALPHA / 2.0, np.nan, 0.9]),
+            valid=np.array([True, True, True]),
+            replicates=3,
+        )
+        self.assertEqual(row["valid_count"], 2)
+        self.assertEqual(row["reject_count"], 1)
+        self.assertAlmostEqual(row["valid_rate"], 2.0 / 3.0)
+        self.assertAlmostEqual(row["rejection_rate"], 0.5)
 
 
 if __name__ == "__main__":

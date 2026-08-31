@@ -35,6 +35,11 @@ calculated from observed tables are written with a hat.
 Natural logarithms are used throughout, so mutual information is measured in
 nats.
 
+The empirical assessment of this method is reported in the
+[2x2 analytic baseline](../experiments/EQUAL_MI_2X2_BASELINE.md). The method is
+retained as a comparison, but the experiments do not support it as a uniform
+replacement for Normal Wald.
+
 ## 1. Estimate the Difference in Mutual Information
 
 The numerator of the final test statistic is
@@ -1284,54 +1289,7 @@ The derivation uses:
 Widespread empirical support loss places the calculation outside the smooth
 finite-sample regime represented by these approximations.
 
-## Appendix A. Optional Bias-Corrected Combination Formula
-
-A proposed fourth-moment correction changes only the final rule for combining
-the two variance components; it does not change $\widehat V(P)$,
-$\widehat\tau^2(P)$, $\widehat\nu_P$, or any corresponding quantity for $Q$.
-The corrected general formula is
-
-$$
-\nu_{\chi'}^{(\mathrm{corr})}
-\approx
-\frac{
-\left(\displaystyle\sum_{i=1}^m k_i s_i^2\right)^2
-}{
-\displaystyle\sum_{i=1}^m
-\frac{(k_i s_i^2)^2}{\nu_i+2}
-}
--2.
-$$
-
-Using the same MI inputs gives
-
-$$
-\boxed{
-\widehat\nu_{\mathrm{corrected}}
-=\frac{
-\left\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\right\}^2
-}{
-\left\{\widehat V(P)/n_P\right\}^2/
-\{\widehat\nu_P+2\}
-+\left\{\widehat V(Q)/n_Q\right\}^2/
-\{\widehat\nu_Q+2\}
-}
--2.
-}
-$$
-
-This correction was tested on 192 null configurations with 10,000 simulated
-table pairs per configuration. It reduced aggregate mean absolute
-false-positive-rate error by 2.6%, 1.7%, and 1.2% at alpha levels 0.10, 0.05,
-and 0.01. Almost all of that improvement came from the widespread-sparsity
-regime. Outside that regime it was effectively tied and slightly worse,
-including in the sparse and skewed target regimes. The primary method
-therefore retains the original expanded Welch-Satterthwaite combination.
-
-The complete comparison is recorded in
-[`../../results/corrected_satterthwaite_full/REPORT.md`](../../results/corrected_satterthwaite_full/REPORT.md).
-
-## Appendix B. Why These Are the MI-Specific Welch-Satterthwaite Inputs
+## Appendix A. Why These Are the MI-Specific Welch-Satterthwaite Inputs
 
 This appendix explains why each quantity in the method is used. The
 construction has two layers:
@@ -1346,7 +1304,7 @@ construction has two layers:
 The first layer is specific to mutual information. The second layer is the
 general Welch-Satterthwaite construction.
 
-### B.1 Why the test is based on one signed difference
+### A.1 Why the test is based on one signed difference
 
 The null hypothesis places one scalar restriction on the two populations:
 
@@ -1368,7 +1326,7 @@ the natural reference form for this one-dimensional restriction. Squaring
 the statistic would give an equivalent one-degree-of-freedom Wald form, but
 would discard the sign of the estimated difference.
 
-### B.2 Why pointwise mutual information is the observation-level quantity
+### A.2 Why pointwise mutual information is the observation-level quantity
 
 Mutual information is the expectation of pointwise mutual information:
 
@@ -1407,7 +1365,7 @@ $$
 \frac{1}{n_P}\sum_{a=1}^{n_P}\psi_P(Z_a^{(P)}).
 $$
 
-### B.3 Why the variance of PMI governs the variance of estimated MI
+### A.3 Why the variance of PMI governs the variance of estimated MI
 
 The preceding expansion expresses the estimation error as the average of
 $n_P$ independent centred PMI effects. Therefore,
@@ -1442,7 +1400,7 @@ Here $s_P^2$ estimates the variance of one observation's first-order MI
 effect, while $k_P$ converts that observation-level variance into the
 variance of a sample average.
 
-### B.4 Why the two variance contributions are added
+### A.4 Why the two variance contributions are added
 
 For independent samples,
 
@@ -1469,7 +1427,7 @@ $$
 No equal-variance assumption is imposed. Each table contributes its own PMI
 variance and sample-size weight.
 
-### B.5 Why the leading MI bias is removed separately
+### A.5 Why the leading MI bias is removed separately
 
 The plug-in MI estimator has leading bias $d/(2n)$ under fixed dimensions and
 full support. When $n_P\ne n_Q$, the two biases need not cancel even when
@@ -1481,7 +1439,7 @@ constants. Subtracting them changes the mean of the estimator but not its
 first-order variance. The same $\widehat V(P)/n_P+\widehat V(Q)/n_Q$
 denominator is therefore used with the bias-corrected numerator.
 
-### B.6 Why the uncertainty of $\widehat V(P)$ must also be calculated
+### A.6 Why the uncertainty of $\widehat V(P)$ must also be calculated
 
 The denominator does not contain the known population variance $V(P)$; it
 contains the estimate $\widehat V(P)=V(\widehat P)$. Repeated samples change
@@ -1494,7 +1452,7 @@ variance $\widehat V(P)$ varies. Treating $\widehat V(P)$ as known would lead
 back to the normal Wald reference and would not provide a finite effective
 degrees-of-freedom adjustment.
 
-### B.7 Why $g_P(x,y)$ is the required sensitivity
+### A.7 Why $g_P(x,y)$ is the required sensitivity
 
 For an observation in cell $(x,y)$, define
 
@@ -1527,7 +1485,7 @@ and its column margin. A calculation that treated the observed PMI values as
 fixed numbers would omit these margin effects and would not differentiate
 the complete MI variance estimator.
 
-### B.8 Why $\tau^2(P)$ is the sampling uncertainty of $\widehat V(P)$
+### A.8 Why $\tau^2(P)$ is the sampling uncertainty of $\widehat V(P)$
 
 The influence function is centred:
 
@@ -1555,7 +1513,7 @@ of $\operatorname{Var}(G)=\operatorname E(G^2)-\operatorname E(G)^2$ and
 also protects the calculation from small numerical or plug-in deviations
 from exact zero centring.
 
-### B.9 Why a scaled chi-squared distribution is used
+### A.9 Why a scaled chi-squared distribution is used
 
 A variance estimate is nonnegative. In the classical normal model, a sample
 variance has an exact scaled chi-squared distribution, and the Student
@@ -1615,7 +1573,7 @@ The scaled chi-squared model is a moment-matching approximation. The method
 does not require or claim that the MI variance estimate is exactly
 chi-squared in finite samples.
 
-### B.10 Why the component degrees of freedom are combined this way
+### A.10 Why the component degrees of freedom are combined this way
 
 Let
 
@@ -1670,7 +1628,7 @@ $$
 Replacing $a_P$ and $a_Q$ by the observed components $A_P$ and $A_Q$ gives
 the Welch-Satterthwaite equation used in Section 4.13.
 
-### B.11 Why the final reference distribution is Student
+### A.11 Why the final reference distribution is Student
 
 The numerator is approximately normal after centring and scaling. The
 denominator is the square root of an estimated variance whose sampling
@@ -1692,7 +1650,7 @@ the component and combined degrees of freedom increase. The Student
 distribution then approaches the standard normal distribution, so the
 expanded method converges to the normal Wald reference.
 
-### B.12 Scope of the construction
+### A.12 Scope of the construction
 
 All required empirical quantities are probability-weighted sums over the
 observed cells. The calculation is deterministic and requires no
@@ -1743,8 +1701,3 @@ $$
   <https://doi.org/10.1162/089976603321780272>.
 - van der Vaart, A. W. (1998). *Asymptotic Statistics*. Cambridge University
   Press.
-- von Davier, M. (2025). *An Improved Satterthwaite (1941, 1946) Effective df
-  Approximation*. Journal of Educational and Behavioral Statistics.
-  <https://doi.org/10.3102/10769986241309329>.
-- von Davier, M. (2026). *A Corrected Welch Satterthwaite Equation*.
-  <https://arxiv.org/abs/2602.20912>.
