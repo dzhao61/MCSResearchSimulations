@@ -11,16 +11,23 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
 
 from run_supervisor_experiment import (
+    BRADLEY_LIBERAL_LOWER,
+    BRADLEY_LIBERAL_UPPER,
     CALIBRATION_ALPHAS,
     MAXIMUM_SAMPLE_SIZE,
     MINIMUM_SAMPLE_SIZE,
+    RandomScenario,
     _aggregate_rejection_calibration,
+    _build_power_alternative,
     _fixed_density_sample_sizes,
     _sample_sizes_in_expected_band,
+    _simulate_null_scenario,
     _wilson,
     _wilson_many,
     _widespread_sparsity_sample_sizes,
+    generate_strong_null_scenarios,
 )
+from differential_mi.distributions import table_with_target_mi
 
 
 class ExpectedCountDesignTests(unittest.TestCase):
@@ -134,6 +141,85 @@ class ExpectedCountDesignTests(unittest.TestCase):
             self.assertGreaterEqual(float(np.mean(expected < 1.0)), 0.25)
             self.assertLessEqual(float(np.mean(expected < 1.0)), 0.50)
             self.assertGreaterEqual(float(np.mean(expected < 5.0)), 0.50)
+
+def _make_scenario(target_mi: float = 0.10, rows: int = 2, columns: int = 2) -> RandomScenario:
+    """Build a small deterministic RandomScenario for targeted unit tests."""
+    row = np.full(rows, 1.0 / rows)
+    column = np.full(columns, 1.0 / columns)
+    probability_p, association_p = table_with_target_mi(row, column, target_mi)
+    return RandomScenario(
+        scenario_id="unit_test_scenario",
+        shape_index=0,
+        design_index=0,
+        rows=rows,
+        columns=columns,
+        n_p=200,
+        n_q=200,
+        target_mi=target_mi,
+        margin_alpha_p=50.0,
+        margin_alpha_q=50.0,
+        association_p=association_p,
+        association_q=association_p,
+        generation_attempts=1,
+        probability_p=probability_p,
+        probability_q=probability_p.copy(),
+    )
+
+
+class StrongNullTests(unittest.TestCase):
+    def test_strong_null_scenarios_have_identical_populations(self) -> None:
+        scenarios = generate_strong_null_scenarios(2_026_000_001)
+        self.assertGreater(len(scenarios), 0)
+        for scenario in scenarios:
+            np.testing.assert_array_equal(
+                scenario.probability_p, scenario.probability_q
+            )
+            self.assertAlmostEqual(scenario.association_p, scenario.association_q)
+            self.assertGreaterEqual(scenario.n_p, MINIMUM_SAMPLE_SIZE)
+            self.assertLessEqual(scenario.n_q, MAXIMUM_SAMPLE_SIZE)
+
+
+class ThreeDenominatorReportingTests(unittest.TestCase):
+    def test_common_valid_and_unconditional_rates_bound_the_conditional_rate(
+        self,
+    ) -> None:
+        scenario = _make_scenario()
+        rows, _, _ = _simulate_null_scenario(
+            scenario, replicates=400, batch_size=100, seed=2_026_000_002
+        )
+        for row in rows:
+            self.assertLessEqual(row["common_valid_replicates"], row["replicates"])
+            for label in ("10", "05", "01"):
+                # Unconditional divides the same numerator by a denominator
+                # that is at least as large, so it can never exceed the
+                # conditional rate.
+                self.assertLessEqual(
+                    row[f"unconditional_fpr_{label}"] + 1e-12,
+                    row[f"fpr_{label}"] + 1e-12,
+                )
+                self.assertIsInstance(row[f"adequate_size_control_{label}"], bool)
+
+    def test_bradley_liberal_interval_is_symmetric_around_nominal(self) -> None:
+        self.assertLess(BRADLEY_LIBERAL_LOWER, 1.0)
+        self.assertGreater(BRADLEY_LIBERAL_UPPER, 1.0)
+
+
+class PowerAlternativeTests(unittest.TestCase):
+    def test_alternative_hits_the_relative_effect_target(self) -> None:
+        scenario = _make_scenario(target_mi=0.10)
+        rng = np.random.default_rng(2_026_000_003)
+        probability_q_alt, _, target_mi_alt = _build_power_alternative(
+            scenario, relative_effect=0.5, rng=rng
+        )
+        self.assertAlmostEqual(target_mi_alt, 0.15, places=6)
+        self.assertAlmostEqual(float(probability_q_alt.sum()), 1.0, places=10)
+
+    def test_infeasible_target_raises_with_a_reason(self) -> None:
+        scenario = _make_scenario(target_mi=0.10)
+        rng = np.random.default_rng(2_026_000_004)
+        with self.assertRaises(ValueError):
+            _build_power_alternative(scenario, relative_effect=1_000.0, rng=rng)
+
 
 if __name__ == "__main__":
     unittest.main()

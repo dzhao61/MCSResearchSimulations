@@ -31,14 +31,24 @@ from differential_mi.distributions import (  # noqa: E402
     table_with_target_mi_from_interaction,
 )
 from differential_mi.statistics import influence_variance  # noqa: E402
-from differential_mi.scenarios import (  # noqa: E402
-    build_distributions,
-    power_curve_scenarios,
-)
 from welch_differential_mi import differential_mi_pvalues  # noqa: E402
 
 
 ALPHAS = (0.10, 0.05, 0.01)
+# Preregistered decision rules (frozen before any run; see FINAL_PROTOCOL).
+# Adequate size control follows Bradley's (1978) liberal criterion: the
+# empirical rejection rate must lie within a factor of 1.5 of the nominal
+# level. Acceptable validity is a floor on the fraction of replicates for
+# which a method's statistic is even computable; below it, a scenario is
+# reported as a method failure rather than folded into a calibration mean.
+BRADLEY_LIBERAL_LOWER = 0.5
+BRADLEY_LIBERAL_UPPER = 1.5
+MINIMUM_ACCEPTABLE_VALID_RATE = 0.90
+# Power effect sizes are relative to each population pair's own null MI, so
+# that a 2x2 table at I0 = 0.10 and an 8x8 table at I0 = 0.10 are probed by
+# comparably sized departures rather than one fixed absolute nats value that
+# is a large effect for a small table and a small one for a large table.
+RELATIVE_EFFECTS = (0.5, 1.0)
 CALIBRATION_ALPHAS = tuple(index / 1_000 for index in range(101))
 MINIMUM_SAMPLE_SIZE = 50
 MAXIMUM_SAMPLE_SIZE = 1_000
@@ -71,6 +81,18 @@ METHODS = {
     },
 }
 REGIMES = {
+    "strong_null": {
+        "label": "Strong null (P = Q)",
+        "designs": (-2, -1),
+        "description": (
+            "Population Q is set identically equal to population P (equal "
+            "or 2:1 sample sizes). This is a positive control: a "
+            "calibrated method must reject at close to the nominal rate "
+            "here, since a systematic departure reflects an "
+            "implementation or approximation fault rather than a "
+            "finite-sample effect from P and Q genuinely differing."
+        ),
+    },
     "well_sampled": {
         "label": "Well sampled",
         "designs": (0, 1),
@@ -123,6 +145,23 @@ DESIGN_TO_VARIANT = {
     design: f"variant_{index + 1}"
     for specification in REGIMES.values()
     for index, design in enumerate(specification["designs"])
+}
+
+STRONG_NULL_DESIGNS = {
+    -2: {
+        "margin_alpha": 50.0,
+        "target_mi": 0.10,
+        "density": 15,
+        "minimum_n": 200,
+        "sample_size_ratio": 1,
+    },
+    -1: {
+        "margin_alpha": 8.0,
+        "target_mi": 0.15,
+        "density": 8,
+        "minimum_n": 100,
+        "sample_size_ratio": 2,
+    },
 }
 
 FIXED_DENSITY_DESIGNS = {
@@ -214,6 +253,7 @@ PROFILE_SETTINGS = {
     "smoke": {
         "null_replicates": 300,
         "power_replicates": 500,
+        "power_calibration_replicates": 500,
         "batch_size": 150,
         "runtime_repetitions": 20,
         "shape_limit": 3,
@@ -221,6 +261,7 @@ PROFILE_SETTINGS = {
     "full": {
         "null_replicates": 10_000,
         "power_replicates": 10_000,
+        "power_calibration_replicates": 10_000,
         "batch_size": 1_000,
         "runtime_repetitions": 200,
         "shape_limit": None,
@@ -356,6 +397,80 @@ def _fixed_density_sample_sizes(
     ):
         raise ValueError("Fixed-density sample sizes exceed experiment bounds.")
     return n_p, n_q
+
+
+def generate_strong_null_scenarios(seed: int) -> list[RandomScenario]:
+    """Generate positive-control scenarios where Q equals P exactly.
+
+    Every other regime enforces a minimum population separation
+    (``L1(P, Q) >= 0.05``) because the thesis targets the weak null
+    ``I(P) = I(Q)`` with ``P != Q``. This regime is the deliberate
+    exception: it checks that every method is calibrated when the two
+    tables are drawn from literally the same population, so a failure here
+    cannot be attributed to a genuine finite-sample weak-null effect.
+    """
+    rng = np.random.default_rng(seed)
+    scenarios = []
+    for shape_index, (rows, columns) in enumerate(SHAPES):
+        cells = rows * columns
+        for design_index, design in STRONG_NULL_DESIGNS.items():
+            n_p, n_q = _fixed_density_sample_sizes(
+                cells,
+                density=design["density"],
+                ratio=design["sample_size_ratio"],
+                minimum_n=design["minimum_n"],
+            )
+            last_error: Exception | None = None
+            for attempt in range(1, 5_001):
+                try:
+                    row_p = _draw_stress_margin(
+                        rows, design["margin_alpha"], rng
+                    )
+                    column_p = _draw_stress_margin(
+                        columns, design["margin_alpha"], rng
+                    )
+                    probability_p, association_p = (
+                        table_with_target_mi_from_interaction(
+                            row_p,
+                            column_p,
+                            design["target_mi"],
+                            random_interaction_pattern(rows, columns, rng),
+                        )
+                    )
+                    if probability_p.min() < 1e-12:
+                        raise ValueError("Generated cell probability is too small.")
+                    if float(influence_variance(probability_p)) < 1e-6:
+                        raise ValueError("Generated influence variance is degenerate.")
+                except (RuntimeError, ValueError) as error:
+                    last_error = error
+                    continue
+                break
+            else:
+                raise RuntimeError(
+                    f"Failed to generate strong-null shape={rows}x{columns}, "
+                    f"design={design_index}: {last_error}"
+                )
+
+            scenarios.append(
+                RandomScenario(
+                    scenario_id=f"strong_null_{rows}x{columns}_d{design_index}",
+                    shape_index=shape_index,
+                    design_index=design_index,
+                    rows=rows,
+                    columns=columns,
+                    n_p=n_p,
+                    n_q=n_q,
+                    target_mi=design["target_mi"],
+                    margin_alpha_p=design["margin_alpha"],
+                    margin_alpha_q=design["margin_alpha"],
+                    association_p=association_p,
+                    association_q=association_p,
+                    generation_attempts=attempt,
+                    probability_p=probability_p,
+                    probability_q=probability_p.copy(),
+                )
+            )
+    return scenarios
 
 
 def generate_fixed_density_scenarios(seed: int) -> list[RandomScenario]:
@@ -663,6 +778,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--null-replicates", type=int)
     parser.add_argument("--power-replicates", type=int)
+    parser.add_argument("--power-calibration-replicates", type=int)
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--runtime-repetitions", type=int)
     return parser.parse_args()
@@ -673,6 +789,7 @@ def _settings(args: argparse.Namespace) -> dict[str, int | None]:
     for name in (
         "null_replicates",
         "power_replicates",
+        "power_calibration_replicates",
         "batch_size",
         "runtime_repetitions",
     ):
@@ -682,6 +799,7 @@ def _settings(args: argparse.Namespace) -> dict[str, int | None]:
     if min(
         int(settings["null_replicates"]),
         int(settings["power_replicates"]),
+        int(settings["power_calibration_replicates"]),
         int(settings["batch_size"]),
         int(settings["runtime_repetitions"]),
     ) <= 0:
@@ -845,6 +963,7 @@ def _simulate_null_scenario(
             "valid": 0,
             "coverage": 0,
             "rejections": {alpha: 0 for alpha in ALPHAS},
+            "common_valid_rejections": {alpha: 0 for alpha in ALPHAS},
             "calibration_rejections": np.zeros(
                 len(CALIBRATION_ALPHAS),
                 dtype=np.int64,
@@ -853,6 +972,7 @@ def _simulate_null_scenario(
         }
         for method in METHODS
     }
+    common_valid_count = 0
     valid_count = 0
     delta_sum = 0.0
     delta_square_sum = 0.0
@@ -887,6 +1007,17 @@ def _simulate_null_scenario(
         values = _method_values(table_p, table_q)
         base_valid = values["base_valid"]
         valid_count += int(np.count_nonzero(base_valid))
+
+        common_valid_batch = np.ones(count, dtype=bool)
+        for specification in METHODS.values():
+            common_valid_batch &= values[specification["validity"]]
+        common_valid_count += int(np.count_nonzero(common_valid_batch))
+        for method, specification in METHODS.items():
+            common_p_values = values[specification["p_value"]][common_valid_batch]
+            for alpha in ALPHAS:
+                method_counts[method]["common_valid_rejections"][alpha] += int(
+                    np.count_nonzero(common_p_values <= alpha)
+                )
 
         delta = values["delta_corrected"][base_valid]
         standard_error = values["standard_error"][base_valid]
@@ -949,6 +1080,8 @@ def _simulate_null_scenario(
             "replicates": replicates,
             "estimator_valid_replicates": valid_count,
             "estimator_valid_rate": valid_count / replicates,
+            "common_valid_replicates": common_valid_count,
+            "common_valid_rate": common_valid_count / replicates,
             "mean_delta_error": (
                 delta_sum / valid_count if valid_count else np.nan
             ),
@@ -984,6 +1117,9 @@ def _simulate_null_scenario(
             "method_label": specification["label"],
             "valid_replicates": method_valid_count,
             "valid_rate": method_valid_count / replicates,
+            "acceptable_validity": (
+                method_valid_count / replicates >= MINIMUM_ACCEPTABLE_VALID_RATE
+            ),
             "coverage_95": (
                 method_counts[method]["coverage"] / method_valid_count
                 if method_valid_count
@@ -1015,6 +1151,26 @@ def _simulate_null_scenario(
             row[f"fpr_{label}_low"] = low
             row[f"fpr_{label}_high"] = high
             row[f"absolute_fpr_error_{label}"] = abs(fpr - alpha)
+            # Unconditional: invalid replicates count as non-rejections, so
+            # the denominator is every replicate rather than only the valid
+            # ones. Common-valid: restricted to replicates where every
+            # method's statistic is defined, so the three methods' rates in
+            # one row always refer to the same underlying replicates.
+            row[f"unconditional_fpr_{label}"] = rejections / replicates
+            common_valid_rejections = method_counts[method][
+                "common_valid_rejections"
+            ][alpha]
+            row[f"common_valid_fpr_{label}"] = (
+                common_valid_rejections / common_valid_count
+                if common_valid_count
+                else np.nan
+            )
+            row[f"adequate_size_control_{label}"] = bool(
+                np.isfinite(fpr)
+                and BRADLEY_LIBERAL_LOWER * alpha
+                <= fpr
+                <= BRADLEY_LIBERAL_UPPER * alpha
+            )
         rows.append(row)
 
         calibration_rejections = method_counts[method][
@@ -1137,6 +1293,9 @@ def _aggregate_scenarios(scenario_results: pd.DataFrame) -> pd.DataFrame:
                 "population_pairs": len(group),
                 "replicates_per_population": int(group["replicates"].iloc[0]),
                 "mean_valid_rate": float(group["valid_rate"].mean()),
+                "scenarios_below_valid_rate_floor": int(
+                    (~group["acceptable_validity"]).sum()
+                ),
                 "mean_coverage_95": float(group["coverage_95"].mean()),
                 "median_effective_df": float(
                     group["median_effective_df"].median()
@@ -1152,6 +1311,18 @@ def _aggregate_scenarios(scenario_results: pd.DataFrame) -> pd.DataFrame:
                 row[f"median_absolute_fpr_error_{label}"] = float(error.median())
                 row[f"minimum_fpr_{label}"] = float(fpr.min())
                 row[f"maximum_fpr_{label}"] = float(fpr.max())
+                row[f"mean_unconditional_fpr_{label}"] = float(
+                    group[f"unconditional_fpr_{label}"].mean()
+                )
+                row[f"mean_common_valid_fpr_{label}"] = float(
+                    group[f"common_valid_fpr_{label}"].mean()
+                )
+                row[f"adequate_size_control_count_{label}"] = int(
+                    group[f"adequate_size_control_{label}"].sum()
+                )
+                row[f"inadequate_size_control_count_{label}"] = int(
+                    (~group[f"adequate_size_control_{label}"]).sum()
+                )
                 row[f"improved_vs_normal_{label}"] = int(
                     (error < normal_error).sum()
                 )
@@ -1165,97 +1336,286 @@ def _aggregate_scenarios(scenario_results: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def _build_power_alternative(
+    scenario: RandomScenario,
+    relative_effect: float,
+    rng: np.random.Generator,
+) -> tuple[np.ndarray, float, float]:
+    """Build an alternative Q with MI shifted relative to the null pair.
+
+    Reuses Q's own row and column margins from the null scenario (recovered
+    from its probability table) so the alternative keeps the same marginal
+    shape as the calibration pair; only the association strength, and hence
+    I(Q), changes. The effect is expressed relative to the pair's own null
+    MI (``target_mi``) so that a small table and a large table are probed by
+    comparably sized departures rather than one fixed absolute nats value.
+    Raises ``ValueError`` if the requested MI is infeasible for these
+    margins or produces a degenerate influence variance, so that the caller
+    can log every dropped configuration explicitly rather than have it
+    disappear silently from the output.
+    """
+    row_q = scenario.probability_q.sum(axis=1)
+    column_q = scenario.probability_q.sum(axis=0)
+    target_mi_alt = scenario.target_mi * (1.0 + relative_effect)
+    try:
+        probability_q_alt, association_alt = table_with_target_mi_from_interaction(
+            row_q,
+            column_q,
+            target_mi_alt,
+            random_interaction_pattern(scenario.rows, scenario.columns, rng),
+        )
+    except (RuntimeError, ValueError) as error:
+        raise ValueError(
+            f"Target MI {target_mi_alt:.6f} is infeasible for these margins: {error}"
+        ) from error
+    if probability_q_alt.min() < 1e-12:
+        raise ValueError("Generated cell probability is too small.")
+    if float(influence_variance(probability_q_alt)) < 1e-6:
+        raise ValueError("Generated influence variance is degenerate.")
+    return probability_q_alt, association_alt, target_mi_alt
+
+
+def _aggregate_power(power_results: pd.DataFrame) -> pd.DataFrame:
+    """Summarize power by regime and relative effect size.
+
+    Mirrors ``_aggregate_scenarios``: the full per-population-pair power
+    results remain in ``power_summary.csv`` so that a regime-level average
+    cannot conceal a specific configuration's power loss.
+    """
+    rows = []
+    regime_groups = [
+        (regime, power_results[power_results["regime"].eq(regime)])
+        for regime in REGIME_ORDER
+    ]
+    regime_groups.append(("all", power_results))
+    for regime, regime_frame in regime_groups:
+        for relative_effect in sorted(power_results["relative_effect"].unique()):
+            effect_frame = regime_frame[
+                regime_frame["relative_effect"].eq(relative_effect)
+            ]
+            if effect_frame.empty:
+                continue
+            for method, specification in METHODS.items():
+                group = effect_frame[effect_frame["method"].eq(method)]
+                if group.empty:
+                    continue
+                rows.append(
+                    {
+                        "regime": regime,
+                        "regime_label": (
+                            "All regimes"
+                            if regime == "all"
+                            else REGIMES[regime]["label"]
+                        ),
+                        "relative_effect": relative_effect,
+                        "method": method,
+                        "method_label": specification["label"],
+                        "population_pairs": len(group),
+                        "mean_valid_rate": float(group["valid_rate"].mean()),
+                        "mean_power_05": float(group["power_05"].mean()),
+                        "mean_size_adjusted_power": float(
+                            group["size_adjusted_power"].mean()
+                        ),
+                        "mean_coverage_95": float(group["coverage_95"].mean()),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
 def _simulate_power(
+    scenarios: list[RandomScenario],
     *,
+    relative_effects: tuple[float, ...],
     replicates: int,
+    calibration_replicates: int,
     batch_size: int,
     seed: int,
-) -> pd.DataFrame:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Power across every null population pair, at effects relative to I0.
+
+    Alongside nominal power at alpha = 0.05, also reports size-adjusted
+    power: the alternative-hypothesis rejection rate against an empirical
+    threshold, the 5th percentile of that method's p-values under fresh null
+    replicates of the *same* population pair, drawn from an independent RNG
+    stream that never touches the null replicates used for the primary FPR
+    report or the alternative replicates used for nominal power. Nominal
+    power alone is not a fair method comparison when methods do not share
+    the same actual size; size-adjusted power isolates the power difference
+    that is not explained by a size difference. It is reported as a
+    diagnostic, not as an achievable procedure, since the oracle threshold
+    is not available to an analyst working from one real dataset.
+
+    Returns the power results and a second frame logging every (scenario,
+    relative effect) combination for which no alternative could be
+    constructed, so infeasible configurations are visible rather than
+    silently absent from the output.
+    """
     rows = []
-    scenarios = power_curve_scenarios()
-    children = np.random.SeedSequence(seed).spawn(len(scenarios))
-    for scenario, child in zip(scenarios, children):
-        scenario_seed = int(child.generate_state(1)[0])
-        probability_p, probability_q, diagnostics = build_distributions(scenario)
-        method_counts = {
-            method: {
-                "valid": 0,
-                "rejections": 0,
-                "coverage": 0,
-                "df": [],
-            }
-            for method in METHODS
-        }
-        rng = np.random.default_rng(scenario_seed)
-        for start in range(0, replicates, batch_size):
-            count = min(batch_size, replicates - start)
-            table_p = rng.multinomial(
-                scenario.n_p,
-                probability_p.reshape(-1),
-                size=count,
-            ).reshape(count, scenario.rows, scenario.columns)
-            table_q = rng.multinomial(
-                scenario.n_q,
-                probability_q.reshape(-1),
-                size=count,
-            ).reshape(count, scenario.rows, scenario.columns)
-            values = _method_values(table_p, table_q)
-            for method, specification in METHODS.items():
-                method_valid = values[specification["validity"]]
-                method_counts[method]["valid"] += int(
-                    np.count_nonzero(method_valid)
-                )
-                p_values = values[specification["p_value"]][method_valid]
-                method_counts[method]["rejections"] += int(
-                    np.count_nonzero(p_values <= 0.05)
-                )
-                delta_error = (
-                    values["delta_corrected"][method_valid]
-                    - diagnostics["true_delta"]
-                )
-                standard_error = values["standard_error"][method_valid]
-                df_column = specification["degrees_of_freedom"]
-                if df_column is not None:
-                    df = values[df_column][method_valid]
-                    finite_df = df[np.isfinite(df)]
-                    if finite_df.size:
-                        method_counts[method]["df"].append(finite_df)
-                critical = _critical_values(method, values, method_valid)
-                method_counts[method]["coverage"] += int(
-                    np.count_nonzero(
-                        np.abs(delta_error) <= critical * standard_error
+    infeasible = []
+    top_children = np.random.SeedSequence(seed).spawn(
+        len(scenarios) * len(relative_effects)
+    )
+    child_index = 0
+    for scenario in scenarios:
+        regime = _regime_for(scenario)
+        for relative_effect in relative_effects:
+            construction_seed, calibration_seed, simulation_seed = (
+                int(child.generate_state(1)[0])
+                for child in top_children[child_index].spawn(3)
+            )
+            child_index += 1
+
+            construction_rng = np.random.default_rng(construction_seed)
+            try:
+                probability_q_alt, association_alt, target_mi_alt = (
+                    _build_power_alternative(
+                        scenario, relative_effect, construction_rng
                     )
                 )
-        for method, specification in METHODS.items():
-            df_parts = method_counts[method]["df"]
-            method_valid_count = method_counts[method]["valid"]
-            rows.append(
-                {
-                    **scenario.to_dict(),
-                    **diagnostics,
-                    "simulation_seed": scenario_seed,
-                    "replicates": replicates,
-                    "valid_rate": method_valid_count / replicates,
-                    "method": method,
-                    "method_label": specification["label"],
-                    "power_05": (
-                        method_counts[method]["rejections"] / method_valid_count
-                        if method_valid_count
-                        else np.nan
-                    ),
-                    "coverage_95": (
-                        method_counts[method]["coverage"] / method_valid_count
-                        if method_valid_count
-                        else np.nan
-                    ),
-                    "median_effective_df": (
-                        float(np.median(np.concatenate(df_parts)))
-                        if df_parts
-                        else np.nan
-                    ),
+            except ValueError as error:
+                infeasible.append(
+                    {
+                        "scenario_id": scenario.scenario_id,
+                        "regime": regime,
+                        "relative_effect": relative_effect,
+                        "null_mi": scenario.target_mi,
+                        "reason": str(error),
+                    }
+                )
+                continue
+            true_delta = scenario.target_mi - target_mi_alt
+
+            calibration_rng = np.random.default_rng(calibration_seed)
+            calibration_p_values = {method: [] for method in METHODS}
+            for start in range(0, calibration_replicates, batch_size):
+                count = min(batch_size, calibration_replicates - start)
+                table_p_cal = calibration_rng.multinomial(
+                    scenario.n_p,
+                    scenario.probability_p.reshape(-1),
+                    size=count,
+                ).reshape(count, scenario.rows, scenario.columns)
+                table_q_cal = calibration_rng.multinomial(
+                    scenario.n_q,
+                    scenario.probability_q.reshape(-1),
+                    size=count,
+                ).reshape(count, scenario.rows, scenario.columns)
+                cal_values = _method_values(table_p_cal, table_q_cal)
+                for method, specification in METHODS.items():
+                    method_valid = cal_values[specification["validity"]]
+                    calibration_p_values[method].append(
+                        cal_values[specification["p_value"]][method_valid]
+                    )
+            thresholds = {
+                method: (
+                    float(np.quantile(np.concatenate(parts), 0.05))
+                    if parts and sum(part.size for part in parts)
+                    else np.nan
+                )
+                for method, parts in calibration_p_values.items()
+            }
+
+            rng = np.random.default_rng(simulation_seed)
+            method_counts = {
+                method: {
+                    "valid": 0,
+                    "rejections": 0,
+                    "size_adjusted_rejections": 0,
+                    "coverage": 0,
+                    "df": [],
                 }
-            )
-    return pd.DataFrame(rows)
+                for method in METHODS
+            }
+            for start in range(0, replicates, batch_size):
+                count = min(batch_size, replicates - start)
+                table_p = rng.multinomial(
+                    scenario.n_p,
+                    scenario.probability_p.reshape(-1),
+                    size=count,
+                ).reshape(count, scenario.rows, scenario.columns)
+                table_q = rng.multinomial(
+                    scenario.n_q,
+                    probability_q_alt.reshape(-1),
+                    size=count,
+                ).reshape(count, scenario.rows, scenario.columns)
+                values = _method_values(table_p, table_q)
+                for method, specification in METHODS.items():
+                    method_valid = values[specification["validity"]]
+                    method_counts[method]["valid"] += int(
+                        np.count_nonzero(method_valid)
+                    )
+                    p_values = values[specification["p_value"]][method_valid]
+                    method_counts[method]["rejections"] += int(
+                        np.count_nonzero(p_values <= 0.05)
+                    )
+                    if np.isfinite(thresholds[method]):
+                        method_counts[method]["size_adjusted_rejections"] += int(
+                            np.count_nonzero(p_values <= thresholds[method])
+                        )
+                    delta_error = values["delta_corrected"][method_valid] - true_delta
+                    standard_error = values["standard_error"][method_valid]
+                    df_column = specification["degrees_of_freedom"]
+                    if df_column is not None:
+                        df = values[df_column][method_valid]
+                        finite_df = df[np.isfinite(df)]
+                        if finite_df.size:
+                            method_counts[method]["df"].append(finite_df)
+                    critical = _critical_values(method, values, method_valid)
+                    method_counts[method]["coverage"] += int(
+                        np.count_nonzero(
+                            np.abs(delta_error) <= critical * standard_error
+                        )
+                    )
+            for method, specification in METHODS.items():
+                df_parts = method_counts[method]["df"]
+                method_valid_count = method_counts[method]["valid"]
+                rows.append(
+                    {
+                        "scenario_id": scenario.scenario_id,
+                        "regime": regime,
+                        "regime_label": REGIMES[regime]["label"],
+                        "rows": scenario.rows,
+                        "columns": scenario.columns,
+                        "n_p": scenario.n_p,
+                        "n_q": scenario.n_q,
+                        "null_mi": scenario.target_mi,
+                        "relative_effect": relative_effect,
+                        "alternative_mi_q": target_mi_alt,
+                        "true_delta": true_delta,
+                        "construction_seed": construction_seed,
+                        "calibration_seed": calibration_seed,
+                        "simulation_seed": simulation_seed,
+                        "replicates": replicates,
+                        "calibration_replicates": calibration_replicates,
+                        "method": method,
+                        "method_label": specification["label"],
+                        "valid_rate": (
+                            method_valid_count / replicates if replicates else np.nan
+                        ),
+                        "power_05": (
+                            method_counts[method]["rejections"] / method_valid_count
+                            if method_valid_count
+                            else np.nan
+                        ),
+                        "size_adjusted_threshold": thresholds[method],
+                        "size_adjusted_power": (
+                            method_counts[method]["size_adjusted_rejections"]
+                            / method_valid_count
+                            if method_valid_count and np.isfinite(thresholds[method])
+                            else np.nan
+                        ),
+                        "coverage_95": (
+                            method_counts[method]["coverage"] / method_valid_count
+                            if method_valid_count
+                            else np.nan
+                        ),
+                        "median_effective_df": (
+                            float(np.median(np.concatenate(df_parts)))
+                            if df_parts
+                            else np.nan
+                        ),
+                    }
+                )
+    return pd.DataFrame(rows), pd.DataFrame(infeasible)
 
 
 def _runtime_audit(
@@ -1543,6 +1903,7 @@ def _write_report(
     scenario_results: pd.DataFrame,
     summary: pd.DataFrame,
     power: pd.DataFrame,
+    power_infeasible: pd.DataFrame,
     runtime: pd.DataFrame,
 ) -> None:
     key_rows = summary[summary["regime"].isin(REGIME_ORDER)][
@@ -1587,15 +1948,24 @@ def _write_report(
             "mean_coverage_95": "95% coverage",
         }
     )
-    power_view = power[
-        ["scenario_id", "true_delta", "method_label", "power_05", "coverage_95"]
+    power_agg = _aggregate_power(power)
+    power_view = power_agg[power_agg["regime"].isin(REGIME_ORDER)][
+        [
+            "regime_label",
+            "relative_effect",
+            "method_label",
+            "mean_power_05",
+            "mean_size_adjusted_power",
+            "mean_coverage_95",
+        ]
     ].rename(
         columns={
-            "scenario_id": "Scenario",
-            "true_delta": "True MI difference",
+            "regime_label": "Regime",
+            "relative_effect": "Effect (relative to I0)",
             "method_label": "Method",
-            "power_05": "Power at 0.05",
-            "coverage_95": "95% coverage",
+            "mean_power_05": "Power at 0.05",
+            "mean_size_adjusted_power": "Size-adjusted power",
+            "mean_coverage_95": "95% coverage",
         }
     )
     runtime_view = runtime[
@@ -1641,16 +2011,13 @@ def _write_report(
             for label in ("05", "01")
         }
     power_pivot = power.pivot(
-        index="scenario_id",
+        index=["scenario_id", "relative_effect"],
         columns="method",
         values="power_05",
     )
-    expanded_mean_power_loss = float(
-        (power_pivot["normal_wald"] - power_pivot["expanded_welch"]).mean()
-    )
-    expanded_max_power_loss = float(
-        (power_pivot["normal_wald"] - power_pivot["expanded_welch"]).max()
-    )
+    power_loss = power_pivot["normal_wald"] - power_pivot["expanded_welch"]
+    expanded_mean_power_loss = float(power_loss.mean())
+    expanded_max_power_loss = float(power_loss.max())
     lines = [
         "# Supervisor Experiment: Differential Mutual Information",
         "",
@@ -1683,6 +2050,34 @@ def _write_report(
             "a standard normal distribution, simple Welch uses ordinary `n-1`",
             "component degrees of freedom, and expanded Welch estimates component",
             "degrees of freedom from the MI-variance influence function.",
+            "",
+            "## Decision rules and reporting conventions",
+            "",
+            "These were fixed before this run and are not adjusted after seeing",
+            "results.",
+            "",
+            f"- **Adequate size control** at a nominal level `alpha` means the",
+            f"  empirical false-positive rate falls in Bradley's liberal interval",
+            f"  `[{BRADLEY_LIBERAL_LOWER} * alpha, {BRADLEY_LIBERAL_UPPER} * alpha]`.",
+            f"  `adequate_size_control_count_{{label}}` and",
+            f"  `inadequate_size_control_count_{{label}}` in `regime_summary.csv`",
+            f"  report how many population pairs pass and fail this rule; the",
+            f"  continuous mean-absolute-error metric is reported alongside it,",
+            f"  never in place of it.",
+            f"- **Acceptable validity** requires a method's valid rate at or above",
+            f"  `{MINIMUM_ACCEPTABLE_VALID_RATE:.0%}`. Below that floor a scenario is",
+            f"  reported as a method failure (`scenarios_below_valid_rate_floor`),",
+            f"  not folded into a calibration mean as if it were a well-defined",
+            f"  result.",
+            f"- **Three rejection-rate denominators are always reported**:",
+            f"  `fpr_{{label}}` is conditional on validity; `unconditional_fpr_{{label}}`",
+            f"  treats an invalid replicate as a non-rejection (the operational",
+            f"  fallback an analyst actually has); `common_valid_fpr_{{label}}`",
+            f"  restricts to replicates where every method's statistic is defined,",
+            f"  so the three methods in one row always refer to the same",
+            f"  underlying replicates. Conditioning on validity alone can be",
+            f"  misleading precisely because invalidity is not independent of the",
+            f"  test outcome for these estimators.",
             "",
             "## Rejection calibration",
             "",
@@ -1723,15 +2118,34 @@ def _write_report(
             f"  `{well_sampled.loc['normal_wald', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  to `{well_sampled.loc['expanded_welch', 'mean_absolute_fpr_error_05']:.5f}`",
             f"  by becoming mildly conservative.",
-            f"- Across the five power scenarios, expanded Welch lost",
-            f"  `{expanded_mean_power_loss:.4f}` power on average and at most",
-            f"  `{expanded_max_power_loss:.4f}` relative to normal Wald.",
+            f"- Across every population pair and relative effect size, expanded",
+            f"  Welch lost `{expanded_mean_power_loss:.4f}` power on average and at",
+            f"  most `{expanded_max_power_loss:.4f}` relative to normal Wald at the",
+            f"  matched nominal threshold. Nominal power is not a fair comparison",
+            f"  when methods do not share the same actual size; size-adjusted power",
+            f"  in the table below isolates the difference that remains once size",
+            f"  is matched via an independently calibrated per-method threshold.",
             "- The simple Welch correction changed both calibration and power only",
             "  slightly, consistent with its usually large effective degrees of freedom.",
             "- Scenario-level Wilson intervals, sparsity diagnostics, validity rates,",
-            "  and effective degrees of freedom are retained in `scenario_results.csv`.",
+            "  and effective degrees of freedom are retained in `scenario_results.csv`;",
+            "  every population pair's power at every relative effect size is",
+            "  retained in `power_summary.csv`.",
             "",
             "## Power",
+            "",
+            "Effect sizes are relative to each population pair's own null MI",
+            "(`I0`), e.g. an effect of `1.0` doubles `I(Q)` relative to `I(P)`.",
+            "Size-adjusted power uses a threshold from an independently simulated",
+            "null of the same population pair rather than the nominal",
+            "`alpha = 0.05` cutoff, and is a diagnostic rather than an achievable",
+            "procedure. Per-population-pair power is in `power_summary.csv`.",
+            f"{len(power_infeasible)} of "
+            f"{power[['scenario_id', 'relative_effect']].drop_duplicates().shape[0] + len(power_infeasible)}"
+            " requested (population pair, relative effect) combinations were",
+            "infeasible at the requested effect size and are logged, with a",
+            "reason, in `power_infeasible_configurations.csv` rather than",
+            "silently absent.",
             "",
             _markdown(power_view, 4),
             "",
@@ -1747,15 +2161,23 @@ def _write_report(
             "",
             "- `population_scenarios.csv`: the fixed generating distributions and",
             "  difficulty diagnostics.",
-            "- `scenario_results.csv`: every scenario-method result.",
-            "- `regime_summary.csv`: the presentation-level aggregate table.",
+            "- `scenario_results.csv`: every scenario-method result, including",
+            "  all three rejection-rate denominators and the decision-rule flags.",
+            "- `regime_summary.csv`: the presentation-level aggregate table,",
+            "  including counts of population pairs passing and failing the",
+            "  preregistered decision rules.",
             "- `rejection_calibration_scenarios.csv`: scenario-level rejection",
             "  curves over 101 nominal significance levels.",
             "- `rejection_calibration_regimes.csv`: mean curves and population",
             "  variability bands for each regime and method.",
             "- `null_pvalues.npz`: complete null p-value arrays for follow-up",
             "  calibration or Q-Q plots without rerunning the simulation.",
-            "- `power_summary.csv`: alternative-hypothesis power and coverage.",
+            "- `power_summary.csv`: alternative-hypothesis power and coverage for",
+            "  every population pair at every relative effect size, including",
+            "  the independently calibrated size-adjustment threshold.",
+            "- `power_infeasible_configurations.csv`: every (population pair,",
+            "  relative effect) combination that could not be constructed, with",
+            "  a reason, so infeasibility is logged rather than silent.",
             "- `runtime_summary.csv`: end-to-end timing by table size.",
             "- `calibration_summary.png`: one visual comparison across regimes.",
             "- `rejection_calibration.png` and `.pdf`: lower-tail rejection",
@@ -1774,7 +2196,8 @@ def main() -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     run_start = perf_counter()
 
-    scenarios = generate_fixed_density_scenarios(args.scenario_seed)
+    scenarios = generate_strong_null_scenarios(args.scenario_seed - 1)
+    scenarios.extend(generate_fixed_density_scenarios(args.scenario_seed))
     scenarios.extend(
         generate_expected_count_stress_scenarios(args.scenario_seed + 1)
     )
@@ -1839,8 +2262,11 @@ def main() -> None:
     rejection_calibration = _aggregate_rejection_calibration(
         scenario_calibration
     )
-    power_summary = _simulate_power(
+    power_summary, power_infeasible = _simulate_power(
+        scenarios,
+        relative_effects=RELATIVE_EFFECTS,
         replicates=int(settings["power_replicates"]),
+        calibration_replicates=int(settings["power_calibration_replicates"]),
         batch_size=int(settings["batch_size"]),
         seed=args.simulation_seed + 10_001,
     )
@@ -1886,6 +2312,10 @@ def main() -> None:
         args.output_dir / "power_summary.csv",
         index=False,
     )
+    power_infeasible.to_csv(
+        args.output_dir / "power_infeasible_configurations.csv",
+        index=False,
+    )
     runtime_summary.to_csv(
         args.output_dir / "runtime_summary.csv",
         index=False,
@@ -1899,6 +2329,7 @@ def main() -> None:
         scenario_results=scenario_results,
         summary=regime_summary,
         power=power_summary,
+        power_infeasible=power_infeasible,
         runtime=runtime_summary,
     )
 
