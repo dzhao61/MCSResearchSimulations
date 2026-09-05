@@ -1,0 +1,45 @@
+{
+  "title": "Expanded Welch-Satterthwaite thesis validation: frozen protocol",
+  "frozen_before": "the full-profile run of run_supervisor_experiment.py that produces the thesis Results chapter numbers",
+  "runner": "run_supervisor_experiment.py",
+  "scenario_seed": 2026080501,
+  "simulation_seed": 2026080502,
+  "profile": "full",
+  "methods": ["normal_wald", "simple_welch", "expanded_welch"],
+  "design": {
+    "shapes": ["2x2", "2x5", "3x3", "3x5", "5x5", "8x8"],
+    "regimes": [
+      "strong_null",
+      "well_sampled",
+      "moderate",
+      "highly_sparse",
+      "ultra_sparse",
+      "widespread_sparse"
+    ],
+    "designs_per_shape": 12,
+    "population_pairs": 72,
+    "strong_null_regime_purpose": "Positive control added after the correctness/design audit: P = Q exactly, so a calibrated method must reject at close to the nominal rate here. A failure in this regime indicates an implementation or approximation fault, not a genuine weak-null finite-sample effect, and it is therefore not folded into the same interpretation as the other four regimes.",
+    "null_replicates": 10000,
+    "power_replicates": 10000,
+    "power_calibration_replicates": 10000,
+    "power_relative_effects": [0.5, 1.0],
+    "power_effect_definition": "Alternative MI is null_mi * (1 + relative_effect); alternative margins are the null pair's own recovered margins with a freshly drawn interaction pattern re-solved to the shifted target MI.",
+    "alphas": [0.10, 0.05, 0.01],
+    "calibration_alpha_grid": "0 to 0.10 in steps of 0.001 (101 points)"
+  },
+  "decision_rules": {
+    "adequate_size_control": "Empirical FPR at nominal alpha falls in Bradley's (1978) liberal interval [0.5 * alpha, 1.5 * alpha]. Reported as a pass/fail count per regime/method alongside the continuous mean-absolute-error metric, never in place of it.",
+    "acceptable_validity": "Valid rate >= 0.90. Below this floor a scenario is reported as a method failure, not folded into a calibration mean.",
+    "rejection_rate_denominators": "Three denominators are always reported together: fpr (conditional on validity), unconditional_fpr (invalid replicates counted as non-rejections), common_valid_fpr (restricted to replicates where every method is valid, so cross-method rows are always comparable).",
+    "size_adjusted_power": "Reported as a diagnostic alongside nominal power, using a threshold from an independently seeded null simulation of the same population pair. Not represented as an achievable procedure for a real analysis."
+  },
+  "reporting_commitments": {
+    "disaggregation": "Every scenario-method result is retained in scenario_results.csv and power_summary.csv; regime_summary.csv aggregates are never presented without the underlying disaggregation being available.",
+    "infeasible_configurations": "Every (population pair, relative effect) combination that cannot be constructed is logged with a reason in power_infeasible_configurations.csv, not silently dropped.",
+    "no_post_hoc_regime_changes": "The regime and design-parameter definitions in run_supervisor_experiment.py are not altered after this protocol is frozen, except to fix an implementation bug (which would be disclosed)."
+  },
+  "out_of_scope_for_this_run": {
+    "constrained_lr": "Evaluated separately in run_lr_permutation_comparison.py as a secondary, exploratory comparison. It is not part of this protocol and does not gate any decision about the Expanded Welch method.",
+    "independence_boundary": "I(P) = I(Q) = 0 is excluded from the main design as a nonregular boundary case (see docs/theory and Appendix D); it is not swept in this protocol."
+  }
+}

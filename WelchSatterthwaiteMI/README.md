@@ -44,6 +44,15 @@ The current evidence is reported directly in the
 [`2x2 LR validation`](docs/experiments/CONSTRAINED_LR_2X2_VALIDATION.md) and
 [`multi-alphabet LR validation`](docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md).
 
+## Next planned work
+
+[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md) specifies the next
+experiment: a detection and breakdown sweep that measures false-positive and
+true-positive rates on one surface, removes every artificial lower bound on
+sample size and expected cell counts, and extends beyond `2x2` tables. It also
+records the current state of uncommitted work and the empirically established
+floors of the Expanded Welch method.
+
 ## Theory
 
 - [`docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md`](docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md)

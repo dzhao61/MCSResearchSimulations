@@ -1,0 +1,21 @@
+{
+  "profile": "full",
+  "replicates_by_shape": {
+    "2x2": 300,
+    "2x5": 250,
+    "3x3": 200,
+    "3x5": 150,
+    "5x5": 100,
+    "8x8": 40
+  },
+  "permutations": 199,
+  "scenario_seed": 2026080501,
+  "simulation_seed": 2026090601,
+  "scenario_count": 72,
+  "elapsed_seconds": 322.6981415420305,
+  "script_sha256": "55dc3aebc898b2c0cacfdc1acfafed24b7e5bea9832d803ab524b17c5410c349",
+  "python": "3.13.5",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "pandas": "3.0.3"
+}

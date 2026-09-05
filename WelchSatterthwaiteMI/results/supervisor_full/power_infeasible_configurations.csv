@@ -1,0 +1,15 @@
+scenario_id,regime,relative_effect,null_mi,reason
+fixed_2x2_d3,moderate,1.0,0.15,Target MI 0.300000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+stress_2x2_d6,ultra_sparse,0.5,0.1,Target MI 0.150000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+stress_2x2_d6,ultra_sparse,1.0,0.1,Target MI 0.200000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+stress_2x2_d7,ultra_sparse,0.5,0.15,Target MI 0.225000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+stress_2x2_d7,ultra_sparse,1.0,0.15,Target MI 0.300000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_2x2_d8,widespread_sparse,0.5,0.1,Target MI 0.150000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_2x2_d8,widespread_sparse,1.0,0.1,Target MI 0.200000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_2x2_d9,widespread_sparse,0.5,0.15,Target MI 0.225000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_2x2_d9,widespread_sparse,1.0,0.15,Target MI 0.300000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+stress_3x3_d5,highly_sparse,1.0,0.15,Target MI 0.300000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_3x3_d8,widespread_sparse,1.0,0.1,Generated cell probability is too small.
+adversarial_3x3_d9,widespread_sparse,0.5,0.15,Generated cell probability is too small.
+adversarial_3x5_d9,widespread_sparse,0.5,0.15,Target MI 0.225000 is infeasible for these margins: Target MI is infeasible for the requested margins.
+adversarial_3x5_d9,widespread_sparse,1.0,0.15,Target MI 0.300000 is infeasible for these margins: Target MI is infeasible for the requested margins.

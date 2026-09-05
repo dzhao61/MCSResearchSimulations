@@ -3,13 +3,14 @@
   "settings": {
     "null_replicates": 10000,
     "power_replicates": 10000,
+    "power_calibration_replicates": 10000,
     "batch_size": 1000,
     "runtime_repetitions": 200,
     "shape_limit": null
   },
   "scenario_seed": 2026080501,
   "simulation_seed": 2026080502,
-  "scenario_count": 192,
+  "scenario_count": 72,
   "methods": [
     "normal_wald",
     "simple_welch",
@@ -26,8 +27,8 @@
     "points": 101
   },
   "null_pvalue_archive_dtype": "float64",
-  "elapsed_seconds": 30.872509042033926,
-  "script_sha256": "639a6685e5a753f1abc3c892d07eb47cb7289b3331f60fb649a77ab2865d134a",
+  "elapsed_seconds": 40.448660584166646,
+  "script_sha256": "326101d011357ba60f3bd57b6aa01734424b056a6277aabdfbdc33c6816a79be",
   "python": "3.13.5",
   "numpy": "2.4.4",
   "scipy": "1.17.1",
