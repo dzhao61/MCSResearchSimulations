@@ -1,11 +1,24 @@
 # Experiments
 
-## Current Constrained-LR Program
+## Final Confirmatory Experiment
 
-The current candidate directly fits the null $I(P)=I(Q)$ by constrained
-multinomial likelihood. Its derivation, 2x2 validation, and multi-alphabet
-screen are the primary active work. Expanded Welch remains a comparison method
-and an earlier finite-sample correction study.
+`run_detection_breakdown_sweep.py` implements the frozen protocol in
+`FINAL_PROTOCOL.json`. It compares Normal Wald, Simple Welch, and Expanded
+Welch across calibration, power, interaction-pattern robustness, and unequal-
+sample robustness cells. The runner constructs deterministic populations,
+uses stable configuration-specific seeds, processes simulations in bounded
+batches, and generates all aggregate data, checks, figures, and `REPORT.md`.
+
+Routine simulation work follows a run-first convention: once an experiment or
+diagnostic is sufficiently specified and low risk, implement and run it, then
+use the evidence to guide discussion. Supervisor confirmation is reserved for
+consequential changes to the research question, method, or thesis scope rather
+than ordinary implementation and empirical checks.
+
+## Exploratory Constrained-LR Program
+
+The constrained-LR derivation, 2x2 validation, and multi-alphabet screen are
+retained as exploratory work outside the final confirmatory protocol.
 
 ### 2x2 experiments
 

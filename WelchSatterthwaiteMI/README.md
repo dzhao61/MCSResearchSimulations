@@ -6,52 +6,30 @@ This project studies analytic tests for the independent two-sample weak null
 H0: I(P) = I(Q), allowing P != Q.
 ```
 
-Three methods form the current comparison:
+Three methods form the final confirmatory comparison:
 
 1. **Normal Wald** uses the bias-corrected plug-in MI difference, its
    influence-function standard error, and a standard-normal reference.
 2. **Expanded Welch** keeps the same statistic but uses MI-specific
    Satterthwaite degrees of freedom.
-3. **Constrained likelihood ratio (LR)** directly maximises the two-sample
-   multinomial likelihood under `I(P) = I(Q)` and compares the loss of fit with
-   the regular asymptotic `chi-squared(1)` reference.
+3. **Simple Welch** keeps the Wald statistic but uses the ordinary
+   Welch-Satterthwaite degrees of freedom.
 
 ## Current status
 
-The constrained LR is the leading current research direction. In the final
-2x2 null experiment, its mean absolute false-positive-rate error at
-`alpha = 0.05` was `0.0210`, compared with `0.0329` for Expanded Welch and
-`0.0762` for Normal Wald. It was numerically valid for at least 99.9% of
-replicates, but remained conservative in several severe rare-cell cases.
-
-A subsequent screen covered 3x3, 4x4, 5x5, and 8x8 tables. LR had the lowest
-aggregate calibration error, often reduced severe liberal Wald behaviour, and
-usually had similar power once `N >= 250`. It did not dominate every exact
-configuration. The 8x8 estimates use only 250 replicates per configuration and
-remain preliminary screening evidence.
-
-A focused 2,000-replicate confirmation then reran six prespecified cases. LR
-was close to the nominal 0.05 rate in the ordinary control and three cases in
-which Wald was liberal, but was strongly conservative in two ultra-skewed
-cases. This confirms both the useful regime and the principal failure mode.
-
-Expanded Welch remains an important baseline and mechanism study, not the
-primary current candidate. Its finite-degrees-of-freedom correction improved
-some difficult null configurations but was often conservative and could be
-undefined in highly sparse tables.
-
-The current evidence is reported directly in the
-[`2x2 LR validation`](docs/experiments/CONSTRAINED_LR_2X2_VALIDATION.md) and
-[`multi-alphabet LR validation`](docs/experiments/CONSTRAINED_LR_MULTIALPHABET_VALIDATION.md).
+The final thesis experiment is the frozen detection-and-breakdown sweep in
+[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md). It compares Normal Wald,
+Simple Welch, and Expanded Welch across exact table shapes, margins, sample
+sizes, effects, and robustness cases without averaging away individual
+configurations. Constrained LR and earlier screens remain exploratory evidence,
+not part of this confirmatory comparison.
 
 ## Next planned work
 
-[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md) specifies the next
-experiment: a detection and breakdown sweep that measures false-positive and
-true-positive rates on one surface, removes every artificial lower bound on
-sample size and expected cell counts, and extends beyond `2x2` tables. It also
-records the current state of uncommitted work and the empirically established
-floors of the Expanded Welch method.
+[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md) specifies the experiment,
+and [`experiments/FINAL_PROTOCOL.json`](experiments/FINAL_PROTOCOL.json)
+provides its machine-readable protocol. The protocol measures false-positive
+rates, power, numerical validity, and breakdown with no expected-count floor.
 
 ## Theory
 
@@ -79,6 +57,14 @@ MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
   .venv/bin/python WelchSatterthwaiteMI/experiments/run_multialphabet_lr_experiment.py \
   --profile smoke --shape-limit 1 --workers 1 \
   --output-dir /tmp/multialphabet_lr_smoke
+```
+
+Run the frozen sweep's smoke profile with:
+
+```bash
+MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
+  .venv/bin/python WelchSatterthwaiteMI/experiments/run_detection_breakdown_sweep.py \
+  --profile smoke --workers 4 --output-dir /tmp/detection_breakdown_smoke
 ```
 
 See [`experiments/README.md`](experiments/README.md) and

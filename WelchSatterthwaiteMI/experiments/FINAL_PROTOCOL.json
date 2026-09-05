@@ -1,8 +1,9 @@
 {
   "title": "Final thesis experiment: differential mutual information",
-  "status": "final_design_awaiting_implementation_freeze",
+  "status": "frozen_for_confirmatory_run",
   "design_document": "../NEXT_EXPERIMENT_PLAN.md",
   "runner": "run_detection_breakdown_sweep.py",
+  "configuration_manifest": "FINAL_CONFIGURATION_MANIFEST.csv",
   "output_directory": "../results/detection_breakdown_sweep",
   "master_seed": 2026090501,
   "methods": [

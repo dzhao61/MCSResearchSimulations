@@ -1,6 +1,13 @@
 # Results
 
-## Current LR Evidence
+## Final Confirmatory Evidence
+
+[`detection_breakdown_sweep/`](detection_breakdown_sweep/) is reserved for the
+frozen final experiment comparing Normal Wald, Simple Welch, and Expanded
+Welch. Its `REPORT.md` is generated only by the full protocol run; smoke output
+is written outside this directory and discarded.
+
+## Exploratory LR Evidence
 
 - [`2x2_constrained_lr_confirmatory_fullstarts/`](2x2_constrained_lr_confirmatory_fullstarts/)
   is the final 2x2 null-calibration run.

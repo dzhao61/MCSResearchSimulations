@@ -1,10 +1,10 @@
 # Final Thesis Experiment Protocol: Differential Mutual Information
 
-**Status: final design, awaiting implementation freeze.** The protocol must be
-encoded in a machine-readable configuration file, reviewed, and committed
-before the full simulation is run. Smoke tests may be used to find software
-errors, but their results are not thesis evidence. After the freeze, changes
-to factors, outcomes, or reporting rules must be documented as protocol
+**Status: frozen for the confirmatory run.** The protocol is encoded in
+`experiments/FINAL_PROTOCOL.json`, and every planned cell is listed in
+`experiments/FINAL_CONFIGURATION_MANIFEST.csv`. Smoke tests may be used to find
+software errors, but their results are not thesis evidence. After the freeze,
+changes to factors, outcomes, or reporting rules must be documented as protocol
 deviations rather than silently incorporated.
 
 The experiment evaluates three deterministic tests of
