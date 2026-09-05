@@ -1,45 +1,164 @@
 {
-  "title": "Expanded Welch-Satterthwaite thesis validation: frozen protocol",
-  "frozen_before": "the full-profile run of run_supervisor_experiment.py that produces the thesis Results chapter numbers",
-  "runner": "run_supervisor_experiment.py",
-  "scenario_seed": 2026080501,
-  "simulation_seed": 2026080502,
-  "profile": "full",
-  "methods": ["normal_wald", "simple_welch", "expanded_welch"],
-  "design": {
-    "shapes": ["2x2", "2x5", "3x3", "3x5", "5x5", "8x8"],
-    "regimes": [
-      "strong_null",
-      "well_sampled",
-      "moderate",
-      "highly_sparse",
-      "ultra_sparse",
-      "widespread_sparse"
+  "title": "Final thesis experiment: differential mutual information",
+  "status": "final_design_awaiting_implementation_freeze",
+  "design_document": "../NEXT_EXPERIMENT_PLAN.md",
+  "runner": "run_detection_breakdown_sweep.py",
+  "output_directory": "../results/detection_breakdown_sweep",
+  "master_seed": 2026090501,
+  "methods": [
+    "normal_wald",
+    "simple_welch",
+    "expanded_welch"
+  ],
+  "hypothesis": {
+    "null": "I(P) = I(Q)",
+    "alternative": "I(P) != I(Q)",
+    "sidedness": "two-sided",
+    "primary_alpha": 0.05,
+    "secondary_alphas": [0.1, 0.01],
+    "primary_contrast": "expanded_welch versus normal_wald under the equal-MI different-shape null",
+    "primary_metric": "absolute unconditional FPR error from 0.05 for each exact configuration"
+  },
+  "population_construction": {
+    "shapes": [
+      "2x2",
+      "2x3",
+      "3x3",
+      "3x5",
+      "4x4",
+      "4x8",
+      "5x5",
+      "8x8"
     ],
-    "designs_per_shape": 12,
-    "population_pairs": 72,
-    "strong_null_regime_purpose": "Positive control added after the correctness/design audit: P = Q exactly, so a calibrated method must reject at close to the nominal rate here. A failure in this regime indicates an implementation or approximation fault, not a genuine weak-null finite-sample effect, and it is therefore not folded into the same interpretation as the other four regimes.",
-    "null_replicates": 10000,
-    "power_replicates": 10000,
-    "power_calibration_replicates": 10000,
-    "power_relative_effects": [0.5, 1.0],
-    "power_effect_definition": "Alternative MI is null_mi * (1 + relative_effect); alternative margins are the null pair's own recovered margins with a freshly drawn interaction pattern re-solved to the shifted target MI.",
-    "alphas": [0.10, 0.05, 0.01],
-    "calibration_alpha_grid": "0 to 0.10 in steps of 0.001 (101 points)"
+    "skewness": {
+      "balanced": "uniform margins",
+      "mild": "one dominant row and column category with probability 0.70",
+      "strong": "one dominant row and column category with probability 0.90",
+      "ultra": "one dominant row and column category with probability 0.95"
+    },
+    "relationships": [
+      "identical_distribution",
+      "equal_mi_different_shape"
+    ],
+    "primary_p_interaction": "ordinal",
+    "different_shape_q_interaction": "negative_ordinal",
+    "different_shape_q_row_margin": "P row margin rolled by +1",
+    "different_shape_q_column_margin": "P column margin rolled by -1",
+    "association_strength_probe": [0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128],
+    "shared_reachable_scale": "M = min(M_P, M_Q)",
+    "baseline_mi": "I(P) = 0.20 * M",
+    "q_target_mi": "I(Q) = (0.20 + e) * M",
+    "maximum_target_fraction_of_M": 0.8,
+    "target_mi_tolerance": 1e-10,
+    "minimum_usable_M": 1e-8,
+    "minimum_l1_selection_threshold": null
   },
-  "decision_rules": {
-    "adequate_size_control": "Empirical FPR at nominal alpha falls in Bradley's (1978) liberal interval [0.5 * alpha, 1.5 * alpha]. Reported as a pass/fail count per regime/method alongside the continuous mean-absolute-error metric, never in place of it.",
-    "acceptable_validity": "Valid rate >= 0.90. Below this floor a scenario is reported as a method failure, not folded into a calibration mean.",
-    "rejection_rate_denominators": "Three denominators are always reported together: fpr (conditional on validity), unconditional_fpr (invalid replicates counted as non-rejections), common_valid_fpr (restricted to replicates where every method is valid, so cross-method rows are always comparable).",
-    "size_adjusted_power": "Reported as a diagnostic alongside nominal power, using a threshold from an independently seeded null simulation of the same population pair. Not represented as an achievable procedure for a real analysis."
+  "experiment_1_controls": {
+    "source": "predeclared subsets of experiment_2_calibration",
+    "strong_null": {
+      "relationship": "identical_distribution",
+      "skewness": "balanced",
+      "sample_sizes": [50, 250, 1000],
+      "shapes": "all"
+    },
+    "weak_null": {
+      "relationship": "equal_mi_different_shape",
+      "skewness": "balanced",
+      "sample_sizes": [50, 250, 1000],
+      "shapes": "all"
+    },
+    "large_sample_control_n": 1000
   },
-  "reporting_commitments": {
-    "disaggregation": "Every scenario-method result is retained in scenario_results.csv and power_summary.csv; regime_summary.csv aggregates are never presented without the underlying disaggregation being available.",
-    "infeasible_configurations": "Every (population pair, relative effect) combination that cannot be constructed is logged with a reason in power_infeasible_configurations.csv, not silently dropped.",
-    "no_post_hoc_regime_changes": "The regime and design-parameter definitions in run_supervisor_experiment.py are not altered after this protocol is frozen, except to fix an implementation bug (which would be disclosed)."
+  "experiment_2_calibration": {
+    "relative_effects": [0],
+    "sample_sizes": [2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 30, 50, 75, 100, 150, 250, 500, 1000],
+    "replicates_per_cell": 10000,
+    "cell_count": 1152,
+    "table_pair_count": 11520000,
+    "structural_breakdown_definition": "n < max(r, c)"
   },
-  "out_of_scope_for_this_run": {
-    "constrained_lr": "Evaluated separately in run_lr_permutation_comparison.py as a secondary, exploratory comparison. It is not part of this protocol and does not gate any decision about the Expanded Welch method.",
-    "independence_boundary": "I(P) = I(Q) = 0 is excluded from the main design as a nonregular boundary case (see docs/theory and Appendix D); it is not swept in this protocol."
-  }
+  "experiment_3_power": {
+    "relative_effects": [0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6],
+    "sample_sizes": [5, 10, 20, 50, 100, 250, 500, 1000],
+    "replicates_per_cell": 10000,
+    "cell_count": 3584,
+    "table_pair_count": 35840000
+  },
+  "robustness_interactions": {
+    "shapes": ["3x3", "3x5", "5x5", "8x8"],
+    "skewness": ["balanced", "strong", "ultra"],
+    "interaction_pairs": [
+      "checkerboard_and_cyclic",
+      "fixed_random_A_and_fixed_random_B"
+    ],
+    "fixed_random_seeds": [2026090511, 2026090512],
+    "relationship": "equal_mi_different_shape",
+    "sample_sizes": [5, 10, 20, 50, 100, 250],
+    "relative_effects": [0, 0.1, 0.4, 0.6],
+    "replicates_per_cell": 10000,
+    "cell_count": 576,
+    "table_pair_count": 5760000
+  },
+  "robustness_sample_imbalance": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "skewness": ["strong", "ultra"],
+    "relationship": "equal_mi_different_shape",
+    "smaller_sample_sizes": [5, 10, 20, 50, 100],
+    "n_q_to_n_p_ratios": [2, 5, 10],
+    "relative_effects": [0, 0.1, 0.4],
+    "replicates_per_cell": 10000,
+    "cell_count": 360,
+    "table_pair_count": 3600000
+  },
+  "totals": {
+    "confirmatory_cell_count": 4736,
+    "confirmatory_table_pair_count": 47360000,
+    "all_cell_count": 5672,
+    "all_table_pair_count": 56720000
+  },
+  "outcomes": {
+    "primary_rejection_rate": "valid rejections divided by all replicates; invalid results count as non-rejections",
+    "diagnostic_rates": [
+      "method-conditional rejection rate",
+      "common-valid rejection rate",
+      "valid rate"
+    ],
+    "uncertainty": [
+      "Wilson 95% interval",
+      "Monte Carlo standard error",
+      "paired rejection-rate difference interval"
+    ],
+    "paired_counts": [
+      "both reject",
+      "neither rejects",
+      "only method A rejects",
+      "only method B rejects"
+    ]
+  },
+  "operating_frontiers": {
+    "alpha": 0.05,
+    "sustained_points_required": 3,
+    "validity_threshold": 0.9,
+    "bradley_interval": [0.025, 0.075],
+    "detection_effect": 0.6,
+    "detection_power_threshold": 0.5
+  },
+  "main_figure_subset": {
+    "shapes": ["2x2", "3x3", "3x5", "5x5", "8x8"],
+    "skewness": ["balanced", "strong", "ultra"],
+    "selection_timing": "fixed before the full run"
+  },
+  "excluded_from_primary_protocol": {
+    "independence_boundary": "I(P) = I(Q) = 0 is nonregular for the first-order variance method",
+    "constrained_lr": "secondary exploratory work",
+    "resampling_tests": "secondary work; not part of the confirmatory analytic comparison",
+    "size_adjusted_power": "not included",
+    "raw_contingency_table_storage": "aggregate online instead"
+  },
+  "freeze_requirements": [
+    "runner, protocol, tests, configuration manifest, and master seed committed together",
+    "smoke outcomes discarded before the full run",
+    "all predeclared blocks run without outcome-driven changes",
+    "all deviations and reruns recorded in the final report"
+  ]
 }
