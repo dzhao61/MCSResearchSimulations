@@ -1,0 +1,10 @@
+experiment,shape,skewness,relationship,interaction_pair,n_p,n_q,method,effect_from,effect_to,power_from,power_to,decline,three_mcse_threshold
+power,2x2,ultra,identical_distribution,primary,250,250,normal_wald,0.1,0.2,0.0344,0.026,0.008400000000000001,0.007258551921698984
+power,2x2,ultra,identical_distribution,primary,250,250,simple_welch,0.1,0.2,0.0341,0.0258,0.008299999999999998,0.007229411801799646
+power,2x2,ultra,identical_distribution,primary,500,500,normal_wald,0.4,0.6,0.0393,0.0302,0.0091,0.007767826143780511
+power,2x2,ultra,identical_distribution,primary,500,500,simple_welch,0.4,0.6,0.0392,0.0301,0.0091,0.007757036483090692
+power,4x8,mild,equal_mi_different_shape,primary,10,10,expanded_welch,0.025,0.05,0.104,0.0905,0.013499999999999998,0.012567592251501477
+robustness_imbalance,3x3,ultra,equal_mi_different_shape,primary,10,20,simple_welch,0.1,0.4,0.267,0.2425,0.024500000000000022,0.01847875198707965
+robustness_imbalance,3x3,ultra,equal_mi_different_shape,primary,20,40,normal_wald,0.1,0.4,0.3762,0.3525,0.0237,0.02041140806020006
+robustness_imbalance,3x3,ultra,equal_mi_different_shape,primary,20,40,simple_welch,0.1,0.4,0.3708,0.3496,0.021199999999999997,0.02036218259421126
+robustness_interaction,3x5,strong,equal_mi_different_shape,fixed_random_A_and_fixed_random_B,5,5,normal_wald,0.4,0.6,0.0424,0.0342,0.008199999999999999,0.008140598258113467

@@ -2,10 +2,12 @@
 
 ## Final Confirmatory Evidence
 
-[`detection_breakdown_sweep/`](detection_breakdown_sweep/) is reserved for the
-frozen final experiment comparing Normal Wald, Simple Welch, and Expanded
-Welch. Its `REPORT.md` is generated only by the full protocol run; smoke output
-is written outside this directory and discarded.
+[`detection_breakdown_sweep/`](detection_breakdown_sweep/) contains the frozen
+final experiment comparing Normal Wald, Simple Welch, and Expanded Welch. The
+run completed all 5,672 cells and 56.72 million table pairs from freeze commit
+`264692980043bec192da30a9707de577d6c104ff`. Start with its `REPORT.md`; the
+configuration-level CSVs and 57 figures retain the complete evidence. Smoke
+output was written outside this directory and discarded.
 
 ## Exploratory LR Evidence
 

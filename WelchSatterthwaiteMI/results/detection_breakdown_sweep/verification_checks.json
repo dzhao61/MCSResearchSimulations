@@ -1,0 +1,14 @@
+{
+  "all_pass": true,
+  "manifest_cell_count": 5672,
+  "manifest_cell_count_expected": 5672,
+  "manifest_count_pass": true,
+  "manifest_unique_pass": true,
+  "n2_expanded_zero_validity_pass": true,
+  "result_count_pass": true,
+  "result_row_count": 51048,
+  "result_row_count_expected": 51048,
+  "target_mi_tolerance_pass": true,
+  "three_denominators_equal_when_fully_valid_pass": true,
+  "unconditional_rejections_within_valid_pass": true
+}
