@@ -1,19 +1,20 @@
 # Final Experiment Landscape: Normal Wald versus Expanded Welch
 
-## 1. Scope
+## 1. Purpose
 
-This document presents the complete primary landscape before drawing conclusions
-from individual cases. It displays every predeclared experiment configuration at
-$\alpha=0.05$ for Normal Wald and Expanded Welch. No table shape, skewness
-level, sample size, population relationship, effect size, imbalance ratio, or
-interaction pair is averaged with another.
+This document presents the complete primary experiment before selecting cases
+for detailed interpretation. Every graph compares Normal Wald with Expanded
+Welch for one explicitly defined regime. No result is averaged across table
+shape, skewness, sample size, population relationship, effect size, imbalance
+ratio, or interaction pattern.
 
-Each heatmap cell is based on 10,000 independently simulated table pairs. The
-figures jointly cover all 5,672 frozen configurations. The secondary
-$\alpha=0.01$ and $\alpha=0.10$ results and Simple Welch results remain in the
-results file, but are omitted here so the primary comparison is visually clear.
+All figures use the primary significance level $\alpha=0.05$. Every plotted
+point is based on 10,000 independently simulated table pairs. Together, the
+figures cover all 5,672 frozen experiment configurations. Simple Welch and the
+secondary $\alpha=0.01$ and $\alpha=0.10$ results remain available in the
+source results but are omitted from this visual comparison.
 
-The hypothesis is
+The test is
 
 $$
 H_0:I(P)=I(Q)
@@ -21,319 +22,390 @@ H_0:I(P)=I(Q)
 H_1:I(P)\ne I(Q).
 $$
 
-## 2. How to read every figure
+## 2. How to read the graphs
 
-Each figure uses the same five panels:
+The blue circular line is Normal Wald. The magenta square line is Expanded
+Welch. A filled point means that the method returned a valid statistic and
+$p$-value in at least 90% of replicates. A hollow point means that its valid
+rate was below 90%, so a low rejection rate should not be interpreted as good
+performance without caution.
 
-| Panel | Meaning |
-| --- | --- |
-| Normal Wald: rejection | Fraction of all simulated table pairs rejected by Normal Wald |
-| Expanded Welch: rejection | Fraction rejected by Expanded Welch |
-| Expanded minus Wald | Expanded Welch rejection rate minus Normal Wald rejection rate |
-| Normal Wald: validity | Fraction for which Normal Wald returned a finite statistic and $p$-value |
-| Expanded Welch: validity | Fraction for which Expanded Welch returned a finite statistic and $p$-value |
+In every rejection-growth graph:
 
-Blue in the difference panel means Expanded Welch rejects less often; red means
-it rejects more often. This panel shows direction only. Its colour range is set
-to the largest difference within that figure, so colour intensity should not be
-compared between different figures.
+- the vertical axis is rejection rate from 0 to 1;
+- the horizontal axis is the relative MI difference $e$ from 0 to 0.60;
+- the first point, $e=0$, is the false-positive rate because the null is true;
+- points with $e>0$ show power as the true MI difference increases; and
+- the dotted horizontal line marks 0.05.
 
-At relative effect $e=0$, the null is true and the rejection rate is the
-false-positive rate. Its target is 0.05. At $e>0$, the null is false and the
-rejection rate is power. Rejection rates are unconditional: an invalid result
-counts as a non-rejection. The validity panels must therefore be read alongside
-the rejection panels.
+The actual MI difference is
 
-The null-rejection colour scale is centred at 0.05 and shared across the null
-figures. Values above 0.25 use the same darkest red to preserve detail around
-the target; the exact values are available in `cell_results.csv`. Power and
-validity maps always use the full range from 0 to 1.
+$$
+\Delta_I=|I(Q)-I(P)|=eM,
+$$
 
-## 3. Shared experiment specification
+where $M$ is the shared reachable MI scale reported below each figure. Using
+$e$ on every horizontal axis keeps all graphs directly comparable even though
+different populations have different feasible MI ranges.
+
+Rejection rates are unconditional: an invalid output counts as a
+non-rejection. Every panel within a figure is a separate graph for one fixed
+combination of shape, skewness, population relationship, and sample size.
+
+## 3. Shared population construction
 
 | Factor | Exact setting |
 | --- | --- |
-| Table shapes | $2\times2$, $2\times3$, $3\times3$, $3\times5$, $4\times4$, $4\times8$, $5\times5$, $8\times8$ |
+| Shapes | $2\times2$, $2\times3$, $3\times3$, $3\times5$, $4\times4$, $4\times8$, $5\times5$, $8\times8$ |
 | Skewness | balanced, mild, strong, ultra |
 | Dominant marginal probability | balanced: uniform; mild: 0.70; strong: 0.90; ultra: 0.95 |
-| Primary $P$ interaction | ordinal |
-| Primary $Q$ construction | rolled row and column margins with the negative ordinal interaction |
-| Significance level shown | $\alpha=0.05$ |
-| Replicates | 10,000 independent table pairs per exact configuration |
-| Expected-count restriction | none |
-| Sampling | independent multinomial samples from fixed population tables $P$ and $Q$ |
+| Primary interaction for $P$ | ordinal |
+| Different-path construction for $Q$ | rolled margins and negative ordinal interaction |
+| Baseline MI | $I(P)=0.20M$ |
+| Alternative MI | $I(Q)=(0.20+e)M$ |
+| Expected-count floor | none |
+| Sampling | independent multinomial samples from fixed $P$ and $Q$ |
 
-For each shape and skewness level, $M$ is the MI range reachable by both
-population paths. The baseline is $I(P)=0.20M$, and the alternative target is
+`Same population path` means that $Q$ uses the same margins and interaction
+path as $P$; at $e=0$, $P=Q$. `Different population paths` means that $P$ and
+$Q$ differ in shape even at $e=0$, while still satisfying $I(P)=I(Q)$.
 
-$$
-I(Q)=(0.20+e)M,
-\qquad
-|I(Q)-I(P)|=eM.
-$$
+## 4. Null calibration across all sample sizes
 
-Thus $e$ is comparable across rows, while $eM$ gives the actual MI difference
-in nats. Every target is at most $0.80M$, leaving a 20% numerical buffer below
-the demonstrated reachable limit.
-
-## 4. Null calibration landscape
+These two figures include the complete 18-point calibration grid. Each graph
+fixes one shape, skewness level, and null construction, then shows how its
+false-positive rate changes with the equal sample size. Both figures use the
+same log-scaled horizontal axis from 2 to 1000 and vertical axis from 0 to 1.
 
 ### 4.1 Identical-distribution null
 
-![Complete calibration landscape when P equals Q](figures/final_experiment_landscape/calibration_identical_distribution.png)
+![Calibration when P equals Q](figures/final_experiment_landscape/calibration_identical_distribution.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Null construction | $P=Q$ exactly |
-| Rows | All 32 shape-by-skewness combinations |
-| Columns | $n_P=n_Q\in\{2,3,4,5,6,8,10,12,15,20,30,50,75,100,150,250,500,1000\}$ |
-| Exact configurations | $8\times4\times18=576$ |
-| Quantity in rejection panels | False-positive rate; target 0.05 |
+| Population relationship | $P=Q$ |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | all eight table shapes |
+| Horizontal values | $n_P=n_Q\in\{2,3,4,5,6,8,10,12,15,20,30,50,75,100,150,250,500,1000\}$ |
+| Quantity | False-positive rate; target 0.05 |
+| Exact configurations | $4\times8\times18=576$ |
 
 ### 4.2 Equal-MI, different-shape null
 
-![Complete calibration landscape when P and Q differ but have equal MI](figures/final_experiment_landscape/calibration_equal_mi_different_shape.png)
+![Calibration when P and Q differ but have equal MI](figures/final_experiment_landscape/calibration_equal_mi_different_shape.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Null construction | $P\ne Q$ but $I(P)=I(Q)$ |
-| $P$ path | Original margins and ordinal interaction |
-| $Q$ path | Rolled margins and negative ordinal interaction |
-| Rows | All 32 shape-by-skewness combinations |
-| Columns | The same 18 equal sample sizes from 2 to 1000 |
-| Exact configurations | $8\times4\times18=576$ |
-| Quantity in rejection panels | False-positive rate; target 0.05 |
+| Population relationship | $P\ne Q$ but $I(P)=I(Q)$ |
+| $P$ path | original margins and ordinal interaction |
+| $Q$ path | rolled margins and negative ordinal interaction |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | all eight table shapes |
+| Horizontal values | the same 18 equal sample sizes from 2 to 1000 |
+| Quantity | False-positive rate; target 0.05 |
+| Exact configurations | $4\times8\times18=576$ |
 
-## 5. Power landscape
+## 5. Rejection growth across MI differences
 
-The power figures add the null point $e=0$ to the seven positive alternatives,
-so calibration and detection can be read on the same row. In the row labels,
-`same` means that $Q$ follows the same margins and interaction path as $P$;
-`different` means that $Q$ follows the rolled-margin, negative-interaction path.
+Each figure in this section fixes one table shape and one population
+relationship. Each graph within it then fixes one skewness level and one equal
+sample size. Consequently, every graph contains exactly two curves for one
+specific regime.
 
-### 5.1 Shape 2x2
+### 5.1 Shape 2x2: same population path
 
-![Complete 2x2 power landscape](figures/final_experiment_landscape/power_2x2.png)
+![2x2 rejection curves for the same population path](figures/final_experiment_landscape/power_2x2_identical_distribution.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $2\times2$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 0.693147; mild 0.132829; strong 0.011134; ultra 0.002633 |
+
+### 5.2 Shape 2x2: different population paths
+
+![2x2 rejection curves for different population paths](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $2\times2$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.1 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 0.693147; mild 0.132829; strong 0.011134; ultra 0.002633 |
+
+### 5.3 Shape 2x3: same population path
+
+![2x3 rejection curves for the same population path](figures/final_experiment_landscape/power_2x3_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $2\times3$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 0.462098; mild 0.132829; strong 0.011134; ultra 0.002633 |
+
+### 5.4 Shape 2x3: different population paths
+
+![2x3 rejection curves for different population paths](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $2\times3$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.3 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 0.462098; mild 0.132829; strong 0.011134; ultra 0.002633 |
+
+### 5.5 Shape 3x3: same population path
+
+![3x3 rejection curves for the same population path](figures/final_experiment_landscape/power_3x3_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $3\times3$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 1.094589; mild 0.427910; strong 0.192209; ultra 0.112985 |
+
+### 5.6 Shape 3x3: different population paths
+
+![3x3 rejection curves for different population paths](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $3\times3$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.5 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 1.094589; mild 0.427910; strong 0.192209; ultra 0.112985 |
+
+### 5.7 Shape 3x5: same population path
+
+![3x5 rejection curves for the same population path](figures/final_experiment_landscape/power_3x5_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $3\times5$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 0.844007; mild 0.441515; strong 0.196781; ultra 0.115309 |
+
+### 5.8 Shape 3x5: different population paths
+
+![3x5 rejection curves for different population paths](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $3\times5$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.7 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 0.844007; mild 0.441515; strong 0.196781; ultra 0.115309 |
+
+### 5.9 Shape 4x4: same population path
+
+![4x4 rejection curves for the same population path](figures/final_experiment_landscape/power_4x4_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $4\times4$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 1.376379; mild 0.602958; strong 0.275423; ultra 0.160939 |
+
+### 5.10 Shape 4x4: different population paths
+
+![4x4 rejection curves for different population paths](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $4\times4$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.9 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 1.376379; mild 0.602958; strong 0.275423; ultra 0.160939 |
+
+### 5.11 Shape 4x8: same population path
+
+![4x8 rejection curves for the same population path](figures/final_experiment_landscape/power_4x8_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $4\times8$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 1.374327; mild 0.598808; strong 0.274189; ultra 0.160449 |
+
+### 5.12 Shape 4x8: different population paths
+
+![4x8 rejection curves for different population paths](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $4\times8$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.11 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 1.374327; mild 0.598808; strong 0.274189; ultra 0.160449 |
+
+### 5.13 Shape 5x5: same population path
+
+![5x5 rejection curves for the same population path](figures/final_experiment_landscape/power_5x5_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $5\times5$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 1.467011; mild 0.748216; strong 0.336034; ultra 0.194520 |
+
+### 5.14 Shape 5x5: different population paths
+
+![5x5 rejection curves for different population paths](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $5\times5$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.13 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 1.467011; mild 0.748216; strong 0.336034; ultra 0.194520 |
+
+### 5.15 Shape 8x8: same population path
+
+![8x8 rejection curves for the same population path](figures/final_experiment_landscape/power_8x8_identical_distribution.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $8\times8$; same population path |
+| Graph rows | balanced, mild, strong, ultra |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
+| Horizontal values | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
+| $M$ by row | balanced 2.021338; mild 0.908803; strong 0.402920; ultra 0.230904 |
+
+### 5.16 Shape 8x8: different population paths
+
+![8x8 rejection curves for different population paths](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Shape and relationship | $8\times8$; different paths with equal MI at $e=0$ |
+| Graph rows and columns | the same skewness levels and sample sizes as Section 5.15 |
+| Horizontal values | the same eight values of $e$ from 0 to 0.60 |
+| $M$ by row | balanced 2.021338; mild 0.908803; strong 0.402920; ultra 0.230904 |
+
+## 6. Unequal-sample regimes
+
+Each graph fixes shape, skewness, sample-size ratio, and the smaller sample
+$n_P$. The three observed points are $e=0$, 0.10, and 0.40. The horizontal
+axis still runs from 0 to 0.60 and the vertical axis from 0 to 1, matching the
+main figures.
+
+### 6.1 Shape 2x2
+
+![2x2 rejection curves under unequal samples](figures/final_experiment_landscape/imbalance_2x2.png)
+
+| Figure specification | Exact setting |
 | --- | --- |
 | Shape | $2\times2$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 0.693147; mild 0.132829; strong 0.011134; ultra 0.002633 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
+| Graph rows | strong and ultra skewness, each crossed with $n_Q:n_P\in\{2:1,5:1,10:1\}$ |
+| Graph columns | $n_P\in\{5,10,20,50,100\}$ |
+| Horizontal points | $e\in\{0,0.10,0.40\}$ |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 5.2 Shape 2x3
+### 6.2 Shape 3x3
 
-![Complete 2x3 power landscape](figures/final_experiment_landscape/power_2x3.png)
+![3x3 rejection curves under unequal samples](figures/final_experiment_landscape/imbalance_3x3.png)
 
-| Figure component | Exact specification |
-| --- | --- |
-| Shape | $2\times3$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 0.462098; mild 0.132829; strong 0.011134; ultra 0.002633 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
-
-### 5.3 Shape 3x3
-
-![Complete 3x3 power landscape](figures/final_experiment_landscape/power_3x3.png)
-
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
 | Shape | $3\times3$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 1.094589; mild 0.427910; strong 0.192209; ultra 0.112985 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
+| Graph rows, columns and effects | same design as Section 6.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 5.4 Shape 3x5
+### 6.3 Shape 5x5
 
-![Complete 3x5 power landscape](figures/final_experiment_landscape/power_3x5.png)
+![5x5 rejection curves under unequal samples](figures/final_experiment_landscape/imbalance_5x5.png)
 
-| Figure component | Exact specification |
-| --- | --- |
-| Shape | $3\times5$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 0.844007; mild 0.441515; strong 0.196781; ultra 0.115309 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
-
-### 5.5 Shape 4x4
-
-![Complete 4x4 power landscape](figures/final_experiment_landscape/power_4x4.png)
-
-| Figure component | Exact specification |
-| --- | --- |
-| Shape | $4\times4$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 1.376379; mild 0.602958; strong 0.275423; ultra 0.160939 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
-
-### 5.6 Shape 4x8
-
-![Complete 4x8 power landscape](figures/final_experiment_landscape/power_4x8.png)
-
-| Figure component | Exact specification |
-| --- | --- |
-| Shape | $4\times8$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 1.374327; mild 0.598808; strong 0.274189; ultra 0.160449 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
-
-### 5.7 Shape 5x5
-
-![Complete 5x5 power landscape](figures/final_experiment_landscape/power_5x5.png)
-
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
 | Shape | $5\times5$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 1.467011; mild 0.748216; strong 0.336034; ultra 0.194520 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
+| Graph rows, columns and effects | same design as Section 6.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 5.8 Shape 8x8
+### 6.4 Shape 8x8
 
-![Complete 8x8 power landscape](figures/final_experiment_landscape/power_8x8.png)
+![8x8 rejection curves under unequal samples](figures/final_experiment_landscape/imbalance_8x8.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
 | Shape | $8\times8$ |
-| Rows | 2 population relationships $\times$ 4 skewness levels $\times$ 8 sample sizes |
-| Equal sample sizes | $n_P=n_Q\in\{5,10,20,50,100,250,500,1000\}$ |
-| Columns | $e\in\{0,0.01,0.025,0.05,0.10,0.20,0.40,0.60\}$ |
-| Reachable $M$ by skewness | balanced 2.021338; mild 0.908803; strong 0.402920; ultra 0.230904 |
-| Absolute MI difference | $eM$ within each row |
-| Exact cells displayed | 512 per method, including the reused null points |
+| Graph rows, columns and effects | same design as Section 6.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-## 6. Unequal-sample landscape
+## 7. Alternative interaction-pattern regimes
 
-These figures retain the primary equal-MI, different-shape population paths.
-The row ratio is $n_Q:n_P$, and the horizontal axis gives the smaller sample
-$n_P$. Thus, for example, ratio 10:1 at $n_P=100$ means $n_Q=1000$.
+Each graph fixes shape, skewness, interaction pair, and equal sample size. The
+four points are $e=0$, 0.10, 0.40, and 0.60. `checker/cyclic` compares a
+checkerboard interaction in $P$ with a cyclic interaction in $Q$. `fixed
+random` compares two interactions generated once from fixed seeds and then
+held constant.
 
-### 6.1 Null: e = 0
+### 7.1 Shape 3x3
 
-![Complete unequal-sample null landscape](figures/final_experiment_landscape/imbalance_effect_0.png)
+![3x3 rejection curves under alternative interactions](figures/final_experiment_landscape/interaction_3x3.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Shapes | $2\times2$, $3\times3$, $5\times5$, $8\times8$ |
-| Skewness | strong and ultra |
-| Rows | Shape $\times$ skewness $\times$ ratios 2:1, 5:1, and 10:1 |
-| Columns | $n_P\in\{5,10,20,50,100\}$, with $n_Q$ determined by the row ratio |
-| Population relationship | $P\ne Q$ but $I(P)=I(Q)$ |
-| Exact configurations | $4\times2\times3\times5=120$ |
-| Quantity in rejection panels | False-positive rate; target 0.05 |
+| Shape | $3\times3$ |
+| Graph rows | balanced, strong, ultra, each crossed with the two interaction pairs |
+| Graph columns | $n_P=n_Q\in\{5,10,20,50,100,250\}$ |
+| Horizontal points | $e\in\{0,0.10,0.40,0.60\}$ |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 6.2 Alternative: e = 0.10
+### 7.2 Shape 3x5
 
-![Complete unequal-sample power landscape at e 0.10](figures/final_experiment_landscape/imbalance_effect_0_1.png)
+![3x5 rejection curves under alternative interactions](figures/final_experiment_landscape/interaction_3x5.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Shapes, skewness, rows and columns | Same as Section 6.1 |
-| Population relationship | $P\ne Q$ and $I(Q)-I(P)=0.10M$ |
-| Exact configurations | 120 |
-| Quantity in rejection panels | Power |
+| Shape | $3\times5$ |
+| Graph rows, columns and effects | same design as Section 7.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 6.3 Alternative: e = 0.40
+### 7.3 Shape 5x5
 
-![Complete unequal-sample power landscape at e 0.40](figures/final_experiment_landscape/imbalance_effect_0_4.png)
+![5x5 rejection curves under alternative interactions](figures/final_experiment_landscape/interaction_5x5.png)
 
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Shapes, skewness, rows and columns | Same as Section 6.1 |
-| Population relationship | $P\ne Q$ and $I(Q)-I(P)=0.40M$ |
-| Exact configurations | 120 |
-| Quantity in rejection panels | Power |
+| Shape | $5\times5$ |
+| Graph rows, columns and effects | same design as Section 7.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-## 7. Interaction-pattern landscape
+### 7.4 Shape 8x8
 
-This block checks whether the result depends on the ordinal interaction used in
-the primary sweep. `checker/cyclic` compares a checkerboard interaction in $P$
-with a cyclic interaction in $Q$. `fixed random` compares two interactions
-generated once using fixed seeds and then held constant for the full run. The
-reachable scale $M$ is recalculated separately for every population pair.
+![8x8 rejection curves under alternative interactions](figures/final_experiment_landscape/interaction_8x8.png)
 
-### 7.1 Null: e = 0
-
-![Complete interaction-pattern null landscape](figures/final_experiment_landscape/interaction_effect_0.png)
-
-| Figure component | Exact specification |
+| Figure specification | Exact setting |
 | --- | --- |
-| Shapes | $3\times3$, $3\times5$, $5\times5$, $8\times8$ |
-| Skewness | balanced, strong, ultra |
-| Interaction pairs | checkerboard/cyclic and fixed-random-A/fixed-random-B |
-| Rows | Shape $\times$ skewness $\times$ interaction pair |
-| Columns | $n_P=n_Q\in\{5,10,20,50,100,250\}$ |
-| Population relationship | $P\ne Q$ but $I(P)=I(Q)$ |
-| Exact configurations | $4\times3\times2\times6=144$ |
-| Quantity in rejection panels | False-positive rate; target 0.05 |
+| Shape | $8\times8$ |
+| Graph rows, columns and effects | same design as Section 7.1 |
+| Population relationship | different paths; equal MI at $e=0$ |
 
-### 7.2 Alternative: e = 0.10
+## 8. Briefing sequence
 
-![Complete interaction-pattern power landscape at e 0.10](figures/final_experiment_landscape/interaction_effect_0_1.png)
-
-| Figure component | Exact specification |
-| --- | --- |
-| Shapes, skewness, interaction pairs and sample sizes | Same as Section 7.1 |
-| Population relationship | $P\ne Q$ and $I(Q)-I(P)=0.10M$ |
-| Exact configurations | 144 |
-| Quantity in rejection panels | Power |
-
-### 7.3 Alternative: e = 0.40
-
-![Complete interaction-pattern power landscape at e 0.40](figures/final_experiment_landscape/interaction_effect_0_4.png)
-
-| Figure component | Exact specification |
-| --- | --- |
-| Shapes, skewness, interaction pairs and sample sizes | Same as Section 7.1 |
-| Population relationship | $P\ne Q$ and $I(Q)-I(P)=0.40M$ |
-| Exact configurations | 144 |
-| Quantity in rejection panels | Power |
-
-### 7.4 Alternative: e = 0.60
-
-![Complete interaction-pattern power landscape at e 0.60](figures/final_experiment_landscape/interaction_effect_0_6.png)
-
-| Figure component | Exact specification |
-| --- | --- |
-| Shapes, skewness, interaction pairs and sample sizes | Same as Section 7.1 |
-| Population relationship | $P\ne Q$ and $I(Q)-I(P)=0.60M$ |
-| Exact configurations | 144 |
-| Quantity in rejection panels | Power |
-
-## 8. Suggested briefing order
-
-1. Start with the two calibration maps and scan from left to right as sample
-   size increases.
-2. Check the validity maps before treating a low false-positive rate as good
-   calibration.
-3. Use the power maps to compare methods at the same shape, skewness, sample
-   size, relationship, and effect.
-4. Use the imbalance and interaction maps last to see whether the main patterns
-   persist when one assumption is changed.
-
-This order exposes the landscape before selecting any cases for detailed
-discussion.
+1. Read the leftmost point of a graph first. This is its false-positive rate
+   under the null.
+2. Check whether that point is hollow before judging its calibration.
+3. Follow the same two curves to the right to compare rejection growth as the
+   MI difference increases.
+4. Compare graphs vertically to change skewness and horizontally to change
+   sample size while keeping all other settings fixed.
+5. Use the unequal-sample and interaction sections only after understanding
+   the matching equal-sample, primary-interaction graphs.
 
 ## 9. Reproducibility
 
@@ -341,6 +413,5 @@ The figures are generated by
 [`../../experiments/make_final_experiment_landscape.py`](../../experiments/make_final_experiment_landscape.py)
 from
 [`../../results/detection_breakdown_sweep/cell_results.csv`](../../results/detection_breakdown_sweep/cell_results.csv).
-The source CSV also contains Wilson intervals, Monte Carlo standard errors,
-conditional rejection rates, common-valid rejection rates, small-cell
-diagnostics, and degrees-of-freedom diagnostics for every displayed cell.
+The generator verifies the frozen configuration counts and rejects duplicate
+or incomplete curves rather than averaging them.
