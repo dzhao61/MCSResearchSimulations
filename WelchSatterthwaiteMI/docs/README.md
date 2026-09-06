@@ -20,6 +20,9 @@ experimental records, and historical material.
 
 ## Experiments
 
+- [`experiments/FINAL_EXPERIMENT_LANDSCAPE.md`](experiments/FINAL_EXPERIMENT_LANDSCAPE.md)
+  maps every primary Wald-versus-Expanded-Welch configuration without pooling
+  regimes, with the exact experiment specification below each figure.
 - [`experiments/EQUAL_MI_2X2_BASELINE.md`](experiments/EQUAL_MI_2X2_BASELINE.md)
   establishes the 2x2 Normal Wald and Expanded Welch baselines.
 - [`experiments/CONSTRAINED_LR_2X2_VALIDATION.md`](experiments/CONSTRAINED_LR_2X2_VALIDATION.md)
