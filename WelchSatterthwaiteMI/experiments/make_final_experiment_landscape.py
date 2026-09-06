@@ -305,7 +305,7 @@ def _mi_details(frame: pd.DataFrame, row_definitions: list[tuple[str, dict[str, 
         if len(scales) != 1:
             raise ValueError(f"Expected one MI scale for {label}, got {scales}")
         details.append(
-            f"{label}: $M\approx{scales[0]:.4g}$, $I(P)\approx{mi_p:.4g}$, "
+            f"{label}: $M\\approx{scales[0]:.4g}$, $I(P)\\approx{mi_p:.4g}$, "
             f"$e$ values {_format_number_set(row['relative_effect'])}"
         )
     return "<br>".join(details)
