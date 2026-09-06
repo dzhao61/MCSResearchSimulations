@@ -23,7 +23,6 @@ COLORS = {"normal_wald": "#1f4e79", "expanded_welch": "#b23a73"}
 MARKERS = {"normal_wald": "o", "expanded_welch": "s"}
 SHAPES = ("2x2", "2x3", "3x3", "3x5", "4x4", "4x8", "5x5", "8x8")
 SKEWNESS = ("balanced", "mild", "strong", "ultra")
-CALIBRATION_N = (2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 30, 50, 75, 100, 150, 250, 500, 1000)
 POWER_N = (5, 10, 20, 50, 100, 250, 500, 1000)
 EFFECTS = (0.0, 0.01, 0.025, 0.05, 0.10, 0.20, 0.40, 0.60)
 IMBALANCE_RATIOS = (2, 5, 10)
@@ -59,114 +58,6 @@ def _validate_source(results: pd.DataFrame) -> None:
         raise ValueError("The landscape expects 10,000 replicates in every primary cell")
     if primary["configuration_id"].nunique() != sum(EXPECTED_PRIMARY_CELLS.values()):
         raise ValueError("Primary configuration identifiers are not one-to-one")
-
-
-def _calibration_landscapes(results: pd.DataFrame, output_dir: Path) -> None:
-    relationships = (
-        ("identical_distribution", "Identical-distribution null: P = Q"),
-        ("equal_mi_different_shape", "Equal-MI, different-shape null: P differs from Q"),
-    )
-    for relationship, label in relationships:
-        frame = results[
-            results["experiment"].eq("calibration")
-            & results["relationship"].eq(relationship)
-            & results["method"].isin(METHODS)
-            & np.isclose(results["nominal_alpha"], 0.05)
-        ]
-        figure, axes = plt.subplots(
-            len(SKEWNESS),
-            len(SHAPES),
-            figsize=(3.0 * len(SHAPES), 2.35 * len(SKEWNESS)),
-            sharex=True,
-            sharey=True,
-        )
-        for row_index, skew in enumerate(SKEWNESS):
-            for column_index, shape in enumerate(SHAPES):
-                axis = axes[row_index, column_index]
-                panel = frame[frame["skewness"].eq(skew) & frame["shape"].eq(shape)]
-                for method in METHODS:
-                    line = panel[panel["method"].eq(method)].sort_values("n_p")
-                    if tuple(line["n_p"]) != CALIBRATION_N:
-                        raise ValueError(f"Incomplete calibration curve for {relationship}/{shape}/{skew}/{method}")
-                    axis.plot(
-                        line["n_p"],
-                        line["unconditional_rejection_rate"],
-                        color=COLORS[method],
-                        linewidth=1.6,
-                    )
-                    valid = line["valid_rate"].ge(0.90)
-                    axis.scatter(
-                        line.loc[valid, "n_p"],
-                        line.loc[valid, "unconditional_rejection_rate"],
-                        color=COLORS[method],
-                        marker=MARKERS[method],
-                        s=16,
-                        linewidths=0.7,
-                        zorder=3,
-                    )
-                    axis.scatter(
-                        line.loc[~valid, "n_p"],
-                        line.loc[~valid, "unconditional_rejection_rate"],
-                        facecolors="white",
-                        edgecolors=COLORS[method],
-                        marker=MARKERS[method],
-                        s=21,
-                        linewidths=1.1,
-                        zorder=3,
-                    )
-                axis.axhline(0.05, color="#666666", linestyle=":", linewidth=0.9)
-                axis.set_xscale("log")
-                axis.set_xlim(1.8, 1100)
-                axis.set_ylim(-0.02, 1.02)
-                axis.grid(color="#dddddd", linewidth=0.55, alpha=0.65)
-                axis.tick_params(labelsize=7)
-                if row_index == 0:
-                    axis.set_title(shape, fontsize=9)
-                if column_index == 0:
-                    axis.set_ylabel(f"{skew}\nFalse-positive rate", fontsize=8)
-                if row_index == len(SKEWNESS) - 1:
-                    axis.set_xlabel("Equal sample size n", fontsize=8)
-
-        legend = [
-            Line2D(
-                [0],
-                [0],
-                color=COLORS[method],
-                marker=MARKERS[method],
-                linewidth=1.8,
-                markersize=5,
-                label=LABELS[method],
-            )
-            for method in METHODS
-        ]
-        legend.append(
-            Line2D(
-                [0],
-                [0],
-                color="#555555",
-                marker="o",
-                markerfacecolor="white",
-                linewidth=0,
-                markersize=5,
-                label="Hollow point: validity below 0.90",
-            )
-        )
-        figure.legend(
-            legend,
-            [item.get_label() for item in legend],
-            loc="upper center",
-            bbox_to_anchor=(0.5, 0.965),
-            ncol=3,
-            frameon=False,
-        )
-        figure.suptitle(f"Calibration at alpha = 0.05\n{label}", fontsize=14, weight="bold", y=1.0)
-        figure.tight_layout(rect=(0, 0, 1, 0.92))
-        figure.savefig(
-            output_dir / f"calibration_{relationship}.png",
-            dpi=180,
-            bbox_inches="tight",
-        )
-        plt.close(figure)
 
 
 def _plot_rejection_curve(axis: plt.Axes, panel: pd.DataFrame, method: str) -> None:
@@ -407,11 +298,10 @@ def main() -> None:
     results = pd.read_csv(args.results_dir / "cell_results.csv")
     _validate_source(results)
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    _calibration_landscapes(results, args.output_dir)
     _power_curve_landscapes(results, args.output_dir)
     _imbalance_curve_landscapes(results, args.output_dir)
     _interaction_curve_landscapes(results, args.output_dir)
-    print(f"Wrote 26 exact-regime landscape figures to {args.output_dir}")
+    print(f"Wrote 24 exact-regime landscape figures to {args.output_dir}")
 
 
 if __name__ == "__main__":
