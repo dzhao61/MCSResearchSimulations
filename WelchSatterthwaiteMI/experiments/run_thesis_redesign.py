@@ -100,7 +100,13 @@ def save_preflight(
         "infeasible_display_slots": int(len(failures)),
         "table_pairs": int(configurations["replicates"].sum()) if not configurations.empty else 0,
         "method_evaluations": int(2 * configurations["replicates"].sum()) if not configurations.empty else 0,
-        "figure_count": int(display["figure_key"].nunique()),
+        "primary_figure_count": int(display["figure_key"].nunique()),
+        "companion_calibration_zooms": int(
+            display.loc[display["section"].eq("convergence"), "figure_key"].nunique()
+        ),
+        "figure_count": int(display["figure_key"].nunique()) + int(
+            display.loc[display["section"].eq("convergence"), "figure_key"].nunique()
+        ),
     }
     atomic_json(output / "preflight_summary.json", summary)
     return summary
@@ -404,8 +410,17 @@ def main() -> None:
             str(path.relative_to(ROOT.parent)): sha256(path)
             for path in [protocol_path, Path(__file__), Path(__file__).with_name("thesis_redesign_core.py"),
                          ROOT / "src/welch_differential_mi/welch.py",
+                         Path(__file__).with_name("report_thesis_redesign.py"),
                          ROOT.parent / "DifferentialMI/src/differential_mi/statistics.py",
                          ROOT.parent / "DifferentialMI/src/differential_mi/distributions.py"]
+        },
+        "output_sha256": {
+            name: sha256(output / name)
+            for name in ["configuration_manifest.csv", "display_manifest.csv",
+                         "population_definitions.csv", "cell_results.csv",
+                         "paired_method_results.csv", "runtime_inputs.csv",
+                         "runtime_summary.csv"]
+            if (output / name).exists()
         },
     }
     atomic_json(output / "run_metadata.json", metadata)

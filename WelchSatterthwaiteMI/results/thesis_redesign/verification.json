@@ -1,0 +1,18 @@
+{
+  "all_pass": true,
+  "checks": {
+    "all_configurations_present": true,
+    "exactly_two_methods": true,
+    "expanded_rejection_subset": true,
+    "margins_and_normalization": true,
+    "n1_explicitly_invalid": true,
+    "one_paired_row_per_configuration": true,
+    "paired_counts_sum": true,
+    "population_mi": true,
+    "rates_recalculate": true,
+    "replicate_denominators": true,
+    "strictly_positive_populations": true,
+    "unique_method_rows": true,
+    "valid_rates_recalculate": true
+  }
+}

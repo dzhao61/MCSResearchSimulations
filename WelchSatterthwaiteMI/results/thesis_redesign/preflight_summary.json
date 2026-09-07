@@ -1,0 +1,13 @@
+{
+  "companion_calibration_zooms": 7,
+  "display_slots": 4001,
+  "figure_count": 106,
+  "infeasible_display_slots": 0,
+  "method_evaluations": 124440000,
+  "population_pairs": 534,
+  "primary_figure_count": 99,
+  "profile": "full",
+  "protocol_sha256": "a3ef38e10878c5e23fbfb7b97810d05efb1b1ed27e481d70c417721b6b01dc51",
+  "table_pairs": 62220000,
+  "unique_configurations": 3111
+}

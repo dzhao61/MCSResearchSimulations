@@ -1,10 +1,19 @@
 # Experiments
 
-The current [thesis redesign plan](../docs/experiments/THESIS_EXPERIMENT_PLAN.md)
-is an implementation handoff, not a completed run. The programs below preserve
-the earlier studies.
+## Current Thesis Experiment
 
-## Final Confirmatory Experiment
+`run_thesis_redesign.py` implements the frozen
+`THESIS_REDESIGN_PROTOCOL.json`; `thesis_redesign_core.py` contains the
+population construction and simulation, and `report_thesis_redesign.py`
+rebuilds the report from saved results. The complete study is documented in
+[Thesis Experiments](../docs/experiments/THESIS_EXPERIMENTS.md), with its
+[design record](../docs/experiments/THESIS_EXPERIMENT_PLAN.md) retained beside it.
+
+The run completed 3,111 unique configurations and 62.22 million sampled table
+pairs. Use `--report-only` to rebuild figures without resampling. The separate
+smoke output remains under `results/thesis_redesign_smoke/`.
+
+## Earlier Confirmatory Experiment
 
 `run_detection_breakdown_sweep.py` implements the frozen protocol in
 `FINAL_PROTOCOL.json`. It compares Normal Wald, Simple Welch, and Expanded

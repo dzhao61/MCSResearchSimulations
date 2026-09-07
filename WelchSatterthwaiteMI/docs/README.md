@@ -20,9 +20,11 @@ experimental records, and historical material.
 
 ## Experiments
 
-- [Thesis Experiment Redesign](experiments/THESIS_EXPERIMENT_PLAN.md)
-  is the current implementation plan: explicit populations, matched MI differences,
-  calibration and power, stress tests, and standardized reporting. Not yet run.
+- [Thesis Experiments](experiments/THESIS_EXPERIMENTS.md)
+  is the completed current study, with the full regime landscape, exact tables,
+  overall findings, runtime results and reproducibility links.
+- [Thesis Experiment Design](experiments/THESIS_EXPERIMENT_PLAN.md)
+  records the frozen population construction, regimes and reporting rules.
 - [Population Construction Check](experiments/CONSTRUCTION_CHECK.md)
   retains the separate exploratory evidence motivating the redesign.
 - [Archived Experimental Results](experiments/archive/EXPERIMENTAL_RESULTS.md)

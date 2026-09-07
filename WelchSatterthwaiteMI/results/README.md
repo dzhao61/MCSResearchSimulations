@@ -1,6 +1,15 @@
 # Results
 
-## Final Confirmatory Evidence
+## Current Thesis Evidence
+
+[`thesis_redesign/`](thesis_redesign/) contains the frozen Wald-versus-Expanded-
+Welch study: 3,111 unique configurations, 62.22 million sampled table pairs,
+complete paired decisions, runtime measurements and verification records.
+Start with the [reader-facing report](../docs/experiments/THESIS_EXPERIMENTS.md).
+The separate [`thesis_redesign_smoke/`](thesis_redesign_smoke/) contains the
+pre-freeze boundary smoke run and is not thesis evidence.
+
+## Earlier Confirmatory Evidence
 
 [`detection_breakdown_sweep/`](detection_breakdown_sweep/) contains the frozen
 final experiment comparing Normal Wald, Simple Welch, and Expanded Welch. The

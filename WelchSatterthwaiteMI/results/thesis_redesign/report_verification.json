@@ -1,0 +1,7 @@
+{
+  "expected_figure_count": true,
+  "all_referenced_figures_exist": true,
+  "every_display_point_has_two_method_rows": true,
+  "no_missing_result_rows": true,
+  "all_pass": true
+}

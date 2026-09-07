@@ -1,10 +1,9 @@
 # Thesis Experiment Redesign: Wald and Expanded Welch
 
-**Status: implementation plan, not a completed experiment or a frozen protocol.**
-This is the handoff for the next implementation session. Build and validate the
-design below, run separate smoke tests, freeze the executable protocol, then
-run and document the study. Do not treat the earlier results as observations
-from this redesigned experiment.
+**Status: completed.** Protocol version 1.0.0 was frozen after successful
+preflight and smoke testing. The full run, verification, runtime study and
+standardized report are complete. The executable protocol and manifest
+implement the design below; earlier studies are not observations from this run.
 
 ## 1. Purpose and reading order
 
@@ -559,18 +558,17 @@ or equate fixed sample size with fixed sparsity across alphabets. The scope
 is a transparent, reproducible set of regular and deliberately difficult
 categorical populations, not every distribution that could exist.
 
-## 10. Handoff boundary
+## 10. Completion record
 
-This session creates the plan and archives the previous main report only.
-Planning-time numerical checks passed for 568 additive population/target
-combinations covering the requested shapes, marginal parameters, patterns and
-MI grids: their cells were positive, margins were preserved and MI targets
-met the stated tolerance. This is not the deduplicated experiment manifest
-or a replacement for the complete implementation preflight. In particular,
-log-linear construction and all test/simulation checks remain to be performed.
+Preflight produced 4,001 display points, deduplicated to 3,111 unique
+configurations and 534 fixed population pairs. All population targets were
+feasible. The independent smoke run covered 449 boundary configurations and
+89,800 sampled pairs before the protocol was frozen.
 
-No redesigned simulation results have been generated. The next implementing
-model should carry out Stages A-D rather than create another overview or
-request routine supervisor approval. Escalate only a substantive change to
-the research question or an unresolved design conflict; ordinary construction
-checks, smoke tests and execution are part of the authorized workflow.
+The full run completed 62.22 million independently sampled table pairs and
+124.44 million method evaluations. All simulation and report checks passed.
+The final output contains 99 primary figures, seven companion calibration
+zooms, exact result tables, paired comparisons, runtime measurements and
+full-precision population definitions. Start with the
+[reader-facing results](THESIS_EXPERIMENTS.md); machine-readable records are
+under [`../../results/thesis_redesign/`](../../results/thesis_redesign/).
