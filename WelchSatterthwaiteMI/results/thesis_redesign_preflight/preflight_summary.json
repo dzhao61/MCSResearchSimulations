@@ -1,0 +1,11 @@
+{
+  "display_slots": 4001,
+  "figure_count": 99,
+  "infeasible_display_slots": 0,
+  "method_evaluations": 124440000,
+  "population_pairs": 534,
+  "profile": "full",
+  "protocol_sha256": "fb2073fa079488f9637e436369473581da881f184267cc6a241c447f9d3424d5",
+  "table_pairs": 62220000,
+  "unique_configurations": 3111
+}

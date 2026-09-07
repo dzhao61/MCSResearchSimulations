@@ -1,0 +1,11 @@
+{
+  "display_slots": 694,
+  "figure_count": 94,
+  "infeasible_display_slots": 0,
+  "method_evaluations": 179600,
+  "population_pairs": 534,
+  "profile": "smoke",
+  "protocol_sha256": "fb2073fa079488f9637e436369473581da881f184267cc6a241c447f9d3424d5",
+  "table_pairs": 89800,
+  "unique_configurations": 449
+}

@@ -1,0 +1,31 @@
+{
+  "batch_size": 2000,
+  "display_slots": 694,
+  "figure_count": 94,
+  "finished_at_utc": "2026-09-07T22:59:22.661340+00:00",
+  "git_revision": "2ebf64e2c9c593566bd8acb2e9559fe22e6f9133",
+  "infeasible_display_slots": 0,
+  "input_sha256": {
+    "DifferentialMI/src/differential_mi/distributions.py": "70c32b59cb03d8271f9325e91b1b6bf9d531f5eb0f1190836f3e7174cffa48af",
+    "DifferentialMI/src/differential_mi/statistics.py": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5",
+    "WelchSatterthwaiteMI/experiments/THESIS_REDESIGN_PROTOCOL.json": "fb2073fa079488f9637e436369473581da881f184267cc6a241c447f9d3424d5",
+    "WelchSatterthwaiteMI/experiments/run_thesis_redesign.py": "9f26915ddc2cec7fae903c7380ece47597e6b57036094be3779816c473fc5477",
+    "WelchSatterthwaiteMI/experiments/thesis_redesign_core.py": "3b34654218b19f98b342922b011c502a87299d0e990fdd42758e12e0ee969294",
+    "WelchSatterthwaiteMI/src/welch_differential_mi/welch.py": "ec82b965d210816f39921262fc7999a388e26f98d8917d39ab684d688e3f9d20"
+  },
+  "method_evaluations": 179600,
+  "numpy_version": "2.4.4",
+  "pandas_version": "3.0.3",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "population_pairs": 534,
+  "profile": "smoke",
+  "protocol_sha256": "fb2073fa079488f9637e436369473581da881f184267cc6a241c447f9d3424d5",
+  "python_version": "3.13.5",
+  "scipy_version": "1.17.1",
+  "simulation_elapsed_seconds_this_invocation": 1.1284984999801964,
+  "started_at_utc": "2026-09-07T22:59:20.986957+00:00",
+  "status": "complete",
+  "table_pairs": 89800,
+  "unique_configurations": 449,
+  "workers": 4
+}

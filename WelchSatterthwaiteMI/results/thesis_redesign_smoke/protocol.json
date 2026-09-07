@@ -1,0 +1,146 @@
+{
+  "title": "Thesis experiment redesign: Normal Wald and Expanded Welch",
+  "version": "1.0.0",
+  "status": "draft_until_preflight_and_smoke_pass",
+  "design_document": "../docs/experiments/THESIS_EXPERIMENT_PLAN.md",
+  "runner": "run_thesis_redesign.py",
+  "reporter": "report_thesis_redesign.py",
+  "output_directory": "../results/thesis_redesign",
+  "report": "../docs/experiments/THESIS_EXPERIMENTS.md",
+  "master_seed": 2026090809,
+  "timing_seed": 2026090810,
+  "alpha": 0.05,
+  "replicates": 20000,
+  "smoke_replicates": 200,
+  "batch_size": 2000,
+  "methods": ["normal_wald", "expanded_welch"],
+  "population_tolerances": {
+    "normalization": 1e-12,
+    "margins": 1e-12,
+    "mi_absolute": 1e-12,
+    "mi_relative": 1e-8
+  },
+  "profiles": {
+    "uniform": {"p_dominant": null, "q_dominant": null},
+    "same_skew": {"p_dominant": 0.8, "q_dominant": 0.8},
+    "different_skew": {"p_dominant": 0.7, "q_dominant": 0.8}
+  },
+  "main": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": 0.02,
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_sizes": [2, 5, 10, 20, 50, 100, 250, 500, 1000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "baseline": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": [0.0001, 0.001, 0.02],
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_sizes": [20, 100, 1000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "patterns": {
+    "shapes": ["3x3", "5x5", "8x8"],
+    "profile": "different_skew",
+    "patterns_by_shape": {
+      "3x3": ["first", "rare"],
+      "5x5": ["first", "rare", "spread"],
+      "8x8": ["first", "rare", "spread"]
+    },
+    "baseline_mi": 0.0001,
+    "mi_differences": [0, 0.0001, 0.00025, 0.0005, 0.001, 0.002],
+    "sample_sizes": [20, 100, 1000],
+    "constructor": "additive"
+  },
+  "imbalance": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": 0.02,
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_pairs": [[50, 50], [50, 100], [100, 50], [50, 250], [250, 50], [50, 500], [500, 50], [500, 500]],
+    "mi_directions": ["q_higher", "p_higher"],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "broad_effect": {
+    "shapes": ["2x2", "3x3"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": 0.02,
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2],
+    "sample_sizes": [20, 100, 1000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "rectangular": {
+    "shapes": ["2x3", "3x5"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": 0.02,
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_sizes": [20, 100, 1000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "construction": {
+    "shapes": ["3x3", "5x5", "8x8"],
+    "profiles": ["uniform", "different_skew"],
+    "baseline_mi": [0.0001, 0.02],
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_sizes": [20, 100, 1000],
+    "constructors": ["additive", "loglinear"],
+    "pattern": "first"
+  },
+  "extreme": {
+    "shapes": ["2x2", "3x3", "8x8"],
+    "dominant_pairs": [[0.9, 0.95], [0.99, 0.995], [0.999, 0.9995]],
+    "baseline_mi": 0.00001,
+    "mi_differences": [0, 0.00001, 0.00005, 0.0001, 0.0002],
+    "sample_sizes": [1, 2, 5, 20, 100, 1000, 10000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "rare_stress": {
+    "shapes": ["3x3", "8x8"],
+    "dominant_pair": [0.9, 0.95],
+    "baseline_mi": 0.00001,
+    "mi_differences": [0, 0.00001, 0.000025, 0.00005, 0.0001],
+    "sample_sizes": [1, 2, 5, 20, 100, 1000, 10000],
+    "patterns": ["first", "rare"],
+    "constructor": "additive"
+  },
+  "independence": {
+    "shapes": ["2x2", "8x8"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": 0,
+    "mi_differences": [0, 0.001, 0.002, 0.005, 0.01, 0.02],
+    "sample_sizes": [2, 20, 100, 1000],
+    "pattern": "first",
+    "constructor": "additive"
+  },
+  "convergence": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "profiles": ["uniform", "same_skew", "different_skew"],
+    "baseline_mi": [0.0001, 0.02],
+    "sample_sizes": [1000, 2500, 10000, 50000],
+    "pattern": "first",
+    "constructor": "additive",
+    "rare_shapes": ["3x3", "5x5", "8x8"],
+    "rare_profile": "different_skew",
+    "rare_baseline_mi": 0.0001
+  },
+  "runtime": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8", "3x5"],
+    "profiles": ["uniform", "different_skew"],
+    "sample_sizes": [20, 100, 1000],
+    "baseline_mi": 0.02,
+    "mi_differences": [0, 0.02],
+    "inputs_per_regime": 200,
+    "warmup_calls": 20,
+    "timed_passes": 5,
+    "pattern": "first",
+    "constructor": "additive"
+  }
+}

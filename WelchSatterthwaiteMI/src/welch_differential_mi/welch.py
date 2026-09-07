@@ -92,10 +92,13 @@ def _combine_df(
     degrees_of_freedom_q: np.ndarray,
 ) -> np.ndarray:
     numerator = (component_p + component_q) ** 2
-    denominator = (
-        component_p**2 / degrees_of_freedom_p
-        + component_q**2 / degrees_of_freedom_q
-    )
+    # Degenerate sparse tables intentionally produce invalid component df.
+    # Their p-values are masked below, so avoid emitting expected 0/0 warnings.
+    with np.errstate(divide="ignore", invalid="ignore"):
+        denominator = (
+            component_p**2 / degrees_of_freedom_p
+            + component_q**2 / degrees_of_freedom_q
+        )
     return np.divide(
         numerator,
         denominator,
