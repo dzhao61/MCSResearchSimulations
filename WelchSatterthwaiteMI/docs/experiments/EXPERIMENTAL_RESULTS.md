@@ -1,30 +1,494 @@
-# Follow-up Experiments: Wald and Expanded Welch
+# Experimental Results: Normal Wald and Expanded Welch
 
-These additions were specified after reviewing the original experiment. Each panel is one fixed regime; no rates are averaged across regimes.
+This document brings together the original experiment and the subsequent
+design follow-up. Each panel represents one fixed regime; results are not
+averaged across population definitions, table sizes, or sample sizes. The
+follow-up was specified after reviewing the original results. Both protocols
+and datasets remain available in the reproducibility section.
 
-The curves show operational rejection rates: invalid outputs count as non-rejections. At zero MI difference this is the false-positive rate; at positive differences it is power. Shading shows pointwise 95% Wilson Monte Carlo intervals. Hollow markers indicate validity below 90%. Each point uses 10,000 table pairs.
+## Contents
 
-Expanded Welch uses the same statistic with a heavier-tailed reference, so it can only reduce rejection relative to Wald. A benefit requires improved null calibration together with useful power and adequate validity.
+- [1. How to read the figures and metrics](#1-how-to-read-the-figures-and-metrics)
+- [2. Main landscape](#2-main-landscape)
+- [3. Different margins](#3-different-margins)
+- [4. Baseline MI sensitivity](#4-baseline-mi-sensitivity)
+- [5. Unequal sample sizes: both allocations](#5-unequal-sample-sizes-both-allocations)
+- [6. Large-sample convergence](#6-large-sample-convergence)
+- [7. Protocols and reproducibility](#7-protocols-and-reproducibility)
 
-The effect axis is e, with absolute MI difference eM. M is a numerical scale demonstrated by the original probe grid, not a theoretical maximum. Within each baseline comparison, M, margins, and dependence arrangements stay fixed; I(P)=bM and I(Q)=(b+e)M. All rejection and validity rates are listed as fractions beneath the figures.
+## 1. How to read the figures and metrics
 
-The heterogeneous-margin block uses uniform margins for P and one dominant category of probability 0.70 for Q. Remaining marginal probabilities are equal. Other blocks use the saved ordinal/negative-ordinal constructions with balanced, strong (0.90), or ultra (0.95) margins.
+The test compares $H_0:I(P)=I(Q)$ with $H_1:I(P)\ne I(Q)$ for two independent
+multinomial samples. Every plotted point uses 10,000 simulated table pairs,
+evaluated by both methods at significance level $\alpha=0.05$.
 
-[Protocol](../../experiments/DESIGN_FOLLOWUP_PROTOCOL.json) | [Full results](../../results/design_followup/cell_results.csv) | [Paired comparisons](../../results/design_followup/paired_method_results.csv) | [Exact populations](../../results/design_followup/population_definitions.csv)
+| Quantity | Meaning |
+| --- | --- |
+| Rejection rate | Fraction of all simulated pairs for which the method rejects; invalid results count as non-rejections |
+| False-positive rate | Rejection rate at zero MI difference; the target is 0.05 |
+| Power | Rejection rate at a positive MI difference |
+| Valid rate | Fraction of pairs for which the method returns a valid statistic and p-value |
+| Conditional rejection rate | Fraction rejected among valid results only |
+| Shaded band | Pointwise 95% Wilson interval for Monte Carlo uncertainty in the rejection rate |
+| Hollow marker | Valid rate below 0.90; exact validity is reported in the detailed tables |
 
-## 1. Different margins: 2x2, balanced vs mild, b=0.2
+Blue circles represent Normal Wald and magenta squares represent Expanded
+Welch. Read the zero-difference point before comparing power: a method that
+already rejects too often under the null can have misleadingly high power.
+Expanded Welch uses the same statistic with a heavier-tailed reference, so
+it can only reduce rejection relative to Wald. Its value depends on whether
+that reduction improves calibration at an acceptable cost in power and validity.
+
+The effect axis is $e$, where the absolute MI difference is $eM$ nats. $M$ is
+the smaller of the largest MI values successfully constructed on the original
+numerical probe grids. It is a demonstrated numerical range, not a theoretical
+maximum. Equal $e$ values in different regimes can therefore represent different
+absolute MI differences.
+
+The baseline parameter $b$ sets $I(P)=bM$, while $I(Q)=(b+e)M$. Most regimes
+use $b=0.2$; Section 4 varies it explicitly. All power graphs share an $e$ axis
+from 0 to 0.6 and a rejection-rate axis from 0 to 1. Section 6 instead plots
+sample size on a logarithmic horizontal axis because it examines null convergence.
+
+Balanced margins are uniform. Mild, strong, and ultra margins have one
+dominant category with probability 0.70, 0.90, and 0.95, respectively; the
+remaining marginal probabilities are equal. There is no minimum expected-count
+filter. A minimum expected count is the smallest $n_Pp_{ij}$ or $n_Qq_{ij}$,
+using the true joint probabilities rather than a fitted independence model.
+
+Each figure is followed by its specifications. Original-landscape figures
+link to exact point-by-point tables; the other sections place those tables
+inside expandable details beneath each figure.
+
+## 2. Main landscape
+
+These are the original equal-sample comparisons across table sizes, skewness,
+sample sizes, and dependence arrangements. The balanced primary different-shape
+nulls are column relabellings of $P$. They are useful invariance controls,
+but do not establish performance for different MI-estimator distributions.
+Section 3 explicitly compares different margins.
+
+### 2.1 Equal sample sizes and the primary dependence arrangement
+
+#### 2.1.1 Shape 2x2: same distribution shape
+
+![2x2 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x2_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $2\times2$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/2$; each column $1/2$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3$, every other column $0.3$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.6931$, $I(P)\approx0.1386$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.1328$, $I(P)\approx0.02657$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.2 Shape 2x2: different distribution shapes
+
+![2x2 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $2\times2$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/2$; each column $1/2$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 2 each have probability 0.7; every other row has probability $0.3$, every other column $0.3$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 2 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 2 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.6931$, $I(P)\approx0.1386$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.1328$, $I(P)\approx0.02657$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.3 Shape 2x3: same distribution shape
+
+![2x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x3_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $2\times3$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/2$; each column $1/3$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3$, every other column $0.3/2$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1$, every other column $0.1/2$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.4621$, $I(P)\approx0.09242$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.1328$, $I(P)\approx0.02657$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.4 Shape 2x3: different distribution shapes
+
+![2x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $2\times3$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/2$; each column $1/3$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 3 each have probability 0.7; every other row has probability $0.3$, every other column $0.3/2$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1$, every other column $0.1/2$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.4621$, $I(P)\approx0.09242$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.1328$, $I(P)\approx0.02657$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.5 Shape 3x3: same distribution shape
+
+![3x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x3_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times3$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/3$; each column $1/3$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/2$, every other column $0.3/2$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.095$, $I(P)\approx0.2189$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.4279$, $I(P)\approx0.08558$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.1922$, $I(P)\approx0.03844$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.113$, $I(P)\approx0.0226$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.6 Shape 3x3: different distribution shapes
+
+![3x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times3$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/3$; each column $1/3$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 3 each have probability 0.7; every other row has probability $0.3/2$, every other column $0.3/2$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.095$, $I(P)\approx0.2189$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.4279$, $I(P)\approx0.08558$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.1922$, $I(P)\approx0.03844$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.113$, $I(P)\approx0.0226$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.7 Shape 3x5: same distribution shape
+
+![3x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x5_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times5$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/3$; each column $1/5$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/2$, every other column $0.3/4$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/4$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.844$, $I(P)\approx0.1688$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.4415$, $I(P)\approx0.0883$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.1968$, $I(P)\approx0.03936$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1153$, $I(P)\approx0.02306$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.8 Shape 3x5: different distribution shapes
+
+![3x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times5$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/3$; each column $1/5$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 5 each have probability 0.7; every other row has probability $0.3/2$, every other column $0.3/4$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/4$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx0.844$, $I(P)\approx0.1688$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.4415$, $I(P)\approx0.0883$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.1968$, $I(P)\approx0.03936$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1153$, $I(P)\approx0.02306$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.9 Shape 4x4: same distribution shape
+
+![4x4 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x4_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $4\times4$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/4$; each column $1/4$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/3$, every other column $0.3/3$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/3$, every other column $0.1/3$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/3$, every other column $0.05/3$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.376$, $I(P)\approx0.2753$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.603$, $I(P)\approx0.1206$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.2754$, $I(P)\approx0.05508$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1609$, $I(P)\approx0.03219$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.10 Shape 4x4: different distribution shapes
+
+![4x4 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $4\times4$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/4$; each column $1/4$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 4 each have probability 0.7; every other row has probability $0.3/3$, every other column $0.3/3$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 4 each have probability 0.9; every other row has probability $0.1/3$, every other column $0.1/3$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 4 each have probability 0.95; every other row has probability $0.05/3$, every other column $0.05/3$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.376$, $I(P)\approx0.2753$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.603$, $I(P)\approx0.1206$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.2754$, $I(P)\approx0.05508$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1609$, $I(P)\approx0.03219$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.11 Shape 4x8: same distribution shape
+
+![4x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x8_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $4\times8$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/4$; each column $1/8$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/3$, every other column $0.3/7$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/3$, every other column $0.1/7$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/3$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.374$, $I(P)\approx0.2749$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.5988$, $I(P)\approx0.1198$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.2742$, $I(P)\approx0.05484$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1604$, $I(P)\approx0.03209$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.12 Shape 4x8: different distribution shapes
+
+![4x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $4\times8$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/4$; each column $1/8$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 8 each have probability 0.7; every other row has probability $0.3/3$, every other column $0.3/7$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/3$, every other column $0.1/7$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/3$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.374$, $I(P)\approx0.2749$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.5988$, $I(P)\approx0.1198$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.2742$, $I(P)\approx0.05484$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1604$, $I(P)\approx0.03209$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.13 Shape 5x5: same distribution shape
+
+![5x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_5x5_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $5\times5$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/5$; each column $1/5$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/4$, every other column $0.3/4$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.467$, $I(P)\approx0.2934$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.7482$, $I(P)\approx0.1496$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.336$, $I(P)\approx0.06721$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1945$, $I(P)\approx0.0389$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.14 Shape 5x5: different distribution shapes
+
+![5x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $5\times5$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/5$; each column $1/5$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 5 each have probability 0.7; every other row has probability $0.3/4$, every other column $0.3/4$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx1.467$, $I(P)\approx0.2934$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.7482$, $I(P)\approx0.1496$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.336$, $I(P)\approx0.06721$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.1945$, $I(P)\approx0.0389$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.15 Shape 8x8: same distribution shape
+
+![8x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_8x8_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_identical_distribution.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $8\times8$ |
+| Population construction | Same distribution shape: $P$ and $Q$ use the same margins and dependence arrangement; $I(Q)$ is increased according to the listed scaled MI settings |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/8$; each column $1/8$<br>mild: $P$ and $Q$: row 1 and column 1 each have probability 0.7; every other row has probability $0.3/7$, every other column $0.3/7$<br>strong: $P$ and $Q$: row 1 and column 1 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$<br>ultra: $P$ and $Q$: row 1 and column 1 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx2.021$, $I(P)\approx0.4043$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.9088$, $I(P)\approx0.1818$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.4029$, $I(P)\approx0.08058$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.2309$, $I(P)\approx0.04618$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.1.16 Shape 8x8: different distribution shapes
+
+![8x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $8\times8$ |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
+| Vertical graph regime specifications (rows) | balanced: $P$ and $Q$: each row has probability $1/8$; each column $1/8$<br>mild: $P$: row 1 and column 1 each have probability 0.7; $Q$: row 2 and column 8 each have probability 0.7; every other row has probability $0.3/7$, every other column $0.3/7$<br>strong: $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$<br>ultra: $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
+| MI settings by vertical regime | balanced: $M\approx2.021$, $I(P)\approx0.4043$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>mild: $M\approx0.9088$, $I(P)\approx0.1818$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>strong: $M\approx0.4029$, $I(P)\approx0.08058$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$<br>ultra: $M\approx0.2309$, $I(P)\approx0.04618$, $e$ values $\{0, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+### 2.2 Other arrangements of dependence
+
+#### 2.2.1 Shape 3x3
+
+![3x3 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x3.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x3.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times3$ |
+| Population construction | Different distribution shapes. Alternating/repeating compares an alternating high-low arrangement in $P$ with a repeating shifted-diagonal arrangement in $Q$. Fixed irregular compares two irregular arrangements generated once from fixed seeds and then held constant. |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250\}$ |
+| Vertical graph regime specifications (rows) | {balanced, alternating/repeating; balanced, fixed irregular; strong, alternating/repeating; strong, fixed irregular; ultra, alternating/repeating; ultra, fixed irregular}<br>balanced (both arrangements): $P$ and $Q$: each row has probability $1/3$; each column $1/3$<br>strong (both arrangements): $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$<br>ultra (both arrangements): $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250)\}$ |
+| MI settings by vertical regime | balanced, alternating/repeating: $M\approx0.6337$, $I(P)\approx0.1267$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>balanced, fixed irregular: $M\approx0.7167$, $I(P)\approx0.1433$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, alternating/repeating: $M\approx0.1942$, $I(P)\approx0.03884$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, fixed irregular: $M\approx0.1933$, $I(P)\approx0.03866$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, alternating/repeating: $M\approx0.1123$, $I(P)\approx0.02247$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, fixed irregular: $M\approx0.1135$, $I(P)\approx0.02271$, $e$ values $\{0, 0.1, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.2.2 Shape 3x5
+
+![3x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x5.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x5.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $3\times5$ |
+| Population construction | Different distribution shapes. Alternating/repeating compares an alternating high-low arrangement in $P$ with a repeating shifted-diagonal arrangement in $Q$. Fixed irregular compares two irregular arrangements generated once from fixed seeds and then held constant. |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250\}$ |
+| Vertical graph regime specifications (rows) | {balanced, alternating/repeating; balanced, fixed irregular; strong, alternating/repeating; strong, fixed irregular; ultra, alternating/repeating; ultra, fixed irregular}<br>balanced (both arrangements): $P$ and $Q$: each row has probability $1/3$; each column $1/5$<br>strong (both arrangements): $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/4$<br>ultra (both arrangements): $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/4$. These are row/column totals, fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250)\}$ |
+| MI settings by vertical regime | balanced, alternating/repeating: $M\approx0.4563$, $I(P)\approx0.09126$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>balanced, fixed irregular: $M\approx0.8438$, $I(P)\approx0.1688$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, alternating/repeating: $M\approx0.08851$, $I(P)\approx0.0177$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, fixed irregular: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, alternating/repeating: $M\approx0.05135$, $I(P)\approx0.01027$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, fixed irregular: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.1, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.2.3 Shape 5x5
+
+![5x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_5x5.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_5x5.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $5\times5$ |
+| Population construction | Different distribution shapes. Alternating/repeating compares an alternating high-low arrangement in $P$ with a repeating shifted-diagonal arrangement in $Q$. Fixed irregular compares two irregular arrangements generated once from fixed seeds and then held constant. |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250\}$ |
+| Vertical graph regime specifications (rows) | {balanced, alternating/repeating; balanced, fixed irregular; strong, alternating/repeating; strong, fixed irregular; ultra, alternating/repeating; ultra, fixed irregular}<br>balanced (both arrangements): $P$ and $Q$: each row has probability $1/5$; each column $1/5$<br>strong (both arrangements): $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$<br>ultra (both arrangements): $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250)\}$ |
+| MI settings by vertical regime | balanced, alternating/repeating: $M\approx0.6701$, $I(P)\approx0.134$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>balanced, fixed irregular: $M\approx1.023$, $I(P)\approx0.2046$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, alternating/repeating: $M\approx0.1972$, $I(P)\approx0.03944$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, fixed irregular: $M\approx0.01113$, $I(P)\approx0.002227$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, alternating/repeating: $M\approx0.116$, $I(P)\approx0.02319$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, fixed irregular: $M\approx0.002633$, $I(P)\approx0.0005266$, $e$ values $\{0, 0.1, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+#### 2.2.4 Shape 8x8
+
+![8x8 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_8x8.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_8x8.md)
+
+| Figure specification | Exact setting |
+| --- | --- |
+| Table shape | $8\times8$ |
+| Population construction | Different distribution shapes. Alternating/repeating compares an alternating high-low arrangement in $P$ with a repeating shifted-diagonal arrangement in $Q$. Fixed irregular compares two irregular arrangements generated once from fixed seeds and then held constant. |
+| Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250\}$ |
+| Vertical graph regime specifications (rows) | {balanced, alternating/repeating; balanced, fixed irregular; strong, alternating/repeating; strong, fixed irregular; ultra, alternating/repeating; ultra, fixed irregular}<br>balanced (both arrangements): $P$ and $Q$: each row has probability $1/8$; each column $1/8$<br>strong (both arrangements): $P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$<br>ultra (both arrangements): $P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, fixed as $e$ changes. |
+| Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250)\}$ |
+| MI settings by vertical regime | balanced, alternating/repeating: $M\approx0.6931$, $I(P)\approx0.1386$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>balanced, fixed irregular: $M\approx1.25$, $I(P)\approx0.2499$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, alternating/repeating: $M\approx0.2176$, $I(P)\approx0.04353$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>strong, fixed irregular: $M\approx0.2279$, $I(P)\approx0.04558$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, alternating/repeating: $M\approx0.1287$, $I(P)\approx0.02575$, $e$ values $\{0, 0.1, 0.4, 0.6\}$<br>ultra, fixed irregular: $M\approx0.1233$, $I(P)\approx0.02466$, $e$ values $\{0, 0.1, 0.4, 0.6\}$ |
+| Horizontal axis within each graph | Scaled MI difference $e$, from 0 to 0.60; the corresponding absolute difference is $eM$ nats |
+| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; an invalid result counts as a non-rejection |
+| Reference line | Rejection rate 0.05 |
+| Validity notation | Filled marker: valid rate at least 0.90; hollow marker: valid rate below 0.90 |
+| Replicates | 10,000 independently simulated table pairs per plotted point |
+
+## 3. Different margins
+
+P has uniform margins and Q has a dominant marginal probability of 0.70. These populations cannot be made identical by relabelling categories. The original dependence arrangements are tuned to the stated MI values.
+
+### 3.1 Different margins: 2x2, balanced vs mild, b=0.2
 
 ![Different margins: 2x2, balanced vs mild, b=0.2](figures/design_followup/01_heterogeneous_margins_2x2_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | P uniform, Q dominant probability 0.70; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: each row has probability $1/2$; each column $1/2$. $Q$: row 2 and column 2 each have probability 0.7; every other row has probability $0.3$, every other column $0.3$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1328; b=0.2; I(P) approximately 0.02657; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -51,19 +515,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 2. Different margins: 3x3, balanced vs mild, b=0.2
+### 3.2 Different margins: 3x3, balanced vs mild, b=0.2
 
 ![Different margins: 3x3, balanced vs mild, b=0.2](figures/design_followup/02_heterogeneous_margins_3x3_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | P uniform, Q dominant probability 0.70; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: each row has probability $1/3$; each column $1/3$. $Q$: row 2 and column 3 each have probability 0.7; every other row has probability $0.3/2$, every other column $0.3/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.4279; b=0.2; I(P) approximately 0.08558; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -90,19 +554,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 3. Different margins: 5x5, balanced vs mild, b=0.2
+### 3.3 Different margins: 5x5, balanced vs mild, b=0.2
 
 ![Different margins: 5x5, balanced vs mild, b=0.2](figures/design_followup/03_heterogeneous_margins_5x5_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | P uniform, Q dominant probability 0.70; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: each row has probability $1/5$; each column $1/5$. $Q$: row 2 and column 5 each have probability 0.7; every other row has probability $0.3/4$, every other column $0.3/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.7482; b=0.2; I(P) approximately 0.1496; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -129,19 +593,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 4. Different margins: 8x8, balanced vs mild, b=0.2
+### 3.4 Different margins: 8x8, balanced vs mild, b=0.2
 
 ![Different margins: 8x8, balanced vs mild, b=0.2](figures/design_followup/04_heterogeneous_margins_8x8_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | P uniform, Q dominant probability 0.70; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: each row has probability $1/8$; each column $1/8$. $Q$: row 2 and column 8 each have probability 0.7; every other row has probability $0.3/7$, every other column $0.3/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.9088; b=0.2; I(P) approximately 0.1818; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -168,19 +632,23 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 5. Baseline MI sensitivity: 3x3, balanced, b=0.02
+## 4. Baseline MI sensitivity
+
+These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence arrangements, M, and sample sizes fixed. At each e, the absolute MI difference eM therefore stays fixed across baseline levels.
+
+### 4.1 Baseline MI sensitivity: 3x3, balanced, b=0.02
 
 ![Baseline MI sensitivity: 3x3, balanced, b=0.02](figures/design_followup/05_baseline_sensitivity_3x3_balanced_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/3$; each column $1/3$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.095; b=0.02; I(P) approximately 0.02189; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -207,19 +675,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 6. Baseline MI sensitivity: 3x3, balanced, b=0.2
+### 4.2 Baseline MI sensitivity: 3x3, balanced, b=0.2
 
 ![Baseline MI sensitivity: 3x3, balanced, b=0.2](figures/design_followup/06_baseline_sensitivity_3x3_balanced_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/3$; each column $1/3$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.095; b=0.2; I(P) approximately 0.2189; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -246,19 +714,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 7. Baseline MI sensitivity: 3x3, balanced, b=0.6
+### 4.3 Baseline MI sensitivity: 3x3, balanced, b=0.6
 
 ![Baseline MI sensitivity: 3x3, balanced, b=0.6](figures/design_followup/07_baseline_sensitivity_3x3_balanced_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/3$; each column $1/3$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.095; b=0.6; I(P) approximately 0.6568; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -285,19 +753,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 8. Baseline MI sensitivity: 3x3, strong, b=0.02
+### 4.4 Baseline MI sensitivity: 3x3, strong, b=0.02
 
 ![Baseline MI sensitivity: 3x3, strong, b=0.02](figures/design_followup/08_baseline_sensitivity_3x3_strong_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.02; I(P) approximately 0.003844; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -324,19 +792,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 9. Baseline MI sensitivity: 3x3, strong, b=0.2
+### 4.5 Baseline MI sensitivity: 3x3, strong, b=0.2
 
 ![Baseline MI sensitivity: 3x3, strong, b=0.2](figures/design_followup/09_baseline_sensitivity_3x3_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.2; I(P) approximately 0.03844; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -363,19 +831,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 10. Baseline MI sensitivity: 3x3, strong, b=0.6
+### 4.6 Baseline MI sensitivity: 3x3, strong, b=0.6
 
 ![Baseline MI sensitivity: 3x3, strong, b=0.6](figures/design_followup/10_baseline_sensitivity_3x3_strong_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.6; I(P) approximately 0.1153; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -402,19 +870,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 11. Baseline MI sensitivity: 5x5, balanced, b=0.02
+### 4.7 Baseline MI sensitivity: 5x5, balanced, b=0.02
 
 ![Baseline MI sensitivity: 5x5, balanced, b=0.02](figures/design_followup/11_baseline_sensitivity_5x5_balanced_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/5$; each column $1/5$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.467; b=0.02; I(P) approximately 0.02934; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -441,19 +909,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 12. Baseline MI sensitivity: 5x5, balanced, b=0.2
+### 4.8 Baseline MI sensitivity: 5x5, balanced, b=0.2
 
 ![Baseline MI sensitivity: 5x5, balanced, b=0.2](figures/design_followup/12_baseline_sensitivity_5x5_balanced_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/5$; each column $1/5$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.467; b=0.2; I(P) approximately 0.2934; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -480,19 +948,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 13. Baseline MI sensitivity: 5x5, balanced, b=0.6
+### 4.9 Baseline MI sensitivity: 5x5, balanced, b=0.6
 
 ![Baseline MI sensitivity: 5x5, balanced, b=0.6](figures/design_followup/13_baseline_sensitivity_5x5_balanced_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Uniform margins; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$ and $Q$: each row has probability $1/5$; each column $1/5$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 1.467; b=0.6; I(P) approximately 0.8802; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -519,19 +987,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 14. Baseline MI sensitivity: 5x5, strong, b=0.02
+### 4.10 Baseline MI sensitivity: 5x5, strong, b=0.02
 
 ![Baseline MI sensitivity: 5x5, strong, b=0.02](figures/design_followup/14_baseline_sensitivity_5x5_strong_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.02; I(P) approximately 0.006721; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -558,19 +1026,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 15. Baseline MI sensitivity: 5x5, strong, b=0.2
+### 4.11 Baseline MI sensitivity: 5x5, strong, b=0.2
 
 ![Baseline MI sensitivity: 5x5, strong, b=0.2](figures/design_followup/15_baseline_sensitivity_5x5_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.2; I(P) approximately 0.06721; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -597,19 +1065,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 16. Baseline MI sensitivity: 5x5, strong, b=0.6
+### 4.12 Baseline MI sensitivity: 5x5, strong, b=0.6
 
 ![Baseline MI sensitivity: 5x5, strong, b=0.6](figures/design_followup/16_baseline_sensitivity_5x5_strong_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=50, smaller n=250, smaller n=1000} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=50, smaller n=250, smaller n=1000} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.6; I(P) approximately 0.2016; e in [0.0, 0.1, 0.2]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -636,19 +1104,23 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 17. Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1
+## 5. Unequal sample sizes: both allocations
+
+Each figure shows both sample allocations for the same population pairs. The first row gives Q the larger sample; the second gives P the larger sample. The populations are not swapped. The first row reuses the original results; the second contains the follow-up simulations. These figures include all configurations from the original unequal-sample overviews.
+
+### 5.1 Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1](figures/design_followup/17_allocation_reversal_2x2_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 2 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.01113; b=0.2; I(P) approximately 0.002227; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -717,19 +1189,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 18. Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1
+### 5.2 Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1](figures/design_followup/18_allocation_reversal_2x2_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 2 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.01113; b=0.2; I(P) approximately 0.002227; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -798,19 +1270,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 19. Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1
+### 5.3 Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1](figures/design_followup/19_allocation_reversal_2x2_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 2 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.01113; b=0.2; I(P) approximately 0.002227; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -879,19 +1351,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 20. Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1
+### 5.4 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1](figures/design_followup/20_allocation_reversal_2x2_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 2 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.002633; b=0.2; I(P) approximately 0.0005266; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -960,19 +1432,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 21. Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1
+### 5.5 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1](figures/design_followup/21_allocation_reversal_2x2_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 2 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.002633; b=0.2; I(P) approximately 0.0005266; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1041,19 +1513,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 22. Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1
+### 5.6 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1](figures/design_followup/22_allocation_reversal_2x2_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 2 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.002633; b=0.2; I(P) approximately 0.0005266; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1122,19 +1594,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 23. Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1
+### 5.7 Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1](figures/design_followup/23_allocation_reversal_3x3_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.2; I(P) approximately 0.03844; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1203,19 +1675,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 24. Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1
+### 5.8 Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1](figures/design_followup/24_allocation_reversal_3x3_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.2; I(P) approximately 0.03844; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1284,19 +1756,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 25. Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1
+### 5.9 Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1](figures/design_followup/25_allocation_reversal_3x3_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.2; I(P) approximately 0.03844; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1365,19 +1837,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 26. Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1
+### 5.10 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1](figures/design_followup/26_allocation_reversal_3x3_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.113; b=0.2; I(P) approximately 0.0226; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1446,19 +1918,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 27. Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1
+### 5.11 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1](figures/design_followup/27_allocation_reversal_3x3_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.113; b=0.2; I(P) approximately 0.0226; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1527,19 +1999,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 28. Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1
+### 5.12 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1](figures/design_followup/28_allocation_reversal_3x3_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.113; b=0.2; I(P) approximately 0.0226; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1608,19 +2080,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 29. Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1
+### 5.13 Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1](figures/design_followup/29_allocation_reversal_5x5_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.2; I(P) approximately 0.06721; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1689,19 +2161,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 30. Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1
+### 5.14 Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1](figures/design_followup/30_allocation_reversal_5x5_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.2; I(P) approximately 0.06721; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1770,19 +2242,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 31. Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1
+### 5.15 Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1](figures/design_followup/31_allocation_reversal_5x5_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.2; I(P) approximately 0.06721; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1851,19 +2323,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 32. Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1
+### 5.16 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1](figures/design_followup/32_allocation_reversal_5x5_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1945; b=0.2; I(P) approximately 0.0389; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -1932,19 +2404,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 33. Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1
+### 5.17 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1](figures/design_followup/33_allocation_reversal_5x5_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1945; b=0.2; I(P) approximately 0.0389; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2013,19 +2485,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 34. Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1
+### 5.18 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1](figures/design_followup/34_allocation_reversal_5x5_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1945; b=0.2; I(P) approximately 0.0389; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2094,19 +2566,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 35. Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1
+### 5.19 Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1](figures/design_followup/35_allocation_reversal_8x8_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.4029; b=0.2; I(P) approximately 0.08058; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2175,19 +2647,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 36. Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1
+### 5.20 Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1](figures/design_followup/36_allocation_reversal_8x8_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.4029; b=0.2; I(P) approximately 0.08058; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2256,19 +2728,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 37. Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1
+### 5.21 Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1](figures/design_followup/37_allocation_reversal_8x8_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.4029; b=0.2; I(P) approximately 0.08058; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2337,19 +2809,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 38. Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1
+### 5.22 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1
 
 ![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1](figures/design_followup/38_allocation_reversal_8x8_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.2309; b=0.2; I(P) approximately 0.04618; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2418,19 +2890,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 39. Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1
+### 5.23 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1
 
 ![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1](figures/design_followup/39_allocation_reversal_8x8_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.2309; b=0.2; I(P) approximately 0.04618; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2499,19 +2971,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 40. Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1
+### 5.24 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1
 
 ![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1](figures/design_followup/40_allocation_reversal_8x8_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
-| Vertical panels | {Q larger, P larger} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {smaller n=5, smaller n=10, smaller n=20, smaller n=50, smaller n=100} |
+| Vertical graph regime specifications (rows) | {Q larger, P larger}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.2309; b=0.2; I(P) approximately 0.04618; e in [0.0, 0.1, 0.4]; I(Q)=(b+e)M |
 | Axes | e from 0 to 0.6; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2580,19 +3052,23 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 41. Large-sample null calibration: 2x2, strong, b=0.2
+## 6. Large-sample convergence
+
+These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 50000}. The n=1000 points come from the original experiment. The larger samples are diagnostic controls beyond the main study range; the question is whether false-positive rates approach 0.05.
+
+### 6.1 Large-sample null calibration: 2x2, strong, b=0.2
 
 ![Large-sample null calibration: 2x2, strong, b=0.2](figures/design_followup/41_convergence_2x2_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 2 each have probability 0.9; every other row has probability $0.1$, every other column $0.1$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.01113; b=0.2; I(P) approximately 0.002227; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2609,19 +3085,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 42. Large-sample null calibration: 2x2, ultra, b=0.2
+### 6.2 Large-sample null calibration: 2x2, ultra, b=0.2
 
 ![Large-sample null calibration: 2x2, ultra, b=0.2](figures/design_followup/42_convergence_2x2_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 2x2 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 2 each have probability 0.95; every other row has probability $0.05$, every other column $0.05$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.002633; b=0.2; I(P) approximately 0.0005266; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2638,19 +3114,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 43. Large-sample null calibration: 3x3, strong, b=0.2
+### 6.3 Large-sample null calibration: 3x3, strong, b=0.2
 
 ![Large-sample null calibration: 3x3, strong, b=0.2](figures/design_followup/43_convergence_3x3_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 3 each have probability 0.9; every other row has probability $0.1/2$, every other column $0.1/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1922; b=0.2; I(P) approximately 0.03844; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2667,19 +3143,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 44. Large-sample null calibration: 3x3, ultra, b=0.2
+### 6.4 Large-sample null calibration: 3x3, ultra, b=0.2
 
 ![Large-sample null calibration: 3x3, ultra, b=0.2](figures/design_followup/44_convergence_3x3_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 3x3 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 3 each have probability 0.95; every other row has probability $0.05/2$, every other column $0.05/2$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.113; b=0.2; I(P) approximately 0.0226; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2696,19 +3172,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 45. Large-sample null calibration: 5x5, strong, b=0.2
+### 6.5 Large-sample null calibration: 5x5, strong, b=0.2
 
 ![Large-sample null calibration: 5x5, strong, b=0.2](figures/design_followup/45_convergence_5x5_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 5 each have probability 0.9; every other row has probability $0.1/4$, every other column $0.1/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.336; b=0.2; I(P) approximately 0.06721; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2725,19 +3201,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 46. Large-sample null calibration: 5x5, ultra, b=0.2
+### 6.6 Large-sample null calibration: 5x5, ultra, b=0.2
 
 ![Large-sample null calibration: 5x5, ultra, b=0.2](figures/design_followup/46_convergence_5x5_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 5x5 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 5 each have probability 0.95; every other row has probability $0.05/4$, every other column $0.05/4$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.1945; b=0.2; I(P) approximately 0.0389; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2754,19 +3230,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 47. Large-sample null calibration: 8x8, strong, b=0.2
+### 6.7 Large-sample null calibration: 8x8, strong, b=0.2
 
 ![Large-sample null calibration: 8x8, strong, b=0.2](figures/design_followup/47_convergence_8x8_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.90; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.9; $Q$: row 2 and column 8 each have probability 0.9; every other row has probability $0.1/7$, every other column $0.1/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.4029; b=0.2; I(P) approximately 0.08058; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2783,19 +3259,19 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 
 </details>
 
-## 48. Large-sample null calibration: 8x8, ultra, b=0.2
+### 6.8 Large-sample null calibration: 8x8, ultra, b=0.2
 
 ![Large-sample null calibration: 8x8, ultra, b=0.2](figures/design_followup/48_convergence_8x8_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
 | Table shape | 8x8 |
-| Population regime | Dominant row and column probability 0.95; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |
-| Horizontal panels | {single graph, n in [1000, 2500, 10000, 50000]} |
-| Vertical panels | {equal samples} |
+| Population construction | Ordinal arrangement for P and reversed ordinal for Q |
+| Horizontal graph regime specifications (columns) | {single graph, n in [1000, 2500, 10000, 50000]} |
+| Vertical graph regime specifications (rows) | {equal samples}.<br>$P$: row 1 and column 1 each have probability 0.95; $Q$: row 2 and column 8 each have probability 0.95; every other row has probability $0.05/7$, every other column $0.05/7$. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |
 | MI settings (nats) | M approximately 0.2309; b=0.2; I(P) approximately 0.04618; e in [0.0]; I(Q)=(b+e)M |
 | Axes | n from 1000 to 50000, log scale; rejection rate from 0 to 1 |
-| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |
+| Replicates | 10,000 independent table pairs per point |
 
 <details><summary>Exact rejection rates, intervals, validity and expected counts</summary>
 
@@ -2811,4 +3287,30 @@ The heterogeneous-margin block uses uniform margins for P and one dominant categ
 | 50000 | 50000 | 0 | Normal Wald | 0.0503 | 0.04619 | 0.05476 | 1 | 0.0503 | 1.267 | 0.1346 |
 
 </details>
+
+## 7. Protocols and reproducibility
+
+The original run contains 5,672 configurations and 56.72 million simulated
+table pairs. The subsequent additions contain 528 new configurations and
+5.28 million pairs. Reused points in the combined figures are not new simulations.
+Simple Welch and secondary significance levels remain in the datasets.
+
+| Resource | Original experiment | Follow-up |
+| --- | --- | --- |
+| Protocol | [Original protocol](../../experiments/FINAL_PROTOCOL.json) | [Follow-up protocol](../../experiments/DESIGN_FOLLOWUP_PROTOCOL.json) |
+| Results | [All exact results](../../results/detection_breakdown_sweep/cell_results.csv) | [All exact results](../../results/design_followup/cell_results.csv) |
+| Populations | [Population definitions](../../results/detection_breakdown_sweep/population_definitions.csv) | [Population definitions](../../results/design_followup/population_definitions.csv) |
+| Paired comparisons | [Paired results](../../results/detection_breakdown_sweep/paired_method_results.csv) | [Paired results](../../results/design_followup/paired_method_results.csv) |
+| Verification | [Original checks](../../results/detection_breakdown_sweep/verification_checks.json) | [Follow-up checks](../../results/design_followup/verification.json) |
+
+The landscape includes the original power grid and matching null points.
+The finer original null-only sample-size grid, including n=2, 3 and 4, remains
+in the original results. The two earlier standalone documents are archived in
+[the original landscape](archive/FINAL_EXPERIMENT_LANDSCAPE.md) and
+[the follow-up report](archive/DESIGN_FOLLOWUP.md).
+
+Regenerate this document from the saved results with
+`python experiments/make_experimental_results.py` from the project directory.
+The [combined report generator](../../experiments/make_experimental_results.py)
+uses the original and follow-up reporting functions. It does not rerun sampling.
 

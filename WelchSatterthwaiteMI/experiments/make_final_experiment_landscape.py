@@ -17,7 +17,7 @@ DEFAULT_RESULTS = PROJECT_ROOT / "results" / "detection_breakdown_sweep"
 DEFAULT_OUTPUT = (
     PROJECT_ROOT / "docs" / "experiments" / "figures" / "final_experiment_landscape"
 )
-DEFAULT_DOCUMENT = PROJECT_ROOT / "docs" / "experiments" / "FINAL_EXPERIMENT_LANDSCAPE.md"
+DEFAULT_DOCUMENT = PROJECT_ROOT / "docs" / "experiments" / "EXPERIMENTAL_RESULTS.md"
 METHODS = ("normal_wald", "expanded_welch")
 LABELS = {"normal_wald": "Normal Wald", "expanded_welch": "Expanded Welch"}
 COLORS = {"normal_wald": "#1f4e79", "expanded_welch": "#b23a73"}
@@ -324,6 +324,30 @@ def _mi_details(frame: pd.DataFrame, row_definitions: list[tuple[str, dict[str, 
     return "<br>".join(details)
 
 
+def marginal_specification(shape: str, skewness: str, same_shape: bool = False) -> str:
+    """Describe fixed population margins, not joint-cell probabilities."""
+    rows, columns = map(int, shape.split("x"))
+    if skewness == "balanced":
+        return f"$P$ and $Q$: each row has probability $1/{rows}$; each column $1/{columns}$"
+    a = {"mild": .7, "strong": .9, "ultra": .95, "balanced_vs_mild": .7}[skewness]
+    remaining = f"{1-a:.2g}"
+    row_other = remaining if rows == 2 else f"{remaining}/{rows-1}"
+    col_other = remaining if columns == 2 else f"{remaining}/{columns-1}"
+    if skewness == "balanced_vs_mild":
+        return (
+            f"$P$: each row has probability $1/{rows}$; each column $1/{columns}$. "
+            f"$Q$: row 2 and column {columns} each have probability {a:g}; "
+            f"every other row has probability ${row_other}$, every other column ${col_other}$"
+        )
+    positions = (
+        f"$P$ and $Q$: row 1 and column 1 each have probability {a:g}"
+        if same_shape else
+        f"$P$: row 1 and column 1 each have probability {a:g}; "
+        f"$Q$: row 2 and column {columns} each have probability {a:g}"
+    )
+    return positions + f"; every other row has probability ${row_other}$, every other column ${col_other}$"
+
+
 def _specification_table(
     shape: str,
     population_construction: str,
@@ -346,8 +370,6 @@ def _specification_table(
         r"0.60; the corresponding absolute difference is $eM$ nats |",
         "| Vertical axis within each graph | Unconditional rejection rate from 0 to 1; "
         "an invalid result counts as a non-rejection |",
-        "| Methods | {Normal Wald, Expanded Welch} |",
-        r"| Test and significance level | Two-sided test of $H_0:I(P)=I(Q)$ at $\alpha=0.05$ |",
         "| Reference line | Rejection rate 0.05 |",
         "| Validity notation | Filled marker: valid rate at least 0.90; "
         "hollow marker: valid rate below 0.90 |",
@@ -467,8 +489,11 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
                         shape,
                         construction,
                         r"$\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$",
-                        "{balanced (uniform margins), mild (dominant marginal probability "
-                        "0.70), strong (0.90), ultra (0.95)}",
+                        "<br>".join(
+                            f"{skew}: " + marginal_specification(
+                                shape, skew, relationship == "identical_distribution"
+                            ) for skew in ("balanced", "mild", "strong", "ultra")
+                        ) + ". These are row/column totals, not cell probabilities; they stay fixed as $e$ changes.",
                         r"$\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), "
                         r"(100,100), (250,250), (500,500), (1000,1000)\}$",
                         _mi_details(frame, power_rows),
@@ -554,7 +579,10 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
                     "shifted-diagonal arrangement in $Q$. Fixed irregular compares two "
                     "irregular arrangements generated once from fixed seeds and then held constant.",
                     r"$\{n_P=n_Q=5, 10, 20, 50, 100, 250\}$",
-                    vertical_interactions,
+                    vertical_interactions + "<br>" + "<br>".join(
+                        f"{skew} (both arrangements): " + marginal_specification(shape, skew)
+                        for skew in ("balanced", "strong", "ultra")
+                    ) + ". These are row/column totals, fixed as $e$ changes.",
                     r"$\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), "
                     r"(100,100), (250,250)\}$",
                     _mi_details(frame, interaction_rows),
@@ -600,7 +628,7 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
             "controls, not evidence of different estimator distributions. Equal e values "
             "across regimes need not represent equal absolute MI differences. Expanded Welch "
             "uses the same statistic as Wald with a heavier-tailed reference, so its rejection "
-            "rate cannot exceed Wald's. See [the follow-up experiments](DESIGN_FOLLOWUP.md) "
+            "rate cannot exceed Wald's. See [the combined experiments](EXPERIMENTAL_RESULTS.md) "
             "for genuinely different margins, baseline MI sensitivity, reversed sample "
             "allocations, and large-sample diagnostics.")
     expanded_lines[2:2] = [note, ""]
@@ -623,7 +651,8 @@ def main() -> None:
     _power_curve_landscapes(results, args.output_dir)
     _imbalance_curve_landscapes(results, args.output_dir)
     _interaction_curve_landscapes(results, args.output_dir)
-    _write_document(results, args.document)
+    from make_experimental_results import write_combined
+    write_combined(args.document, primary=results)
     print(f"Wrote 24 exact-regime landscape figures to {args.output_dir}")
     print(f"Wrote the landscape document to {args.document}")
 

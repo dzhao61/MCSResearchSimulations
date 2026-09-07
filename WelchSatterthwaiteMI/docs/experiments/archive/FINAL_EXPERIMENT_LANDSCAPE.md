@@ -1,5 +1,7 @@
 # Final Experiment Landscape: Normal Wald versus Expanded Welch
 
+Archived standalone report. Use [Experimental Results](../EXPERIMENTAL_RESULTS.md) for the combined study.
+
 Shading shows pointwise 95% Monte Carlo intervals. In the balanced primary different-shape nulls, Q is a column relabelling of P; these are invariance controls, not evidence of different estimator distributions. Equal e values across regimes need not represent equal absolute MI differences. Expanded Welch uses the same statistic as Wald with a heavier-tailed reference, so its rejection rate cannot exceed Wald's. See [the follow-up experiments](DESIGN_FOLLOWUP.md) for genuinely different margins, baseline MI sensitivity, reversed sample allocations, and large-sample diagnostics.
 
 ## 1. Purpose
@@ -59,9 +61,9 @@ detects progressively larger MI differences.
 
 #### 4.1.1 Shape 2x2: same distribution shape
 
-![2x2 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x2_identical_distribution.png)
+![2x2 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_2x2_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x2_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -81,9 +83,9 @@ detects progressively larger MI differences.
 
 #### 4.1.2 Shape 2x2: different distribution shapes
 
-![2x2 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
+![2x2 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -103,9 +105,9 @@ detects progressively larger MI differences.
 
 #### 4.1.3 Shape 2x3: same distribution shape
 
-![2x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x3_identical_distribution.png)
+![2x3 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_2x3_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -125,9 +127,9 @@ detects progressively larger MI differences.
 
 #### 4.1.4 Shape 2x3: different distribution shapes
 
-![2x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
+![2x3 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -147,9 +149,9 @@ detects progressively larger MI differences.
 
 #### 4.1.5 Shape 3x3: same distribution shape
 
-![3x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x3_identical_distribution.png)
+![3x3 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_3x3_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -169,9 +171,9 @@ detects progressively larger MI differences.
 
 #### 4.1.6 Shape 3x3: different distribution shapes
 
-![3x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
+![3x3 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -191,9 +193,9 @@ detects progressively larger MI differences.
 
 #### 4.1.7 Shape 3x5: same distribution shape
 
-![3x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x5_identical_distribution.png)
+![3x5 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_3x5_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -213,9 +215,9 @@ detects progressively larger MI differences.
 
 #### 4.1.8 Shape 3x5: different distribution shapes
 
-![3x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
+![3x5 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -235,9 +237,9 @@ detects progressively larger MI differences.
 
 #### 4.1.9 Shape 4x4: same distribution shape
 
-![4x4 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x4_identical_distribution.png)
+![4x4 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_4x4_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x4_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -257,9 +259,9 @@ detects progressively larger MI differences.
 
 #### 4.1.10 Shape 4x4: different distribution shapes
 
-![4x4 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
+![4x4 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -279,9 +281,9 @@ detects progressively larger MI differences.
 
 #### 4.1.11 Shape 4x8: same distribution shape
 
-![4x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x8_identical_distribution.png)
+![4x8 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_4x8_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -301,9 +303,9 @@ detects progressively larger MI differences.
 
 #### 4.1.12 Shape 4x8: different distribution shapes
 
-![4x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
+![4x8 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -323,9 +325,9 @@ detects progressively larger MI differences.
 
 #### 4.1.13 Shape 5x5: same distribution shape
 
-![5x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_5x5_identical_distribution.png)
+![5x5 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_5x5_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_5x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -345,9 +347,9 @@ detects progressively larger MI differences.
 
 #### 4.1.14 Shape 5x5: different distribution shapes
 
-![5x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
+![5x5 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -367,9 +369,9 @@ detects progressively larger MI differences.
 
 #### 4.1.15 Shape 8x8: same distribution shape
 
-![8x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_8x8_identical_distribution.png)
+![8x8 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_8x8_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_8x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -389,9 +391,9 @@ detects progressively larger MI differences.
 
 #### 4.1.16 Shape 8x8: different distribution shapes
 
-![8x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
+![8x8 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -413,9 +415,9 @@ detects progressively larger MI differences.
 
 #### 4.2.1 Shape 2x2
 
-![2x2 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_2x2.png)
+![2x2 rejection curves under unequal sample sizes](../figures/final_experiment_landscape/imbalance_2x2.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_2x2.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/imbalance_2x2.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -435,9 +437,9 @@ detects progressively larger MI differences.
 
 #### 4.2.2 Shape 3x3
 
-![3x3 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_3x3.png)
+![3x3 rejection curves under unequal sample sizes](../figures/final_experiment_landscape/imbalance_3x3.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_3x3.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/imbalance_3x3.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -457,9 +459,9 @@ detects progressively larger MI differences.
 
 #### 4.2.3 Shape 5x5
 
-![5x5 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_5x5.png)
+![5x5 rejection curves under unequal sample sizes](../figures/final_experiment_landscape/imbalance_5x5.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_5x5.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/imbalance_5x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -479,9 +481,9 @@ detects progressively larger MI differences.
 
 #### 4.2.4 Shape 8x8
 
-![8x8 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_8x8.png)
+![8x8 rejection curves under unequal sample sizes](../figures/final_experiment_landscape/imbalance_8x8.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_8x8.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/imbalance_8x8.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -503,9 +505,9 @@ detects progressively larger MI differences.
 
 #### 4.3.1 Shape 3x3
 
-![3x3 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x3.png)
+![3x3 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_3x3.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x3.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_3x3.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -525,9 +527,9 @@ detects progressively larger MI differences.
 
 #### 4.3.2 Shape 3x5
 
-![3x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x5.png)
+![3x5 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_3x5.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x5.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_3x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -547,9 +549,9 @@ detects progressively larger MI differences.
 
 #### 4.3.3 Shape 5x5
 
-![5x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_5x5.png)
+![5x5 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_5x5.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_5x5.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_5x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -569,9 +571,9 @@ detects progressively larger MI differences.
 
 #### 4.3.4 Shape 8x8
 
-![8x8 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_8x8.png)
+![8x8 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_8x8.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_8x8.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_8x8.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -603,8 +605,8 @@ detects progressively larger MI differences.
 ## 6. Reproducibility
 
 The figures and this document are generated by
-[`../../experiments/make_final_experiment_landscape.py`](../../experiments/make_final_experiment_landscape.py)
+[`../../experiments/make_final_experiment_landscape.py`](../../../experiments/make_final_experiment_landscape.py)
 from
-[`../../results/detection_breakdown_sweep/cell_results.csv`](../../results/detection_breakdown_sweep/cell_results.csv).
+[`../../results/detection_breakdown_sweep/cell_results.csv`](../../../results/detection_breakdown_sweep/cell_results.csv).
 The generator verifies the frozen configuration counts and rejects duplicate
 or incomplete curves rather than averaging them.

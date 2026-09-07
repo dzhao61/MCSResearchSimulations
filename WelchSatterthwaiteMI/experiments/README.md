@@ -9,11 +9,11 @@ sample robustness cells. The runner constructs deterministic populations,
 uses stable configuration-specific seeds, processes simulations in bounded
 batches, and generates all aggregate data, checks, figures, and `REPORT.md`.
 
-`make_final_experiment_landscape.py` converts the frozen configuration-level
-results into the Wald-versus-Expanded-Welch atlas in
-[`../docs/experiments/FINAL_EXPERIMENT_LANDSCAPE.md`](../docs/experiments/FINAL_EXPERIMENT_LANDSCAPE.md).
-Its heatmaps preserve every exact configuration at the primary significance
-level rather than pooling regimes.
+`make_experimental_results.py` combines the original and follow-up results in
+[Experimental Results](../docs/experiments/EXPERIMENTAL_RESULTS.md).
+Its curves preserve each regime, with specifications and exact result tables.
+The unequal-sample figures show both allocations together. Run this generator
+to refresh the combined document from saved results; no sampling is needed.
 
 Routine simulation work follows a run-first convention: once an experiment or
 diagnostic is sufficiently specified and low risk, implement and run it, then

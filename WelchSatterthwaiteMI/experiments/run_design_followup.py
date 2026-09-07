@@ -14,11 +14,12 @@ import pandas as pd
 from run_detection_breakdown_sweep import (
     _simulate_configuration, stable_seed, table_with_target_mi_from_interaction,
 )
+from make_final_experiment_landscape import marginal_specification
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "results/detection_breakdown_sweep"
 OUT = ROOT / "results/design_followup"
-DOC = ROOT / "docs/experiments/DESIGN_FOLLOWUP.md"
+DOC = ROOT / "docs/experiments/EXPERIMENTAL_RESULTS.md"
 FIG = DOC.parent / "figures/design_followup"
 PROTOCOL = Path(__file__).with_name("DESIGN_FOLLOWUP_PROTOCOL.json")
 METHODS = {"normal_wald": ("Normal Wald", "#1f4e79", "o"),
@@ -128,7 +129,7 @@ def table(frame):
     return lines
 
 
-def report(results):
+def report(results, document):
     FIG.mkdir(parents=True,exist_ok=True)
     old=pd.read_csv(SOURCE/'cell_results.csv')
     old=old[(old.nominal_alpha==.05)&old.method.isin(METHODS)].copy()
@@ -189,19 +190,18 @@ def report(results):
         fig.savefig(FIG/filename,dpi=150);plt.close(fig)
         first=frame.iloc[0];scale=float(first.shared_reachable_mi)
         rows=['| Specification | Setting |','| --- | --- |',f'| Table shape | {shape} |',
-              f'| Population regime | '+('P uniform, Q dominant probability 0.70' if block=='heterogeneous_margins' else
-                  {'balanced':'Uniform margins','strong':'Dominant row and column probability 0.90',
-                   'ultra':'Dominant row and column probability 0.95'}[skew])+
-                  '; all remaining marginal probabilities equal; ordinal arrangement for P and reversed ordinal for Q |',
-              f'| Horizontal panels | '+('{single graph, n in '+str([int(v) for v in ns])+'}' if convergence else '{'+', '.join('smaller n='+str(int(v)) for v in ns)+'}')+' |',
-              '| Vertical panels | {'+', '.join(allocations)+'} |',
+              '| Population construction | Ordinal arrangement for P and reversed ordinal for Q |',
+              f'| Horizontal graph regime specifications (columns) | '+('{single graph, n in '+str([int(v) for v in ns])+'}' if convergence else '{'+', '.join('smaller n='+str(int(v)) for v in ns)+'}')+' |',
+              '| Vertical graph regime specifications (rows) | {'+', '.join(allocations)+'}.<br>'+
+                  marginal_specification(shape, skew)+
+                  '. These are row/column totals, not cell probabilities; they stay fixed across all panels and MI differences in this figure. |',
               f'| MI settings (nats) | M approximately {scale:.4g}; b={b:g}; I(P) approximately {b*scale:.4g}; e in '+str(sorted(frame.relative_effect.unique().tolist()))+'; I(Q)=(b+e)M |',
               '| Axes | '+('n from 1000 to 50000, log scale' if convergence else 'e from 0 to 0.6')+'; rejection rate from 0 to 1 |',
-              '| Methods and sampling | Normal Wald and Expanded Welch; alpha=0.05; 10,000 independent table pairs per point |']
+              '| Replicates | 10,000 independent table pairs per point |']
         lines.extend([f'## {index}. {title}','',f'![{title}](figures/design_followup/{filename})','',*rows,'',
                       '<details><summary>Exact rejection rates, intervals, validity and expected counts</summary>','',
                       *table(frame.sort_values(['n_p','n_q','relative_effect','method'])),'','</details>',''])
-    DOC.write_text('\n'.join(lines)+'\n')
+    document.write_text('\n'.join(lines)+'\n')
 
 
 def main():
@@ -242,7 +242,9 @@ def main():
     assert (counts.expanded_welch<=counts.normal_wald).all()
     (OUT/'verification.json').write_text(json.dumps({'all_pass':True,'configurations':protocol['new_configuration_count'],
         'checks':['unique complete result grid','rejection denominators','valid counts','target MI','Expanded rejection subset']},indent=2))
-    report(results);print(f'Verified results; wrote {DOC}',flush=True)
+    from make_experimental_results import write_combined
+    write_combined(DOC, followup=results)
+    print(f'Verified results; wrote {DOC}',flush=True)
 
 
 if __name__=='__main__':

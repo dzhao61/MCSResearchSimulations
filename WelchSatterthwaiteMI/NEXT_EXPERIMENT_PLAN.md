@@ -2,7 +2,7 @@
 
 The frozen experiment is complete. The subsequent design review and authorized
 follow-up are specified in `experiments/DESIGN_FOLLOWUP_PROTOCOL.json` and
-reported in [Design Follow-up](docs/experiments/DESIGN_FOLLOWUP.md).
+reported in [Experimental Results](docs/experiments/EXPERIMENTAL_RESULTS.md).
 Those additions include different margins, baseline MI sensitivity, reversed
 sample allocations, and larger-sample null diagnostics. They are subsequent
 evidence, not part of the original confirmatory protocol below. Balanced
