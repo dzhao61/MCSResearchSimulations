@@ -20,10 +20,13 @@ experimental records, and historical material.
 
 ## Experiments
 
-- [Experimental Results](experiments/EXPERIMENTAL_RESULTS.md)
-  combines the original Wald-versus-Expanded-Welch landscape with different
-  margins, baseline MI sensitivity, both sample allocations, and convergence
-  diagnostics. Each figure includes specifications and exact result tables.
+- [Thesis Experiment Redesign](experiments/THESIS_EXPERIMENT_PLAN.md)
+  is the current implementation plan: explicit populations, matched MI differences,
+  calibration and power, stress tests, and standardized reporting. Not yet run.
+- [Population Construction Check](experiments/CONSTRUCTION_CHECK.md)
+  retains the separate exploratory evidence motivating the redesign.
+- [Archived Experimental Results](experiments/archive/EXPERIMENTAL_RESULTS.md)
+  preserves the previous landscape and follow-up with their original data.
 - [`experiments/EQUAL_MI_2X2_BASELINE.md`](experiments/EQUAL_MI_2X2_BASELINE.md)
   establishes the 2x2 Normal Wald and Expanded Welch baselines.
 - [`experiments/CONSTRAINED_LR_2X2_VALIDATION.md`](experiments/CONSTRAINED_LR_2X2_VALIDATION.md)

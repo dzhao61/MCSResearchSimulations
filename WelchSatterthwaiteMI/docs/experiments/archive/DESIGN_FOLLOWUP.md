@@ -1,6 +1,6 @@
 # Follow-up Experiments: Wald and Expanded Welch
 
-Archived standalone report. Use [Experimental Results](../EXPERIMENTAL_RESULTS.md) for the combined study.
+Archived standalone report. Use [Experimental Results](EXPERIMENTAL_RESULTS.md) for the archived combined study.
 
 These additions were specified after reviewing the original experiment. Each panel is one fixed regime; no rates are averaged across regimes.
 

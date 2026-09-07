@@ -1,6 +1,6 @@
 # Final Experiment Landscape: Normal Wald versus Expanded Welch
 
-Archived standalone report. Use [Experimental Results](../EXPERIMENTAL_RESULTS.md) for the combined study.
+Archived standalone report. Use [Experimental Results](EXPERIMENTAL_RESULTS.md) for the archived combined study.
 
 Shading shows pointwise 95% Monte Carlo intervals. In the balanced primary different-shape nulls, Q is a column relabelling of P; these are invariance controls, not evidence of different estimator distributions. Equal e values across regimes need not represent equal absolute MI differences. Expanded Welch uses the same statistic as Wald with a heavier-tailed reference, so its rejection rate cannot exceed Wald's. See [the follow-up experiments](DESIGN_FOLLOWUP.md) for genuinely different margins, baseline MI sensitivity, reversed sample allocations, and large-sample diagnostics.
 

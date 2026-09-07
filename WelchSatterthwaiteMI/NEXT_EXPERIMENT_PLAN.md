@@ -1,8 +1,11 @@
 # Final Thesis Experiment Protocol: Differential Mutual Information
 
+> Historical frozen protocol for the completed original study. For the current
+> proposed design, use [Thesis Experiment Redesign](docs/experiments/THESIS_EXPERIMENT_PLAN.md).
+
 The frozen experiment is complete. The subsequent design review and authorized
 follow-up are specified in `experiments/DESIGN_FOLLOWUP_PROTOCOL.json` and
-reported in [Experimental Results](docs/experiments/EXPERIMENTAL_RESULTS.md).
+reported in [Archived Experimental Results](docs/experiments/archive/EXPERIMENTAL_RESULTS.md).
 Those additions include different margins, baseline MI sensitivity, reversed
 sample allocations, and larger-sample null diagnostics. They are subsequent
 evidence, not part of the original confirmatory protocol below. Balanced

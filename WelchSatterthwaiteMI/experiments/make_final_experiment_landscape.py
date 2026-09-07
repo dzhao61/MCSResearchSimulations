@@ -17,7 +17,7 @@ DEFAULT_RESULTS = PROJECT_ROOT / "results" / "detection_breakdown_sweep"
 DEFAULT_OUTPUT = (
     PROJECT_ROOT / "docs" / "experiments" / "figures" / "final_experiment_landscape"
 )
-DEFAULT_DOCUMENT = PROJECT_ROOT / "docs" / "experiments" / "EXPERIMENTAL_RESULTS.md"
+DEFAULT_DOCUMENT = PROJECT_ROOT / "docs" / "experiments" / "archive" / "EXPERIMENTAL_RESULTS.md"
 METHODS = ("normal_wald", "expanded_welch")
 LABELS = {"normal_wald": "Normal Wald", "expanded_welch": "Expanded Welch"}
 COLORS = {"normal_wald": "#1f4e79", "expanded_welch": "#b23a73"}

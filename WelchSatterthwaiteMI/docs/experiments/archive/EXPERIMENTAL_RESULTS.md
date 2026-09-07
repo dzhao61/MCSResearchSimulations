@@ -1,5 +1,7 @@
 # Experimental Results: Normal Wald and Expanded Welch
 
+> Archived study. The new design is specified in [Thesis Experiment Redesign](../THESIS_EXPERIMENT_PLAN.md). These results belong to the previous protocols and are preserved unchanged.
+
 This document brings together the original experiment and the subsequent
 design follow-up. Each panel represents one fixed regime; results are not
 averaged across population definitions, table sizes, or sample sizes. The
@@ -219,9 +221,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.1 Shape 2x2: same distribution shape
 
-![2x2 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x2_identical_distribution.png)
+![2x2 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_2x2_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x2_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -239,9 +241,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.2 Shape 2x2: different distribution shapes
 
-![2x2 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
+![2x2 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -259,9 +261,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.3 Shape 2x3: same distribution shape
 
-![2x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x3_identical_distribution.png)
+![2x3 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_2x3_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -279,9 +281,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.4 Shape 2x3: different distribution shapes
 
-![2x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
+![2x3 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -299,9 +301,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.5 Shape 3x3: same distribution shape
 
-![3x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x3_identical_distribution.png)
+![3x3 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_3x3_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -319,9 +321,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.6 Shape 3x3: different distribution shapes
 
-![3x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
+![3x3 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -339,9 +341,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.7 Shape 3x5: same distribution shape
 
-![3x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x5_identical_distribution.png)
+![3x5 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_3x5_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -359,9 +361,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.8 Shape 3x5: different distribution shapes
 
-![3x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
+![3x5 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -379,9 +381,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.9 Shape 4x4: same distribution shape
 
-![4x4 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x4_identical_distribution.png)
+![4x4 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_4x4_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x4_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -399,9 +401,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.10 Shape 4x4: different distribution shapes
 
-![4x4 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
+![4x4 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -419,9 +421,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.11 Shape 4x8: same distribution shape
 
-![4x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x8_identical_distribution.png)
+![4x8 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_4x8_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -439,9 +441,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.12 Shape 4x8: different distribution shapes
 
-![4x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
+![4x8 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -459,9 +461,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.13 Shape 5x5: same distribution shape
 
-![5x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_5x5_identical_distribution.png)
+![5x5 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_5x5_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_5x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -479,9 +481,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.14 Shape 5x5: different distribution shapes
 
-![5x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
+![5x5 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -499,9 +501,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.15 Shape 8x8: same distribution shape
 
-![8x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_8x8_identical_distribution.png)
+![8x8 rejection curves for same distribution shape](../figures/final_experiment_landscape/power_8x8_identical_distribution.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_identical_distribution.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_8x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -519,9 +521,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.1.16 Shape 8x8: different distribution shapes
 
-![8x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
+![8x8 rejection curves for different distribution shapes](../figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -541,9 +543,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.2.1 Shape 3x3
 
-![3x3 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x3.png)
+![3x3 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_3x3.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x3.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_3x3.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -561,9 +563,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.2.2 Shape 3x5
 
-![3x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x5.png)
+![3x5 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_3x5.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x5.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_3x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -581,9 +583,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.2.3 Shape 5x5
 
-![5x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_5x5.png)
+![5x5 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_5x5.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_5x5.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_5x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -601,9 +603,9 @@ Section 3 explicitly compares different margins.
 
 #### 2.2.4 Shape 8x8
 
-![8x8 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_8x8.png)
+![8x8 rejection curves for other arrangements of dependence](../figures/final_experiment_landscape/interaction_8x8.png)
 
-[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_8x8.md)
+[Exact rates, validity, and 95% intervals for every point](../figures/final_experiment_landscape/interaction_8x8.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -625,7 +627,7 @@ P has uniform margins and Q has a dominant marginal probability of 0.70. These p
 
 ### 3.1 Different margins: 2x2, balanced vs mild, b=0.2
 
-![Different margins: 2x2, balanced vs mild, b=0.2](figures/design_followup/01_heterogeneous_margins_2x2_balanced_vs_mild_b0.2_r1.png)
+![Different margins: 2x2, balanced vs mild, b=0.2](../figures/design_followup/01_heterogeneous_margins_2x2_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -664,7 +666,7 @@ P has uniform margins and Q has a dominant marginal probability of 0.70. These p
 
 ### 3.2 Different margins: 3x3, balanced vs mild, b=0.2
 
-![Different margins: 3x3, balanced vs mild, b=0.2](figures/design_followup/02_heterogeneous_margins_3x3_balanced_vs_mild_b0.2_r1.png)
+![Different margins: 3x3, balanced vs mild, b=0.2](../figures/design_followup/02_heterogeneous_margins_3x3_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -703,7 +705,7 @@ P has uniform margins and Q has a dominant marginal probability of 0.70. These p
 
 ### 3.3 Different margins: 5x5, balanced vs mild, b=0.2
 
-![Different margins: 5x5, balanced vs mild, b=0.2](figures/design_followup/03_heterogeneous_margins_5x5_balanced_vs_mild_b0.2_r1.png)
+![Different margins: 5x5, balanced vs mild, b=0.2](../figures/design_followup/03_heterogeneous_margins_5x5_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -742,7 +744,7 @@ P has uniform margins and Q has a dominant marginal probability of 0.70. These p
 
 ### 3.4 Different margins: 8x8, balanced vs mild, b=0.2
 
-![Different margins: 8x8, balanced vs mild, b=0.2](figures/design_followup/04_heterogeneous_margins_8x8_balanced_vs_mild_b0.2_r1.png)
+![Different margins: 8x8, balanced vs mild, b=0.2](../figures/design_followup/04_heterogeneous_margins_8x8_balanced_vs_mild_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -785,7 +787,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.1 Baseline MI sensitivity: 3x3, balanced, b=0.02
 
-![Baseline MI sensitivity: 3x3, balanced, b=0.02](figures/design_followup/05_baseline_sensitivity_3x3_balanced_b0.02_r1.png)
+![Baseline MI sensitivity: 3x3, balanced, b=0.02](../figures/design_followup/05_baseline_sensitivity_3x3_balanced_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -824,7 +826,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.2 Baseline MI sensitivity: 3x3, balanced, b=0.2
 
-![Baseline MI sensitivity: 3x3, balanced, b=0.2](figures/design_followup/06_baseline_sensitivity_3x3_balanced_b0.2_r1.png)
+![Baseline MI sensitivity: 3x3, balanced, b=0.2](../figures/design_followup/06_baseline_sensitivity_3x3_balanced_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -863,7 +865,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.3 Baseline MI sensitivity: 3x3, balanced, b=0.6
 
-![Baseline MI sensitivity: 3x3, balanced, b=0.6](figures/design_followup/07_baseline_sensitivity_3x3_balanced_b0.6_r1.png)
+![Baseline MI sensitivity: 3x3, balanced, b=0.6](../figures/design_followup/07_baseline_sensitivity_3x3_balanced_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -902,7 +904,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.4 Baseline MI sensitivity: 3x3, strong, b=0.02
 
-![Baseline MI sensitivity: 3x3, strong, b=0.02](figures/design_followup/08_baseline_sensitivity_3x3_strong_b0.02_r1.png)
+![Baseline MI sensitivity: 3x3, strong, b=0.02](../figures/design_followup/08_baseline_sensitivity_3x3_strong_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -941,7 +943,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.5 Baseline MI sensitivity: 3x3, strong, b=0.2
 
-![Baseline MI sensitivity: 3x3, strong, b=0.2](figures/design_followup/09_baseline_sensitivity_3x3_strong_b0.2_r1.png)
+![Baseline MI sensitivity: 3x3, strong, b=0.2](../figures/design_followup/09_baseline_sensitivity_3x3_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -980,7 +982,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.6 Baseline MI sensitivity: 3x3, strong, b=0.6
 
-![Baseline MI sensitivity: 3x3, strong, b=0.6](figures/design_followup/10_baseline_sensitivity_3x3_strong_b0.6_r1.png)
+![Baseline MI sensitivity: 3x3, strong, b=0.6](../figures/design_followup/10_baseline_sensitivity_3x3_strong_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1019,7 +1021,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.7 Baseline MI sensitivity: 5x5, balanced, b=0.02
 
-![Baseline MI sensitivity: 5x5, balanced, b=0.02](figures/design_followup/11_baseline_sensitivity_5x5_balanced_b0.02_r1.png)
+![Baseline MI sensitivity: 5x5, balanced, b=0.02](../figures/design_followup/11_baseline_sensitivity_5x5_balanced_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1058,7 +1060,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.8 Baseline MI sensitivity: 5x5, balanced, b=0.2
 
-![Baseline MI sensitivity: 5x5, balanced, b=0.2](figures/design_followup/12_baseline_sensitivity_5x5_balanced_b0.2_r1.png)
+![Baseline MI sensitivity: 5x5, balanced, b=0.2](../figures/design_followup/12_baseline_sensitivity_5x5_balanced_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1097,7 +1099,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.9 Baseline MI sensitivity: 5x5, balanced, b=0.6
 
-![Baseline MI sensitivity: 5x5, balanced, b=0.6](figures/design_followup/13_baseline_sensitivity_5x5_balanced_b0.6_r1.png)
+![Baseline MI sensitivity: 5x5, balanced, b=0.6](../figures/design_followup/13_baseline_sensitivity_5x5_balanced_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1136,7 +1138,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.10 Baseline MI sensitivity: 5x5, strong, b=0.02
 
-![Baseline MI sensitivity: 5x5, strong, b=0.02](figures/design_followup/14_baseline_sensitivity_5x5_strong_b0.02_r1.png)
+![Baseline MI sensitivity: 5x5, strong, b=0.02](../figures/design_followup/14_baseline_sensitivity_5x5_strong_b0.02_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1175,7 +1177,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.11 Baseline MI sensitivity: 5x5, strong, b=0.2
 
-![Baseline MI sensitivity: 5x5, strong, b=0.2](figures/design_followup/15_baseline_sensitivity_5x5_strong_b0.2_r1.png)
+![Baseline MI sensitivity: 5x5, strong, b=0.2](../figures/design_followup/15_baseline_sensitivity_5x5_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1214,7 +1216,7 @@ These comparisons vary b over {0.02, 0.2, 0.6} while holding margins, dependence
 
 ### 4.12 Baseline MI sensitivity: 5x5, strong, b=0.6
 
-![Baseline MI sensitivity: 5x5, strong, b=0.6](figures/design_followup/16_baseline_sensitivity_5x5_strong_b0.6_r1.png)
+![Baseline MI sensitivity: 5x5, strong, b=0.6](../figures/design_followup/16_baseline_sensitivity_5x5_strong_b0.6_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1257,7 +1259,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.1 Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1](figures/design_followup/17_allocation_reversal_2x2_strong_b0.2_r10.png)
+![Reversed sample allocation: 2x2, strong, b=0.2, ratio=10:1](../figures/design_followup/17_allocation_reversal_2x2_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1338,7 +1340,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.2 Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1](figures/design_followup/18_allocation_reversal_2x2_strong_b0.2_r2.png)
+![Reversed sample allocation: 2x2, strong, b=0.2, ratio=2:1](../figures/design_followup/18_allocation_reversal_2x2_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1419,7 +1421,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.3 Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1](figures/design_followup/19_allocation_reversal_2x2_strong_b0.2_r5.png)
+![Reversed sample allocation: 2x2, strong, b=0.2, ratio=5:1](../figures/design_followup/19_allocation_reversal_2x2_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1500,7 +1502,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.4 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1](figures/design_followup/20_allocation_reversal_2x2_ultra_b0.2_r10.png)
+![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=10:1](../figures/design_followup/20_allocation_reversal_2x2_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1581,7 +1583,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.5 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1](figures/design_followup/21_allocation_reversal_2x2_ultra_b0.2_r2.png)
+![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=2:1](../figures/design_followup/21_allocation_reversal_2x2_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1662,7 +1664,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.6 Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1](figures/design_followup/22_allocation_reversal_2x2_ultra_b0.2_r5.png)
+![Reversed sample allocation: 2x2, ultra, b=0.2, ratio=5:1](../figures/design_followup/22_allocation_reversal_2x2_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1743,7 +1745,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.7 Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1](figures/design_followup/23_allocation_reversal_3x3_strong_b0.2_r10.png)
+![Reversed sample allocation: 3x3, strong, b=0.2, ratio=10:1](../figures/design_followup/23_allocation_reversal_3x3_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1824,7 +1826,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.8 Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1](figures/design_followup/24_allocation_reversal_3x3_strong_b0.2_r2.png)
+![Reversed sample allocation: 3x3, strong, b=0.2, ratio=2:1](../figures/design_followup/24_allocation_reversal_3x3_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1905,7 +1907,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.9 Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1](figures/design_followup/25_allocation_reversal_3x3_strong_b0.2_r5.png)
+![Reversed sample allocation: 3x3, strong, b=0.2, ratio=5:1](../figures/design_followup/25_allocation_reversal_3x3_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -1986,7 +1988,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.10 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1](figures/design_followup/26_allocation_reversal_3x3_ultra_b0.2_r10.png)
+![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=10:1](../figures/design_followup/26_allocation_reversal_3x3_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2067,7 +2069,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.11 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1](figures/design_followup/27_allocation_reversal_3x3_ultra_b0.2_r2.png)
+![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=2:1](../figures/design_followup/27_allocation_reversal_3x3_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2148,7 +2150,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.12 Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1](figures/design_followup/28_allocation_reversal_3x3_ultra_b0.2_r5.png)
+![Reversed sample allocation: 3x3, ultra, b=0.2, ratio=5:1](../figures/design_followup/28_allocation_reversal_3x3_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2229,7 +2231,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.13 Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1](figures/design_followup/29_allocation_reversal_5x5_strong_b0.2_r10.png)
+![Reversed sample allocation: 5x5, strong, b=0.2, ratio=10:1](../figures/design_followup/29_allocation_reversal_5x5_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2310,7 +2312,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.14 Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1](figures/design_followup/30_allocation_reversal_5x5_strong_b0.2_r2.png)
+![Reversed sample allocation: 5x5, strong, b=0.2, ratio=2:1](../figures/design_followup/30_allocation_reversal_5x5_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2391,7 +2393,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.15 Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1](figures/design_followup/31_allocation_reversal_5x5_strong_b0.2_r5.png)
+![Reversed sample allocation: 5x5, strong, b=0.2, ratio=5:1](../figures/design_followup/31_allocation_reversal_5x5_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2472,7 +2474,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.16 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1](figures/design_followup/32_allocation_reversal_5x5_ultra_b0.2_r10.png)
+![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=10:1](../figures/design_followup/32_allocation_reversal_5x5_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2553,7 +2555,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.17 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1](figures/design_followup/33_allocation_reversal_5x5_ultra_b0.2_r2.png)
+![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=2:1](../figures/design_followup/33_allocation_reversal_5x5_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2634,7 +2636,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.18 Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1](figures/design_followup/34_allocation_reversal_5x5_ultra_b0.2_r5.png)
+![Reversed sample allocation: 5x5, ultra, b=0.2, ratio=5:1](../figures/design_followup/34_allocation_reversal_5x5_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2715,7 +2717,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.19 Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1](figures/design_followup/35_allocation_reversal_8x8_strong_b0.2_r10.png)
+![Reversed sample allocation: 8x8, strong, b=0.2, ratio=10:1](../figures/design_followup/35_allocation_reversal_8x8_strong_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2796,7 +2798,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.20 Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1](figures/design_followup/36_allocation_reversal_8x8_strong_b0.2_r2.png)
+![Reversed sample allocation: 8x8, strong, b=0.2, ratio=2:1](../figures/design_followup/36_allocation_reversal_8x8_strong_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2877,7 +2879,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.21 Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1](figures/design_followup/37_allocation_reversal_8x8_strong_b0.2_r5.png)
+![Reversed sample allocation: 8x8, strong, b=0.2, ratio=5:1](../figures/design_followup/37_allocation_reversal_8x8_strong_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -2958,7 +2960,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.22 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1
 
-![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1](figures/design_followup/38_allocation_reversal_8x8_ultra_b0.2_r10.png)
+![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=10:1](../figures/design_followup/38_allocation_reversal_8x8_ultra_b0.2_r10.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3039,7 +3041,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.23 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1
 
-![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1](figures/design_followup/39_allocation_reversal_8x8_ultra_b0.2_r2.png)
+![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=2:1](../figures/design_followup/39_allocation_reversal_8x8_ultra_b0.2_r2.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3120,7 +3122,7 @@ Each figure shows both sample allocations for the same population pairs. The fir
 
 ### 5.24 Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1
 
-![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1](figures/design_followup/40_allocation_reversal_8x8_ultra_b0.2_r5.png)
+![Reversed sample allocation: 8x8, ultra, b=0.2, ratio=5:1](../figures/design_followup/40_allocation_reversal_8x8_ultra_b0.2_r5.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3205,7 +3207,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.1 Large-sample null calibration: 2x2, strong, b=0.2
 
-![Large-sample null calibration: 2x2, strong, b=0.2](figures/design_followup/41_convergence_2x2_strong_b0.2_r1.png)
+![Large-sample null calibration: 2x2, strong, b=0.2](../figures/design_followup/41_convergence_2x2_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3234,7 +3236,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.2 Large-sample null calibration: 2x2, ultra, b=0.2
 
-![Large-sample null calibration: 2x2, ultra, b=0.2](figures/design_followup/42_convergence_2x2_ultra_b0.2_r1.png)
+![Large-sample null calibration: 2x2, ultra, b=0.2](../figures/design_followup/42_convergence_2x2_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3263,7 +3265,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.3 Large-sample null calibration: 3x3, strong, b=0.2
 
-![Large-sample null calibration: 3x3, strong, b=0.2](figures/design_followup/43_convergence_3x3_strong_b0.2_r1.png)
+![Large-sample null calibration: 3x3, strong, b=0.2](../figures/design_followup/43_convergence_3x3_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3292,7 +3294,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.4 Large-sample null calibration: 3x3, ultra, b=0.2
 
-![Large-sample null calibration: 3x3, ultra, b=0.2](figures/design_followup/44_convergence_3x3_ultra_b0.2_r1.png)
+![Large-sample null calibration: 3x3, ultra, b=0.2](../figures/design_followup/44_convergence_3x3_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3321,7 +3323,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.5 Large-sample null calibration: 5x5, strong, b=0.2
 
-![Large-sample null calibration: 5x5, strong, b=0.2](figures/design_followup/45_convergence_5x5_strong_b0.2_r1.png)
+![Large-sample null calibration: 5x5, strong, b=0.2](../figures/design_followup/45_convergence_5x5_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3350,7 +3352,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.6 Large-sample null calibration: 5x5, ultra, b=0.2
 
-![Large-sample null calibration: 5x5, ultra, b=0.2](figures/design_followup/46_convergence_5x5_ultra_b0.2_r1.png)
+![Large-sample null calibration: 5x5, ultra, b=0.2](../figures/design_followup/46_convergence_5x5_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3379,7 +3381,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.7 Large-sample null calibration: 8x8, strong, b=0.2
 
-![Large-sample null calibration: 8x8, strong, b=0.2](figures/design_followup/47_convergence_8x8_strong_b0.2_r1.png)
+![Large-sample null calibration: 8x8, strong, b=0.2](../figures/design_followup/47_convergence_8x8_strong_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3408,7 +3410,7 @@ These null comparisons use the same populations at nP=nQ in {1000, 2500, 10000, 
 
 ### 6.8 Large-sample null calibration: 8x8, ultra, b=0.2
 
-![Large-sample null calibration: 8x8, ultra, b=0.2](figures/design_followup/48_convergence_8x8_ultra_b0.2_r1.png)
+![Large-sample null calibration: 8x8, ultra, b=0.2](../figures/design_followup/48_convergence_8x8_ultra_b0.2_r1.png)
 
 | Specification | Setting |
 | --- | --- |
@@ -3444,20 +3446,19 @@ Simple Welch and secondary significance levels remain in the datasets.
 
 | Resource | Original experiment | Follow-up |
 | --- | --- | --- |
-| Protocol | [Original protocol](../../experiments/FINAL_PROTOCOL.json) | [Follow-up protocol](../../experiments/DESIGN_FOLLOWUP_PROTOCOL.json) |
-| Results | [All exact results](../../results/detection_breakdown_sweep/cell_results.csv) | [All exact results](../../results/design_followup/cell_results.csv) |
-| Populations | [Population definitions](../../results/detection_breakdown_sweep/population_definitions.csv) | [Population definitions](../../results/design_followup/population_definitions.csv) |
-| Paired comparisons | [Paired results](../../results/detection_breakdown_sweep/paired_method_results.csv) | [Paired results](../../results/design_followup/paired_method_results.csv) |
-| Verification | [Original checks](../../results/detection_breakdown_sweep/verification_checks.json) | [Follow-up checks](../../results/design_followup/verification.json) |
+| Protocol | [Original protocol](../../../experiments/FINAL_PROTOCOL.json) | [Follow-up protocol](../../../experiments/DESIGN_FOLLOWUP_PROTOCOL.json) |
+| Results | [All exact results](../../../results/detection_breakdown_sweep/cell_results.csv) | [All exact results](../../../results/design_followup/cell_results.csv) |
+| Populations | [Population definitions](../../../results/detection_breakdown_sweep/population_definitions.csv) | [Population definitions](../../../results/design_followup/population_definitions.csv) |
+| Paired comparisons | [Paired results](../../../results/detection_breakdown_sweep/paired_method_results.csv) | [Paired results](../../../results/design_followup/paired_method_results.csv) |
+| Verification | [Original checks](../../../results/detection_breakdown_sweep/verification_checks.json) | [Follow-up checks](../../../results/design_followup/verification.json) |
 
 The landscape includes the original power grid and matching null points.
 The finer original null-only sample-size grid, including n=2, 3 and 4, remains
 in the original results. The two earlier standalone documents are archived in
-[the original landscape](archive/FINAL_EXPERIMENT_LANDSCAPE.md) and
-[the follow-up report](archive/DESIGN_FOLLOWUP.md).
+[the original landscape](FINAL_EXPERIMENT_LANDSCAPE.md) and
+[the follow-up report](DESIGN_FOLLOWUP.md).
 
 Regenerate this document from the saved results with
 `python experiments/make_experimental_results.py` from the project directory.
-The [combined report generator](../../experiments/make_experimental_results.py)
+The [combined report generator](../../../experiments/make_experimental_results.py)
 uses the original and follow-up reporting functions. It does not rerun sampling.
-

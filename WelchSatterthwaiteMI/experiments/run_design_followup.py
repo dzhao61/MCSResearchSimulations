@@ -19,8 +19,8 @@ from make_final_experiment_landscape import marginal_specification
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "results/detection_breakdown_sweep"
 OUT = ROOT / "results/design_followup"
-DOC = ROOT / "docs/experiments/EXPERIMENTAL_RESULTS.md"
-FIG = DOC.parent / "figures/design_followup"
+DOC = ROOT / "docs/experiments/archive/EXPERIMENTAL_RESULTS.md"
+FIG = ROOT / "docs/experiments/figures/design_followup"
 PROTOCOL = Path(__file__).with_name("DESIGN_FOLLOWUP_PROTOCOL.json")
 METHODS = {"normal_wald": ("Normal Wald", "#1f4e79", "o"),
            "expanded_welch": ("Expanded Welch", "#b23a73", "s")}

@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCUMENT = ROOT / 'docs/experiments/EXPERIMENTAL_RESULTS.md'
+DOCUMENT = ROOT / 'docs/experiments/archive/EXPERIMENTAL_RESULTS.md'
 
 
 def extract(text, start, end):
@@ -309,6 +309,14 @@ uses the original and follow-up reporting functions. It does not rerun sampling.
 ''')
     text = '\n\n'.join(pieces) + '\n'
     assert len(re.findall(r'^!\[', text, re.M)) == 68
+    if document.resolve().parent == DOCUMENT.parent.resolve():
+        text = text.replace('](figures/', '](../figures/')
+        text = text.replace('](../../', '](../../../')
+        text = text.replace('](archive/', '](')
+        title, body = text.split('\n', 1)
+        text = title + ('\n\n> Archived study. The new design is specified in '
+                        '[Thesis Experiment Redesign](../THESIS_EXPERIMENT_PLAN.md). '
+                        'These results belong to the previous protocols and are preserved unchanged.\n') + body
     document.parent.mkdir(parents=True, exist_ok=True)
     document.write_text(text)
     return document

@@ -1,5 +1,9 @@
 # Experiments
 
+The current [thesis redesign plan](../docs/experiments/THESIS_EXPERIMENT_PLAN.md)
+is an implementation handoff, not a completed run. The programs below preserve
+the earlier studies.
+
 ## Final Confirmatory Experiment
 
 `run_detection_breakdown_sweep.py` implements the frozen protocol in
@@ -10,7 +14,7 @@ uses stable configuration-specific seeds, processes simulations in bounded
 batches, and generates all aggregate data, checks, figures, and `REPORT.md`.
 
 `make_experimental_results.py` combines the original and follow-up results in
-[Experimental Results](../docs/experiments/EXPERIMENTAL_RESULTS.md).
+[Archived Experimental Results](../docs/experiments/archive/EXPERIMENTAL_RESULTS.md).
 Its curves preserve each regime, with specifications and exact result tables.
 The unequal-sample figures show both allocations together. Run this generator
 to refresh the combined document from saved results; no sampling is needed.
