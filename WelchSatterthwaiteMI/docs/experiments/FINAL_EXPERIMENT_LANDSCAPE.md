@@ -1,5 +1,7 @@
 # Final Experiment Landscape: Normal Wald versus Expanded Welch
 
+Shading shows pointwise 95% Monte Carlo intervals. In the balanced primary different-shape nulls, Q is a column relabelling of P; these are invariance controls, not evidence of different estimator distributions. Equal e values across regimes need not represent equal absolute MI differences. Expanded Welch uses the same statistic as Wald with a heavier-tailed reference, so its rejection rate cannot exceed Wald's. See [the follow-up experiments](DESIGN_FOLLOWUP.md) for genuinely different margins, baseline MI sensitivity, reversed sample allocations, and large-sample diagnostics.
+
 ## 1. Purpose
 
 This document presents the complete primary comparison of Normal Wald and
@@ -40,8 +42,9 @@ ordered categories. The additional dependence experiments use the two
 arrangements defined explicitly in each subsection table. All observed tables
 are independent multinomial samples from fixed population tables $P$ and $Q$.
 
-$M$ is the smaller of the maximum MI values attainable by the fixed $P$ and
-$Q$ constructions. Every regime sets $I(P)=0.2M$ and
+$M$ is the smaller of the largest MI values successfully constructed on the
+two fixed numerical probe grids. It is a demonstrated range, not a theoretical
+maximum, and depends on the constructor and probe settings. Every regime sets $I(P)=0.2M$ and
 $I(Q)=(0.2+e)M$. Therefore, the absolute MI difference is
 $\lvert I(Q)-I(P)\rvert=eM$ nats. Scaling by $M$ places regimes with
 different attainable MI ranges on the same horizontal axis.
@@ -57,6 +60,8 @@ detects progressively larger MI differences.
 #### 4.1.1 Shape 2x2: same distribution shape
 
 ![2x2 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x2_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -78,10 +83,12 @@ detects progressively larger MI differences.
 
 ![2x2 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x2_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $2\times2$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -97,6 +104,8 @@ detects progressively larger MI differences.
 #### 4.1.3 Shape 2x3: same distribution shape
 
 ![2x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_2x3_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -118,10 +127,12 @@ detects progressively larger MI differences.
 
 ![2x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_2x3_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $2\times3$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -137,6 +148,8 @@ detects progressively larger MI differences.
 #### 4.1.5 Shape 3x3: same distribution shape
 
 ![3x3 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x3_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -158,10 +171,12 @@ detects progressively larger MI differences.
 
 ![3x3 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x3_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $3\times3$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -177,6 +192,8 @@ detects progressively larger MI differences.
 #### 4.1.7 Shape 3x5: same distribution shape
 
 ![3x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_3x5_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -198,10 +215,12 @@ detects progressively larger MI differences.
 
 ![3x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_3x5_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $3\times5$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -217,6 +236,8 @@ detects progressively larger MI differences.
 #### 4.1.9 Shape 4x4: same distribution shape
 
 ![4x4 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x4_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -238,10 +259,12 @@ detects progressively larger MI differences.
 
 ![4x4 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x4_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $4\times4$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -257,6 +280,8 @@ detects progressively larger MI differences.
 #### 4.1.11 Shape 4x8: same distribution shape
 
 ![4x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_4x8_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -278,10 +303,12 @@ detects progressively larger MI differences.
 
 ![4x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_4x8_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $4\times8$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -297,6 +324,8 @@ detects progressively larger MI differences.
 #### 4.1.13 Shape 5x5: same distribution shape
 
 ![5x5 rejection curves for same distribution shape](figures/final_experiment_landscape/power_5x5_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -318,10 +347,12 @@ detects progressively larger MI differences.
 
 ![5x5 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_5x5_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $5\times5$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -337,6 +368,8 @@ detects progressively larger MI differences.
 #### 4.1.15 Shape 8x8: same distribution shape
 
 ![8x8 rejection curves for same distribution shape](figures/final_experiment_landscape/power_8x8_identical_distribution.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_identical_distribution.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -358,10 +391,12 @@ detects progressively larger MI differences.
 
 ![8x8 rejection curves for different distribution shapes](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/power_8x8_equal_mi_different_shape.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $8\times8$ |
-| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings |
+| Population construction | Different distribution shapes: the largest row and column probabilities are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is increased according to the listed scaled MI settings. The balanced null is a column relabelling control |
 | Horizontal graph regime specifications (columns) | $\{n_P=n_Q=5, 10, 20, 50, 100, 250, 500, 1000\}$ |
 | Vertical graph regime specifications (rows) | {balanced (uniform margins), mild (dominant marginal probability 0.70), strong (0.90), ultra (0.95)} |
 | Resulting sample sizes | $\{(n_P,n_Q)=(5,5), (10,10), (20,20), (50,50), (100,100), (250,250), (500,500), (1000,1000)\}$ |
@@ -379,6 +414,8 @@ detects progressively larger MI differences.
 #### 4.2.1 Shape 2x2
 
 ![2x2 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_2x2.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_2x2.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -400,6 +437,8 @@ detects progressively larger MI differences.
 
 ![3x3 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_3x3.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_3x3.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $3\times3$ |
@@ -420,6 +459,8 @@ detects progressively larger MI differences.
 
 ![5x5 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_5x5.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_5x5.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $5\times5$ |
@@ -439,6 +480,8 @@ detects progressively larger MI differences.
 #### 4.2.4 Shape 8x8
 
 ![8x8 rejection curves under unequal sample sizes](figures/final_experiment_landscape/imbalance_8x8.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/imbalance_8x8.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -462,6 +505,8 @@ detects progressively larger MI differences.
 
 ![3x3 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x3.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x3.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $3\times3$ |
@@ -481,6 +526,8 @@ detects progressively larger MI differences.
 #### 4.3.2 Shape 3x5
 
 ![3x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_3x5.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_3x5.md)
 
 | Figure specification | Exact setting |
 | --- | --- |
@@ -502,6 +549,8 @@ detects progressively larger MI differences.
 
 ![5x5 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_5x5.png)
 
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_5x5.md)
+
 | Figure specification | Exact setting |
 | --- | --- |
 | Table shape | $5\times5$ |
@@ -521,6 +570,8 @@ detects progressively larger MI differences.
 #### 4.3.4 Shape 8x8
 
 ![8x8 rejection curves for other arrangements of dependence](figures/final_experiment_landscape/interaction_8x8.png)
+
+[Exact rates, validity, and 95% intervals for every point](figures/final_experiment_landscape/interaction_8x8.md)
 
 | Figure specification | Exact setting |
 | --- | --- |

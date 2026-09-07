@@ -1,0 +1,47 @@
+{
+  "status": "prospective follow-up to the completed frozen experiment; specified after inspecting original outcomes",
+  "master_seed": 2026090801,
+  "replicates": 10000,
+  "alphas": [0.01, 0.05, 0.1],
+  "methods": ["normal_wald", "simple_welch", "expanded_welch"],
+  "heterogeneous_margins": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "p_skewness": "balanced",
+    "q_skewness": "mild",
+    "baseline_fraction": 0.2,
+    "effects": [0, 0.1, 0.4],
+    "sample_sizes": [50, 250, 1000],
+    "M": "minimum of saved primary balanced and mild shared_reachable_mi values",
+    "construction": "P uses saved balanced primary P margins and interaction; Q uses saved mild primary Q margins and interaction; tune MI to 0.2M and (0.2+e)M"
+  },
+  "baseline_sensitivity": {
+    "shapes": ["3x3", "5x5"],
+    "skewness": ["balanced", "strong"],
+    "baseline_fractions": [0.02, 0.2, 0.6],
+    "effects": [0, 0.1, 0.2],
+    "sample_sizes": [50, 250, 1000],
+    "construction": "saved primary different-shape margins, interactions and M; P target=bM, Q target=(b+e)M"
+  },
+  "allocation_reversal": {
+    "construction": "reuse every saved robustness_imbalance population pair exactly; exchange n_p and n_q without exchanging the populations",
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "skewness": ["strong", "ultra"],
+    "smaller_samples": [5, 10, 20, 50, 100],
+    "ratios": [2, 5, 10],
+    "effects": [0, 0.1, 0.4],
+    "original_allocation": "reuse saved original results for the larger-Q allocation"
+  },
+  "convergence": {
+    "shapes": ["2x2", "3x3", "5x5", "8x8"],
+    "skewness": ["strong", "ultra"],
+    "effects": [0],
+    "sample_sizes": [2500, 10000, 50000],
+    "construction": "reuse saved primary different-shape null populations; include saved n=1000 in plots"
+  },
+  "new_configuration_count": 528,
+  "new_table_pairs": 5280000,
+  "interpretation": "exact regimes remain primary; validity, pointwise Wilson intervals and paired differences accompany operational rates; no universal superiority inferred from raw power",
+  "M_definition": "a numerical scale demonstrated by the saved probe grid, not a theoretical maximum",
+  "construction_failures": "record and fail preflight; do not replace a failed population based on test outcomes",
+  "storage": "save exact populations, manifest, aggregate results, paired counts, input hashes and validation; no raw simulation tables"
+}

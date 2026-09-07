@@ -1,0 +1,17 @@
+{
+  "input_sha256": {
+    "WelchSatterthwaiteMI/experiments/DESIGN_FOLLOWUP_PROTOCOL.json": "e00e11c64956bdb43cad7f28471ea85f63ff0d6792860040aedc6b67204e64f5",
+    "WelchSatterthwaiteMI/experiments/run_design_followup.py": "4be7c70463b1b3281169a74f9c5898620cf452996f063ad6205ea1e2f5c39ec0",
+    "WelchSatterthwaiteMI/results/detection_breakdown_sweep/population_definitions.csv": "fe8a0e449d31578b01b762bf8ea3b02c5aca6edf14aefb4e6e2332b7195cff18",
+    "WelchSatterthwaiteMI/results/detection_breakdown_sweep/cell_results.csv": "e9279d0ecc6ea85edda13026c9f5ca2ad1f66631a763ca2abb565472e6a6a544",
+    "WelchSatterthwaiteMI/experiments/run_detection_breakdown_sweep.py": "37a7f736ac5fcb47bf59b0046d597ef530ba83fdb83dcc00593ca7460922afbc",
+    "WelchSatterthwaiteMI/src/welch_differential_mi/welch.py": "ec82b965d210816f39921262fc7999a388e26f98d8917d39ab684d688e3f9d20",
+    "DifferentialMI/src/differential_mi/statistics.py": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5",
+    "DifferentialMI/src/differential_mi/distributions.py": "70c32b59cb03d8271f9325e91b1b6bf9d531f5eb0f1190836f3e7174cffa48af"
+  },
+  "status": "complete",
+  "seed": 2026090801,
+  "configurations": 528,
+  "elapsed_seconds": 17.113937332993373,
+  "table_pairs": 5280000
+}

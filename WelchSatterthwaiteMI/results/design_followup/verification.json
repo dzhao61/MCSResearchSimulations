@@ -1,0 +1,11 @@
+{
+  "all_pass": true,
+  "configurations": 528,
+  "checks": [
+    "unique complete result grid",
+    "rejection denominators",
+    "valid counts",
+    "target MI",
+    "Expanded rejection subset"
+  ]
+}

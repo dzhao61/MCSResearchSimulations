@@ -1,5 +1,14 @@
 # Final Thesis Experiment Protocol: Differential Mutual Information
 
+The frozen experiment is complete. The subsequent design review and authorized
+follow-up are specified in `experiments/DESIGN_FOLLOWUP_PROTOCOL.json` and
+reported in [Design Follow-up](docs/experiments/DESIGN_FOLLOWUP.md).
+Those additions include different margins, baseline MI sensitivity, reversed
+sample allocations, and larger-sample null diagnostics. They are subsequent
+evidence, not part of the original confirmatory protocol below. Balanced
+ordinal/negative-ordinal null pairs in the original design are category
+relabellings and should be interpreted as invariance controls.
+
 **Status: frozen for the confirmatory run.** The protocol is encoded in
 `experiments/FINAL_PROTOCOL.json`, and every planned cell is listed in
 `experiments/FINAL_CONFIGURATION_MANIFEST.csv`. Smoke tests may be used to find

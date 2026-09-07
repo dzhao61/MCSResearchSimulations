@@ -74,6 +74,10 @@ def _plot_rejection_curve(axis: plt.Axes, panel: pd.DataFrame, method: str) -> N
         linewidth=1.6,
         zorder=2,
     )
+    axis.fill_between(
+        line["relative_effect"], line["wilson_95_low"], line["wilson_95_high"],
+        color=COLORS[method], alpha=0.15, linewidth=0,
+    )
     valid = line["valid_rate"].ge(0.90)
     axis.scatter(
         line.loc[valid, "relative_effect"],
@@ -180,6 +184,15 @@ def _curve_grid(
     figure.tight_layout(rect=(0, 0, 1, 0.92))
     figure.savefig(output, dpi=180, bbox_inches="tight")
     plt.close(figure)
+    columns = ["configuration_id", "skewness", "n_p", "n_q", "relative_effect",
+               "absolute_mi_difference", "method", "unconditional_rejection_rate",
+               "wilson_95_low", "wilson_95_high", "valid_rate", "conditional_rejection_rate"]
+    details = frame[columns].sort_values(["configuration_id", "method"])
+    rows = ["# Exact results", "", "Rates use all replicates; intervals are pointwise 95% Wilson intervals.", "",
+            "| " + " | ".join(columns) + " |", "| " + " | ".join(["---"] * len(columns)) + " |"]
+    for record in details.itertuples(index=False, name=None):
+        rows.append("| " + " | ".join(f"{x:.4g}" if isinstance(x, float) else str(x) for x in record) + " |")
+    output.with_suffix(".md").write_text("\n".join(rows) + "\n")
 
 
 def _power_curve_landscapes(results: pd.DataFrame, output_dir: Path) -> None:
@@ -390,8 +403,9 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
         "arrangements defined explicitly in each subsection table. All observed tables",
         "are independent multinomial samples from fixed population tables $P$ and $Q$.",
         "",
-        "$M$ is the smaller of the maximum MI values attainable by the fixed $P$ and",
-        "$Q$ constructions. Every regime sets $I(P)=0.2M$ and",
+        "$M$ is the smaller of the largest MI values successfully constructed on the",
+        "two fixed numerical probe grids. It is a demonstrated range, not a theoretical",
+        "maximum, and depends on the constructor and probe settings. Every regime sets $I(P)=0.2M$ and",
         "$I(Q)=(0.2+e)M$. Therefore, the absolute MI difference is",
         r"$\lvert I(Q)-I(P)\rvert=eM$ nats. Scaling by $M$ places regimes with",
         "different attainable MI ranges on the same horizontal axis.",
@@ -424,7 +438,8 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
             "different distribution shapes",
             "Different distribution shapes: the largest row and column probabilities "
             "are moved in $Q$, and its dependence arrangement is reversed; $I(Q)$ is "
-            "increased according to the listed scaled MI settings",
+            "increased according to the listed scaled MI settings. The balanced null "
+            "is a column relabelling control",
         ),
     )
     subsection = 1
@@ -574,7 +589,22 @@ def _write_document(results: pd.DataFrame, document: Path) -> None:
         ]
     )
     document.parent.mkdir(parents=True, exist_ok=True)
-    document.write_text("\n".join(lines) + "\n")
+    expanded_lines = []
+    for line in lines:
+        expanded_lines.append(line)
+        if line.startswith("!["):
+            target = line.split("](", 1)[1][:-1].replace(".png", ".md")
+            expanded_lines.extend(["", f"[Exact rates, validity, and 95% intervals for every point]({target})"])
+    note = ("Shading shows pointwise 95% Monte Carlo intervals. In the balanced primary "
+            "different-shape nulls, Q is a column relabelling of P; these are invariance "
+            "controls, not evidence of different estimator distributions. Equal e values "
+            "across regimes need not represent equal absolute MI differences. Expanded Welch "
+            "uses the same statistic as Wald with a heavier-tailed reference, so its rejection "
+            "rate cannot exceed Wald's. See [the follow-up experiments](DESIGN_FOLLOWUP.md) "
+            "for genuinely different margins, baseline MI sensitivity, reversed sample "
+            "allocations, and large-sample diagnostics.")
+    expanded_lines[2:2] = [note, ""]
+    document.write_text("\n".join(expanded_lines) + "\n")
 
 
 def parse_args() -> argparse.Namespace:
