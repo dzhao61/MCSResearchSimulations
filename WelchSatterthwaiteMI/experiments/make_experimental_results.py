@@ -58,6 +58,33 @@ averaged across population definitions, table sizes, or sample sizes. The
 follow-up was specified after reviewing the original results. Both protocols
 and datasets remain available in the reproducibility section.
 
+## Study roadmap
+
+The document works through a sequence of increasingly focused questions:
+
+1. **How to read the figures and metrics:** defines the axes, calibration,
+   power and validity, and explains how the fixed population tables are built.
+2. **Main landscape:** asks how Wald and Expanded Welch behave as table size,
+   sample size, skewness and MI difference change. Section 2.1 uses the primary
+   dependence arrangement; Section 2.2 checks other arrangements.
+3. **Different margins:** asks whether the conclusions remain when $P$ and $Q$
+   have genuinely different row and column margins.
+4. **Baseline MI sensitivity:** asks whether performance depends on how much
+   dependence is already present in $P$, using $I(P)=bM$ with
+   $b\in\{0.02,0.2,0.6\}$.
+5. **Unequal sample sizes:** asks what happens when one population has more
+   observations, and whether it matters whether the larger sample comes from
+   $P$ or $Q$.
+6. **Large-sample convergence:** asks whether inaccurate false-positive rates
+   are temporary small-sample effects by increasing the equal sample size to
+   50,000 under the null.
+7. **Protocols and reproducibility:** links the exact populations, settings,
+   results and verification records.
+
+In short, Section 2 maps the overall performance landscape; Sections 3--5
+change one important feature at a time; and Section 6 checks whether remaining
+calibration problems disappear with very large samples.
+
 ## Contents
 
 - [1. How to read the figures and metrics](#1-how-to-read-the-figures-and-metrics)
@@ -69,6 +96,8 @@ and datasets remain available in the reproducibility section.
 - [7. Protocols and reproducibility](#7-protocols-and-reproducibility)
 
 ## 1. How to read the figures and metrics
+
+### 1.1 Figures and metrics
 
 The test compares $H_0:I(P)=I(Q)$ with $H_1:I(P)\ne I(Q)$ for two independent
 multinomial samples. Every plotted point uses 10,000 simulated table pairs,
@@ -111,6 +140,124 @@ using the true joint probabilities rather than a fitted independence model.
 Each figure is followed by its specifications. Original-landscape figures
 link to exact point-by-point tables; the other sections place those tables
 inside expandable details beneath each figure.
+
+### 1.2 How the fixed population tables are constructed
+
+The horizontal axis is controlled through the population tables, not through
+random sample variation. For each regime, the construction begins by fixing
+the desired row probabilities $r_i$ and column probabilities $c_j$. If there
+were no dependence, the joint probability in cell $(i,j)$ would be
+
+$$
+p_{ij}^{(0)}=r_i c_j.
+$$
+
+Next, a fixed interaction matrix $h_{ij}$ specifies which cells should receive
+relatively more or less probability. In the primary ordinal arrangement,
+equally spaced row and column scores from $-1$ to $1$ are multiplied:
+
+$$
+h_{ij}=s_i t_j.
+$$
+
+Positive entries favour corresponding low-low and high-high categories. The
+negative ordinal arrangement uses $-h_{ij}$ and favours the opposite pairing.
+Other fixed interaction matrices are used only in Section 2.2 and are stated
+in the relevant figure specifications.
+
+An association-strength parameter $\lambda\geq0$ controls how strongly the
+interaction pattern is expressed. Before enforcing the margins, its cell
+weights are $\exp(\lambda h_{ij})$. The final table has the log-linear form
+
+$$
+p_{ij}(\lambda)=u_i\exp(\lambda h_{ij})v_j,
+$$
+
+where the row multipliers $u_i$ and column multipliers $v_j$ are found by
+iterative proportional fitting so that
+
+$$
+\sum_j p_{ij}(\lambda)=r_i,
+\qquad
+\sum_i p_{ij}(\lambda)=c_j.
+$$
+
+Thus changing $\lambda$ changes dependence while preserving the specified row
+and column margins. At $\lambda=0$, the construction returns the independence
+table $r_i c_j$. For a positive target MI, a one-dimensional numerical search
+finds the value of $\lambda$ for which
+
+$$
+I\{p(\lambda)\}
+=\sum_{i,j}p_{ij}(\lambda)
+ \log\!\left\{\frac{p_{ij}(\lambda)}{r_i c_j}\right\}
+=I_{\mathrm{target}}.
+$$
+
+For each pair of margins and interaction patterns, association strengths
+$\{0,0.25,0.5,1,2,4,8,16,32,64,128\}$ are first probed to determine a stable
+constructible MI range for $P$ and for $Q$. The common scale $M$ is the smaller
+of the two largest MI values reached on these probe paths. It is therefore a
+practical numerical scale for this construction, not the theoretical maximum
+MI. The original experiment then constructs
+
+$$
+I(P)=0.2M,
+\qquad
+I(Q)=(0.2+e)M,
+$$
+
+with numerical error below $10^{-10}$ nats. Section 4 replaces $0.2$ by the
+stated baseline value $b$. At $e=0$, the two tables have equal true MI; when
+$e>0$, their true MI difference is exactly $eM$ up to numerical tolerance.
+
+For example, in the mildly skewed $2\times2$ same-shape regime, both row and
+column margins are $(0.7,0.3)$ and $M\approx0.132829$. The independence table is
+
+$$
+\begin{pmatrix}0.49&0.21\\0.21&0.09\end{pmatrix}.
+$$
+
+After fitting the ordinal interaction to $I(P)=0.2M\approx0.026566$, the fixed
+population table is
+
+$$
+P\approx
+\begin{pmatrix}
+0.53931&0.16069\\
+0.16069&0.13931
+\end{pmatrix}.
+$$
+
+At $e=0.1$, fitting the same margins and pattern to
+$I(Q)=0.3M\approx0.039849$ gives
+
+$$
+Q\approx
+\begin{pmatrix}
+0.55049&0.14951\\
+0.14951&0.15049
+\end{pmatrix}.
+$$
+
+Both tables still have row and column margins $(0.7,0.3)$, while their true MI
+difference is $0.1M\approx0.013283$ nats. These two probability tables are then
+held fixed. Each replicate independently draws one multinomial count table
+from $P$ and one from $Q$; only the observed MI estimates and variance estimates
+vary across replicates.
+
+The population relationship changes across the document, but the numerical
+construction is the same:
+
+| Section | Margins and interaction used for $P$ and $Q$ |
+| --- | --- |
+| 2.1, same shape | Same margins and ordinal interaction; $Q$ receives the larger target MI when $e>0$ |
+| 2.1, different shape | The dominant row and column are moved in $Q$, and $Q$ uses the negative ordinal interaction |
+| 2.2 | The stated alternating, cyclic or fixed irregular interactions replace the ordinal patterns |
+| 3 | $P$ has uniform margins; $Q$ has one row and one column with marginal probability 0.70 |
+| 4 | Margins and patterns are fixed while the baseline $I(P)=bM$ changes |
+| 5 | The same fixed $P,Q$ pairs are used twice; only which population receives the larger sample is changed |
+| 6 | The same equal-MI $P,Q$ pair is held fixed while the equal sample size increases |
 
 ## 2. Main landscape
 

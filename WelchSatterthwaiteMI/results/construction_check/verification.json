@@ -1,0 +1,10 @@
+{
+  "configurations": 960,
+  "simulated_pairs": 9600000,
+  "result_rows": 2880,
+  "binary_max_rate_difference": 0.0,
+  "binary_reconstruction_max_cell_error": 6.38378239159465e-15,
+  "probability_margin_target_checks": true,
+  "rejection_denominators_checked": true,
+  "expanded_rejections_subset_of_wald": true
+}

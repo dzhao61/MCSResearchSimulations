@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "input_sha256": {
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/experiments/run_construction_check.py": "d50cf51b36e008548e7daabdeb84808057ee68dfea5c5ba5515b96abf8392cc6",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/experiments/run_detection_breakdown_sweep.py": "37a7f736ac5fcb47bf59b0046d597ef530ba83fdb83dcc00593ca7460922afbc",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/WelchSatterthwaiteMI/src/welch_differential_mi/welch.py": "ec82b965d210816f39921262fc7999a388e26f98d8917d39ab684d688e3f9d20",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/DifferentialMI/src/differential_mi/distributions.py": "70c32b59cb03d8271f9325e91b1b6bf9d531f5eb0f1190836f3e7174cffa48af",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations/DifferentialMI/src/differential_mi/statistics.py": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5"
+  },
+  "simulation_seconds": 42.952256832970306,
+  "total_seconds_before_reporting": 45.56201666709967
+}
