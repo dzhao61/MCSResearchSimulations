@@ -1,5 +1,10 @@
 # Writing Style Guide for the Welch-MI Thesis
 
+> Historical guide. Use [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
+> for the current exemplar review and writing conventions, together with
+> [THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). Numerical examples and
+> favourable calibration claims below refer to the previous experiment.
+
 ## 1. Overall Style
 
 The target style is **formal, direct, and explanatory**. It should read like a

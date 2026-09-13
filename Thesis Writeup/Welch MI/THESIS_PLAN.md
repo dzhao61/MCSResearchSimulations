@@ -1,5 +1,10 @@
 # Thesis Writing Plan: Welch-Type Inference for Differential Mutual Information
 
+> Historical plan. Superseded on 13 September 2026 by
+> [THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). The experimental design,
+> result summaries and proposed practical recommendation below describe the
+> previous stage of the project.
+
 ## 1. Proposed Thesis Direction
 
 ### Working title
