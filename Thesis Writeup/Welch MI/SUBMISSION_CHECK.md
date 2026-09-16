@@ -52,19 +52,28 @@ not change the frozen evidence or add material for length alone.
 | Appendix D | The independence construction and second-order Taylor expansion agree with the independent numerical check and the (G)-test boundary. |
 | Appendix E | Run metadata and commands agree with the saved record. Its description now includes the exact 22-figure and Chapter 6 evidence checks. |
 
-No active manuscript file contains a TODO or drafting placeholder. The working
-comments in the declaration, acknowledgements and metadata are administrative
-author checks reserved for T8, not missing thesis argument.
+No active manuscript file contains a TODO or drafting placeholder. The only
+remaining front-matter action is the author's signature and date on the
+declaration; no personal attestation has been invented.
+
+The final comprehensive audit also compared the retained implementation with
+the source hashes recorded by the confirmatory run. The frozen protocol,
+population and simulation core, test implementation, and imported statistical
+dependencies still match exactly. The orchestration runner has two later,
+non-statistical additions: more precise atlas-count metadata and hashes for
+saved outputs. Its simulation path is unchanged, so this source drift does not
+alter the frozen results. The source package is rebuilt without disposable
+LaTeX auxiliary files.
 
 ## Final verification record
 
 Final checks run on 16 September 2026:
 
-- clean build from `/private/tmp/welch-thesis-final.6duPIf`;
-- 88 A4 pages and 937,179 bytes before packaging;
+- clean build from `/private/tmp/welch-thesis-final-audit.6rBTvI/thesis`;
+- 88 A4 pages and 937,144 bytes before packaging;
 - `texcount` diagnostic of 12,592 words across the complete included source,
   including 9,733 words in Chapters 1--8;
-- final named PDF SHA-256 `c2ee067bd000fccce9de784faf1363066428afebc0a981ac2cb8e3bfd2b3beba`;
+- final named PDF SHA-256 `294877adb2f49a597ea77c8c51d4b5759a155dfb583cf6638e7ce609c57e910a`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - 28 relevant unit and derivation tests passed;
 - complete evidence audit passed, including all 22 thesis figures and every reported Chapter 6 value;

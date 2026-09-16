@@ -1,6 +1,6 @@
 {
-  "report_sha256": "ced49d8af86bb309e9e1a50408e0b350347cdd4503c4cc6b42c1564998adadee",
-  "reporter_sha256": "6398fc4c9fd284f6d244db70c328fc6089c49bea72518d2f59409d63ce064442",
+  "report_sha256": "f7743f3cac9a8a79cebe6a230e310f3fb425d7b35951d70f348305c30048ccf5",
+  "reporter_sha256": "0c8a972a33300f42b870fd4f0e72353a551e82f875c0b61132dc63c36f80f2a1",
   "primary_figures": 99,
   "companion_calibration_zooms": 7
 }

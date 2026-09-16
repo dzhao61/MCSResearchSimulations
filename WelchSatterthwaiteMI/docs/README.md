@@ -39,6 +39,10 @@ experimental records, and historical material.
 - [`../experiments/README.md`](../experiments/README.md) indexes executable
   experiment scripts and earlier studies.
 
+The constrained-LR documents are ancillary investigations retained for
+context. They are not methods or evidence in the frozen two-method thesis
+experiment.
+
 Superseded calibration investigations are retained under
 [`experiments/archive/`](experiments/archive/).
 

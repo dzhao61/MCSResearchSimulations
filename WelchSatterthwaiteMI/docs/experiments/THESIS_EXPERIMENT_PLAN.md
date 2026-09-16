@@ -7,9 +7,10 @@ implement the design below; earlier studies are not observations from this run.
 
 ## 1. Purpose and reading order
 
-The question is: **when does Expanded Welch's reduction in false positives
-justify its loss of detection power, compared with Normal Wald?** We are not
-trying to select populations that make either method win.
+The question is: **how do Expanded Welch and Normal Wald trade false-positive
+calibration, nominal-threshold detection, and method validity across fixed
+regimes?** We are not trying to select populations that make either method
+win.
 
 Both methods test whether two independently sampled populations have the same
 mutual information (MI):

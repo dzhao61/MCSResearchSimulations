@@ -68,6 +68,12 @@ MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
 Stable configuration-specific seeds make the statistical outputs independent
 of worker completion order. Runtime measurements remain machine-dependent.
 
+The saved `run_metadata.json` records the exact source hashes used for the
+confirmatory run. The protocol, simulation core, test implementation, and
+imported statistical dependencies still match those hashes. The bundled
+orchestration runner has since gained only atlas-count metadata and hashes for
+saved outputs; its population construction and simulation path are unchanged.
+
 ## Use with the thesis source archive
 
 Extract the thesis source and this supplement into the same directory. The

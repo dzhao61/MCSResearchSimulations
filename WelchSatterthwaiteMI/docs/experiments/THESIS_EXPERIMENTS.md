@@ -12516,7 +12516,7 @@ The complete regime-by-regime results support a conditional conclusion, not a un
 - Near independence, baseline MI 0.0001 remained conservative at n=50,000: Wald ranged from 0.0089 to 0.0279, and Expanded Welch from 0.0076 to 0.0138. This shows that sample size alone is not an adequate description of the approximation regime.
 - Expanded Welch took 1.75 times the Wald runtime at the median across the 60 timed regimes (range 1.72 to 1.79).
 
-Taken together, the study does not support Expanded Welch as a general replacement for Normal Wald. Its heavier-tailed reference can usefully reduce liberal rejection in some small-sample regimes, but it can also become unnecessarily conservative, fail more often, and lose power. The exact population construction still matters in larger tables, so conclusions should be attached to the stated regimes rather than presented as a universal rule.
+Taken together, the study does not support Expanded Welch as a general replacement for Normal Wald. Its heavier-tailed reference can usefully reduce liberal rejection in some small-sample regimes, but it can also become unnecessarily conservative, fail more often, and show lower nominal-threshold detection. Because the methods need not have the same achieved false-positive rate, this difference is not interpreted as matched-size power loss. The exact population construction still matters in larger tables, so conclusions should be attached to the stated regimes rather than presented as a universal rule.
 
 ## 15. Runtime
 

@@ -3,7 +3,7 @@
 
 This chapter develops the concepts needed to compare MI between two
 categorical populations. It begins with entropy, pointwise MI, and population
-MI. It then reviews plug-in estimation, first-order inference, the
+MI\@. It then reviews plug-in estimation, first-order inference, the
 Welch--Satterthwaite approximation, and prior comparisons of information
 quantities. The final section identifies the gap addressed by the expanded
 method.
@@ -200,7 +200,7 @@ available because the leading estimation error is an average of independent,
 mean-zero contributions. Second, it identifies the observation-level
 quantity whose variance determines the standard error. The raw categories
 themselves do not have a numerical variance relevant to MI; their effects on
-the MI functional are represented by centred pointwise MI.
+the MI functional are represented by centred pointwise MI\@.
 
 The expansion is local. It describes sampling fluctuations near a fixed
 positive-support population and does not assert that the plug-in estimator is
@@ -374,11 +374,11 @@ The remaining gap is narrower. The ordinary Welch substitution assigns a
 classical sample-variance degree of freedom, such as \(n-1\), to each variance
 component. The estimated MI variance is not an ordinary sample variance of
 fixed observations. It is a nonlinear function of the same empirical joint
-table used to calculate MI. A change in one observation modifies the cell
+table used to calculate MI\@. A change in one observation modifies the cell
 probabilities, margins, pointwise-MI values, and their weighted variance.
 
 The expanded method addresses this gap by differentiating the complete MI
 variance functional. The resulting observation-level sensitivity determines
 the sampling variance of the variance estimate and, through Satterthwaite
-moment matching, an MI-specific component degree of freedom. Chapters
-\ref{chap:baselines} and \ref{chap:expanded} develop this construction.
+moment matching, an MI-specific component degree of freedom.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop this construction.

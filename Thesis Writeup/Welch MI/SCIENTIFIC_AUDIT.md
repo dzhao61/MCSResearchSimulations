@@ -17,6 +17,7 @@ literature search.
 | Important | An earlier sentence said clipping a negative bias-corrected estimate would change the estimand. The estimand remains the population MI difference; clipping changes the estimator. | Chapter 3 now states the correct consequence: clipping creates a different nonlinear estimator with different finite-sample bias and sampling behaviour. |
 | Important | The independence appendix stated the quadratic result without defining its perturbation or displaying the Taylor terms. | Appendix D now defines the path and expansion point, separates the zeroth-, first-, and second-order terms, derives both forms of the Hessian, and connects multinomial cell error to the usual chi-squared limit. |
 | Checked | The analytic cell-sensitivity expression, plug-in implementation, and saved result summaries agree under the checks below. | No change to the frozen simulations or method implementation was justified. |
+| Checked | The current orchestration runner has changed since the recorded run. | The diff contains only atlas-count metadata and output-hash additions. The frozen protocol, simulation core, method implementation, and imported statistical dependencies retain their recorded hashes; the statistical path and saved results are unaffected. |
 
 ## Derivation checked independently
 

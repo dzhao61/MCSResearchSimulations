@@ -15,8 +15,8 @@ configuration identifiers for every panel.
 \section{Main landscape: shape, margins and sample size}
 
 The first question is broad: do the methods behave differently as the table
-grows, margins become uneven and samples become larger? Figures
-\ref{fig:main-2x2-uniform}--\ref{fig:main-8x8-different_skew} provide a
+grows, margins become uneven and samples become larger?
+Figures~\ref{fig:main-2x2-uniform}--\ref{fig:main-8x8-different_skew} provide a
 systematic view rather than a selection of favourable examples. Each of the
 four shapes is shown under all three margin profiles. Within every figure,
 the columns are the same three equal sample sizes. The full vertical scale
@@ -112,7 +112,7 @@ examined before calling the gap a power advantage.
 The main grid fixes \(I(P)=0.02\). Does starting closer to independence
 change the conclusion? Figure~\ref{fig:baseline-focus} holds shape, margins,
 sample size and changed cells fixed while varying only the common starting
-MI. The zero-difference points are especially informative: for
+MI\@. The zero-difference points are especially informative: for
 \(I_0=0.0001,0.001,0.02\), Wald's rates are 0.0193, 0.0146 and 0.0171,
 while Expanded Welch's are 0.0017, 0.0016 and 0.0083. All the plotted null
 calculations in this focused set are valid. Reducing the reference tail does
@@ -164,7 +164,7 @@ The distinction matters because the finite bias corrections are
 \(d/(2n_P)\) and \(d/(2n_Q)\), and the two populations have different
 margins. For example, at \((n_P,n_Q)=(50,250)\) and a 0.02-nat difference,
 Wald's rejection is 0.0994 when \(Q\) has higher MI and 0.0495 when \(P\)
-has higher MI. Expanded Welch gives 0.0247 and 0.0233. All four rates in
+has higher MI\@. Expanded Welch gives 0.0247 and 0.0233. All four rates in
 that specific comparison have validity one. These alternative rates should
 still be read beside the matched null points rather than as equal-size power.
 
@@ -235,7 +235,7 @@ Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 \section{Population construction sensitivity}
 
 The additive block is interpretable, but it is only one way to make tables
-with fixed margins and target MI. Figure~\ref{fig:construction-focus}
+with fixed margins and target MI\@. Figure~\ref{fig:construction-focus}
 compares it with an ordinal log-linear construction under matched targets.
 The null rates are not identical: for the displayed \(5\times5\) different-
 skew comparison at \(n=100\), Wald gives 0.0250 under additive construction
@@ -269,8 +269,8 @@ only 0.0118 of Wald replicates and 0.00005 of Expanded Welch replicates.
 Both unconditional false-positive rates are zero, but this is mostly an
 absence of valid tests, not evidence of excellent calibration. With dominant
 margins 0.9 and 0.95, the corresponding null rates are 0.0701 and 0.0088;
-Expanded Welch lowers an excessive Wald rate past the target. Figure
-\ref{fig:extreme-focus} shows all three specified skew levels, not just
+Expanded Welch lowers an excessive Wald rate past the target.
+Figure~\ref{fig:extreme-focus} shows all three specified skew levels, not just
 the favourable one.
 
 \begin{figure}[htbp]
@@ -288,8 +288,8 @@ markers flag validity below 90\%.}
 \label{fig:extreme-focus}
 \end{figure}
 
-Exact independence is a separate theoretical boundary. Figure
-\ref{fig:independence-focus} starts \(P\) at MI zero and includes the equal-
+Exact independence is a separate theoretical boundary.
+Figure~\ref{fig:independence-focus} starts \(P\) at MI zero and includes the equal-
 MI point where both populations are independent. This is not a routine
 positive-MI validation of Expanded Welch: its population first-order
 variance is zero at independence. At \(n=100\), for example, the uniform

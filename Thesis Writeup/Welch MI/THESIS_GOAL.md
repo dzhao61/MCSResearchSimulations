@@ -107,7 +107,7 @@ on the declaration outstanding.** T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-revised 90-page PDF builds without undefined references, citations or overfull
+revised 88-page PDF builds without undefined references, citations or overfull
 boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 15 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
