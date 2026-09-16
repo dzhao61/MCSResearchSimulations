@@ -41,9 +41,6 @@
 \captionsetup{font=small,labelfont=bf}
 \setlist{itemsep=0.25em,topsep=0.5em}
 \renewcommand{\arraystretch}{1.16}
-\makeatletter
-\setlength{\@fptop}{0pt}
-\makeatother
 
 \newtheorem{assumption}{Assumption}
 \newtheorem{proposition}{Proposition}
@@ -65,10 +62,11 @@
 \newcommand{\R}{\mathbb R}
 
 \graphicspath{
-  {figures_rewrite/}
+  {figures/}
+  {../../WelchSatterthwaiteMI/results/supervisor_practical/}
+  {../../WelchSatterthwaiteMI/results/scaled_chi_square_validation/}
+  {../../WelchSatterthwaiteMI/article/figures/}
 }
-
-\input{figures_rewrite/evidence_values.tex}
 
 \hypersetup{
   colorlinks=true,
@@ -76,5 +74,5 @@
   citecolor=MidnightBlue,
   urlcolor=MidnightBlue,
   pdfauthor={Daniel Zhao},
-  pdftitle={Comparing Mutual Information in Finite Samples: Wald and Expanded Welch-Satterthwaite Inference}
+  pdftitle={Finite-Sample Welch-Satterthwaite Inference for Comparing Mutual Information}
 }

@@ -1,0 +1,178 @@
+\chapter{The Independence Boundary}
+\label{app:independence-boundary}
+
+The main thesis concerns the regular weak null \(I(P)=I(Q)>0\). This appendix
+explains why constructing an independent reference distribution does not turn
+the expanded Welch method into a new first-order test of independence.
+
+\section{Constructing the independent reference}
+
+For a joint distribution $P=(p_{ij})$, define
+\begin{equation}
+  q_{ij}=p_{i+}p_{+j}.
+  \label{eq:appendix-independent-q}
+\end{equation}
+Then $Q=(q_{ij})$ is a probability distribution because
+\begin{equation}
+  \sum_{i,j}q_{ij}
+  =\left(\sum_i p_{i+}\right)
+   \left(\sum_j p_{+j}\right)=1.
+\end{equation}
+It has the same margins as \(P\), since
+\begin{equation}
+  \sum_jq_{ij}=p_{i+},
+  \qquad
+  \sum_iq_{ij}=p_{+j}.
+\end{equation}
+The factorisation in Equation~\eqref{eq:appendix-independent-q} makes \(X\)
+and \(Y\) independent under \(Q\), so \(I(Q)=0\).
+
+The divergence from $P$ to this reference is
+\begin{align}
+  D_{\mathrm{KL}}(P\Vert Q)
+  &=\sum_{i,j}p_{ij}\log\frac{p_{ij}}{q_{ij}}\\
+  &=\sum_{i,j}p_{ij}\log\frac{p_{ij}}{p_{i+}p_{+j}}\\
+  &=I(P).
+\end{align}
+Consequently, testing \(I(P)=I(Q)\) for this constructed reference is exactly
+testing \(I(P)=0\), or independence.
+
+\section{Why the first-order term vanishes}
+
+At independence, $p_{ij}=p_{i+}p_{+j}$, and every population pointwise-MI
+value is zero:
+\begin{equation}
+  \pmi_P(i,j)=\log 1=0.
+\end{equation}
+Equation~\eqref{eq:mi-derivative} therefore gives
+\begin{equation}
+  \left.\frac{\mathrm d I(P_\varepsilon)}
+  {\mathrm d\varepsilon}\right|_0
+  =\pmi_P(x,y)-I(P)=0.
+\end{equation}
+The first-order variance also vanishes:
+\begin{equation}
+  V(P)=\Var_P\{\pmi_P(X,Y)\}=0.
+\end{equation}
+The denominator used by normal Wald and expanded Welch is thus
+degenerate under the population independence null. This does not mean that a
+finite sample must have zero plug-in MI or zero plug-in variance. Sampling
+noise usually makes the empirical table depart from exact independence. The
+point is that these random departures do not enter MI through the usual
+first-order term at the null. They enter through the second-order term derived
+next, so changing only the degrees of freedom of a first-order statistic cannot
+supply the missing source of variation.
+
+\section{Second-order behaviour}
+
+Fix a strictly positive independent table $P$, and let $h=(h_{ij})$ describe a
+small redistribution of probability, with $\sum_{i,j}h_{ij}=0$. Define the path
+\begin{equation}
+  P_\varepsilon=P+\varepsilon h,
+  \qquad
+  f(\varepsilon)=I(P_\varepsilon),
+  \label{eq:independence-path}
+\end{equation}
+for values of $\varepsilon$ small enough that all cells remain positive. Here
+$\varepsilon=0$ is the expansion point and $f(0)=I(P)=0$. The second-order
+Taylor expansion is
+\begin{equation}
+  f(\varepsilon)
+  \approx
+  \underbrace{f(0)}_{\text{zeroth order}}
+  +\underbrace{f'(0)\varepsilon}_{\text{first order}}
+  +\underbrace{\frac{f''(0)}{2!}\varepsilon^2}_{\text{second order}}.
+  \label{eq:independence-taylor-template}
+\end{equation}
+
+The first-order term is
+\begin{equation}
+  f'(0)
+  =\sum_{i,j}\{\pmi_P(i,j)-1\}h_{ij}=0.
+  \label{eq:independence-first-term}
+\end{equation}
+Both parts vanish: $\pmi_P(i,j)=0$ at independence, and the probability
+constraint gives $\sum_{i,j}h_{ij}=0$. Thus, positive and negative cell errors
+cannot create a linear change in MI around the independence table.
+
+To state the surviving term, define the row and column changes
+$h_{i+}=\sum_jh_{ij}$ and $h_{+j}=\sum_ih_{ij}$. Differentiating the entropy
+form of MI twice gives
+\begin{equation}
+  f''(0)
+  =\sum_{i,j}\frac{h_{ij}^2}{p_{ij}}
+   -\sum_i\frac{h_{i+}^2}{p_{i+}}
+   -\sum_j\frac{h_{+j}^2}{p_{+j}}.
+  \label{eq:independence-second-derivative}
+\end{equation}
+Because $p_{ij}=p_{i+}p_{+j}$, define the part of each cell change that cannot
+be explained by changed margins as
+\begin{equation}
+  a_{ij}=h_{ij}-p_{+j}h_{i+}-p_{i+}h_{+j}.
+  \label{eq:independence-association-residual}
+\end{equation}
+Equation~\eqref{eq:independence-second-derivative} can then be written as
+\begin{equation}
+  f''(0)=\sum_{i,j}\frac{a_{ij}^2}{p_{i+}p_{+j}}.
+  \label{eq:independence-quadratic-form}
+\end{equation}
+Substituting the zeroth-, first-, and second-order terms into
+Equation~\eqref{eq:independence-taylor-template} gives
+\begin{equation}
+  \boxed{
+  I(P_\varepsilon)
+  =\underbrace{0}_{\text{zeroth and first order}}
+  +\underbrace{\frac{\varepsilon^2}{2}
+  \sum_{i,j}\frac{a_{ij}^2}{p_{i+}p_{+j}}
+  }_{\text{second order}}
+  +o(\varepsilon^2)
+  }.
+  \label{eq:appendix-mi-second-order}
+\end{equation}
+The remainder $o(\varepsilon^2)$ is negligible relative to
+$\varepsilon^2$ as $\varepsilon$ approaches zero.
+
+For a multinomial sample, take $\varepsilon h=\widehat P-P$. An empirical cell
+proportion has standard deviation $\sqrt{p_{ij}(1-p_{ij})/n}$, so each
+$\varepsilon h_{ij}$ is typically proportional to $n^{-1/2}$. The corresponding
+row- and column-adjusted errors $\varepsilon a_{ij}$ have the same scale.
+Equation~\eqref{eq:appendix-mi-second-order} squares these errors, making
+$\Ihat(P)$ proportional to $n^{-1}$ under independence. Multiplying by $2n$
+therefore produces a statistic with a non-vanishing scale:
+\begin{equation}
+  2n\Ihat(P)
+  \xrightarrow{d}
+  \chi^2_{(r-1)(c-1)}.
+\end{equation}
+This is the usual likelihood-ratio, or $G$, test of independence under a fixed
+alphabet and the standard positive-support large-sample conditions
+\citep{brillinger2004}. The chi-squared reference describes the squared cell
+errors in Equation~\eqref{eq:appendix-mi-second-order}. Expanded Welch instead
+standardises a signed first-order MI error on the $n^{-1/2}$ scale. At
+independence that signed term is absent, so its Student reference is not the
+chi-squared reference in another form.
+
+\section{What alternative constructions produce}
+
+Using the observed margins to set
+$\widehat q_{ij}=\widehat p_{i+}\widehat p_{+j}$ gives
+\begin{equation}
+  2nD_{\mathrm{KL}}(\widehat P\Vert\widehat Q)
+  =2n\Ihat(P),
+\end{equation}
+which is the likelihood-ratio statistic above.
+Because $\widehat Q$ is constructed from the same sample as $\widehat P$, it
+is not an independent second table and cannot be inserted into the two-sample
+Welch variance formula as though it supplied new information.
+
+Repeatedly shuffling one variable preserves its observations while breaking
+the pairing with the other variable. The resulting empirical distribution is
+a permutation reference. Repeatedly drawing tables from
+$\widehat P_X\widehat P_Y$ is a parametric bootstrap reference. A single
+simulated $Q$ table adds Monte Carlo variation but does not by itself define
+a calibrated null distribution.
+
+The independent reference $Q=P_XP_Y$ is therefore mathematically valid, but
+it does not create a regular two-sample MI comparison. Analytic improvement of
+the sparse independence test would require a second-order finite-sample
+method, rather than an immediate extension of the expanded Welch calculation.

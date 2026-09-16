@@ -1,0 +1,377 @@
+\chapter{Experimental Results}
+\label{chap:results}
+
+Every ordinary panel in this chapter begins at a true MI difference of zero.
+That point measures false-positive rejection under \(H_0\). Points to its
+right measure detection under \(H_1\). The horizontal coordinate is a
+\emph{constructed population} difference in nats; random count tables create
+the vertical variation. The blue solid circles are Normal Wald and the
+magenta dashed squares are Expanded Welch. The dotted horizontal line marks
+the nominal 0.05 rejection rate. Each plotted rate divides the number of valid rejections
+by all 20,000 replicates. A hollow marker indicates a valid-result rate below
+0.90, not an accepted test. The figure source manifest gives the exact saved
+configuration identifiers for every panel.
+
+\section{Main landscape: shape, margins and sample size}
+
+The first question is broad: do the methods behave differently as the table
+grows, margins become uneven and samples become larger? Figures
+\ref{fig:main-2x2-uniform}--\ref{fig:main-8x8-different_skew} provide a
+systematic view rather than a selection of favourable examples. Each of the
+four shapes is shown under all three margin profiles. Within every figure,
+the columns are the same three equal sample sizes. The full vertical scale
+preserves comparability of detection; the lower row enlarges the region in
+which calibration differences near 0.05 can be seen. The complete nine-size
+ladder, including \(n=2,5,20,50,250,500\), remains in the companion atlas.
+
+\newcommand{\mainlandscapefigure}[5]{%
+\begin{figure}[p]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.18\textwidth]{main_#1_#3.pdf}}
+\caption[Main landscape: #2 tables, #5 margins]{#2 tables, #4. Columns: \(n_P=n_Q=10,100,1000\), respectively.
+For each population the first two rows and columns receive the signed changes
+in Equation~\eqref{eq:first-change-block}; \(I(P)=0.02\) and
+\(I(Q)=0.02+|\Delta|\). The horizontal grid is
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats. The upper panels have a
+shared 0--1 rejection axis and the lower panels show the same data at 0--0.15.
+At zero the rate is false positives; elsewhere it is detection. Each point
+uses 20,000 paired samples. Hollow markers denote validity below 90\%.}
+\label{fig:main-#1-#3}
+\end{figure}%
+}
+
+\mainlandscapefigure{2x2}{\(2\times2\)}{uniform}{Both \(P\) and \(Q\) have uniform row and column margins \((1/2,1/2)\)}{uniform}
+\mainlandscapefigure{2x2}{\(2\times2\)}{same_skew}{Both \(P\) and \(Q\) have row and column margins \(m_2(0.8)=(0.8,0.2)\)}{same skew}
+\mainlandscapefigure{2x2}{\(2\times2\)}{different_skew}{\(P\) has row and column margins \(m_2(0.7)=(0.7,0.3)\), while \(Q\) has \(m_2(0.8)=(0.8,0.2)\)}{different skew}
+
+\mainlandscapefigure{3x3}{\(3\times3\)}{uniform}{Both \(P\) and \(Q\) have uniform row and column margins \((1/3,1/3,1/3)\)}{uniform}
+\mainlandscapefigure{3x3}{\(3\times3\)}{same_skew}{Both \(P\) and \(Q\) have row and column margins \(m_3(0.8)=(0.8,0.1,0.1)\)}{same skew}
+\mainlandscapefigure{3x3}{\(3\times3\)}{different_skew}{\(P\) has row and column margins \(m_3(0.7)=(0.7,0.15,0.15)\), while \(Q\) has \(m_3(0.8)=(0.8,0.1,0.1)\)}{different skew}
+
+\mainlandscapefigure{5x5}{\(5\times5\)}{uniform}{Both \(P\) and \(Q\) have uniform row and column margins \((1/5,\ldots,1/5)\)}{uniform}
+\mainlandscapefigure{5x5}{\(5\times5\)}{same_skew}{Both \(P\) and \(Q\) have row and column margins \(m_5(0.8)=(0.8,0.05,0.05,0.05,0.05)\)}{same skew}
+\mainlandscapefigure{5x5}{\(5\times5\)}{different_skew}{\(P\) has row and column margins \(m_5(0.7)=(0.7,0.075,0.075,0.075,0.075)\), while \(Q\) has \(m_5(0.8)=(0.8,0.05,0.05,0.05,0.05)\)}{different skew}
+
+\mainlandscapefigure{8x8}{\(8\times8\)}{uniform}{Both \(P\) and \(Q\) have uniform row and column margins \((1/8,\ldots,1/8)\)}{uniform}
+\mainlandscapefigure{8x8}{\(8\times8\)}{same_skew}{Both \(P\) and \(Q\) have row and column margins \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{same skew}
+\mainlandscapefigure{8x8}{\(8\times8\)}{different_skew}{\(P\) has row and column margins \(m_8(0.7)=(0.7,0.3/7,\ldots,0.3/7)\), while \(Q\) has \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{different skew}
+
+The landscape does not yield a uniformly preferable method. Among the 36
+main null regimes with \(n=5,10,20\), Expanded Welch is numerically closer to
+0.05 in 26 and Wald in 10. This is a descriptive count, not a test of 36
+independent improvements. The trend reverses in the 24 main null settings at
+\(n=500\) or 1,000: Wald is closer to 0.05 in all 24. At \(n=1{,}000\), Wald
+null rates across the main settings lie between 0.0228 and 0.0453; Expanded
+Welch lies between 0.0211 and 0.0393. Neither is uniformly at the nominal
+level.
+
+Two fully valid null points make the contrast concrete. With uniform
+\(8\times8\) populations, \(n_P=n_Q=20\), and equal true MI of 0.02,
+Wald rejects \(\EightUniformTwentyWaldRate\) of samples and Expanded Welch
+\(\EightUniformTwentyExpandedRate\). The latter is closer to 0.05. With
+uniform \(2\times2\) populations at \(n_P=n_Q=1{,}000\), the respective
+rates are \(\TwoUniformThousandWaldRate\) and
+\(\TwoUniformThousandExpandedRate\); the correction moves an already
+conservative procedure farther below the target. Both methods are valid on
+all replicates in these examples, so the change is attributable to their
+different references rather than missing outputs.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Two fully valid main-grid null regimes. Brackets beside each rate
+are pointwise Wilson 95\% intervals; the final bracket is the approximate
+paired 95\% interval for Wald minus Expanded Welch on the same samples.
+Source configurations are \texttt{config\_313a5e5c05280f9e} and
+\texttt{config\_700945d218841f2e}, respectively.}
+\label{tab:null-paired-examples}
+\begin{tabularx}{\textwidth}{@{}l>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X@{}}
+\toprule
+Regime & Wald & Expanded & Wald minus Expanded\\
+ & Rate [95\% interval] & Rate [95\% interval] & Rate [95\% interval]\\
+\midrule
+\(8\times8\), uniform, \(n=20\) & 0.0687 [0.0653, 0.0723] & 0.0570 [0.0538, 0.0602] & 0.0118 [0.0103, 0.0132]\\
+\(2\times2\), uniform, \(n=1000\) & 0.0445 [0.0417, 0.0474] & 0.0387 [0.0361, 0.0414] & 0.0059 [0.0048, 0.0069]\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The lower sample-size figures also show an important limit to interpreting
+small rejection rates. In the \(8\times8\) different-skew alternative with
+\(n_P=n_Q=5\), \(I(P)=0.02\) and \(I(Q)=0.021\), Wald rejects
+\(\EightSparseFiveAlternativeWaldRate\) and Expanded Welch rejects
+\(\EightSparseFiveAlternativeExpandedRate\), but their valid-result rates
+are only \(\EightSparseFiveAlternativeWaldValid\) and
+\(\EightSparseFiveAlternativeExpandedValid\). These are probabilities of a
+\emph{valid rejection}, not a clean comparison of power at matched achieved
+false-positive rates. The corresponding null and validity records must be
+examined before calling the gap a power advantage.
+
+\section{Baseline MI and the location of changed cells}
+
+The main grid fixes \(I(P)=0.02\). Does starting closer to independence
+change the conclusion? Figure~\ref{fig:baseline-focus} holds shape, margins,
+sample size and changed cells fixed while varying only the common starting
+MI. The zero-difference points are especially informative: for
+\(I_0=0.0001,0.001,0.02\), Wald's rates are 0.0193, 0.0146 and 0.0171,
+while Expanded Welch's are 0.0017, 0.0016 and 0.0083. All the plotted null
+calculations in this focused set are valid. Reducing the reference tail does
+not address the already-low null rejection in these settings.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{baseline_3x3_different_skew.pdf}
+\caption[Baseline-MI comparison, \(3\times3\) tables]{Baseline-MI comparison for \(3\times3\) tables. Columns have
+\(I(P)=0.0001,0.001,0.02\) nats, respectively; \(I(Q)=I(P)+|\Delta|\).
+\(P\) has row and column margins \((0.7,0.15,0.15)\) and \(Q\) has
+\((0.8,0.1,0.1)\). Both use the first-cell change block,
+\(n_P=n_Q=100\), and \(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+Top: 0--1 rejection scale; bottom: 0--0.15 zoom. Each point has 20,000
+replicates; hollow markers flag validity below 90\%.}
+\label{fig:baseline-focus}
+\end{figure}
+
+Figure~\ref{fig:patterns-focus} asks whether the association being placed in
+an early, rare or distributed set of cells changes performance when the
+margins and target MI are fixed. At the displayed null points, Wald rates
+are 0.0169, 0.0170 and 0.0161 and Expanded Welch rates are 0.0039, 0.0044
+and 0.0041 for first, rare and spread patterns. The similarity of those three
+null rates in this selected setting is not evidence that the patterns are
+equivalent in all tables. The full \(3\times3\), \(5\times5\) and
+\(8\times8\) matched sets are in the atlas.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{patterns_5x5_different_skew.pdf}
+\caption[Changed-cell comparison, \(5\times5\) tables]{Changed-cell comparison for \(5\times5\) tables. Columns place
+association in the first \(2\times2\) block, last (rare) \(2\times2\)
+block, or a centred score outer product spread across all cells. For every
+column, \(P\)'s row and column margins are
+\((0.7,0.075,0.075,0.075,0.075)\), and \(Q\)'s are
+\((0.8,0.05,0.05,0.05,0.05)\). Here \(I(P)=0.0001\),
+\(I(Q)=I(P)+|\Delta|\), \(n_P=n_Q=100\), and
+\(|\Delta|=0,0.0001,0.00025,0.0005,0.001,0.002\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
+\label{fig:patterns-focus}
+\end{figure}
+
+\section{Unequal samples and the direction of the difference}
+
+Figures~\ref{fig:imbalance-q} and~\ref{fig:imbalance-p} hold the unordered
+sample sizes at 50 and 250 but reverse which population has the larger
+sample. They also show the two directions of the MI difference separately.
+The distinction matters because the finite bias corrections are
+\(d/(2n_P)\) and \(d/(2n_Q)\), and the two populations have different
+margins. For example, at \((n_P,n_Q)=(50,250)\) and a 0.02-nat difference,
+Wald's rejection is 0.0994 when \(Q\) has higher MI and 0.0495 when \(P\)
+has higher MI. Expanded Welch gives 0.0247 and 0.0233. All four rates in
+that specific comparison have validity one. These alternative rates should
+still be read beside the matched null points rather than as equal-size power.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{imbalance_3x3_q_higher.pdf}
+\caption[Unequal samples, \(Q\) higher]{Unequal samples, \(Q\) higher. Columns have
+\((n_P,n_Q)=(50,250)\) and \((250,50)\). For both columns, \(P\) has
+\(3\times3\) row and column margins \((0.7,0.15,0.15)\) and \(Q\) has
+\((0.8,0.1,0.1)\); the first-cell change block is used.
+\(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), with
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats. Top: 0--1; bottom:
+0--0.15. Each point has 20,000 replicates.}
+\label{fig:imbalance-q}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{imbalance_3x3_p_higher.pdf}
+\caption[Unequal samples, \(P\) higher]{Unequal samples, \(P\) higher. Columns have
+\((n_P,n_Q)=(50,250)\) and \((250,50)\). \(P\)'s \(3\times3\) row and
+column margins are \((0.7,0.15,0.15)\); \(Q\)'s are \((0.8,0.1,0.1)\).
+Both use the first-cell change block. \(I(Q)=0.02\) and
+\(I(P)=0.02+|\Delta|\), with
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
+\label{fig:imbalance-p}
+\end{figure}
+
+\section{Larger differences and rectangular tables}
+
+The main grid deliberately concentrates on small MI differences. A separate
+\(2\times2\) family extends the feasible axis to 0.2 nats without changing
+the axis units or pretending unconstructed targets exist. This shows where
+detection eventually rises, while retaining the zero-difference point that
+defines null calibration. Rectangular \(2\times3\) and \(3\times5\) tables
+check that the discussion is not tied only to square alphabets. The panels
+do not average over shapes.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{broad_2x2_uniform.pdf}
+\caption[Wider MI differences, uniform \(2\times2\)]{Wider MI differences in a uniform \(2\times2\) population pair.
+The single panel has \(P\) and \(Q\) row and column margins \((0.5,0.5)\),
+first-cell changes, \(n_P=n_Q=100\), \(I(P)=0.02\), and
+\(I(Q)=0.02+|\Delta|\). The horizontal grid is
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2\) nats;
+the rejection axis is 0--1. Each point has 20,000 replicates.}
+\label{fig:broad-focus}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{rectangular_different_skew.pdf}
+\caption[Rectangular tables]{Rectangular tables. Columns are \(2\times3\) and \(3\times5\).
+In each dimension \(k\), \(P\)'s corresponding margin is \(m_k(0.7)\)
+and \(Q\)'s is \(m_k(0.8)\), for both rows and columns. Thus the first
+column uses \(P\) rows \((0.7,0.3)\), columns
+\((0.7,0.15,0.15)\), and \(Q\) rows \((0.8,0.2)\), columns
+\((0.8,0.1,0.1)\); the second applies the same formula to 3 and 5
+categories. Both use first-cell changes, \(n_P=n_Q=100\),
+\(I(P)=0.02\), and \(I(Q)=0.02+|\Delta|\) for
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
+\label{fig:rectangular-focus}
+\end{figure}
+
+\section{Population construction sensitivity}
+
+The additive block is interpretable, but it is only one way to make tables
+with fixed margins and target MI. Figure~\ref{fig:construction-focus}
+compares it with an ordinal log-linear construction under matched targets.
+The null rates are not identical: for the displayed \(5\times5\) different-
+skew comparison at \(n=100\), Wald gives 0.0250 under additive construction
+and 0.0182 under log-linear construction; Expanded Welch gives 0.0136 and
+0.0119. All are below nominal and all are valid. Thus matching the scalar MI
+and margins does not fix the complete finite-sample behaviour. The
+constructor comparison is a sensitivity check, not proof that the population
+families exhaust all relevant dependence structures.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{construction_5x5_different_skew.pdf}
+\caption[Additive versus log-linear construction]{Additive versus ordinal log-linear construction for
+\(5\times5\) tables. The left column uses the first-cell additive block;
+the right fits an ordinal interaction while preserving the margins. In both,
+\(P\)'s row and column margins are
+\((0.7,0.075,0.075,0.075,0.075)\) and \(Q\)'s are
+\((0.8,0.05,0.05,0.05,0.05)\). Both have
+\(I(P)=0.02\), \(I(Q)=0.02+|\Delta|\), \(n_P=n_Q=100\), and
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
+\label{fig:construction-focus}
+\end{figure}
+
+\section{Extreme skew, independence and larger samples}
+
+The extreme-skew check deliberately keeps configurations with very small
+expected cell counts. At \(n_P=n_Q=100\), \(3\times3\) tables with dominant
+margins 0.999 for \(P\) and 0.9995 for \(Q\) yield valid null results in
+only 0.0118 of Wald replicates and 0.00005 of Expanded Welch replicates.
+Both unconditional false-positive rates are zero, but this is mostly an
+absence of valid tests, not evidence of excellent calibration. With dominant
+margins 0.9 and 0.95, the corresponding null rates are 0.0701 and 0.0088;
+Expanded Welch lowers an excessive Wald rate past the target. Figure
+\ref{fig:extreme-focus} shows all three specified skew levels, not just
+the favourable one.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{extreme_3x3.pdf}
+\caption[Extreme-skew \(3\times3\) tables]{Extreme-skew \(3\times3\) tables. Across columns the dominant
+row and column probabilities for \((P,Q)\) are
+\((0.9,0.95)\), \((0.99,0.995)\), and \((0.999,0.9995)\). Each remaining
+margin entry splits the leftover probability equally between the two other
+categories. Both use first-cell changes, \(n_P=n_Q=100\),
+\(I(P)=0.00001\), and \(I(Q)=I(P)+|\Delta|\), for
+\(|\Delta|=0,0.00001,0.00005,0.0001,0.0002\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates; hollow
+markers flag validity below 90\%.}
+\label{fig:extreme-focus}
+\end{figure}
+
+Exact independence is a separate theoretical boundary. Figure
+\ref{fig:independence-focus} starts \(P\) at MI zero and includes the equal-
+MI point where both populations are independent. This is not a routine
+positive-MI validation of Expanded Welch: its population first-order
+variance is zero at independence. At \(n=100\), for example, the uniform
+\(2\times2\) null rates are only 0.00025 and 0.00010 for Wald and Expanded
+Welch. Appendix~\ref{app:independence-boundary} explains why a second-order
+independence test has a different reference.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{independence_2x2.pdf}
+\caption[Exact-independence boundary]{Exact-independence boundary for \(2\times2\) tables. Columns are
+uniform margins \((0.5,0.5)\) for both populations, same skew
+\((0.8,0.2)\) for both, and different skew with \(P=(0.7,0.3)\) and
+\(Q=(0.8,0.2)\); each vector is used for both rows and columns. The first-
+cell block is used, \(I(P)=0\), \(I(Q)=|\Delta|\),
+\(n_P=n_Q=100\), and
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
+\label{fig:independence-focus}
+\end{figure}
+
+Does increasing \(n\) resolve the null error when the populations remain
+fixed? Figure~\ref{fig:convergence-focus} keeps equal MI and changes only
+sample size. Across the 12 first-block profiles with \(I(P)=I(Q)=0.02\) and
+\(n=50{,}000\), Wald's false-positive rates range from 0.0470 to 0.0527
+and Expanded Welch's from 0.0466 to 0.0526. At equal MI 0.0001, however,
+the ranges at the same \(n\) are 0.0089--0.0280 and 0.0076--0.0138.
+These are finite-sample observations for fixed populations. They show that
+very small positive MI can remain difficult at a large sample size, not that
+the regular asymptotic theory is mathematically false.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{convergence.pdf}
+\caption[Large-sample null behaviour]{Large-sample null behaviour. Rows compare \(2\times2\) and
+\(8\times8\) tables; columns have common true MI 0.0001 and 0.02 nats.
+For both shapes, \(P\)'s row and column margins are \(m_k(0.7)\) and
+\(Q\)'s are \(m_k(0.8)\), with \(k=2\) or 8. Both populations use the
+first-cell block. The horizontal axis is the equal sample size
+\(n_P=n_Q=1{,}000,2{,}500,10{,}000,50{,}000\) on a labelled log scale;
+the vertical axis is null rejection from 0 to 0.10. Each point has 20,000
+replicates.}
+\label{fig:convergence-focus}
+\end{figure}
+
+\section{Runtime and summary of evidence}
+
+The complete scalar calls have the same \(O(rc)\) asymptotic complexity.
+The observed median time across the 60 timing regimes is about 85
+microseconds for Wald and 150 microseconds for Expanded Welch. The median
+Expanded-to-Wald ratio is about 1.75, with regime ratios about 1.72--1.79.
+For the explicitly timed \(3\times3\), different-skew, \(n_P=n_Q=100\),
+equal-MI input regime, the medians are 85.083 and 149.979 microseconds.
+These are implementation- and machine-specific timings, not universal
+complexity constants. Exact per-regime medians and interquartile ranges are
+in the saved runtime file cited in Appendix~\ref{app:evidence-index}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Complete scalar-call times in microseconds for the different-skew
+null at \(n_P=n_Q=100\) and \(I(P)=I(Q)=0.02\). Entries give median
+[interquartile range] over five passes on 200 saved inputs per regime.
+Population construction and multinomial sampling are excluded.}
+\label{tab:runtime-by-shape}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Shape & Normal Wald & Expanded Welch & Expanded/Wald\\
+\midrule
+\(2\times2\) & 85.8 [85.5, 86.3] & 150.0 [149.4, 151.3] & 1.75\\
+\(3\times3\) & 85.1 [84.6, 85.6] & 150.0 [148.9, 150.9] & 1.76\\
+\(3\times5\) & 85.2 [84.9, 85.5] & 150.1 [149.5, 150.9] & 1.76\\
+\(5\times5\) & 85.3 [85.1, 85.7] & 149.2 [148.5, 150.1] & 1.75\\
+\(8\times8\) & 88.0 [87.1, 88.9] & 153.4 [152.4, 154.8] & 1.74\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The evidence separates three observations. First, Expanded Welch can make a
+liberal Wald null rate closer to 0.05. Second, because it uses the same
+statistic with a heavier-tailed reference, it can also reduce rejection where
+Wald is already conservative. Third, in sparse samples the unconditional rate
+can fall because the expanded calculation is invalid more often. No one
+number summarises these behaviours; the matched curves and their validity
+records are the basis for the discussion that follows.

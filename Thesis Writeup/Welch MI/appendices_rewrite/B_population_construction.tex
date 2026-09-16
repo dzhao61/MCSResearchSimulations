@@ -1,0 +1,131 @@
+\chapter{Population Construction and Exact Design Settings}
+\label{app:construction}
+
+The experiment uses fixed population tables. This appendix states the
+construction precisely enough to reproduce any plotted point and records the
+finite parameter grids. Full-precision probabilities for every constructed
+pair are stored in \texttt{population\_definitions.csv}; rounded examples in
+the thesis are for reading, not simulation input.
+
+\section{Additive construction}
+
+For prescribed positive row vector \(a\) and column vector \(b\), form
+\(B=ab^{\mathsf T}\). The principal first-cell direction \(H\) contains
+\(\left(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\right)\) in
+rows and columns 1 and 2 and zero elsewhere. The rare-cell direction places
+the same block in the last two rows and columns. The spread direction is
+\begin{equation}
+ H_{ij}=u_i v_j,
+ \quad u_i=-1+\frac{2(i-1)}{r-1},
+ \quad v_j=-1+\frac{2(j-1)}{c-1}.
+ \label{eq:appendix-spread}
+\end{equation}
+Both score vectors sum to zero, so every direction preserves margins.
+
+For \(t\ge0\), define \(R(t)=B+tH\). Calculate the first strength at which
+a decreasing cell reaches zero,
+\begin{equation}
+ t_{\max}=\min_{H_{ij}<0}\frac{B_{ij}}{-H_{ij}}.
+\end{equation}
+Evaluate the path endpoint MI. A target MI must lie strictly below this
+endpoint, within the stated numerical tolerance. For a positive target,
+Brent's one-dimensional root search solves \(I\{R(t)\}=I_{\rm target}\)
+on \([0,t_{\max}]\); a zero target uses \(t=0\). The final table is accepted
+only if every cell is strictly positive, the sum is one, both margins agree
+with their prescribed vectors, and achieved MI agrees with the target. The
+normalisation and margin tolerances are \(10^{-12}\); the MI tolerance is
+\(10^{-12}+10^{-8}I_{\rm target}\). These numerical checks ensure that a
+horizontal-axis difference denotes constructed population truth, not an
+empirical estimate. They do not impose an expected-count floor on the
+subsequent sample.
+
+The row and column vectors are separately constructed for each population.
+For shape \(r\times c\), profile \texttt{uniform} uses uniform vectors of
+lengths \(r\) and \(c\) for both \(P\) and \(Q\). Profile
+\texttt{same\_skew} uses \(m_r(0.8)\), \(m_c(0.8)\) for both. Profile
+\texttt{different\_skew} uses \(m_r(0.7)\), \(m_c(0.7)\) for \(P\) and
+\(m_r(0.8)\), \(m_c(0.8)\) for \(Q\). The extreme regimes instead state the
+two dominant probabilities directly. The direction of the alternative is a
+separate parameter and should not be inferred from which population has the
+more skewed margin.
+
+The log-linear comparison uses an ordinal interaction pattern. Its strength
+is tuned numerically while iterative proportional fitting preserves the
+given row and column margins. The final table is subjected to the same
+positivity, normalisation, margin and target-MI checks as the additive table.
+This is a comparison across two ways to make plausible fixed populations,
+not a claim that a matched target implies matched higher moments or cell
+counts.
+
+\section{Frozen statistical grids}
+
+Unless a row of Table~\ref{tab:exact-grids} says otherwise, both populations
+use the first-cell additive direction, \(I(P)=I_0\),
+\(I(Q)=I_0+|\Delta|\), and the three standard margin profiles. The
+symbol \(n\) means \(n_P=n_Q=n\). A requested point was simulated only after
+the population constructor verified a strictly positive feasible table.
+The final display contains no infeasible slots, but that is a result of
+choosing feasible finite grids, not permission to extend any curve beyond
+its last constructed target.
+
+\begin{longtable}{@{}p{0.18\textwidth}p{0.75\textwidth}@{}}
+\caption{Exact statistical experiment grids; MI values are in nats.}
+\label{tab:exact-grids}\\
+\toprule
+Family & Settings\\
+\midrule
+\endfirsthead
+\toprule
+Family & Settings\\
+\midrule
+\endhead
+Main & Shapes \(2\times2,3\times3,5\times5,8\times8\); three profiles;
+\(I_0=0.02\); \(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\);
+\(n\in\{2,5,10,20,50,100,250,500,1000\}\).\\
+Baseline & Main shapes and profiles; \(I_0\in\{0.0001,0.001,0.02\}\);
+main difference grid; \(n\in\{20,100,1000\}\).\\
+Changed cells & Shapes \(3\times3,5\times5,8\times8\);
+different-skew margins; \(I_0=0.0001\);
+\(|\Delta|\in\{0,0.0001,0.00025,0.0005,0.001,0.002\}\);
+\(n\in\{20,100,1000\}\). First and rare blocks for all shapes;
+spread pattern for \(5\times5\) and \(8\times8\).\\
+Imbalance & Main shapes, profiles and difference grid;
+\(I_0=0.02\). Sample pairs are
+\((50,50),(50,100),(100,50),(50,250)\),
+\((250,50),(50,500),(500,50),(500,500)\).
+Both \(Q\)-higher and \(P\)-higher MI directions.\\
+Larger effects & Shapes \(2\times2,3\times3\); three profiles;
+\(I_0=0.02\); main difference grid plus \(0.05,0.1,0.2\);
+\(n\in\{20,100,1000\}\).\\
+Rectangular & Shapes \(2\times3,3\times5\); three profiles;
+\(I_0=0.02\); main difference grid;
+\(n\in\{20,100,1000\}\).\\
+Construction & Shapes \(3\times3,5\times5,8\times8\); uniform and
+different-skew profiles; \(I_0\in\{0.0001,0.02\}\); main difference
+grid; \(n\in\{20,100,1000\}\); additive first block and ordinal
+log-linear constructors.\\
+Extreme skew & Shapes \(2\times2,3\times3,8\times8\); dominant margin
+probability pairs \((\rho_P,\rho_Q)\in\{(0.9,0.95),(0.99,0.995),
+(0.999,0.9995)\}\); \(I_0=0.00001\);
+\(|\Delta|\in\{0,0.00001,0.00005,0.0001,0.0002\}\);
+\(n\in\{1,2,5,20,100,1000,10000\}\).\\
+Rare-cell stress & Shapes \(3\times3,8\times8\); dominant pair
+\((0.9,0.95)\); first and rare blocks; \(I_0=0.00001\);
+\(|\Delta|\in\{0,0.00001,0.000025,0.00005,0.0001\}\);
+same \(n\) ladder as extreme skew.\\
+Independence & Shapes \(2\times2,8\times8\); three profiles;
+\(I_0=0\); main difference grid;
+\(n\in\{2,20,100,1000\}\).\\
+Convergence & Main square shapes and profiles; equal MI
+\(I(P)=I(Q)\in\{0.0001,0.02\}\);
+\(n\in\{1000,2500,10000,50000\}\). Additional rare-block controls
+use \(3\times3,5\times5,8\times8\), different-skew margins and common
+MI 0.0001.\\
+\bottomrule
+\end{longtable}
+
+The \(n=1\) stress setting is retained rather than hidden; the statistic is
+not evaluable there and its result is recorded as invalid. Every unique
+statistical configuration has 20,000 sampled table pairs. When the same
+population pair and sample sizes appear in another section, the saved
+configuration is reused for presentation rather than simulated again.

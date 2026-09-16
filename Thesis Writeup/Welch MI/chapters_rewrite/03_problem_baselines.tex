@@ -1,0 +1,249 @@
+\chapter{Comparing Mutual Information with Normal Wald}
+\label{chap:baselines}
+
+This chapter defines the estimand and statistic shared by the two methods in
+the final experiment. Normal Wald evaluates it against a standard normal
+reference; Chapter~\ref{chap:expanded} develops a Student reference with
+estimated degrees of freedom.
+
+\section{Data, estimand, and assumptions}
+
+Let
+\begin{equation}
+  N^P=(N^P_{ij}),
+  \qquad
+  N^Q=(N^Q_{ij})
+\end{equation}
+be independent \(r\times c\) count tables with totals \(n_P\) and \(n_Q\).
+The row and column categories have the same definitions in both populations.
+The empirical probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N^P_{ij}}{n_P},
+  \qquad
+  \widehat q_{ij}=\frac{N^Q_{ij}}{n_Q}.
+\end{equation}
+
+The population parameter is the signed difference
+\begin{equation}
+  \Delta=I(P)-I(Q).
+  \label{eq:delta-population}
+\end{equation}
+The principal test is two-sided:
+\begin{equation}
+  H_0:\Delta=0
+  \quad\text{against}\quad
+  H_1:\Delta\ne0.
+  \label{eq:two-sample-null}
+\end{equation}
+
+The first-order construction uses the following assumptions.
+
+\begin{assumption}[Sampling]
+Observations are independent and identically distributed within each
+population, and the two population samples are independent.
+\end{assumption}
+
+\begin{assumption}[Aligned fixed alphabets]
+The row and column categories are fixed in advance and aligned between the two
+tables.
+\end{assumption}
+
+\begin{assumption}[Positive support]
+Every population cell has positive probability. Empirical zero cells are
+allowed, but widespread observed support loss is recorded as a diagnostic.
+\end{assumption}
+
+\begin{assumption}[Regular MI]
+The first-order influence variances \(V(P)\) and \(V(Q)\) are positive. This
+excludes exact independence and other degenerate cases from the regular
+Student approximation.
+\end{assumption}
+
+All logarithms are natural. MI differences and standard errors are therefore
+reported in nats. Changing the logarithm base scales both by the same positive
+constant and leaves the standardised statistic unchanged.
+
+\section{Plug-in and bias-corrected MI}
+
+For the first table, define empirical pointwise MI by
+\begin{equation}
+  \widehat\pmi_P(i,j)
+  =\log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right)
+  \qquad\text{when }\widehat p_{ij}>0.
+  \label{eq:empirical-pmi}
+\end{equation}
+The plug-in MI estimate is
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}\widehat\pmi_P(i,j).
+  \label{eq:plugin-mi}
+\end{equation}
+The same calculation gives \(\Ihat(Q)\).
+
+Let
+\begin{equation}
+  d=(r-1)(c-1).
+\end{equation}
+Under fixed positive support, the leading bias correction gives
+\begin{equation}
+  \widehat I_{\mathrm{BC}}(P)
+  =\Ihat(P)-\frac{d}{2n_P},
+  \qquad
+  \widehat I_{\mathrm{BC}}(Q)
+  =\Ihat(Q)-\frac{d}{2n_Q}.
+  \label{eq:bias-corrected-mi}
+\end{equation}
+The estimated effect is
+\begin{equation}
+  \Deltahat
+  =\widehat I_{\mathrm{BC}}(P)
+  -\widehat I_{\mathrm{BC}}(Q).
+  \label{eq:bias-corrected-difference}
+\end{equation}
+
+The correction uses the declared alphabet dimensions rather than the observed
+nonempty dimensions. It may produce a negative corrected MI estimate in a
+sparse sample. The implementation does not clip that estimate at zero. Clipping
+would replace the stated bias-corrected estimator by a different nonlinear
+estimator and would change its finite-sample bias and sampling distribution.
+When $n_P=n_Q$, the two leading corrections cancel in the difference in
+Equation~\eqref{eq:bias-corrected-difference}. When the sample sizes differ,
+their difference remains and removes the leading unequal-sample bias described
+in Section~\ref{sec:background-mi-bias}.
+
+\section{First-order variance of plug-in MI}
+
+For population \(P\), define
+\begin{equation}
+  V(P)
+  =\sum_{i,j}p_{ij}
+  \{\pmi_P(i,j)-I(P)\}^2.
+  \label{eq:population-mi-variance}
+\end{equation}
+This is the population variance of pointwise MI. It governs the sampling
+variance of the complete plug-in estimator because the first-order MI error is
+an average of centred pointwise-MI contributions. This first-order variance
+is established for histogram and discrete MI \citep{moddemeijer1989,brillinger2004};
+the expanded calculation in Chapter~\ref{chap:expanded} concerns the
+\emph{sampling uncertainty of its plug-in estimate}.
+
+To see this directly, write one observation as
+\(Z_a^{(P)}=(X_a^{(P)},Y_a^{(P)})\). A first-order Taylor expansion of MI
+around the fixed population table $P$ gives
+\begin{equation}
+  \Ihat(P)-I(P)
+  =
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}
+  \{\pmi_P(Z_a^{(P)})-I(P)\}
+  +o_p(n_P^{-1/2}).
+  \label{eq:mi-asymptotic-linear}
+\end{equation}
+The summands are independent, have mean zero, and have variance \(V(P)\).
+The remainder $o_p(n_P^{-1/2})$ is asymptotically smaller than the leading
+$n_P^{-1/2}$ sampling fluctuation. Appendix~\ref{app:derivation-details}
+derives the linear term by expanding MI as a function of the cell
+probabilities.
+Therefore,
+\begin{align}
+  \Var\{\Ihat(P)\}
+  &\approx
+  \Var\left[
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}
+  \{\pmi_P(Z_a^{(P)})-I(P)\}
+  \right]\\
+  &=\frac{1}{n_P^2}
+  \sum_{a=1}^{n_P}V(P)\\
+  &=\frac{V(P)}{n_P}.
+  \label{eq:mi-sampling-variance}
+\end{align}
+Subtracting the fixed leading bias term in Equation
+\eqref{eq:bias-corrected-mi} does not change this first-order variance.
+
+The observed table estimates \(V(P)\) by
+\begin{equation}
+  \Vhat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
+  \label{eq:estimated-mi-variance}
+\end{equation}
+Define \(\Vhat(Q)\) analogously.
+
+\section{Shared standard error and test statistic}
+
+Because the two samples are independent, their estimated variance
+contributions add:
+\begin{equation}
+  \SEhat^2
+  =\frac{\Vhat(P)}{n_P}
+  +\frac{\Vhat(Q)}{n_Q}.
+  \label{eq:shared-se}
+\end{equation}
+The common standardised statistic is
+\begin{equation}
+  T=\frac{\Deltahat}{\SEhat}.
+  \label{eq:shared-t}
+\end{equation}
+The null hypothesis is not imposed when calculating \(\Deltahat\),
+\(\SEhat\) or \(T\): they use the observed tables. Equal population MI
+enters when interpreting the reference distribution, which is centred at
+zero under \(H_0\). In particular, \(Q\)'s observed estimate and variance
+are not set to zero merely because the null is being tested.
+Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
+by normal Wald and expanded Welch. Their difference lies in the reference
+distribution, not the effect estimate or plug-in standard error.
+
+\section{Normal Wald reference}
+
+Under the regular first-order asymptotics,
+\begin{equation}
+  T\xrightarrow{d}N(0,1)
+  \qquad\text{under }H_0.
+\end{equation}
+Here both $n_P$ and $n_Q$ increase while the aligned alphabet and the two
+positive-support population tables remain fixed.
+The two-sided normal Wald p-value is
+\begin{equation}
+  p_{\mathrm{Wald}}
+  =2\{1-\Phi(|T|)\},
+  \label{eq:wald-pvalue}
+\end{equation}
+where \(\Phi\) is the standard normal distribution function. A
+\(100(1-\alpha)\%\) confidence interval for \(\Delta\) is
+\begin{equation}
+  \Deltahat
+  \ \pm\
+  z_{1-\alpha/2}\SEhat,
+  \label{eq:wald-ci}
+\end{equation}
+where $z_\gamma$ is the $\gamma$ quantile of the standard normal
+distribution.
+
+The normal reference is a large-sample approximation. Its standard error is
+estimated from the observed tables; Wald does not treat it as known. Rather,
+it does not apply the finite-sample degrees-of-freedom adjustment proposed
+here.
+
+\section{What the expanded method must calculate}
+
+The shared statistic supplies the estimated effect and its first-order
+standard error. A familiar Welch analogy would assign \(n_P-1\) and \(n_Q-1\)
+degrees of freedom, as for ordinary sample variances. But \(\Vhat(P)\) is a
+nonlinear functional of a table whose margins and pointwise MI values also
+change with the data. The expanded method instead estimates component degrees
+of freedom from that full functional.
+
+Satterthwaite moment matching requires the first two moments of each positive
+variance estimate. To first order,
+\begin{equation}
+  \E\{\Vhat(P)\}\approx V(P).
+\end{equation}
+Chapter~\ref{chap:expanded} derives
+\(\Var\{\Vhat(P)\}\) by calculating how the complete variance functional
+changes when one observation changes the joint table.

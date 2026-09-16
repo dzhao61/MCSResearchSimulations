@@ -1,0 +1,39 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Mutual information measures statistical dependence without restricting that
+dependence to a linear or monotone form. Standard significance procedures for
+categorical mutual information primarily test whether two variables are
+independent within one population. This thesis studies a different problem:
+whether two independent populations have equal mutual information,
+\(H_0:I(P)=I(Q)\), while allowing their complete joint distributions to differ.
+
+The usual analytic approach forms a bias-corrected difference of plug-in
+mutual information estimates, divides it by an influence-function standard
+error, and compares the resulting statistic with a standard normal
+distribution. This normal Wald reference does not represent finite-sample
+uncertainty in the estimated variance. The thesis develops an expanded
+Welch--Satterthwaite correction that retains the same effect estimate and
+standard error but derives mutual-information-specific component degrees of
+freedom from the sampling variability of the complete variance functional.
+The resulting procedure is deterministic and requires \(O(rc)\) operations
+for an \(r\times c\) table.
+
+The method was evaluated using 60 fixed pairs of positive-support categorical
+populations with exactly equal mutual information. The experiment covered six
+table shapes, five sampling regimes, sample sizes from 50 to 1,000, and 10,000
+independent table-pair replicates per population pair. At nominal
+\(\alpha=0.05\), mean absolute calibration error across all scenarios was
+0.01342 for normal Wald, 0.01194 for simple Welch--Satterthwaite, and 0.00825
+for expanded Welch--Satterthwaite. The expanded method left the well-sampled
+control essentially unchanged and reduced error in the skewed, rare-cell, and
+widespread-sparsity regimes, although it did not restore exact calibration in
+the most difficult cases. Its average power loss relative to normal Wald was
+approximately one percentage point, and median runtime remained below
+0.15 milliseconds for the tested tables.
+
+These results support expanded Welch--Satterthwaite inference as a low-cost
+finite-sample correction for comparing positive mutual information values.
+The method is not a universal sparse-table solution and does not apply at the
+nonregular independence boundary, where the first-order mutual-information
+variance vanishes.

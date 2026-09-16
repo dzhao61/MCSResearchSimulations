@@ -1,0 +1,38 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+This thesis developed a deterministic finite-sample reference for comparing
+mutual information between two independent categorical populations. The
+method begins with the same bias-corrected MI difference and first-order
+standard error as normal Wald inference. It then estimates how much each
+population's MI variance estimate would change across repeated samples,
+converts that uncertainty into component degrees of freedom by Satterthwaite
+moment matching, and combines the components in the usual Welch form.
+
+The resulting expanded Welch--Satterthwaite test is mathematically grounded
+in the influence function of the complete MI variance functional. It accounts
+for changes in both the joint probabilities and the row and column margins.
+Its computational complexity is $O(rc)$, matching the order of the normal
+Wald and simple Welch alternatives.
+
+Across 60 fixed equal-MI population pairs and 600,000 null replicates,
+expanded Welch had the smallest overall calibration error and the coverage
+closest to 95\%. At $\alpha=0.05$, mean absolute false-positive-rate error
+fell from 0.01342 for normal Wald and 0.01194 for simple Welch to 0.00825. The
+largest improvements occurred under skewness, rare expected cells, and
+unequal sample sizes. In well-sampled tables, expanded Welch and normal Wald
+were similarly accurate. The correction cost approximately one percentage
+point of power in the tested alternatives and increased median runtime from
+about 0.08 to 0.15 milliseconds per table pair.
+
+The result is useful but bounded. Expanded Welch improves the calibration of
+regular positive-MI comparisons; it is not an exact finite-sample test and
+does not solve the nonregular independence boundary or arbitrary support
+loss. The most extreme sparse and imbalanced configuration remained liberal.
+
+The principal conclusion is therefore that MI-specific
+Welch--Satterthwaite calibration is a viable analytic refinement for the
+two-sample equal-MI problem. It offers a practical middle ground between an
+uncorrected normal reference and computational resampling. Independent
+confirmatory validation and higher-order centring are the next steps required
+before broad applied adoption.

@@ -1,6 +1,19 @@
 # Thesis Rewrite Plan
 
-13 September 2026. This is the active plan for the next thesis draft. It replaces the empirical direction in [THESIS_PLAN.md](THESIS_PLAN.md) and draws on the [exemplar review and writing notes](EXEMPLAR_REVIEW_NOTES.md). The existing LaTeX manuscript is the previous draft; this planning stage does not revise its chapters.
+**Current completion target (15 September 2026):** See
+[THESIS_GOAL.md](THESIS_GOAL.md) for the SMART targets, exemplar length
+benchmark and final acceptance criteria. These supersede the earlier page
+allocations below. The user confirmed that there is no AI-use limitation for
+this task and that CSYS5061 is not the applicable course. This file remains
+the detailed chapter and evidence plan.
+
+**Status (13 September 2026):** Implemented as the active LaTeX manuscript in
+`chapters_rewrite/`, `appendices_rewrite/`, and `figures_rewrite/`, with compiled
+`main.pdf`. The prior source and PDF are preserved in
+`archive/previous_draft_2026-09-13/`. This plan remains the design record;
+the active manuscript and its evidence audit are described in `README.md`.
+
+13 September 2026. This plan replaced the empirical direction in [THESIS_PLAN.md](THESIS_PLAN.md) and drew on the [exemplar review and writing notes](EXEMPLAR_REVIEW_NOTES.md). The remaining numbered sections record the decisions used to produce the active draft.
 
 ## 1. Thesis direction
 

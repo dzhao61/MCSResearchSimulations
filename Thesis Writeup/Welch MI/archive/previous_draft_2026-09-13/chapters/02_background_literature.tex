@@ -1,0 +1,371 @@
+\chapter{Background and Related Work}
+\label{chap:background}
+
+This chapter develops the concepts needed to compare MI between two
+categorical populations. It begins with entropy, pointwise MI, and population
+MI. It then reviews plug-in estimation, first-order inference, the
+Welch--Satterthwaite approximation, and prior comparisons of information
+quantities. The final section identifies the gap addressed by the expanded
+method.
+
+\section{Information-theoretic foundations}
+
+\subsection{Entropy and information content}
+
+For a discrete random variable \(X\) with probability mass function
+\(p_X(x)\), the information content of outcome \(x\) is
+\begin{equation}
+  h_X(x)=-\log p_X(x).
+\end{equation}
+Rare outcomes have larger information content because they are less expected.
+Using natural logarithms gives information in nats. The Shannon entropy is the
+expected information content,
+\begin{equation}
+  H(X)=-\sum_x p_X(x)\log p_X(x).
+  \label{eq:entropy}
+\end{equation}
+Entropy summarises the uncertainty of one random variable before its value is
+observed \citep{shannon1948}.
+
+For a pair \((X,Y)\), the joint entropy \(H(X,Y)\) is defined from the joint
+probabilities in the same way. The conditional entropy
+\(
+H(X\mid Y)=H(X,Y)-H(Y)
+\)
+measures the uncertainty remaining in \(X\) after observing \(Y\).
+
+\subsection{Pointwise and average mutual information}
+
+Let \(P=(p_{ij})\) be the joint distribution of categorical variables
+\(X\in\{1,\ldots,r\}\) and \(Y\in\{1,\ldots,c\}\). Write
+\begin{equation}
+  p_{i+}=\sum_{j=1}^{c}p_{ij},
+  \qquad
+  p_{+j}=\sum_{i=1}^{r}p_{ij}
+\end{equation}
+for the row and column margins. The pointwise mutual information associated
+with cell \((i,j)\) is
+\begin{equation}
+  \pmi_P(i,j)
+  =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
+  \label{eq:background-pmi}
+\end{equation}
+The denominator is the cell probability under independence with the same
+margins. A positive value means that the cell occurs more often than
+independence predicts; a negative value means that it occurs less often.
+
+Mutual information is the probability-weighted average of these pointwise
+values:
+\begin{equation}
+  I(P)
+  =\sum_{i=1}^{r}\sum_{j=1}^{c}p_{ij}\pmi_P(i,j).
+  \label{eq:background-mi}
+\end{equation}
+Equivalently,
+\begin{equation}
+  I(X;Y)=H(X)+H(Y)-H(X,Y).
+  \label{eq:mi-entropy-form}
+\end{equation}
+The quantity is nonnegative and equals zero exactly when
+\(p_{ij}=p_{i+}p_{+j}\) for every cell with positive support.
+
+Equation~\eqref{eq:background-mi} is also the Kullback--Leibler divergence
+between the joint distribution and the product of its margins. MI therefore
+measures the overall departure from independence rather than one particular
+shape of association.
+
+This scalar summary deliberately discards much of the information in the
+joint distribution. Two populations can have the same MI while assigning
+probability to different cells, having different margins, or exhibiting
+different association patterns. Equality of MI is therefore weaker than
+equality of distributions. This distinction is central to the present test:
+the null fixes one scalar functional while leaving the remaining features of
+each population unrestricted.
+
+The logarithm base determines the unit but not the inferential problem. If
+base two is used, every pointwise value and MI value is divided by
+\(\log 2\). The standard error is divided by the same constant, so a
+studentized statistic is unchanged. This thesis uses natural logarithms and
+reports MI in nats.
+
+\section{Estimating discrete mutual information}
+
+Suppose a sample of size \(n\) produces counts \(N_{ij}\). The empirical cell
+probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N_{ij}}{n}.
+\end{equation}
+Substitution into Equation~\eqref{eq:background-mi} gives the plug-in estimator
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right).
+  \label{eq:plugin-mi-background}
+\end{equation}
+The zero-cell convention follows from
+\(\lim_{x\downarrow0}x\log x=0\). Empty cells contribute no direct term, but
+they still affect the empirical margins and the finite-sample behaviour of the
+estimator.
+
+Under multinomial sampling, the entire table is random subject to its fixed
+total. Cell counts are dependent because increasing one count leaves fewer
+observations for the others. The plug-in estimator remains consistent for a
+fixed alphabet, but its finite-sample distribution depends on the complete
+probability table. Equal alphabet sizes and sample sizes do not imply equal
+sampling behaviour when one population has much rarer cells.
+
+The plug-in estimator is upward biased. Finite sampling makes an empirical
+joint table appear more structured than its population distribution, which
+increases the estimated departure from independence. For a fixed positive
+\(r\times c\) support, the leading bias is
+\begin{equation}
+  \Bias\{\Ihat(P)\}
+  =\frac{(r-1)(c-1)}{2n}+O(n^{-2}).
+  \label{eq:mi-leading-bias}
+\end{equation}
+This result follows from the corresponding leading entropy biases and is
+closely related to Miller's correction \citep{miller1955,moddemeijer1989}.
+More complete analyses show that sparse sampling and unknown support can
+produce substantial higher-order error beyond Equation
+\eqref{eq:mi-leading-bias} \citep{paninski2003}.
+
+The leading term can be seen from the entropy identity in Equation
+\eqref{eq:mi-entropy-form}. For a discrete variable with \(m\) positive
+categories, the plug-in entropy has leading bias \(-(m-1)/(2n)\). Applying
+this result to \(H(X)+H(Y)-H(X,Y)\) gives
+\begin{align}
+  \Bias\{\Ihat(P)\}
+  &\approx
+  -\frac{r-1}{2n}
+  -\frac{c-1}{2n}
+  +\frac{rc-1}{2n}\\
+  &=\frac{(r-1)(c-1)}{2n}.
+  \label{eq:mi-bias-from-entropies}
+\end{align}
+The correction is positive because estimating the larger joint distribution
+introduces more entropy bias than estimating the two margins.
+
+Bias matters directly when comparing two populations. If
+\(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
+\begin{equation}
+  \frac{(r-1)(c-1)}{2}
+  \left(\frac{1}{n_P}-\frac{1}{n_Q}\right).
+\end{equation}
+Removing the leading term is therefore part of the effect estimate rather than
+an optional refinement of its reference distribution.
+
+\section{First-order inference for nonlinear functionals}
+
+MI is a nonlinear function of the cell probabilities. When all population
+cells are positive and the empirical table is close to its population value,
+a first-order Taylor expansion replaces this nonlinear function locally by a
+linear combination of the cell-probability errors. The resulting expansion is
+often expressed through an influence function \citep{kandasamy2015}.
+
+For MI, the observation-level influence function is centred pointwise MI:
+\begin{equation}
+  \psi_P(i,j)=\pmi_P(i,j)-I(P).
+  \label{eq:mi-if-background}
+\end{equation}
+It has population mean zero. Its variance is
+\begin{equation}
+  V(P)
+  =\Var_P\{\psi_P(X,Y)\}
+  =\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
+  \label{eq:mi-variance-background}
+\end{equation}
+The plug-in MI error is, to first order, the sample mean of these influence
+values. Consequently,
+\begin{equation}
+  \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
+  \label{eq:first-order-mi-var-background}
+\end{equation}
+
+This representation has two roles. First, it makes the central limit theorem
+available because the leading estimation error is an average of independent,
+mean-zero contributions. Second, it identifies the observation-level
+quantity whose variance determines the standard error. The raw categories
+themselves do not have a numerical variance relevant to MI; their effects on
+the MI functional are represented by centred pointwise MI.
+
+The expansion is local. It describes sampling fluctuations near a fixed
+positive-support population and does not assert that the plug-in estimator is
+normally distributed for every finite table. Its accuracy depends on the
+sample size relative to the probability structure, not only on the total
+number of observations.
+
+The central limit theorem then gives a normal approximation when
+\(V(P)>0\). At exact independence, every pointwise-MI value is zero and
+\(V(P)=0\). The first-order term disappears, so a second-order expansion is
+required. This is why the chi-squared limit for testing independence and the
+normal limit for comparing positive MI values are not competing descriptions
+of the same regular case.
+
+\section{Wald and Welch--Satterthwaite inference}
+
+\subsection{Normal Wald inference}
+
+A Wald test estimates a parameter difference, divides it by an estimated
+standard error, and compares the result with its asymptotic normal reference.
+For two independent MI estimates, the first-order variance contributions add:
+\begin{equation}
+  \Var\{\Ihat(P)-\Ihat(Q)\}
+  \approx
+  \frac{V(P)}{n_P}+
+  \frac{V(Q)}{n_Q}.
+  \label{eq:wald-variance-background}
+\end{equation}
+Replacing the population quantities by estimates produces the normal Wald
+test developed formally in Chapter~\ref{chap:baselines}.
+
+Wald inference is asymptotically valid under regularity conditions, but its
+finite-sample calibration depends on both the quality of the linear expansion
+and the stability of the estimated standard error. A normal reference does not
+separately represent the uncertainty of the two estimated variance
+contributions.
+
+\subsection{The Welch--Satterthwaite principle}
+
+Welch's test compares two means when their population variances may differ
+\citep{welch1947}. The denominator contains two independently estimated
+variance contributions. Satterthwaite's approximation represents their sum by
+a scaled chi-squared variable with matching first two moments
+\citep{satterthwaite1946}. The resulting effective degrees of freedom are
+\begin{equation}
+  \nu
+  =
+  \frac{\left(\sum_i k_i s_i^2\right)^2}
+       {\sum_i (k_i s_i^2)^2/\nu_i},
+  \label{eq:general-ws-background}
+\end{equation}
+where \(s_i^2\) are variance estimates, \(k_i\) are positive weights, and
+\(\nu_i\) are their component degrees of freedom.
+
+The final statistic uses a Student distribution rather than a normal
+distribution. Small effective degrees of freedom produce heavier tails,
+reflecting greater uncertainty in the estimated denominator. As the component
+variance estimates become stable, the effective degrees of freedom increase
+and the Student reference approaches the normal reference.
+
+For a single scalar restriction, normal and chi-squared Wald notation are
+equivalent. If \(T\) is asymptotically standard normal, then \(T^2\) is
+asymptotically \(\chi^2_1\). The signed form is retained here because the
+parameter is the scalar difference \(I(P)-I(Q)\), its sign is meaningful, and
+the Welch refinement replaces the normal reference for \(T\) by a Student
+reference. The \((r-1)(c-1)\)-degree chi-squared law used for one-table
+independence is a different second-order result.
+
+\section{Prior comparisons of entropy and mutual information}
+
+Hutcheson applied a Welch--Satterthwaite architecture to differences between
+Shannon diversity values \citep{hutcheson1970}. The method combines an entropy
+difference, analytic variance estimates, and a Student reference. It is the
+closest direct predecessor to the present study because entropy and MI are
+both nonlinear functionals of categorical probabilities.
+
+The analogy is useful but incomplete. Entropy depends directly on one
+probability vector. Discrete MI depends on the joint probabilities and on the
+two margins calculated from them. Moving probability into one cell therefore
+changes not only that cell's pointwise MI but also pointwise values throughout
+its row and column. An MI-specific variance calculation must retain these
+indirect effects.
+
+The comparison of MI-related quantities is also established. Mora and
+Ruiz-Castillo studied the estimation and comparison of an MI-based segregation
+index \citep{mora2009,mora2011}. Their work places MI comparison within a
+broader literature on nonlinear inequality and segregation measures. Related
+research combines analytic bias adjustments, asymptotic tests, and bootstrap
+refinements for such indices \citep{allen2015}.
+
+In neuroscience, MI estimates have been compared using jackknife uncertainty
+estimates \citep{hart2010}. Other applications apply ordinary mean tests to a
+collection of replicated MI estimates rather than deriving uncertainty from a
+single multinomial table in each population. These uses demonstrate the
+practical demand for differential MI inference, but they do not provide the
+variance-functional degrees of freedom developed here.
+
+Examples of the replicated-estimate approach occur across several fields.
+MI values from randomised astronomical samples have been compared with a
+Student test \citep{sarkar2020}, and per-neuron information measurements have
+been analysed with Welch comparisons \citep{prince2021}. Partitioned
+continuous-data MI estimates have also been compared using unequal-variance
+mean tests \citep{martin2026}. In each case, replication supplies a sample of
+MI values. The present problem instead begins with one multinomial table from
+each population and must derive uncertainty from the cell counts themselves.
+
+Information-theoretic statistics and mean-based tests have also been used as
+parallel detectors rather than as parts of one inferential construction
+\citep{mather2013}. These applications show that the combination of MI and
+Welch terminology is not a novelty claim. The narrower question is whether the
+variance-component logic can be derived for the plug-in MI functional itself.
+
+Hutcheson's result also defines an important novelty boundary. Substituting MI
+for entropy in a Welch-like template is not by itself a new statistical
+principle. MI introduces additional structure because its pointwise values
+depend on both joint and marginal probabilities. The sampling uncertainty of
+the resulting MI variance estimate must account for those changing margins.
+
+\section{Resampling and the weak null}
+
+Bootstrap methods can approximate the sampling distribution of nonlinear
+indices by repeatedly sampling from fitted empirical populations. They are
+flexible but computationally more expensive than an analytic table scan.
+Their accuracy also depends on how well the empirical distribution represents
+rare cells and unknown support.
+
+The bootstrap and permutation address different sources of uncertainty. A
+multinomial bootstrap samples each fitted table separately and approximates
+the estimator's repeated-sampling distribution. A label permutation pools the
+observations and reallocates them between groups. The latter construction is
+exact only when the pooled observations are exchangeable under the null.
+Bootstrap refinements have improved inference for nonlinear segregation and
+entropy measures, which makes them valuable future comparators
+\citep{allen2015,palma2022}. They do not remove the need to state which null is
+being approximated.
+
+Permutation requires a separate distinction. Pooling two samples and
+permuting their group labels is exact under the strong null \(P=Q\), because
+the observations are exchangeable. Under the weak null \(I(P)=I(Q)\), the two
+complete distributions may differ, so raw label permutation generally targets
+the wrong null. Studentized permutation can recover asymptotic validity for
+some weak-null parameter comparisons \citep{chung2013}, but it is not the
+standard one-table MI shuffle used to test independence.
+
+The primary thesis comparison therefore uses two transparent analytic
+baselines that share the same effect estimate and standard error as the
+proposed method. Resampling remains relevant for future confirmatory work, but
+it is not treated as an exact finite-sample oracle for the unrestricted weak
+null.
+
+\section{Literature synthesis and methodological gap}
+
+The literature establishes all of the broad ingredients used in this thesis:
+plug-in MI estimation and bias correction, first-order influence-function
+variance, Wald comparison of smooth functionals, and
+Welch--Satterthwaite moment matching. It also establishes prior comparisons of
+entropy and MI-related indices.
+
+No single ingredient is presented as new. Shannon established MI; Miller and
+later authors developed finite-sample bias analysis; influence-function and
+delta-method theory provide first-order variance; and Welch, Satterthwaite,
+and Hutcheson provide the variance-component architecture. Prior MI comparison
+work establishes the scientific problem. The thesis contribution is the
+particular MI variance-functional derivation needed to connect these pieces,
+followed by a controlled evaluation under distinct equal-MI populations.
+
+The remaining gap is narrower. The ordinary Welch substitution assigns a
+classical sample-variance degree of freedom, such as \(n-1\), to each variance
+component. The estimated MI variance is not an ordinary sample variance of
+fixed observations. It is a nonlinear function of the same empirical joint
+table used to calculate MI. A change in one observation modifies the cell
+probabilities, margins, pointwise-MI values, and their weighted variance.
+
+The expanded method addresses this gap by differentiating the complete MI
+variance functional. The resulting observation-level sensitivity determines
+the sampling variance of the variance estimate and, through Satterthwaite
+moment matching, an MI-specific component degree of freedom. Chapters
+\ref{chap:baselines} and \ref{chap:expanded} develop this construction.

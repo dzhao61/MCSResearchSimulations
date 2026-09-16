@@ -1,0 +1,59 @@
+\chapter{Reproducibility and Protocol Record}
+\label{app:reproducibility}
+
+The final statistical protocol is
+\path{WelchSatterthwaiteMI/experiments/THESIS_REDESIGN_PROTOCOL.json},
+version 1.0.0, frozen on 7 September 2026 UTC before the final simulation.
+It specifies the population grids, seeds, methods, 20,000 replicates,
+\(\alpha=0.05\), validation tolerances and timing design. It is a local
+protocol freeze following exploratory work, not an externally registered
+analysis plan.
+
+The run metadata report 3,111 unique configurations, 4,001 display slots,
+534 population pairs, 62,220,000 sampled table pairs and 124,440,000 method
+evaluations. The timing experiment is recorded separately. The saved run
+reports completion, and \texttt{verification.json} records that every
+configuration has both method rows, population MI and margins meet their
+checks, rate denominators recalculate, the expanded rejection subset property
+holds, and the \(n=1\) setting is explicitly invalid. The separate report
+verification checks the display-to-result joins and the existence of its
+figures.
+
+The thesis evidence audit goes further. It reconstructs the protocol
+manifests, independently selects the exact source configurations for all 22
+thesis figures, and checks every numerical result reported in
+Chapter~\ref{chap:results}. It also checks the generated LaTeX values, paired
+comparisons, convergence ranges, and runtime table against the frozen files.
+
+The exact run inputs and software versions are in
+\path{WelchSatterthwaiteMI/results/thesis_redesign/run_metadata.json}.
+Its protocol SHA-256 is the concatenation of these two hexadecimal halves:
+\begin{center}
+\small\texttt{a3ef38e10878c5e23fbfb7b97810d05e}\par
+\texttt{fb1b1ed27e481d70c417721b6b01dc51}
+\end{center}
+It records Python 3.13.5, NumPy 2.4.4, pandas 3.0.3 and SciPy 1.17.1 on
+macOS arm64. Source hashes for the runner, population constructor and both
+method implementations are included there; the recorded Git revision alone
+need not identify every working-tree input. The report metadata distinguish
+99 primary atlas figures from seven additional calibration zooms.
+
+The statistical runner and report generator are
+\texttt{run\_thesis\_redesign.py} and
+\texttt{report\_thesis\_redesign.py} in the methods project's
+\texttt{experiments/} directory. The thesis plot export is
+\texttt{figures\_rewrite/make\_figures.py} in the thesis directory.
+From the workspace root, the latter can be run with
+\texttt{.venv/bin/python} to regenerate the 22 thesis-specific PDFs and
+their figure manifest and numerical macros from the frozen saved CSVs. It
+does not resimulate populations. The manuscript is then
+built from \texttt{Thesis Writeup/Welch MI/} with
+\texttt{/Library/TeX/texbin/latexmk -pdf main.tex}.
+
+The method's complete scalar runtime does not include construction of the
+population probability tables or random count tables. For each timing
+regime, 200 saved inputs were prepared; a method had 20 warm-up calls and
+five timed passes. Thus the reported microseconds describe this implementation
+and machine. Re-running the protocol elsewhere should preserve the
+statistical specification and compare statistical outputs before comparing
+absolute wall-clock times.

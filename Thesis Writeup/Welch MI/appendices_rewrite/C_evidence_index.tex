@@ -1,0 +1,72 @@
+\chapter{Evidence Index and Additional Diagnostics}
+\label{app:evidence-index}
+
+The main results chapter shows a systematic selection of full-scale and
+calibration-zoom figures. The full companion atlas remains the source for
+every sample size and focused regime in the frozen design. The index below
+specifies how to retrieve exact numbers rather than averaging regimes into
+a single summary. Paths are relative to the workspace root
+\texttt{Simulations/}.
+
+\begin{table}[htbp]
+\centering
+\caption{Saved files and the question each answers.}
+\label{tab:evidence-files}
+\begin{tabularx}{\textwidth}{@{}p{0.40\textwidth}X@{}}
+\toprule
+File in the final results directory & Use\\
+\midrule
+\texttt{display\_manifest.csv} & Figure section, row, column, horizontal
+value and exact configuration identifier; a configuration may recur.\\
+\texttt{configuration\_manifest.csv} & Unique statistical configurations,
+sample sizes, target populations and simulation identifiers.\\
+\texttt{population\_definitions.csv} & Full-precision \(P\) and \(Q\)
+probability tables, margins, achieved MI, constructor and feasibility
+diagnostics for every pair.\\
+\texttt{cell\_results.csv} & One row per configuration and method:
+unconditional rejection, method validity, conditional and common-valid
+rates, Wilson intervals, expected-count and support-loss diagnostics.\\
+\texttt{paired\_method\_results.csv} & Paired rejection counts, rate
+differences and approximate paired intervals from the same replicates.\\
+\texttt{runtime\_summary.csv} & Per-regime median and interquartile call
+times in microseconds, validity and Expanded-to-Wald time ratio.\\
+\texttt{verification.json} and \texttt{report\_verification.json} & Run-level
+population, denominator, pairing, method and report checks.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The companion written atlas is at
+\path{WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md}.
+Its 99 primary figures and seven extra calibration zooms retain the full
+design. The thesis-specific PDFs in \texttt{Thesis Writeup/Welch MI/
+figures\_rewrite/} are generated from the two final CSV files named in the
+source script, not from the old pilot folders. The adjacent
+\texttt{figure\_manifest.json} lists, for each thesis PDF, its original
+section, source files, configuration identifiers and 20,000-replicate
+denominator. The file \texttt{evidence\_values.tex} is generated from exact
+configuration IDs for the numerical examples in Chapter~\ref{chap:results}.
+
+The plotted rate is \(R^{-1}\sum_s A_{m,s}\), where \(A_{m,s}\) requires
+both a valid output and rejection. The method-valid conditional rate divides
+valid rejections by that method's valid outputs; it is undefined if there are
+none. The common-valid rate restricts to outputs where both methods are
+valid. A paired difference is based on counts of the four joint rejection
+outcomes for the same table pairs. These distinctions allow a reader to
+check whether a curve difference is primarily a changed reference or lost
+validity.
+
+For any \(P\) population with sample size \(n_P\), its minimum expected
+cell count is \(\min_{ij}n_Pp_{ij}\); define \(Q\)'s analogously. No
+``expected minimum'' of random observed counts is calculated. The saved
+support diagnostics include empty observed rows and columns and the fraction
+of zero-count cells. Such values describe why a statistic might fail, but
+do not constitute a universal validity threshold.
+
+The thesis does not treat a descriptive count of regimes closer to 0.05 as
+a formal paired test over regimes. Wilson intervals quantify binomial Monte
+Carlo variation at each fixed point, and paired normal intervals quantify a
+specified within-configuration method difference. Neither interval family is
+a simultaneous assertion across all configurations. Tables sharing a
+population but changing \(n\) or \(|\Delta|\) answer different fixed-design
+questions and should not be collapsed into one mean rate.

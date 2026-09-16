@@ -1,39 +1,37 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Mutual information measures statistical dependence without restricting that
-dependence to a linear or monotone form. Standard significance procedures for
-categorical mutual information primarily test whether two variables are
-independent within one population. This thesis studies a different problem:
-whether two independent populations have equal mutual information,
-\(H_0:I(P)=I(Q)\), while allowing their complete joint distributions to differ.
+Mutual information measures dependence between two variables, but a
+difference between two sample estimates need not reflect a difference between
+their populations. This thesis studies two independent categorical samples
+and tests whether their population mutual information values are equal,
+without requiring their complete joint distributions or margins to be the
+same.
 
-The usual analytic approach forms a bias-corrected difference of plug-in
-mutual information estimates, divides it by an influence-function standard
-error, and compares the resulting statistic with a standard normal
-distribution. This normal Wald reference does not represent finite-sample
-uncertainty in the estimated variance. The thesis develops an expanded
-Welch--Satterthwaite correction that retains the same effect estimate and
-standard error but derives mutual-information-specific component degrees of
-freedom from the sampling variability of the complete variance functional.
-The resulting procedure is deterministic and requires \(O(rc)\) operations
-for an \(r\times c\) table.
+Normal Wald inference divides a bias-corrected difference by a plug-in
+standard error and uses a normal reference. The proposed Expanded
+Welch--Satterthwaite procedure keeps that statistic but derives effective
+degrees of freedom from the sampling variability of the complete mutual-
+information variance functional. A change in one table cell also changes the
+row and column margins and the pointwise information values; the derivation
+accounts for all of these effects. The resulting Student reference is a
+moment-matching approximation, not an exact finite-sample distribution.
 
-The method was evaluated using 60 fixed pairs of positive-support categorical
-populations with exactly equal mutual information. The experiment covered six
-table shapes, five sampling regimes, sample sizes from 50 to 1,000, and 10,000
-independent table-pair replicates per population pair. At nominal
-\(\alpha=0.05\), mean absolute calibration error across all scenarios was
-0.01342 for normal Wald, 0.01194 for simple Welch--Satterthwaite, and 0.00825
-for expanded Welch--Satterthwaite. The expanded method left the well-sampled
-control essentially unchanged and reduced error in the skewed, rare-cell, and
-widespread-sparsity regimes, although it did not restore exact calibration in
-the most difficult cases. Its average power loss relative to normal Wald was
-approximately one percentage point, and median runtime remained below
-0.15 milliseconds for the tested tables.
+The completed experiment compares the two methods on fixed positive-support
+populations from \(2\times2\) to \(8\times8\), with additional rectangular,
+unequal-sample, construction and extreme-sparsity checks. Each of 3,111
+unique statistical configurations uses 20,000 paired count-table replicates
+at a two-sided nominal level of 0.05. False positives, detection, numerical
+validity and runtime are reported separately for individual regimes.
 
-These results support expanded Welch--Satterthwaite inference as a low-cost
-finite-sample correction for comparing positive mutual information values.
-The method is not a universal sparse-table solution and does not apply at the
-nonregular independence boundary, where the first-order mutual-information
-variance vanishes.
+Expanded Welch moves some liberal Wald false-positive rates toward 0.05, but
+makes conservative regimes more conservative and can be less often valid in
+sparse samples. Wald is closer to nominal in all 24 main null regimes at
+sample sizes 500 or 1,000. At common MI 0.02 and sample size 50,000, both
+methods are near nominal in the tested populations; very small MI remains
+difficult. Expanded Welch has the same computational order as Wald and costs
+about 1.75 times as much per scalar call in the measured implementation.
+
+The evidence supports retaining Wald as the simpler general baseline.
+Expanded Welch may be informative in selected liberal regimes, provided that
+valid-result frequency and the complete null behaviour are also reported.

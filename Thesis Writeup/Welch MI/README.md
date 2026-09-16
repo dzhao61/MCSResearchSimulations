@@ -1,9 +1,11 @@
 # Welch-MI Thesis
 
-## Current writing direction
+## Final manuscript
 
-The active plan is [THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md), dated
-13 September 2026. The companion [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
+The goal and SMART acceptance targets are in
+[THESIS_GOAL.md](THESIS_GOAL.md), dated 15 September 2026, with a proposed
+completion target of 22 September. The detailed chapter plan is
+[THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). The companion [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
 records the review of the three example theses and the writing conventions
 for the new draft.
 
@@ -12,29 +14,42 @@ Expanded Welch. It replaces the older draft's empirical argument with an
 assessment of calibration, power, validity and computational cost by exact
 regime.
 
-The existing LaTeX chapters and `main.pdf` are the **previous draft**. Their
-design, numerical results, abstract and conclusions have not yet been
-rewritten for the final experiment. `THESIS_PLAN.md` and
-`WRITING_STYLE_GUIDE.md` are retained as historical planning material.
+The final unsigned manuscript is `main.pdf`, built from `chapters_rewrite/` and
+`appendices_rewrite/`. It uses the completed fixed-population comparison of
+Normal Wald and Expanded Welch, including validity and runtime. The preceding
+LaTeX source and PDF are preserved in `archive/previous_draft_2026-09-13/`;
+the older `chapters/`, `appendices/`, and `figures/` directories remain only
+for history and are not read by `main.tex`. `THESIS_PLAN.md` and
+`WRITING_STYLE_GUIDE.md` are historical planning material.
 
 ## Build
 
-From this directory, run:
+With the experiment supplement extracted beside this source directory,
+regenerate the 22 thesis figures and numerical macros from the final saved
+CSVs with:
+
+```bash
+MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
+  .venv/bin/python figures_rewrite/make_figures.py
+```
+
+From this thesis directory, build the PDF with:
 
 ```bash
 /Library/TeX/texbin/latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-Clean auxiliary files with:
-
-```bash
-/Library/TeX/texbin/latexmk -c
-```
-
-The bibliography is currently read from the validated methods project at
-`../../WelchSatterthwaiteMI/article/references.bib`. Figures are read from
-the corresponding results and article directories, which keeps the thesis
-linked to the generated evidence rather than manually copied outputs.
+The 15 actively cited and source-audited bibliography records are stored in
+the local `references.bib`, so the manuscript can compile without the parent
+methods project. The active preamble searches only `figures_rewrite/`,
+preventing an old pilot figure from being used silently.
+`figures_rewrite/figure_manifest.json` maps every thesis
+figure to the final display/configuration identifiers. The full companion
+atlas is `../../WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md`.
+The source-linked numerical audit is `figures_rewrite/audit_evidence.py` and
+can be run with the same environment. Both scripts automatically locate a
+neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
+`WELCH_MI_WORKSPACE_ROOT` to the directory containing that tree.
 
 ## Structure
 
@@ -42,15 +57,19 @@ linked to the generated evidence rather than manually copied outputs.
 - `metadata.tex`: author, degree, supervisor, and submission metadata.
 - `preamble.tex`: shared packages, notation, and formatting.
 - `frontmatter/`: title page, declaration, abstract, and acknowledgements.
-- `chapters/`: eight main chapters.
-- `appendices/`: supporting derivations, diagnostics, and reproducibility.
+- `chapters_rewrite/`: eight active main chapters.
+- `appendices_rewrite/`: active derivations, exact design grids and evidence index.
+- `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
+- `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
+- `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
+- `THESIS_GOAL.md`: current objective, exemplar length benchmark, SMART targets and completion criteria.
+- `SUBMISSION_CHECK.md`: evidence available and the remaining steps to complete the thesis.
 - `THESIS_REWRITE_PLAN.md`: active research, chapter and evidence plan.
 - `EXEMPLAR_REVIEW_NOTES.md`: current exemplar analysis and writing guidance.
 - `THESIS_PLAN.md`: previous research and chapter plan.
 - `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
 
-Before submission, confirm the degree name, supervisor title, declaration,
-acknowledgements, and final submission date. The previous draft's figures use
-older simulation artefacts. The new draft will use
-`../../WelchSatterthwaiteMI/results/thesis_redesign/` as its primary empirical
-source, as specified in the active plan.
+The final named PDF, self-contained source archive, experiment supplement and
+checksums are in `deliverables/`. `SUBMISSION_CHECK.md` records the completed
+scientific, build and page-review gates. The author must sign and date the
+declaration before submitting the attested copy.

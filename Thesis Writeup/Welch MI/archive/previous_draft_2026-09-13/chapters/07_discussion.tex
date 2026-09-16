@@ -1,0 +1,244 @@
+\chapter{Discussion}
+\label{chap:discussion}
+
+This thesis asked whether the Welch--Satterthwaite principle can be adapted
+to compare mutual information between two independent categorical
+populations. The central problem is not estimation of the MI difference
+itself. It is calibration of the standardized difference when the two
+first-order variance contributions are estimated from finite, heterogeneous
+contingency tables. This chapter interprets the proposed solution and the
+evidence obtained for it.
+
+\section{Answers to the research questions}
+
+\subsection{Method construction}
+
+Research Question~1 asked how to adapt Welch--Satterthwaite inference to the
+nonlinear plug-in MI variance estimator. The expanded method does this in two
+stages. For each population, it first measures the sampling variability of
+the estimated MI variance through the influence function $g_P$ or $g_Q$.
+It then matches the mean and variance of that positive variance estimator to
+a scaled chi-squared variable. This produces the component degrees of freedom
+
+\begin{equation}
+  \widehat\nu_P
+  =\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)},
+  \qquad
+  \widehat\nu_Q
+  =\frac{2n_Q\widehat V(Q)^2}{\widehat\tau^2(Q)}.
+  \label{eq:discussion-component-df}
+\end{equation}
+
+The ordinary Welch--Satterthwaite equation combines these values according to
+the two contributions to the squared standard error. The result is a Student
+reference whose tail weight is determined by the observed stability of the
+MI variance estimates. No resampling or numerical optimisation is required at
+test time.
+
+The construction is MI-specific because $g_P$ differentiates the complete
+variance functional. In particular, it includes the changes in pointwise MI
+caused by changing the joint and marginal probabilities. Replacing this step
+by $n_P-1$, as in a direct analogy with Welch's test for means, does not
+represent the sampling uncertainty of the MI variance estimator.
+
+\subsection{Statistical performance}
+
+Research Question~2 asked whether expanded Welch improves type-I error and
+coverage. Across all 60 equal-MI population pairs, it reduced mean absolute
+false-positive-rate error at $\alpha=0.05$ from 0.01342 for normal Wald and
+0.01194 for simple Welch to 0.00825. Overall 95\% coverage increased from
+0.93799 for normal Wald to 0.94455.
+
+The improvement was concentrated in the regimes for which the method was
+designed. Expanded Welch reduced calibration error by 29.3--46.5\% relative
+to normal Wald in the highly skewed, ultra-skewed, and widespread-sparsity
+regimes. It also improved the moderate regime by 37.8\%. In the well-sampled
+control, normal Wald was already accurate and expanded Welch was effectively
+similar, although its mean absolute error was 4.5\% larger. The evidence
+therefore supports improved average calibration in difficult positive-MI
+settings, not uniform dominance for every population pair.
+
+The most extreme scenario remained outside satisfactory calibration. Under
+ultra-sparse cells and a $10:1$ sample-size ratio, expanded Welch reduced
+mean FPR from 0.09233 to 0.07343 but did not reach the nominal value of 0.05.
+The reference correction addresses uncertainty in the estimated variance; it
+does not remove all finite-sample bias, discreteness, or empirical support
+loss.
+
+\subsection{Practical trade-offs}
+
+Research Question~3 asked about power, runtime, validity, and operating
+range. The heavier Student tails reduced power by 1.02 percentage points on
+average across the five alternatives and by at most 1.23 points. This is a
+small but genuine cost. A liberal null reference can appear more powerful
+partly because it rejects too often under both the null and alternative. The
+calibration and power results must therefore be interpreted together.
+
+Expanded Welch took approximately 0.15 milliseconds per table pair in the
+timed implementation, compared with 0.08 milliseconds for normal Wald. Both
+methods have $O(rc)$ time and memory complexity. The correction is therefore
+about 1.7 times slower in the tested implementation but remains negligible in
+absolute cost and avoids the multiplicative cost of resampling.
+
+The valid rate was effectively one outside widespread sparsity. It fell to
+0.97447 when support loss caused the empirical first-order variance to vanish
+in some replicates. A finite p-value is not the only criterion for a useful
+test; the underlying first-order variance must also be identifiable from the
+observed table.
+
+\section{Why the correction improves difficult cases}
+
+Normal Wald treats the estimated standard error as if it were known. This is
+a reasonable approximation when the table is well sampled, because repeated
+samples then produce similar empirical probabilities and similar variance
+estimates. Skewness, rare cells, and unequal sample sizes make the denominator
+of the test statistic less stable. A normal reference does not respond to
+that additional uncertainty.
+
+Simple Welch adds finite degrees of freedom, but assigns them from sample
+sizes alone. Its reference changes little when two tables have the same
+sample sizes but very different cell probabilities. The primary results show
+the consequence: simple Welch generally lies between normal Wald and expanded
+Welch, but its improvement is modest in the most difficult regimes.
+
+Expanded Welch estimates how strongly the complete MI variance functional
+changes when probability is moved towards each cell. Large variation among
+the resulting $g_P(i,j)$ values implies a volatile variance estimate, a
+smaller component degree of freedom, and a heavier-tailed Student reference.
+The correction therefore becomes strongest when the observed table indicates
+that the standard error itself is unreliable. As sampling improves,
+$\widehat\nu_P$ and $\widehat\nu_Q$ increase and the Student reference
+approaches the normal reference.
+
+This mechanism also explains the residual failures. The derivation is
+first-order. When many cells disappear from the empirical support, both the
+point estimate and its estimated variance can be governed by higher-order and
+discrete effects. Changing only the reference tails cannot reconstruct
+information that is absent from the table.
+
+\section{Interpretation of the scaled chi-squared model}
+
+Satterthwaite's scaled chi-squared representation is a working model for the
+positive estimated variance, not an assertion that its exact finite-sample
+distribution is chi-squared. Its role is to translate the first two moments
+of the variance estimator into an effective degree of freedom. That degree
+of freedom then enters the final Student reference.
+
+The separate mechanism audit supports this use with qualifications. An
+oracle scaled chi-squared distribution fitted the complete distribution about
+as well as an oracle normal model and better than an oracle lognormal model.
+It produced the smallest upper-tail error among the three candidates. The
+larger discrepancy arose in the first-order prediction of finite-sample
+moments, not in the choice between chi-squared and normal shape families.
+The plug-in component degrees of freedom nevertheless had median ratio 0.970
+to empirical moment-matched values.
+
+These findings justify scaled chi-squared moment matching as a useful
+approximation for tail calibration. They do not establish an exact pivot.
+The finite-sample performance demonstrated in Chapter~\ref{chap:results}
+remains empirical evidence for a theoretically motivated approximation.
+
+\section{Relation to existing methods}
+
+The expanded procedure occupies a middle position between normal Wald
+inference and resampling. Like Wald inference, it is deterministic, analytic,
+and linear in the number of cells. Like Welch--Satterthwaite inference, it
+acknowledges that an estimated denominator changes the reference tails. Its
+distinctive step is to calculate that denominator uncertainty for the MI
+variance functional rather than importing the ordinary sample-variance
+degrees of freedom.
+
+The method also differs from an independence test. Pearson and likelihood-
+ratio tests compare a single joint distribution with the product of its own
+margins and use a multivariate quadratic statistic. The present method
+compares one scalar functional across two independent populations and uses a
+signed, studentized difference. At the independence boundary, the first-order
+MI influence vanishes and the regular derivation used here no longer applies.
+Appendix~\ref{app:independence-boundary} develops this distinction.
+
+The literature review identified prior ingredients rather than a direct
+precedent for the complete method. Bias correction for information measures,
+first-order MI variance, influence-function analysis, tests for entropy-based
+indices, and Welch--Satterthwaite moment matching are established. The claim
+of this thesis is consequently methodological and specific: it constructs and
+evaluates an MI-variance influence-function degree-of-freedom correction for
+the two-sample equal-MI problem. It does not claim invention of the component
+theories.
+
+\section{Limitations}
+
+Several limitations define the strength of the conclusions.
+
+First, the primary evidence is simulation-based. The 60 fixed population
+pairs cover multiple table sizes, marginal shapes, association structures,
+sample ratios, and expected-count regimes, but they do not span all discrete
+distributions. A new independently generated confirmatory grid would provide
+a stronger guard against conclusions that depend on the chosen population
+generator.
+
+Second, the theory assumes fixed finite alphabets, positive population
+support, independent samples, and positive first-order MI variance. The
+primary experiment deliberately uses $I(P)=I(Q)>0$. It does not validate
+the method at independence, where the first derivative is zero, or when the
+alphabet grows with sample size.
+
+Third, every analytic method uses the same first-order standard error and the
+same Miller-type bias correction. Expanded Welch changes the reference
+distribution only. Residual errors can therefore arise from finite-sample
+bias in the numerator, error in the first-order variance estimate, dependence
+between numerator and denominator, or discreteness of the table distribution.
+The experiment does not identify one of these as the sole remaining cause.
+
+Fourth, invalid replicates are conditioned out uniformly across methods. This
+is appropriate for comparing references on common inputs, but a low valid
+rate would limit practical use regardless of conditional calibration. The
+widespread-sparsity result illustrates this point.
+
+Fifth, the power experiment contains five controlled alternatives rather than
+a broad power surface. It establishes the approximate cost of the heavier
+reference in representative $3\times3$ cases, but does not characterise
+power over all effect sizes, table shapes, or sample ratios.
+
+Finally, no real-data case study is included. The thesis establishes a method
+and its controlled numerical behaviour. Applied work is needed to determine
+how often its difficult regimes arise in specific fields and whether its
+calibration advantage changes scientific conclusions.
+
+\section{Recommended operating range}
+
+The results support expanded Welch when two independent categorical samples
+have positive estimated MI and the analyst seeks a fast analytic comparison
+of their population MI values. It is most useful when one or both tables have
+skewed margins, rare expected cells, or unequal sample sizes, but retain enough
+observed support for positive first-order variance estimates.
+
+Normal Wald remains adequate in well-sampled tables and is simpler. Expanded
+Welch should not be presented as a repair for arbitrary sparsity. If complete
+rows or columns are frequently absent, if the estimated first-order variance
+is zero, or if the scientific null is independence, the regular two-sample
+method is not the appropriate reference without further development.
+
+\section{Further work}
+
+The first priority is an independently generated confirmatory experiment with
+the analysis code and decision rules fixed in advance. It should preserve the
+current regime definitions, report scenario-level uncertainty, and include a
+broader power surface. This would test whether the observed calibration gains
+generalise beyond the development grid.
+
+The second priority is improved finite-sample centring. The expanded method
+models uncertainty in the denominator but does not account for all
+distribution-specific bias in the difference. An analytically tractable
+higher-order correction could address the remaining liberal behaviour without
+introducing resampling.
+
+The third priority is boundary theory. Near $I=0$, first-order normal
+inference transitions to the second-order chi-squared geometry of
+independence testing. A unified method would require an explicit treatment of
+that transition rather than a direct extension of the present degrees of
+freedom.
+
+Finally, the same variance-functional strategy may be investigated for
+conditional MI and related discrete information measures. Such extensions
+should follow, rather than precede, independent validation of the simpler
+two-sample MI setting.

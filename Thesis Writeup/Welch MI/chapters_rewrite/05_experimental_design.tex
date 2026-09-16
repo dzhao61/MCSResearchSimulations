@@ -1,0 +1,208 @@
+\chapter{Experimental Design}
+\label{chap:design}
+
+The purpose of the experiment is to compare the complete behaviour of two
+tests, not just their p-values on convenient tables. Each design point fixes
+two population distributions in advance. Repeated independent samples from
+those populations show how often each procedure returns a valid result and
+how often it rejects. Because the population MI values are known, a rejection
+at equal MI is a false positive; a rejection at unequal MI is detection.
+
+\section{A population pair before the design grid}
+
+Consider two \(2\times2\) populations whose row and column margins are
+\((0.7,0.3)\) for \(P\) and \((0.8,0.2)\) for \(Q\). The construction produces,
+to the displayed precision,
+\begin{equation}
+ P\simeq
+ \begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
+ \qquad
+ Q\simeq
+ \begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
+ \label{eq:design-example-pair}
+\end{equation}
+These are \emph{probability} tables, not observed counts. Their target MI
+values are 0.02 and 0.03 nats, so the true magnitude of the difference is
+0.01 nats. Sampling new count tables changes the estimated MI values, but
+does not move this fixed population pair to a new horizontal-axis location.
+The stored unrounded probabilities, rather than the rounded display in
+Equation~\eqref{eq:design-example-pair}, determine the samples.
+
+\section{Constructing fixed joint distributions}
+
+For one population, let \(a=(a_1,\ldots,a_r)\) and
+\(b=(b_1,\ldots,b_c)\) be prescribed row and column probabilities. The
+independence table is \(B=ab^{\mathsf T}\), with \(B_{ij}=a_i b_j\).
+Association is introduced by
+\begin{equation}
+ R(t)=ab^{\mathsf T}+tH,
+ \qquad H\mathbf{1}_c=0,
+ \qquad \mathbf{1}_r^{\mathsf T}H=0.
+ \label{eq:additive-construction}
+\end{equation}
+The zero row and column sums mean that changing \(t\) leaves the margins
+fixed. For the main construction, \(H\) is zero except in the first two rows
+and columns, where it is
+\begin{equation}
+ H_{1:2,1:2}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+ \label{eq:first-change-block}
+\end{equation}
+Thus \(t\) is added to the two diagonal cells and removed from the other two
+cells. The changes cancel within each affected row and column. The same
+matrix specifies a \(2\times2\) test and a localised change in a larger
+table; only its embedding differs. This four-cell perturbation is a standard
+sparse alternative in contingency-table simulation studies
+\citep[Section~3.2]{berrett2021}. Here it is adapted to compare two fixed
+populations: their margins are prescribed separately and the perturbation
+strength is chosen to attain a specified MI rather than used directly as the
+horizontal-axis effect.
+
+The largest nonnegative strength before a cell with \(H_{ij}<0\) reaches zero
+is
+\begin{equation}
+ t_{\max}=\min_{H_{ij}<0}\frac{a_i b_j}{-H_{ij}}.
+ \label{eq:design-tmax}
+\end{equation}
+The construction solves for \(0\le t<t_{\max}\) such that \(I\{R(t)\}\)
+equals the requested target. Targets at or beyond the endpoint are not
+admitted. This endpoint is specific to the chosen path, not the largest
+possible MI over every table with those margins. Both constructed tables are
+checked for strictly positive cells, correct margins and target MI before any
+sampling. Appendix~\ref{app:construction} gives the numerical details.
+
+For a dimension of size \(k\), the skewed margin used in the design is
+\begin{equation}
+ m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
+                   \frac{1-\rho}{k-1}\right).
+ \label{eq:skew-margin}
+\end{equation}
+The three principal profiles are specified separately for the two
+populations in Table~\ref{tab:margin-profiles}. For a rectangular
+\(r\times c\) table, the formula is applied with \(k=r\) to row margins and
+\(k=c\) to column margins. At a zero MI difference, the same-margin profiles
+produce \(P=Q\) under this construction; the different-skew profile has
+\(I(P)=I(Q)\) but \(P\ne Q\).
+
+\begin{table}[htbp]
+\centering
+\caption{Row and column margins used for each population in the principal
+design. ``Uniform'' means the vector with every entry equal to \(1/k\).}
+\label{tab:margin-profiles}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Profile & \(P\): rows and columns & \(Q\): rows and columns\\
+\midrule
+Uniform & uniform & uniform\\
+Same skew & \(m_k(0.8)\) & \(m_k(0.8)\)\\
+Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the usual effect direction, \(I(P)=I_0\) and
+\(I(Q)=I_0+|\Delta|\). The paired solve chooses separate strengths for
+\(P\) and \(Q\); it does not add random noise to their true MI values. The
+reverse-direction imbalance experiment assigns the higher target to \(P\).
+The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
+the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
+
+Two focused checks change the pattern or constructor while keeping the
+interpretation of target MI. A ``rare block'' puts Equation
+\eqref{eq:first-change-block} in the final two rows and columns. A ``spread''
+pattern is the outer product of equally spaced, centred row and column scores;
+its row and column sums are zero. The ordinal log-linear comparator fits the
+prescribed margins while varying an ordinal interaction strength to meet the
+target MI. Matching margins and MI across constructors does not imply matching
+all cell probabilities or expected counts.
+
+\section{Sampling, tests and measured outcomes}
+
+For each unique configuration, 20,000 independent pairs of multinomial count
+tables are drawn from its fixed \(P\) and \(Q\). Normal Wald and Expanded
+Welch are applied to the \emph{same} count-table pair. This pairing makes
+method differences more precisely measurable than unrelated simulations,
+though it does not remove Monte Carlo uncertainty. The two-sided nominal
+threshold is \(\alpha=0.05\) throughout the statistical study.
+
+Let \(A_m=1\) if method \(m\) returns a valid p-value no larger than 0.05,
+and \(A_m=0\) otherwise. The primary plotted rejection rate is
+\begin{equation}
+ \widehat r_m=\frac{1}{20{,}000}\sum_{s=1}^{20{,}000} A_{m,s}.
+ \label{eq:unconditional-rate}
+\end{equation}
+At \(|\Delta|=0\) this estimates the false-positive rate. At
+\(|\Delta|>0\) it estimates the probability of detecting the specified
+difference at the fixed nominal threshold, often called power. A rate near
+0.05 is desirable under the null; a smaller rate is not automatically better.
+Under an alternative, higher detection is useful only alongside acceptable
+null calibration and a usable test result.
+
+An invalid calculation contributes no rejection to Equation
+\eqref{eq:unconditional-rate}. This convention reports the behaviour of the
+complete procedure, but an invalid result is not a valid acceptance of the
+null. The companion valid-result rate is the fraction of replicates with a
+usable p-value. The saved data also give rejection conditional on each
+method's valid outputs and on the subset where both are valid. Those
+denominators answer different questions: conditioning each method on its own
+valid samples can change which tables are compared. For a single rate, saved
+Wilson 95\% intervals represent Monte Carlo uncertainty at the fixed
+population pair. Paired method differences use the same replicates and their
+saved paired standard errors. These intervals do not describe uncertainty
+over all possible population distributions.
+
+The ``minimum expected count'' diagnostic is
+\(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).
+It is not the expectation of the smallest observed count. No lower bound on
+that diagnostic was used to admit statistical configurations. Empty observed
+cells and rows remain possible. In the plots a hollow marker warns that fewer
+than 90\% of outputs of that method were valid; 90\% is a display convention,
+not a validated safety threshold.
+
+\section{Experiment families and computation}
+
+Table~\ref{tab:design-families} records the question answered by each family.
+The common population construction above applies unless the named factor
+changes. Exact parameter sets are in Appendix~\ref{app:construction}, and the
+machine-readable protocol is identified in Appendix~\ref{app:reproducibility}.
+There are 3,111 unique statistical configurations but 4,001 display points:
+some configurations are deliberately shown in more than one comparison.
+Each unique configuration is sampled once, giving 62,220,000 table pairs in
+the final statistical run. The within-family counts in
+Table~\ref{tab:design-families} do not sum to 3,111 because the same
+configuration can occur in several families. Display reuse is not an
+independent replication.
+
+\begin{table}[htbp]
+\centering
+\caption{The fixed experiment families. All statistical points use 20,000
+paired replicates and the 5\% threshold.}
+\label{tab:design-families}
+\begin{tabularx}{\textwidth}{@{}lrrX@{}}
+\toprule
+Family & Displays & Unique & Factor examined\\
+\midrule
+Main & 648 & 648 & Square table size, three margin profiles and equal sample size.\\
+Baseline & 648 & 648 & Starting positive MI of 0.0001, 0.001 or 0.02 nats.\\
+Changed cells & 144 & 144 & First, rare or spread association patterns.\\
+Imbalance & 1,152 & 1,056 & Sample allocation and which population has higher MI.\\
+Larger effects & 162 & 162 & MI differences up to 0.2 nats where feasible.\\
+Rectangular & 108 & 108 & \(2\times3\) and \(3\times5\) tables.\\
+Construction & 432 & 432 & Additive versus ordinal log-linear population tables.\\
+Extreme skew & 315 & 315 & Dominant margins up to 0.9995, including \(n=1\) stress.\\
+Rare-cell stress & 140 & 140 & First- versus rare-block changes, including \(n=1\) stress.\\
+Independence & 144 & 144 & Exact \(I(P)=0\) boundary.\\
+Convergence & 108 & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
+Runtime & 60 & 60 & Complete-call timing regimes, separate from simulation.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The runtime experiment measures a full method call after count tables are
+already available. It varies table shape, profile, sample size and null or
+alternative status. Each regime uses 200 saved inputs, 20 warm-up calls and
+five timed passes. Thus it measures method computation, not the cost of
+constructing populations or generating random tables. Median call times and
+interquartile ranges are reported in Chapter~\ref{chap:results}. The finite
+tested range includes samples of size one in the stress check and an
+\(8\times8\) largest square table; it does not imply valid inference for all
+sparse distributions or unbounded alphabet sizes.

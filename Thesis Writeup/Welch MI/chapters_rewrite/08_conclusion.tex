@@ -1,0 +1,33 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+This thesis examined whether uncertainty in an estimated MI standard error
+can be represented through an MI-specific Welch--Satterthwaite correction
+when comparing two independent categorical populations. The null is equality
+of their population MI values, not independence within either population or
+equality of the complete joint distributions.
+
+The derivation starts from the pointwise-MI variance governing first-order
+sampling error. A one-cell perturbation changes the joint probabilities,
+the margins and the pointwise values. Differentiating the complete variance
+functional supplies the sampling variability needed for component effective
+degrees of freedom. The resulting Expanded Welch procedure retains Wald's
+bias-corrected MI difference and plug-in standard error but evaluates the
+shared statistic against a Student reference. This is a principled
+moment-matching construction, not an exact finite-sample Student law.
+
+The completed fixed-population experiment found both benefits and costs.
+Expanded Welch can make a liberal Wald null rate closer to the nominal 5\%
+level. Where Wald is already conservative, the heavier-tailed reference moves
+rejection farther below that target. In sparse regimes, Expanded Welch also
+returns fewer valid results; a low unconditional rate there is not reliable
+evidence of good calibration. At ordinary positive MI and sufficiently large
+samples, both methods approached the nominal null rate in the tested fixed
+populations, while near-independence settings remained difficult even at
+large finite sample sizes. The expanded call used about 1.75 times the
+runtime of Wald in the measured implementation.
+
+The evidence therefore supports Normal Wald as the general baseline. Expanded
+Welch is only a conditional sensitivity analysis; future corrections must
+address the numerator, standard error and population structure together rather
+than changing the reference law alone.

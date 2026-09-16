@@ -1,0 +1,690 @@
+[
+  {
+    "file": "figures_rewrite/main_2x2_uniform.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_10845e5343bd1ea4",
+      "config_185c7aa1bb226d6e",
+      "config_1a981240d959e1c7",
+      "config_2b62fe971dca8d78",
+      "config_2ff69a1b6be18f64",
+      "config_4121dfff95a59892",
+      "config_57e6cfa435e91943",
+      "config_6620e68bf41e17b3",
+      "config_6aa2e210ae2aae5b",
+      "config_700945d218841f2e",
+      "config_786f54c4f147369a",
+      "config_a4638330abec5db2",
+      "config_a636a472f3b028ac",
+      "config_bc556b136708f793",
+      "config_c2e8c931930806b9",
+      "config_d6d1509435679951",
+      "config_d6d2f09c47798d3e",
+      "config_f26d804883a0033f"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_2x2_same_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_033b35a7a6c4fa8a",
+      "config_36a2d4f61e85b75b",
+      "config_4e1d20c5fe9e3808",
+      "config_622fcbb800e6633e",
+      "config_6dbf8a7718ae549e",
+      "config_93263fdc08e2378e",
+      "config_a6622c284bbefaaf",
+      "config_acd443eededaf04c",
+      "config_b6e02f927ce0e530",
+      "config_b81a2f421a512f73",
+      "config_c016479e556bb2d5",
+      "config_c89d367d7c2b178b",
+      "config_d20444a92b745cb1",
+      "config_d7b284e99875a796",
+      "config_d88eb4d6a1db28f3",
+      "config_d9a9a5c5167b7f68",
+      "config_e4ccb9a9d72c95fa",
+      "config_ff38434622711baa"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_2x2_different_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_0db9176dc09d340e",
+      "config_170c26ab387d2359",
+      "config_2e2875249146afce",
+      "config_5a95bc58eaf211f6",
+      "config_70c7cd7c32d8cf60",
+      "config_7297508d720d1347",
+      "config_8c069f2318803293",
+      "config_9af80add2a68d651",
+      "config_a2ca4fd463f46059",
+      "config_a51fd693ff54ac01",
+      "config_ad07734b693694d2",
+      "config_b2f5c75b29734843",
+      "config_b84ad3320df042e5",
+      "config_cb0b7753c5273529",
+      "config_d3b1f0fe8ea3fd07",
+      "config_e472991d3d1d0c95",
+      "config_e4ae567c650388e8",
+      "config_e9d9809ebf11d319"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_3x3_uniform.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_0daa0fa21f0d096a",
+      "config_20d96844fe195e8d",
+      "config_2739b3e5fc75225a",
+      "config_30a58c12a402f520",
+      "config_44028b985ceed646",
+      "config_4ab3139332e86ae6",
+      "config_5214cd434894bd0e",
+      "config_535b900f376746de",
+      "config_7b3dd90c96b6eaf7",
+      "config_85855c4107c0e4dd",
+      "config_8ae45953bb6d4988",
+      "config_96f6d301865aff79",
+      "config_a3cbc2d4cb04b5a6",
+      "config_bd657c8ee6eb9b2a",
+      "config_ce432a7704c33893",
+      "config_d77397627f027bc9",
+      "config_f62660bbb1182b23",
+      "config_fd329d9a8ba87d01"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_3x3_same_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_0f108650ba0823c6",
+      "config_0f2ba8ba7c87d96f",
+      "config_1927b4acb34f97b5",
+      "config_1b7459a5cb664f6a",
+      "config_1dcd20a22b67cd4b",
+      "config_407ecc6af4ab3662",
+      "config_44202e551f64351c",
+      "config_45ed3e10ea9733a7",
+      "config_4c20e7a5f79d343a",
+      "config_4eaf58ac2172693b",
+      "config_65213d535e74667b",
+      "config_a21b59b6d9ba8a88",
+      "config_a3aca493c5de3366",
+      "config_c7c821fddc12bacb",
+      "config_ea84a88cac05d784",
+      "config_eeff73b60b43ea1f",
+      "config_f3d17c882342a038",
+      "config_f9235be648887956"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_3x3_different_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_1b6b2afc5ccb1291",
+      "config_3d9e84c76e0e69a9",
+      "config_3dfca6b798c48880",
+      "config_5910d811bfa3a804",
+      "config_5b38ed9151aeaac0",
+      "config_5ff06ad7ab438e3b",
+      "config_65f3fb4294512119",
+      "config_8231b4ec22535e0e",
+      "config_8ea690dff2062be3",
+      "config_993a80fa1ae6f535",
+      "config_9a950321a4b1b32b",
+      "config_9ab2d16212099f7a",
+      "config_a27043e10a2f0f46",
+      "config_a4a8b835598a07e1",
+      "config_bc20f51de68dd237",
+      "config_d1f273c193ca5752",
+      "config_f67e74127a56dc37",
+      "config_fca58c4829e6790f"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_5x5_uniform.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_00d2cc8ab3b820a8",
+      "config_0dd9cf7abfc86486",
+      "config_1993a7c560ec27e0",
+      "config_2c1cfa826b349579",
+      "config_3c66013c02274dd9",
+      "config_433a14ba2f93aa8a",
+      "config_51c440a2af9f78e3",
+      "config_5611458b60973f1a",
+      "config_603ee3108322fc4d",
+      "config_631285a887ceff60",
+      "config_65029e2f71809a71",
+      "config_773bd100ef3dcd3b",
+      "config_97314dab3814c8e6",
+      "config_b8bbec1fc6dd650d",
+      "config_c1ef481bc1368bfd",
+      "config_c609347e1987898d",
+      "config_ef33a773bd5a1b95",
+      "config_f8cd4d5c8fdb8e8f"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_5x5_same_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_070fac90dda20531",
+      "config_0d76798b96bbe8fd",
+      "config_1b45c2b432b9f31a",
+      "config_28ad6ec8a12025b8",
+      "config_3cb1f3f872b7f62b",
+      "config_78fd18443dffa3c7",
+      "config_88355c33482bfabf",
+      "config_8de426030397f86b",
+      "config_969600481e19bed6",
+      "config_b10a17e642073cd3",
+      "config_bde6a70f41a978e1",
+      "config_bf32f010ab448565",
+      "config_c166b6d2123fa5c4",
+      "config_cf308bfb3c6f73b0",
+      "config_d09c2d075b6410ee",
+      "config_d7a37cf89adfe3d7",
+      "config_e41f6fb7e90bede5",
+      "config_e50bf0af6c47e836"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_5x5_different_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_2d1e330c5eba06cb",
+      "config_3301beb275018a01",
+      "config_376769348630db17",
+      "config_43ffafa7dcb008c4",
+      "config_592453c4101ec668",
+      "config_60e5d0ca8695e42c",
+      "config_63a381d35c613aee",
+      "config_66a5ffeeb7d78344",
+      "config_6f9f7e813a2246b4",
+      "config_723435ca3fad0eb4",
+      "config_75fccca8c64dc78e",
+      "config_87f1ea514009ce5a",
+      "config_8db9f0c03741ad54",
+      "config_c4993598aee836ea",
+      "config_da206d5bd8178f60",
+      "config_ec95b4b9b5636035",
+      "config_f03fcfefe1db7bc1",
+      "config_f712ce2208585016"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_8x8_uniform.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_04d5af04366eb1f9",
+      "config_0fc0658c2dd2974a",
+      "config_118ed101d4bdeaeb",
+      "config_2cdc11a35ddba1b8",
+      "config_52461b13d152ee4d",
+      "config_575da483e905b2f4",
+      "config_621be532862cd442",
+      "config_6a1beff1960e10ea",
+      "config_7d95f1ecf8bc80f2",
+      "config_84d30ce1d1ee0204",
+      "config_876d8e39be0e5735",
+      "config_8a0b0d6069b308cf",
+      "config_8e3e6510b0502b30",
+      "config_97504996f23f947c",
+      "config_bcf51fef4c5306b5",
+      "config_c075b1a7b13736cd",
+      "config_c846c25310d254fc",
+      "config_e8f9e4c4f5c449af"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_8x8_same_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_1c2bd31b023c0f9a",
+      "config_2d6e2dcb73c6e1a6",
+      "config_321def8adfc1c077",
+      "config_4241bdd4a9cf8f2e",
+      "config_46b457a1c86bef0a",
+      "config_52e8909f32c7b40a",
+      "config_8050a274adbe6ed8",
+      "config_82b043d5335915c6",
+      "config_9c198e1bda1059bd",
+      "config_b2ae853c39fda499",
+      "config_b502907a65b7f2ed",
+      "config_b51233134965eb0a",
+      "config_cb52489a48a0105e",
+      "config_cede4325a31cf2ef",
+      "config_d66e7dd03810d68b",
+      "config_e294395175df56dd",
+      "config_e691cd5dcfa717e8",
+      "config_fc44936ef8129979"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/main_8x8_different_skew.pdf",
+    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "main"
+    ],
+    "configuration_ids": [
+      "config_3b5dc34305466c57",
+      "config_3b6dfd437a845f6f",
+      "config_3fd05c109b8befa8",
+      "config_509394888d3892ed",
+      "config_53d84132df0e4c88",
+      "config_5b2b6655d247b745",
+      "config_66228054de8528df",
+      "config_6b86e5d5e954ca1b",
+      "config_8c066b953d43bd17",
+      "config_9518f7834b2b48ee",
+      "config_982a4a161a9b31ee",
+      "config_a2fd7eb1386e3925",
+      "config_a968313d61c5584e",
+      "config_aba622f1b9d3f408",
+      "config_b7ddef0aaafc25f5",
+      "config_b916c1bf6c1ff457",
+      "config_d85015ffa96d7c62",
+      "config_ea6daefbc09c4213"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/baseline_3x3_different_skew.pdf",
+    "description": "Panels: I0 = 0.0001, I0 = 0.001, I0 = 0.02",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "baseline"
+    ],
+    "configuration_ids": [
+      "config_0dcb8da087167843",
+      "config_10bd7d01d2b79c04",
+      "config_1eaebf07f37d151c",
+      "config_3dfca6b798c48880",
+      "config_455e783d24811fbd",
+      "config_52ce79e09b2595df",
+      "config_5b38ed9151aeaac0",
+      "config_5ef823fb39c43e50",
+      "config_6dcb652002aec005",
+      "config_71b11f9f71af31b7",
+      "config_a4a8b835598a07e1",
+      "config_b1e7429493c7de8f",
+      "config_bc20f51de68dd237",
+      "config_d1f273c193ca5752",
+      "config_f33e4217f6378252",
+      "config_f67e74127a56dc37",
+      "config_fd832978e6addf92",
+      "config_febf253fef9de361"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/patterns_5x5_different_skew.pdf",
+    "description": "Panels: Changed cells: first, Changed cells: rare, Changed cells: spread",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "patterns"
+    ],
+    "configuration_ids": [
+      "config_057933f8c49fd4c9",
+      "config_12ec1e9b3ea246ae",
+      "config_229a773d7ee80997",
+      "config_27d97db0c578a49e",
+      "config_2a442583aeddaeeb",
+      "config_3057d18094a460ac",
+      "config_499aa98450e8d91b",
+      "config_51e00b459ad750aa",
+      "config_52445b7e6067b946",
+      "config_527e27cb0e01e40f",
+      "config_61e3818341389956",
+      "config_682af6f93d67994a",
+      "config_9143beefcb1564b1",
+      "config_ab06a41a128e68a2",
+      "config_ae4f95619b202c6e",
+      "config_bcb60a83d28a0cc5",
+      "config_ee4aa38458c72f17",
+      "config_ffd26032ab55ed1c"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/imbalance_3x3_q_higher.pdf",
+    "description": "Panels: nP=50, nQ=250, nP=250, nQ=50",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "imbalance"
+    ],
+    "configuration_ids": [
+      "config_05a6b12058f208f6",
+      "config_0e3e171ecebf3af3",
+      "config_4efcf3a432c27a37",
+      "config_9d8ff410a8e23418",
+      "config_9fc2a468bce31930",
+      "config_ad8363b97f980717",
+      "config_b6e1a56d335e7e7d",
+      "config_c2939089c820d2f1",
+      "config_ccd3944fd0ff64c7",
+      "config_d3549919c737f439",
+      "config_ee3c5ccc95b08a28",
+      "config_f67564e6851c0159"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/imbalance_3x3_p_higher.pdf",
+    "description": "Panels: nP=50, nQ=250, nP=250, nQ=50",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "imbalance"
+    ],
+    "configuration_ids": [
+      "config_0e1af827b7e63a41",
+      "config_11e6f45beda8cf0a",
+      "config_22d5d7cc6a8ce86b",
+      "config_329e40cbb99b2c6c",
+      "config_4a1e6de17bf0eea8",
+      "config_686c098347e1ad78",
+      "config_6fcffac671ba3071",
+      "config_94ad53ec297c032a",
+      "config_99a04cc728b635f4",
+      "config_9fc2a468bce31930",
+      "config_ccd3944fd0ff64c7",
+      "config_e8bf2aabd2d5834b"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/broad_2x2_uniform.pdf",
+    "description": "Panels: nP=nQ=100",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "broad_effect"
+    ],
+    "configuration_ids": [
+      "config_185c7aa1bb226d6e",
+      "config_2c4aab110d7cfde4",
+      "config_2ff69a1b6be18f64",
+      "config_4121dfff95a59892",
+      "config_7035516e03235a68",
+      "config_786f54c4f147369a",
+      "config_9e57d9d82f271d3e",
+      "config_bc556b136708f793",
+      "config_d6d1509435679951"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/rectangular_different_skew.pdf",
+    "description": "Panels: 2x3, 3x5",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "rectangular"
+    ],
+    "configuration_ids": [
+      "config_090f3322639d8ba0",
+      "config_15146d65c2e63d7c",
+      "config_2a7fbfe4132fadff",
+      "config_358057a4b33ed718",
+      "config_5624495eab248f3f",
+      "config_5b1ecd08f955ecb6",
+      "config_75b7bdb68c140bee",
+      "config_9897009fd0459795",
+      "config_9ce4b2c45b748a6f",
+      "config_b96e71cf24f69176",
+      "config_c600d5754c9b7726",
+      "config_ebf57d2bee243978"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/construction_5x5_different_skew.pdf",
+    "description": "Panels: additive, loglinear",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "construction"
+    ],
+    "configuration_ids": [
+      "config_2f9e4449d1974f90",
+      "config_376769348630db17",
+      "config_43ffafa7dcb008c4",
+      "config_60e5d0ca8695e42c",
+      "config_63a381d35c613aee",
+      "config_6be16590b8705c0f",
+      "config_6fb3d1f93dcc60d1",
+      "config_723435ca3fad0eb4",
+      "config_a13f9bcf7d4d7afa",
+      "config_a71de5be6cb576a5",
+      "config_c525fb4818e13b1c",
+      "config_f03fcfefe1db7bc1"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/extreme_3x3.pdf",
+    "description": "Panels: P 0.9, Q 0.95, P 0.99, Q 0.995, P 0.999, Q 0.9995",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "extreme"
+    ],
+    "configuration_ids": [
+      "config_197623b0f12dd4fd",
+      "config_24c2677c2aff5c9e",
+      "config_2513dce9845e4c30",
+      "config_47d147ee24fa1867",
+      "config_55ad8786fb3d4820",
+      "config_7639fa42c8485305",
+      "config_ac191ed9cd185248",
+      "config_b7cf0765aef27bfd",
+      "config_bcc6d6794eb64d65",
+      "config_de4acc537ea1ade1",
+      "config_e5a35976f2c011f2",
+      "config_e7a5462b43768f3a",
+      "config_e94e438c3c166f83",
+      "config_ebec286e5fab3caf",
+      "config_ed11eb023595fb34"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/independence_2x2.pdf",
+    "description": "Panels: uniform, same skew, different skew",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "independence"
+    ],
+    "configuration_ids": [
+      "config_2465b652a7bb334c",
+      "config_26a043379e53f341",
+      "config_3c06b72a1605aca7",
+      "config_3dba313a393fd79f",
+      "config_3e0075b8cce8131d",
+      "config_6475e9b59750fd76",
+      "config_68196ee022f12956",
+      "config_687e37c1302c1651",
+      "config_a0680eb87edd3d1a",
+      "config_a8146d05bb6bf31e",
+      "config_a9ccef008550f8d6",
+      "config_ac41a7b72729da36",
+      "config_b1d375bed6be0c2d",
+      "config_c5ff385434db678c",
+      "config_c65dbbb249b5a4af",
+      "config_d7ba82945072824a",
+      "config_edb0c72606f87804",
+      "config_fbcbfe9db14a8bd1"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  },
+  {
+    "file": "figures_rewrite/convergence.pdf",
+    "description": "Different-skew null, first block, both baseline MI values",
+    "source_files": [
+      "display_manifest.csv",
+      "cell_results.csv"
+    ],
+    "sections": [
+      "convergence"
+    ],
+    "configuration_ids": [
+      "config_180e0ce1d453ca50",
+      "config_1ec09212c938ce11",
+      "config_1f62b4f87f0fe5f1",
+      "config_347648880c2628d3",
+      "config_44561eed2ab06bc4",
+      "config_4e9808f84de44e81",
+      "config_509394888d3892ed",
+      "config_5c383040a59e8425",
+      "config_755168891c29f0f1",
+      "config_9273437ba1aa1b78",
+      "config_9f98dbe9d8853c2e",
+      "config_b84ad3320df042e5",
+      "config_c83293765a08d6cf",
+      "config_cfdb626817d9bb2e",
+      "config_f33311c2e510c9bd",
+      "config_f78d6e8ba0463d8a"
+    ],
+    "rate_column": "unconditional_rejection_rate",
+    "denominator": 20000
+  }
+]

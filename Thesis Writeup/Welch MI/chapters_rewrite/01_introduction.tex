@@ -1,0 +1,93 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+Suppose two independent groups are observed on the same categorical variables
+\(X\) and \(Y\). Mutual information (MI) describes the strength of association
+between those variables in each group. If the estimated MI differs, the
+difference alone does not tell us whether the populations differ: both estimates
+vary when new observations are drawn. The question in this thesis is whether
+the two \emph{population} MI values can plausibly be equal.
+
+This is not the usual test of whether \(X\) and \(Y\) are independent within
+one group. The null hypothesis here permits dependence in both groups and
+permits their complete joint distributions to differ. It specifies only
+\begin{equation}
+  H_0:I(P)=I(Q),
+  \qquad H_1:I(P)\ne I(Q),
+  \label{eq:introduction-null}
+\end{equation}
+where \(P\) and \(Q\) are the two joint distributions. The samples from
+\(P\) and \(Q\) are independent of each other; that sampling assumption does
+not imply independence of \(X\) and \(Y\) within either population.
+
+\section{Why the comparison is difficult}
+
+MI is a nonlinear function of all cell probabilities and their row and column
+margins. In a small or uneven table, many cells can be empty in the sample
+even though their population probabilities are positive. The same data are
+then used to estimate both the MI difference and its standard error. A
+first-order normal Wald test is simple, but its finite-sample rejection rate
+need not be close to the nominal level.
+
+Welch--Satterthwaite inference offers a possible adjustment. Instead of
+comparing the standardised difference with a normal reference, it compares
+the same statistic with a Student reference whose effective degrees of
+freedom describe uncertainty in the estimated variance. For MI, that variance
+is itself a nonlinear function of the full table. A conventional \(n-1\)
+assignment does not account for the way a changed cell also changes the
+margins and the pointwise MI values. The method examined here estimates those
+degrees of freedom from the sensitivity of the complete variance functional.
+
+The resulting reference is an approximation, not a guarantee of better
+inference. A heavier-tailed reference can reduce excessive false positives,
+but it can also suppress useful detection when Wald already rejects too
+rarely. Moreover, one method can fail to produce a valid p-value on samples
+where the other succeeds. Calibration, detection and valid-result frequency
+must therefore be considered together.
+
+\section{Research questions and contributions}
+
+The thesis asks four related questions. First, how can the sampling
+uncertainty of the estimated MI variance be turned into an MI-specific
+Welch--Satterthwaite reference? Second, how does that reference affect false
+positives, detection and numerical validity relative to Normal Wald? Third,
+how do table size, margins, baseline dependence, the location of association
+and unequal sample sizes change the comparison? Fourth, do the observed
+problems diminish with larger samples, and what additional computation does
+the correction require?
+
+The contribution is a connected derivation and a controlled evaluation of its
+limits. The mathematical ingredients of first-order MI inference and
+Satterthwaite moment matching are established; the thesis does not claim to
+invent either one. It derives the sensitivity of the complete MI variance,
+implements the resulting two-sample procedure, and evaluates both methods on
+fixed populations whose true MI values are known. The experiment was frozen
+after exploratory work and covers \(2\times2\) through \(8\times8\) square
+tables, two rectangular shapes and explicit stress regimes.
+
+The broad result is conditional rather than a uniform improvement. Expanded
+Welch corrects some liberal null rejection in small samples. It can also be
+too conservative, especially where Wald is already below the 5\% target, and
+can produce fewer valid results in sparse samples. The final evidence does
+not support replacing Wald generally. This negative finding is useful: it
+identifies what the proposed adjustment changes, what it cannot change, and
+which conditions need more than a new reference quantile.
+
+\section{Scope and organisation}
+
+The analysis concerns independent multinomial samples on fixed, aligned
+categorical alphabets. The principal theory assumes strictly positive cell
+probabilities and positive first-order MI variances. Exact independence is
+studied separately as a boundary case, not treated as an ordinary positive-MI
+regime. The final experiment compares Normal Wald with Expanded Welch at a
+two-sided nominal level of 0.05. It does not establish performance for paired
+data, continuous MI estimators or alphabets that grow with sample size.
+
+Chapter~\ref{chap:background} supplies the statistical background.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
+statistic and derive the correction. Chapter~\ref{chap:design} explains how
+the populations and samples are generated and how the results are measured.
+Chapter~\ref{chap:results} shows the complete landscape before the focused
+comparisons. Chapters~\ref{chap:discussion} and~\ref{chap:conclusion} discuss
+the consequences and the resulting recommendation. The appendices provide
+the detailed algebra, construction and source-to-result record.

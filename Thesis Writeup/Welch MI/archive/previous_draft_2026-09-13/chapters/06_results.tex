@@ -1,0 +1,306 @@
+\chapter{Results}
+\label{chap:results}
+
+This chapter evaluates the three reference distributions while holding the MI
+difference and standard error fixed. Rejection calibration is the primary
+outcome. Coverage, power, validity, and runtime describe the associated
+trade-offs.
+
+\section{Rejection calibration across regimes}
+
+Figure~\ref{fig:rejection-calibration} plots actual rejection rate against the
+nominal significance level. The diagonal represents perfect calibration. A
+curve above the diagonal is liberal and rejects too often; a curve below it is
+conservative. Each method's line is the equal-weight mean across the 12 fixed
+population pairs in that regime. Shading spans the 10th to 90th percentiles of
+the scenario-specific rates.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{rejection_calibration.png}
+  \caption{Rejection calibration under the equal-MI null. Each line is the
+  mean across fixed population pairs in one regime, and each band spans the
+  10th to 90th percentiles across those pairs. The vertical guide marks
+  \(\alpha=0.05\).}
+  \label{fig:rejection-calibration}
+\end{figure}
+
+The three curves are close in the well-sampled control. The expanded reference
+moves the moderate and sparse curves toward the diagonal. The largest visible
+change occurs in the ultra-skewed and widespread-sparsity regimes, where the
+normal Wald and simple Welch curves are substantially liberal.
+
+Table~\ref{tab:regime-calibration} separates mean FPR from mean absolute
+scenario error at \(\alpha=0.05\). Mean FPR describes direction, while mean
+absolute error measures scenario-level accuracy without cancellation.
+
+\begin{table}[htbp]
+\centering
+\caption{Calibration at \(\alpha=0.05\). Error change is the relative
+reduction in mean absolute error from normal Wald to expanded Welch; a
+negative value denotes deterioration.}
+\label{tab:regime-calibration}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Regime & Wald FPR & Simple FPR & Expanded FPR & Wald MAE & Expanded MAE & Change \\
+\midrule
+Well sampled & 0.05174 & 0.05112 & 0.04913 & 0.00317 & 0.00332 & \(-4.5\%\) \\
+Moderate & 0.06158 & 0.06025 & 0.05623 & 0.01158 & 0.00720 & \(37.8\%\) \\
+Highly skewed and sparse & 0.05547 & 0.05445 & 0.05198 & 0.00645 & 0.00456 & \(29.3\%\) \\
+Ultra-skewed and sparse & 0.07504 & 0.07208 & 0.06305 & 0.02504 & 0.01340 & \(46.5\%\) \\
+Widespread sparsity & 0.06621 & 0.06400 & 0.05687 & 0.02087 & 0.01277 & \(38.8\%\) \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Normal Wald was already calibrated in the well-sampled control. Expanded
+Welch changed mean FPR from 0.05174 to 0.04913, but its mean absolute error was
+4.5\% larger because some scenarios became mildly conservative. The result is
+consistent with the intended asymptotic behaviour: when the component degrees
+of freedom are large, little correction is needed.
+
+The moderate regime had normal Wald mean FPR 0.06158. Expanded Welch reduced
+it to 0.05623 and reduced mean absolute error by 37.8\%. In the highly skewed
+and sparse regime, where both minimum expected counts lay between 1 and 5,
+expanded Welch reduced mean absolute error by 29.3\%.
+
+The largest relative improvement occurred in the ultra-skewed regime. Expanded
+Welch reduced mean FPR from 0.07504 to 0.06305 and mean absolute error by
+46.5\%. The method improved the result but did not restore exact calibration.
+The widespread-sparsity boundary showed a similar pattern: mean FPR fell from
+0.06621 to 0.05687, while mean absolute error fell by 38.8\%.
+
+At \(\alpha=0.01\), the expanded method reduced mean absolute error by 54.2\%
+in the moderate regime, 51.6\% in the highly skewed and sparse regime, 66.3\%
+in the ultra-skewed regime, and 48.5\% under widespread sparsity. The heavier
+Student tails had a larger relative effect in the more extreme tail.
+
+\section{Variation within regimes}
+
+Regime averages can hide unequal performance between design variants.
+Table~\ref{tab:variant-fpr} reports mean FPR across the six table shapes for
+each fully specified variant.
+
+\begin{table}[htbp]
+\centering
+\caption{Mean FPR at \(\alpha=0.05\) by regime variant.}
+\label{tab:variant-fpr}
+\small
+\begin{tabularx}{\textwidth}{@{}Xccccc@{}}
+\toprule
+Variant & MI & Ratio & Wald & Simple & Expanded \\
+\midrule
+Well sampled 1 & 0.10 & \(1:1\) & 0.04942 & 0.04882 & 0.04612 \\
+Well sampled 2 & 0.15 & \(1:1\) & 0.05407 & 0.05342 & 0.05215 \\
+Moderate 1 & 0.10 & \(1:1\) & 0.05772 & 0.05647 & 0.05222 \\
+Moderate 2 & 0.15 & \(2:1\) & 0.06545 & 0.06403 & 0.06025 \\
+Highly sparse 1 & 0.10 & \(1:1\) & 0.05185 & 0.05077 & 0.04797 \\
+Highly sparse 2 & 0.15 & \(2:1\) & 0.05908 & 0.05813 & 0.05598 \\
+Ultra-sparse 1 & 0.10 & \(1:1\) & 0.05775 & 0.05638 & 0.05267 \\
+Ultra-sparse 2 & 0.15 & \(10:1\) & 0.09233 & 0.08778 & 0.07343 \\
+Widespread sparsity 1 & 0.10 & \(1:1\) & 0.06190 & 0.05926 & 0.05057 \\
+Widespread sparsity 2 & 0.15 & \(2:1\) & 0.07053 & 0.06874 & 0.06317 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Expanded Welch improved both variants of every difficult regime. The most
+severe remaining error was the \(10:1\) ultra-sparse variant. Its mean FPR fell
+from 0.09233 to 0.07343 but remained materially above 0.05. This scenario
+combines a very small first sample, rare cells, and extreme sample imbalance.
+The reference correction cannot remove all higher-order bias and support
+instability in that setting.
+
+Figure~\ref{fig:scenario-calibration-comparison} removes the averaging over
+shapes and compares absolute FPR error for every population pair. Points below
+the diagonal favour the comparator over normal Wald. Simple Welch improved 53
+of the 60 scenarios, but most movements were small. Expanded Welch improved 48
+scenarios and worsened 12; its improvements were larger in the difficult
+regimes, while six of the 12 well-sampled controls became slightly less
+accurate. This explains why expanded Welch has the best aggregate error even
+though it does not win the largest number of individual scenarios.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{scenario_calibration_comparison.pdf}
+  \caption{Scenario-level absolute FPR error at \(\alpha=0.05\). Each point is
+  one fixed equal-MI population pair. Points below the diagonal have lower
+  error than normal Wald; colour identifies the sampling regime.}
+  \label{fig:scenario-calibration-comparison}
+\end{figure}
+
+\section{Overall calibration, coverage, and validity}
+
+Table~\ref{tab:overall-results} aggregates all 60 fixed population pairs.
+Expanded Welch had the lowest mean absolute calibration error at each reported
+significance level and the coverage closest to 0.95.
+
+\begin{table}[htbp]
+\centering
+\caption{Overall results across the 60 equal-MI population pairs.}
+\label{tab:overall-results}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Method & MAE 0.10 & MAE 0.05 & MAE 0.01 & Valid rate & Coverage \\
+\midrule
+Normal Wald & 0.01716 & 0.01342 & 0.00608 & 0.99489 & 0.93799 \\
+Simple Welch & 0.01560 & 0.01194 & 0.00514 & 0.99489 & 0.93962 \\
+Expanded Welch & 0.01179 & 0.00825 & 0.00278 & 0.99489 & 0.94455 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All methods used the same base validity condition, which required positive
+finite first-order variance estimates. In the first four regimes the valid
+rate was effectively one. Under widespread sparsity it fell to 0.97447 because
+one sampled table could have zero estimated MI influence variance after severe
+support loss. Conditioning every method on the same valid table pairs keeps
+their reference comparison aligned, but the reduced valid rate is itself a
+warning against relying on first-order inference in this regime.
+
+Coverage followed the calibration result. Normal Wald's overall 95\% coverage
+was 0.93799, simple Welch increased it to 0.93962, and expanded Welch increased
+it to 0.94455. Expanded Welch remained slightly below nominal overall, which
+is consistent with the residual liberal behaviour in the most difficult
+variants.
+
+\section{Effective degrees of freedom}
+
+Figure~\ref{fig:effective-df-comparison} compares the median total degrees of
+freedom assigned by the two Student references in each scenario. All 60 points
+fall below the diagonal. The median simple-Welch value was 380.50, whereas the
+median expanded value was 71.56; the median ratio was 0.219. The expanded
+calculation therefore identifies substantially more uncertainty in the MI
+variance estimator than the generic \(n-1\) assignment.
+
+Smaller degrees of freedom do not by themselves establish better inference.
+They describe the mechanism by which expanded Welch changes the reference
+tails. In the well-sampled scenarios, the median expanded value was still
+117.03, for which the Student distribution is already close to normal. In the
+ultra-skewed scenarios it fell to 30.27, producing a more material correction.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\textwidth]{effective_df_comparison.pdf}
+  \caption{Median effective degrees of freedom for simple and expanded Welch
+  in each fixed null scenario. Both axes are logarithmic; the dashed line
+  denotes equality.}
+  \label{fig:effective-df-comparison}
+\end{figure}
+
+\section{Power}
+
+Table~\ref{tab:power-results} reports power at \(\alpha=0.05\). Power increased
+with both the true MI difference and sample size. Simple Welch was nearly
+indistinguishable from normal Wald. Expanded Welch had lower power because its
+heavier reference tails require a larger \(|T|\) for rejection.
+
+Figure~\ref{fig:power-comparison} shows the same result graphically. Increasing
+the sample size from 150 to 600 at fixed \(|\Delta|=0.05\) raises power for all
+methods. The ordering between methods remains much smaller than the effect of
+sample size or the true MI difference.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{power_comparison.pdf}
+  \caption{Power at \(\alpha=0.05\) for the five alternative scenarios.
+  Here \(n=n_P=n_Q\) and \(|\Delta|=|I(P)-I(Q)|\).}
+  \label{fig:power-comparison}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Power at \(\alpha=0.05\) for the five alternative scenarios.}
+\label{tab:power-results}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\(I(P)\) & \(I(Q)\) & \((n_P,n_Q)\) & Wald & Simple & Expanded \\
+\midrule
+0.05 & 0.07 & \((300,300)\) & 0.0768 & 0.0759 & 0.0689 \\
+0.05 & 0.10 & \((150,150)\) & 0.1523 & 0.1498 & 0.1402 \\
+0.05 & 0.10 & \((300,300)\) & 0.2775 & 0.2761 & 0.2652 \\
+0.05 & 0.10 & \((600,600)\) & 0.5161 & 0.5151 & 0.5063 \\
+0.05 & 0.15 & \((300,300)\) & 0.7449 & 0.7437 & 0.7362 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Relative to normal Wald, expanded Welch lost 1.02 percentage points of power
+on average and at most 1.23 percentage points in these scenarios. The power
+cost is small in absolute terms but is not zero. It is the expected trade-off
+for correcting a liberal reference with heavier tails.
+
+\section{Computational cost}
+
+Table~\ref{tab:runtime-results} reports the median time for one complete method
+call after the count tables had been constructed. Expanded Welch required
+approximately 1.72--1.74 times the normal Wald runtime, but all measured times
+remained below 0.15 milliseconds.
+
+\begin{table}[htbp]
+\centering
+\caption{Median end-to-end method runtime over 200 repetitions.}
+\label{tab:runtime-results}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Shape & \((n_P,n_Q)\) & Wald (ms) & Simple (ms) & Expanded (ms) \\
+\midrule
+\(2\times2\) & \((200,200)\) & 0.0842 & 0.0991 & 0.1451 \\
+\(3\times3\) & \((200,200)\) & 0.0844 & 0.0995 & 0.1456 \\
+\(5\times5\) & \((375,375)\) & 0.0837 & 0.0987 & 0.1452 \\
+\(8\times8\) & \((960,960)\) & 0.0858 & 0.1009 & 0.1481 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The additional arithmetic is negligible in absolute terms. All methods are
+deterministic and have \(O(rc)\) complexity. Runtime therefore differs in
+constant factors rather than asymptotic order.
+
+\section{Scaled chi-squared mechanism audit}
+
+The expanded derivation uses a scaled chi-squared model for the positive MI
+variance estimate. A separate experiment evaluated that working model on 128
+population components from 64 fixed scenarios. For each component, 10,000
+tables estimated finite-sample moments and an independent 10,000 tables
+evaluated distributional fit.
+
+When every candidate distribution received the empirical mean and variance,
+the oracle scaled chi-squared model had mean Kolmogorov--Smirnov distance
+0.0199, compared with 0.0196 for an oracle normal model and 0.0291 for an
+oracle lognormal model. Scaled chi-squared had lower upper-tail error than the
+normal model: 0.0045 versus 0.0054 at the 0.05 tail and 0.0026 versus 0.0038 at
+the 0.01 tail. It was therefore a plausible tail model but not uniformly the
+best whole-distribution family.
+
+The direct population first-order model had mean KS distance 0.1622, showing
+that finite-sample error in the predicted moments is more important than the
+choice between chi-squared and normal shape families. The implemented plug-in
+component degrees of freedom were nevertheless close to empirical
+moment-matched values: their median ratio was 0.970. Appendix
+\ref{app:additional-validation} reports the full diagnostic.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{distribution_fit_summary.png}
+  \caption{Audit of the scaled chi-squared working model. The left panel
+  compares whole-distribution KS distance; the right panel compares absolute
+  upper-tail probability error. Oracle models use empirical moments, whereas
+  the population first-order model uses the derived moments.}
+  \label{fig:scaled-chi-audit}
+\end{figure}
+
+\section{Results summary}
+
+The empirical evidence gives a consistent but bounded result. Normal Wald was
+already accurate in well-sampled tables. Simple Welch made only a small
+change. Expanded Welch improved average calibration, coverage, and tail
+behaviour in the moderate and sparse regimes, with the largest gains under
+rare cells and unequal sample sizes. It incurred about one percentage point of
+average power loss and less than 0.07 milliseconds of additional median
+runtime. The most extreme sparse and imbalanced scenario remained liberal,
+and widespread support loss produced invalid first-order variance estimates in
+approximately 2.6\% of table pairs.

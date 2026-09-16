@@ -1,0 +1,149 @@
+\chapter{Discussion}
+\label{chap:discussion}
+
+The proposed correction has a clear mathematical purpose: it represents
+sampling uncertainty in the MI variance estimate before using that estimate
+in a two-sample test. The experiments show that the purpose is narrower than
+its possible practical effect. A better description of the denominator does
+not by itself repair every finite-sample error in the numerator, in the
+first-order approximation, or in the availability of a valid statistic.
+
+\section{Answers to the research questions}
+
+The first research question was whether an MI-specific effective degree of
+freedom can be derived. Chapter~\ref{chap:expanded} does so by differentiating
+the variance of pointwise MI along one-cell probability perturbations. The
+derivative includes changes to row and column margins, not just to the
+selected cell. Its sampling variance supplies the component degrees of
+freedom used in Satterthwaite moment matching. These derivative and
+moment-matching steps define a reproducible statistic. The final Student
+reference remains a working approximation rather than an exact
+finite-sample theorem for MI.
+
+The second question concerned false positives, detection and validity.
+Figure~\ref{fig:main-8x8-uniform} contains a fully valid small-sample null
+case where Expanded Welch moves an excessive Wald false-positive rate toward
+0.05. Figure~\ref{fig:main-2x2-uniform} contains a larger-sample null case
+where the same adjustment moves a below-nominal Wald rate farther from
+0.05. In the sparsest panels, a low unconditional rejection rate may largely
+reflect invalid outputs. Thus improved calibration at selected null points
+does not imply that the expanded procedure performs better overall. Under
+alternatives, its rejection rate is generally lower; these comparisons are
+not power at a matched achieved size.
+
+The third question asked whether population features alter this judgement.
+The main landscape varies alphabet size and margins explicitly. The focused
+comparisons show that baseline MI, changed-cell location, sample allocation
+and population constructor can change the finite-sample behaviour even when
+the target MI difference is held fixed. The construction comparison is
+particularly instructive: equal margins and MI do not determine the table's
+complete sampling distribution. A scalar target is useful for organising
+experiments, but cannot guarantee identical difficulty across distinct
+population tables.
+
+The fourth question concerned sample size and computation. For the tested
+first-block positive-MI populations with true MI 0.02, both null rates are
+near 0.05 at \(n=50{,}000\). The corresponding very-small-MI fixed
+populations remain noticeably conservative at that sample size. Expanded
+Welch has the same linear-in-cell-count order as Wald but costs about 1.75
+times as much per scalar call in the measured implementation. The extra
+expense is modest compared with a full resampling procedure but not cost-free,
+particularly for many repeated comparisons.
+
+\section{What the correction can and cannot change}
+
+Both methods compute the same \(\Deltahat\), \(\SEhat\) and \(T\). With
+valid positive degrees of freedom, Expanded Welch has a heavier-tailed
+reference and a two-sided p-value no smaller than Wald's for the same table
+pair. This gives a direct explanation for many plots: the correction lowers
+rejection whether the Wald rate is too high or already too low. It is not an
+adaptive calibration method that can move the threshold in both directions.
+It also does not alter the leading bias correction or re-estimate the
+numerator's finite-sample distribution.
+
+The estimated numerator and denominator come from the same count tables.
+Independence of the \(P\) and \(Q\) \emph{samples} allows their variance
+contributions to be combined, but it does not make the numerator independent
+of its estimated standard error. Moment matching of the denominator alone
+therefore does not prove that \(T\) has a Student distribution. When the
+first-order MI approximation itself is poor, changing only the reference
+quantile has limited scope. This is a theoretical limitation; the current
+experiment identifies where error occurs but does not uniquely attribute
+every regime's error to one of these mechanisms.
+The component degree-of-freedom formula also has its own regularity
+condition: a positive first-order MI variance does not force its variance
+sensitivity to be positive. At such stationary points, the first-order
+moment match cannot describe the finite-sample variance estimate without
+higher-order terms.
+
+At exact independence, \(I=0\) and the population first-order MI variance
+vanishes. This does not mean finite empirical MI estimates are always zero.
+It means their leading stochastic variation is quadratic rather than linear
+in the probability errors. The standard one-table likelihood-ratio statistic
+uses that second-order behaviour. Neither setting a reference \(Q\) to an
+independent distribution nor squaring the current \(T\) makes Expanded Welch
+the classical independence test. Appendix~\ref{app:independence-boundary}
+gives the mathematical distinction.
+
+\section{Interpretation of invalid samples}
+
+The validity diagnostics matter most where expected counts are very small.
+Wald needs a usable total estimated variance. The expanded implementation
+additionally needs usable component sensitivity variances and effective
+degrees of freedom. An observed table can have a positive total variance
+while one component calculation is unusable. The final study does not silently
+replace these cases with a different test. Instead, it reports invalidity
+and counts such a replicate as a non-rejection in the primary unconditional
+rate.
+
+That rate answers an operational question: how often does the complete
+procedure produce a valid rejection? It should not be mistaken for the
+conditional rejection probability among valid tables. Nor does a failure to
+return a p-value constitute a true negative. The saved method-valid and
+common-valid subsets allow these distinctions to be inspected. In
+particular, the very large \(8\times8\), \(n=5\) alternative gap in
+Chapter~\ref{chap:results} cannot be explained as a pure change of reference
+threshold because the methods are valid on different fractions of tables.
+The exact paired records are preferable to comparing two method-specific
+conditional rates with different denominators.
+
+\section{Practical conclusion and limits of the evidence}
+
+For the tested task, Normal Wald remains the simpler general baseline.
+Expanded Welch can be useful as a conservative sensitivity analysis in a
+regime where its validity is high and Wald's null rejection is demonstrably
+liberal. It should not be installed as a universal replacement merely
+because one null table shows a smaller false-positive rate. In applications,
+the population truth is unknown, so the most relevant calibration study is
+one matched to the anticipated alphabet, sample size and plausible margins.
+Selecting between the methods after inspecting a single p-value is not a
+validated selection rule.
+
+Several limitations bound this conclusion. The population families are
+deliberately constructed fixed examples rather than a probability sample of
+all joint distributions. Twenty thousand replicates make a rate at a fixed
+population relatively precise; they do not make the 534 selected population
+pairs representative of every application. The tables are at most
+\(8\times8\) square and \(3\times5\) rectangular, with the stated finite
+sample ladders and only a two-sided nominal level of 0.05. The main
+construction emphasises a local four-cell association; spread, rare-cell and
+log-linear checks probe but do not exhaust other possibilities. The study
+does not validate paired observations, continuous estimators, a real-data
+workflow or growing alphabets.
+
+The protocol was frozen before the final simulation, after exploratory
+development of the method and design. It is therefore a reproducible final
+run, not an externally preregistered untouched hypothesis. Configurations
+displayed in several sections are the same sampled run. Repeating their
+figure appearances does not provide independent confirmation. The recorded
+Monte Carlo intervals also address repeated sampling of each fixed pair, not
+the broader uncertainty of generalising to an untested population.
+
+Future work should address the joint finite-sample behaviour of the
+numerator and denominator or use a calibrated reference tailored to sparse
+tables. The transition near independence is a particularly distinct problem
+because the first-order variance tends to zero. A likelihood-ratio or
+resampling alternative must be assessed under the equal-MI \emph{weak null},
+not imported from a test of full distributional equality or one-table
+independence without checking its target. These are directions for new
+validation, not remedies established by the present results.
