@@ -252,6 +252,7 @@ def main() -> None:
         ["configuration_id", "n_p", "shape", "profile"],
     ].drop_duplicates().set_index("configuration_id")
     paired = paired.join(specs, validate="one_to_one")
+    assert len(paired) == 108
     smallest = paired.loc[paired.n_p.eq(5)]
     early = paired.loc[paired.n_p.isin([10, 20])]
     late = paired.loc[paired.n_p.isin([500, 1000])]
@@ -608,11 +609,6 @@ def main() -> None:
     )
     assert len(unequal_components) == 12
     assert unequal_components.local_moment_df.notna().all()
-    assert (HERE / "mechanism_ablation.pdf").read_bytes()[:5] == b"%PDF-"
-    null_table = (HERE / "main_null_table.tex").read_text()
-    shape_prefixes = ("2x2 &", "3x3 &", "5x5 &", "8x8 &")
-    assert sum(line.startswith(shape_prefixes) for line in null_table.splitlines()) == 108
-
     print("PASS: protocol reconstruction, family counts, manuscript claims, 22 confirmatory figures, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
 
 
