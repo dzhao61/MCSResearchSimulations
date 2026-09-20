@@ -1,4 +1,4 @@
-"""Generate the review supplement and thesis tables from recorded CSVs."""
+"""Generate the supplementary mechanism report and thesis tables."""
 from pathlib import Path
 import os
 import numpy as np
@@ -26,6 +26,15 @@ FINAL = ROOT / "results/thesis_redesign"
 FIG = THESIS / "figures_rewrite"
 METHODS = ["normal_wald", "hutcheson_welch", "simple_welch", "kurtosis_welch", "expanded_welch"]
 LABELS = ["Normal Wald", "Hutcheson-style", "Simple Welch", "Kurtosis only", "Expanded Welch"]
+
+
+def local_moment_df(frame, interaction_df):
+    """Evaluate the local component-df formula with the matching sample size."""
+    sample_size = frame.n_p.where(frame.population.eq("p"), frame.n_q)
+    return (
+        (sample_size * frame.v + interaction_df) ** 2
+        / (2 * sample_size * frame.v + interaction_df)
+    )
 
 
 def markdown(frame):
@@ -71,17 +80,22 @@ def main():
             r = g.unconditional_rejection_rate
             weak_rows.append(dict(profile=p, method=m, regimes=len(g),
                 below=int((r<.025).sum()), inside=int(r.between(.025,.075).sum()),
-                above=int((r>.075).sum()), minimum_valid=float(g.valid_rate.min())))
+                above=int((r>.075).sum()), low_valid=int((g.valid_rate<.9).sum()),
+                minimum_valid=float(g.valid_rate.min())))
     pd.DataFrame(weak_rows).to_csv(OUT / "null_profile_summary.csv", index=False)
     d = diag[(diag["shape"]=="3x3") & diag.profile.eq("different_skew") & diag.target_mi_p.eq(.02)
              & diag.n_p.eq(diag.n_q) & diag.n_p.isin([100,1000])].sort_values("n_p")
     rows = [f"{r.n_p} & {r.mean_se2_over_empirical_var:.2f} & {r.normal_wald_rate:.4f} & {r.independent_mc_sd_rate:.4f} & {r.population_first_order_sd_rate:.4f} \\\\" for r in d.itertuples()]
     text = table("Denominator diagnostic for the additive first-block $3\\times3$ different-skew null, $I(P)=I(Q)=0.02$. $R$ is mean estimated squared SE divided by independently estimated sampling variance. MC SD uses that independent finite-sample SD; first-order SD uses the population influence variance. Each pilot and evaluation uses 20,000 independent replicates.",
                  "tab:denominator-check",r"$n$ & $R$ & Wald & MC SD & First-order SD",rows,"rrrrr")
-    c = components[components.configuration_id.isin(d.configuration_id)].sort_values(["n_p", "population"])
-    rows = [f"{r.n_p} & {r.population.upper()} & {r.mean_vhat_over_v:.2f} & {r.population_first_order_df:.2f} & {r.median_plugin_df:.2f} & {r.empirical_moment_df:.2f} \\\\" for r in c.itertuples()]
-    text += table("Variance and component-df diagnostics for the same populations. The population first-order df is $2nV^2/\\tau^2$; plug-in is its median over evaluation tables; MC is $2\\overline{\\widehat V}^{2}/s^2_{\\widehat V}$ from the independent pilot.",
-                  "tab:component-check",r"$n$ & Population & $\E\widehat V/V$ & First order & Plug-in & MC",rows,"rlrrrr")
+    c = components[components.configuration_id.isin(d.configuration_id)].copy()
+    shape_dims = c["shape"].str.extract(r"(?P<rows>\d+)x(?P<cols>\d+)").astype(int)
+    interaction_df = (shape_dims.rows - 1) * (shape_dims.cols - 1)
+    c["local_moment_df"] = local_moment_df(c, interaction_df)
+    c = c.sort_values(["n_p", "population"])
+    rows = [f"{r.n_p} & {r.population.upper()} & {r.mean_vhat_over_v:.2f} & {r.population_first_order_df:.2f} & {r.local_moment_df:.2f} & {r.median_plugin_df:.2f} & {r.empirical_moment_df:.2f} \\\\" for r in c.itertuples()]
+    text += table("Variance and component-df diagnostics for the same populations. First order is $2nV^2/\\tau^2$; local moments is $(nV+d)^2/(2nV+d)$; plug-in is the median first-order estimate over evaluation tables; MC is $2\\overline{\\widehat V}^{2}/s^2_{\\widehat V}$ from the independent pilot.",
+                  "tab:component-check",r"$n$ & Population & $\E\widehat V/V$ & First order & Local moments & Plug-in & MC",rows,"rlrrrrr")
     (FIG / "mechanism_tables.tex").write_text(text)
     for shape in ["2x2", "3x3", "5x5", "8x8"]:
         fig, axes = plt.subplots(3, 3, figsize=(10, 8), sharex=True, sharey=True)
@@ -106,7 +120,7 @@ def main():
         fig.savefig(OUT / f"ablation_{shape}.pdf",bbox_inches="tight")
         if shape=="3x3": fig.savefig(FIG / "mechanism_ablation.pdf",bbox_inches="tight")
         plt.close(fig)
-    overview = ["# Explanatory follow-up to the thesis review", "", "This is a post-review diagnostic study, separate from the frozen confirmatory run.", "",
+    overview = ["# Supplementary mechanism checks", "", "This is a post-protocol diagnostic study, separate from the frozen confirmatory run.", "",
         "## Design", "", "The saved tables supply all populations. There are 809 unique configurations: the complete main grid, the 3x3 different-skew baseline and imbalance checks, and the 3x3/8x8 convergence checks. Every configuration uses 20,000 new evaluation pairs; every null also uses an independent 20,000-pair pilot. Seeds and source hashes are in metadata.json.", "",
         "All five reference variants share the corrected numerator and plug-in standard error. The Hutcheson-style MI analogue uses n per component, following Hutcheson's information-theoretic Satterthwaite assignment. Simple Welch uses n-1 per component. Kurtosis-only Welch freezes the pointwise scores when differentiating the variance. Expanded Welch differentiates the complete functional. The separate observed-support sensitivity changes the numerator correction to (occupied cells - occupied rows - occupied columns + 1)/(2n). It is not a validated replacement.", "",
         "Across the 809 configurations, Hutcheson-style and Simple Welch have identical rejection rates in 494 cases. Their mean absolute difference is 0.00047 and their largest difference is 0.01235, in the 5x5 uniform n=5 alternative with target MI values 0.020 and 0.022.", "",
@@ -116,7 +130,7 @@ def main():
         "The empirical moment df validates approximation quality; finite-difference tests only validate the derivative. These are component dfs, distinct from the combined two-sample df.", "",
         "## Complete evidence", "", "- ablation_rates.csv: every selected regime, all six arms, rejection counts, validity, MC standard errors and paired differences from Wald.",
         "- denominator_diagnostics.csv: all selected nulls and both population-SD diagnostics.",
-        "- component_diagnostics.csv: both populations at every selected null, variance ratios and three df definitions.",
+        "- component_diagnostics.csv: both populations at every selected null, variance ratios and three empirical or first-order df definitions; the local-moment column in the thesis table is calculated from the recorded population V, n and table dimension.",
         "- selected_displays.csv: exact selected settings and frozen configuration identifiers.",
         "- ablation_2x2.pdf through ablation_8x8.pdf: main curves, rows = margin profiles, columns = n=10,100,1000. All axes use MI difference 0--0.02 and rejection 0--0.15; larger rates are outside this calibration zoom and remain in the CSV. Hollow markers mean validity below 90%.", "",
         "## Strong and weak nulls", "", markdown(pd.DataFrame(weak_rows)), "",

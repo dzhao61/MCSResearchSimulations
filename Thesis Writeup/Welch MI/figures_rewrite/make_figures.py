@@ -34,8 +34,11 @@ def find_workspace_root() -> Path:
 
 PROJECT = find_workspace_root() / "WelchSatterthwaiteMI"
 RESULTS = PROJECT / "results" / "thesis_redesign"
+PROTOCOL = json.loads((RESULTS / "protocol.json").read_text())
+REPLICATES = int(PROTOCOL["replicates"])
 DISPLAY = pd.read_csv(RESULTS / "display_manifest.csv")
 CELLS = pd.read_csv(RESULTS / "cell_results.csv")
+RUNTIME = pd.read_csv(RESULTS / "runtime_summary.csv")
 VALUES = CELLS[
     [
         "configuration_id",
@@ -108,7 +111,7 @@ def save(name: str, fig, rows: pd.DataFrame, description: str) -> None:
             "sections": sorted(rows.section.unique().tolist()),
             "configuration_ids": sorted(rows.configuration_id.unique().tolist()),
             "rate_column": "unconditional_rejection_rate",
-            "denominator": 20000,
+            "denominator": REPLICATES,
         }
     )
 
@@ -231,7 +234,140 @@ def evidence_macros() -> None:
             row = match.loc[match.method.eq(method)].iloc[0]
             lines.append(f"\\newcommand{{\\{name}{stem}Rate}}{{{row.unconditional_rejection_rate:.5f}}}")
             lines.append(f"\\newcommand{{\\{name}{stem}Valid}}{{{row.valid_rate:.5f}}}")
+
+    def add(name: str, value: float | int, digits: int | None = None) -> None:
+        rendered = str(int(value)) if digits is None else f"{float(value):.{digits}f}"
+        lines.append(f"\\newcommand{{\\{name}}}{{{rendered}}}")
+
+    def one_row(section: str, method: str, **filters: object) -> pd.Series:
+        rows = subset(section, **filters)
+        rows = rows.loc[rows.method.eq(method)].drop_duplicates("configuration_id")
+        if len(rows) != 1:
+            raise ValueError(f"Expected one evidence row: {section} {method} {filters}")
+        return rows.iloc[0]
+
+    main_null = DATA.loc[DATA.section.eq("main") & DATA.mi_difference.eq(0)].drop_duplicates(
+        ["configuration_id", "method"]
+    )
+    main_meta = main_null[["configuration_id", "n_p"]].drop_duplicates().set_index("configuration_id")
+    main_pivot = main_null.pivot(
+        index="configuration_id", columns="method", values="unconditional_rejection_rate"
+    ).join(main_meta)
+    smallest = main_pivot.loc[main_pivot.n_p.eq(5)]
+    early = main_pivot.loc[main_pivot.n_p.isin([10, 20])]
+    late = main_pivot.loc[main_pivot.n_p.isin([500, 1000])]
+    add("MainFiveNullCount", len(smallest))
+    add("MainTenTwentyNullCount", len(early))
+    add("MainTenTwentyExpandedCloserCount", int(
+        ((early.expanded_welch - .05).abs() < (early.normal_wald - .05).abs()).sum()
+    ))
+    add("MainTenTwentyWaldCloserCount", int(
+        ((early.normal_wald - .05).abs() < (early.expanded_welch - .05).abs()).sum()
+    ))
+    add("MainLateNullCount", len(late))
+    add("MainLateWaldCloserCount", int(
+        ((late.normal_wald - .05).abs() < (late.expanded_welch - .05).abs()).sum()
+    ))
+    main_thousand = main_null.loc[main_null.n_p.eq(1000)]
+    for method, stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+        values = main_thousand.loc[main_thousand.method.eq(method), "unconditional_rejection_rate"]
+        add(f"MainThousand{stem}MinRate", values.min(), 4)
+        add(f"MainThousand{stem}MaxRate", values.max(), 4)
+
+    for baseline, stem in ((0.0001, "Tiny"), (0.001, "Small"), (0.02, "Regular")):
+        for method, method_stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+            row = one_row(
+                "baseline", method, shape="3x3", profile="different_skew",
+                baseline_mi=baseline, n_p=100, n_q=100, mi_difference=0.0,
+            )
+            add(f"Baseline{stem}{method_stem}Rate", row.unconditional_rejection_rate, 4)
+
+    for pattern, stem in (("first", "First"), ("rare", "Rare"), ("spread", "Spread")):
+        for method, method_stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+            row = one_row(
+                "patterns", method, shape="5x5", profile="different_skew",
+                pattern=pattern, baseline_mi=0.0001, n_p=100, n_q=100,
+                mi_difference=0.0,
+            )
+            add(f"Pattern{stem}{method_stem}Rate", row.unconditional_rejection_rate, 4)
+
+    for direction, stem in (("q_higher", "QHigher"), ("p_higher", "PHigher")):
+        for method, method_stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+            row = one_row(
+                "imbalance", method, shape="3x3", profile="different_skew",
+                n_p=50, n_q=250, mi_direction=direction, mi_difference=0.02,
+            )
+            add(f"Imbalance{stem}{method_stem}Rate", row.unconditional_rejection_rate, 4)
+
+    for constructor, stem in (("additive", "Additive"), ("loglinear", "Loglinear")):
+        for method, method_stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+            row = one_row(
+                "construction", method, shape="5x5", profile="different_skew",
+                constructor=constructor, baseline_mi=0.02, n_p=100, n_q=100,
+                mi_difference=0.0,
+            )
+            add(f"Construction{stem}{method_stem}Rate", row.unconditional_rejection_rate, 4)
+
+    for n_q, stem in ((50, "EqualSmall"), (500, "QFiveHundred")):
+        for method, method_stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+            row = one_row(
+                "imbalance", method, shape="8x8", profile="uniform",
+                n_p=50, n_q=n_q, mi_difference=0.0,
+            )
+            add(f"ImbalanceEight{stem}{method_stem}Rate", row.unconditional_rejection_rate, 4)
+    add("ImbalanceEightCorrectionOffset", abs(49 / (2 * 50) - 49 / (2 * 500)), 3)
+
+    for method, stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+        regular = RUNTIME.loc[
+            RUNTIME["shape"].eq("3x3") & RUNTIME.profile.eq("different_skew")
+            & RUNTIME.n_p.eq(100) & RUNTIME.n_q.eq(100)
+            & RUNTIME.mi_difference.eq(0) & RUNTIME.method.eq(method)
+        ]
+        if len(regular) != 1:
+            raise ValueError(f"Expected one runtime row for {method}")
+        add(f"RuntimeRegular{stem}Median", regular.iloc[0].median_microseconds, 3)
     (HERE / "evidence_values.tex").write_text("\n".join(lines) + "\n")
+
+
+def null_band_table() -> None:
+    rows = []
+    main_null = DATA.loc[DATA.section.eq("main") & DATA.mi_difference.eq(0)].drop_duplicates(
+        ["configuration_id", "method"]
+    )
+    for profile, profile_label in (
+        ("uniform", "Uniform"),
+        ("same_skew", "Same skew"),
+        ("different_skew", "Different skew"),
+    ):
+        for method, method_label in (
+            ("normal_wald", "Normal Wald"),
+            ("expanded_welch", "Expanded Welch"),
+        ):
+            group = main_null.loc[
+                main_null.profile.eq(profile) & main_null.method.eq(method)
+            ]
+            rate = group.unconditional_rejection_rate
+            rows.append(
+                f"{profile_label} & {method_label} & {int((rate < .025).sum())} & "
+                f"{int(rate.between(.025, .075).sum())} & {int((rate > .075).sum())} & "
+                f"{int((group.valid_rate < .9).sum())} \\\\"
+            )
+    content = "\n".join([
+        r"\begin{table}[htbp]",
+        r"\centering",
+        r"\small",
+        r"\caption{Location, separately for each method, of the 108 main-grid null configurations relative to the descriptive rejection-rate interval 0.025--0.075. Each profile contains 36 configurations. The final column separately counts configurations with validity below 90\%; it overlaps the three rate-location columns. In particular, all four $n=2$ configurations per profile have zero validity for both methods. Uniform and same-skew are strong nulls; different-skew is the equal-MI weak null. Exact rates and validity are in Appendix~\ref{app:mechanism}.}",
+        r"\label{tab:null-band-summary}",
+        r"\begin{tabular}{@{}llrrrr@{}}",
+        r"\toprule",
+        r"Margins & Method & Below & Inside & Above & Validity below 90\%\\",
+        r"\midrule",
+        *rows,
+        r"\bottomrule",
+        r"\end{tabular}",
+        r"\end{table}",
+    ])
+    (HERE / "null_band_summary.tex").write_text(content + "\n")
 
 
 def main() -> None:
@@ -240,6 +376,7 @@ def main() -> None:
     focused()
     convergence()
     evidence_macros()
+    null_band_table()
     (HERE / "figure_manifest.json").write_text(json.dumps(RECORDS, indent=2) + "\n")
     print(f"Generated {len(RECORDS)} PDF figures from {len(DISPLAY)} display points.")
 

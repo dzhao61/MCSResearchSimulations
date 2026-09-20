@@ -25,7 +25,7 @@ thesis figures, and checks every numerical result reported in
 Chapter~\ref{chap:results}. It also checks the generated LaTeX values, paired
 comparisons, convergence ranges, and runtime table against the frozen files.
 
-The post-review mechanism check is deliberately separate. Its runner is
+The supplementary mechanism check is deliberately separate. Its runner is
 \path{run_thesis_mechanism_check.py}, and its report generator is
 \path{report_thesis_mechanism_check.py}. The saved
 \path{results/thesis_mechanism_check/metadata.json} records 809 selected
@@ -45,20 +45,40 @@ Its protocol SHA-256 is the concatenation of these two hexadecimal halves:
 It records Python 3.13.5, NumPy 2.4.4, pandas 3.0.3 and SciPy 1.17.1 on
 macOS arm64. Source hashes for the runner, population constructor and both
 method implementations are included there; the recorded Git revision alone
-need not identify every working-tree input. The report metadata distinguish
-99 primary atlas figures from seven additional calibration zooms.
+need not identify every working-tree input. The recorded runner SHA-256 is
+the concatenation of
+\begin{center}
+\small\texttt{42c0ef36f46c88e7828a628ee68fbeb18}\par
+\texttt{dbde5d978291d849dc4847c2b857908},
+\end{center}
+whereas the supplied runner SHA-256 is the concatenation of
+\begin{center}
+\small\texttt{0fd0247da05e5bea92e4f56c9956b067}\par
+\texttt{1ae93244a4e433c421ccf53aac8095bf}.
+\end{center}
+Its later changes are confined to atlas-count metadata, saved-output hashes
+for future runs, and one-pass handling of a failed preflight; population
+construction, simulation and method evaluation are unchanged. All other
+recorded input hashes still match the supplied files. The frozen metadata are
+retained rather than rewritten after the run. Their figure count of 99 means
+primary atlas figures; the later report and preflight records distinguish
+these from seven additional calibration zooms, for 106 files in total.
 
-The statistical runner and report generator are
-\texttt{run\_thesis\_redesign.py} and
-\texttt{report\_thesis\_redesign.py} in the methods project's
-\texttt{experiments/} directory. The thesis plot export is
-\texttt{figures\_rewrite/make\_figures.py} in the thesis directory.
-From the workspace root, the latter can be run with
-\texttt{.venv/bin/python} to regenerate the 22 thesis-specific PDFs and
-their figure manifest and numerical macros from the frozen saved CSVs. It
-does not resimulate populations. The manuscript is then
-built from \texttt{Thesis Writeup/Welch MI/} with
-\texttt{/Library/TeX/texbin/latexmk -pdf main.tex}.
+The original run metadata predate per-output hashes. This is not repaired by
+altering the historical record. Instead, the package-level hashes in
+\texttt{SHA256SUMS.txt} authenticate the delivered archives, while the saved
+verification record and evidence audit check the internal result structure,
+denominators and reported values. A fresh run with the supplied runner would
+also record hashes for the consolidated output tables.
+
+The submitted source and experiment-supplement archives contain the manuscript,
+frozen results and generation scripts. Their full names and hashes are recorded
+in \texttt{SHA256SUMS.txt}. After extracting both archives into the documented
+relative layout, running \texttt{python figures\_rewrite/make\_figures.py}
+regenerates the 22 thesis-specific PDFs, figure manifest and numerical macros
+without resimulating populations. The manuscript can then be built with
+\texttt{latexmk -pdf main.tex}. The archive README records the full audit and
+environment commands; no machine-specific installation path is required.
 
 The method's complete scalar runtime does not include construction of the
 population probability tables or random count tables. For each timing

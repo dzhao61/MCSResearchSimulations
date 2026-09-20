@@ -15,13 +15,13 @@ literature search.
 | Important | Positive MI variance \(V(P)>0\) does **not** imply positive variance-sensitivity variance \(\tau^2(P)>0\). | Chapter 4 now states the additional condition for its first-order component degrees of freedom. A concrete counterexample is below and is guarded by a regression test. |
 | Important | Satterthwaite moment matching of the denominator does not prove an exact Student reference for the ratio. The numerator and estimated variance use the same sample. | Chapter 4 now states their generally nonzero first-order covariance. The thesis correctly describes Student as a working reference and interprets its performance empirically. |
 | Important | The original results documented near-independence conservatism without explaining its scale. | Chapter 4 now derives the local relations `V ≈ 2I`, `tau² ≈ 4V`, component df `≈ nI`, and the quadratic dimension terms. Appendix F checks the approximation with independent simulations. |
-| Important | A derivative check validates the algebra of the expanded df, not the quality of its moment approximation. | A post-review study now compares population first-order, plug-in and finite-sample moment dfs, and uses an independent pilot SD to diagnose the complete standardisation. |
+| Important | A derivative check validates the algebra of the expanded df, not the quality of its moment approximation. | A supplementary study now compares population first-order, local-moment, plug-in and finite-sample moment dfs, and uses an independent pilot SD to diagnose the complete standardisation. |
 | Important | The empirical contribution lacked direct ablations of the complete variance sensitivity. | Simple Welch and a kurtosis-only frozen-score df were evaluated over 809 selected configurations. They show that the complete pointwise and margin derivative drives most of the additional conservatism. |
-| Important | Hutcheson (1970) is a direct information-theoretic Welch predecessor and uses component df (n_i), not (n_i-1). | The history and gap statement were corrected. A separate Hutcheson-style MI arm was added to the post-review follow-up without modifying the frozen confirmatory run. |
+| Important | Hutcheson (1970) is a direct information-theoretic Welch predecessor and uses component df (n_i), not (n_i-1). | The history and gap statement were corrected. A separate Hutcheson-style MI arm was added to the supplementary study without modifying the frozen confirmatory run. |
 | Important | An earlier sentence said clipping a negative bias-corrected estimate would change the estimand. The estimand remains the population MI difference; clipping changes the estimator. | Chapter 3 now states the correct consequence: clipping creates a different nonlinear estimator with different finite-sample bias and sampling behaviour. |
 | Important | The independence appendix stated the quadratic result without defining its perturbation or displaying the Taylor terms. | Appendix D now defines the path and expansion point, separates the zeroth-, first-, and second-order terms, derives both forms of the Hessian, and connects multinomial cell error to the usual chi-squared limit. |
 | Checked | The analytic cell-sensitivity expression, plug-in implementation, and saved result summaries agree under the checks below. | No change to the frozen simulations or method implementation was justified. |
-| Checked | The current orchestration runner has changed since the recorded run. | The diff contains only atlas-count metadata and output-hash additions. The frozen protocol, simulation core, method implementation, and imported statistical dependencies retain their recorded hashes; the statistical path and saved results are unaffected. |
+| Checked | The current orchestration runner has changed since the recorded run. | The diff contains atlas-count metadata, output-hash additions for future runs, and corrected one-pass handling of a failed preflight. The frozen protocol, simulation core, method implementation, and imported statistical dependencies retain their recorded hashes; population construction, simulation, method evaluation, and the saved results are unaffected. The exact old and current runner hashes are documented in Appendix E. |
 
 ## Derivation checked independently
 
@@ -185,7 +185,7 @@ paired results have zero Expanded-only rejections across 3,111 configurations,
 consistent with that theorem. This cannot by itself show superior calibration
 or power; rejection falls under both the null and alternatives.
 
-## Post-review mechanism check
+## Supplementary mechanism check
 
 The explanatory follow-up uses the frozen population tables but new random
 samples. It contains 809 unique evaluation configurations with 20,000 table

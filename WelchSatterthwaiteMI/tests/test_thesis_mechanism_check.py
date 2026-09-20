@@ -1,9 +1,10 @@
-"""Integrity checks for the post-review explanatory follow-up."""
+"""Integrity checks for the supplementary mechanism study."""
 
 from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -14,6 +15,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results" / "thesis_mechanism_check"
 SOURCE = ROOT / "results" / "thesis_redesign"
+sys.path.insert(0, str(ROOT / "experiments"))
+
+from report_thesis_mechanism_check import local_moment_df  # noqa: E402
 
 
 class ThesisMechanismCheck(unittest.TestCase):
@@ -64,6 +68,21 @@ class ThesisMechanismCheck(unittest.TestCase):
         self.assertAlmostEqual(row.population_first_order_sd_rate, 0.09760)
         self.assertAlmostEqual(row.mean_se2_over_empirical_var, 1.169852, places=6)
         self.assertAlmostEqual(row.empirical_var_over_first_order, 1.424926, places=6)
+
+    def test_local_moment_df_uses_each_populations_sample_size(self) -> None:
+        frame = pd.DataFrame({
+            "population": ["p", "q"],
+            "n_p": [50, 50],
+            "n_q": [250, 250],
+            "v": [0.04, 0.04],
+        })
+        interaction_df = pd.Series([4, 4])
+        observed = local_moment_df(frame, interaction_df)
+        expected = pd.Series([
+            (50 * 0.04 + 4) ** 2 / (2 * 50 * 0.04 + 4),
+            (250 * 0.04 + 4) ** 2 / (2 * 250 * 0.04 + 4),
+        ])
+        np.testing.assert_allclose(observed, expected)
 
 
 if __name__ == "__main__":

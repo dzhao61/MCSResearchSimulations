@@ -13,7 +13,7 @@ Welch--Satterthwaite predecessor rather than only a loose analogy.
 | The four-cell alternative was called standard | Corrected to the minimal four-violation alternative used by Berrett and Samworth, Section 3(b). No field-wide standard is claimed. |
 | Brillinger's priority was unclear | Chapter 2 now says that Brillinger attributes the non-null variance to Moddemeijer and presents the independence chi-squared limit alongside it. |
 | Hutcheson's component df are the sample sizes | Accepted. Chapter 2 now gives the formula, the gap statement distinguishes Hutcheson's (n_i) assignment from ordinary Welch's (n_i-1), and the introduction and baseline chapter use the same history. |
-| Hutcheson should be an empirical baseline | Added to the post-review follow-up as `hutcheson_welch`, using exactly the same corrected MI statistic, plug-in standard error, table pairs and fixed populations as the other reference ablations. |
+| Hutcheson should be an empirical baseline | Added to the supplementary mechanism study as `hutcheson_welch`, using exactly the same corrected MI statistic, plug-in standard error, table pairs and fixed populations as the other reference ablations. |
 | Influence-function foundations were thin | van der Vaart (1998, Chapter 20) is now cited with Hampel (1974); Kandasamy et al. remain a secondary information-functional application. |
 | General Satterthwaite/sandwich precedents were incomplete | Fay and Graubard (2001) and Imbens and Kolesar (2016) were added beside Pan and Wall, Bell and McCaffrey, and Kauermann and Carroll. The novelty claim is limited to the MI-specific sensitivity and its evaluation. |
 | Marinescu and Balcau were described too narrowly | Chapter 2 now states their broader normal-plus-quadratic expansion, and Chapter 7 uses it cautiously as a possible explanation for behaviour near independence. |
@@ -23,7 +23,7 @@ Welch--Satterthwaite predecessor rather than only a loose analogy.
 ## Empirical consequence
 
 The historical correction does not change the thesis conclusion. Across the
-809 post-review configurations, Hutcheson-style (n_i) and Simple Welch
+809 supplementary configurations, Hutcheson-style (n_i) and Simple Welch
 (n_i-1) produce identical rejection rates in 494 cases. Their mean absolute
 difference is 0.00047. The maximum difference is 0.01235 in the deliberately
 extreme (5\times5), (n_P=n_Q=5) alternative, where changing a component df
@@ -32,7 +32,7 @@ closer to Wald than the complete Expanded Welch correction in the low-MI
 regimes that drive the main finding.
 
 The confirmatory run remains frozen. The Hutcheson comparison is explicitly
-labelled as a post-review explanatory follow-up and does not replace any of the
+labelled as a supplementary post-protocol study and does not replace any of the
 3,111 confirmatory configurations.
 
 ## Qualified or declined points

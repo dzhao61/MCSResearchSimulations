@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript | 68 pages | 109 pages |
+| Current Welch-MI manuscript | 69 pages | 111 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -108,7 +108,7 @@ on the declaration outstanding.** T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-revised 109-page PDF builds without undefined references, citations or overfull
+revised 111-page PDF builds without undefined references, citations or overfull
 boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 35 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
@@ -118,13 +118,13 @@ accounts for all 4,001 display slots, 3,111 unique configurations, 534
 population pairs and 62,220,000 sampled table pairs. T5 regenerates and checks
 all 22 confirmatory thesis figures against independently selected source rows,
 verifies every reported result in Chapter 6, and retains all individual regimes
-in the companion atlas. The post-review check adds one explanatory figure and
+in the companion atlas. The supplementary mechanism check adds one explanatory figure and
 an exact table of all 108 main nulls without changing the frozen run. T6 records
 a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 109-page A4 manuscript from the active source, with
+T7 then built the final 111-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
-boxes. All 100 tests and the complete evidence audit pass. The previously
+boxes. All 101 tests and the complete evidence audit pass. The previously
 reviewed pages and all pages changed or added by the follow-up have been
 inspected at final size. The final PDF, source archive and
 experimental supplement are assembled under `deliverables/`; T8 can close

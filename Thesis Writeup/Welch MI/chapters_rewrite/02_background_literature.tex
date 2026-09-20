@@ -71,7 +71,7 @@ The quantity is nonnegative and equals zero exactly when
 
 Equation~\eqref{eq:background-mi} is also the Kullback--Leibler divergence
 between the joint distribution and the product of its margins. MI therefore
-measures the overall departure from independence rather than one particular
+measures the overall departure from independence, not one particular
 shape of association.
 
 This scalar summary deliberately discards much of the information in the
@@ -157,7 +157,7 @@ Bias matters directly when comparing two populations. If
   \frac{(r-1)(c-1)}{2}
   \left(\frac{1}{n_P}-\frac{1}{n_Q}\right).
 \end{equation}
-Removing the leading term is therefore part of the effect estimate rather than
+Removing the leading term is therefore part of the effect estimate, not
 an optional refinement of its reference distribution.
 
 \section{First-order inference for nonlinear functionals}
@@ -278,20 +278,31 @@ The same principle extends beyond ordinary sample variances.
 \citet{panwall2002} account for variability in sandwich variance estimates
 using approximate Student and $F$ references. \citet{bell2002} use
 Satterthwaite moment matching for regression variance estimates under
-multi-stage sampling and discuss excessive conservatism at small effective
-degrees of freedom. \citet{kauermann2001} examine the variability and
-efficiency of sandwich covariance estimation. Related adjustments and practical
-guidance are given by \citet{fay2001} and \citet{imbens2016}. These are close
+multi-stage sampling after showing that traditional linearisation estimators
+can have substantial negative bias. \citet{kauermann2001} examine the
+variability and efficiency of sandwich covariance estimation and propose an
+adjustment for the resulting confidence-interval undercoverage. Related
+adjustments and practical guidance are given by \citet{fay2001} and
+\citet{imbens2016}. These are close
 methodological precedents: estimating the variability of a variance estimator
 and using it in a finite-sample reference are established strategies. The
 present task is to derive the required inputs for the complete discrete MI
 functional and assess whether the resulting reference is useful.
 
+The direction of the finite-sample problem is nevertheless different here.
+The cited regression corrections respond to underestimated uncertainty or
+anti-conservative coverage, so a larger variance estimate or heavier-tailed
+reference can move inference in the required direction. Near independence,
+the MI calculation instead gives
+\(\E\widehat V\approx V+d/n\): the plug-in variance is shifted upward. A
+heavier-tailed Student reference then reinforces, rather than offsets, the
+resulting conservatism.
+
 \section{Prior MI inference and related comparisons}
 
 MI uncertainty also has a broader literature than its leading normal
-approximation. \citet{roulston1999} derive entropy and MI error estimates
-using error propagation and examine them numerically. \citet{hutter2002}
+approximation. \citet{roulston1999} derives entropy and MI error estimates
+using error propagation and examines them numerically. \citet{hutter2002}
 and \citet{hutterzaffalon2005} derive moments of the posterior distribution
 of MI under a Dirichlet model, including higher-order variance and shape
 information. Their posterior uncertainty has a different conditioning from
@@ -308,7 +319,9 @@ Student reference, using
        {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
   \label{eq:hutcheson-df}
 \end{equation}
-as its effective degrees of freedom \citep{hutcheson1970}. Thus each component
+as its effective degrees of freedom \citep{hutcheson1970}. Here each of
+\(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
+corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\). Applying the same assignment to the
 two MI variance contributions gives a clear historical baseline. It does not,
 however, derive how the plug-in MI variance itself fluctuates: MI depends on a

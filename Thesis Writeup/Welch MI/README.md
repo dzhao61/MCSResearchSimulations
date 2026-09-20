@@ -30,13 +30,13 @@ CSVs with:
 
 ```bash
 MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python figures_rewrite/make_figures.py
+  python figures_rewrite/make_figures.py
 ```
 
 From this thesis directory, build the PDF with:
 
 ```bash
-/Library/TeX/texbin/latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
 The 35 actively cited and source-audited bibliography records are stored in
@@ -59,7 +59,7 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `frontmatter/`: title page, declaration, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
 - `appendices_rewrite/`: active derivations, exact design grids and evidence index.
-- `appendices_rewrite/F_mechanism_checks.tex`: post-review independent-SD,
+- `appendices_rewrite/F_mechanism_checks.tex`: supplementary independent-SD,
   degree-of-freedom and ablation checks, plus all 108 main null rates.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
 - `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.

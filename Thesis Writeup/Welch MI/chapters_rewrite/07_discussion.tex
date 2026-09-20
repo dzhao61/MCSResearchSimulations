@@ -17,7 +17,7 @@ derivative includes changes to row and column margins, not just to the
 selected cell. Its sampling variance supplies the component degrees of
 freedom used in Satterthwaite moment matching. These derivative and
 moment-matching steps define a reproducible statistic. The final Student
-reference remains a working approximation rather than an exact
+reference remains a working approximation, not an exact
 finite-sample theorem for MI\@.
 
 The second question concerned false positives, detection and validity.
@@ -39,7 +39,10 @@ the target MI difference is held fixed. The construction comparison is
 particularly instructive: equal margins and MI do not determine the table's
 complete sampling distribution. A scalar target is useful for organising
 experiments, but cannot guarantee identical difficulty across distinct
-population tables.
+population tables. The \(8\times8\) imbalance check adds a related warning:
+when \(d\) is large and one sample remains small, the leading bias correction
+itself can be under substantial finite-sample stress. Changing only the
+reference distribution cannot repair that shared numerator problem.
 
 The fourth question concerned sample size and computation. For the tested
 first-block positive-MI populations with true MI 0.02, both null rates are
@@ -60,6 +63,13 @@ rejection whether the Wald rate is too high or already too low. It is not an
 adaptive calibration method that can move the threshold in both directions.
 It also does not alter the leading bias correction or re-estimate the
 numerator's finite-sample distribution.
+
+This direction contrasts with the regression settings that motivate several
+Satterthwaite precedents. There, downward-biased uncertainty estimates or
+undercoverage call for a correction that makes rejection harder. Near MI
+independence, however, \(\E\widehat V\approx V+d/n\), so estimated uncertainty
+is already shifted upward; adding a heavier-tailed reference compounds the
+conservatism instead of correcting it.
 
 The estimated numerator and denominator come from the same count tables.
 Independence of the \(P\) and \(Q\) \emph{samples} allows their variance
@@ -144,7 +154,7 @@ Selecting between the methods after inspecting a single p-value is not a
 validated selection rule.
 
 Several limitations bound this conclusion. The population families are
-deliberately constructed fixed examples rather than a probability sample of
+deliberately constructed fixed examples, not a probability sample of
 all joint distributions. Twenty thousand replicates make a rate at a fixed
 population relatively precise; they do not make the 534 selected population
 pairs representative of every application. The tables are at most

@@ -25,7 +25,7 @@ These are \emph{probability} tables, not observed counts. Their target MI
 values are 0.02 and 0.03 nats, so the true magnitude of the difference is
 0.01 nats. Sampling new count tables changes the estimated MI values, but
 does not move this fixed population pair to a new horizontal-axis location.
-The stored unrounded probabilities, rather than the rounded display in
+Calculations use the stored unrounded probabilities; the rounded display in
 Equation~\eqref{eq:design-example-pair}, determine the samples.
 
 \section{Constructing fixed joint distributions}
@@ -53,7 +53,7 @@ matrix specifies a \(2\times2\) test and a localised change in a larger
 table; only its embedding differs. This follows the minimal four-violation
 sparse alternative used by \citet[Section~3(b)]{berrett2021}. Here it is adapted to compare two fixed
 populations: their margins are prescribed separately and the perturbation
-strength is chosen to attain a specified MI rather than used directly as the
+strength is chosen to attain a specified MI and is not used directly as the
 horizontal-axis effect.
 
 The largest nonnegative strength before a cell with \(H_{ij}<0\) reaches zero

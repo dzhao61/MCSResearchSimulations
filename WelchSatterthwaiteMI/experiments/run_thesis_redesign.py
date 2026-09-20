@@ -356,10 +356,13 @@ def main() -> None:
         return
 
     started = utc_now()
-    display, configurations, populations, arrays = build_manifests(protocol)
-    failures = pd.DataFrame()
+    display, configurations, populations_or_failures, arrays = build_manifests(protocol)
     if configurations.empty:
-        _, _, failures, _ = build_manifests(protocol)
+        populations = pd.DataFrame()
+        failures = populations_or_failures
+    else:
+        populations = populations_or_failures
+        failures = pd.DataFrame()
     if args.smoke:
         selected = smoke_configuration_ids(display)
         configurations = configurations[configurations["configuration_id"].isin(selected)].copy()

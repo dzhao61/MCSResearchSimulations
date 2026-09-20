@@ -2,10 +2,10 @@
 
 This archive contains the frozen confirmatory protocol, implementation,
 consolidated results, individual-regime atlas and tests used by the thesis.
-It also contains the separately labelled post-review mechanism check under
+It also contains the separately labelled supplementary mechanism check under
 `results/thesis_mechanism_check/`; that check does not modify the frozen run.
-It deliberately omits the 3,111 transient checkpoint files because the
-consolidated result tables contain every reported outcome.
+The 3,111 individual checkpoint files are included alongside the consolidated
+tables so each configuration can be inspected directly.
 
 ## Environment
 
@@ -85,8 +85,18 @@ independent pilot for each of 169 nulls.
 The saved `run_metadata.json` records the exact source hashes used for the
 confirmatory run. The protocol, simulation core, test implementation, and
 imported statistical dependencies still match those hashes. The bundled
-orchestration runner has since gained only atlas-count metadata and hashes for
-saved outputs; its population construction and simulation path are unchanged.
+orchestration runner has since gained atlas-count metadata, hashes for saved
+outputs on future runs, and one-pass handling of a failed preflight. Its
+population construction, simulation, and method-evaluation path are unchanged.
+The recorded runner SHA-256 is
+`42c0ef36f46c88e7828a628ee68fbeb18dbde5d978291d849dc4847c2b857908`;
+the supplied runner SHA-256 is
+`0fd0247da05e5bea92e4f56c9956b0671ae93244a4e433c421ccf53aac8095bf`.
+The historical metadata are intentionally not rewritten. Their figure count
+of 99 refers to primary atlas figures; the later report and preflight records
+add seven companion calibration zooms, giving 106 files in total. The original
+metadata predate per-output hashes, so `SHA256SUMS.txt` authenticates the
+delivered archives and the verification scripts check their internal evidence.
 
 ## Use with the thesis source archive
 

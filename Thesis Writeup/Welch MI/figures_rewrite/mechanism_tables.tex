@@ -13,16 +13,16 @@ $n$ & $R$ & Wald & MC SD & First-order SD\\
 \end{table}
 \begin{table}[htbp]
 \centering\small
-\caption{Variance and component-df diagnostics for the same populations. The population first-order df is $2nV^2/\tau^2$; plug-in is its median over evaluation tables; MC is $2\overline{\widehat V}^{2}/s^2_{\widehat V}$ from the independent pilot.}
+\caption{Variance and component-df diagnostics for the same populations. First order is $2nV^2/\tau^2$; local moments is $(nV+d)^2/(2nV+d)$; plug-in is the median first-order estimate over evaluation tables; MC is $2\overline{\widehat V}^{2}/s^2_{\widehat V}$ from the independent pilot.}
 \label{tab:component-check}
-\begin{tabular}{rlrrrr}
+\begin{tabular}{rlrrrrr}
 \toprule
-$n$ & Population & $\E\widehat V/V$ & First order & Plug-in & MC\\
+$n$ & Population & $\E\widehat V/V$ & First order & Local moments & Plug-in & MC\\
 \midrule
-100 & P & 1.75 & 1.73 & 3.14 & 4.84 \\
-100 & Q & 1.63 & 1.51 & 2.43 & 3.77 \\
-1000 & P & 1.09 & 17.26 & 18.82 & 20.52 \\
-1000 & Q & 1.08 & 15.08 & 16.52 & 17.56 \\
+100 & P & 1.75 & 1.73 & 5.55 & 3.14 & 4.84 \\
+100 & Q & 1.63 & 1.51 & 5.77 & 2.43 & 3.77 \\
+1000 & P & 1.09 & 17.26 & 25.42 & 18.82 & 20.52 \\
+1000 & Q & 1.08 & 15.08 & 27.86 & 16.52 & 17.56 \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,4 +1,4 @@
-"""Post-review diagnostics; never modifies the frozen confirmatory results."""
+"""Supplementary diagnostics; never modifies the frozen confirmatory results."""
 from __future__ import annotations
 
 import argparse
@@ -92,6 +92,7 @@ def main():
     source = ROOT / "results/thesis_redesign"
     output = ROOT / ("results/thesis_mechanism_smoke" if args.smoke else "results/thesis_mechanism_check")
     output.mkdir(parents=True, exist_ok=True)
+    alpha = float(json.loads((source / "protocol.json").read_text())["alpha"])
     display = pd.read_csv(source / "display_manifest.csv")
     chosen = display.loc[
         display.section.eq("main")
@@ -114,8 +115,8 @@ def main():
         info["section"] = selected.section
         for method in methods:
             valid = draws[method].notna().to_numpy()
-            reject = draws[method].lt(.05).to_numpy() & valid
-            paired = reject.astype(float) - draws.normal_wald.lt(.05).to_numpy()
+            reject = draws[method].le(alpha).to_numpy() & valid
+            paired = reject.astype(float) - draws.normal_wald.le(alpha).to_numpy()
             rates.append(dict(info, method=method, replicates=args.replicates,
                 rejected=int(reject.sum()), valid=int(valid.sum()), rate=reject.mean(),
                 valid_rate=valid.mean(), rate_mcse=np.sqrt(reject.mean()*(1-reject.mean())/args.replicates),

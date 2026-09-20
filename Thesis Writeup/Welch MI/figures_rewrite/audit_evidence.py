@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import hashlib
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -238,7 +239,7 @@ def main() -> None:
         equal(-row.paired_95_low, high)
 
     display_results = DISPLAY.merge(
-        CELLS[["configuration_id", "method", "unconditional_rejection_rate"]],
+        CELLS[["configuration_id", "method", "unconditional_rejection_rate", "valid_rate"]],
         on="configuration_id",
         validate="many_to_many",
     )
@@ -248,20 +249,57 @@ def main() -> None:
     paired = null_main.pivot(index="configuration_id", columns="method", values="unconditional_rejection_rate")
     specs = DISPLAY.loc[
         DISPLAY.section.eq("main") & DISPLAY.mi_difference.eq(0),
-        ["configuration_id", "n_p"],
+        ["configuration_id", "n_p", "shape", "profile"],
     ].drop_duplicates().set_index("configuration_id")
     paired = paired.join(specs, validate="one_to_one")
-    early = paired.loc[paired.n_p.isin([5, 10, 20])]
+    smallest = paired.loc[paired.n_p.eq(5)]
+    early = paired.loc[paired.n_p.isin([10, 20])]
     late = paired.loc[paired.n_p.isin([500, 1000])]
-    assert len(early) == 36 and len(late) == 24
+    assert len(smallest) == 12 and len(early) == 24 and len(late) == 24
+    assert smallest.expanded_welch.eq(0).all()
     early_expanded_closer = (
         (early.expanded_welch - .05).abs() < (early.normal_wald - .05).abs()
+    ).sum()
+    early_wald_closer = (
+        (early.normal_wald - .05).abs() < (early.expanded_welch - .05).abs()
     ).sum()
     late_wald_closer = (
         (late.normal_wald - .05).abs() < (late.expanded_welch - .05).abs()
     ).sum()
-    assert early_expanded_closer == 26
+    assert early_expanded_closer == 15 and early_wald_closer == 9
     assert late_wald_closer == 24
+
+    smallest_expanded = null_main.loc[
+        null_main.n_p.eq(5) & null_main.method.eq("expanded_welch")
+    ]
+    equal(smallest_expanded.valid_rate.min(), 0.20820)
+    equal(smallest_expanded.valid_rate.max(), 0.99085)
+    uniform_larger_shapes = smallest_expanded.loc[
+        smallest_expanded.profile.eq("uniform")
+        & smallest_expanded["shape"].isin(["3x3", "5x5", "8x8"])
+    ]
+    assert len(uniform_larger_shapes) == 3
+    assert uniform_larger_shapes.valid_rate.gt(.9).all()
+
+    expected_null_summary = {
+        ("uniform", "normal_wald"): (10, 18, 8, 4),
+        ("uniform", "expanded_welch"): (19, 16, 1, 5),
+        ("same_skew", "normal_wald"): (14, 15, 7, 8),
+        ("same_skew", "expanded_welch"): (25, 11, 0, 12),
+        ("different_skew", "normal_wald"): (9, 16, 11, 8),
+        ("different_skew", "expanded_welch"): (19, 13, 4, 12),
+    }
+    for (profile, method), expected in expected_null_summary.items():
+        rows = null_main.loc[
+            null_main.profile.eq(profile) & null_main.method.eq(method)
+        ]
+        observed = (
+            int((rows.unconditional_rejection_rate < .025).sum()),
+            int(rows.unconditional_rejection_rate.between(.025, .075).sum()),
+            int((rows.unconditional_rejection_rate > .075).sum()),
+            int((rows.valid_rate < .9).sum()),
+        )
+        assert observed == expected
 
     main_thousand = null_main.loc[null_main.n_p.eq(1000)]
     for method, expected_range in {
@@ -403,36 +441,109 @@ def main() -> None:
         assert figure["sections"] == sorted(expected_rows.section.unique().tolist())
         assert figure["source_files"] == ["display_manifest.csv", "cell_results.csv"]
         assert figure["rate_column"] == "unconditional_rejection_rate"
-        assert figure["denominator"] == 20000
+        assert figure["denominator"] == int(protocol["replicates"])
         pdf = HERE / Path(figure["file"]).name
         assert pdf.is_file() and pdf.stat().st_size > 5000
         assert pdf.read_bytes()[:5] == b"%PDF-"
 
         plotted = CELLS.loc[CELLS.configuration_id.isin(expected_ids)]
         assert len(plotted) == 2 * len(expected_ids)
-        assert plotted.replicates.eq(20000).all()
+        assert plotted.replicates.eq(int(protocol["replicates"])).all()
         assert plotted.method.groupby(plotted.configuration_id).nunique().eq(2).all()
         assert plotted.unconditional_rejection_rate.between(0, 1).all()
         assert plotted.valid_rate.between(0, 1).all()
 
-    expected_macro_lines = [
-        "% Generated from results/thesis_redesign/cell_results.csv; do not edit values by hand.",
-    ]
+    macro_text = (HERE / "evidence_values.tex").read_text()
+    assert macro_text.startswith(
+        "% Generated from results/thesis_redesign/cell_results.csv; do not edit values by hand.\n"
+    )
+    macros = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", macro_text))
+
+    def macro(name: str, value: float | int, digits: int | None = None) -> None:
+        expected = str(int(value)) if digits is None else f"{float(value):.{digits}f}"
+        assert macros[name] == expected, (name, macros.get(name), expected)
+
     for name, configuration_id in {
         "EightUniformTwenty": "config_313a5e5c05280f9e",
         "TwoUniformThousand": "config_700945d218841f2e",
         "EightSparseFiveAlternative": "config_e9b5baebbe3f5535",
     }.items():
         for method, stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
-            expected_macro_lines.append(
-                f"\\newcommand{{\\{name}{stem}Rate}}"
-                f"{{{result(configuration_id, method, 'unconditional_rejection_rate'):.5f}}}"
+            macro(
+                f"{name}{stem}Rate",
+                result(configuration_id, method, "unconditional_rejection_rate"),
+                5,
             )
-            expected_macro_lines.append(
-                f"\\newcommand{{\\{name}{stem}Valid}}"
-                f"{{{result(configuration_id, method, 'valid_rate'):.5f}}}"
+            macro(
+                f"{name}{stem}Valid",
+                result(configuration_id, method, "valid_rate"),
+                5,
             )
-    assert (HERE / "evidence_values.tex").read_text() == "\n".join(expected_macro_lines) + "\n"
+    macro("MainFiveNullCount", len(smallest))
+    macro("MainTenTwentyNullCount", len(early))
+    macro("MainTenTwentyExpandedCloserCount", early_expanded_closer)
+    macro("MainTenTwentyWaldCloserCount", early_wald_closer)
+    macro("MainLateNullCount", len(late))
+    macro("MainLateWaldCloserCount", late_wald_closer)
+    for method, stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
+        values = main_thousand.loc[
+            main_thousand.method.eq(method), "unconditional_rejection_rate"
+        ]
+        macro(f"MainThousand{stem}MinRate", values.min(), 4)
+        macro(f"MainThousand{stem}MaxRate", values.max(), 4)
+
+    for baseline, stem in ((0.0001, "Tiny"), (0.001, "Small"), (0.02, "Regular")):
+        rows = selected_results(
+            "baseline", shape="3x3", profile="different_skew",
+            baseline_mi=baseline, n_p=100, n_q=100, mi_difference=0.0,
+        )
+        macro(f"Baseline{stem}WaldRate", claim_value(rows, "normal_wald"), 4)
+        macro(f"Baseline{stem}ExpandedRate", claim_value(rows, "expanded_welch"), 4)
+    for pattern, stem in (("first", "First"), ("rare", "Rare"), ("spread", "Spread")):
+        rows = selected_results(
+            "patterns", shape="5x5", profile="different_skew", pattern=pattern,
+            baseline_mi=0.0001, n_p=100, n_q=100, mi_difference=0.0,
+        )
+        macro(f"Pattern{stem}WaldRate", claim_value(rows, "normal_wald"), 4)
+        macro(f"Pattern{stem}ExpandedRate", claim_value(rows, "expanded_welch"), 4)
+    for direction, stem in (("q_higher", "QHigher"), ("p_higher", "PHigher")):
+        rows = selected_results(
+            "imbalance", shape="3x3", profile="different_skew", n_p=50, n_q=250,
+            mi_direction=direction, mi_difference=0.02,
+        )
+        macro(f"Imbalance{stem}WaldRate", claim_value(rows, "normal_wald"), 4)
+        macro(f"Imbalance{stem}ExpandedRate", claim_value(rows, "expanded_welch"), 4)
+    for constructor, stem in (("additive", "Additive"), ("loglinear", "Loglinear")):
+        rows = selected_results(
+            "construction", shape="5x5", profile="different_skew",
+            constructor=constructor, baseline_mi=0.02, n_p=100, n_q=100,
+            mi_difference=0.0,
+        )
+        macro(f"Construction{stem}WaldRate", claim_value(rows, "normal_wald"), 4)
+        macro(f"Construction{stem}ExpandedRate", claim_value(rows, "expanded_welch"), 4)
+    for n_q, stem in ((50, "EqualSmall"), (500, "QFiveHundred")):
+        rows = selected_results(
+            "imbalance", shape="8x8", profile="uniform", n_p=50, n_q=n_q,
+            mi_difference=0.0,
+        )
+        macro(f"ImbalanceEight{stem}WaldRate", claim_value(rows, "normal_wald"), 4)
+        macro(f"ImbalanceEight{stem}ExpandedRate", claim_value(rows, "expanded_welch"), 4)
+        assert rows.valid_rate.eq(1).all()
+    macro("ImbalanceEightCorrectionOffset", abs(49 / (2 * 50) - 49 / (2 * 500)), 3)
+    manuscript = (HERE.parent / "chapters_rewrite/06_results.tex").read_text()
+    used_generated = set(re.findall(r"\\([A-Z][A-Za-z0-9]+(?:Rate|Valid|Count|Median|Offset))", manuscript))
+    assert used_generated <= macros.keys(), sorted(used_generated - macros.keys())
+
+    null_band = (HERE / "null_band_summary.tex").read_text()
+    for profile, method, expected in (
+        ("Uniform", "Normal Wald", (10, 18, 8, 4)),
+        ("Uniform", "Expanded Welch", (19, 16, 1, 5)),
+        ("Same skew", "Normal Wald", (14, 15, 7, 8)),
+        ("Same skew", "Expanded Welch", (25, 11, 0, 12)),
+        ("Different skew", "Normal Wald", (9, 16, 11, 8)),
+        ("Different skew", "Expanded Welch", (19, 13, 4, 12)),
+    ):
+        assert f"{profile} & {method} & {' & '.join(map(str, expected))} \\\\" in null_band
 
     mechanism_rates = pd.read_csv(MECHANISM / "ablation_rates.csv")
     mechanism_diagnostics = pd.read_csv(MECHANISM / "denominator_diagnostics.csv")
@@ -460,12 +571,49 @@ def main() -> None:
     equal(mechanism_anchor.population_first_order_sd_rate, 0.09760)
     equal(mechanism_anchor.mean_se2_over_empirical_var, 1.169852, tolerance=5e-7)
     equal(mechanism_anchor.empirical_var_over_first_order, 1.424926, tolerance=5e-7)
+    representative = mechanism_components.loc[
+        mechanism_components.configuration_id.isin([
+            "config_f67e74127a56dc37",
+            "config_1b6b2afc5ccb1291",
+        ])
+    ].copy()
+    assert len(representative) == 4
+    interaction_df = 4
+    representative_sample_size = representative.n_p.where(
+        representative.population.eq("p"), representative.n_q
+    )
+    representative["local_moment_df"] = (
+        (representative_sample_size * representative.v + interaction_df) ** 2
+        / (2 * representative_sample_size * representative.v + interaction_df)
+    )
+    expected_local = {
+        (100, "p"): 5.54624,
+        (100, "q"): 5.76934,
+        (1000, "p"): 25.41624,
+        (1000, "q"): 27.86032,
+    }
+    for row in representative.itertuples():
+        equal(row.local_moment_df, expected_local[(row.n_p, row.population)], tolerance=5e-5)
+    unequal_components = mechanism_components.loc[
+        mechanism_components.n_p.ne(mechanism_components.n_q)
+    ].copy()
+    unequal_sample_size = unequal_components.n_p.where(
+        unequal_components.population.eq("p"), unequal_components.n_q
+    )
+    unequal_shape = unequal_components["shape"].str.extract(r"(\d+)x(\d+)").astype(int)
+    unequal_d = (unequal_shape[0] - 1) * (unequal_shape[1] - 1)
+    unequal_components["local_moment_df"] = (
+        (unequal_sample_size * unequal_components.v + unequal_d) ** 2
+        / (2 * unequal_sample_size * unequal_components.v + unequal_d)
+    )
+    assert len(unequal_components) == 12
+    assert unequal_components.local_moment_df.notna().all()
     assert (HERE / "mechanism_ablation.pdf").read_bytes()[:5] == b"%PDF-"
     null_table = (HERE / "main_null_table.tex").read_text()
     shape_prefixes = ("2x2 &", "3x3 &", "5x5 &", "8x8 &")
     assert sum(line.startswith(shape_prefixes) for line in null_table.splitlines()) == 108
 
-    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 confirmatory figures, post-review diagnostics, nested rejections, convergence and runtime")
+    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 confirmatory figures, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
 
 
 if __name__ == "__main__":

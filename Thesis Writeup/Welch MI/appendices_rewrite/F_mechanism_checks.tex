@@ -1,4 +1,4 @@
-\chapter{Post-review Mechanism Checks}
+\chapter{Supplementary Mechanism Checks}
 \label{app:mechanism}
 
 This appendix reports an explanatory follow-up performed after the
@@ -28,13 +28,15 @@ standardised empirical interaction is approximately
   \sqrt n\,\widehat u \approx \sqrt n\,u+Z,
   \qquad Z\sim N_d(0,I_d).
 \end{equation}
-Locally, \(\lVert u\rVert^2\approx 2I\approx V\). Hence the quadratic
+Locally, \(\lVert u\rVert^2\approx V\approx 2I\). Hence the quadratic
 quantity
 \begin{equation}
   R=\lVert\sqrt n\,u+Z\rVert^2
 \end{equation}
 is approximately noncentral chi-squared with \(d\) degrees of freedom and
-noncentrality \(nV\), while \(2n\widehat I\approx R\) and
+local noncentrality
+\(\lambda=n\lVert u\rVert^2\approx nV\approx2nI\), while
+\(2n\widehat I\approx R\) and
 \(\widehat V\approx R/n\). The standard moments
 \(\E R=d+nV\) and \(\Var(R)=2d+4nV\) then give
 \begin{align}
@@ -72,15 +74,16 @@ closer. Thus denominator estimation is an important mechanism in this
 example, but the evidence does not support treating it as the only one.
 
 Table~\ref{tab:component-check} makes the degree-of-freedom distinction
-explicit. At \(n=100\), the population first-order component values are 1.73
-and 1.51, whereas moment matching the simulated \(\widehat V\) gives 4.84
-and 3.77. The variance approximation
-\(\Var(\widehat V)\approx\tau^2/n\) is already within about 10\%; much of the
-remaining degree-of-freedom difference comes from the upward shift in
-\(\E\widehat V\). By \(n=1000\), all three component calculations are much
-closer. A finite-difference derivative check validates the formula for
-\(\tau^2\), but only this repeated-sampling check assesses whether its
-first-order moment approximation is accurate.
+explicit. At \(n=100\), the local-moment predictions are 5.55 for \(P\) and
+5.77 for \(Q\), compared with Monte Carlo values 4.84 and 3.77. They are
+closer than the population first-order values 1.73 and 1.51, although the
+plug-in median is closer for \(Q\). At \(n=1000\), the local predictions
+25.42 and 27.86 overshoot the Monte Carlo values 20.52 and 17.56; the
+first-order and plug-in values are then closer. This loss of accuracy is
+unsurprising because \(V\approx2I\) and \(\tau^2\approx4V\) are local, not
+exact, relations at \(I=0.02\). A finite-difference check validates the
+derivative formula for \(\tau^2\), but only this repeated-sampling check
+assesses the accuracy of the moment approximations.
 
 \section{Ablations of the degrees of freedom}
 

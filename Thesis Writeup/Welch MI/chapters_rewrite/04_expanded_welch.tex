@@ -342,7 +342,7 @@ population component degree of freedom
   }.
   \label{eq:population-component-df}
 \end{equation}
-Equation~\eqref{eq:population-component-df} depends on relative, rather than
+Equation~\eqref{eq:population-component-df} depends on relative, not
 absolute, uncertainty. Since
 \begin{equation}
   \frac{\Var\{\Vhat(P)\}}{V(P)^2}
@@ -425,15 +425,8 @@ The expanded two-sided p-value is
   \label{eq:expanded-p}
 \end{equation}
 where $F_{t_\nu}$ denotes the cumulative distribution function of a Student
-$t$ variable with $\nu$ degrees of freedom. The corresponding working
-confidence interval is
-\begin{equation}
-  \Deltahat
-  \ \pm\
-  t_{\widehat\nu_{\mathrm{expanded}},1-\alpha/2}\SEhat.
-  \label{eq:expanded-ci}
-\end{equation}
-Here $t_{\nu,\gamma}$ is the $\gamma$ quantile of that Student distribution.
+$t$ variable with $\nu$ degrees of freedom. As with Wald, only test behaviour
+is evaluated; no confidence-interval coverage claim is made.
 
 The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
 \(T\). It changes only the quantile used to evaluate that statistic.
@@ -529,7 +522,7 @@ Step & Calculation \\
 4 & Compute the row and column pointwise-MI means needed in \(\widehat g_P\) and \(\widehat g_Q\). \\
 5 & Compute \(\widehat\tau^2(P)\), \(\widehat\tau^2(Q)\), and the two component degrees of freedom. \\
 6 & Combine the components using Equation~\eqref{eq:expanded-df}. \\
-7 & Return the Student p-value, effective degrees of freedom, and validity diagnostics. Equation~\eqref{eq:expanded-ci} gives an interval if required. \\
+7 & Return the Student p-value, effective degrees of freedom, and validity diagnostics. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -570,7 +563,9 @@ These relations explain why low baseline MI can produce a large Student
 adjustment. They also reveal a limit to its first-order justification.
 In the local Gaussian approximation to multinomial errors, the quadratic
 interaction statistic has a noncentral chi-squared form with
-\(d=(r-1)(c-1)\) coordinates and noncentrality approximately \(2nI(P)\).
+\(d=(r-1)(c-1)\) coordinates and local noncentrality
+\(\lambda\approx nV(P)\approx2nI(P)\). The last equivalence uses the local
+relation \(V(P)\approx2I(P)\); it is not exact away from independence.
 Retaining the linear and quadratic error terms then gives the local formulas
 \begin{align}
  \E\Vhat&\approx V+\frac d n,&
@@ -590,9 +585,9 @@ The estimated variance of MI can therefore be too large even when the
 numerator's sampling variance also exceeds its first-order value. Changing
 to a Student reference lowers rejection further. To neglect the quadratic
 terms in this local model requires \(nV\) large relative to \(d\), not just
-a large total sample size. This is a warning about using first-order moment
-matching near independence, rather than a proof that small degrees of
-freedom can never be useful.
+a large total sample size. This warns against first-order moment matching near
+independence; it does not prove that small degrees of freedom can never be
+useful.
 
 \section{Theoretical status}
 
@@ -603,7 +598,7 @@ first-order asymptotic linear representations.
 
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and the
 final Student reference are working approximations. They match the first two
-moments of the estimated variance rather than providing an exact finite-sample
+moments of the estimated variance and do not provide an exact finite-sample
 law. Moreover, \(\Ihat(P)\) and \(\Vhat(P)\) use the same observations; their
 first-order covariance is generally
 \(\E_P[\{\pmi_P(X,Y)-I(P)\}g_P(X,Y)]/n_P\), not zero. Moment matching
@@ -620,6 +615,6 @@ each table. Wald is then valid only when the corrected difference and standard
 error are finite and $\Vhat(P)+\Vhat(Q)>10^{-14}$. Expanded Welch
 additionally requires positive finite
 component and combined degrees of freedom. Failed conditions are recorded as
-invalid calculations rather than silently replaced by a different test. The
+invalid calculations; no different test is silently substituted. The
 validation in Chapters~\ref{chap:design} and~\ref{chap:results} evaluates how often these conditions
 occur and whether the finite-sample correction improves calibration.
