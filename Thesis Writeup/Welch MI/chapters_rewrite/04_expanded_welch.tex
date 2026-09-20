@@ -296,8 +296,8 @@ g_P(x,y)
 \label{eq:g-final}
 \end{equation}
 The first line is the change that would arise from the centred squared
-pointwise-MI value. The remaining terms account for the row and column margins
-that change with the selected cell.
+pointwise-MI value. The bracket accounts for changes in the pointwise-MI
+values themselves, including the selected joint probability and both margins.
 
 \section{Sampling variance of the MI variance estimator}
 
@@ -308,6 +308,11 @@ Define the population variability of the observation-level sensitivities by
 \end{equation}
 The mean of an influence function is zero. Centring explicitly gives the same
 variance if numerical substitution produces a small nonzero mean.
+
+\begin{assumption}[Regular variance sensitivity]
+For the first-order Expanded Welch construction,
+\(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
+\end{assumption}
 
 A first-order Taylor expansion of the variance functional around $P$ is
 \begin{equation}
@@ -374,7 +379,8 @@ each occupied cell,
 \end{aligned}
 \label{eq:g-hat}
 \end{equation}
-The empirical mean and variance of these cell sensitivities are
+In all weighted sums, an empty cell contributes zero; no logarithm or
+sensitivity needs to be evaluated there. The empirical mean and variance are
 \begin{align}
   \overline g_P
   &=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),\\
@@ -435,12 +441,19 @@ The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
 \begin{proposition}[Nested rejection on common-valid samples]
 If the two calculations use the same finite statistic \(T\) and Expanded
 Welch has positive finite degrees of freedom, its two-sided p-value is at
-least the normal Wald p-value. Thus, at a common fixed threshold, every
+least the Normal Wald p-value. Thus, at a common fixed threshold, every
 Expanded Welch rejection is also a Wald rejection on samples where both are
 valid.
 \end{proposition}
-This follows because a Student distribution has heavier tails than the
-standard normal at a fixed positive threshold. The proposition does not
+\begin{proof}
+Write a Student variable as \(Z/\sqrt S\), with independent
+\(Z\sim N(0,1)\) and \(S\sim\chi^2_\nu/\nu\). For \(c>0\),
+\(f(s)=2\{1-\Phi(c\sqrt{s})\}\) has
+\(f''(s)=c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\).
+Since \(\E S=1\), Jensen's inequality gives
+\(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\). At \(c=0\) both tails equal one.
+\end{proof}
+The proposition does not
 classify samples on which one method is invalid. In particular, a correction
 that only changes the reference cannot raise rejection where Wald is already
 too conservative.
@@ -484,7 +497,7 @@ The empirical influence variances are
 \end{equation}
 Normal Wald gives \(p=0.14734\).
 
-For expanded Welch, the table-based sensitivity calculation first gives
+For Expanded Welch, the table-based sensitivity calculation first gives
 \(\widehat\tau^2(P)=0.93212\) and
 \(\widehat\tau^2(Q)=0.82035\). Substitution into
 Equation~\eqref{eq:nu-p-hat} gives component degrees of freedom
@@ -504,7 +517,7 @@ Table~\ref{tab:expanded-algorithm} summarises one complete comparison.
 
 \begin{table}[htbp]
 \centering
-\caption{Operational expanded Welch--Satterthwaite algorithm.}
+\caption{Operational Expanded Welch--Satterthwaite algorithm.}
 \label{tab:expanded-algorithm}
 \begin{tabularx}{\textwidth}{@{}cX@{}}
 \toprule
@@ -525,6 +538,61 @@ Each empirical probability, pointwise-MI value, row mean, column mean, and
 variance contribution is calculated by a fixed number of table scans. The
 time complexity is therefore \(O(rc)\), and the working memory is also
 \(O(rc)\). The method is deterministic once the two count tables are given.
+
+\section{Behaviour near independence}
+\label{sec:near-independence-mechanism}
+
+The size of the adjustment has a useful local explanation. Hold the positive
+margins fixed and write \(p_{ij}=a_{ij}+\epsilon h_{ij}\), where
+\(a_{ij}=p_{i+}p_{+j}\), the row and column sums of \(h\) vanish, and
+\(\epsilon\) tends to zero. With \(s_{ij}=h_{ij}/a_{ij}\), a second-order
+Taylor expansion gives
+\begin{align}
+ I(P)&=\tfrac12\epsilon^2\sum_{ij}a_{ij}s_{ij}^2+O(\epsilon^3),\\
+ V(P)&=\epsilon^2\sum_{ij}a_{ij}s_{ij}^2+O(\epsilon^3)
+       =2I(P)+O(\epsilon^3).
+\end{align}
+The row and column conditional means of the leading score
+\(\epsilon s_{ij}\) are zero. In Equation~\eqref{eq:g-final}, the bracket
+therefore contributes \(2\epsilon s_{ij}+O(\epsilon^2)\), whereas the
+centred squared term is only \(O(\epsilon^2)\). Consequently,
+\begin{equation}
+ \tau^2(P)=4V(P)+O(\epsilon^3),\qquad
+ \nu_P\approx\frac{n_PV(P)}{2}\approx n_PI(P).
+ \label{eq:near-independent-df}
+\end{equation}
+This is a population component approximation. The final two-sample degree
+of freedom still combines both components: for equal populations and equal
+sample sizes it is approximately \(2nI(P)\). A small population component
+also need not equal the median of its empirical plug-in estimate.
+
+These relations explain why low baseline MI can produce a large Student
+adjustment. They also reveal a limit to its first-order justification.
+In the local Gaussian approximation to multinomial errors, the quadratic
+interaction statistic has a noncentral chi-squared form with
+\(d=(r-1)(c-1)\) coordinates and noncentrality approximately \(2nI(P)\).
+Retaining the linear and quadratic error terms then gives the local formulas
+\begin{align}
+ \E\Vhat&\approx V+\frac d n,&
+ \Var(\Ihat)&\approx\frac V n+\frac d{2n^2},\\
+ \Var(\Vhat)&\approx\frac{4V}{n}+\frac{2d}{n^2},&
+ \nu_{\rm moments}&\approx\frac{(nV+d)^2}{2nV+d}.
+ \label{eq:local-variance-mechanism}
+\end{align}
+Here \(\nu_{\rm moments}=2\{\E\Vhat\}^2/\Var(\Vhat)\) includes the
+quadratic terms omitted by the first-order component formula. Appendix
+\ref{app:mechanism} derives these expressions and tests them numerically.
+They require fixed dimension, positive margins and an adequate Gaussian
+approximation to the cell counts; they are not universal finite-sample
+bias formulas for arbitrary MI or sparse support.
+
+The estimated variance of MI can therefore be too large even when the
+numerator's sampling variance also exceeds its first-order value. Changing
+to a Student reference lowers rejection further. To neglect the quadratic
+terms in this local model requires \(nV\) large relative to \(d\), not just
+a large total sample size. This is a warning about using first-order moment
+matching near independence, rather than a proof that small degrees of
+freedom can never be useful.
 
 \section{Theoretical status}
 

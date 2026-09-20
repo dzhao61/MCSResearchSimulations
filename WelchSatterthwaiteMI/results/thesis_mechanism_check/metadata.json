@@ -1,0 +1,13 @@
+{
+  "status": "post-review explanatory follow-up",
+  "seed_scheme": "SHA256 mechanism-v1:configuration_id:phase, first 8 bytes",
+  "replicates_per_phase": 20000,
+  "configurations": 809,
+  "pilot_is_independent": true,
+  "source_sha256": {
+    "protocol.json": "a3ef38e10878c5e23fbfb7b97810d05efb1b1ed27e481d70c417721b6b01dc51",
+    "configuration_manifest.csv": "aa5acac8b71b371c4578b985450b3fdb04263db4fbfc935eb4f167712016dbdf",
+    "population_definitions.csv": "e8ce598f2c64105bc082702117338c8b8c595d92f28cf897f2421c8dd390516c"
+  },
+  "script_sha256": "6033961e4d1f4f4a9a5fd428b58332b9b6a469df8672bd29e70b71268ed30369"
+}

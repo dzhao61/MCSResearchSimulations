@@ -2,6 +2,8 @@
 
 This archive contains the frozen confirmatory protocol, implementation,
 consolidated results, individual-regime atlas and tests used by the thesis.
+It also contains the separately labelled post-review mechanism check under
+`results/thesis_mechanism_check/`; that check does not modify the frozen run.
 It deliberately omits the 3,111 transient checkpoint files because the
 consolidated result tables contain every reported outcome.
 
@@ -33,6 +35,7 @@ MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
   .venv/bin/python -m unittest \
   WelchSatterthwaiteMI.tests.test_thesis_redesign \
   WelchSatterthwaiteMI.tests.test_thesis_derivation_audit \
+  WelchSatterthwaiteMI.tests.test_thesis_mechanism_check \
   WelchSatterthwaiteMI.tests.test_welch
 ```
 
@@ -67,6 +70,17 @@ MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
 
 Stable configuration-specific seeds make the statistical outputs independent
 of worker completion order. Runtime measurements remain machine-dependent.
+
+To regenerate the mechanism-check report from its saved CSV files, run:
+
+```bash
+MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
+  .venv/bin/python WelchSatterthwaiteMI/experiments/report_thesis_mechanism_check.py
+```
+
+The full follow-up simulation can be reproduced with
+`run_thesis_mechanism_check.py`; it evaluates 809 configurations and uses an
+independent pilot for each of 169 nulls.
 
 The saved `run_metadata.json` records the exact source hashes used for the
 confirmatory run. The protocol, simulation core, test implementation, and

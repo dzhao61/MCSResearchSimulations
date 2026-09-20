@@ -3,7 +3,7 @@
 
 The main thesis concerns the regular weak null \(I(P)=I(Q)>0\). This appendix
 explains why constructing an independent reference distribution does not turn
-the expanded Welch method into a new first-order test of independence.
+the Expanded Welch method into a new first-order test of independence.
 
 \section{Constructing the independent reference}
 
@@ -54,7 +54,7 @@ The first-order variance also vanishes:
 \begin{equation}
   V(P)=\Var_P\{\pmi_P(X,Y)\}=0.
 \end{equation}
-The denominator used by normal Wald and expanded Welch is thus
+The denominator used by Normal Wald and Expanded Welch is thus
 degenerate under the population independence null. This does not mean that a
 finite sample must have zero plug-in MI or zero plug-in variance. Sampling
 noise usually makes the empirical table depart from exact independence. The
@@ -146,11 +146,18 @@ therefore produces a statistic with a non-vanishing scale:
 \end{equation}
 This is the usual likelihood-ratio, or $G$, test of independence under a fixed
 alphabet and the standard positive-support large-sample conditions
-\citep{brillinger2004}. The chi-squared reference describes the squared cell
+\citep{wilks1938,brillinger2004}. The chi-squared reference describes the squared cell
 errors in Equation~\eqref{eq:appendix-mi-second-order}. Expanded Welch instead
 standardises a signed first-order MI error on the $n^{-1/2}$ scale. At
 independence that signed term is absent, so its Student reference is not the
 chi-squared reference in another form.
+
+The same likelihood-ratio connection appears for conditional information
+measures. For finite Markov chains, \citet{barnett2012} relate transfer entropy
+to a log-likelihood ratio with an asymptotic chi-squared reference; the wider
+information-theoretic setting is reviewed by \citet{bossomaier2016}. This is an
+adjacent application of the same second-order likelihood principle, not a
+two-sample equal-MI Welch test.
 
 \section{What alternative constructions produce}
 
@@ -175,4 +182,4 @@ a calibrated null distribution.
 The independent reference $Q=P_XP_Y$ is therefore mathematically valid, but
 it does not create a regular two-sample MI comparison. Analytic improvement of
 the sparse independence test would require a second-order finite-sample
-method, rather than an immediate extension of the expanded Welch calculation.
+method, rather than an immediate extension of the Expanded Welch calculation.

@@ -50,9 +50,8 @@ and columns, where it is
 Thus \(t\) is added to the two diagonal cells and removed from the other two
 cells. The changes cancel within each affected row and column. The same
 matrix specifies a \(2\times2\) test and a localised change in a larger
-table; only its embedding differs. This four-cell perturbation is a standard
-sparse alternative in contingency-table simulation studies
-\citep[Section~3.2]{berrett2021}. Here it is adapted to compare two fixed
+table; only its embedding differs. This follows the minimal four-violation
+sparse alternative used by \citet[Section~3(b)]{berrett2021}. Here it is adapted to compare two fixed
 populations: their margins are prescribed separately and the perturbation
 strength is chosen to attain a specified MI rather than used directly as the
 horizontal-axis effect.
@@ -145,7 +144,7 @@ usable p-value. The saved data also give rejection conditional on each
 method's valid outputs and on the subset where both are valid. Those
 denominators answer different questions: conditioning each method on its own
 valid samples can change which tables are compared. For a single rate, saved
-Wilson 95\% intervals represent Monte Carlo uncertainty at the fixed
+Wilson 95\% intervals \citep{wilson1927} represent Monte Carlo uncertainty at the fixed
 population pair. Paired method differences use the same replicates and their
 saved paired standard errors. These intervals do not describe uncertainty
 over all possible population distributions.
@@ -164,7 +163,10 @@ Table~\ref{tab:design-families} records the question answered by each family.
 The common population construction above applies unless the named factor
 changes. Exact parameter sets are in Appendix~\ref{app:construction}, and the
 machine-readable protocol is identified in Appendix~\ref{app:reproducibility}.
-There are 3,111 unique statistical configurations but 4,001 display points:
+There are 534 distinct population pairs \((P,Q)\), each specifying two
+fixed joint probability tables. Reusing a pair at different sample sizes
+creates distinct sampling configurations. There are 3,111 unique statistical
+configurations but 4,001 display points:
 some configurations are deliberately shown in more than one comparison.
 Each unique configuration is sampled once, giving 62,220,000 table pairs in
 the final statistical run. The within-family counts in

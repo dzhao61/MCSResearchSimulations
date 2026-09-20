@@ -67,7 +67,7 @@ Equivalently,
   \label{eq:mi-entropy-form}
 \end{equation}
 The quantity is nonnegative and equals zero exactly when
-\(p_{ij}=p_{i+}p_{+j}\) for every cell with positive support.
+\(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells.
 
 Equation~\eqref{eq:background-mi} is also the Kullback--Leibler divergence
 between the joint distribution and the product of its margins. MI therefore
@@ -166,7 +166,10 @@ MI is a nonlinear function of the cell probabilities. When all population
 cells are positive and the empirical table is close to its population value,
 a first-order Taylor expansion replaces this nonlinear function locally by a
 linear combination of the cell-probability errors. The resulting expansion is
-often expressed through an influence function \citep{kandasamy2015}.
+often expressed through an influence function. The classical influence-curve
+and functional delta-method treatments are given by \citet{hampel1974} and
+\citet[Chapter~20]{vanderVaart1998}; \citet{kandasamy2015} apply related von
+Mises methods to information functionals.
 
 For MI, the observation-level influence function is centred pointwise MI:
 \begin{equation}
@@ -188,8 +191,10 @@ values. Consequently,
 \end{equation}
 This leading variance for histogram MI was calculated by
 \citet{moddemeijer1989}, who noted that the calculation also applies to
-discrete systems; \citet{brillinger2004} gives the discrete non-null formula
-explicitly. For temporally dependent observation pairs, \citet{moddemeijer1999}
+discrete systems. \citet{brillinger2004} gives the discrete non-null formula
+explicitly, attributes that result to Moddemeijer, and states alongside it the
+\(\chi^2/(2n)\) limit at independence. For temporally dependent observation
+pairs, \citet{moddemeijer1999}
 develops an estimator of the same sampling variance using methods that account
 for dependence between observations. The present work assumes independent
 observations within each sample and does not claim the first-order MI variance
@@ -229,7 +234,7 @@ For two independent MI estimates, the first-order variance contributions add:
   \frac{V(Q)}{n_Q}.
   \label{eq:wald-variance-background}
 \end{equation}
-Replacing the population quantities by estimates produces the normal Wald
+Replacing the population quantities by estimates produces the Normal Wald
 test developed formally in Chapter~\ref{chap:baselines}.
 
 Wald inference is asymptotically valid under regularity conditions, but its
@@ -269,30 +274,68 @@ the Welch refinement replaces the normal reference for \(T\) by a Student
 reference. The \((r-1)(c-1)\)-degree chi-squared law used for one-table
 independence is a different second-order result.
 
+The same principle extends beyond ordinary sample variances.
+\citet{panwall2002} account for variability in sandwich variance estimates
+using approximate Student and $F$ references. \citet{bell2002} use
+Satterthwaite moment matching for regression variance estimates under
+multi-stage sampling and discuss excessive conservatism at small effective
+degrees of freedom. \citet{kauermann2001} examine the variability and
+efficiency of sandwich covariance estimation. Related adjustments and practical
+guidance are given by \citet{fay2001} and \citet{imbens2016}. These are close
+methodological precedents: estimating the variability of a variance estimator
+and using it in a finite-sample reference are established strategies. The
+present task is to derive the required inputs for the complete discrete MI
+functional and assess whether the resulting reference is useful.
+
 \section{Prior MI inference and related comparisons}
 
-Hutcheson's test compares Shannon diversity values using an estimated
-variance and a \(t\)-type reference \citep{hutcheson1970}. It is a useful
-predecessor because entropy and MI are both nonlinear functions of categorical
-probabilities. Yet MI depends on a joint distribution \emph{and} on its two
-margins. Moving mass into one cell changes pointwise MI values elsewhere in
-the same row and column. The variance calculation in this thesis retains
-those changes; substituting MI into an entropy formula would not establish
-its component degrees of freedom.
+MI uncertainty also has a broader literature than its leading normal
+approximation. \citet{roulston1999} derive entropy and MI error estimates
+using error propagation and examine them numerically. \citet{hutter2002}
+and \citet{hutterzaffalon2005} derive moments of the posterior distribution
+of MI under a Dirichlet model, including higher-order variance and shape
+information. Their posterior uncertainty has a different conditioning from
+the repeated-sampling distribution studied here. Their results establish
+that higher-order MI uncertainty is not a new topic, but do not directly
+validate the two-sample Student reference in this thesis.
+
+Hutcheson's test is a direct information-theoretic Welch predecessor. It
+compares two Shannon diversity estimates with an estimated variance and a
+Student reference, using
+\begin{equation}
+  \nu_H=
+  \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
+       {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
+  \label{eq:hutcheson-df}
+\end{equation}
+as its effective degrees of freedom \citep{hutcheson1970}. Thus each component
+is assigned its sample size, not \(n_i-1\). Applying the same assignment to the
+two MI variance contributions gives a clear historical baseline. It does not,
+however, derive how the plug-in MI variance itself fluctuates: MI depends on a
+joint distribution and both margins, so moving mass into one cell changes
+pointwise values elsewhere in its row and column. The expanded calculation
+retains these changes.
 
 The question of comparing MI values also has predecessors. In a segregation
 application, \citet{mora2009} develop inference for an MI index and discuss
-pairwise comparisons across groups and periods. They do not derive the
+pairwise comparisons across groups and periods; the later peer-reviewed account
+places that MI index within the wider segregation literature \citep{mora2011}.
+They do not derive the
 variance-sensitivity degrees of freedom used here, but the general aim of
 comparing MI values is not new. \citet{guha2014} use MI for a different two-sample
 question: whether two continuous distributions are identical. Their MI is
 between a pooled observation and its sample label; their null is equality of
-distributions, not equality of two within-population MI values.
+distributions, not equality of two within-population MI values. For discrete
+data, \citet{drake2014} develop an MI-based \(k\)-sample test for the same
+distributional-equality question.
 
 The exact-independence boundary has likewise been studied separately.
 \citet{marinescu2025} use a second-order delta-method argument for MI under
+independence. More generally, their expansion combines a normal term with a
+linear combination of chi-squared terms; the normal term vanishes at exact
 independence. That setting explains why a first-order positive-MI comparison
-must not be presented as a replacement for a one-table independence test.
+must not be presented as a replacement for a one-table independence test and
+suggests why second-order effects can remain relevant near that boundary.
 
 Table~\ref{tab:prior-work-scope} distinguishes the relevant established
 ideas by the problem each addresses. This is not a claim that no other MI
@@ -315,16 +358,18 @@ give predecessors for the first-order MI variance, while
 studies the sampling uncertainty of the plug-in variance estimate itself in
 the independent two-sample problem.\\
 Welch principle & \citet{satterthwaite1946} and \citet{welch1947}
-provide moment-matching ideas, not an exact Student theorem for MI.\\
-Other comparisons & \citet{hutcheson1970} compares Shannon
-diversity; \citet{mora2009} study an MI-based segregation index. Neither
-derives the variance-sensitivity degrees of freedom used here.\\
-Different MI nulls & \citet{guha2014} test distributional equality;
+provide moment-matching ideas; \citet{hutcheson1970} applies the same structure
+to Shannon diversity using component degrees of freedom \(n_i\).\\
+Other comparisons & \citet{mora2009,mora2011} study an MI-based segregation
+index. They do not derive the variance-sensitivity degrees of freedom used here.\\
+Different MI nulls & \citet{guha2014} and \citet{drake2014} test
+distributional equality;
 \citet{marinescu2025} study one-table independence. These are not the
 two-population equal-MI null.\\
 Weak-null tests & \citet{chung2013} explain why a raw pooled-label
 permutation need not be valid when the compared parameters agree but
-\(P\ne Q\).\\
+\(P\ne Q\); \citet{janssen1997} gives an earlier studentized permutation
+result for heterogeneous two-sample nulls.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -333,16 +378,16 @@ permutation need not be valid when the compared parameters agree but
 
 Bootstrap methods can approximate a statistic's repeated-sampling behaviour
 by drawing from fitted empirical populations, at greater computational cost
-than a direct analytic table scan. Sparse empirical support can still be a
-problem. A label permutation instead pools the observations and reallocates
-their group labels; it targets a different symmetry assumption.
+than a direct analytic table scan \citep{efron1979}. Sparse empirical support
+can still be a problem. A label permutation instead pools the observations and
+reallocates their group labels; it targets a different symmetry assumption.
 
 Permutation requires a separate distinction. Pooling two samples and
 permuting their group labels is exact under the strong null \(P=Q\), because
 the observations are exchangeable. Under the weak null \(I(P)=I(Q)\), the two
 complete distributions may differ, so raw label permutation generally targets
 the wrong null. Studentized permutation can recover asymptotic validity for
-some weak-null parameter comparisons \citep{chung2013}, but it is not the
+some weak-null parameter comparisons \citep{janssen1997,chung2013}, but it is not the
 standard one-table MI shuffle used to test independence.
 
 The final comparison uses Normal Wald and the proposed Expanded Welch method,
@@ -359,9 +404,10 @@ It also contains prior comparisons of entropy and MI-related indices.
 
 No single ingredient is presented as new. Shannon established MI; Miller and
 later authors developed finite-sample bias analysis; Moddemeijer and
-Brillinger give the first-order MI sampling variance, including a dependent-
-observation extension; and Welch,
-Satterthwaite, and Hutcheson provide relevant variance-component ideas.
+Brillinger give the first-order MI sampling variance, including a
+dependent-observation extension; and Welch and Satterthwaite provide the
+general moment-matching structure. Hutcheson already applies that structure to
+an information quantity using component degrees of freedom \(n_i\).
 Mora and Ruiz-Castillo also show that inference about differences in an MI
 index predates this study. The contribution claimed here is narrower: an
 explicit observation-level sensitivity for the \emph{estimated MI variance},
@@ -370,15 +416,20 @@ evaluation under distinct equal-MI multinomial populations. The literature
 review does not establish that no earlier derivation of this exact
 sensitivity exists, so first priority is not claimed.
 
-The remaining gap is narrower. The ordinary Welch substitution assigns a
-classical sample-variance degree of freedom, such as \(n-1\), to each variance
-component. The estimated MI variance is not an ordinary sample variance of
-fixed observations. It is a nonlinear function of the same empirical joint
-table used to calculate MI\@. A change in one observation modifies the cell
-probabilities, margins, pointwise-MI values, and their weighted variance.
+The remaining task is specific to MI. Hutcheson's direct information-theoretic
+predecessor assigns each component its sample size; an ordinary-Welch analogue
+uses \(n-1\). Both are fixed assignments. By contrast, established sandwich
+adjustments derive effective degrees of freedom from the estimated variability
+of the variance estimator itself. The plug-in MI variance requires its own
+version of that calculation because it is a nonlinear function of the same
+empirical joint table used to calculate MI. A change in one observation
+modifies the cell probabilities, margins, pointwise-MI values, and their
+weighted variance.
 
 The expanded method addresses this gap by differentiating the complete MI
 variance functional. The resulting observation-level sensitivity determines
 the sampling variance of the variance estimate and, through Satterthwaite
-moment matching, an MI-specific component degree of freedom.
+moment matching, an MI-specific component degree of freedom. The contribution
+is this explicit functional calculation and its evaluation, within the
+established approach to variance uncertainty described above.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop this construction.

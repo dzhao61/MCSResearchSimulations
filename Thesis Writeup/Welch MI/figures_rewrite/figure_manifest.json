@@ -1,7 +1,7 @@
 [
   {
     "file": "figures_rewrite/main_2x2_uniform.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -34,7 +34,7 @@
   },
   {
     "file": "figures_rewrite/main_2x2_same_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -67,7 +67,7 @@
   },
   {
     "file": "figures_rewrite/main_2x2_different_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -100,7 +100,7 @@
   },
   {
     "file": "figures_rewrite/main_3x3_uniform.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -133,7 +133,7 @@
   },
   {
     "file": "figures_rewrite/main_3x3_same_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -166,7 +166,7 @@
   },
   {
     "file": "figures_rewrite/main_3x3_different_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -199,7 +199,7 @@
   },
   {
     "file": "figures_rewrite/main_5x5_uniform.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -232,7 +232,7 @@
   },
   {
     "file": "figures_rewrite/main_5x5_same_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -265,7 +265,7 @@
   },
   {
     "file": "figures_rewrite/main_5x5_different_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -298,7 +298,7 @@
   },
   {
     "file": "figures_rewrite/main_8x8_uniform.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -331,7 +331,7 @@
   },
   {
     "file": "figures_rewrite/main_8x8_same_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -364,7 +364,7 @@
   },
   {
     "file": "figures_rewrite/main_8x8_different_skew.pdf",
-    "description": "Panels: nP = nQ = 10, nP = nQ = 100, nP = nQ = 1000",
+    "description": "Panels: $n_P=n_Q=10$, $n_P=n_Q=100$, $n_P=n_Q=1000$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -463,7 +463,7 @@
   },
   {
     "file": "figures_rewrite/imbalance_3x3_q_higher.pdf",
-    "description": "Panels: nP=50, nQ=250, nP=250, nQ=50",
+    "description": "Panels: $n_P=50,\\ n_Q=250$, $n_P=250,\\ n_Q=50$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -490,7 +490,7 @@
   },
   {
     "file": "figures_rewrite/imbalance_3x3_p_higher.pdf",
-    "description": "Panels: nP=50, nQ=250, nP=250, nQ=50",
+    "description": "Panels: $n_P=50,\\ n_Q=250$, $n_P=250,\\ n_Q=50$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -517,7 +517,7 @@
   },
   {
     "file": "figures_rewrite/broad_2x2_uniform.pdf",
-    "description": "Panels: nP=nQ=100",
+    "description": "Panels: $n_P=n_Q=100$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"

@@ -146,7 +146,7 @@ def main_landscape() -> None:
     for shape in ("2x2", "3x3", "5x5", "8x8"):
         for profile in profiles:
             panels = [
-                (f"nP = nQ = {n}", subset("main", shape=shape, profile=profile, n_p=n, n_q=n))
+                (fr"$n_P=n_Q={n}$", subset("main", shape=shape, profile=profile, n_p=n, n_q=n))
                 for n in samples
             ]
             grid(f"main_{shape}_{profile}", panels)
@@ -168,12 +168,12 @@ def focused() -> None:
     for direction in ("q_higher", "p_higher"):
         grid(
             f"imbalance_3x3_{direction}",
-            [(f"nP={n_p}, nQ={n_q}", subset("imbalance", shape="3x3", profile="different_skew", n_p=n_p, n_q=n_q, mi_direction=direction))
+            [(fr"$n_P={n_p},\ n_Q={n_q}$", subset("imbalance", shape="3x3", profile="different_skew", n_p=n_p, n_q=n_q, mi_direction=direction))
              for n_p, n_q in pairs],
         )
     grid(
         "broad_2x2_uniform",
-        [("nP=nQ=100", subset("broad_effect", shape="2x2", profile="uniform", n_p=100))],
+        [(r"$n_P=n_Q=100$", subset("broad_effect", shape="2x2", profile="uniform", n_p=100))],
         zoom=None,
     )
     grid(
@@ -207,7 +207,7 @@ def convergence() -> None:
     for ax, (shape, baseline, rows) in zip(axes.flat, panels):
         draw(ax, rows, ylim=(0, 0.1), x_kind="sample")
         ax.set_title(f"{shape}, I(P)=I(Q)={baseline:g}", fontsize=11)
-        ax.set_xlabel("nP = nQ", fontsize=10)
+        ax.set_xlabel(r"$n_P=n_Q$", fontsize=10)
     axes[0, 0].set_ylabel("Null rejection rate", fontsize=10)
     axes[1, 0].set_ylabel("Null rejection rate", fontsize=10)
     handles, labels = axes[0, 0].get_legend_handles_labels()

@@ -196,7 +196,7 @@ enters when interpreting the reference distribution, which is centred at
 zero under \(H_0\). In particular, \(Q\)'s observed estimate and variance
 are not set to zero merely because the null is being tested.
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
-by normal Wald and expanded Welch. Their difference lies in the reference
+by Normal Wald and Expanded Welch. Their difference lies in the reference
 distribution, not the effect estimate or plug-in standard error.
 
 \section{Normal Wald reference}
@@ -208,7 +208,7 @@ Under the regular first-order asymptotics,
 \end{equation}
 Here both $n_P$ and $n_Q$ increase while the aligned alphabet and the two
 positive-support population tables remain fixed.
-The two-sided normal Wald p-value is
+The two-sided Normal Wald p-value is
 \begin{equation}
   p_{\mathrm{Wald}}
   =2\{1-\Phi(|T|)\},
@@ -225,19 +225,19 @@ where \(\Phi\) is the standard normal distribution function. A
 where $z_\gamma$ is the $\gamma$ quantile of the standard normal
 distribution.
 
-The normal reference is a large-sample approximation. Its standard error is
-estimated from the observed tables; Wald does not treat it as known. Rather,
-it does not apply the finite-sample degrees-of-freedom adjustment proposed
-here.
+The normal reference is a large-sample approximation. Wald estimates the
+standard error from the tables but applies no degrees-of-freedom adjustment.
 
 \section{What the expanded method must calculate}
 
 The shared statistic supplies the estimated effect and its first-order
-standard error. A familiar Welch analogy would assign \(n_P-1\) and \(n_Q-1\)
-degrees of freedom, as for ordinary sample variances. But \(\Vhat(P)\) is a
-nonlinear functional of a table whose margins and pointwise MI values also
-change with the data. The expanded method instead estimates component degrees
-of freedom from that full functional.
+standard error. The direct Hutcheson-style information-theoretic analogue
+assigns component degrees of freedom \(n_P\) and \(n_Q\); a familiar
+ordinary-Welch analogue uses \(n_P-1\) and \(n_Q-1\). Both fixed assignments
+are retained as explanatory baselines. However, \(\Vhat(P)\) is a nonlinear
+functional of a table whose margins and pointwise MI values also change with
+the data. The expanded method instead estimates component degrees of freedom
+from that full functional.
 
 Satterthwaite moment matching requires the first two moments of each positive
 variance estimate. To first order,

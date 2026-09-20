@@ -1,0 +1,13 @@
+configuration_id,pair_id,shape,profile,n_p,n_q,target_mi_p,target_mi_q,section,method,replicates,rejected,valid,rate,valid_rate,rate_mcse,paired_minus_wald,paired_mcse
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,normal_wald,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,hutcheson_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,simple_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,kurtosis_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,expanded_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,observed_support_wald,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,normal_wald,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,hutcheson_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,simple_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,kurtosis_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,expanded_welch,200,0,0,0.0,0.0,0.0,0.0,0.0
+config_e988f1580360e8c9,pair_0b7dd028d07380ef,2x2,uniform,2,2,0.02,0.021,main,observed_support_wald,200,0,0,0.0,0.0,0.0,0.0,0.0

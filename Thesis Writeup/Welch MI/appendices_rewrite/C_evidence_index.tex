@@ -56,6 +56,20 @@ outcomes for the same table pairs. These distinctions allow a reader to
 check whether a curve difference is primarily a changed reference or lost
 validity.
 
+Specifically, let \(A_{m,s}\) be the valid-rejection indicator for method
+\(m\) on replicate \(s\), and set
+\(D_s=A_{\mathrm{expanded},s}-A_{\mathrm{Wald},s}\). The saved paired
+difference is \(\bar D=R^{-1}\sum_sD_s\), with approximate 95\% interval
+\begin{equation}
+  \bar D\ \pm\ 1.96
+  \left\{
+    \frac{1}{R(R-1)}\sum_{s=1}^{R}(D_s-\bar D)^2
+  \right\}^{1/2}.
+\end{equation}
+This calculation preserves the within-replicate pairing. The individual
+method intervals use Wilson's binomial score construction
+\citep{wilson1927}.
+
 For any \(P\) population with sample size \(n_P\), its minimum expected
 cell count is \(\min_{ij}n_Pp_{ij}\); define \(Q\)'s analogously. No
 ``expected minimum'' of random observed counts is calculated. The saved

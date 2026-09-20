@@ -67,14 +67,38 @@ contributions to be combined, but it does not make the numerator independent
 of its estimated standard error. Moment matching of the denominator alone
 therefore does not prove that \(T\) has a Student distribution. When the
 first-order MI approximation itself is poor, changing only the reference
-quantile has limited scope. This is a theoretical limitation; the current
-experiment identifies where error occurs but does not uniquely attribute
-every regime's error to one of these mechanisms.
+quantile has limited scope. The independent-pilot diagnostic in
+Appendix~\ref{app:mechanism} shows that replacing the random denominator by
+the actual finite-sample standard deviation can restore near-nominal rejection
+in a representative conservative regime. It also shows that the population
+first-order standard deviation is too small there. The result supports a
+combined explanation involving denominator estimation and omitted quadratic
+numerator variation; it does not isolate mean denominator bias from
+numerator--denominator dependence or establish one universal mechanism.
 The component degree-of-freedom formula also has its own regularity
 condition: a positive first-order MI variance does not force its variance
 sensitivity to be positive. At such stationary points, the first-order
 moment match cannot describe the finite-sample variance estimate without
 higher-order terms.
+
+Near independence, the local calculation gives \(V\approx2I\),
+\(\tau^2\approx4V\), and hence a population component degree of freedom near
+\(nI\). This explains why the Expanded Welch reference can become extremely
+heavy-tailed at low baseline MI. The same local Gaussian calculation shows
+that quadratic terms of dimension \(d\) affect both the mean and variance of
+\(\widehat V\). First-order moment matching therefore requires \(nV\) to be
+large relative to \(d\), in addition to adequate expected counts. The
+follow-up comparison with simulated moments confirms that the population,
+plug-in and finite-sample component degrees of freedom can differ materially
+at \(n=100\), then move closer by \(n=1000\).
+
+This transition is consistent with the broader second-order delta-method
+description of \citet{marinescu2025}: away from independence the MI estimation
+error contains a normal contribution together with quadratic, chi-squared-type
+contributions, whereas the linear contribution vanishes at independence. That
+result does not supply a finite-sample correction for the present two-sample
+weak null, but it provides a plausible explanation for why a purely
+first-order Student adjustment can remain conservative at small positive MI.
 
 At exact independence, \(I=0\) and the population first-order MI variance
 vanishes. This does not mean finite empirical MI estimates are always zero.
@@ -138,6 +162,14 @@ displayed in several sections are the same sampled run. Repeating their
 figure appearances does not provide independent confirmation. The recorded
 Monte Carlo intervals also address repeated sampling of each fixed pair, not
 the broader uncertainty of generalising to an untested population.
+
+The reported alternative rejection rates use the common nominal 0.05
+threshold. Size-adjusting each method separately would answer a different
+question: how their rankings change when a simulation-specific critical value
+is known. Such a curve would not provide a usable calibration rule for an
+unknown real population and was not part of the frozen comparison. The thesis
+therefore keeps calibration and nominal-threshold detection visible side by
+side and does not describe the alternative curves as power at matched size.
 
 Future work should address the joint finite-sample behaviour of the
 numerator and denominator or use a calibrated reference tailored to sparse

@@ -25,6 +25,16 @@ thesis figures, and checks every numerical result reported in
 Chapter~\ref{chap:results}. It also checks the generated LaTeX values, paired
 comparisons, convergence ranges, and runtime table against the frozen files.
 
+The post-review mechanism check is deliberately separate. Its runner is
+\path{run_thesis_mechanism_check.py}, and its report generator is
+\path{report_thesis_mechanism_check.py}. The saved
+\path{results/thesis_mechanism_check/metadata.json} records 809 selected
+configurations, 20,000 evaluation pairs per configuration, independent
+20,000-pair pilots for 169 nulls, the deterministic seed scheme and hashes of
+the frozen source protocol, configuration manifest and population file. The
+evidence audit checks its dimensions and the numerical values quoted in
+Chapter~\ref{chap:results} and Appendix~\ref{app:mechanism}.
+
 The exact run inputs and software versions are in
 \path{WelchSatterthwaiteMI/results/thesis_redesign/run_metadata.json}.
 Its protocol SHA-256 is the concatenation of these two hexadecimal halves:

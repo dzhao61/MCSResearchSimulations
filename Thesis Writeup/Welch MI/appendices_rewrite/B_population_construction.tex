@@ -29,7 +29,7 @@ a decreasing cell reaches zero,
 \end{equation}
 Evaluate the path endpoint MI\@. A target MI must lie strictly below this
 endpoint, within the stated numerical tolerance. For a positive target,
-Brent's one-dimensional root search solves \(I\{R(t)\}=I_{\rm target}\)
+Brent's one-dimensional root search \citep{brent1973} solves \(I\{R(t)\}=I_{\rm target}\)
 on \([0,t_{\max}]\); a zero target uses \(t=0\). The final table is accepted
 only if every cell is strictly positive, the sum is one, both margins agree
 with their prescribed vectors, and achieved MI agrees with the target. The
@@ -50,7 +50,7 @@ separate parameter and should not be inferred from which population has the
 more skewed margin.
 
 The log-linear comparison uses an ordinal interaction pattern. Its strength
-is tuned numerically while iterative proportional fitting preserves the
+is tuned numerically while iterative proportional fitting \citep{deming1940} preserves the
 given row and column margins. The final table is subjected to the same
 positivity, normalisation, margin and target-MI checks as the additive table.
 This is a comparison across two ways to make plausible fixed populations,

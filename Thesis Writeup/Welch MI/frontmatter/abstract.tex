@@ -11,8 +11,8 @@ same.
 Normal Wald inference divides a bias-corrected difference by a plug-in
 standard error and uses a normal reference. The proposed Expanded
 Welch--Satterthwaite procedure keeps that statistic but derives effective
-degrees of freedom from the sampling variability of the complete mutual-
-information variance functional. A change in one table cell also changes the
+degrees of freedom from the sampling variability of the complete mutual information
+variance functional. A change in one table cell also changes the
 row and column margins and the pointwise information values; the derivation
 accounts for all of these effects. The resulting Student reference is a
 moment-matching approximation, not an exact finite-sample distribution.
@@ -23,6 +23,8 @@ unequal-sample, construction and extreme-sparsity checks. Each of 3,111
 unique statistical configurations uses 20,000 paired count-table replicates
 at a two-sided nominal level of 0.05. False positives, detection, numerical
 validity and runtime are reported separately for individual regimes.
+The main null grid includes both identical populations and distinct
+populations with equal MI; their calibration is also reported separately.
 
 Expanded Welch moves some liberal Wald false-positive rates toward 0.05, but
 makes conservative regimes more conservative and can be less often valid in
@@ -31,6 +33,13 @@ sample sizes 500 or 1,000. At common MI 0.02 and sample size 50,000, both
 methods are near nominal in the tested populations; very small MI remains
 difficult. Expanded Welch has the same computational order as Wald and costs
 about 1.75 times as much per scalar call in the measured implementation.
+
+A separate explanatory follow-up finds that estimated standard errors can
+exceed actual sampling variability. Near independence, local expansions give
+component degrees of freedom approximately equal to sample size times MI,
+while omitted quadratic terms can invalidate that first-order moment match.
+Simpler Welch ablations distinguish the additional effect of differentiating
+the complete variance functional.
 
 The evidence supports retaining Wald as the simpler general baseline.
 Expanded Welch may be informative in selected liberal regimes, provided that

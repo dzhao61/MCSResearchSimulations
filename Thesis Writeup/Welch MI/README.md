@@ -39,7 +39,7 @@ From this thesis directory, build the PDF with:
 /Library/TeX/texbin/latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The 15 actively cited and source-audited bibliography records are stored in
+The 35 actively cited and source-audited bibliography records are stored in
 the local `references.bib`, so the manuscript can compile without the parent
 methods project. The active preamble searches only `figures_rewrite/`,
 preventing an old pilot figure from being used silently.
@@ -59,9 +59,13 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `frontmatter/`: title page, declaration, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
 - `appendices_rewrite/`: active derivations, exact design grids and evidence index.
+- `appendices_rewrite/F_mechanism_checks.tex`: post-review independent-SD,
+  degree-of-freedom and ablation checks, plus all 108 main null rates.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
 - `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
 - `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
+- `REVIEW_RESPONSE.md`: point-by-point disposition of the external assessment.
+- `BIBLIOGRAPHY_REVIEW_RESPONSE.md`: disposition of the later source and literature assessment.
 - `THESIS_GOAL.md`: current objective, exemplar length benchmark, SMART targets and completion criteria.
 - `SUBMISSION_CHECK.md`: evidence available and the remaining steps to complete the thesis.
 - `THESIS_REWRITE_PLAN.md`: active research, chapter and evidence plan.

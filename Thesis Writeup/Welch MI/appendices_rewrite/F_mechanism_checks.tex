@@ -1,0 +1,155 @@
+\chapter{Post-review Mechanism Checks}
+\label{app:mechanism}
+
+This appendix reports an explanatory follow-up performed after the
+confirmatory protocol had been frozen and run. It does not replace or modify
+the 3,111 confirmatory configurations. Its purpose is to test why the two
+references behave differently and whether the complete variance sensitivity
+is responsible for the observed Expanded Welch adjustment.
+
+The follow-up selected 809 distinct configurations from the saved main,
+baseline, sample-imbalance and convergence families. Each configuration used
+20,000 new table pairs. The 169 null configurations also used a separate
+20,000-pair pilot to estimate finite-sample moments without reusing the
+evaluation draws. In total, the follow-up generated 19.56 million table
+pairs. The populations were read unchanged from the confirmatory population
+file; the follow-up therefore changes the diagnostic calculation, not the
+population construction.
+
+\section{Local explanation near independence}
+
+The approximation in Section~\ref{sec:near-independence-mechanism} can be
+seen through a local Gaussian representation. After the row and column
+effects are removed, let \(u\in\mathbb R^d\) denote the population
+interaction coordinates, where \(d=(r-1)(c-1)\). In fixed dimension, with
+positive cell probabilities and sufficiently large expected counts, the
+standardised empirical interaction is approximately
+\begin{equation}
+  \sqrt n\,\widehat u \approx \sqrt n\,u+Z,
+  \qquad Z\sim N_d(0,I_d).
+\end{equation}
+Locally, \(\lVert u\rVert^2\approx 2I\approx V\). Hence the quadratic
+quantity
+\begin{equation}
+  R=\lVert\sqrt n\,u+Z\rVert^2
+\end{equation}
+is approximately noncentral chi-squared with \(d\) degrees of freedom and
+noncentrality \(nV\), while \(2n\widehat I\approx R\) and
+\(\widehat V\approx R/n\). The standard moments
+\(\E R=d+nV\) and \(\Var(R)=2d+4nV\) then give
+\begin{align}
+  \E\widehat V&\approx V+d/n,\\
+  \Var(\widehat I)&\approx V/n+d/(2n^2),\\
+  \Var(\widehat V)&\approx 4V/n+2d/n^2.
+\end{align}
+These equations separate two effects. The linear approximation contributes
+the terms containing \(V\); random quadratic interaction contributes the
+terms containing \(d\). When \(nV\) is not large relative to \(d\), both the
+estimated standard error and the component degree of freedom can therefore
+depart materially from their first-order population approximations. This is
+a local, fixed-dimension explanation, not an exact formula for sparse tables.
+
+\section{Independent standard-deviation diagnostic}
+
+For each selected null, an independent pilot estimates the actual
+finite-sample standard deviation of the corrected MI difference. The
+evaluation numerator is then divided by this single pilot value. This
+``MC SD'' is unavailable from one real data set because it uses repeated
+samples from the known simulation populations. It is used only to diagnose
+the approximation. It simultaneously removes random denominator error and
+numerator--denominator dependence, so it cannot attribute a discrepancy to
+mean denominator bias alone.
+
+\input{figures_rewrite/mechanism_tables}
+
+Table~\ref{tab:denominator-check} shows that the estimated squared standard
+error is 17\% too large relative to the empirical finite-sample variance at
+\(n=100\). Replacing it with the independent MC SD moves rejection from
+0.0166 to 0.0551. However, the population first-order SD gives 0.0976,
+because the finite-sample numerator variance is itself 42\% larger than its
+first-order value. At \(n=1000\), the corresponding approximations are much
+closer. Thus denominator estimation is an important mechanism in this
+example, but the evidence does not support treating it as the only one.
+
+Table~\ref{tab:component-check} makes the degree-of-freedom distinction
+explicit. At \(n=100\), the population first-order component values are 1.73
+and 1.51, whereas moment matching the simulated \(\widehat V\) gives 4.84
+and 3.77. The variance approximation
+\(\Var(\widehat V)\approx\tau^2/n\) is already within about 10\%; much of the
+remaining degree-of-freedom difference comes from the upward shift in
+\(\E\widehat V\). By \(n=1000\), all three component calculations are much
+closer. A finite-difference derivative check validates the formula for
+\(\tau^2\), but only this repeated-sampling check assesses whether its
+first-order moment approximation is accurate.
+
+\section{Ablations of the degrees of freedom}
+
+Three simpler references were evaluated with the same corrected numerator and
+plug-in standard error:
+\begin{enumerate}
+  \item The Hutcheson-style MI analogue sets each component degree of freedom
+  to \(n\), following Equation~\eqref{eq:hutcheson-df}.
+  \item Simple Welch sets each component degree of freedom to \(n-1\), as for
+  ordinary sample variances.
+  \item Kurtosis-only Welch freezes the pointwise scores when differentiating
+  the variance. Its sensitivity is
+  \(g^{(K)}_{ij}=(\ell_{ij}-I)^2-V\), giving
+  \begin{equation}
+    \nu^{(K)}=\frac{2nV^2}{\sum_{ij}p_{ij}\{g^{(K)}_{ij}\}^2}.
+  \end{equation}
+\end{enumerate}
+The third ablation omits the change in the pointwise MI values and their row
+and column margins. It therefore isolates what the complete derivative adds
+to the reference calculation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{mechanism_ablation.pdf}
+\caption[Reference ablations in the $3\times3$ main family]{Reference
+ablations in the \(3\times3\) main family. Rows are uniform, same-skew and
+different-skew margins; columns use equal sample sizes 10, 100 and 1000. The
+horizontal axis is the constructed MI difference from 0 to 0.02 nats and the
+vertical axis is unconditional rejection from 0 to 0.15. Each point uses
+20,000 new table pairs. Hollow markers indicate validity below 90\%; complete
+rates, including values outside this calibration zoom, are retained in the
+follow-up CSV.}
+\label{fig:mechanism-ablation}
+\end{figure}
+
+Figure~\ref{fig:mechanism-ablation} shows that the Hutcheson-style and Simple
+Welch references are usually close to each other and to Wald, while the
+kurtosis-only correction lies between them and Expanded Welch. Their rejection
+rates are identical in 494 of 809 configurations and differ by 0.00047 on
+average in absolute value. The largest difference, 0.01235, occurs in the
+extreme \(5\times5\), \(n_P=n_Q=5\) case, where replacing \(n_i-1=4\) by
+\(n_i=5\) is proportionally substantial. The complete pointwise and margin
+sensitivity is therefore what drives most of the extra tail inflation near low
+MI. This confirms that the expanded derivative has a real numerical effect; it
+does not establish that the effect improves calibration.
+
+\section{Bias-correction sensitivity}
+
+The confirmatory statistic uses the declared fixed-support correction
+\(d/(2n)\). As a sensitivity check only, the follow-up replaced \(d\) by
+the observed support quantity
+\begin{equation}
+  d_{\rm obs}=K_{XY}-K_X-K_Y+1,
+\end{equation}
+where the three \(K\)'s count occupied joint cells, rows and columns. In the
+different-skew \(3\times3\) equal-MI imbalance family with baseline MI 0.02,
+this changed Wald rejection from 0.0661 to 0.0580 when
+\((n_P,n_Q)=(50,500)\), but from 0.0827 to 0.0262 when the allocation was
+reversed. The sensitivity can therefore change direction asymmetry, but it
+is not a validated universal correction. Its dependence on random observed
+support introduces a new source of variation, so the declared-support
+statistic remains the confirmatory definition.
+
+\section{Complete main-null table}
+
+Table~\ref{tab:all-main-null} provides the exact rejection and validity rates
+for all 108 main-grid null configurations. It separates the 36 different-skew
+weak-null configurations, where \(P\ne Q\) but \(I(P)=I(Q)\), from the 72
+uniform and same-skew strong-null configurations, where \(P=Q\). These rows
+are the source data for the summary statements in Chapter~\ref{chap:results}.
+
+\input{figures_rewrite/main_null_table}

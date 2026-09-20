@@ -32,6 +32,7 @@ def find_workspace_root() -> Path:
 
 WORKSPACE = find_workspace_root()
 RESULTS = WORKSPACE / "WelchSatterthwaiteMI" / "results" / "thesis_redesign"
+MECHANISM = WORKSPACE / "WelchSatterthwaiteMI" / "results" / "thesis_mechanism_check"
 EXPERIMENTS = WORKSPACE / "WelchSatterthwaiteMI" / "experiments"
 sys.path.insert(0, str(EXPERIMENTS))
 
@@ -433,7 +434,38 @@ def main() -> None:
             )
     assert (HERE / "evidence_values.tex").read_text() == "\n".join(expected_macro_lines) + "\n"
 
-    print("PASS: protocol reconstruction, family counts, all manuscript numerical claims, exact source rows for 22 figures, generated macros, nested rejections, convergence and runtime")
+    mechanism_rates = pd.read_csv(MECHANISM / "ablation_rates.csv")
+    mechanism_diagnostics = pd.read_csv(MECHANISM / "denominator_diagnostics.csv")
+    mechanism_components = pd.read_csv(MECHANISM / "component_diagnostics.csv")
+    mechanism_metadata = json.loads((MECHANISM / "metadata.json").read_text())
+    assert mechanism_metadata["configurations"] == 809
+    expected_mechanism_methods = {
+        "normal_wald",
+        "hutcheson_welch",
+        "simple_welch",
+        "kurtosis_welch",
+        "expanded_welch",
+        "observed_support_wald",
+    }
+    assert len(mechanism_rates) == 809 * len(expected_mechanism_methods)
+    assert set(mechanism_rates.method) == expected_mechanism_methods
+    assert mechanism_rates.groupby("configuration_id").method.nunique().eq(6).all()
+    assert mechanism_diagnostics.configuration_id.nunique() == 169
+    assert len(mechanism_components) == 2 * 169
+    mechanism_anchor = mechanism_diagnostics.loc[
+        mechanism_diagnostics.configuration_id.eq("config_f67e74127a56dc37")
+    ].iloc[0]
+    equal(mechanism_anchor.normal_wald_rate, 0.01660)
+    equal(mechanism_anchor.independent_mc_sd_rate, 0.05510)
+    equal(mechanism_anchor.population_first_order_sd_rate, 0.09760)
+    equal(mechanism_anchor.mean_se2_over_empirical_var, 1.169852, tolerance=5e-7)
+    equal(mechanism_anchor.empirical_var_over_first_order, 1.424926, tolerance=5e-7)
+    assert (HERE / "mechanism_ablation.pdf").read_bytes()[:5] == b"%PDF-"
+    null_table = (HERE / "main_null_table.tex").read_text()
+    shape_prefixes = ("2x2 &", "3x3 &", "5x5 &", "8x8 &")
+    assert sum(line.startswith(shape_prefixes) for line in null_table.splitlines()) == 108
+
+    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 confirmatory figures, post-review diagnostics, nested rejections, convergence and runtime")
 
 
 if __name__ == "__main__":

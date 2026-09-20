@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript | About 61 pages | 88 pages |
+| Current Welch-MI manuscript | 68 pages | 109 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -101,28 +101,32 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed on
-16 September 2026. T8 is assembled, with only the author's signature and date
+Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed and
+the external assessment addressed on 20 September 2026. T8 is assembled,
+with only the author's signature and date
 on the declaration outstanding.** T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-revised 88-page PDF builds without undefined references, citations or overfull
-boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 15 sources
+revised 109-page PDF builds without undefined references, citations or overfull
+boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 35 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
 precedent are incorporated, and the contribution remains explicitly narrower
 than a first-priority claim. T4 reconstructs the frozen protocol exactly and
 accounts for all 4,001 display slots, 3,111 unique configurations, 534
 population pairs and 62,220,000 sampled table pairs. T5 regenerates and checks
-all 22 thesis figures against independently selected source rows, verifies every
-reported result in Chapter 6, and retains all individual regimes in the
-companion atlas. T6 records a separate scientific-continuity and readability
+all 22 confirmatory thesis figures against independently selected source rows,
+verifies every reported result in Chapter 6, and retains all individual regimes
+in the companion atlas. The post-review check adds one explanatory figure and
+an exact table of all 108 main nulls without changing the frozen run. T6 records
+a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 88-page A4 manuscript from a fresh source copy, with
+T7 then built the final 109-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
-boxes. All 28 relevant tests and the complete evidence audit pass, and all 88
-rendered pages have been inspected. The final PDF, source archive and
+boxes. All 100 tests and the complete evidence audit pass. The previously
+reviewed pages and all pages changed or added by the follow-up have been
+inspected at final size. The final PDF, source archive and
 experimental supplement are assembled under `deliverables/`; T8 can close
 when the author signs and dates the declaration.
 
@@ -204,6 +208,12 @@ question through method, evidence and interpretation. Use ordinary verbs and
 define technical terms. Give each paragraph one main point; revise long
 sentences that combine several claims. Review sentences longer than about
 35 words as an editing aid, while allowing necessary mathematical qualifications.
+
+Keep a dedicated contribution subsection near the end of the introduction so
+the mathematical, methodological, empirical and practical contributions remain
+clear in the examiner's mind. In the results chapter, do not stop after quoting
+a rate or describing a curve: immediately explain why the result matters, what
+comparison it supports and what it does not establish.
 
 Each chapter opens with its purpose and connects to the next part of the
 argument. Results sections use the same sequence: **question, figure, exact

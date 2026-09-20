@@ -1,6 +1,6 @@
 # Scientific audit of the active thesis
 
-Initially checked 13 September 2026 and extended through 16 September 2026 against `chapters_rewrite/`,
+Initially checked 13 September 2026 and extended through 20 September 2026 against `chapters_rewrite/`,
 `WelchSatterthwaiteMI/src/welch_differential_mi/welch.py`, the frozen
 `results/thesis_redesign/` outputs, and the primary sources in
 `LITERATURE_SOURCE_CHECK.md`. This is an independent derivation and
@@ -14,6 +14,10 @@ literature search.
 | Important | Earlier literature already gives the leading categorical/histogram MI bias and sampling variance, and MI-index comparisons predate this thesis. | Chapter 2 now credits Moddemeijer, Brillinger, and Mora--Ruiz-Castillo explicitly. The claimed contribution is narrowed to the variance-estimator sensitivity, its Welch use, and the fixed-regime evaluation. |
 | Important | Positive MI variance \(V(P)>0\) does **not** imply positive variance-sensitivity variance \(\tau^2(P)>0\). | Chapter 4 now states the additional condition for its first-order component degrees of freedom. A concrete counterexample is below and is guarded by a regression test. |
 | Important | Satterthwaite moment matching of the denominator does not prove an exact Student reference for the ratio. The numerator and estimated variance use the same sample. | Chapter 4 now states their generally nonzero first-order covariance. The thesis correctly describes Student as a working reference and interprets its performance empirically. |
+| Important | The original results documented near-independence conservatism without explaining its scale. | Chapter 4 now derives the local relations `V ≈ 2I`, `tau² ≈ 4V`, component df `≈ nI`, and the quadratic dimension terms. Appendix F checks the approximation with independent simulations. |
+| Important | A derivative check validates the algebra of the expanded df, not the quality of its moment approximation. | A post-review study now compares population first-order, plug-in and finite-sample moment dfs, and uses an independent pilot SD to diagnose the complete standardisation. |
+| Important | The empirical contribution lacked direct ablations of the complete variance sensitivity. | Simple Welch and a kurtosis-only frozen-score df were evaluated over 809 selected configurations. They show that the complete pointwise and margin derivative drives most of the additional conservatism. |
+| Important | Hutcheson (1970) is a direct information-theoretic Welch predecessor and uses component df (n_i), not (n_i-1). | The history and gap statement were corrected. A separate Hutcheson-style MI arm was added to the post-review follow-up without modifying the frozen confirmatory run. |
 | Important | An earlier sentence said clipping a negative bias-corrected estimate would change the estimand. The estimand remains the population MI difference; clipping changes the estimator. | Chapter 3 now states the correct consequence: clipping creates a different nonlinear estimator with different finite-sample bias and sampling behaviour. |
 | Important | The independence appendix stated the quadratic result without defining its perturbation or displaying the Taylor terms. | Appendix D now defines the path and expansion point, separates the zeroth-, first-, and second-order terms, derives both forms of the Hessian, and connects multinomial cell error to the usual chi-squared limit. |
 | Checked | The analytic cell-sensitivity expression, plug-in implementation, and saved result summaries agree under the checks below. | No change to the frozen simulations or method implementation was justified. |
@@ -181,6 +185,46 @@ paired results have zero Expanded-only rejections across 3,111 configurations,
 consistent with that theorem. This cannot by itself show superior calibration
 or power; rejection falls under both the null and alternatives.
 
+## Post-review mechanism check
+
+The explanatory follow-up uses the frozen population tables but new random
+samples. It contains 809 unique evaluation configurations with 20,000 table
+pairs each. Each of 169 null configurations has a separate 20,000-pair pilot,
+for 19.56 million new table pairs in total. It is labelled as follow-up evidence
+and does not alter the frozen 3,111-configuration confirmatory run.
+
+For the additive first-block 3x3 different-skew null with equal MI 0.02 and
+equal sample sizes 100, the evaluation gives Wald rejection 0.0166. Dividing
+the numerator by the finite-sample SD estimated from the independent pilot
+gives 0.0551, while dividing by the population first-order SD gives 0.0976.
+The average estimated squared SE is 1.1699 times the empirical variance, but
+the empirical numerator variance is 1.4249 times the population first-order
+variance. This supports denominator estimation as an important mechanism and
+simultaneously rules out the stronger claim that denominator mean bias alone
+explains the regime.
+
+At the same point, the population first-order component dfs are 1.73 and 1.51,
+the evaluation medians of the plug-in dfs are 3.14 and 2.43, and independent
+pilot moment dfs are 4.84 and 3.77. The first-order variance approximation for
+the variance estimator is already within about 10%, so its shifted finite-
+sample mean also contributes to the df discrepancy. At n=1000 the three
+calculations are substantially closer. These observations support a condition
+that `nV` should be large relative to interaction dimension `d`; they do not
+prove failure for every small-df population.
+
+The follow-up also compares Hutcheson's component assignment (n_i) with the
+ordinary-Welch assignment (n_i-1). Their rejection rates are identical in
+494 of 809 configurations, differ by 0.00047 on average in absolute value, and
+differ by at most 0.01235 in the extreme 5x5, n=5 alternative. This confirms
+that the historical correction matters conceptually but does not overturn the
+empirical conclusion about the much stronger Expanded Welch adjustment.
+
+The follow-up also checks the observed-support bias correction. Its effect
+changes with the direction of sample imbalance, so it is retained only as a
+sensitivity analysis. All exact rates, validity values, Monte Carlo errors,
+paired differences, source hashes and deterministic seed rules are stored in
+`results/thesis_mechanism_check/`.
+
 ## Empirical claim audit
 
 - The source-linked `figures_rewrite/audit_evidence.py` reconstructs the frozen
@@ -219,7 +263,7 @@ or power; rejection falls under both the null and alternatives.
 From the workspace root:
 
 ```bash
-.venv/bin/python -m unittest WelchSatterthwaiteMI.tests.test_thesis_derivation_audit WelchSatterthwaiteMI.tests.test_welch
+.venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
 .venv/bin/python 'Thesis Writeup/Welch MI/figures_rewrite/audit_evidence.py'
 ```
 

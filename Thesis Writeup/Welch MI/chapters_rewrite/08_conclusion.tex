@@ -27,6 +27,16 @@ populations, while near-independence settings remained difficult even at
 large finite sample sizes. The expanded call used about 1.75 times the
 runtime of Wald in the measured implementation.
 
+The post-review mechanism checks explain this pattern more directly. Near
+independence, the population component degree of freedom is approximately
+\(nI\), so Expanded Welch can impose a very heavy-tailed reference exactly
+where quadratic sampling variation is still important. An independent-pilot
+diagnostic shows that standard-error estimation explains a substantial part
+of Wald's conservatism in a representative weak-null regime, but also that
+the population first-order variance understates the numerator's finite-sample
+variation. Simpler degree-of-freedom ablations confirm that the complete
+pointwise and margin derivative drives most of the expanded adjustment.
+
 The evidence therefore supports Normal Wald as the general baseline. Expanded
 Welch is only a conditional sensitivity analysis; future corrections must
 address the numerator, standard error and population structure together rather

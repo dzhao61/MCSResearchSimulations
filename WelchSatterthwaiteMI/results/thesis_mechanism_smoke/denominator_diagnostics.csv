@@ -1,0 +1,2 @@
+configuration_id,pair_id,shape,profile,n_p,n_q,target_mi_p,target_mi_q,section,replicates,pilot_sd,standardized_bias,mean_se2_over_empirical_var,empirical_var_over_first_order,normal_wald_rate,independent_mc_sd_rate,population_first_order_sd_rate,median_combined_df,numerator_se2_correlation
+config_f5bd1ee837e6f46b,pair_0a0e0f72610302eb,2x2,uniform,2,2,0.02,0.02,main,200,0.435053938931122,-0.023898663540304767,0.0,4.828809781182061,0.0,0.0,0.405,,

@@ -1,0 +1,28 @@
+\begin{table}[htbp]
+\centering\small
+\caption{Denominator diagnostic for the additive first-block $3\times3$ different-skew null, $I(P)=I(Q)=0.02$. $R$ is mean estimated squared SE divided by independently estimated sampling variance. MC SD uses that independent finite-sample SD; first-order SD uses the population influence variance. Each pilot and evaluation uses 20,000 independent replicates.}
+\label{tab:denominator-check}
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & $R$ & Wald & MC SD & First-order SD\\
+\midrule
+100 & 1.17 & 0.0166 & 0.0551 & 0.0976 \\
+1000 & 1.06 & 0.0384 & 0.0509 & 0.0532 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering\small
+\caption{Variance and component-df diagnostics for the same populations. The population first-order df is $2nV^2/\tau^2$; plug-in is its median over evaluation tables; MC is $2\overline{\widehat V}^{2}/s^2_{\widehat V}$ from the independent pilot.}
+\label{tab:component-check}
+\begin{tabular}{rlrrrr}
+\toprule
+$n$ & Population & $\E\widehat V/V$ & First order & Plug-in & MC\\
+\midrule
+100 & P & 1.75 & 1.73 & 3.14 & 4.84 \\
+100 & Q & 1.63 & 1.51 & 2.43 & 3.77 \\
+1000 & P & 1.09 & 17.26 & 18.82 & 20.52 \\
+1000 & Q & 1.08 & 15.08 & 16.52 & 17.56 \\
+\bottomrule
+\end{tabular}
+\end{table}

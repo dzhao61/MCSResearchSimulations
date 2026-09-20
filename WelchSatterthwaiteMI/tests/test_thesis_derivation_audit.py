@@ -71,7 +71,53 @@ def direct_expanded_values(table: np.ndarray) -> tuple[float, float, float, floa
     return mi, variance, tau_squared, component_df
 
 
+def kurtosis_only_df(table: np.ndarray) -> float:
+    """Evaluate the frozen-score comparator used in the review follow-up."""
+    probability = table / table.sum()
+    mi, variance = mi_and_variance(probability)
+    pointwise = np.log(
+        probability
+        / (
+            probability.sum(axis=1, keepdims=True)
+            * probability.sum(axis=0, keepdims=True)
+        )
+    )
+    sensitivity = (pointwise - mi) ** 2 - variance
+    tau_squared = float(np.sum(probability * sensitivity**2))
+    return 2.0 * table.sum() * variance**2 / tau_squared
+
+
 class ThesisDerivationAudit(unittest.TestCase):
+    def test_near_independence_limits(self) -> None:
+        row = np.array([0.7, 0.2, 0.1])
+        column = np.array([0.6, 0.25, 0.15])
+        independent = np.outer(row, column)
+        direction = np.array(
+            [[1.0, -1.0, 0.0], [-1.0, 1.0, 0.0], [0.0, 0.0, 0.0]]
+        )
+        ratios = []
+        for epsilon in (1e-3, 5e-4, 2.5e-4):
+            probability = independent + epsilon * direction
+            mi, variance = mi_and_variance(probability)
+            table = probability * 10000.0
+            _, _, tau_squared, component_df = direct_expanded_values(table)
+            ratios.append((variance / (2.0 * mi), tau_squared / (4.0 * variance), component_df / (10000.0 * mi)))
+        for index in range(3):
+            self.assertLess(abs(ratios[-1][index] - 1.0), abs(ratios[0][index] - 1.0))
+            self.assertAlmostEqual(ratios[-1][index], 1.0, delta=0.01)
+
+    def test_kurtosis_only_worked_example_is_distinct(self) -> None:
+        table_p = np.array([[35, 10, 5], [10, 20, 5], [5, 5, 10]], dtype=float)
+        table_q = np.array([[30, 5, 5], [5, 30, 5], [5, 5, 10]], dtype=float)
+        expanded_p = direct_expanded_values(table_p)[3]
+        expanded_q = direct_expanded_values(table_q)[3]
+        frozen_p = kurtosis_only_df(table_p)
+        frozen_q = kurtosis_only_df(table_q)
+        self.assertAlmostEqual(frozen_p, 315.32, places=2)
+        self.assertAlmostEqual(frozen_q, 122.68, places=2)
+        self.assertGreater(frozen_p, expanded_p)
+        self.assertGreater(frozen_q, expanded_q)
+
     def test_mi_influence_matches_direct_finite_differences(self) -> None:
         probability = np.array([[0.36, 0.14], [0.09, 0.41]])
         mi, _ = mi_and_variance(probability)
