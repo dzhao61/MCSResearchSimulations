@@ -39,10 +39,7 @@ the target MI difference is held fixed. The construction comparison is
 particularly instructive: equal margins and MI do not determine the table's
 complete sampling distribution. A scalar target is useful for organising
 experiments, but cannot guarantee identical difficulty across distinct
-population tables. The \(8\times8\) imbalance check adds a related warning:
-when \(d\) is large and one sample remains small, the leading bias correction
-itself can be under substantial finite-sample stress. Changing only the
-reference distribution cannot repair that shared numerator problem.
+population tables.
 
 The fourth question concerned sample size and computation. For the tested
 first-block positive-MI populations with true MI 0.02, both null rates are
@@ -64,51 +61,19 @@ adaptive calibration method that can move the threshold in both directions.
 It also does not alter the leading bias correction or re-estimate the
 numerator's finite-sample distribution.
 
-This direction contrasts with the regression settings that motivate several
-Satterthwaite precedents. There, downward-biased uncertainty estimates or
-undercoverage call for a correction that makes rejection harder. Near MI
-independence, however, \(\E\widehat V\approx V+d/n\), so estimated uncertainty
-is already shifted upward; adding a heavier-tailed reference compounds the
-conservatism instead of correcting it.
-
 The estimated numerator and denominator come from the same count tables.
-Independence of the \(P\) and \(Q\) \emph{samples} allows their variance
-contributions to be combined, but it does not make the numerator independent
-of its estimated standard error. Moment matching of the denominator alone
-therefore does not prove that \(T\) has a Student distribution. When the
-first-order MI approximation itself is poor, changing only the reference
-quantile has limited scope. The independent-pilot diagnostic in
-Appendix~\ref{app:mechanism} shows that replacing the random denominator by
-the actual finite-sample standard deviation can restore near-nominal rejection
-in a representative conservative regime. It also shows that the population
-first-order standard deviation is too small there. The result supports a
-combined explanation involving denominator estimation and omitted quadratic
-numerator variation; it does not isolate mean denominator bias from
-numerator--denominator dependence or establish one universal mechanism.
-The component degree-of-freedom formula also has its own regularity
-condition: a positive first-order MI variance does not force its variance
-sensitivity to be positive. At such stationary points, the first-order
-moment match cannot describe the finite-sample variance estimate without
-higher-order terms.
+Independence of the two samples allows their variance contributions to be
+added, but it does not make \(T\)'s numerator independent of its estimated
+standard error. The representative pilot in Chapter~\ref{chap:results} shows
+that both parts can depart from their first-order approximations. Moment
+matching the denominator alone therefore cannot guarantee a Student law or
+correct every finite-sample error.
 
 Near independence, the local calculation gives \(V\approx2I\),
 \(\tau^2\approx4V\), and hence a population component degree of freedom near
-\(nI\). This explains why the Expanded Welch reference can become extremely
-heavy-tailed at low baseline MI. The same local Gaussian calculation shows
-that quadratic terms of dimension \(d\) affect both the mean and variance of
-\(\widehat V\). First-order moment matching therefore requires \(nV\) to be
-large relative to \(d\), in addition to adequate expected counts. The
-follow-up comparison with simulated moments confirms that the population,
-plug-in and finite-sample component degrees of freedom can differ materially
-at \(n=100\), then move closer by \(n=1000\).
-
-This transition is consistent with the broader second-order delta-method
-description of \citet{marinescu2025}: away from independence the MI estimation
-error contains a normal contribution together with quadratic, chi-squared-type
-contributions, whereas the linear contribution vanishes at independence. That
-result does not supply a finite-sample correction for the present two-sample
-weak null, but it provides a plausible explanation for why a purely
-first-order Student adjustment can remain conservative at small positive MI.
+\(nI\). This explains why the reference can become very heavy-tailed at low
+MI, exactly where the first-order approximation is least reliable. The result
+is a useful warning, not a complete finite-sample theory.
 
 At exact independence, \(I=0\) and the population first-order MI variance
 vanishes. This does not mean finite empirical MI estimates are always zero.
@@ -133,13 +98,9 @@ rate.
 That rate answers an operational question: how often does the complete
 procedure produce a valid rejection? It should not be mistaken for the
 conditional rejection probability among valid tables. Nor does a failure to
-return a p-value constitute a true negative. The saved method-valid and
-common-valid subsets allow these distinctions to be inspected. In
-particular, the very large \(8\times8\), \(n=5\) alternative gap in
-Chapter~\ref{chap:results} cannot be explained as a pure change of reference
-threshold because the methods are valid on different fractions of tables.
-The exact paired records are preferable to comparing two method-specific
-conditional rates with different denominators.
+return a p-value constitute a true negative. The saved validity and paired
+results allow readers to distinguish fewer rejections from fewer usable
+tests.
 
 \section{Practical conclusion and limits of the evidence}
 
@@ -173,13 +134,9 @@ figure appearances does not provide independent confirmation. The recorded
 Monte Carlo intervals also address repeated sampling of each fixed pair, not
 the broader uncertainty of generalising to an untested population.
 
-The reported alternative rejection rates use the common nominal 0.05
-threshold. Size-adjusting each method separately would answer a different
-question: how their rankings change when a simulation-specific critical value
-is known. Such a curve would not provide a usable calibration rule for an
-unknown real population and was not part of the frozen comparison. The thesis
-therefore keeps calibration and nominal-threshold detection visible side by
-side and does not describe the alternative curves as power at matched size.
+The alternative curves use the common nominal 0.05 threshold. They show
+practical detection under the tested procedures, not power after giving each
+method a simulation-specific critical value.
 
 Future work should address the joint finite-sample behaviour of the
 numerator and denominator or use a calibrated reference tailored to sparse

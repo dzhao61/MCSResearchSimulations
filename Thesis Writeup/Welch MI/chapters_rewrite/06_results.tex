@@ -210,19 +210,6 @@ complete testing problem. Which population has the higher MI and which one has
 the larger sample changes the bias and variance contributions. Power should
 therefore not be averaged across the two directions of sample imbalance.
 
-The larger-table atlas shows that this problem can be more severe than the
-displayed \(3\times3\) examples. For the uniform \(8\times8\) null, changing
-\((n_P,n_Q)\) from \((50,50)\) to \((50,500)\) increases the absolute
-leading-correction difference from zero to
-\(\ImbalanceEightCorrectionOffset\) nats. Wald rejection rises from
-\(\ImbalanceEightEqualSmallWaldRate\) to
-\(\ImbalanceEightQFiveHundredWaldRate\), and Expanded Welch rises from
-\(\ImbalanceEightEqualSmallExpandedRate\) to
-\(\ImbalanceEightQFiveHundredExpandedRate\); validity is one throughout. The
-correction is intended to remove leading plug-in bias, so this pattern is
-evidence that the first-order correction is under severe finite-sample stress,
-not proof that the deterministic offset alone causes the inflation.
-
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth]{imbalance_3x3_q_higher.pdf}
@@ -409,7 +396,7 @@ replicates.}
 \label{fig:convergence-focus}
 \end{figure}
 
-\section{Mechanism checks and null composition}
+\section{Overall calibration and a mechanism check}
 \label{sec:mechanism-results}
 
 The main-grid null contains two different hypotheses in terms of complete
@@ -432,33 +419,15 @@ A separate supplementary study tested the mechanism without altering the
 confirmatory results. For the representative \(3\times3\) different-skew
 null with \(I(P)=I(Q)=0.02\) and \(n=100\), Wald rejection was 0.0166. Using
 an independent Monte Carlo estimate of the numerator's finite-sample standard
-deviation gave 0.0551. In contrast, using the population first-order standard
-deviation gave 0.0976. The estimated squared standard error was 1.17 times
-the empirical variance, while the empirical variance was 1.42 times the
-population first-order variance. Denominator estimation is therefore an
-important source of conservatism in this setting, but the first-order
-numerator approximation also matters.
-
-The same follow-up compared the Hutcheson-style \(n_i\) assignment, Simple
-Welch's \(n_i-1\) assignment and a kurtosis-only component degree of freedom
-against the complete expansion. The first two were nearly indistinguishable
-on average and generally close to Wald, although their rejection rates differed
-by as much as 0.01235 in one \(5\times5\), \(n=5\) configuration. The
-kurtosis-only method was less conservative than Expanded Welch,
-showing that changes to the pointwise MI values and margins drive much of the
-expanded adjustment. Appendix~\ref{app:mechanism} gives the derivation,
-independent-pilot diagnostics, ablation figure and complete main-null table.
-
-The convergence paths need not be monotone at the available finite sample
-sizes. For the \(8\times8\), very-small-MI populations, the follow-up shows
-that the ratio of estimated squared SE to empirical numerator variance changes
-materially between \(n=2{,}500\), 10,000 and 50,000. As cells become occupied
-and the quadratic interaction term gives way to the linear approximation,
-the numerator distribution and denominator approximation can improve at
-different rates. Asymptotic convergence does not require every intermediate
-null rejection rate to move monotonically toward 0.05.
+deviation gave 0.0551, while using the population first-order standard
+deviation gave 0.0976. The first-order approximation is therefore imperfect
+in both the estimated standard error and the numerator distribution. This
+supports the simpler interpretation that changing only the reference
+distribution cannot correct every finite-sample error. Full pilot and
+ablation results are retained in the experiment supplement.
 
 \section{Runtime and summary of evidence}
+\label{sec:runtime-summary}
 
 The complete scalar calls have the same \(O(rc)\) asymptotic complexity.
 The observed median time across the 60 timing regimes is about 85

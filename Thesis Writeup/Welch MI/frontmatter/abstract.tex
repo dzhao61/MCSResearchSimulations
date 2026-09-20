@@ -34,12 +34,10 @@ methods are near nominal in the tested populations; very small MI remains
 difficult. Expanded Welch has the same computational order as Wald and costs
 about 1.75 times as much per scalar call in the measured implementation.
 
-A supplementary post-protocol mechanism study finds that estimated standard errors can
-exceed actual sampling variability. Near independence, local expansions give
-component degrees of freedom approximately equal to sample size times MI,
-while omitted quadratic terms can invalidate that first-order moment match.
-Simpler Welch ablations distinguish the additional effect of differentiating
-the complete variance functional.
+Near independence, the effective degrees of freedom can become very small,
+making Expanded Welch strongly conservative. A supplementary diagnostic also
+shows that changing the reference distribution alone cannot correct all
+finite-sample errors in the statistic and its standard error.
 
 The evidence supports retaining Wald as the simpler general baseline.
 Expanded Welch may be informative in selected liberal regimes, provided that

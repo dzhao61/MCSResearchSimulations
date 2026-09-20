@@ -356,7 +356,7 @@ def null_band_table() -> None:
         r"\begin{table}[htbp]",
         r"\centering",
         r"\small",
-        r"\caption{Location, separately for each method, of the 108 main-grid null configurations relative to the descriptive rejection-rate interval 0.025--0.075. Each profile contains 36 configurations. The final column separately counts configurations with validity below 90\%; it overlaps the three rate-location columns. In particular, all four $n=2$ configurations per profile have zero validity for both methods. Uniform and same-skew are strong nulls; different-skew is the equal-MI weak null. Exact rates and validity are in Appendix~\ref{app:mechanism}.}",
+        r"\caption{Location, separately for each method, of the 108 main-grid null configurations relative to the descriptive rejection-rate interval 0.025--0.075. Each profile contains 36 configurations. The final column separately counts configurations with validity below 90\%; it overlaps the three rate-location columns. In particular, all four $n=2$ configurations per profile have zero validity for both methods. Uniform and same-skew are strong nulls; different-skew is the equal-MI weak null. Exact rates and validity are available in the saved results described in Appendix~\ref{app:evidence-index}.}",
         r"\label{tab:null-band-summary}",
         r"\begin{tabular}{@{}llrrrr@{}}",
         r"\toprule",

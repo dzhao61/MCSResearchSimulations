@@ -1,89 +1,35 @@
 \chapter{Reproducibility and Protocol Record}
 \label{app:reproducibility}
 
-The final statistical protocol is
+The final protocol is
 \path{WelchSatterthwaiteMI/experiments/THESIS_REDESIGN_PROTOCOL.json},
 version 1.0.0, frozen on 7 September 2026 UTC before the final simulation.
 It specifies the population grids, seeds, methods, 20,000 replicates,
-\(\alpha=0.05\), validation tolerances and timing design. It is a local
-protocol freeze following exploratory work, not an externally registered
-analysis plan.
+\(\alpha=0.05\), validation tolerances and timing design. This was a local
+protocol freeze after exploratory development, not an external
+preregistration.
 
-The run metadata report 3,111 unique configurations, 4,001 display slots,
-534 population pairs, 62,220,000 sampled table pairs and 124,440,000 method
-evaluations. The timing experiment is recorded separately. The saved run
-reports completion, and \texttt{verification.json} records that every
-configuration has both method rows, population MI and margins meet their
-checks, rate denominators recalculate, the expanded rejection subset property
-holds, and the \(n=1\) setting is explicitly invalid. The separate report
-verification checks the display-to-result joins and the existence of its
-figures.
+The run contains 3,111 unique configurations, 4,001 display positions and
+534 population pairs, corresponding to 62,220,000 sampled table pairs.
+The saved verification records check the population targets, result
+denominators, paired method outputs, validity rules and generated atlas.
+Chapter~\ref{chap:results} uses the same frozen tables; no population was
+resimulated for a thesis figure.
 
-The thesis evidence audit goes further. It reconstructs the protocol
-manifests, independently selects the exact source configurations for all 22
-thesis figures, and checks every numerical result reported in
-Chapter~\ref{chap:results}. It also checks the generated LaTeX values, paired
-comparisons, convergence ranges, and runtime table against the frozen files.
-
-The supplementary mechanism check is deliberately separate. Its runner is
-\path{run_thesis_mechanism_check.py}, and its report generator is
-\path{report_thesis_mechanism_check.py}. The saved
-\path{results/thesis_mechanism_check/metadata.json} records 809 selected
-configurations, 20,000 evaluation pairs per configuration, independent
-20,000-pair pilots for 169 nulls, the deterministic seed scheme and hashes of
-the frozen source protocol, configuration manifest and population file. The
-evidence audit checks its dimensions and the numerical values quoted in
-Chapter~\ref{chap:results} and Appendix~\ref{app:mechanism}.
-
-The exact run inputs and software versions are in
+The exact software versions, seeds and source hashes are recorded in
 \path{WelchSatterthwaiteMI/results/thesis_redesign/run_metadata.json}.
-Its protocol SHA-256 is the concatenation of these two hexadecimal halves:
-\begin{center}
-\small\texttt{a3ef38e10878c5e23fbfb7b97810d05e}\par
-\texttt{fb1b1ed27e481d70c417721b6b01dc51}
-\end{center}
-It records Python 3.13.5, NumPy 2.4.4, pandas 3.0.3 and SciPy 1.17.1 on
-macOS arm64. Source hashes for the runner, population constructor and both
-method implementations are included there; the recorded Git revision alone
-need not identify every working-tree input. The recorded runner SHA-256 is
-the concatenation of
-\begin{center}
-\small\texttt{42c0ef36f46c88e7828a628ee68fbeb18}\par
-\texttt{dbde5d978291d849dc4847c2b857908},
-\end{center}
-whereas the supplied runner SHA-256 is the concatenation of
-\begin{center}
-\small\texttt{0fd0247da05e5bea92e4f56c9956b067}\par
-\texttt{1ae93244a4e433c421ccf53aac8095bf}.
-\end{center}
-Its later changes are confined to atlas-count metadata, saved-output hashes
-for future runs, and one-pass handling of a failed preflight; population
-construction, simulation and method evaluation are unchanged. All other
-recorded input hashes still match the supplied files. The frozen metadata are
-retained rather than rewritten after the run. Their figure count of 99 means
-primary atlas figures; the later report and preflight records distinguish
-these from seven additional calibration zooms, for 106 files in total.
+The accompanying experiment supplement contains the protocol, implementation,
+consolidated results, 3,111 configuration checkpoints, complete atlas,
+mechanism diagnostics and tests. Its README also documents the minor
+post-run changes to the orchestration script; the population construction,
+simulation and method calculations used for the frozen results are unchanged.
 
-The original run metadata predate per-output hashes. This is not repaired by
-altering the historical record. Instead, the package-level hashes in
-\texttt{SHA256SUMS.txt} authenticate the delivered archives, while the saved
-verification record and evidence audit check the internal result structure,
-denominators and reported values. A fresh run with the supplied runner would
-also record hashes for the consolidated output tables.
-
-The submitted source and experiment-supplement archives contain the manuscript,
-frozen results and generation scripts. Their full names and hashes are recorded
-in \texttt{SHA256SUMS.txt}. After extracting both archives into the documented
-relative layout, running \texttt{python figures\_rewrite/make\_figures.py}
-regenerates the 22 thesis-specific PDFs, figure manifest and numerical macros
-without resimulating populations. The manuscript can then be built with
-\texttt{latexmk -pdf main.tex}. The archive README records the full audit and
-environment commands; no machine-specific installation path is required.
-
-The method's complete scalar runtime does not include construction of the
-population probability tables or random count tables. For each timing
-regime, 200 saved inputs were prepared; a method had 20 warm-up calls and
-five timed passes. Thus the reported microseconds describe this implementation
-and machine. Re-running the protocol elsewhere should preserve the
-statistical specification and compare statistical outputs before comparing
-absolute wall-clock times.
+The thesis evidence audit reconstructs the protocol manifests, identifies the
+source configurations for every displayed figure and checks every numerical
+claim in Chapter~\ref{chap:results} against the saved files. The final
+deliverable checksums are recorded in \texttt{SHA256SUMS.txt}. After extracting
+the source and supplement together, run
+\texttt{python figures\_rewrite/make\_figures.py},
+\texttt{python figures\_rewrite/audit\_evidence.py} and
+\texttt{latexmk -pdf main.tex}. Runtime definitions and limitations are given
+with the results in Section~\ref{sec:runtime-summary}.

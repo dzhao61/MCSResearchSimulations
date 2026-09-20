@@ -21,11 +21,11 @@ submission action.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The final A4 PDF has 111 pages, including 69 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The final A4 PDF has 95 pages, including 66 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 35 active references. The local bibliography contains the same 35 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 109 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Build | The active source builds to 95 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
 | Visual presentation | The previously reviewed pages and every page changed in the supplementary revision were inspected at final size. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, declaration, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration includes blank signature and date lines. | Author must sign and date the declaration before submission. |
@@ -42,16 +42,16 @@ not change the frozen evidence or add material for length alone.
 | Chapter 1 | The estimand, weak null, four research questions, contribution and scope agree with the later method and evidence. No material change required. |
 | Chapter 2 | Prior-work scope agrees with the expanded 35-source audit, including Hutcheson's direct information-theoretic comparison, general sandwich-df and higher-moment MI precedents. Standardisation wording was made consistent and unnecessary “oracle” jargon was removed. |
 | Chapter 3 | Bias correction, (V) versus (V/n), shared statistic and null interpretation agree with the implementation. Unevaluated confidence-interval formulas were removed. |
-| Chapter 4 | The derivation proceeds from moment matching through the complete variance sensitivity to the final reference. It now derives the local `df approximately nI` behaviour and the quadratic terms omitted near independence. Assumptions, invalidity, nesting and numerator-denominator dependence are explicit. |
+| Chapter 4 | The derivation proceeds from moment matching through the complete variance sensitivity to the final reference. It retains the interpretable local `df approximately nI` behaviour without the supplementary higher-order calculation. Assumptions, invalidity, nesting and numerator-denominator dependence are explicit. |
 | Chapter 5 | The fixed population construction, margins, sample randomness, metrics, family counts and runtime design agree exactly with the frozen protocol. |
-| Chapter 6 | Every stated result and all 22 confirmatory figure selections pass the source-linked audit. Strong and weak nulls are separated; the \(n=5\) zero-rejection finding is not counted as calibration; low-validity settings are exposed; and all supplementary mechanism values are checked against saved outputs. |
+| Chapter 6 | Every stated result and all 22 confirmatory figure selections pass the source-linked audit. Strong and weak nulls are separated; the \(n=5\) zero-rejection finding is not counted as calibration; low-validity settings are exposed; and one representative mechanism check is reported without the full ablation study. |
 | Chapters 7-8 | All four research questions are answered; the practical recommendation distinguishes calibration, nominal-threshold detection and validity. The mechanism conclusion is qualified to include denominator estimation, quadratic numerator error and their dependence. |
 | Appendix A | The supporting derivatives agree with the mathematical tests. The finite-difference step was renamed (eta) so it is not confused with the earlier perturbation direction (h). |
 | Appendix B | The constructors and every exact grid agree with the reconstructed protocol; reused configurations and infeasible extensions are distinguished. |
 | Appendix C | The evidence files, denominators, intervals and expected-count terminology agree with the saved outputs. |
 | Appendix D | The independence construction and second-order Taylor expansion agree with the independent numerical check and the (G)-test boundary. |
-| Appendix E | Run metadata and commands agree with the saved record. Its description now includes the exact 22-figure and Chapter 6 evidence checks. |
-| Appendix F | The independent-SD diagnostic, first-order/local/plugin/Monte Carlo component-df comparison, three ablations, support-correction sensitivity and all 108 main null rows agree with the supplementary result files. |
+| Appendix E | The concise reproduction record identifies the frozen protocol, saved metadata, evidence audit, archives and build commands. Exact hashes and code-history details remain in the experiment supplement. |
+| Mechanism supplement | The independent-SD diagnostic, component-df comparisons, ablations, support-correction sensitivity and all 108 main null rows remain available outside the compiled thesis and agree with the saved result files. |
 
 No active manuscript file contains a TODO or drafting placeholder. The only
 remaining front-matter action is the author's signature and date on the
@@ -64,24 +64,25 @@ dependencies still match exactly. The orchestration runner has three later,
 non-statistical changes: more precise atlas-count metadata, hashes for saved
 outputs on future runs, and corrected one-pass handling of a failed preflight.
 Its population-construction, simulation and method-evaluation path is
-unchanged, so this source drift does not alter the frozen results. Appendix E
-records both runner hashes and explains the 99-primary-plus-7-zoom count. The
-source package is rebuilt without disposable LaTeX auxiliary files.
+unchanged, so this source drift does not alter the frozen results. Detailed
+hashes and runner-history notes remain in the experiment supplement rather
+than interrupting the thesis narrative. The source package is rebuilt without
+disposable LaTeX auxiliary files.
 
 ## Final verification record
 
 Final checks run on 20 September 2026:
 
 - clean build from a fresh extraction of the final source archive;
-- 111 A4 pages and 1,046,039 bytes before packaging;
-- final named PDF SHA-256 `dffc7ac4ec13eee0c4e380db5daee882c1a8de87fe49fd93cada02fce370cd04`;
+- 95 A4 pages and 975,342 bytes before packaging;
+- final named PDF SHA-256 `c43921ec40570f05dc95da44473b1ae59db745b9bdb388f9c3ce5ea85e97b25d`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - all 101 unit, derivation and experiment tests passed;
 - complete evidence audit passed, including all 22 confirmatory thesis figures, every reported Chapter 6 value and the supplementary mechanism evidence;
 - a fresh combined extraction of the source and experiment archives rebuilt
   the 3,111-configuration preflight, passed all 36 bundled tests, regenerated the
   22 confirmatory thesis figures and mechanism report, passed the evidence
-  audit and compiled the 111-page thesis without access to the working tree;
+  audit and compiled the 95-page thesis without access to the working tree;
 - 35 checked bibliography records, with every manuscript citation resolved and no unused records;
 - all newly added and changed pages inspected at final pagination, building on the prior full-page review;
 - `git diff --check` passed for the thesis tree.

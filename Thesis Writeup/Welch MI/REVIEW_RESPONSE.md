@@ -16,8 +16,8 @@ more carefully than proposed. The active manuscript now:
   in every \(n=5\) main-null regime;
 - adds a validity-below-90% column to the complete null summary, so invalid or
   unstable settings are visible alongside the unconditional rejection bins;
-- adds the local-moment prediction to Table F.2 and describes both its useful
-  \(n=100\) approximation and its \(n=1000\) overshoot;
+- checks the local-moment prediction in the experiment supplement while
+  retaining only the interpretable \(nI\) result in the thesis;
 - uses the common local noncentrality form
   \(\lambda\approx nV\approx2nI\), with the equivalence explicitly limited to
   the near-independence expansion;
@@ -70,7 +70,7 @@ confirmatory estimator, or the thesis's substantive conclusions.
 | Missing Simple and kurtosis-only ablations | Accepted | Both were added to the supplementary mechanism study. Simple Welch is generally close to Wald; kurtosis-only lies between Simple and Expanded Welch. This confirms that the complete pointwise and margin derivative drives most of the added conservatism. |
 | Literature gap is overstated | Accepted | Chapter 2 and the source audit now engage Pan and Wall, Bell and McCaffrey, Kauermann and Carroll, Hutter, Hutter and Zaffalon, and Roulston. The contribution is now framed as an MI-specific derivation and assessment within an established general small-sample-adjustment literature. |
 | Strong and weak nulls are mixed | Accepted | The abstract and Results now say this explicitly. Results separate the 36 different-skew weak-null configurations from the 72 P=Q configurations. |
-| All 108 main null results should be visible | Accepted | Appendix F now prints rejection and validity for every main null configuration. |
+| All 108 main null results should be visible | Accepted with separation | The thesis reports the complete profile summary, while the exact 108-row table is retained in the experiment supplement to avoid interrupting the main narrative. |
 | Add size-adjusted power | Not adopted | This would answer a different question using a population-specific simulated critical value unavailable in practice. The frozen design intentionally reports null calibration and nominal-threshold detection separately. The limitation is now stated directly. |
 | Upper panels are flat | Not changed | The common 0--1 scale is deliberate and lets readers compare the complete landscape. Calibration zooms remain available alongside the full-scale panels. |
 | Explain nonmonotone convergence | Accepted cautiously | Results now explain that numerator and denominator approximations can change at different rates as support fills in. The text does not claim a monotonic finite-sample convergence theorem. |

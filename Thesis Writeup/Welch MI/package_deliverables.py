@@ -43,6 +43,12 @@ def source_files() -> list[tuple[Path, Path]]:
     for source in clean_files(
         THESIS / "figures_rewrite", suffixes={".pdf", ".py", ".json", ".tex"}
     ):
+        if source.name in {
+            "main_null_table.tex",
+            "mechanism_ablation.pdf",
+            "mechanism_tables.tex",
+        }:
+            continue
         files.append((source, source.relative_to(THESIS)))
     return files
 

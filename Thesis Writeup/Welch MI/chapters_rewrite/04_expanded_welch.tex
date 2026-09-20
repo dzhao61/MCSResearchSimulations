@@ -535,59 +535,23 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 \section{Behaviour near independence}
 \label{sec:near-independence-mechanism}
 
-The size of the adjustment has a useful local explanation. Hold the positive
-margins fixed and write \(p_{ij}=a_{ij}+\epsilon h_{ij}\), where
-\(a_{ij}=p_{i+}p_{+j}\), the row and column sums of \(h\) vanish, and
-\(\epsilon\) tends to zero. With \(s_{ij}=h_{ij}/a_{ij}\), a second-order
-Taylor expansion gives
-\begin{align}
- I(P)&=\tfrac12\epsilon^2\sum_{ij}a_{ij}s_{ij}^2+O(\epsilon^3),\\
- V(P)&=\epsilon^2\sum_{ij}a_{ij}s_{ij}^2+O(\epsilon^3)
-       =2I(P)+O(\epsilon^3).
-\end{align}
-The row and column conditional means of the leading score
-\(\epsilon s_{ij}\) are zero. In Equation~\eqref{eq:g-final}, the bracket
-therefore contributes \(2\epsilon s_{ij}+O(\epsilon^2)\), whereas the
-centred squared term is only \(O(\epsilon^2)\). Consequently,
+The size of the adjustment has a useful local explanation. For a distribution
+close to independence, a second-order Taylor expansion gives
 \begin{equation}
- \tau^2(P)=4V(P)+O(\epsilon^3),\qquad
- \nu_P\approx\frac{n_PV(P)}{2}\approx n_PI(P).
+ V(P)\approx 2I(P),
+ \qquad \tau^2(P)\approx4V(P).
+ \label{eq:near-independent-moments}
+\end{equation}
+Substitution into the component formula then gives
+\begin{equation}
+ \nu_P=\frac{2n_PV(P)^2}{\tau^2(P)}\approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-This is a population component approximation. The final two-sample degree
-of freedom still combines both components: for equal populations and equal
-sample sizes it is approximately \(2nI(P)\). A small population component
-also need not equal the median of its empirical plug-in estimate.
-
-These relations explain why low baseline MI can produce a large Student
-adjustment. They also reveal a limit to its first-order justification.
-In the local Gaussian approximation to multinomial errors, the quadratic
-interaction statistic has a noncentral chi-squared form with
-\(d=(r-1)(c-1)\) coordinates and local noncentrality
-\(\lambda\approx nV(P)\approx2nI(P)\). The last equivalence uses the local
-relation \(V(P)\approx2I(P)\); it is not exact away from independence.
-Retaining the linear and quadratic error terms then gives the local formulas
-\begin{align}
- \E\Vhat&\approx V+\frac d n,&
- \Var(\Ihat)&\approx\frac V n+\frac d{2n^2},\\
- \Var(\Vhat)&\approx\frac{4V}{n}+\frac{2d}{n^2},&
- \nu_{\rm moments}&\approx\frac{(nV+d)^2}{2nV+d}.
- \label{eq:local-variance-mechanism}
-\end{align}
-Here \(\nu_{\rm moments}=2\{\E\Vhat\}^2/\Var(\Vhat)\) includes the
-quadratic terms omitted by the first-order component formula. Appendix
-\ref{app:mechanism} derives these expressions and tests them numerically.
-They require fixed dimension, positive margins and an adequate Gaussian
-approximation to the cell counts; they are not universal finite-sample
-bias formulas for arbitrary MI or sparse support.
-
-The estimated variance of MI can therefore be too large even when the
-numerator's sampling variance also exceeds its first-order value. Changing
-to a Student reference lowers rejection further. To neglect the quadratic
-terms in this local model requires \(nV\) large relative to \(d\), not just
-a large total sample size. This warns against first-order moment matching near
-independence; it does not prove that small degrees of freedom can never be
-useful.
+Thus low MI can produce a small effective degree of freedom and a much
+heavier-tailed reference. The approximation is local: it assumes fixed table
+dimension, positive probabilities and sufficiently regular cell counts. Very
+near independence, quadratic sampling variation can still be important, so a
+first-order Student adjustment need not improve finite-sample calibration.
 
 \section{Theoretical status}
 

@@ -59,8 +59,6 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `frontmatter/`: title page, declaration, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
 - `appendices_rewrite/`: active derivations, exact design grids and evidence index.
-- `appendices_rewrite/F_mechanism_checks.tex`: supplementary independent-SD,
-  degree-of-freedom and ablation checks, plus all 108 main null rates.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
 - `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
 - `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
@@ -72,6 +70,10 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `EXEMPLAR_REVIEW_NOTES.md`: current exemplar analysis and writing guidance.
 - `THESIS_PLAN.md`: previous research and chapter plan.
 - `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
+
+Detailed independent-pilot, degree-of-freedom ablation and complete main-null
+diagnostics are retained in the experiment supplement rather than the
+reader-facing thesis.
 
 The final named PDF, self-contained source archive, experiment supplement and
 checksums are in `deliverables/`. `SUBMISSION_CHECK.md` records the completed
