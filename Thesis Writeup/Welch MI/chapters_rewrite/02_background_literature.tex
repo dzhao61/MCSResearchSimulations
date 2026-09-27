@@ -112,54 +112,38 @@ The zero-cell convention follows from
 they still affect the empirical margins and the finite-sample behaviour of the
 estimator.
 
-Under multinomial sampling, the entire table is random subject to its fixed
-total. Cell counts are dependent because increasing one count leaves fewer
-observations for the others. The plug-in estimator remains consistent for a
-fixed alphabet, but its finite-sample distribution depends on the complete
-probability table. Equal alphabet sizes and sample sizes do not imply equal
-sampling behaviour when one population has much rarer cells.
+Under multinomial sampling, the cell counts are random but constrained to sum
+to \(n\), so they are dependent. The plug-in estimator remains consistent for
+a fixed alphabet, but its finite-sample behaviour depends on the complete
+probability table. In particular, rare cells can change the sampling
+behaviour even when the alphabet and sample sizes are unchanged.
 
-The plug-in estimator is upward biased. Finite sampling makes an empirical
-joint table appear more structured than its population distribution, which
-increases the estimated departure from independence. For a fixed positive
-\(r\times c\) support, the leading bias is
+The plug-in estimator is upward biased: random variation in the cell counts
+tends to make the empirical table appear more dependent than the population
+table. For a fixed positive \(r\times c\) support, the leading bias is
 \begin{equation}
   \Bias\{\Ihat(P)\}
   =\frac{(r-1)(c-1)}{2n}+O(n^{-2}).
   \label{eq:mi-leading-bias}
 \end{equation}
-This result follows from the corresponding leading entropy biases and is
-closely related to Miller's correction \citep{miller1955}; the same
-histogram-MI term appears in \citet{moddemeijer1989}.
-More complete analyses show that sparse sampling and unknown support can
-produce substantial higher-order error beyond Equation
-\eqref{eq:mi-leading-bias} \citep{paninski2003}.
-
-The leading term can be seen from the entropy identity in Equation
-\eqref{eq:mi-entropy-form}. For a discrete variable with \(m\) positive
-categories, the plug-in entropy has leading bias \(-(m-1)/(2n)\). Applying
-this result to \(H(X)+H(Y)-H(X,Y)\) gives
-\begin{align}
-  \Bias\{\Ihat(P)\}
-  &\approx
-  -\frac{r-1}{2n}
-  -\frac{c-1}{2n}
-  +\frac{rc-1}{2n}\\
-  &=\frac{(r-1)(c-1)}{2n}.
-  \label{eq:mi-bias-from-entropies}
-\end{align}
-The leading MI bias is positive because estimating the larger joint
-distribution introduces more entropy bias than estimating the two margins.
-The correction in Chapter~\ref{chap:baselines} subtracts this leading term.
+The factor \((r-1)(c-1)\) increases with table size, while division by \(n\)
+shows that the bias decreases as the sample grows. The bias is therefore
+largest for larger tables with small samples. The result is closely related
+to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
+term appears in \citet{moddemeijer1989}. Sparse sampling can produce further
+error beyond this leading approximation \citep{paninski2003}.
 
 Bias matters directly when comparing two populations. If
 \(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
 \begin{equation}
   \frac{(r-1)(c-1)}{2}
   \left(\frac{1}{n_P}-\frac{1}{n_Q}\right).
+  \label{eq:two-sample-mi-bias}
 \end{equation}
-Removing the leading term is therefore part of the effect estimate, not
-an optional refinement of its reference distribution.
+For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
+\eqref{eq:two-sample-mi-bias} gives \(0.005\) nats despite equal population MIs. Chapter
+\ref{chap:baselines} corrects this sample-size effect by subtracting
+\((r-1)(c-1)/(2n)\) from each estimate.
 
 \section{First-order inference for nonlinear functionals}
 
