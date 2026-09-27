@@ -55,15 +55,16 @@ margins. A positive value means that the cell occurs more often than
 independence predicts; a negative value means that it occurs less often.
 
 Mutual information is the probability-weighted average of these pointwise
-values:
+values \citep{shannon1948,bossomaier2016}:
 \begin{equation}
   I(P)
   =\sum_{i=1}^{r}\sum_{j=1}^{c}p_{ij}\pmi_P(i,j).
   \label{eq:background-mi}
 \end{equation}
-Equivalently,
+Because \(P\) is the joint distribution of \((X,Y)\), the same quantity is
+conventionally written as \(I(X;Y)\). Equivalently,
 \begin{equation}
-  I(P)=I(X;Y)=H(X)+H(Y)-H(X,Y).
+  I(X;Y)=H(X)+H(Y)-H(X,Y).
   \label{eq:mi-entropy-form}
 \end{equation}
 The quantity is nonnegative and equals zero exactly when
@@ -82,11 +83,8 @@ equality of distributions. This distinction is central to the present test:
 the null fixes one scalar functional while leaving the remaining features of
 each population unrestricted.
 
-The logarithm base determines the unit but not the inferential problem. If
-base two is used, every pointwise value and MI value is divided by
-\(\log 2\). The standard error is divided by the same constant, so a
-standardised statistic is unchanged. This thesis uses natural logarithms and
-reports MI in nats.
+The logarithm base determines the unit used to report MI. This thesis uses
+natural logarithms, so MI is measured in nats.
 
 \section{Estimating discrete mutual information}
 \label{sec:background-mi-bias}

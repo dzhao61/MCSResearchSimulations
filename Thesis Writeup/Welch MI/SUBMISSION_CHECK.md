@@ -72,8 +72,8 @@ disposable LaTeX auxiliary files.
 Final checks completed on 27 September 2026:
 
 - clean build from a fresh extraction of the final source archive;
-- 96 A4 pages and 981,431 bytes before packaging;
-- final named PDF SHA-256 `b8bc95f69fc8941fa70ac8f11edbf7f0186f4e7fea6950d716da44adf063e889`;
+- 96 A4 pages and 981,496 bytes before packaging;
+- final named PDF SHA-256 `7d1e71e9a6c239dbdf0e7ef0e4c05171b8a3823d41ca8f7600a6ce4864fae66b`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - all 101 unit, derivation and experiment tests passed;
 - complete evidence audit passed, including all 22 confirmatory thesis figures, every reported Chapter 6 value and the supplementary mechanism evidence;
