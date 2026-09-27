@@ -77,10 +77,10 @@ $V(P)/n_P$, not a variance of the numerical category labels.
 \section{Mean of the variance influence function}
 
 The influence function $g_P(x,y)$ is centred at the population level. This
-can be shown without expanding its individual terms. Write the one-cell
-direction as $h^{(x,y)}=\delta_{(x,y)}-P$. Its probability-weighted average is
+can be shown without expanding its individual terms. The probability-weighted
+average of the one-cell perturbation directions is
 \begin{equation}
-  \sum_{x,y}p_{xy}h^{(x,y)}=P-P=0.
+  \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
 \end{equation}
 The first derivative is linear in the direction of change. Therefore, the
 weighted average of the one-cell derivatives is the derivative in the
@@ -93,15 +93,15 @@ weighted-average direction:
     \right|_{0}\\
   &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}
     V\left\{P+\varepsilon
-    \sum_{x,y}p_{xy}h^{(x,y)}\right\}
+    \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}\right\}
     \right|_{0}\\
   &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
     \right|_{0}=0.
 \end{align}
 The same weighted cancellation holds after exact plug-in substitution. The
-implementation nevertheless subtracts $\overline g_P$ in
-Equation~\eqref{eq:tau-hat} to protect the variance calculation from
-floating-point roundoff; this does not change the population definition.
+implementation nevertheless subtracts the probability-weighted empirical
+mean inside Equation~\eqref{eq:tau-hat} to protect the variance calculation
+from floating-point roundoff; this does not change the population definition.
 
 \section{Direct table substitutions}
 
@@ -119,26 +119,20 @@ Welch are calculated as
   \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
 \end{align}
 All sums involving pointwise MI are restricted to cells with
-$\widehat p_{ij}>0$. The probability-weighted row and column means are
-\begin{align}
-  \widehat R_P(i)
-  &=\frac{\sum_j\widehat p_{ij}\widehat\pmi_P(i,j)}
-          {\widehat p_{i+}},\\
-  \widehat C_P(j)
-  &=\frac{\sum_i\widehat p_{ij}\widehat\pmi_P(i,j)}
-          {\widehat p_{+j}}.
-\end{align}
-Consequently,
+$\widehat p_{ij}>0$. Direct substitution gives
 \begin{align}
   \widehat g_P(i,j)
   ={}&\{\widehat\pmi_P(i,j)-\Ihat(P)\}^2-\Vhat(P)\\
-  &+2\{\widehat\pmi_P(i,j)-\widehat R_P(i)
-  -\widehat C_P(j)+\Ihat(P)\},\\
-  \overline g_P
-  ={}&\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),\\
+  &+2\left\{\widehat\pmi_P(i,j)
+  -\frac{\sum_{j'}\widehat p_{ij'}\widehat\pmi_P(i,j')}
+         {\widehat p_{i+}}
+  -\frac{\sum_{i'}\widehat p_{i'j}\widehat\pmi_P(i',j)}
+         {\widehat p_{+j}}
+  +\Ihat(P)\right\},\\
   \widehat\tau^2(P)
   ={}&\sum_{i,j}\widehat p_{ij}
-  \{\widehat g_P(i,j)-\overline g_P\}^2,\\
+  \left\{\widehat g_P(i,j)
+  -\sum_{k,l}\widehat p_{kl}\widehat g_P(k,l)\right\}^2,\\
   \widehat\nu_P
   ={}&\frac{2n_P\Vhat(P)^2}{\widehat\tau^2(P)}.
 \end{align}

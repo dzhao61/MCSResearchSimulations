@@ -9,26 +9,21 @@ of the full MI variance estimator.
 
 \section{From Welch--Satterthwaite to the required MI quantity}
 
-For independent variance estimates \(s_i^2\), positive weights \(k_i\), and
-component degrees of freedom \(\nu_i\), the Welch--Satterthwaite equation is
+For the two MI estimates, the Welch--Satterthwaite equation combines their
+estimated variance contributions as
 \begin{equation}
   \nu
   =
   \frac{
-  \left(\sum_i k_i s_i^2\right)^2
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
   }{
-  \sum_i(k_i s_i^2)^2/\nu_i
+  \left\{\Vhat(P)/n_P\right\}^2/\nu_P
+  +\left\{\Vhat(Q)/n_Q\right\}^2/\nu_Q
   }.
   \label{eq:ws-general}
 \end{equation}
-For the two MI estimates, the variance contributions are
-\begin{equation}
-  k_Ps_P^2=\frac{\Vhat(P)}{n_P},
-  \qquad
-  k_Qs_Q^2=\frac{\Vhat(Q)}{n_Q}.
-  \label{eq:ws-mi-components}
-\end{equation}
-These are the two terms in the squared standard error. The remaining quantities
+The numerator contains the two terms in the squared standard error. The
+remaining quantities
 are the component degrees of freedom \(\nu_P\) and \(\nu_Q\), which should
 measure how reliably \(\Vhat(P)\) and \(\Vhat(Q)\) estimate their population
 counterparts.
@@ -44,40 +39,38 @@ combined through Equation~\eqref{eq:ws-general}.
 \noindent\textbf{Moment matching for one component.}
 
 Satterthwaite represents a positive variance estimate by a scaled chi-squared
-variable. For the first population, write the working model as
+variable. For the first population, the working approximation represents
+\(\Vhat(P)\) by
 \begin{equation}
-  \Vhat(P)
-  \ \dot\sim\
   \E\{\Vhat(P)\}
   \frac{\chi^2_{\nu_P}}{\nu_P}.
   \label{eq:scaled-chi-working}
 \end{equation}
-The symbol $\dot\sim$ denotes a working distributional approximation. The
-model matches moments; it does not assert that the
+The approximation matches moments; it does not assert that the
 finite-sample distribution of \(\Vhat(P)\) is exactly chi-squared.
 
-For \(U\sim\chi^2_{\nu_P}\),
+For a chi-squared variable with \(\nu_P\) degrees of freedom,
 \begin{equation}
-  \E(U)=\nu_P,
+  \E(\chi^2_{\nu_P})=\nu_P,
   \qquad
-  \Var(U)=2\nu_P.
+  \Var(\chi^2_{\nu_P})=2\nu_P.
 \end{equation}
 The scaling in Equation~\eqref{eq:scaled-chi-working} therefore matches the
 mean automatically:
 \begin{equation}
   \E\left[
-  \E\{\Vhat(P)\}\frac{U}{\nu_P}
+  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_P}}{\nu_P}
   \right]
   =\E\{\Vhat(P)\}.
 \end{equation}
 Its variance is
 \begin{align}
   \Var\left[
-  \E\{\Vhat(P)\}\frac{U}{\nu_P}
+  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_P}}{\nu_P}
   \right]
   &=
   \frac{[\E\{\Vhat(P)\}]^2}{\nu_P^2}
-  \Var(U)\\
+  \Var(\chi^2_{\nu_P})\\
   &=
   \frac{2[\E\{\Vhat(P)\}]^2}{\nu_P}.
 \end{align}
@@ -202,11 +195,9 @@ The target is the first-order change in
   V(P)
   =\Var_P\{\pmi_P(X,Y)\}.
 \end{equation}
-Write this variance as
+Write this variance in second-moment form:
 \begin{equation}
-  V(P)=M_2(P)-I(P)^2,
-  \qquad
-  M_2(P)=\E_P\{\pmi_P(X,Y)^2\}.
+  V(P)=\E_P\{\pmi_P(X,Y)^2\}-I(P)^2.
   \label{eq:v-second-moment}
 \end{equation}
 Define the observation-level variance sensitivity by
@@ -222,7 +213,8 @@ Differentiating Equation~\eqref{eq:v-second-moment} gives
 \begin{equation}
   g_P(x,y)
   =
-  \left.\frac{\mathrm d M_2(P_\varepsilon)}{\mathrm d\varepsilon}
+  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+  \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
   \right|_{0}
   -2I(P)
   \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
@@ -232,13 +224,14 @@ Differentiating Equation~\eqref{eq:v-second-moment} gives
 
 It remains to differentiate
 \begin{equation}
-  M_2(P_\varepsilon)
+  \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
   =\sum_{i,j}p_{ij}(\varepsilon)
   \pmi_{P_\varepsilon}(i,j)^2.
 \end{equation}
 The product rule gives
 \begin{align}
-  \left.\frac{\mathrm d M_2(P_\varepsilon)}{\mathrm d\varepsilon}
+  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+  \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
   \right|_{0}
   ={}&
   \sum_{i,j}
@@ -254,7 +247,7 @@ The product rule gives
 \end{align}
 The first sum is
 \begin{equation}
-  \pmi_P(x,y)^2-M_2(P).
+  \pmi_P(x,y)^2-\E_P\{\pmi_P(X,Y)^2\}.
   \label{eq:m2-weight-term}
 \end{equation}
 
@@ -386,15 +379,15 @@ each occupied cell,
 \label{eq:g-hat}
 \end{equation}
 In all weighted sums, an empty cell contributes zero; no logarithm or
-sensitivity needs to be evaluated there. The empirical mean and variance are
-\begin{align}
-  \overline g_P
-  &=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j),\\
+sensitivity needs to be evaluated there. The empirical variance is centred
+explicitly:
+\begin{equation}
   \widehat\tau^2(P)
-  &=\sum_{i,j}\widehat p_{ij}
-  \{\widehat g_P(i,j)-\overline g_P\}^2.
+  =\sum_{i,j}\widehat p_{ij}
+  \left\{\widehat g_P(i,j)
+  -\sum_{k,l}\widehat p_{kl}\widehat g_P(k,l)\right\}^2.
   \label{eq:tau-hat}
-\end{align}
+\end{equation}
 The estimated component degree of freedom is
 \begin{equation}
   \boxed{
@@ -473,9 +466,10 @@ the unconditional rates that count invalid outputs as non-rejections.
 \begin{proof}
 Write a Student variable as \(Z/\sqrt S\), with independent
 \(Z\sim N(0,1)\) and \(S\sim\chi^2_\nu/\nu\). For \(c>0\),
-\(f(s)=2\{1-\Phi(c\sqrt{s})\}\) has
-\(f''(s)=c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\).
-Since \(\E S=1\), Jensen's inequality gives
+the conditional two-sided tail \(2\{1-\Phi(c\sqrt{s})\}\) is strictly
+convex in \(s\), because its second derivative is
+\(c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\). Since \(\E S=1\),
+Jensen's inequality gives
 \(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\). At \(c=0\) both tails equal one.
 \end{proof}
 Invalid Expanded outputs count as non-rejections in the reported
@@ -502,7 +496,7 @@ Consider the two observed \(3\times3\) tables
   \label{eq:worked-tables}
 \end{equation}
 Their totals are \(n_P=105\) and \(n_Q=100\). The plug-in MI estimates are
-0.13693 and 0.25848 nats. With \(d=(3-1)(3-1)=4\), the corrected difference is
+0.13693 and 0.25848 nats. Since \((3-1)(3-1)=4\), the corrected difference is
 \begin{equation}
   \Deltahat
   =\left(0.13693-\frac{4}{2(105)}\right)

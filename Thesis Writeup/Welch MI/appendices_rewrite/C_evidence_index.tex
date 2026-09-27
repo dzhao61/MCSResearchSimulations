@@ -51,9 +51,8 @@ section, source files, configuration identifiers and 20,000-replicate
 denominator. The file \texttt{evidence\_values.tex} is generated from exact
 configuration IDs for the numerical examples in Chapter~\ref{chap:results}.
 
-For each configuration, \(R=20{,}000\). The plotted rate is
-\(R^{-1}\sum_s A_{m,s}\), where \(A_{m,s}\) requires
-both a valid output and rejection. The method-valid conditional rate divides
+For each configuration, 20,000 table pairs are sampled. The plotted rate is
+the number of valid rejections divided by 20,000. The method-valid conditional rate divides
 valid rejections by that method's valid outputs; it is undefined if there are
 none. The common-valid rate restricts to outputs where both methods are
 valid. A paired difference is based on counts of the four joint rejection
@@ -61,15 +60,16 @@ outcomes for the same table pairs. These distinctions allow a reader to
 check whether a curve difference is primarily a changed reference or lost
 validity.
 
-Specifically, let \(A_{m,s}\) be the valid-rejection indicator for method
-\(m\) on replicate \(s\), and set
-\(D_s=A_{\mathrm{Wald},s}-A_{\mathrm{expanded},s}\), matching the sign used
-in Table~\ref{tab:null-paired-examples}. Its paired difference is
-\(\bar D=R^{-1}\sum_sD_s\), with approximate 95\% interval
+For the paired comparison, let \(D_s\) equal the Wald valid-rejection
+indicator minus the Expanded Welch valid-rejection indicator for sampled
+table pair \(s\), matching the sign used in
+Table~\ref{tab:null-paired-examples}. Its average is
+\(\bar D=(1/20{,}000)\sum_{s=1}^{20{,}000}D_s\), with approximate 95\% interval
 \begin{equation}
   \bar D\ \pm\ 1.96
   \left\{
-    \frac{1}{R(R-1)}\sum_{s=1}^{R}(D_s-\bar D)^2
+    \frac{1}{20{,}000(19{,}999)}
+    \sum_{s=1}^{20{,}000}(D_s-\bar D)^2
   \right\}^{1/2}.
 \end{equation}
 This calculation preserves the within-replicate pairing. In the saved CSV,

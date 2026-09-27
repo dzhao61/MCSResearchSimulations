@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper,oneside,openany]{book}
+
+\input{preamble}
+\input{metadata}
+\hypersetup{
+  draft,
+  pdftitle={Working Draft: Comparing Mutual Information in Finite Samples}
+}
+
+% Retain the full thesis's forward chapter numbers without including those chapters.
+\makeatletter
+\newlabel{chap:design}{{5}{}{Experimental design}{}{}}
+\newlabel{chap:results}{{6}{}{Results}{}{}}
+\newlabel{chap:discussion}{{7}{}{Discussion}{}{}}
+\newlabel{chap:conclusion}{{8}{}{Conclusion}{}{}}
+\makeatother
+
+\begin{document}
+\frontmatter
+\begin{titlepage}
+  \centering
+  \vspace*{18mm}
+  {\Large\bfseries \thesistitle\par}
+  \vspace{18mm}
+  {\Large\bfseries Working Draft\par}
+  \vspace{4mm}
+  {\large Chapters 1--4\par}
+  \vspace{18mm}
+  {\large \thesisauthor\par}
+  \vfill
+  {\large Supervisor: \thesissupervisor\par}
+  \vspace{15mm}
+  {\large \thesisschool\par}
+  {\large \thesisuniversity\par}
+  \vspace{15mm}
+  {\large \thesisdate\par}
+\end{titlepage}
+\setcounter{page}{1}
+\tableofcontents
+
+\mainmatter
+% Input keeps this draft's auxiliary files separate from the full thesis build.
+\input{chapters_rewrite/01_introduction}
+\input{chapters_rewrite/02_background_literature}
+\input{chapters_rewrite/03_problem_baselines}
+\input{chapters_rewrite/04_expanded_welch}
+
+\backmatter
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

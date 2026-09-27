@@ -1,4 +1,4 @@
-\chapter{Background and Related Work}
+\chapter{Background and Literature Review}
 \label{chap:background}
 
 This chapter develops the concepts needed to compare MI between two
@@ -14,9 +14,7 @@ method.
 
 For a discrete random variable \(X\) with probability mass function
 \(p_X(x)\), the information content of outcome \(x\) is
-\begin{equation}
-  h_X(x)=-\log p_X(x).
-\end{equation}
+\(-\log p_X(x)\).
 Rare outcomes have larger information content because they are less expected.
 Using natural logarithms gives information in nats. The Shannon entropy is the
 expected information content,
@@ -61,6 +59,9 @@ values \citep{shannon1948,bossomaier2016}:
   =\sum_{i=1}^{r}\sum_{j=1}^{c}p_{ij}\pmi_P(i,j).
   \label{eq:background-mi}
 \end{equation}
+Here the summations are nested: for each row \(i\), the inner sum runs over
+all columns \(j\). Equivalently, the expression sums once over every cell in
+the table and may be written with the shorthand \(\sum_{i,j}\).
 Because \(P\) is the joint distribution of \((X,Y)\), the same quantity is
 conventionally written as \(I(X;Y)\). Equivalently,
 \begin{equation}
@@ -178,18 +179,41 @@ written directly in terms of the joint and marginal probabilities:
   -\sum_j p_{+j}\log p_{+j}.
   \label{eq:mi-probability-sums}
 \end{equation}
-Let \(f(u)=u\log u\). Since \(f'(u)=\log u+1\), its first-order Taylor
-expansion around the population value \(u\) is
+Let \(f(u)=u\log u\). The derivative needed for its first-order Taylor
+expansion follows directly from the product rule:
 \begin{equation}
-  f(\widehat u)
+  f'(u)
+  =\frac{d}{du}\{u\log u\}
+  =\log u+u\frac{1}{u}
+  =\log u+1.
+  \label{eq:ulog-derivative-background}
+\end{equation}
+The general first-order Taylor formula is
+\begin{equation}
+  f(x)\approx f(a)+f'(a)(x-a),
+  \label{eq:general-first-order-taylor-background}
+\end{equation}
+where \(a\) is the value around which the function is expanded and \(x-a\)
+is the distance from that value. Here the new value is the estimated
+probability \(x=\widehat u\), the expansion point is the population probability
+\(a=u\), and \(f(t)=t\log t\). Therefore, \(x-a=\widehat u-u\), which is the
+sampling error in the estimated probability. Substituting these quantities
+into the general formula gives
+\begin{equation}
+  \widehat u\log\widehat u
   \approx
-  \underbrace{f(u)}_{\text{population value}}
+  \underbrace{u\log u}_{\text{population value}}
   +
-  \underbrace{f'(u)(\widehat u-u)}_{\text{first-order change}}.
+  \underbrace{(\log u+1)(\widehat u-u)}_{\text{first-order change}}.
   \label{eq:first-order-taylor-background}
 \end{equation}
-Thus a small probability error \(\widehat u-u\) changes \(u\log u\), to first
-order, by \((\log u+1)(\widehat u-u)\).
+Subtracting the population value from both sides makes the change explicit:
+\begin{equation}
+  \widehat u\log\widehat u-u\log u
+  \approx
+  (\log u+1)(\widehat u-u).
+  \label{eq:ulog-change-background}
+\end{equation}
 
 Applying this expansion to the three sums in
 Equation~\eqref{eq:mi-probability-sums} gives
@@ -214,30 +238,62 @@ The margin errors are sums of the corresponding cell errors:
   =\sum_i(\widehat p_{ij}-p_{ij}).
   \label{eq:margin-errors-from-cells}
 \end{equation}
-After substituting these expressions, the coefficient of the error in cell
-\((i,j)\) is
-\begin{equation}
-  (\log p_{ij}+1)
+For example, the row-margin sum can now be written as
+\begin{align}
+  \sum_i(\log p_{i+}+1)(\widehat p_{i+}-p_{i+})
+  &=\sum_i\left[
+    (\log p_{i+}+1)
+    \left\{\sum_j(\widehat p_{ij}-p_{ij})\right\}
+    \right]
+  \notag\\
+  &=\sum_{i,j}(\log p_{i+}+1)(\widehat p_{ij}-p_{ij}).
+\end{align}
+The inner sum over \(j\) is the probability error for a fixed row \(i\). It
+is multiplied by that row's coefficient \(\log p_{i+}+1\); the outer sum then
+adds these products over all rows. The column-margin sum can be rearranged in
+the same way. Consequently,
+the same cell error \(\widehat p_{ij}-p_{ij}\) appears in the joint term, its
+row-margin term and its column-margin term. Its combined coefficient is
+\begin{align}
+  &(\log p_{ij}+1)
   -(\log p_{i+}+1)
   -(\log p_{+j}+1)
+  \notag\\
+  &\qquad
+  =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)-1
+  \notag\\
+  &\qquad
   =\pmi_P(i,j)-1.
   \label{eq:mi-error-cell-coefficient}
-\end{equation}
-The empirical and population cell probabilities both sum to one, so
-\begin{equation}
-  \sum_{i,j}(\widehat p_{ij}-p_{ij})=0.
-  \label{eq:cell-errors-sum-zero}
-\end{equation}
-The constant \(-1\) in Equation~\eqref{eq:mi-error-cell-coefficient}
-therefore contributes zero. Equation~\eqref{eq:mi-first-order-three-sums}
-reduces to
+\end{align}
+Therefore,
 \begin{equation}
   \Ihat(P)-I(P)
   \approx
-  \sum_{i,j}
+  \sum_{i,j}\{\pmi_P(i,j)-1\}(\widehat p_{ij}-p_{ij}).
+  \label{eq:mi-error-before-constant-cancellation}
+\end{equation}
+The empirical and population cell probabilities both sum to one, so
+\begin{equation}
+  \sum_{i,j}(\widehat p_{ij}-p_{ij})
+  =\sum_{i,j}\widehat p_{ij}-\sum_{i,j}p_{ij}
+  =1-1=0.
+  \label{eq:cell-errors-sum-zero}
+\end{equation}
+The constant \(-1\) in Equation~\eqref{eq:mi-error-cell-coefficient} therefore
+contributes zero. Explicitly,
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \sum_{i,j}\{\pmi_P(i,j)-1\}(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &=\sum_{i,j}\pmi_P(i,j)(\widehat p_{ij}-p_{ij})
+    -\sum_{i,j}(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &=\sum_{i,j}
   \pmi_P(i,j)(\widehat p_{ij}-p_{ij}).
   \label{eq:mi-error-from-cell-errors}
-\end{equation}
+\end{align}
 The complicated changes in the joint table and its two margins have therefore
 reduced to a weighted sum of cell-probability errors. The weight for a cell is
 its population pointwise MI.
@@ -255,27 +311,51 @@ the proportion of observations in that cell, so
   \label{eq:cell-error-as-average}
 \end{equation}
 Substituting this expression into Equation~\eqref{eq:mi-error-from-cell-errors}
-and rearranging the sums gives
+first gives
 \begin{equation}
   \Ihat(P)-I(P)
   \approx
-  \frac{1}{n}\sum_{a=1}^{n}
-  \{\pmi_P(Z_a)-I(P)\}.
-  \label{eq:mi-error-as-average-background}
+  \sum_{i,j}\pmi_P(i,j)
+  \left[
+    \frac{1}{n}\sum_{a=1}^{n}
+    \{\mathbf 1(Z_a=(i,j))-p_{ij}\}
+  \right].
+  \label{eq:mi-error-double-sum-background}
 \end{equation}
-For each observation, the indicator selects its observed cell, giving
-\(\pmi_P(Z_a)\), while the probability-weighted sum of all pointwise-MI
-values is \(I(P)\).
+The finite sums can be exchanged, so the contribution from observation \(a\)
+is gathered inside one pair of brackets:
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \frac{1}{n}\sum_{a=1}^{n}
+  \left[
+    \sum_{i,j}\pmi_P(i,j)\mathbf 1(Z_a=(i,j))
+    -\sum_{i,j}p_{ij}\pmi_P(i,j)
+  \right]
+  \notag\\
+  &=\frac{1}{n}\sum_{a=1}^{n}
+  \left\{\pmi_P(Z_a)-I(P)\right\}.
+  \label{eq:mi-error-as-average-background}
+\end{align}
+The first sum inside the brackets selects the single cell containing
+\(Z_a\), giving \(\pmi_P(Z_a)\). The second is the probability-weighted
+average of all pointwise-MI values, which is \(I(P)\).
 This equation is the key step. To first order, the error in the plug-in MI
 estimate behaves like the average of \(n\) observation-level contributions.
-The contribution of an observation in cell \((i,j)\) is
-\begin{equation}
-  \psi_P(i,j)=\pmi_P(i,j)-I(P).
-  \label{eq:mi-if-background}
-\end{equation}
-It is simply that cell's pointwise MI minus the population average. Therefore,
-\(\E_P\{\psi_P(X,Y)\}=0\). In formal asymptotic terminology,
-\(\psi_P\) is the influence function of MI; Equation
+The contribution of an observation in cell \((i,j)\) is simply that cell's
+pointwise MI minus the population average, \(\pmi_P(i,j)-I(P)\). Its mean is
+zero because
+\begin{align}
+  \E_P\{\pmi_P(X,Y)-I(P)\}
+  &=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}
+  \notag\\
+  &=\underbrace{\sum_{i,j}p_{ij}\pmi_P(i,j)}_{I(P)}
+    -I(P)\underbrace{\sum_{i,j}p_{ij}}_{1}
+  =0.
+  \label{eq:mi-if-mean-zero-background}
+\end{align}
+In formal asymptotic terminology, the centred function
+\(\pmi_P(i,j)-I(P)\) is the influence function of MI; Equation
 \eqref{eq:mi-error-as-average-background} is its first-order linear
 representation \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 
@@ -285,21 +365,27 @@ representation \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 Define the population variance of these centred contributions by
 \begin{equation}
   V(P)
-  =\Var_P\{\psi_P(X,Y)\}
+  =\Var_P\{\pmi_P(X,Y)-I(P)\}
   =\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
   \label{eq:mi-variance-background}
 \end{equation}
 Under independent sampling, the \(n\) terms in
 Equation~\eqref{eq:mi-error-as-average-background} are independent and each
-has variance \(V(P)\). Hence
+has variance \(V(P)\). The covariance between any two different observations
+is therefore zero. Hence
 \begin{align}
   \Var\{\Ihat(P)\}
   &\approx
   \Var\left\{
-    \frac{1}{n}\sum_{a=1}^{n}\psi_P(Z_a)
+    \frac{1}{n}\sum_{a=1}^{n}
+    \{\pmi_P(Z_a)-I(P)\}
   \right\}
   \notag\\
+  &=\frac{1}{n^2}
+    \sum_{a=1}^{n}\Var\{\pmi_P(Z_a)-I(P)\}
+  \notag\\
   &=\frac{1}{n^2}\sum_{a=1}^{n}V(P)
+  =\frac{nV(P)}{n^2}
   =\frac{V(P)}{n}.
   \label{eq:mi-variance-derived-background}
 \end{align}
@@ -344,8 +430,27 @@ in different settings.
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with its asymptotic normal reference.
 For two independent MI estimates, the two first-order variance contributions
-add. Replacing the population quantities by estimates produces the Normal
-Wald test developed formally in Chapter~\ref{chap:baselines}.
+add:
+\begin{equation}
+  \Var\{\Ihat(P)-\Ihat(Q)\}
+  \approx \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
+  \label{eq:background-two-sample-variance}
+\end{equation}
+Each term is the sampling variance of one MI estimate. Independence of the
+two samples makes their covariance zero. Replacing the population variances
+by estimates gives the standardisation
+\begin{equation}
+  \frac{\Ihat(P)-\Ihat(Q)}
+       {\sqrt{\Vhat(P)/n_P+\Vhat(Q)/n_Q}}
+  \xrightarrow{d}N(0,1)
+  \qquad\text{under }I(P)=I(Q).
+  \label{eq:background-wald-standardisation}
+\end{equation}
+Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
+\(V(P)\) and \(V(Q)\). This limit assumes the regular positive-support
+conditions of Section~\ref{sec:first-order-mi-background} and increasing
+sample sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
+to the numerator and specifies the full Normal Wald test.
 
 Wald inference is asymptotically valid under regularity conditions, but its
 finite-sample calibration depends on both the quality of the linear expansion
@@ -357,19 +462,44 @@ contributions.
 \noindent\textbf{The Welch--Satterthwaite principle.}
 
 Welch's test compares two means when their population variances may differ
-\citep{welch1947}. The denominator contains two independently estimated
-variance contributions. Satterthwaite's approximation represents their sum by
-a scaled chi-squared variable with matching first two moments
-\citep{satterthwaite1946}. This produces an effective degree of freedom that
-reflects the relative size and uncertainty of the component variance
-estimates. Chapter~\ref{chap:expanded} gives the equation and derives its
-MI-specific inputs.
+\citep{welch1947}. For two independent samples with means
+\(\bar X_P,\bar X_Q\) and variances \(s_P^2,s_Q^2\), the statistic for
+testing equal population means and its effective degrees of freedom are
+\begin{align}
+  T_{\mathrm{Welch}}
+  &=\frac{\bar X_P-\bar X_Q}
+          {\sqrt{s_P^2/n_P+s_Q^2/n_Q}},\\
+  \nu
+  &=\frac{\left(s_P^2/n_P+s_Q^2/n_Q\right)^2}
+          {\dfrac{(s_P^2/n_P)^2}{n_P-1}
+           +\dfrac{(s_Q^2/n_Q)^2}{n_Q-1}}.
+  \label{eq:background-ordinary-welch}
+\end{align}
+The denominator of the statistic contains two independently estimated
+variance contributions. The degrees-of-freedom formula weights their
+uncertainty: under normal sampling, each sample variance has component
+degrees of freedom \(n_P-1\) or \(n_Q-1\). Satterthwaite obtains the combined value by
+representing the sum as a scaled chi-squared variable with matching mean
+and variance \citep{satterthwaite1946}.
 
-The final statistic uses a Student distribution rather than a normal
-distribution. Small effective degrees of freedom produce heavier tails,
-reflecting greater uncertainty in the estimated denominator. As the component
-variance estimates become stable, the effective degrees of freedom increase
-and the Student reference approaches the normal reference.
+Welch evaluates the statistic against a Student distribution with \(\nu\)
+degrees of freedom. The connection to the normal reference can be seen from
+the representation
+\begin{equation}
+  t_\nu=\frac{Z}{\sqrt{\chi^2_\nu/\nu}},
+  \qquad Z\sim N(0,1),
+  \label{eq:background-student-representation}
+\end{equation}
+where the normal and chi-squared variables are independent. The denominator
+is random, which produces heavier tails than the normal reference. As
+\(\nu\) increases, \(\chi^2_\nu/\nu\) approaches one and the Student
+reference approaches \(N(0,1)\).
+
+For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
+\(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
+calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
+the probability tables. Chapter~\ref{chap:expanded} derives these
+MI-specific inputs to the same moment-matching structure.
 
 For a single scalar restriction, normal and chi-squared Wald notation are
 equivalent. If \(T\) is asymptotically standard normal, then \(T^2\) is
@@ -522,19 +652,14 @@ plug-in MI estimation and bias correction, first-order MI variance, Wald
 comparison of smooth functionals, and Welch--Satterthwaite moment matching.
 It also contains prior comparisons of entropy and MI-related indices.
 
-No single ingredient is presented as new. Shannon established MI; Miller and
-later authors developed finite-sample bias analysis; Moddemeijer and
-Brillinger give the first-order MI sampling variance, including a
-dependent-observation extension; and Welch and Satterthwaite provide the
-general moment-matching structure. Hutcheson already applies that structure to
-an information quantity using component degrees of freedom \(n_i\).
-Mora and Ruiz-Castillo also show that inference about differences in an MI
-index predates this study. The contribution claimed here is narrower: an
-explicit observation-level sensitivity for the \emph{estimated MI variance},
-its use in a plug-in Welch--Satterthwaite calculation, and a controlled
-evaluation under distinct equal-MI multinomial populations. The literature
-review does not establish that no earlier derivation of this exact
-sensitivity exists, so first priority is not claimed.
+This thesis makes three contributions to two-sample inference for mutual
+information. First, it derives an explicit observation-level sensitivity for
+the estimated MI variance. Second, it uses this sensitivity to construct a
+plug-in Welch--Satterthwaite degrees-of-freedom correction. Third, it provides
+a controlled empirical evaluation across distinct equal-MI multinomial
+populations. Together, these contributions clarify when Welch--Satterthwaite
+correction is useful for MI comparison and, importantly, why it can become
+overly conservative.
 
 The remaining task is specific to MI. Hutcheson's direct information-theoretic
 predecessor assigns each component its sample size; an ordinary-Welch analogue
@@ -549,7 +674,6 @@ weighted variance.
 The expanded method addresses this gap by differentiating the full MI
 variance functional. The resulting observation-level sensitivity determines
 the sampling variance of the variance estimate and, through Satterthwaite
-moment matching, an MI-specific component degree of freedom. The contribution
-is this explicit functional calculation and its evaluation, within the
-established approach to variance uncertainty described above.
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop this construction.
+moment matching, an MI-specific component degree of freedom.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop this construction,
+and Chapter~\ref{chap:results} evaluates its practical behaviour.

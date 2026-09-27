@@ -85,26 +85,16 @@ The plug-in MI estimate is
 \end{equation}
 The same calculation gives \(\Ihat(Q)\).
 
-Let
-\begin{equation}
-  d=(r-1)(c-1).
-\end{equation}
-Under fixed positive support, the leading bias correction gives
-\begin{equation}
-  \widehat I_{\mathrm{BC}}(P)
-  =\Ihat(P)-\frac{d}{2n_P},
-  \qquad
-  \widehat I_{\mathrm{BC}}(Q)
-  =\Ihat(Q)-\frac{d}{2n_Q}.
-  \label{eq:bias-corrected-mi}
-\end{equation}
-The estimated effect is
+Under fixed positive support, subtracting the leading bias from each plug-in
+estimate gives the estimated effect directly:
 \begin{equation}
   \Deltahat
-  =\widehat I_{\mathrm{BC}}(P)
-  -\widehat I_{\mathrm{BC}}(Q).
+  =\left\{\Ihat(P)-\frac{(r-1)(c-1)}{2n_P}\right\}
+  -\left\{\Ihat(Q)-\frac{(r-1)(c-1)}{2n_Q}\right\}.
   \label{eq:bias-corrected-difference}
 \end{equation}
+The two terms in braces are the bias-corrected MI estimates for the separate
+populations.
 
 The correction uses the declared alphabet dimensions, not the observed
 nonempty dimensions. A corrected estimate can be negative in a sparse sample
@@ -118,7 +108,8 @@ in Section~\ref{sec:background-mi-bias}.
 Section~\ref{sec:first-order-mi-background} showed that the first-order
 sampling variance of \(\Ihat(P)\) is \(V(P)/n_P\), where \(V(P)\) is the
 population variance of pointwise MI. Subtracting the fixed leading bias term
-in Equation~\eqref{eq:bias-corrected-mi} does not change this variance.
+in Equation~\eqref{eq:bias-corrected-difference} does not change this
+variance.
 
 The observed table estimates \(V(P)\) by
 \begin{equation}

@@ -32,8 +32,8 @@ Equation~\eqref{eq:design-example-pair} does not determine the samples.
 
 For one population, let \(a=(a_1,\ldots,a_r)\) and
 \(b=(b_1,\ldots,b_c)\) be prescribed row and column probabilities. The
-independence table is \(B=ab^{\mathsf T}\), with \(B_{ij}=a_i b_j\).
-Association is introduced by
+independence table has cell probabilities \(a_i b_j\). Association is
+introduced by
 \begin{equation}
  R(t)=ab^{\mathsf T}+tH,
  \qquad H\mathbf{1}_c=0,
@@ -123,10 +123,10 @@ method differences more precisely measurable than unrelated simulations,
 though it does not remove Monte Carlo uncertainty. The two-sided nominal
 threshold is \(\alpha=0.05\) throughout the statistical study.
 
-Let \(A_m=1\) if method \(m\) returns a valid p-value no larger than 0.05,
-and \(A_m=0\) otherwise. The primary plotted rejection rate is
+For each method, the primary plotted rejection rate is
 \begin{equation}
- \widehat r_m=\frac{1}{20{,}000}\sum_{s=1}^{20{,}000} A_{m,s}.
+ \frac{\#\{\text{sample pairs giving a valid p-value no larger than }0.05\}}
+      {20{,}000}.
  \label{eq:unconditional-rate}
 \end{equation}
 At \(|\Delta|=0\) this estimates the false-positive rate. At
