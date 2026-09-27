@@ -83,8 +83,10 @@ equality of distributions. This distinction is central to the present test:
 the null fixes one scalar functional while leaving the remaining features of
 each population unrestricted.
 
-The logarithm base determines the unit used to report MI. This thesis uses
-natural logarithms, so MI is measured in nats.
+The logarithm base determines the reporting unit. This thesis uses natural
+logarithms, so MI is measured in nats; dividing by \(\log 2\) converts to bits.
+This conversion rescales MI and its standard error together but leaves the
+degrees of freedom unchanged, so the test result is identical in either unit.
 
 \section{Estimating discrete mutual information}
 \label{sec:background-mi-bias}
