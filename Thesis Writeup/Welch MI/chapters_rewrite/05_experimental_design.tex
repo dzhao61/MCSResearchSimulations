@@ -1,8 +1,8 @@
 \chapter{Experimental Design}
 \label{chap:design}
 
-The purpose of the experiment is to compare the complete behaviour of two
-tests, not just their p-values on convenient tables. Each design point fixes
+The purpose of the experiment is to compare the calibration, detection and
+validity of two tests across controlled populations. Each design point fixes
 two population distributions in advance. Repeated independent samples from
 those populations show how often each procedure returns a valid result and
 how often it rejects. Because the population MI values are known, a rejection
@@ -26,7 +26,7 @@ values are 0.02 and 0.03 nats, so the true magnitude of the difference is
 0.01 nats. Sampling new count tables changes the estimated MI values, but
 does not move this fixed population pair to a new horizontal-axis location.
 Calculations use the stored unrounded probabilities; the rounded display in
-Equation~\eqref{eq:design-example-pair}, determine the samples.
+Equation~\eqref{eq:design-example-pair} does not determine the samples.
 
 \section{Constructing fixed joint distributions}
 
@@ -49,7 +49,7 @@ and columns, where it is
 \end{equation}
 Thus \(t\) is added to the two diagonal cells and removed from the other two
 cells. The changes cancel within each affected row and column. The same
-matrix specifies a \(2\times2\) test and a localised change in a larger
+matrix specifies a \(2\times2\) association and a localised change in a larger
 table; only its embedding differs. This follows the minimal four-violation
 sparse alternative used by \citet[Section~3(b)]{berrett2021}. Here it is adapted to compare two fixed
 populations: their margins are prescribed separately and the perturbation
@@ -138,7 +138,7 @@ null calibration and a usable test result.
 
 An invalid calculation contributes no rejection to Equation
 \eqref{eq:unconditional-rate}. This convention reports the behaviour of the
-complete procedure, but an invalid result is not a valid acceptance of the
+implemented procedure, but an invalid result is not a valid acceptance of the
 null. The companion valid-result rate is the fraction of replicates with a
 usable p-value. The saved data also give rejection conditional on each
 method's valid outputs and on the subset where both are valid. Those
@@ -194,7 +194,7 @@ Extreme skew & 315 & 315 & Dominant margins up to 0.9995, including \(n=1\) stre
 Rare-cell stress & 140 & 140 & First- versus rare-block changes, including \(n=1\) stress.\\
 Independence & 144 & 144 & Exact \(I(P)=0\) boundary.\\
 Convergence & 108 & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
-Runtime & 60 & 60 & Complete-call timing regimes, separate from simulation.\\
+Runtime & 60 & 60 & Full-call timing regimes, separate from simulation.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -204,7 +204,4 @@ already available. It varies table shape, profile, sample size and null or
 alternative status. Each regime uses 200 saved inputs, 20 warm-up calls and
 five timed passes. Thus it measures method computation, not the cost of
 constructing populations or generating random tables. Median call times and
-interquartile ranges are reported in Chapter~\ref{chap:results}. The finite
-tested range includes samples of size one in the stress check and an
-\(8\times8\) largest square table; it does not imply valid inference for all
-sparse distributions or unbounded alphabet sizes.
+interquartile ranges are reported in Chapter~\ref{chap:results}.

@@ -4,12 +4,12 @@
 Every ordinary panel in this chapter begins at a true MI difference of zero.
 That point measures false-positive rejection under \(H_0\). Points to its
 right measure detection under \(H_1\). The horizontal coordinate is a
-\emph{constructed population} difference in nats; random count tables create
-the vertical variation. The blue solid circles are Normal Wald and the
+\emph{constructed population} difference in nats. The vertical coordinate is
+the rejection rate over 20,000 random table pairs. The blue solid circles are Normal Wald and the
 magenta dashed squares are Expanded Welch. The dotted horizontal line marks
 the nominal 0.05 rejection rate. Each plotted rate divides the number of valid rejections
 by all 20,000 replicates. A hollow marker indicates a valid-result rate below
-0.90, not an accepted test. The figure source manifest gives the exact saved
+0.90. The figure source manifest gives the exact saved
 configuration identifiers for every panel.
 
 \section{Main landscape: shape, margins and sample size}
@@ -21,7 +21,7 @@ systematic view, not a selection of favourable examples. Each of the
 four shapes is shown under all three margin profiles. Within every figure,
 the columns are the same three equal sample sizes. The full vertical scale
 preserves comparability of detection; the lower row enlarges the region in
-which calibration differences near 0.05 can be seen. The complete nine-size
+which calibration differences near 0.05 can be seen. The full nine-size
 ladder, including \(n=2,5,20,50,250,500\), remains in the companion atlas.
 
 \newcommand{\mainlandscapefigure}[5]{%
@@ -57,14 +57,14 @@ uses 20,000 paired samples. Hollow markers denote validity below 90\%.}
 \mainlandscapefigure{8x8}{\(8\times8\)}{different_skew}{\(P\) has row and column margins \(m_8(0.7)=(0.7,0.3/7,\ldots,0.3/7)\), while \(Q\) has \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{different skew}
 
 The landscape does not yield a uniformly preferable method. At \(n=5\),
-Expanded Welch rejects none of the \(\MainFiveNullCount\) main null regimes. This includes the
+Expanded Welch has a zero null rejection rate in all
+\(\MainFiveNullCount\) main regimes. This includes the
 uniform \(3\times3\), \(5\times5\) and \(8\times8\) regimes, where more than
 90\% of calculations are valid, so the zero rates cannot be attributed only
 to invalid outputs. Among the \(\MainTenTwentyNullCount\) main null regimes with \(n=10\) or 20,
 Expanded Welch is numerically closer to 0.05 in
 \(\MainTenTwentyExpandedCloserCount\) and Wald in
-\(\MainTenTwentyWaldCloserCount\). This is a
-descriptive count, not a test of independent improvements. The trend reverses
+\(\MainTenTwentyWaldCloserCount\). The comparison reverses
 in the \(\MainLateNullCount\) main null settings at \(n=500\) or 1,000: Wald
 is closer to 0.05 in all \(\MainLateWaldCloserCount\). At \(n=1{,}000\), Wald
 null rates across the main settings lie between
@@ -116,8 +116,9 @@ Regime & Wald & Expanded & Wald minus Expanded\\
 \end{tabularx}
 \end{table}
 
-The lower sample-size figures also show an important limit to interpreting
-small rejection rates. In the \(8\times8\) different-skew alternative with
+The \(n=5\) records in the companion atlas also show an important limit to
+interpreting small rejection rates. In the \(8\times8\) different-skew
+alternative with
 \(n_P=n_Q=5\), \(I(P)=0.02\) and \(I(Q)=0.021\), Wald rejects
 \(\EightSparseFiveAlternativeWaldRate\) and Expanded Welch rejects
 \(\EightSparseFiveAlternativeExpandedRate\), but their valid-result rates
@@ -203,10 +204,11 @@ Wald's rejection is \(\ImbalanceQHigherWaldRate\) when \(Q\) has higher MI and
 \(\ImbalancePHigherWaldRate\) when \(P\) has higher MI\@. Expanded Welch gives
 \(\ImbalanceQHigherExpandedRate\) and \(\ImbalancePHigherExpandedRate\). All four rates in
 that specific comparison have validity one. These alternative rates should
-still be read beside the matched null points; they are not equal-size power.
+still be read beside the matched null points; they are not size-adjusted
+power.
 
-The practical implication is that an absolute MI difference does not define a
-complete testing problem. Which population has the higher MI and which one has
+The practical implication is that an absolute MI difference does not fully
+specify the testing problem. Which population has the higher MI and which one has
 the larger sample changes the bias and variance contributions. Power should
 therefore not be averaged across the two directions of sample imbalance.
 
@@ -240,7 +242,7 @@ Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 
 The main grid deliberately concentrates on small MI differences. A separate
 \(2\times2\) family extends the feasible axis to 0.2 nats without changing
-the axis units or pretending unconstructed targets exist. This shows where
+the axis units, using only targets the construction can reach. This shows where
 detection eventually rises, while retaining the zero-difference point that
 defines null calibration. Rectangular \(2\times3\) and \(3\times5\) tables
 check that the discussion is not tied only to square alphabets. The panels
@@ -286,9 +288,9 @@ Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 
 In the rectangular tables, both methods remain below 0.05 throughout the
 displayed range, with Expanded Welch lower still. Those low alternative
-rejection rates indicate weak detection, not good null calibration. Together
-the two checks show that the main trade-off is not confined to square tables
-or to the narrow MI grid.
+rejection rates indicate weak detection. The rectangular tables therefore
+show the conservative half of the trade-off, while the wider \(2\times2\)
+curve shows where detection eventually becomes strong.
 
 \section{Population construction sensitivity}
 
@@ -302,9 +304,8 @@ different-skew comparison at \(n=100\), Wald gives
 Welch gives \(\ConstructionAdditiveExpandedRate\) and
 \(\ConstructionLoglinearExpandedRate\). All are below nominal and all are
 valid. Thus matching the scalar MI
-and margins does not fix the complete finite-sample behaviour. The
-constructor comparison is a sensitivity check, not proof that the population
-families exhaust all relevant dependence structures.
+and margins does not fix the full finite-sample behaviour. The constructor
+comparison provides a sensitivity check across two dependence structures.
 
 \begin{figure}[htbp]
 \centering
@@ -326,13 +327,13 @@ Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 The extreme-skew check deliberately keeps configurations with very small
 expected cell counts. At \(n_P=n_Q=100\), \(3\times3\) tables with dominant
 margins 0.999 for \(P\) and 0.9995 for \(Q\) yield valid null results in
-only 0.0118 of Wald replicates and 0.00005 of Expanded Welch replicates.
+only 0.0118 of Wald replicates and 0.00005 of Expanded Welch replicates under
+the strict component-validity rule.
 Both unconditional false-positive rates are zero, but this is mostly an
 absence of valid tests, not evidence of excellent calibration. With dominant
 margins 0.9 and 0.95, the corresponding null rates are 0.0701 and 0.0088;
 Expanded Welch lowers an excessive Wald rate past the target.
-Figure~\ref{fig:extreme-focus} shows all three specified skew levels, not just
-the favourable one.
+Figure~\ref{fig:extreme-focus} compares all three specified skew levels.
 
 \begin{figure}[htbp]
 \centering
@@ -352,7 +353,7 @@ markers flag validity below 90\%.}
 Exact independence is a separate theoretical boundary.
 Figure~\ref{fig:independence-focus} starts \(P\) at MI zero and includes the
 equal-MI point where both populations are independent. This is not a routine
-positive-MI validation of Expanded Welch: its population first-order
+positive-MI validation of Expanded Welch: the population first-order MI
 variance is zero at independence. At \(n=100\), for example, the uniform
 \(2\times2\) null rates are only 0.00025 and 0.00010 for Wald and Expanded
 Welch. Appendix~\ref{app:independence-boundary} explains why a second-order
@@ -374,13 +375,13 @@ Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 
 Does increasing \(n\) resolve the null error when the populations remain
 fixed? Figure~\ref{fig:convergence-focus} keeps equal MI and changes only
-sample size. Across the 12 first-block profiles with \(I(P)=I(Q)=0.02\) and
+sample size. Across the 12 first-block shape--margin combinations with
+\(I(P)=I(Q)=0.02\) and
 \(n=50{,}000\), Wald's false-positive rates range from 0.0470 to 0.0527
 and Expanded Welch's from 0.0466 to 0.0526. At equal MI 0.0001, however,
 the ranges at the same \(n\) are 0.0089--0.0280 and 0.0076--0.0138.
-These are finite-sample observations for fixed populations. They show that
-very small positive MI can remain difficult at a large sample size, not that
-the regular asymptotic theory is mathematically false.
+These fixed-population results show that convergence can remain slow when the
+true MI is very small.
 
 \begin{figure}[htbp]
 \centering
@@ -399,8 +400,8 @@ replicates.}
 \section{Overall calibration and a mechanism check}
 \label{sec:mechanism-results}
 
-The main-grid null contains two different hypotheses in terms of complete
-population equality. The 72 uniform and same-skew configurations have
+The main-grid null contains two cases distinguished by whether the population
+tables themselves are equal. The 72 uniform and same-skew configurations have
 \(P=Q\), whereas the 36 different-skew configurations have \(P\ne Q\) but
 \(I(P)=I(Q)\). The latter are the weak-null cases that most directly match
 the thesis motivation. Table~\ref{tab:null-band-summary} reports these
@@ -418,18 +419,22 @@ than with calibration in both directions.
 A separate supplementary study tested the mechanism without altering the
 confirmatory results. For the representative \(3\times3\) different-skew
 null with \(I(P)=I(Q)=0.02\) and \(n=100\), Wald rejection was 0.0166. Using
-an independent Monte Carlo estimate of the numerator's finite-sample standard
-deviation gave 0.0551, while using the population first-order standard
-deviation gave 0.0976. The first-order approximation is therefore imperfect
-in both the estimated standard error and the numerator distribution. This
-supports the simpler interpretation that changing only the reference
-distribution cannot correct every finite-sample error. Full pilot and
-ablation results are retained in the experiment supplement.
+the same numerator with an independent Monte Carlo estimate of its
+finite-sample standard deviation gave a rejection rate of 0.0551; using the
+population first-order standard deviation gave 0.0976. The pilot replicates
+are independent of the confirmatory run, which gave 0.0171, so the two Wald
+rates differ slightly through Monte Carlo variation. The direction is consistent with
+Section~\ref{sec:welch-background}: near independence, the plug-in variance
+is shifted upward by about \(d/n\), helping to explain why its standard error
+can make Wald conservative. The first-order approximation is also imperfect
+in the numerator distribution. Changing only the reference distribution
+therefore cannot correct every finite-sample error. Full pilot and ablation
+results are retained in the experiment supplement.
 
 \section{Runtime and summary of evidence}
 \label{sec:runtime-summary}
 
-The complete scalar calls have the same \(O(rc)\) asymptotic complexity.
+The full method calls have the same \(O(rc)\) asymptotic complexity.
 The observed median time across the 60 timing regimes is about 85
 microseconds for Wald and 150 microseconds for Expanded Welch. The median
 Expanded-to-Wald ratio is about 1.75, with regime ratios about 1.72--1.79.
@@ -437,8 +442,12 @@ For the explicitly timed \(3\times3\), different-skew, \(n_P=n_Q=100\),
 equal-MI input regime, the medians are \(\RuntimeRegularWaldMedian\) and
 \(\RuntimeRegularExpandedMedian\) microseconds.
 These are implementation- and machine-specific timings, not universal
-complexity constants. Exact per-regime medians and interquartile ranges are
-in the saved runtime file cited in Appendix~\ref{app:evidence-index}.
+complexity constants. Their near-flat values mainly measure fixed per-call
+overhead and do not empirically establish the \(O(rc)\) scaling, which follows
+instead from the operation count in
+Section~\ref{sec:expanded-complexity}. Exact per-regime medians and
+interquartile ranges are in the saved runtime file cited in
+Appendix~\ref{app:evidence-index}.
 
 Computationally, the correction is feasible: it has the same cell-linear order
 as Wald and adds roughly 75\% to a scalar call in this implementation. The
@@ -449,7 +458,7 @@ does not provide a separate reason to prefer Expanded Welch.
 \begin{table}[htbp]
 \centering
 \small
-\caption{Complete scalar-call times in microseconds for the different-skew
+\caption{Scalar-call times in microseconds for the different-skew
 null at \(n_P=n_Q=100\) and \(I(P)=I(Q)=0.02\). Entries give median
 [interquartile range] over five passes on 200 saved inputs per regime.
 Population construction and multinomial sampling are excluded.}
@@ -467,10 +476,11 @@ Shape & Normal Wald & Expanded Welch & Expanded/Wald\\
 \end{tabular}
 \end{table}
 
-The evidence separates three observations. First, Expanded Welch can make a
-liberal Wald null rate closer to 0.05. Second, because it uses the same
-statistic with a heavier-tailed reference, it can also reduce rejection where
-Wald is already conservative. Third, in sparse samples the unconditional rate
-can fall because the expanded calculation is invalid more often. No one
-number summarises these behaviours; the matched curves and their validity
-records are the basis for the discussion that follows.
+The evidence gives three conclusions. Expanded Welch can move a liberal Wald
+null rate closer to 0.05, but its heavier-tailed reference also reduces
+rejection where Wald is already conservative. In sparse samples, the
+unconditional rate can fall because Expanded Welch is more often invalid under
+the strict component-validity rule. Some failures would not occur under the
+direct combined formula and are not needed for the first two findings. These
+behaviours cannot be summarised by one number; the matched curves and validity
+records underpin the discussion in Chapter~\ref{chap:discussion}.

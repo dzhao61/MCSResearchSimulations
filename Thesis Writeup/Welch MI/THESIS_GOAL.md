@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript | 66 pages | 95 pages |
+| Current Welch-MI manuscript | 66 pages | 96 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -102,13 +102,13 @@ recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
 Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed and
-the external assessment addressed on 20 September 2026. T8 is assembled,
-with only the author's signature and date
-on the declaration outstanding.** T2 evidence is recorded in
+the external assessment addressed on 20 September 2026. T8 was completed on
+26 September 2026 after the declaration page was removed at the author's
+request.** T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-revised 95-page PDF builds without undefined references, citations or overfull
+revised 96-page PDF builds without undefined references, citations or overfull
 boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 35 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
@@ -122,13 +122,12 @@ in the companion atlas. Detailed mechanism checks remain available in the
 experiment supplement without changing the frozen run. T6 records
 a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 95-page A4 manuscript from the active source, with
+T7 then built the final 96-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
 boxes. All 101 tests and the complete evidence audit pass. The previously
 reviewed pages and all pages changed or added by the follow-up have been
-inspected at final size. The final PDF, source archive and
-experimental supplement are assembled under `deliverables/`; T8 can close
-when the author signs and dates the declaration.
+inspected at final size. The final PDF, source archive and experimental
+supplement are assembled under `deliverables/`.
 
 ## 4. Scientific acceptance criteria
 
@@ -243,7 +242,7 @@ captions. A successful LaTeX build is necessary but does not replace this review
 | LaTeX source package | Main source, chapter/appendix files, metadata, preamble, bibliography, all required figure assets and build instructions. | Successful build in a clean directory without relying on an undocumented parent-workspace file. |
 | Experimental supplement | Complete atlas and the saved records needed to identify every plotted regime and quoted result. | Working links, complete source mappings, consistent units and denominators. |
 | Scientific and source audits | Equation checks, checked worked examples, claim-to-source records and any resolved findings. | Relevant tests pass; every material audit finding has a disposition and supporting evidence. |
-| Final acceptance record | T1-T8 status, final artifact locations, checks performed, dates and remaining author actions. | All required gates pass; personal statements are accurate and any required signature is supplied by the author. |
+| Final acceptance record | T1-T8 status, final artifact locations, checks performed, dates and remaining author actions. | All required gates pass and personal statements are accurate. |
 
 Use the existing `SCIENTIFIC_AUDIT.md`, `LITERATURE_SOURCE_CHECK.md` and
 `SUBMISSION_CHECK.md` as the review records. Extend them where needed instead
@@ -267,10 +266,10 @@ frozen experiment record; additional analysis must state its purpose and
 provenance. Further experiments are warranted only when a specific remaining
 claim cannot be resolved from existing evidence or mathematical checks.
 
-Use the current metadata as the working basis. Personal acknowledgements,
-final dates and any author signature can be handled during final assembly;
-they do not stop the scientific or editorial work. Do not fabricate a signature,
-personal contribution, source, result or verification outcome.
+Use the current metadata as the working basis. Personal acknowledgements and
+final dates can be handled during final assembly; they do not stop the
+scientific or editorial work. Do not fabricate a personal contribution,
+source, result or verification outcome.
 
 Mark the thesis goal complete only when the final artifacts satisfy T1-T8 and
 the substantive acceptance criteria. A written plan, a long PDF or passing

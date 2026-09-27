@@ -3,33 +3,30 @@
 
 The proposed correction has a clear mathematical purpose: it represents
 sampling uncertainty in the MI variance estimate before using that estimate
-in a two-sample test. The experiments show that the purpose is narrower than
-its possible practical effect. A better description of the denominator does
-not by itself repair every finite-sample error in the numerator, in the
-first-order approximation, or in the availability of a valid statistic.
+in a two-sample test. The experiments show that this addresses only one source
+of finite-sample error. A better description of the denominator does not by
+itself repair errors in the numerator or the first-order approximation.
 
 \section{Answers to the research questions}
 
-The first research question was whether an MI-specific effective degree of
-freedom can be derived. Chapter~\ref{chap:expanded} does so by differentiating
+The first research question asked how an MI-specific effective degree of
+freedom can be constructed. Chapter~\ref{chap:expanded} does so by differentiating
 the variance of pointwise MI along one-cell probability perturbations. The
 derivative includes changes to row and column margins, not just to the
 selected cell. Its sampling variance supplies the component degrees of
 freedom used in Satterthwaite moment matching. These derivative and
-moment-matching steps define a reproducible statistic. The final Student
-reference remains a working approximation, not an exact
-finite-sample theorem for MI\@.
+moment-matching steps define a reproducible reference distribution.
 
 The second question concerned false positives, detection and validity.
-Figure~\ref{fig:main-8x8-uniform} contains a fully valid small-sample null
-case where Expanded Welch moves an excessive Wald false-positive rate toward
-0.05. Figure~\ref{fig:main-2x2-uniform} contains a larger-sample null case
-where the same adjustment moves a below-nominal Wald rate farther from
-0.05. In the sparsest panels, a low unconditional rejection rate may largely
-reflect invalid outputs. Thus improved calibration at selected null points
-does not imply that the expanded procedure performs better overall. Under
-alternatives, its rejection rate is generally lower; these comparisons are
-not power at a matched achieved size.
+Table~\ref{tab:null-paired-examples} contains both a fully valid small-sample
+null case where Expanded Welch moves an excessive Wald false-positive rate
+toward 0.05 and a larger-sample null case where the same adjustment moves a
+below-nominal Wald rate farther from 0.05. In the sparsest panels, a low
+unconditional rejection rate may largely reflect invalid outputs under the
+implemented rule. Thus improved calibration at selected null points does not
+imply that the expanded procedure performs better overall. Under alternatives,
+its rejection rate is generally lower; these comparisons are not power at a
+matched achieved size.
 
 The third question asked whether population features alter this judgement.
 The main landscape varies alphabet size and margins explicitly. The focused
@@ -37,7 +34,7 @@ comparisons show that baseline MI, changed-cell location, sample allocation
 and population constructor can change the finite-sample behaviour even when
 the target MI difference is held fixed. The construction comparison is
 particularly instructive: equal margins and MI do not determine the table's
-complete sampling distribution. A scalar target is useful for organising
+full sampling distribution. A scalar target is useful for organising
 experiments, but cannot guarantee identical difficulty across distinct
 population tables.
 
@@ -73,7 +70,7 @@ Near independence, the local calculation gives \(V\approx2I\),
 \(\tau^2\approx4V\), and hence a population component degree of freedom near
 \(nI\). This explains why the reference can become very heavy-tailed at low
 MI, exactly where the first-order approximation is least reliable. The result
-is a useful warning, not a complete finite-sample theory.
+identifies a mechanism behind the low effective degrees of freedom.
 
 At exact independence, \(I=0\) and the population first-order MI variance
 vanishes. This does not mean finite empirical MI estimates are always zero.
@@ -88,14 +85,17 @@ gives the mathematical distinction.
 
 The validity diagnostics matter most where expected counts are very small.
 Wald needs a usable total estimated variance. The expanded implementation
-additionally needs usable component sensitivity variances and effective
-degrees of freedom. An observed table can have a positive total variance
-while one component calculation is unusable. The final study does not silently
-replace these cases with a different test. Instead, it reports invalidity
-and counts such a replicate as a non-rejection in the primary unconditional
-rate.
+additionally requires each component sensitivity variance and effective
+degree of freedom to be positive and finite. An observed table can have a
+positive total variance while one component is zero. The equivalent combined
+formula in Equation~\eqref{eq:expanded-df-direct} remains defined when one
+table has \(\Vhat=\widehat\tau^2=0\), but the frozen implementation first
+requires two positive finite component degrees of freedom. Some
+Expanded-only invalidity therefore reflects the implementation rule rather
+than the combined formula. The primary unconditional rate records a failed
+calculation as a non-rejection.
 
-That rate answers an operational question: how often does the complete
+That rate answers an operational question: how often does the implemented
 procedure produce a valid rejection? It should not be mistaken for the
 conditional rejection probability among valid tables. Nor does a failure to
 return a p-value constitute a true negative. The saved validity and paired
@@ -127,8 +127,8 @@ does not validate paired observations, continuous estimators, a real-data
 workflow or growing alphabets.
 
 The protocol was frozen before the final simulation, after exploratory
-development of the method and design. It is therefore a reproducible final
-run, not an externally preregistered untouched hypothesis. Configurations
+development of the method and design. It is a reproducible final run without
+external preregistration. Configurations
 displayed in several sections are the same sampled run. Repeating their
 figure appearances does not provide independent confirmation. The recorded
 Monte Carlo intervals also address repeated sampling of each fixed pair, not
@@ -140,7 +140,7 @@ method a simulation-specific critical value.
 
 Future work should address the joint finite-sample behaviour of the
 numerator and denominator or use a calibrated reference tailored to sparse
-tables. The transition near independence is a particularly distinct problem
+tables. The transition near independence is a separate problem
 because the first-order variance tends to zero. A likelihood-ratio or
 resampling alternative must be assessed under the equal-MI \emph{weak null},
 not imported from a test of full distributional equality or one-table

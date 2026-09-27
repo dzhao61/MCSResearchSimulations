@@ -63,7 +63,7 @@ values:
 \end{equation}
 Equivalently,
 \begin{equation}
-  I(X;Y)=H(X)+H(Y)-H(X,Y).
+  I(P)=I(X;Y)=H(X)+H(Y)-H(X,Y).
   \label{eq:mi-entropy-form}
 \end{equation}
 The quantity is nonnegative and equals zero exactly when
@@ -148,8 +148,9 @@ this result to \(H(X)+H(Y)-H(X,Y)\) gives
   &=\frac{(r-1)(c-1)}{2n}.
   \label{eq:mi-bias-from-entropies}
 \end{align}
-The correction is positive because estimating the larger joint distribution
-introduces more entropy bias than estimating the two margins.
+The leading MI bias is positive because estimating the larger joint
+distribution introduces more entropy bias than estimating the two margins.
+The correction in Chapter~\ref{chap:baselines} subtracts this leading term.
 
 Bias matters directly when comparing two populations. If
 \(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
@@ -221,6 +222,7 @@ normal limit for comparing positive MI values are not competing descriptions
 of the same regular case.
 
 \section{Wald and Welch--Satterthwaite inference}
+\label{sec:welch-background}
 
 \subsection{Normal Wald inference}
 
@@ -286,7 +288,7 @@ adjustments and practical guidance are given by \citet{fay2001} and
 \citet{imbens2016}. These are close
 methodological precedents: estimating the variability of a variance estimator
 and using it in a finite-sample reference are established strategies. The
-present task is to derive the required inputs for the complete discrete MI
+present task is to derive the required inputs for the discrete MI
 functional and assess whether the resulting reference is useful.
 
 The direction of the finite-sample problem is nevertheless different here.
@@ -294,7 +296,11 @@ The cited regression corrections respond to underestimated uncertainty or
 anti-conservative coverage, so a larger variance estimate or heavier-tailed
 reference can move inference in the required direction. Near independence,
 the MI calculation instead gives
-\(\E\widehat V\approx V+d/n\): the plug-in variance is shifted upward. A
+\(\E\widehat V\approx V+d/n\), where \(d=(r-1)(c-1)\) is the interaction
+dimension of an \(r\times c\) table. Locally,
+\(\widehat V\approx2\widehat I\),
+\(\E\widehat I\approx I+d/(2n)\), and \(V\approx2I\), which gives this
+upward shift. A
 heavier-tailed Student reference then reinforces, rather than offsets, the
 resulting conservatism.
 
@@ -439,7 +445,7 @@ empirical joint table used to calculate MI. A change in one observation
 modifies the cell probabilities, margins, pointwise-MI values, and their
 weighted variance.
 
-The expanded method addresses this gap by differentiating the complete MI
+The expanded method addresses this gap by differentiating the full MI
 variance functional. The resulting observation-level sensitivity determines
 the sampling variance of the variance estimate and, through Satterthwaite
 moment matching, an MI-specific component degree of freedom. The contribution

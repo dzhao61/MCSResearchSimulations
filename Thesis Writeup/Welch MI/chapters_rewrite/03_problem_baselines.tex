@@ -56,7 +56,7 @@ allowed, but widespread observed support loss is recorded as a diagnostic.
 \begin{assumption}[Regular MI]
 The first-order influence variances \(V(P)\) and \(V(Q)\) are positive. This
 excludes exact independence and other degenerate cases from the regular
-Student approximation.
+first-order approximation.
 \end{assumption}
 
 All logarithms are natural. MI differences and standard errors are therefore
@@ -125,7 +125,7 @@ For population \(P\), define
   \label{eq:population-mi-variance}
 \end{equation}
 This is the population variance of pointwise MI\@. It governs the sampling
-variance of the complete plug-in estimator because the first-order MI error is
+variance of the plug-in estimator because the first-order MI error is
 an average of centred pointwise-MI contributions. This first-order variance
 is established for histogram and discrete MI \citep{moddemeijer1989,brillinger2004};
 the expanded calculation in Chapter~\ref{chap:expanded} concerns the
@@ -193,8 +193,7 @@ The common standardised statistic is
 The null hypothesis is not imposed when calculating \(\Deltahat\),
 \(\SEhat\) or \(T\): they use the observed tables. Equal population MI
 enters when interpreting the reference distribution, which is centred at
-zero under \(H_0\). In particular, \(Q\)'s observed estimate and variance
-are not set to zero merely because the null is being tested.
+zero under \(H_0\).
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference
 distribution, not the effect estimate or plug-in standard error.
@@ -227,11 +226,14 @@ standard error from the tables but applies no degrees-of-freedom adjustment.
 The shared statistic supplies the estimated effect and its first-order
 standard error. The direct Hutcheson-style information-theoretic analogue
 assigns component degrees of freedom \(n_P\) and \(n_Q\); a familiar
-ordinary-Welch analogue uses \(n_P-1\) and \(n_Q-1\). Both fixed assignments
-are retained as explanatory baselines. However, \(\Vhat(P)\) is a nonlinear
-functional of a table whose margins and pointwise MI values also change with
-the data. The expanded method instead estimates component degrees of freedom
-from that full functional.
+ordinary-Welch analogue uses \(n_P-1\) and \(n_Q-1\). For positive variance contributions,
+their combined degree of freedom is at least
+\(\min(n_P,n_Q)-1\), so at sample sizes of 50 or more their Student reference
+is already close to normal. The supplementary ablation retains these baselines
+alongside Expanded Welch. However, \(\Vhat(P)\) is a nonlinear functional of a
+table whose margins and pointwise MI values also change with the data. The
+expanded method instead estimates component degrees of freedom from that full
+functional.
 
 Satterthwaite moment matching requires the first two moments of each positive
 variance estimate. To first order,
@@ -239,5 +241,5 @@ variance estimate. To first order,
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}
 Chapter~\ref{chap:expanded} derives
-\(\Var\{\Vhat(P)\}\) by calculating how the complete variance functional
+\(\Var\{\Vhat(P)\}\) by calculating how the full variance functional
 changes when one observation changes the joint table.

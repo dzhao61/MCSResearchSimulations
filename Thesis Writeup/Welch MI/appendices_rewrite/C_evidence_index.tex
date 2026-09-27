@@ -6,7 +6,11 @@ calibration-zoom figures. The full companion atlas remains the source for
 every sample size and focused regime in the frozen design. The index below
 specifies how to retrieve exact numbers without averaging regimes into
 a single summary. Paths are relative to the workspace root
-\texttt{Simulations/}.
+\texttt{Simulations/}. The final results directory used below is
+\path{WelchSatterthwaiteMI/results/thesis_redesign/}. These are workspace
+paths; Appendix~\ref{app:reproducibility} gives commands for the extracted
+archive, where \texttt{main.tex} and \texttt{WelchSatterthwaiteMI/} share one
+root.
 
 \begin{table}[htbp]
 \centering
@@ -41,13 +45,14 @@ The companion written atlas is at
 Its 99 primary figures and seven extra calibration zooms retain the full
 design. The thesis-specific PDFs in \texttt{Thesis Writeup/Welch MI/
 figures\_rewrite/} are generated from the two final CSV files named in the
-source script, not from the old pilot folders. The adjacent
+source script. The adjacent
 \texttt{figure\_manifest.json} lists, for each thesis PDF, its original
 section, source files, configuration identifiers and 20,000-replicate
 denominator. The file \texttt{evidence\_values.tex} is generated from exact
 configuration IDs for the numerical examples in Chapter~\ref{chap:results}.
 
-The plotted rate is \(R^{-1}\sum_s A_{m,s}\), where \(A_{m,s}\) requires
+For each configuration, \(R=20{,}000\). The plotted rate is
+\(R^{-1}\sum_s A_{m,s}\), where \(A_{m,s}\) requires
 both a valid output and rejection. The method-valid conditional rate divides
 valid rejections by that method's valid outputs; it is undefined if there are
 none. The common-valid rate restricts to outputs where both methods are
@@ -58,17 +63,20 @@ validity.
 
 Specifically, let \(A_{m,s}\) be the valid-rejection indicator for method
 \(m\) on replicate \(s\), and set
-\(D_s=A_{\mathrm{expanded},s}-A_{\mathrm{Wald},s}\). The saved paired
-difference is \(\bar D=R^{-1}\sum_sD_s\), with approximate 95\% interval
+\(D_s=A_{\mathrm{Wald},s}-A_{\mathrm{expanded},s}\), matching the sign used
+in Table~\ref{tab:null-paired-examples}. Its paired difference is
+\(\bar D=R^{-1}\sum_sD_s\), with approximate 95\% interval
 \begin{equation}
   \bar D\ \pm\ 1.96
   \left\{
     \frac{1}{R(R-1)}\sum_{s=1}^{R}(D_s-\bar D)^2
   \right\}^{1/2}.
 \end{equation}
-This calculation preserves the within-replicate pairing. The individual
-method intervals use Wilson's binomial score construction
-\citep{wilson1927}.
+This calculation preserves the within-replicate pairing. In the saved CSV,
+the generic field is stored as method A minus method B, with Expanded Welch
+listed as method A; Table~\ref{tab:null-paired-examples} therefore reports its
+negative. The individual method intervals use Wilson's binomial score
+construction \citep{wilson1927}.
 
 For any \(P\) population with sample size \(n_P\), its minimum expected
 cell count is \(\min_{ij}n_Pp_{ij}\); define \(Q\)'s analogously. No

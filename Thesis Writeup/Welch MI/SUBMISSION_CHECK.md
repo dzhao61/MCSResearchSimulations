@@ -1,6 +1,6 @@
 # Thesis completion check
 
-Updated 20 September 2026. The current objective, SMART targets and working
+Updated 26 September 2026. The current objective, SMART targets and working
 schedule are in [THESIS_GOAL.md](THESIS_GOAL.md).
 
 ## Agreed requirements
@@ -16,19 +16,18 @@ The examples have 58, 65 and 87 pages of main text and complete PDFs of 75,
 
 ## Current evidence
 
-This records the final verification status and the one remaining author-only
-submission action.
+This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The final A4 PDF has 95 pages, including 66 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The final A4 PDF has 96 pages, including 66 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 35 active references. The local bibliography contains the same 35 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 95 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Build | The active source builds to 96 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
 | Visual presentation | The previously reviewed pages and every page changed in the supplementary revision were inspected at final size. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
-| Front matter | The title page, declaration, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration includes blank signature and date lines. | Author must sign and date the declaration before submission. |
+| Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
 
 ## Substantive and readability pass
 
@@ -53,9 +52,8 @@ not change the frozen evidence or add material for length alone.
 | Appendix E | The concise reproduction record identifies the frozen protocol, saved metadata, evidence audit, archives and build commands. Exact hashes and code-history details remain in the experiment supplement. |
 | Mechanism supplement | The independent-SD diagnostic, component-df comparisons, ablations, support-correction sensitivity and all 108 main null rows remain available outside the compiled thesis and agree with the saved result files. |
 
-No active manuscript file contains a TODO or drafting placeholder. The only
-remaining front-matter action is the author's signature and date on the
-declaration; no personal attestation has been invented.
+No active manuscript file contains a TODO or drafting placeholder. No personal
+attestation has been invented.
 
 The final comprehensive audit also compared the retained implementation with
 the source hashes recorded by the confirmatory run. The frozen protocol,
@@ -71,18 +69,18 @@ disposable LaTeX auxiliary files.
 
 ## Final verification record
 
-Final checks run on 20 September 2026:
+Final checks completed on 27 September 2026:
 
 - clean build from a fresh extraction of the final source archive;
-- 95 A4 pages and 975,342 bytes before packaging;
-- final named PDF SHA-256 `c43921ec40570f05dc95da44473b1ae59db745b9bdb388f9c3ce5ea85e97b25d`;
+- 96 A4 pages and 981,431 bytes before packaging;
+- final named PDF SHA-256 `b8bc95f69fc8941fa70ac8f11edbf7f0186f4e7fea6950d716da44adf063e889`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - all 101 unit, derivation and experiment tests passed;
 - complete evidence audit passed, including all 22 confirmatory thesis figures, every reported Chapter 6 value and the supplementary mechanism evidence;
 - a fresh combined extraction of the source and experiment archives rebuilt
   the 3,111-configuration preflight, passed all 36 bundled tests, regenerated the
   22 confirmatory thesis figures and mechanism report, passed the evidence
-  audit and compiled the 95-page thesis without access to the working tree;
+  audit and compiled the 96-page thesis without access to the working tree;
 - 35 checked bibliography records, with every manuscript citation resolved and no unused records;
 - all newly added and changed pages inspected at final pagination, building on the prior full-page review;
 - `git diff --check` passed for the thesis tree.
@@ -103,21 +101,21 @@ audit and a complete rerun. Raw per-configuration checkpoint files are
 included alongside the consolidated tables, so individual configuration
 outputs can also be inspected directly.
 
-## Remaining author action
+## Administrative note
 
-Print or otherwise complete the signature and date lines on the declaration
-before submitting the attested copy. No signature image or date has been
-invented. If the School supplies a course-specific declaration form, replace
-only that preliminary page; the thesis argument and evidence do not change.
+The declaration page was removed from the current version at the author's
+request. If the School later requires a prescribed declaration, insert the
+official form as a preliminary page; the thesis argument and evidence do not
+change.
 
 ## Acceptance criteria
 
-1. T1-T7 are closed with evidence and dates.
+1. T1-T8 are closed with evidence and dates.
 2. Every research question has an explicit answer supported by the derivation or results.
 3. All final numerical statements and figures agree with the saved experiments and use the correct denominators.
 4. Both editorial passes and the page-by-page visual review are complete.
 5. The final PDF builds from the deliverable source package and all mathematical and evidence checks pass.
-6. The PDF, source and experimental supplement are assembled; T8 closes when the author signs and dates the declaration.
+6. The PDF, source and experimental supplement are assembled.
 
 Scientific writing, editing and verification can proceed throughout. Routine
 decisions do not require another supervisor confirmation round. The goal is

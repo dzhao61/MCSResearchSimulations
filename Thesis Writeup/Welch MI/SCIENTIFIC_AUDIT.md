@@ -1,6 +1,6 @@
 # Scientific audit of the active thesis
 
-Initially checked 13 September 2026 and extended through 20 September 2026 against `chapters_rewrite/`,
+Initially checked 13 September 2026 and extended through 26 September 2026 against `chapters_rewrite/`,
 `WelchSatterthwaiteMI/src/welch_differential_mi/welch.py`, the frozen
 `results/thesis_redesign/` outputs, and the primary sources in
 `LITERATURE_SOURCE_CHECK.md`. This is an independent derivation and
@@ -22,6 +22,31 @@ literature search.
 | Important | The independence appendix stated the quadratic result without defining its perturbation or displaying the Taylor terms. | Appendix D now defines the path and expansion point, separates the zeroth-, first-, and second-order terms, derives both forms of the Hessian, and connects multinomial cell error to the usual chi-squared limit. |
 | Checked | The analytic cell-sensitivity expression, plug-in implementation, and saved result summaries agree under the checks below. | No change to the frozen simulations or method implementation was justified. |
 | Checked | The current orchestration runner has changed since the recorded run. | The diff contains atlas-count metadata, output-hash additions for future runs, and corrected one-pass handling of a failed preflight. The frozen protocol, simulation core, method implementation, and imported statistical dependencies retain their recorded hashes; population construction, simulation, method evaluation, and the saved results are unaffected. The exact old and current runner hashes are documented in the experiment-supplement README. |
+
+## Strict component-validity convention
+
+The final review identified a useful distinction between the mathematical
+combined degrees of freedom and the software validity rule. Substituting the
+component expression into the Welch--Satterthwaite combination gives
+
+\[
+ \widehat\nu_{\mathrm{expanded}}
+ =\frac{\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\}^2}
+ {\widehat\tau^2(P)/(2n_P^3)+\widehat\tau^2(Q)/(2n_Q^3)}.
+\]
+
+The factors of \(\widehat V^2\) cancel. A direct numerical check agrees with
+the component implementation to floating-point precision whenever both
+component degrees of freedom are defined. If one table has
+\(\widehat V=\widehat\tau^2=0\) and the other supplies a positive denominator
+contribution, the direct expression remains defined and reduces to the other
+table's contribution. The frozen software does not
+evaluate that case directly: it requires both component degrees of freedom to
+be positive and finite. The manuscript therefore states that some
+Expanded-only invalidity comes from this strict convention. This clarification
+does not change the evaluated procedure, its rejection results or its exact
+nesting within Wald on valid outputs, so neither a core-code change nor a
+confirmatory rerun was warranted.
 
 ## Derivation checked independently
 

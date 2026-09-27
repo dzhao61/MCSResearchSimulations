@@ -56,7 +56,7 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `main.tex`: document entry point.
 - `metadata.tex`: author, degree, supervisor, and submission metadata.
 - `preamble.tex`: shared packages, notation, and formatting.
-- `frontmatter/`: title page, declaration, abstract, and acknowledgements.
+- `frontmatter/`: title page, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
 - `appendices_rewrite/`: active derivations, exact design grids and evidence index.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
@@ -77,5 +77,5 @@ reader-facing thesis.
 
 The final named PDF, self-contained source archive, experiment supplement and
 checksums are in `deliverables/`. `SUBMISSION_CHECK.md` records the completed
-scientific, build and page-review gates. The author must sign and date the
-declaration before submitting the attested copy.
+scientific, build and page-review gates. The declaration page is intentionally
+excluded from the current version at the author's request.

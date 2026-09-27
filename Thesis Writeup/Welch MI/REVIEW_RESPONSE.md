@@ -88,7 +88,7 @@ confirmatory estimator, or the thesis's substantive conclusions.
 - The paired interval formula and the meaning of 534 fixed population pairs are now stated.
 - Bibliographic capitalisation and the Marinescu--Balcau arXiv identifier were corrected. The Berrett--Samworth pointer is Section 3(b).
 - No Brillinger DOI was added because one was not verified from the primary record; the author-hosted paper remains linked.
-- The declaration remains unsigned and undated because only the author can attest it. The title-page degree name, Master of Complex Systems, matches the official University of Sydney course title.
+- The declaration page was removed at the author's request. The title-page degree name, Master of Complex Systems, matches the official University of Sydney course title.
 
 ## New evidence files
 
@@ -102,6 +102,33 @@ The explanatory follow-up is separate from the frozen confirmatory study:
 - `WelchSatterthwaiteMI/experiments/report_thesis_mechanism_check.py`
 
 The active manuscript interpretation is intentionally narrower than the
-assessment's strongest claims: denominator estimation matters; the complete
+assessment's strongest claims: denominator estimation matters; the full
 df expansion has a measurable effect; neither fact establishes Expanded
 Welch as a generally better test or supplies a universal finite-sample fix.
+
+## Independent final-review disposition
+
+The 26 September review was accepted selectively to improve precision without
+turning the thesis into a study of every possible implementation variant.
+
+- The component-df cancellation was accepted as an important clarification.
+  Chapter 4 now displays the direct combined formula and distinguishes its
+  behaviour when one table contributes zero from the stricter component-wise
+  validity rule used by the frozen software. The core method and confirmatory
+  results were not changed.
+- The literature explanation now derives the local upward shift
+  \(\mathbb E\widehat V\approx V+d/n\), rather than merely stating it.
+- The generic Welch baselines, the exact nesting result, the independent
+  diagnostic pilot, runtime interpretation, worked-table rounding, evidence
+  sign convention and reproduction root are all stated more explicitly.
+- The Abstract, Results, Discussion and Conclusion now state explicitly that
+  some sparse-case failures arise from the strict implemented rule rather than
+  from the combined degrees-of-freedom formula.
+- Additional optional plots, omnibus ranking tables and new implementation-
+  variant experiments were not added. They would answer narrower questions
+  without changing the main conclusion and would distract from the master's-
+  level narrative.
+- No degree-title change was made: the title page already names the confirmed
+  Master of Complex Systems degree. The existing weak-null summaries and
+  companion atlas already provide the requested regime-level evidence, so an
+  additional weak-null figure was not necessary.

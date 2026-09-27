@@ -5,9 +5,8 @@ The final protocol is
 \path{WelchSatterthwaiteMI/experiments/THESIS_REDESIGN_PROTOCOL.json},
 version 1.0.0, frozen on 7 September 2026 UTC before the final simulation.
 It specifies the population grids, seeds, methods, 20,000 replicates,
-\(\alpha=0.05\), validation tolerances and timing design. This was a local
-protocol freeze after exploratory development, not an external
-preregistration.
+\(\alpha=0.05\), validation tolerances and timing design. This local freeze
+followed exploratory development; it was not an external preregistration.
 
 The run contains 3,111 unique configurations, 4,001 display positions and
 534 population pairs, corresponding to 62,220,000 sampled table pairs.
@@ -18,18 +17,20 @@ resimulated for a thesis figure.
 
 The exact software versions, seeds and source hashes are recorded in
 \path{WelchSatterthwaiteMI/results/thesis_redesign/run_metadata.json}.
-The accompanying experiment supplement contains the protocol, implementation,
-consolidated results, 3,111 configuration checkpoints, complete atlas,
-mechanism diagnostics and tests. Its README also documents the minor
-post-run changes to the orchestration script; the population construction,
-simulation and method calculations used for the frozen results are unchanged.
+The experiment supplement contains the protocol, implementation, consolidated
+results, 3,111 configuration checkpoints, complete atlas, mechanism diagnostics
+and tests. Its README documents minor post-run orchestration changes; the
+frozen population construction, simulation and method calculations are
+unchanged.
 
-The thesis evidence audit reconstructs the protocol manifests, identifies the
-source configurations for every displayed figure and checks every numerical
-claim in Chapter~\ref{chap:results} against the saved files. The final
-deliverable checksums are recorded in \texttt{SHA256SUMS.txt}. After extracting
-the source and supplement together, run
-\texttt{python figures\_rewrite/make\_figures.py},
-\texttt{python figures\_rewrite/audit\_evidence.py} and
-\texttt{latexmk -pdf main.tex}. Runtime definitions and limitations are given
-with the results in Section~\ref{sec:runtime-summary}.
+The evidence audit reconstructs the protocol manifests and checks every figure
+and Chapter~\ref{chap:results} claim against the saved files. Final checksums
+are in \texttt{SHA256SUMS.txt}. After extracting the source and supplement into
+one archive root, run these commands from the directory containing
+\texttt{main.tex} and \texttt{WelchSatterthwaiteMI/}:
+\begin{quote}
+\small\raggedright
+\texttt{python} \path{figures_rewrite/make_figures.py}\par
+\texttt{python} \path{figures_rewrite/audit_evidence.py}\par
+\texttt{latexmk -pdf main.tex}
+\end{quote}

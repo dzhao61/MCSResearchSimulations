@@ -9,29 +9,33 @@ equality of the complete joint distributions.
 
 The derivation starts from the pointwise-MI variance governing first-order
 sampling error. A one-cell perturbation changes the joint probabilities,
-the margins and the pointwise values. Differentiating the complete variance
-functional supplies the sampling variability needed for component effective
-degrees of freedom. The resulting Expanded Welch procedure retains Wald's
+the margins and the pointwise values. Differentiating the variance functional
+supplies the sensitivity; the variance of that sensitivity supplies the
+sampling variability needed for component effective degrees of freedom. The
+resulting Expanded Welch procedure retains Wald's
 bias-corrected MI difference and plug-in standard error but evaluates the
 shared statistic against a Student reference. This is a principled
 moment-matching construction, not an exact finite-sample Student law.
 
-The completed fixed-population experiment found both benefits and costs.
+The fixed-population experiment found both benefits and costs.
 Expanded Welch can make a liberal Wald null rate closer to the nominal 5\%
 level. Where Wald is already conservative, the heavier-tailed reference moves
 rejection farther below that target. In sparse regimes, Expanded Welch also
-returns fewer valid results; a low unconditional rate there is not reliable
-evidence of good calibration. At ordinary positive MI and sufficiently large
-samples, both methods approached the nominal null rate in the tested fixed
-populations, while near-independence settings remained difficult even at
-large finite sample sizes. The expanded call used about 1.75 times the
-runtime of Wald in the measured implementation.
+returns fewer valid results under the strict component-validity rule used in
+the implementation. Some of those failures arise from the rule rather than
+the combined formula, and a low
+unconditional rate there is not reliable evidence of good calibration. At
+ordinary positive MI and sufficiently large samples, both methods approached
+the nominal null rate in the tested fixed populations, while near-independence
+settings remained difficult even at large finite sample sizes. The expanded
+call used about 1.75 times the runtime of Wald in the measured implementation.
 
 Near independence, the component degree of freedom is approximately \(nI\),
 so Expanded Welch can impose a very heavy-tailed reference where the
 first-order approximation remains weak. A supplementary diagnostic confirms
 that errors can arise in both the estimated standard error and the numerator.
-Changing only the reference distribution cannot correct both.
+Changing only the reference distribution leaves both approximation errors
+unchanged and therefore cannot provide a general correction.
 
 The evidence therefore supports Normal Wald as the general baseline. Expanded
 Welch is only a conditional sensitivity analysis; future corrections must
