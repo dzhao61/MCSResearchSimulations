@@ -125,43 +125,19 @@ For population \(P\), define
   \label{eq:population-mi-variance}
 \end{equation}
 This is the population variance of pointwise MI\@. It governs the sampling
-variance of the plug-in estimator because the first-order MI error is
-an average of centred pointwise-MI contributions. This first-order variance
-is established for histogram and discrete MI \citep{moddemeijer1989,brillinger2004};
-the expanded calculation in Chapter~\ref{chap:expanded} concerns the
-\emph{sampling uncertainty of its plug-in estimate}.
-
-To see this directly, write one observation as
-\(Z_a^{(P)}=(X_a^{(P)},Y_a^{(P)})\). A first-order Taylor expansion of MI
-around the fixed population table $P$ gives
+variance of the plug-in estimator because, as derived step by step in
+Section~\ref{sec:first-order-mi-background}, the first-order MI error behaves
+like an average of centred pointwise-MI contributions. Therefore,
 \begin{equation}
-  \Ihat(P)-I(P)
-  =
-  \frac{1}{n_P}
-  \sum_{a=1}^{n_P}
-  \{\pmi_P(Z_a^{(P)})-I(P)\}
-  +o_p(n_P^{-1/2}).
-  \label{eq:mi-asymptotic-linear}
-\end{equation}
-The summands are independent, have mean zero, and have variance \(V(P)\).
-The remainder $o_p(n_P^{-1/2})$ is asymptotically smaller than the leading
-$n_P^{-1/2}$ sampling fluctuation. Appendix~\ref{app:derivation-details}
-derives the linear term by expanding MI as a function of the cell
-probabilities.
-Therefore,
-\begin{align}
   \Var\{\Ihat(P)\}
-  &\approx
-  \Var\left[
-  \frac{1}{n_P}
-  \sum_{a=1}^{n_P}
-  \{\pmi_P(Z_a^{(P)})-I(P)\}
-  \right]\\
-  &=\frac{1}{n_P^2}
-  \sum_{a=1}^{n_P}V(P)\\
-  &=\frac{V(P)}{n_P}.
+  \approx\frac{V(P)}{n_P}.
   \label{eq:mi-sampling-variance}
-\end{align}
+\end{equation}
+This first-order variance is established for histogram and discrete MI
+\citep{moddemeijer1989,brillinger2004}. The expanded calculation in
+Chapter~\ref{chap:expanded} concerns the \emph{sampling uncertainty of its
+plug-in estimate}.
+
 Subtracting the fixed leading bias term in Equation
 \eqref{eq:bias-corrected-mi} does not change this first-order variance.
 

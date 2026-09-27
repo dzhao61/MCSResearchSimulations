@@ -145,65 +145,191 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \ref{chap:baselines} corrects this sample-size effect by subtracting
 \((r-1)(c-1)/(2n)\) from each estimate.
 
-\section{First-order inference for nonlinear functionals}
+\section{Sampling variance of plug-in MI}
+\label{sec:first-order-mi-background}
 
-MI is a nonlinear function of the cell probabilities. When all population
-cells are positive and the empirical table is close to its population value,
-a first-order Taylor expansion replaces this nonlinear function locally by a
-linear combination of the cell-probability errors. The resulting expansion is
-often expressed through an influence function. The classical influence-curve
-and functional delta-method treatments are given by \citet{hampel1974} and
-\citet[Chapter~20]{vanderVaart1998}; \citet{kandasamy2015} apply related von
-Mises methods to information functionals.
+To compare two estimated MI values, it is necessary to know how much each
+estimate would vary across repeated samples. The goal of this section is to
+derive the large-sample approximation
+\begin{equation}
+  \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
+  \label{eq:first-order-mi-var-background}
+\end{equation}
+Here \(V(P)\), defined below, measures how much the contribution of one
+observation varies across the population. The derivation assumes that the
+population cell probabilities are positive, so the logarithms and their
+derivatives are well defined. This first-order variance is established for
+histogram and discrete MI \citep{moddemeijer1989,brillinger2004}.
+The argument proceeds in three steps. First, sampling changes the empirical
+cell probabilities. Second, a first-order Taylor expansion translates those
+probability errors into an MI error. Third, that error can be written as a
+sample average, whose variance is straightforward to calculate.
 
-For MI, the observation-level influence function is centred pointwise MI:
+\subsection{From probability errors to MI error}
+
+Using the entropy identity in Equation~\eqref{eq:mi-entropy-form}, MI can be
+written directly in terms of the joint and marginal probabilities:
+\begin{equation}
+  I(P)
+  =
+  \sum_{i,j}p_{ij}\log p_{ij}
+  -\sum_i p_{i+}\log p_{i+}
+  -\sum_j p_{+j}\log p_{+j}.
+  \label{eq:mi-probability-sums}
+\end{equation}
+Let \(f(u)=u\log u\). Since \(f'(u)=\log u+1\), its first-order Taylor
+expansion around the population value \(u\) is
+\begin{equation}
+  f(\widehat u)
+  \approx
+  \underbrace{f(u)}_{\text{population value}}
+  +
+  \underbrace{f'(u)(\widehat u-u)}_{\text{first-order change}}.
+  \label{eq:first-order-taylor-background}
+\end{equation}
+Thus a small probability error \(\widehat u-u\) changes \(u\log u\), to first
+order, by \((\log u+1)(\widehat u-u)\).
+
+Applying this expansion to the three sums in
+Equation~\eqref{eq:mi-probability-sums} gives
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \sum_{i,j}(\log p_{ij}+1)(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &\quad
+  -\sum_i(\log p_{i+}+1)(\widehat p_{i+}-p_{i+})
+  \notag\\
+  &\quad
+  -\sum_j(\log p_{+j}+1)(\widehat p_{+j}-p_{+j}).
+  \label{eq:mi-first-order-three-sums}
+\end{align}
+The margin errors are sums of the corresponding cell errors:
+\begin{equation}
+  \widehat p_{i+}-p_{i+}
+  =\sum_j(\widehat p_{ij}-p_{ij}),
+  \qquad
+  \widehat p_{+j}-p_{+j}
+  =\sum_i(\widehat p_{ij}-p_{ij}).
+  \label{eq:margin-errors-from-cells}
+\end{equation}
+After substituting these expressions, the coefficient of the error in cell
+\((i,j)\) is
+\begin{equation}
+  (\log p_{ij}+1)
+  -(\log p_{i+}+1)
+  -(\log p_{+j}+1)
+  =\pmi_P(i,j)-1.
+  \label{eq:mi-error-cell-coefficient}
+\end{equation}
+The empirical and population cell probabilities both sum to one, so
+\begin{equation}
+  \sum_{i,j}(\widehat p_{ij}-p_{ij})=0.
+  \label{eq:cell-errors-sum-zero}
+\end{equation}
+The constant \(-1\) in Equation~\eqref{eq:mi-error-cell-coefficient}
+therefore contributes zero. Equation~\eqref{eq:mi-first-order-three-sums}
+reduces to
+\begin{equation}
+  \Ihat(P)-I(P)
+  \approx
+  \sum_{i,j}
+  \pmi_P(i,j)(\widehat p_{ij}-p_{ij}).
+  \label{eq:mi-error-from-cell-errors}
+\end{equation}
+The complicated changes in the joint table and its two margins have therefore
+reduced to a weighted sum of cell-probability errors. The weight for a cell is
+its population pointwise MI.
+
+\subsection{From cell errors to observation-level errors}
+
+Let \(Z_a=(X_a,Y_a)\) be observation \(a\). An empirical cell probability is
+the proportion of observations in that cell, so
+\begin{equation}
+  \widehat p_{ij}-p_{ij}
+  =
+  \frac{1}{n}\sum_{a=1}^{n}
+  \left\{\mathbf 1(Z_a=(i,j))-p_{ij}\right\}.
+  \label{eq:cell-error-as-average}
+\end{equation}
+Substituting this expression into Equation~\eqref{eq:mi-error-from-cell-errors}
+and rearranging the sums gives
+\begin{equation}
+  \Ihat(P)-I(P)
+  \approx
+  \frac{1}{n}\sum_{a=1}^{n}
+  \{\pmi_P(Z_a)-I(P)\}.
+  \label{eq:mi-error-as-average-background}
+\end{equation}
+For each observation, the indicator selects its observed cell, giving
+\(\pmi_P(Z_a)\), while the probability-weighted sum of all pointwise-MI
+values is \(I(P)\).
+This equation is the key step. To first order, the error in the plug-in MI
+estimate behaves like the average of \(n\) observation-level contributions.
+The contribution of an observation in cell \((i,j)\) is
 \begin{equation}
   \psi_P(i,j)=\pmi_P(i,j)-I(P).
   \label{eq:mi-if-background}
 \end{equation}
-It has population mean zero. Its variance is
+It is simply that cell's pointwise MI minus the population average. Therefore,
+\(\E_P\{\psi_P(X,Y)\}=0\). In formal asymptotic terminology,
+\(\psi_P\) is the influence function of MI; Equation
+\eqref{eq:mi-error-as-average-background} is its first-order linear
+representation \citep{hampel1974,vanderVaart1998,kandasamy2015}.
+
+\subsection{Calculate the sampling variance}
+
+Define the population variance of these centred contributions by
 \begin{equation}
   V(P)
   =\Var_P\{\psi_P(X,Y)\}
   =\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
   \label{eq:mi-variance-background}
 \end{equation}
-The plug-in MI error is, to first order, the sample mean of these influence
-values. Consequently,
+Under independent sampling, the \(n\) terms in
+Equation~\eqref{eq:mi-error-as-average-background} are independent and each
+has variance \(V(P)\). Hence
+\begin{align}
+  \Var\{\Ihat(P)\}
+  &\approx
+  \Var\left\{
+    \frac{1}{n}\sum_{a=1}^{n}\psi_P(Z_a)
+  \right\}
+  \notag\\
+  &=\frac{1}{n^2}\sum_{a=1}^{n}V(P)
+  =\frac{V(P)}{n}.
+  \label{eq:mi-variance-derived-background}
+\end{align}
+This proves the approximation stated in
+Equation~\eqref{eq:first-order-mi-var-background}. It is the familiar result
+that the variance of an average of \(n\) independent contributions is the
+variance of one contribution divided by \(n\).
+
+When \(V(P)>0\), the central limit theorem also gives
 \begin{equation}
-  \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
-  \label{eq:first-order-mi-var-background}
+  \frac{\Ihat(P)-I(P)}{\sqrt{V(P)/n}}
+  \xrightarrow{d}N(0,1).
+  \label{eq:mi-clt-background}
 \end{equation}
-This leading variance for histogram MI was calculated by
-\citet{moddemeijer1989}, who noted that the calculation also applies to
-discrete systems. \citet{brillinger2004} gives the discrete non-null formula
-explicitly, attributes that result to Moddemeijer, and states alongside it the
-\(\chi^2/(2n)\) limit at independence. For temporally dependent observation
-pairs, \citet{moddemeijer1999}
-develops an estimator of the same sampling variance using methods that account
-for dependence between observations. The present work assumes independent
-observations within each sample and does not claim the first-order MI variance
-formula as new.
+This does not claim that every finite-sample MI estimate is normally
+distributed. It is a local, large-sample approximation for a fixed table with
+positive population cell probabilities. The \(1/n\) leading bias from
+Section~\ref{sec:background-mi-bias} decreases faster than the
+\(1/\sqrt n\) sampling error, so it does not change this limiting
+distribution.
 
-This representation has two roles. First, it makes the central limit theorem
-available because the leading estimation error is an average of independent,
-mean-zero contributions. Second, it identifies the observation-level
-quantity whose variance determines the standard error. The raw categories
-themselves do not have a numerical variance relevant to MI; their effects on
-the MI functional are represented by centred pointwise MI\@.
+\subsection{Why independence is different}
 
-The expansion is local. It describes sampling fluctuations near a fixed
-positive-support population and does not assert that the plug-in estimator is
-normally distributed for every finite table. Its accuracy depends on the
-sample size relative to the probability structure, not only on the total
-number of observations.
+At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
+\(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
+first-order average in Equation~\eqref{eq:mi-error-as-average-background}
+vanishes.
 
-The central limit theorem then gives a normal approximation when
-\(V(P)>0\). At exact independence, every pointwise-MI value is zero and
-\(V(P)=0\). The first-order term disappears, so a second-order Taylor expansion is
-required. This is why the chi-squared limit for testing independence and the
-normal limit for comparing positive MI values are not competing descriptions
-of the same regular case.
+A finite sample can still have positive MI. Its leading variation comes from
+the squared cell-probability errors in a second-order Taylor expansion, which
+produces the usual chi-squared limit. The normal limit for comparing positive
+MI values and the chi-squared limit for testing independence therefore apply
+in different settings.
 
 \section{Wald and Welch--Satterthwaite inference}
 \label{sec:welch-background}
