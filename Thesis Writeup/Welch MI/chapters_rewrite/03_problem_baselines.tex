@@ -6,7 +6,7 @@ the final experiment. Normal Wald evaluates it against a standard normal
 reference; Chapter~\ref{chap:expanded} develops a Student reference with
 estimated degrees of freedom.
 
-\section{Data, estimand, and assumptions}
+\section{Problem setup and bias-corrected estimator}
 
 Let
 \begin{equation}
@@ -63,7 +63,8 @@ All logarithms are natural. MI differences and standard errors are therefore
 reported in nats. Changing the logarithm base scales both by the same positive
 constant and leaves the standardised statistic unchanged.
 
-\section{Plug-in and bias-corrected MI}
+\medskip
+\noindent\textbf{Bias-corrected estimator.}
 
 For the first table, define empirical pointwise MI by
 \begin{equation}
@@ -106,40 +107,18 @@ The estimated effect is
 \end{equation}
 
 The correction uses the declared alphabet dimensions, not the observed
-nonempty dimensions. It may produce a negative corrected MI estimate in a
-sparse sample. The implementation does not clip that estimate at zero. Clipping
-would replace the stated bias-corrected estimator by a different nonlinear
-estimator and would change its finite-sample bias and sampling distribution.
-When $n_P=n_Q$, the two leading corrections cancel in the difference in
-Equation~\eqref{eq:bias-corrected-difference}. When the sample sizes differ,
-their difference remains and removes the leading unequal-sample bias described
+nonempty dimensions. A corrected estimate can be negative in a sparse sample
+and is not clipped at zero, since clipping would define a different nonlinear
+estimator. When \(n_P=n_Q\), the two corrections cancel in the difference;
+otherwise, their difference removes the leading unequal-sample bias described
 in Section~\ref{sec:background-mi-bias}.
 
-\section{First-order variance of plug-in MI}
+\section{Shared standard error and test statistic}
 
-For population \(P\), define
-\begin{equation}
-  V(P)
-  =\sum_{i,j}p_{ij}
-  \{\pmi_P(i,j)-I(P)\}^2.
-  \label{eq:population-mi-variance}
-\end{equation}
-This is the population variance of pointwise MI\@. It governs the sampling
-variance of the plug-in estimator because, as derived step by step in
-Section~\ref{sec:first-order-mi-background}, the first-order MI error behaves
-like an average of centred pointwise-MI contributions. Therefore,
-\begin{equation}
-  \Var\{\Ihat(P)\}
-  \approx\frac{V(P)}{n_P}.
-  \label{eq:mi-sampling-variance}
-\end{equation}
-This first-order variance is established for histogram and discrete MI
-\citep{moddemeijer1989,brillinger2004}. The expanded calculation in
-Chapter~\ref{chap:expanded} concerns the \emph{sampling uncertainty of its
-plug-in estimate}.
-
-Subtracting the fixed leading bias term in Equation
-\eqref{eq:bias-corrected-mi} does not change this first-order variance.
+Section~\ref{sec:first-order-mi-background} showed that the first-order
+sampling variance of \(\Ihat(P)\) is \(V(P)/n_P\), where \(V(P)\) is the
+population variance of pointwise MI. Subtracting the fixed leading bias term
+in Equation~\eqref{eq:bias-corrected-mi} does not change this variance.
 
 The observed table estimates \(V(P)\) by
 \begin{equation}
@@ -150,8 +129,6 @@ The observed table estimates \(V(P)\) by
   \label{eq:estimated-mi-variance}
 \end{equation}
 Define \(\Vhat(Q)\) analogously.
-
-\section{Shared standard error and test statistic}
 
 Because the two samples are independent, their estimated variance
 contributions add:
@@ -174,7 +151,7 @@ Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference
 distribution, not the effect estimate or plug-in standard error.
 
-\section{Normal Wald reference}
+\section{Normal Wald reference and motivation for expansion}
 
 Under the regular first-order asymptotics,
 \begin{equation}
@@ -197,7 +174,8 @@ coverage experiment.
 The normal reference is a large-sample approximation. Wald estimates the
 standard error from the tables but applies no degrees-of-freedom adjustment.
 
-\section{What the expanded method must calculate}
+\medskip
+\noindent\textbf{Why consider an expanded reference?}
 
 The shared statistic supplies the estimated effect and its first-order
 standard error. The direct Hutcheson-style information-theoretic analogue

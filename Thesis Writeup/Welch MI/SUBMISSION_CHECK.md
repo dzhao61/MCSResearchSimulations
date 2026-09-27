@@ -20,11 +20,11 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The final A4 PDF has 98 pages, including 68 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The final A4 PDF has 96 pages, including 68 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 35 active references. The local bibliography contains the same 35 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 98 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Build | The active source builds to 96 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
 | Visual presentation | The previously reviewed pages and every page changed in the supplementary revision were inspected at final size. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
@@ -72,15 +72,15 @@ disposable LaTeX auxiliary files.
 Final checks completed on 27 September 2026:
 
 - clean build from a fresh extraction of the final source archive;
-- 98 A4 pages and 986,283 bytes before packaging;
-- final named PDF SHA-256 `ce268d340b7eb34d4626319f1eb040c80db9a16102307b44aab1fa4096879c15`;
+- 96 A4 pages and 980,516 bytes before packaging;
+- final named PDF SHA-256 `3e46761cb82794a6e99fe6b9a5774c3319023ecf252eb443beec1253f6837f3f`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - all 101 unit, derivation and experiment tests passed;
 - complete evidence audit passed, including all 22 confirmatory thesis figures, every reported Chapter 6 value and the supplementary mechanism evidence;
 - a fresh combined extraction of the source and experiment archives rebuilt
   the 3,111-configuration preflight, passed all 36 bundled tests, regenerated the
   22 confirmatory thesis figures and mechanism report, passed the evidence
-  audit and compiled the 98-page thesis without access to the working tree;
+  audit and compiled the 96-page thesis without access to the working tree;
 - 35 checked bibliography records, with every manuscript citation resolved and no unused records;
 - all newly added and changed pages inspected at final pagination, building on the prior full-page review;
 - `git diff --check` passed for the thesis tree.

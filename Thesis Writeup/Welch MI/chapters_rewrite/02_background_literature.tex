@@ -165,7 +165,8 @@ cell probabilities. Second, a first-order Taylor expansion translates those
 probability errors into an MI error. Third, that error can be written as a
 sample average, whose variance is straightforward to calculate.
 
-\subsection{From probability errors to MI error}
+\medskip
+\noindent\textbf{Step 1: From probability errors to MI error.}
 
 Using the entropy identity in Equation~\eqref{eq:mi-entropy-form}, MI can be
 written directly in terms of the joint and marginal probabilities:
@@ -241,7 +242,8 @@ The complicated changes in the joint table and its two margins have therefore
 reduced to a weighted sum of cell-probability errors. The weight for a cell is
 its population pointwise MI.
 
-\subsection{From cell errors to observation-level errors}
+\medskip
+\noindent\textbf{Step 2: From cell errors to observation-level errors.}
 
 Let \(Z_a=(X_a,Y_a)\) be observation \(a\). An empirical cell probability is
 the proportion of observations in that cell, so
@@ -277,7 +279,8 @@ It is simply that cell's pointwise MI minus the population average. Therefore,
 \eqref{eq:mi-error-as-average-background} is its first-order linear
 representation \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 
-\subsection{Calculate the sampling variance}
+\medskip
+\noindent\textbf{Step 3: Calculate the sampling variance.}
 
 Define the population variance of these centred contributions by
 \begin{equation}
@@ -318,7 +321,8 @@ Section~\ref{sec:background-mi-bias} decreases faster than the
 \(1/\sqrt n\) sampling error, so it does not change this limiting
 distribution.
 
-\subsection{Why independence is different}
+\medskip
+\noindent\textbf{The independence boundary.}
 
 At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
 \(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
@@ -331,23 +335,17 @@ produces the usual chi-squared limit. The normal limit for comparing positive
 MI values and the chi-squared limit for testing independence therefore apply
 in different settings.
 
-\section{Wald and Welch--Satterthwaite inference}
+\clearpage
+\section{Related inferential methods}
 \label{sec:welch-background}
 
-\subsection{Normal Wald inference}
+\noindent\textbf{Normal Wald inference.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with its asymptotic normal reference.
-For two independent MI estimates, the first-order variance contributions add:
-\begin{equation}
-  \Var\{\Ihat(P)-\Ihat(Q)\}
-  \approx
-  \frac{V(P)}{n_P}+
-  \frac{V(Q)}{n_Q}.
-  \label{eq:wald-variance-background}
-\end{equation}
-Replacing the population quantities by estimates produces the Normal Wald
-test developed formally in Chapter~\ref{chap:baselines}.
+For two independent MI estimates, the two first-order variance contributions
+add. Replacing the population quantities by estimates produces the Normal
+Wald test developed formally in Chapter~\ref{chap:baselines}.
 
 Wald inference is asymptotically valid under regularity conditions, but its
 finite-sample calibration depends on both the quality of the linear expansion
@@ -355,22 +353,17 @@ and the stability of the estimated standard error. A normal reference does not
 separately represent the uncertainty of the two estimated variance
 contributions.
 
-\subsection{The Welch--Satterthwaite principle}
+\medskip
+\noindent\textbf{The Welch--Satterthwaite principle.}
 
 Welch's test compares two means when their population variances may differ
 \citep{welch1947}. The denominator contains two independently estimated
 variance contributions. Satterthwaite's approximation represents their sum by
 a scaled chi-squared variable with matching first two moments
-\citep{satterthwaite1946}. The resulting effective degrees of freedom are
-\begin{equation}
-  \nu
-  =
-  \frac{\left(\sum_i k_i s_i^2\right)^2}
-       {\sum_i (k_i s_i^2)^2/\nu_i},
-  \label{eq:general-ws-background}
-\end{equation}
-where \(s_i^2\) are variance estimates, \(k_i\) are positive weights, and
-\(\nu_i\) are their component degrees of freedom.
+\citep{satterthwaite1946}. This produces an effective degree of freedom that
+reflects the relative size and uncertainty of the component variance
+estimates. Chapter~\ref{chap:expanded} gives the equation and derives its
+MI-specific inputs.
 
 The final statistic uses a Student distribution rather than a normal
 distribution. Small effective degrees of freedom produce heavier tails,
@@ -403,18 +396,15 @@ functional and assess whether the resulting reference is useful.
 
 The direction of the finite-sample problem is nevertheless different here.
 The cited regression corrections respond to underestimated uncertainty or
-anti-conservative coverage, so a larger variance estimate or heavier-tailed
-reference can move inference in the required direction. Near independence,
-the MI calculation instead gives
-\(\E\widehat V\approx V+d/n\), where \(d=(r-1)(c-1)\) is the interaction
-dimension of an \(r\times c\) table. Locally,
-\(\widehat V\approx2\widehat I\),
-\(\E\widehat I\approx I+d/(2n)\), and \(V\approx2I\), which gives this
-upward shift. A
-heavier-tailed Student reference then reinforces, rather than offsets, the
-resulting conservatism.
+anti-conservative coverage, so a heavier-tailed reference can move inference
+in the required direction. Near independence, the plug-in MI variance can
+instead be biased upward. A heavier-tailed Student reference may then
+reinforce, rather than offset, the resulting conservatism. This possibility is
+derived more precisely in Chapter~\ref{chap:expanded} and evaluated in the
+experiments.
 
-\section{Prior MI inference and related comparisons}
+\medskip
+\noindent\textbf{Prior MI inference and related comparisons.}
 
 MI uncertainty also has a broader literature than its leading normal
 approximation. \citet{roulston1999} derives entropy and MI error estimates
@@ -503,7 +493,8 @@ result for heterogeneous two-sample nulls.\\
 \end{tabularx}
 \end{table}
 
-\section{Resampling and the weak null}
+\medskip
+\noindent\textbf{Resampling and the weak null.}
 
 Bootstrap methods can approximate a statistic's repeated-sampling behaviour
 by drawing from fitted empirical populations, at greater computational cost

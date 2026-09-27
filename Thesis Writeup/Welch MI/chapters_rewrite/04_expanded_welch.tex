@@ -7,7 +7,7 @@ against an estimated Student reference rather than the standard normal. This
 chapter derives the required degrees of freedom from the sampling variability
 of the full MI variance estimator.
 
-\section{Roadmap from the Welch--Satterthwaite equation}
+\section{From Welch--Satterthwaite to the required MI quantity}
 
 For independent variance estimates \(s_i^2\), positive weights \(k_i\), and
 component degrees of freedom \(\nu_i\), the Welch--Satterthwaite equation is
@@ -40,7 +40,8 @@ Third, the variability of these sensitivities gives the sampling variance of
 \(\Vhat(P)\). Finally, the two estimated component degrees of freedom are
 combined through Equation~\eqref{eq:ws-general}.
 
-\section{Component degrees of freedom by moment matching}
+\medskip
+\noindent\textbf{Moment matching for one component.}
 
 Satterthwaite represents a positive variance estimate by a scaled chi-squared
 variable. For the first population, write the working model as
@@ -93,7 +94,7 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
 To first order, \(\E\{\Vhat(P)\}\approx V(P)\). The required calculation is
 therefore the sampling variance of \(\Vhat(P)\).
 
-\section{A one-cell perturbation of the distribution}
+\section{Deriving the sensitivity of the MI variance}
 
 The sampling behaviour of a smooth plug-in functional can be obtained by
 measuring its first-order response to one observation. Fix a cell
@@ -135,7 +136,8 @@ The derivatives of the joint probabilities sum to zero because
   =1-1=0.
 \end{equation}
 
-\section{Change in pointwise mutual information and MI}
+\medskip
+\noindent\textbf{Effect on pointwise MI and MI.}
 
 Along the perturbation path, pointwise MI is
 \begin{equation}
@@ -192,7 +194,8 @@ The first sum is \(\pmi_P(x,y)-I(P)\). Substitution of Equation
 This result recovers the centred pointwise-MI influence function used in
 Chapter~\ref{chap:baselines}.
 
-\section{Change in the MI variance}
+\medskip
+\noindent\textbf{Effect on the MI variance.}
 
 The target is the first-order change in
 \begin{equation}
@@ -299,7 +302,9 @@ The first line is the change if the pointwise-MI values were held fixed. The
 bracket accounts for changes in those values, including the effects of the
 selected joint probability and both margins.
 
-\section{Sampling variance of the MI variance estimator}
+\section{Component degrees of freedom and final test}
+
+\noindent\textbf{Population component degrees of freedom.}
 
 Define the population variability of the observation-level sensitivities by
 \begin{equation}
@@ -358,7 +363,8 @@ variance functional, its first-order sensitivity can vanish even though MI
 and \(V(P)\) are positive. There, a higher-order analysis of \(\Vhat(P)\)
 would be needed to describe its finite-sample distribution.
 
-\section{Table-based component degrees of freedom}
+\medskip
+\noindent\textbf{Table-based component degrees of freedom.}
 
 The observed table replaces every population quantity in Equation
 \eqref{eq:g-final} by its empirical counterpart. The sums below are over
@@ -400,7 +406,8 @@ The estimated component degree of freedom is
 Repeating the same calculation for the second table gives
 \(\widehat\nu_Q\).
 
-\section{Combined degrees of freedom and final test}
+\medskip
+\noindent\textbf{Combining the two components.}
 
 Substituting the two variance contributions and component degrees of freedom
 into Equation~\eqref{eq:ws-general} gives
@@ -475,7 +482,7 @@ Invalid Expanded outputs count as non-rejections in the reported
 unconditional rates. Because the correction changes only the reference, it
 cannot raise rejection where Wald is already too conservative.
 
-\section{Worked count-table example}
+\section{Worked example and implementation}
 
 Consider the two observed \(3\times3\) tables
 \begin{equation}
@@ -528,7 +535,9 @@ Equation~\eqref{eq:expanded-df} combines them into
 fail to reject at the 5\% level for these tables. The example shows that
 Expanded Welch changes the reference, not the observed statistic.
 
-\section{Operational algorithm and complexity}
+\pagebreak[3]
+\medskip
+\noindent\textbf{Operational algorithm and complexity.}
 \label{sec:expanded-complexity}
 
 Table~\ref{tab:expanded-algorithm} summarises one comparison.
@@ -557,8 +566,10 @@ variance contribution is calculated by a fixed number of table scans. The
 time complexity is therefore \(O(rc)\), and the working memory is also
 \(O(rc)\). The method is deterministic once the two count tables are given.
 
-\section{Behaviour near independence}
+\section{Behaviour and limitations}
 \label{sec:near-independence-mechanism}
+
+\noindent\textbf{Near independence.}
 
 The size of the adjustment has a useful local explanation. For a distribution
 close to independence, a second-order Taylor expansion gives
@@ -578,7 +589,8 @@ dimension, positive probabilities and sufficiently regular cell counts. Very
 near independence, quadratic sampling variation can still be important, so a
 first-order Student adjustment need not improve finite-sample calibration.
 
-\section{Theoretical status}
+\medskip
+\noindent\textbf{Theoretical status and validity conditions.}
 
 The influence-function calculations in Equations~\eqref{eq:mi-derivative}
 and \eqref{eq:g-final} are directional derivatives of the corresponding
