@@ -20,11 +20,11 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The current A4 PDF has 101 pages, including 73 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The current A4 PDF has 100 pages, including 72 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 36 active references. The local bibliography contains the same 36 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 101 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Build | The active source builds to 100 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
 | Visual presentation | The earlier 97-page version received a full visual and raster review. Pages affected by the later derivation and citation edits were reinspected at final size; the full-page raster comparison was not repeated for the current revision. | Targeted refresh complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
@@ -81,7 +81,7 @@ simulation result or working-draft PDF was changed by this refresh.
 
 At the 27-28 September acceptance refresh, the main text ended on printed
 page 70 and Appendix A started on page 71. The current revision ends on
-page 73 and Appendix A starts on page 74. Extracting pages 9-78 of the
+page 72 and Appendix A starts on page 73. Extracting pages 9-78 of the
 earlier PDF with `pdftotext` gave 18,892
 whitespace-separated tokens, including headings, captions, mathematical
 tokens and plot labels. This is a repeatable secondary length diagnostic,
@@ -126,10 +126,17 @@ The subsequent targeted prose pass clarified the cancellation and conditional
 means in Chapter 4, the alternative population constructors, and the three
 standard-error comparisons in the Chapter 6 mechanism check. It also replaced
 abstract wording in Chapters 2 and 7. No statistical implementation, protocol,
-saved result or figure was changed. The current source builds to 101 A4 pages
+saved result or figure was changed. That revision built to 101 A4 pages
 without LaTeX errors, undefined references or overfull boxes; the edited
 passages and their page breaks were inspected at final size. This targeted
 check does not replace the earlier whole-manuscript visual audit.
+
+The subsequent Section 2.4 flow edit removed the Student-ratio derivation and
+the squared-Wald digression from the background discussion. It retains a
+short explanation of the Student rejection threshold before returning to MI;
+the detailed distributional arguments remain in Chapter 4 and Appendix D.
+The revised PDF has 100 pages. The build passes with no undefined references
+or overfull boxes, and the revised passage was inspected in the rendered PDF.
 
 Final deliverables are stored in `deliverables/`:
 

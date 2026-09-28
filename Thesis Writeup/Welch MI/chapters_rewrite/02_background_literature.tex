@@ -488,19 +488,11 @@ component values affect \(\nu\). Satterthwaite obtains this form by matching
 the mean and variance of their sum to a scaled chi-squared variable
 \citep{satterthwaite1946}.
 
-Welch evaluates the statistic against a Student distribution with \(\nu\)
-degrees of freedom. The connection to the normal reference can be seen from
-the representation
-\begin{equation}
-  t_\nu=\frac{Z}{\sqrt{\chi^2_\nu/\nu}},
-  \qquad Z\sim N(0,1),
-  \label{eq:background-student-representation}
-\end{equation}
-where the normal and chi-squared variables are independent. In this Student
-reference, a small \(\chi^2_\nu/\nu\) makes \(|t_\nu|\) larger, so extreme
-values are more likely than under the normal reference. As \(\nu\) increases,
-\(\chi^2_\nu/\nu\) approaches one and the Student reference approaches
-\(N(0,1)\).
+Welch compares the statistic with a Student distribution using the calculated
+\(\nu\). At the same significance level, this requires a larger absolute
+statistic to reject the null than a standard normal reference does.
+The difference between the Student and normal rejection thresholds becomes
+smaller as \(\nu\) increases.
 
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
@@ -508,15 +500,8 @@ calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
 the probability tables. Chapter~\ref{chap:expanded} derives these
 MI-specific inputs to the same moment-matching structure.
 
-For a single scalar restriction, normal and chi-squared Wald notation are
-equivalent. If \(T\) is asymptotically standard normal, then \(T^2\) is
-asymptotically \(\chi^2_1\). The signed form is retained here because the
-parameter is the scalar difference \(I(P)-I(Q)\), its sign is meaningful, and
-the Welch refinement replaces the normal reference for \(T\) by a Student
-reference. The \((r-1)(c-1)\)-degree chi-squared law used for one-table
-independence is a different second-order result.
-
-The same principle extends beyond ordinary sample variances.
+Using the variability of a variance estimate to choose a reference
+distribution also has precedents in regression.
 \citet{panwall2002} account for variability in sandwich variance estimates
 using approximate Student and $F$ references. \citet{bell2002} use
 Satterthwaite moment matching for regression variance estimates under

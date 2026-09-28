@@ -24,5 +24,11 @@ confident language at an honours/master's level. Define necessary jargon,
 state real approximations or limitations once where they matter, and avoid
 repeated defensive caveats. Simpler wording must remain statistically precise.
 
+Keep each passage focused on the question it is answering. Detailed explanation
+belongs where it advances the argument; omit or relocate short technical
+digressions that interrupt the transition to the next idea. When describing a
+connection, comparison or change, explicitly name both quantities or methods
+so the reader does not have to infer the missing subject.
+
 Keep ordinary chat answers as concise as the user's question warrants; this
 preference chiefly governs substantial derivations and thesis exposition.
