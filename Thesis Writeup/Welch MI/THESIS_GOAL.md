@@ -214,6 +214,29 @@ define technical terms. Give each paragraph one main point; revise long
 sentences that combine several claims. Review sentences longer than about
 35 words as an editing aid, while allowing necessary mathematical qualifications.
 
+### Derivation depth: use Section 2.3 as the model
+
+The sampling-variance derivation in Section 2.3 is the preferred level of
+detail for important mathematical arguments. Write for a reader who knows
+basic calculus and probability but has not seen this MI calculation. Begin
+with the quantity to be derived, why it matters, the assumptions needed, and
+a short roadmap. Divide the argument into meaningful steps, not a continuous
+block of formulas.
+
+At each non-obvious step, show the intermediate equation and explain the
+operation in words. For a Taylor expansion, give the general formula, name
+the function and expansion point, identify the new value and its difference
+from that point, then show the substituted terms. Make nested sums, changes
+of summation order, product-rule terms, cancellations and uses of independence
+visible instead of asking the reader to infer them. Distinguish approximate
+steps from exact algebra after the approximation has been made. After a key
+equation, say what it means and how it advances the derivation.
+
+This is a clarity standard, not a request to expand routine arithmetic or
+repeat every point. Prefer a slightly longer equation to a new symbol that
+the reader must remember, and keep enough detail to reconstruct the argument
+without interrupting the main narrative.
+
 Keep a dedicated contribution subsection near the end of the introduction so
 the mathematical, methodological, empirical and practical contributions remain
 clear in the examiner's mind. In the results chapter, do not stop after quoting
