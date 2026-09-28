@@ -10,7 +10,8 @@ of the full MI variance estimator.
 \section{From Welch--Satterthwaite to the required MI quantity}
 
 For the two MI estimates, the Welch--Satterthwaite equation combines their
-estimated variance contributions as
+estimated variance contributions as in the original moment-matching framework
+\citep{satterthwaite1946,welch1947}:
 \begin{equation}
   \nu
   =
@@ -90,7 +91,8 @@ therefore the sampling variance of \(\Vhat(P)\).
 \section{Deriving the sensitivity of the MI variance}
 
 The sampling behaviour of a smooth plug-in functional can be obtained by
-measuring its first-order response to one observation. Fix a cell
+measuring its first-order response to one observation
+\citep{hampel1974,vanderVaart1998}. Fix a cell
 \((x,y)\) and define the perturbed distribution
 \begin{equation}
   P_\varepsilon
@@ -312,7 +314,16 @@ For the first-order Expanded Welch construction,
 \(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
 \end{assumption}
 
-A first-order Taylor expansion of the variance functional around $P$ is
+The empirical distribution is
+\begin{equation}
+  \widehat P-P
+  =\frac{1}{n_P}\sum_{a=1}^{n_P}
+  \left\{\delta_{Z_a^{(P)}}-P\right\}.
+\end{equation}
+Taylor's first-order term is linear in this difference
+\citep[Chapter~20]{vanderVaart1998}. By
+Equation~\eqref{eq:g-definition}, each summand has sensitivity
+\(g_P(Z_a^{(P)})\). Therefore,
 \begin{equation}
   \Vhat(P)-V(P)
   \approx
@@ -565,8 +576,34 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 \noindent\textbf{Near independence.}
 
-The size of the adjustment has a useful local explanation. For a distribution
-close to independence, a second-order Taylor expansion gives
+The adjustment has a local explanation. Let \(P_t=P_0+tH\), where
+\(P_0=(q_{ij})\) is independent with positive cells \(q_{ij}=a_i b_j\), and
+\(H\) has zero row and column sums. Thus \(t=0\) is the expansion point
+and the margins stay fixed. For \(f(t)=I(P_t)\), the second-order Taylor
+expansion has \(f(0)=0\), \(f'(0)=\sum_{i,j}H_{ij}=0\), and
+\(f''(0)=\sum_{i,j}H_{ij}^2/q_{ij}\).
+\begin{align}
+ I(P_t)
+ &=\underbrace{0}_{\text{population value}}
+   +\underbrace{0t}_{\text{first order}}
+   +\underbrace{\frac{t^2}{2}\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}}_{\text{second order}}
+   +O(t^3),\\
+ \pmi_{P_t}(i,j)
+ &=\log\left(1+\frac{tH_{ij}}{q_{ij}}\right)
+   =\frac{tH_{ij}}{q_{ij}}+O(t^2),\\
+ V(P_t)
+ &=t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
+\end{align}
+Appendix~\ref{app:independence-boundary} gives the second-order MI result
+when the margins can also change.
+The row and column conditional means of pointwise MI have no first-order
+term because the corresponding sums of \(H\) are zero. Equation~\eqref{eq:g-final}
+then gives \(g_{P_t}(i,j)=2tH_{ij}/q_{ij}+O(t^2)\), and hence
+\begin{equation}
+ \tau^2(P_t)
+ =4t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
+\end{equation}
+For a distribution close to independence on this path, these expansions give
 \begin{equation}
  V(P)\approx 2I(P),
  \qquad \tau^2(P)\approx4V(P).

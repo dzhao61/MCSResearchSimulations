@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (28 September) | 70 pages | 97 pages |
+| Current Welch-MI manuscript (28 September) | 72 pages | 99 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -113,8 +113,8 @@ T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-revised 97-page PDF builds without undefined references, citations or overfull
-boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 35 sources
+current 99-page PDF builds without undefined references, citations or overfull
+boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 36 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
 precedent are incorporated, and the contribution is stated as the specific
@@ -128,7 +128,7 @@ in the companion atlas. Detailed mechanism checks remain available in the
 experiment supplement without changing the frozen run. T6 records
 a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 97-page A4 manuscript from the active source, with
+T7 then built the final 99-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
 boxes. All 101 tests and the complete evidence audit pass. The previously
 reviewed pages and all pages changed or added by the follow-up have been

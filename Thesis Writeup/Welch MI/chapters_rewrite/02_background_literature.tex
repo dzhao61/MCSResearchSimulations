@@ -117,7 +117,8 @@ Under multinomial sampling, the cell counts are random but constrained to sum
 to \(n\), so they are dependent. The plug-in estimator remains consistent for
 a fixed alphabet, but its finite-sample behaviour depends on the complete
 probability table. In particular, rare cells can change the sampling
-behaviour even when the alphabet and sample sizes are unchanged.
+behaviour even when the alphabet and sample sizes are unchanged
+\citep{paninski2003}.
 
 The plug-in estimator is upward biased: random variation in the cell counts
 tends to make the empirical table appear more dependent than the population
@@ -417,7 +418,8 @@ vanishes.
 
 A finite sample can still have positive MI. Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
-produces the usual chi-squared limit. The normal limit for comparing positive
+produces the usual chi-squared limit
+\citep{brillinger2004,marinescu2025}. The normal limit for comparing positive
 MI values and the chi-squared limit for testing independence therefore apply
 in different settings.
 
@@ -428,7 +430,8 @@ in different settings.
 \noindent\textbf{Normal Wald inference.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
-standard error, and compares the result with its asymptotic normal reference.
+standard error, and compares the result with its asymptotic normal reference
+\citep{wald1943,vanderVaart1998}.
 For two independent MI estimates, the two first-order variance contributions
 add:
 \begin{equation}
@@ -452,11 +455,10 @@ conditions of Section~\ref{sec:first-order-mi-background} and increasing
 sample sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
 to the numerator and specifies the full Normal Wald test.
 
-Wald inference is asymptotically valid under regularity conditions, but its
-finite-sample calibration depends on both the quality of the linear expansion
-and the stability of the estimated standard error. A normal reference does not
-separately represent the uncertainty of the two estimated variance
-contributions.
+With smaller samples, the MI difference may not follow the normal
+approximation closely, and the estimated standard error can vary between
+samples. The Wald test still uses a normal reference; it makes no separate
+small-sample adjustment for that standard-error variability.
 
 \medskip
 \noindent\textbf{The Welch--Satterthwaite principle.}
@@ -490,10 +492,11 @@ the representation
   \qquad Z\sim N(0,1),
   \label{eq:background-student-representation}
 \end{equation}
-where the normal and chi-squared variables are independent. The denominator
-is random, which produces heavier tails than the normal reference. As
-\(\nu\) increases, \(\chi^2_\nu/\nu\) approaches one and the Student
-reference approaches \(N(0,1)\).
+where the normal and chi-squared variables are independent. In this Student
+reference, a small \(\chi^2_\nu/\nu\) makes \(|t_\nu|\) larger, so extreme
+values are more likely than under the normal reference. As \(\nu\) increases,
+\(\chi^2_\nu/\nu\) approaches one and the Student reference approaches
+\(N(0,1)\).
 
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
@@ -530,8 +533,8 @@ anti-conservative coverage, so a heavier-tailed reference can move inference
 in the required direction. Near independence, the plug-in MI variance can
 instead be biased upward. A heavier-tailed Student reference may then
 reinforce, rather than offset, the resulting conservatism. This possibility is
-derived more precisely in Chapter~\ref{chap:expanded} and evaluated in the
-experiments.
+examined in the supplementary mechanism check in
+Section~\ref{sec:mechanism-results}.
 
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}

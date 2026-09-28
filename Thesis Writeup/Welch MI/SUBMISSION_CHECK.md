@@ -20,12 +20,12 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The final A4 PDF has 97 pages, including 70 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The current A4 PDF has 99 pages, including 72 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
-| Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 35 active references. The local bibliography contains the same 35 checked records, with no missing or unused citations. | Complete. |
+| Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 36 active references. The local bibliography contains the same 36 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 97 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
-| Visual presentation | All pages were rendered and inspected; final-page bodies unchanged from the full review were matched by raster comparison, and every changed page was reinspected. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
+| Build | The active source builds to 99 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Visual presentation | The earlier 97-page version received a full visual and raster review. Pages affected by the later derivation and citation edits were reinspected at final size; the full-page raster comparison was not repeated for the current revision. | Targeted refresh complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
 
@@ -39,7 +39,7 @@ not change the frozen evidence or add material for length alone.
 | Part | Check and disposition |
 | --- | --- |
 | Chapter 1 | The estimand, weak null, four research questions, contribution and scope agree with the later method and evidence. No material change required. |
-| Chapter 2 | Prior-work scope agrees with the expanded 35-source audit, including Hutcheson's direct information-theoretic comparison, general sandwich-df and higher-moment MI precedents. The first-order MI variance derivation now shows the Taylor expansion, cell-error collection, observation-level representation and variance calculation without skipped algebra. |
+| Chapter 2 | Prior-work scope agrees with the expanded 36-source audit, including Hutcheson's direct information-theoretic comparison, general sandwich-df and higher-moment MI precedents. The first-order MI variance derivation now shows the Taylor expansion, cell-error collection, observation-level representation and variance calculation without skipped algebra. |
 | Chapter 3 | Bias correction, (V) versus (V/n), shared statistic and null interpretation agree with the implementation. Unevaluated confidence-interval formulas were removed. |
 | Chapter 4 | The derivation proceeds from moment matching through the complete variance sensitivity to the final reference. It retains the interpretable local `df approximately nI` behaviour without the supplementary higher-order calculation. Assumptions, invalidity, nesting and numerator-denominator dependence are explicit. |
 | Chapter 5 | The fixed population construction, margins, sample randomness, metrics, family counts and runtime design agree exactly with the frozen protocol. |
@@ -79,16 +79,18 @@ The source archive now also includes the detailed rewrite plan referenced
 by its README and goal. No statistical implementation, frozen population,
 simulation result or working-draft PDF was changed by this refresh.
 
-The main text ends on printed page 70; Appendix A starts on page 71. The
-previous record incorrectly used the conclusion's opening page (69) as the
-length. Extracting PDF pages 9-78 with `pdftotext` gives 18,892
+At the 27-28 September acceptance refresh, the main text ended on printed
+page 70 and Appendix A started on page 71. The current revision ends on
+page 72 and Appendix A starts on page 73. Extracting pages 9-78 of the
+earlier PDF with `pdftotext` gave 18,892
 whitespace-separated tokens, including headings, captions, mathematical
 tokens and plot labels. This is a repeatable secondary length diagnostic,
 not a prose-only word count.
 
 ## Final verification record
 
-Final checks completed on 27-28 September 2026:
+The following checks were completed on 27-28 September 2026 for the earlier
+97-page, 35-reference version:
 
 - clean build from a fresh extraction of the final source archive;
 - 97 A4 pages and 984,486 bytes before packaging;
@@ -111,6 +113,14 @@ Final checks completed on 27-28 September 2026:
 - every full-page raster matches the regenerated clean archive build;
 - working-draft PDF unchanged, SHA-256 `aa1024f12d853870665dda146497030a1484770ff939519a876a2cdf182abc02`;
 - `git diff --check` passed for the thesis tree.
+
+The 28 September derivation and citation refresh builds to 99 pages with 36
+resolved bibliography entries and no LaTeX errors, undefined references or
+citations, or overfull boxes. The affected pages were reinspected and the
+deliverable checksums were refreshed. A fresh isolated build from the updated
+source archive also produced 99 pages without warnings. The earlier full
+raster comparison above is a historical check, not a claim that a new
+whole-manuscript raster comparison was run after this text revision.
 
 Final deliverables are stored in `deliverables/`:
 

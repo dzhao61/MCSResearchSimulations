@@ -85,8 +85,9 @@ The plug-in MI estimate is
 \end{equation}
 The same calculation gives \(\Ihat(Q)\).
 
-Under fixed positive support, subtracting the leading bias from each plug-in
-estimate gives the estimated effect directly:
+The leading fixed-support MI bias appears in
+Equation~\eqref{eq:mi-leading-bias} \citep{moddemeijer1989}. Subtracting it
+from each plug-in estimate gives the estimated effect:
 \begin{equation}
   \Deltahat
   =\left\{\Ihat(P)-\frac{(r-1)(c-1)}{2n_P}\right\}
@@ -107,7 +108,8 @@ in Section~\ref{sec:background-mi-bias}.
 
 Section~\ref{sec:first-order-mi-background} showed that the first-order
 sampling variance of \(\Ihat(P)\) is \(V(P)/n_P\), where \(V(P)\) is the
-population variance of pointwise MI. Subtracting the fixed leading bias term
+population variance of pointwise MI \citep{moddemeijer1989,brillinger2004}.
+Subtracting the fixed leading bias term
 in Equation~\eqref{eq:bias-corrected-difference} does not change this
 variance.
 
@@ -144,7 +146,8 @@ distribution, not the effect estimate or plug-in standard error.
 
 \section{Normal Wald reference and motivation for expansion}
 
-Under the regular first-order asymptotics,
+Under the regular first-order asymptotics for a scalar Wald comparison
+\citep{wald1943,vanderVaart1998},
 \begin{equation}
   T\xrightarrow{d}N(0,1)
   \qquad\text{under }H_0.
@@ -170,8 +173,9 @@ standard error from the tables but applies no degrees-of-freedom adjustment.
 
 The shared statistic supplies the estimated effect and its first-order
 standard error. The direct Hutcheson-style information-theoretic analogue
-assigns component degrees of freedom \(n_P\) and \(n_Q\); a familiar
-ordinary-Welch analogue uses \(n_P-1\) and \(n_Q-1\). For positive variance contributions,
+assigns component degrees of freedom \(n_P\) and \(n_Q\)
+\citep{hutcheson1970}; a familiar ordinary-Welch analogue uses
+\(n_P-1\) and \(n_Q-1\) \citep{welch1947}. For positive variance contributions,
 their combined degree of freedom is at least
 \(\min(n_P,n_Q)-1\), so at sample sizes of 50 or more their Student reference
 is already close to normal. The supplementary ablation retains these baselines
@@ -181,7 +185,7 @@ expanded method instead estimates component degrees of freedom from that full
 functional.
 
 Satterthwaite moment matching requires the first two moments of each positive
-variance estimate. To first order,
+variance estimate \citep{satterthwaite1946}. To first order,
 \begin{equation}
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}

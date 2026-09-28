@@ -39,7 +39,7 @@ From this thesis directory, build the PDF with:
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The 35 actively cited and source-audited bibliography records are stored in
+The 36 actively cited and source-audited bibliography records are stored in
 the local `references.bib`, so the manuscript can compile without the parent
 methods project. The active preamble searches only `figures_rewrite/`,
 preventing an old pilot figure from being used silently.
