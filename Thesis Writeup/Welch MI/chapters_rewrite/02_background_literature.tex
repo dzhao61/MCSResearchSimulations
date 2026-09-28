@@ -477,12 +477,16 @@ testing equal population means and its effective degrees of freedom are
            +\dfrac{(s_Q^2/n_Q)^2}{n_Q-1}}.
   \label{eq:background-ordinary-welch}
 \end{align}
-The denominator of the statistic contains two independently estimated
-variance contributions. The degrees-of-freedom formula weights their
-uncertainty: under normal sampling, each sample variance has component
-degrees of freedom \(n_P-1\) or \(n_Q-1\). Satterthwaite obtains the combined value by
-representing the sum as a scaled chi-squared variable with matching mean
-and variance \citep{satterthwaite1946}.
+
+\pagebreak[4]
+
+The denominator of the statistic contains one estimated variance contribution
+from each sample. Under normal sampling, their component degrees of freedom
+are \(n_P-1\) and \(n_Q-1\). If \(s_P^2/n_P\) dominates, the formula makes the
+combined \(\nu\) close to \(n_P-1\); when both contributions matter, both
+component values affect \(\nu\). Satterthwaite obtains this form by matching
+the mean and variance of their sum to a scaled chi-squared variable
+\citep{satterthwaite1946}.
 
 Welch evaluates the statistic against a Student distribution with \(\nu\)
 degrees of freedom. The connection to the normal reference can be seen from

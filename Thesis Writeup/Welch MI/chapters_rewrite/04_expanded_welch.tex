@@ -162,6 +162,9 @@ MI along the path is
   =\sum_{i,j}p_{ij}(\varepsilon)
   \pmi_{P_\varepsilon}(i,j).
 \end{equation}
+
+\pagebreak[4]
+
 The product rule separates its derivative into the change in probability
 weights and the change in pointwise-MI values:
 \begin{align}
@@ -176,8 +179,11 @@ weights and the change in pointwise-MI values:
   \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
   {\mathrm d\varepsilon}\right|_{0}.
 \end{align}
-The first sum is \(\pmi_P(x,y)-I(P)\). Substitution of Equation
-\eqref{eq:pmi-derivative} into the second sum gives \(1-1-1+1=0\). Hence
+The first sum is \(\pmi_P(x,y)-I(P)\). In the second sum, the selected-cell
+term contributes \(p_{xy}/p_{xy}=1\). The row term contributes
+\(-\sum_j p_{xj}/p_{x+}=-1\); the column term likewise contributes \(-1\);
+and the constant contributes \(\sum_{i,j}p_{ij}=1\). These four
+contributions cancel. Hence
 \begin{equation}
   \boxed{
   \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
@@ -268,6 +274,12 @@ Substitution of Equation~\eqref{eq:pmi-derivative} gives
   \notag\\
   &\quad=
   \pmi_P(x,y)
+  -\frac{\sum_j p_{xj}\pmi_P(x,j)}{p_{x+}}
+  -\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}}
+  +I(P)
+  \notag\\
+  &\quad=
+  \pmi_P(x,y)
   -\E_P\{\pmi_P(X,Y)\mid X=x\}
   -\E_P\{\pmi_P(X,Y)\mid Y=y\}
   +I(P).
@@ -306,8 +318,11 @@ Define the population variability of the observation-level sensitivities by
   \tau^2(P)=\Var_P\{g_P(X,Y)\}.
   \label{eq:tau-definition}
 \end{equation}
-The mean of an influence function is zero. Centring explicitly gives the same
-variance if numerical substitution produces a small nonzero mean.
+Averaging the one-cell perturbation directions gives
+\(\sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=0\). The derivative is linear in
+its direction, so \(\E_P\{g_P(X,Y)\}=0\); Appendix~\ref{app:derivation-details}
+shows the steps. Explicit centring protects the numerical calculation if
+roundoff produces a small nonzero empirical mean.
 
 \begin{assumption}[Regular variance sensitivity]
 For the first-order Expanded Welch construction,

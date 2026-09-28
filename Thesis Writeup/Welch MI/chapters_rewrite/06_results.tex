@@ -420,18 +420,25 @@ than with calibration in both directions.
 
 A separate supplementary study tested the mechanism without altering the
 confirmatory results. For the representative \(3\times3\) different-skew
-null with \(I(P)=I(Q)=0.02\) and \(n=100\), Wald rejection was 0.0166. Using
-the same numerator with an independent Monte Carlo estimate of its
-finite-sample standard deviation gave a rejection rate of 0.0551; using the
-population first-order standard deviation gave 0.0976. The pilot replicates
-are independent of the confirmatory run, which gave 0.0171, so the two Wald
-rates differ slightly through Monte Carlo variation. The direction is consistent with
-Section~\ref{sec:welch-background}: near independence, the plug-in variance
-is shifted upward by about \((r-1)(c-1)/n\), helping to explain why its standard error
-can make Wald conservative. The first-order approximation is also imperfect
-in the numerator distribution. Changing only the reference distribution
-therefore cannot correct every finite-sample error. Full pilot and ablation
-results are retained in the experiment supplement.
+null with \(I(P)=I(Q)=0.02\) and \(n=100\), ordinary Wald divided each
+observed bias-corrected MI difference by its own plug-in standard error
+and rejected 0.0166 of sample pairs. Keeping those same differences but dividing
+each by one fixed finite-sample standard deviation estimated from an
+independent pilot gave a rejection rate of 0.0551. Dividing instead by
+the fixed population first-order standard deviation gave 0.0976. The
+confirmatory Wald rate was 0.0171; its small difference from 0.0166 is
+Monte Carlo variation between independent runs.
+
+\pagebreak[4]
+Across the evaluated pairs, the average squared plug-in standard error was
+about 1.17 times the finite-sample variance of the MI difference estimated
+from the independent pilot. The population
+first-order variance was smaller than that finite-sample variance. These
+differences help explain why the three denominators produce different
+rejection rates. The two fixed denominators are diagnostics, not proposed
+tests: Expanded Welch changes neither the observed MI differences nor
+their plug-in standard errors. Full pilot and ablation results are retained
+in the experiment supplement.
 
 \section{Runtime and summary of evidence}
 \label{sec:runtime-summary}

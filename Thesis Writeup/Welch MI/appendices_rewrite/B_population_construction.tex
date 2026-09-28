@@ -49,13 +49,20 @@ two dominant probabilities directly. The direction of the alternative is a
 separate parameter and should not be inferred from which population has the
 more skewed margin.
 
-The log-linear comparison uses an ordinal interaction pattern. Its strength
-is tuned numerically while iterative proportional fitting \citep{deming1940} preserves the
-given row and column margins. The final table is subjected to the same
-positivity, normalisation, margin and target-MI checks as the additive table.
-This is a comparison across two ways to make plausible fixed populations,
-not a claim that a matched target implies matched higher moments or cell
-counts.
+The log-linear comparison uses the scores \(u_i,v_j\) from
+Equation~\eqref{eq:appendix-spread}, but starts from positive cell weights
+\begin{equation}
+  K_{ij}(\lambda)=\exp(\lambda u_i v_j)
+\end{equation}
+instead of adding \(tH\) to the independence table \(B\). Iterative
+proportional fitting \citep{deming1940} scales rows and columns of these
+weights until the prescribed margins are restored. At \(\lambda=0\), this
+gives the independence table; a numerical search then chooses \(\lambda\)
+to reach the target MI\@. The final table passes the same positivity,
+normalisation, margin and target-MI checks as the additive table. Unlike
+the first-block additive construction used in the comparison, it changes
+cells throughout the table. Matching margins and MI does not imply
+matching all cell probabilities or expected counts.
 
 \section{Frozen statistical grids}
 

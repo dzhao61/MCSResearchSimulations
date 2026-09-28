@@ -117,14 +117,17 @@ reverse-direction imbalance experiment assigns the higher target to \(P\).
 The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
 the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
 
-Two focused checks change the pattern or constructor while keeping the
-interpretation of target MI\@. A ``rare block'' puts Equation
-\eqref{eq:first-change-block} in the final two rows and columns. A ``spread''
-pattern is the outer product of equally spaced, centred row and column scores;
-its row and column sums are zero. The ordinal log-linear comparator fits the
-prescribed margins while varying an ordinal interaction strength to meet the
-target MI\@. Matching margins and MI across constructors does not imply matching
-all cell probabilities or expected counts.
+Two focused checks change where or how association is placed while keeping
+the same interpretation of target MI\@. A ``rare block'' moves the four-cell
+change in Equation~\eqref{eq:first-change-block} to the final two rows and
+columns, whose margins are smaller in skewed profiles. A ``spread'' pattern
+changes cells throughout the table using increasing row and column scores;
+its positive and negative changes cancel within each margin. The ordinal
+log-linear construction uses the product of those scores inside an
+exponential cell weight, then rescales the rows and columns to preserve the
+prescribed margins. Its strength is chosen to reach the target MI\@.
+Matching margins and MI across constructors does not imply matching all
+cell probabilities or expected counts.
 
 \section{Sampling, tests and measured outcomes}
 

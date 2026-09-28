@@ -1,11 +1,11 @@
 \chapter{Discussion}
 \label{chap:discussion}
 
-The proposed correction has a clear mathematical purpose: it represents
-sampling uncertainty in the MI variance estimate before using that estimate
-in a two-sample test. The experiments show that this addresses only one source
-of finite-sample error. A better description of the denominator does not by
-itself repair errors in the numerator or the first-order approximation.
+The proposed correction models how the estimated MI variance changes across
+samples. The experiments show why this alone is insufficient: Wald and
+Expanded Welch use the same observed MI difference and plug-in standard
+error. Changing the reference distribution leaves any finite-sample error
+in those quantities untouched.
 
 \section{Answers to the research questions}
 

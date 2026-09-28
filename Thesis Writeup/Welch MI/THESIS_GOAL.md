@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (28 September) | 72 pages | 99 pages |
+| Current Welch-MI manuscript (28 September) | 73 pages | 101 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -59,9 +59,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 18,892
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-78
-(printed pages 1-70). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 19,423
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-81
+(printed pages 1-73). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Working chapter allocation
@@ -108,12 +108,12 @@ Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed and
 the external assessment addressed on 20 September 2026. T8 was completed on
 26 September 2026 after the declaration page was removed at the author's
 request; T1-T8 were revalidated on 27-28 September.** The current page count
-includes the conclusion's final page (70), not its opening page (69).
+includes the conclusion's final page (73), not its opening page (72).
 T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-current 99-page PDF builds without undefined references, citations or overfull
+current 101-page PDF builds without undefined references, citations or overfull
 boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 36 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
@@ -128,11 +128,11 @@ in the companion atlas. Detailed mechanism checks remain available in the
 experiment supplement without changing the frozen run. T6 records
 a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 99-page A4 manuscript from the active source, with
+T7 then built the final 101-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
 boxes. All 101 tests and the complete evidence audit pass. The previously
-reviewed pages and all pages changed or added by the follow-up have been
-inspected at final size. The final PDF, source archive and experimental
+reviewed pages and the passages affected by the targeted prose refresh have
+been inspected at final size. The final PDF, source archive and experimental
 supplement are assembled under `deliverables/`.
 
 ## 4. Scientific acceptance criteria
