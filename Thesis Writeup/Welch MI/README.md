@@ -79,3 +79,8 @@ The final named PDF, self-contained source archive, experiment supplement and
 checksums are in `deliverables/`. `SUBMISSION_CHECK.md` records the completed
 scientific, build and page-review gates. The declaration page is intentionally
 excluded from the current version at the author's request.
+
+The source archive includes the current goal, detailed rewrite plan and review
+records. Links in those records to the supplied example theses and historical
+workspace material are context references, not compilation dependencies; that
+material is not redistributed in the final archives.

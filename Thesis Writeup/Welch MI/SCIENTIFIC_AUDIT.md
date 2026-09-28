@@ -1,11 +1,20 @@
 # Scientific audit of the active thesis
 
-Initially checked 13 September 2026 and extended through 26 September 2026 against `chapters_rewrite/`,
+Initially checked 13 September 2026 and extended through 28 September 2026 against `chapters_rewrite/`,
 `WelchSatterthwaiteMI/src/welch_differential_mi/welch.py`, the frozen
 `results/thesis_redesign/` outputs, and the primary sources in
 `LITERATURE_SOURCE_CHECK.md`. This is an independent derivation and
 implementation review, not a claim of formal peer review or an exhaustive
 literature search.
+
+The 27-28 September final acceptance refresh reran all 101 tests and the full
+source-linked evidence audit successfully. The frozen protocol, simulation
+core, method implementation and directly imported statistical dependencies
+still have their recorded source hashes; the previously documented
+orchestration-only drift is unchanged. The remaining edits improve
+presentation and archive completeness, without changing the mathematics or
+results. Current build, page-review and package-reproduction evidence is
+recorded in `SUBMISSION_CHECK.md`.
 
 ## Findings and disposition
 

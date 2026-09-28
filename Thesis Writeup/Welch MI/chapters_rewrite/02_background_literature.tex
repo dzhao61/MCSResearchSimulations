@@ -671,9 +671,6 @@ empirical joint table used to calculate MI. A change in one observation
 modifies the cell probabilities, margins, pointwise-MI values, and their
 weighted variance.
 
-The expanded method addresses this gap by differentiating the full MI
-variance functional. The resulting observation-level sensitivity determines
-the sampling variance of the variance estimate and, through Satterthwaite
-moment matching, an MI-specific component degree of freedom.
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop this construction,
-and Chapter~\ref{chap:results} evaluates its practical behaviour.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop the MI-specific
+variance sensitivity and its Welch--Satterthwaite reference.
+Chapter~\ref{chap:results} evaluates when that adjustment helps.

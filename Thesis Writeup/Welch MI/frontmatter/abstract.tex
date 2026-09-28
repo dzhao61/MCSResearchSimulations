@@ -1,47 +1,37 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Mutual information measures dependence between two variables, but a
-difference between two sample estimates need not reflect a difference between
-their populations. This thesis studies two independent categorical samples
-and tests whether their population mutual information values are equal,
-without requiring their complete joint distributions or margins to be the
-same.
+Mutual information (MI) measures dependence between two variables. This
+thesis tests whether two independent categorical populations have equal MI,
+without requiring their joint distributions or margins to be the same.
 
-Normal Wald inference divides a bias-corrected difference by a plug-in
-standard error and uses a normal reference. The proposed Expanded
-Welch--Satterthwaite procedure keeps that statistic but derives effective
-degrees of freedom from the sampling variability of the plug-in MI variance
-estimate. A change in one table cell also changes the
-row and column margins and the pointwise information values; the derivation
-accounts for all of these effects. The resulting Student reference is a
-moment-matching approximation, not an exact finite-sample distribution.
+Normal Wald inference standardises a bias-corrected MI difference using a
+plug-in standard error and a normal reference. Expanded Welch--Satterthwaite
+keeps that statistic but derives effective degrees of freedom from the
+sampling variability of the estimated MI variance. The derivation includes
+changes to the cell probabilities, margins and pointwise MI values. Its
+Student reference is a moment-matching approximation, not an exact
+finite-sample distribution.
 
-The experiment compares the two methods on fixed positive-support
-populations from \(2\times2\) to \(8\times8\), with additional rectangular,
-unequal-sample, construction and extreme-sparsity checks. Each of 3,111
-unique statistical configurations uses 20,000 paired count-table replicates
-at a two-sided nominal level of 0.05. False positives, detection, numerical
-validity and runtime are reported separately for individual regimes.
-The main null grid includes both identical populations and distinct
-populations with equal MI; their calibration is also reported separately.
+The experiment covers fixed positive-support populations from \(2\times2\)
+to \(8\times8\), with rectangular, unequal-sample, construction and
+extreme-sparsity checks. Each of 3,111 configurations uses 20,000 paired
+replicates at a two-sided nominal level of 0.05. False positives, detection,
+validity and runtime are reported by regime. The null cases distinguish
+identical populations from distinct populations with equal MI.
 
-Expanded Welch moves some liberal Wald false-positive rates toward 0.05, but
-also makes conservative regimes more conservative. Under the strict
-component-validity rule used in the implementation, it can return fewer valid
-results in sparse samples. Some of these failures arise from that rule rather
-than from the combined degrees-of-freedom formula. Wald is closer
-to nominal in all 24 main null regimes at
-sample sizes 500 or 1,000. At common MI 0.02 and sample size 50,000, both
-methods are near nominal in the tested populations; very small MI remains
-difficult. Expanded Welch has the same computational order as Wald and costs
-about 1.75 times as much per scalar call in the measured implementation.
+Expanded Welch improves some liberal Wald false-positive rates but worsens
+already conservative regimes. Its strict component-validity rule also
+produces fewer usable results in sparse samples. Wald is closer to nominal
+in all 24 main null regimes at sample sizes 500 or 1,000. At common MI 0.02
+and sample size 50,000, both methods are near nominal in the tested
+populations; very small MI remains difficult. Expanded Welch has the same
+computational order and costs about 1.75 times as much per scalar call in the
+measured implementation.
 
-Near independence, the effective degrees of freedom can become very small,
-making Expanded Welch strongly conservative. A supplementary diagnostic also
-shows that changing the reference distribution alone cannot correct all
-finite-sample errors in the statistic and its standard error.
+Near independence, small effective degrees of freedom make Expanded Welch
+strongly conservative. A supplementary diagnostic shows why changing only
+the reference cannot correct errors in both the numerator and standard error.
 
-The evidence supports retaining Wald as the simpler general baseline.
-Expanded Welch may be informative in selected liberal regimes, provided that
-valid-result frequency and the full range of null behaviour are also reported.
+The evidence supports Wald as the simpler general baseline, with Expanded
+Welch as a sensitivity analysis in selected liberal regimes.

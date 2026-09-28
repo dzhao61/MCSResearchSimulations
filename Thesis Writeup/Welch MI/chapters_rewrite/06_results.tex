@@ -56,6 +56,8 @@ uses 20,000 paired samples. Hollow markers denote validity below 90\%.}
 \mainlandscapefigure{8x8}{\(8\times8\)}{same_skew}{both \(P\) and \(Q\) have row and column margins \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{same skew}
 \mainlandscapefigure{8x8}{\(8\times8\)}{different_skew}{\(P\) has row and column margins \(m_8(0.7)=(0.7,0.3/7,\ldots,0.3/7)\), while \(Q\) has \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{different skew}
 
+\clearpage
+
 The landscape does not yield a uniformly preferable method. At \(n=5\),
 Expanded Welch has a zero null rejection rate in all
 \(\MainFiveNullCount\) main regimes. This includes the
@@ -198,7 +200,7 @@ Figures~\ref{fig:imbalance-q} and~\ref{fig:imbalance-p} hold the unordered
 sample sizes at 50 and 250 but reverse which population has the larger
 sample. They also show the two directions of the MI difference separately.
 The distinction matters because the finite bias corrections are
-\(d/(2n_P)\) and \(d/(2n_Q)\), and the two populations have different
+\((r-1)(c-1)/(2n_P)\) and \((r-1)(c-1)/(2n_Q)\), and the two populations have different
 margins. For example, at \((n_P,n_Q)=(50,250)\) and a 0.02-nat difference,
 Wald's rejection is \(\ImbalanceQHigherWaldRate\) when \(Q\) has higher MI and
 \(\ImbalancePHigherWaldRate\) when \(P\) has higher MI\@. Expanded Welch gives
@@ -425,7 +427,7 @@ population first-order standard deviation gave 0.0976. The pilot replicates
 are independent of the confirmatory run, which gave 0.0171, so the two Wald
 rates differ slightly through Monte Carlo variation. The direction is consistent with
 Section~\ref{sec:welch-background}: near independence, the plug-in variance
-is shifted upward by about \(d/n\), helping to explain why its standard error
+is shifted upward by about \((r-1)(c-1)/n\), helping to explain why its standard error
 can make Wald conservative. The first-order approximation is also imperfect
 in the numerator distribution. Changing only the reference distribution
 therefore cannot correct every finite-sample error. Full pilot and ablation

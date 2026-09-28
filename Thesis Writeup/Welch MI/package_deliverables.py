@@ -35,6 +35,7 @@ def source_files() -> list[tuple[Path, Path]]:
         "EXEMPLAR_REVIEW_NOTES.md", "LITERATURE_SOURCE_CHECK.md", "REVIEW_RESPONSE.md",
         "BIBLIOGRAPHY_REVIEW_RESPONSE.md",
         "SCIENTIFIC_AUDIT.md", "SUBMISSION_CHECK.md", "THESIS_GOAL.md",
+        "THESIS_REWRITE_PLAN.md",
     ]
     files.extend((THESIS / name, Path(name)) for name in root_names)
     for directory in ("frontmatter", "chapters_rewrite", "appendices_rewrite"):

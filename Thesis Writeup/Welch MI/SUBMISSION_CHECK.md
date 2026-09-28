@@ -1,6 +1,6 @@
 # Thesis completion check
 
-Updated 26 September 2026. The current objective, SMART targets and working
+Updated 28 September 2026. The current objective, SMART targets and working
 schedule are in [THESIS_GOAL.md](THESIS_GOAL.md).
 
 ## Agreed requirements
@@ -20,12 +20,12 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The final A4 PDF has 98 pages, including 69 numbered main-text pages. The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The final A4 PDF has 97 pages, including 70 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 35 active references. The local bibliography contains the same 35 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 98 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
-| Visual presentation | The previously reviewed pages and every page changed in the supplementary revision were inspected at final size. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
+| Build | The active source builds to 97 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Visual presentation | All pages were rendered and inspected; final-page bodies unchanged from the full review were matched by raster comparison, and every changed page was reinspected. Figures, captions, equations and tables show no clipping or overlap. | Complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
 
@@ -67,22 +67,49 @@ hashes and runner-history notes remain in the experiment supplement rather
 than interrupting the thesis narrative. The source package is rebuilt without
 disposable LaTeX auxiliary files.
 
+The 27-28 September acceptance refresh tightened the abstract to one page,
+removed duplicate contribution and chapter summaries, kept a variance
+calculation together, and prevented the main landscape figures from
+interrupting their interpretation mid-sentence. Two undefined uses of the
+dimension shorthand in Chapter 6 were replaced by the full expressions.
+The isolated reproduction also exposed a stale, empty list of figures in
+the working PDF; a forced main build restored all 22 entries. The refreshed
+PDF matches the clean archive reproduction on every full-page raster.
+The source archive now also includes the detailed rewrite plan referenced
+by its README and goal. No statistical implementation, frozen population,
+simulation result or working-draft PDF was changed by this refresh.
+
+The main text ends on printed page 70; Appendix A starts on page 71. The
+previous record incorrectly used the conclusion's opening page (69) as the
+length. Extracting PDF pages 9-78 with `pdftotext` gives 18,892
+whitespace-separated tokens, including headings, captions, mathematical
+tokens and plot labels. This is a repeatable secondary length diagnostic,
+not a prose-only word count.
+
 ## Final verification record
 
-Final checks completed on 27 September 2026:
+Final checks completed on 27-28 September 2026:
 
 - clean build from a fresh extraction of the final source archive;
-- 98 A4 pages and 985,055 bytes before packaging;
-- final named PDF SHA-256 `5ad491c57b48df477262c6e23bce5853b25f8bc611bdc4008f59514914044d2d`;
+- 97 A4 pages and 984,486 bytes before packaging;
+- final named PDF SHA-256 `dd40de3b2fa4ea907eff6a351585e588896fa8297c1b60e47473679dccb7ceaf`;
 - zero LaTeX errors, undefined citations or references, missing files, and overfull boxes;
 - all 101 unit, derivation and experiment tests passed;
 - complete evidence audit passed, including all 22 confirmatory thesis figures, every reported Chapter 6 value and the supplementary mechanism evidence;
 - a fresh combined extraction of the source and experiment archives rebuilt
   the 3,111-configuration preflight, passed all 36 bundled tests, regenerated the
   22 confirmatory thesis figures and mechanism report, passed the evidence
-  audit and compiled the 98-page thesis without access to the working tree;
+  audit and compiled the 97-page thesis without using files from the working tree;
+- the same extraction regenerated the complete 106-figure atlas; all 117 local
+  atlas links resolve, including figures and evidence files;
+- all 3,111 checkpoint identities and configuration fingerprints were checked;
+  all 6,222 method rows and 3,111 paired rows reproduce the consolidated tables;
+  unconditional, conditional and validity denominators, Monte Carlo standard
+  errors and Wilson intervals were recalculated;
 - 35 checked bibliography records, with every manuscript citation resolved and no unused records;
-- all newly added and changed pages inspected at final pagination, building on the prior full-page review;
+- all 97 pages covered by the full visual review and final-raster comparison;
+- every full-page raster matches the regenerated clean archive build;
+- working-draft PDF unchanged, SHA-256 `aa1024f12d853870665dda146497030a1484770ff939519a876a2cdf182abc02`;
 - `git diff --check` passed for the thesis tree.
 
 Final deliverables are stored in `deliverables/`:
