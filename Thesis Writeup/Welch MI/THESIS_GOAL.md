@@ -214,6 +214,23 @@ define technical terms. Give each paragraph one main point; revise long
 sentences that combine several claims. Review sentences longer than about
 35 words as an editing aid, while allowing necessary mathematical qualifications.
 
+### Prose clarity: explain the mechanism
+
+Write for an honours or master's reader encountering this MI argument for the
+first time. Prefer a concrete explanation of what changes, why it changes,
+and what follows over a technical label that merely names the phenomenon.
+Anchor causal claims to the relevant equation or comparison. Do not use vague
+shorthand such as "the denominator is random" when both methods estimate a
+denominator; say which quantity varies and how that affects the result.
+Avoid contrasts that imply an incorrect property of the baseline method.
+
+Keep the prose formal and confident, but not defensive or needlessly
+abstract. Introduce jargon only when it helps and define it in ordinary
+language. State a genuine assumption, approximation or limitation where it
+matters, without repeating caveats around every sentence. A reader should
+be able to tell exactly what a claim means and why it follows from the
+preceding argument. Simpler wording must not weaken the statistical claim.
+
 ### Derivation depth: use Section 2.3 as the model
 
 The sampling-variance derivation in Section 2.3 is the preferred level of

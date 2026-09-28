@@ -15,5 +15,14 @@ calculus and probability but is new to this particular MI argument.
 - Avoid notation introduced only to shorten an equation, skipped steps that a
   first-time reader must reconstruct, and repetitive or irrelevant detail.
 
+For prose throughout the thesis, explain the mechanism rather than merely
+name it. Identify what quantity changes, why, and what that change does;
+anchor the explanation to the equation or comparison at hand. Avoid vague
+technical shorthand and false contrasts between methods (for example, calling
+one denominator random when both methods estimate it). Use formal, direct,
+confident language at an honours/master's level. Define necessary jargon,
+state real approximations or limitations once where they matter, and avoid
+repeated defensive caveats. Simpler wording must remain statistically precise.
+
 Keep ordinary chat answers as concise as the user's question warrants; this
 preference chiefly governs substantial derivations and thesis exposition.
