@@ -1,4 +1,4 @@
-\chapter{Expanded Welch--Satterthwaite Method}
+\chapter{The Expanded Welch--Satterthwaite Test for MI}
 \label{chap:expanded}
 
 Expanded Welch keeps the estimated MI difference, standard error and test
@@ -7,7 +7,8 @@ to judge that statistic from normal to Student. To choose the Student degrees
 of freedom, this chapter calculates how much the estimated MI variance changes
 between samples.
 
-\section{What degrees of freedom does MI require?}
+\section[Choosing Degrees of Freedom for Expanded Welch]{Choosing Degrees of
+Freedom for\\Expanded Welch}
 
 For the two MI estimates, the Welch--Satterthwaite equation combines their
 estimated variance contributions as in the original moment-matching framework
@@ -87,7 +88,7 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
 To first order, \(\E\{\Vhat(P)\}\approx V(P)\). The required calculation is
 therefore the sampling variance of \(\Vhat(P)\).
 
-\section{Deriving the sensitivity of the MI variance}
+\section{How the MI Variance Changes with the Table}
 
 To find how much the estimated MI variance changes between samples, we first
 ask how the population variance responds when a small amount of probability
