@@ -16,29 +16,31 @@ the row and column totals used in other MI calculations. Measuring how much
 the variance estimate changes provides the degrees of freedom used by
 Expanded Welch.
 
-The second question concerned false positives, detection and usable results.
-Table~\ref{tab:null-paired-examples} shows both sides of the trade-off. In one
-case Wald rejects equal MI too often, and Expanded Welch moves the rate toward
-0.05. In another, Wald already rejects too rarely, and the same adjustment
-moves the rate farther from 0.05. In very sparse settings, some low rejection
-rates arise because the method fails to return a p-value. Thus a smaller
-false-positive rate in one case is not evidence that Expanded Welch is better
-overall. Under unequal MI, it usually detects fewer differences, although
-the methods are not being compared at matched false-positive rates.
+The second question was whether Expanded Welch offers a useful improvement
+over Normal Wald. Table~\ref{tab:null-paired-examples} shows both sides of
+the false-positive trade-off. In one case Wald rejects equal MI too often,
+and Expanded Welch moves the rate toward 0.05. In another, Wald already
+rejects too rarely, and the same adjustment moves the rate farther from
+0.05. In very sparse settings, some low rejection rates arise because the
+method fails to return a p-value. Thus a smaller false-positive rate in one
+case is not evidence that Expanded Welch is better overall. Under unequal
+MI, it usually detects fewer differences, although the methods are not being
+compared at matched false-positive rates.
 
-The third question asked which population features matter. The results vary
-table size, uneven probabilities, starting MI, the cells carrying the
-association, and the allocation of samples between the groups. These features
-can change rejection rates even when the true MI difference is held fixed.
-In particular, tables with the same row totals, column totals and MI can
-still have different cell probabilities and behave differently when sampled.
+The answer also depends on the populations and samples being compared. The
+experiment varies table size, uneven probabilities, starting MI, the cells
+carrying the association, and the allocation of samples between the groups.
+These features can change rejection rates even when the true MI difference
+is held fixed. In particular, tables with the same row totals, column totals
+and MI can still have different cell probabilities and behave differently
+when sampled.
 
-The fourth question concerned larger samples and computation. For the tested
-populations with MI 0.02, both methods reject equal MI at close to the target
-5\% rate when each sample contains 50,000 observations. They still reject too
-rarely for the tested populations with very small MI. In the measured
-implementation, one Expanded Welch calculation takes about 1.75 times as
-long as one Wald calculation.
+For the tested populations with MI 0.02, both methods reject equal MI at
+close to the target 5\% rate when each sample contains 50,000 observations.
+They still reject too rarely for the tested populations with very small MI.
+In the measured implementation, one Expanded Welch calculation takes about
+1.75 times as long as one Wald calculation. These results do not support
+Expanded Welch as a general replacement for Wald.
 
 \section{What the correction can and cannot change}
 
