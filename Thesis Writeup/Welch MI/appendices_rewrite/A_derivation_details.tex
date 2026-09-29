@@ -140,6 +140,7 @@ These expressions are the direct $O(rc)$ implementation of the population
 derivation.
 
 \section{Dependence between the MI and variance estimates}
+\label{sec:mi-variance-covariance}
 
 Both \(\Ihat(P)\) and \(\Vhat(P)\) are calculated from the same sample. Under
 fixed positive support, their first-order covariance is
@@ -149,9 +150,31 @@ fixed positive support, their first-order covariance is
   \left[\{\pmi_P(X,Y)-I(P)\}g_P(X,Y)\right].
 \end{equation}
 The corresponding expression for \(Q\) replaces \(P\) and \(n_P\) with
-\(Q\) and \(n_Q\). This covariance need not be zero. Matching the variability
-of the estimated variance alone therefore does not make the test statistic
-exactly Student distributed.
+\(Q\) and \(n_Q\). To see its direction near independence, use the fixed-margin
+path \(P_t=(q_{ij}+tH_{ij})\) from Section~\ref{sec:near-independence-mechanism},
+where \(q_{ij}=a_i b_j>0\) and \(H\) has zero row and column sums. For small
+positive \(t\), the expansions in that section give
+\begin{equation}
+  \pmi_{P_t}(i,j)-I(P_t)
+  =\frac{tH_{ij}}{q_{ij}}+O(t^2),
+  \qquad
+  g_{P_t}(i,j)=\frac{2tH_{ij}}{q_{ij}}+O(t^2).
+\end{equation}
+Substituting both expressions into the first-order covariance above gives
+\begin{align}
+  \operatorname{Cov}\{\Ihat(P_t),\Vhat(P_t)\}
+  &\approx \frac{2t^2}{n_P}
+      \sum_{i,j}\frac{H_{ij}^2}{q_{ij}}
+      +O\!\left(\frac{t^3}{n_P}\right)\\
+  &=\frac{2V(P_t)}{n_P}
+      +O\!\left(\frac{t^3}{n_P}\right).
+\end{align}
+Thus the first-order large-sample approximation gives positive component
+covariance for small positive MI along this path. This is not a finite-sample
+guarantee or a result for exact independence: at \(t=0\), \(V(P_0)=0\) and
+the first-order MI approximation no longer describes its sampling variation.
+Nor does the component covariance alone determine the two-sample test's
+rejection rate.
 
 \section{Reference ordering and zero components}
 

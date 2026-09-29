@@ -6,67 +6,63 @@ This project studies analytic tests for the independent two-sample weak null
 H0: I(P) = I(Q), allowing P != Q.
 ```
 
-Three methods form the final confirmatory comparison:
+Two methods form the final thesis comparison:
 
 1. **Normal Wald** uses the bias-corrected plug-in MI difference, its
    influence-function standard error, and a standard-normal reference.
 2. **Expanded Welch** keeps the same statistic but uses MI-specific
    Satterthwaite degrees of freedom.
-3. **Simple Welch** keeps the Wald statistic but uses the ordinary
-   Welch-Satterthwaite degrees of freedom.
+
+Simple Welch appears only in supplementary checks; constrained
+likelihood-ratio methods remained exploratory.
 
 ## Current status
 
-The final thesis experiment is the frozen detection-and-breakdown sweep in
-[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md). It compares Normal Wald,
-Simple Welch, and Expanded Welch across exact table shapes, margins, sample
-sizes, effects, and robustness cases without averaging away individual
-configurations. Constrained LR and earlier screens remain exploratory evidence,
-not part of this confirmatory comparison.
+The final thesis experiment is the frozen
+[`thesis_redesign`](results/thesis_redesign/) run. Its
+[`protocol`](experiments/THESIS_REDESIGN_PROTOCOL.json) and
+[`results`](docs/experiments/THESIS_EXPERIMENTS.md) compare Normal Wald with
+Expanded Welch across 3,111 fixed statistical configurations. Each
+configuration has 20,000 paired samples; saved rates and validity remain
+available individually. The separate
+[`thesis_mechanism_check`](results/thesis_mechanism_check/) is a supplementary
+diagnostic, not a change to the confirmatory run.
 
-## Next planned work
+## Reproducibility
 
-[`NEXT_EXPERIMENT_PLAN.md`](NEXT_EXPERIMENT_PLAN.md) specifies the experiment,
-and [`experiments/FINAL_PROTOCOL.json`](experiments/FINAL_PROTOCOL.json)
-provides its machine-readable protocol. The protocol measures false-positive
-rates, power, numerical validity, and breakdown with no expected-count floor.
+Start with the bundled
+[`EXPERIMENT_SUPPLEMENT_README.md`](EXPERIMENT_SUPPLEMENT_README.md) for the
+software environment, saved evidence, verification commands and full rerun
+instructions. The confirmatory run used no minimum-expected-count admission
+rule and records invalid calculations separately from rejections.
 
 ## Theory
 
-- [`docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md`](docs/theory/CONSTRAINED_LIKELIHOOD_RATIO_DERIVATION.md)
-  derives the current LR method.
-- [`docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md`](docs/theory/EXPANDED_WELCH_SATTERTHWAITE_DERIVATION.md)
-  derives the Expanded Welch baseline.
-- [`docs/theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md`](docs/theory/INDEPENDENCE_REFERENCE_DISTRIBUTION.md)
-  explains why the first-order Expanded Welch construction does not become an
-  independence test by introducing a reference distribution.
+Chapter 4 and Appendix A of the thesis source archive give the Expanded Welch
+derivation. The full research repository also retains exploratory notes under
+`docs/theory/`; these are not needed to reproduce the final experiment.
 
 ## Verification
 
-Run the complete automated suite from the repository root:
+Run the bundled thesis tests from the directory containing
+`WelchSatterthwaiteMI/` and `DifferentialMI/`:
 
 ```bash
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
-  .venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -v
+  .venv/bin/python -m unittest \
+  WelchSatterthwaiteMI.tests.test_thesis_redesign \
+  WelchSatterthwaiteMI.tests.test_thesis_derivation_audit \
+  WelchSatterthwaiteMI.tests.test_thesis_mechanism_check \
+  WelchSatterthwaiteMI.tests.test_welch
 ```
 
-Run a small end-to-end LR experiment with:
+Regenerate the saved-run report and atlas without resampling:
 
 ```bash
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/run_multialphabet_lr_experiment.py \
-  --profile smoke --shape-limit 1 --workers 1 \
-  --output-dir /tmp/multialphabet_lr_smoke
+  .venv/bin/python WelchSatterthwaiteMI/experiments/run_thesis_redesign.py \
+  --report-only --output-dir WelchSatterthwaiteMI/results/thesis_redesign
 ```
 
-Run the frozen sweep's smoke profile with:
-
-```bash
-MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/run_detection_breakdown_sweep.py \
-  --profile smoke --workers 4 --output-dir /tmp/detection_breakdown_smoke
-```
-
-See [`experiments/README.md`](experiments/README.md) and
-[`results/README.md`](results/README.md) for executable and generated artefact
-indexes.
+The full repository's [`experiments/README.md`](experiments/README.md)
+indexes exploratory scripts separately from the final thesis protocol.

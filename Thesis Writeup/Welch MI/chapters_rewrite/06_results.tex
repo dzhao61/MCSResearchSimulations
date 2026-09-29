@@ -229,10 +229,12 @@ Both use the first-cell change block. \(I(Q)=0.02\) and
 Top: 0--1; bottom: 0--0.15. Each point has 20,000 replicates.}
 \label{fig:imbalance-p}
 \resultinterpretation{The zero-difference rates are the same as in
-Figure~\ref{fig:imbalance-q}, because the populations are identical at that
-point. Reversing the MI direction changes what happens next: with \(P\) larger,
-Wald rises well above its null rate, whereas with \(Q\) larger it stays nearly
-flat. At \((n_P,n_Q)=(50,250)\) and 0.02 nats, Wald rejects
+Figure~\ref{fig:imbalance-q}, because each allocation uses the same pair of
+populations in both figures at that point; \(P\) and \(Q\) still have different
+margins. Reversing the MI direction changes what happens next: when \(P\) has
+the larger sample, Wald rises well above its null rate, whereas it stays
+nearly flat when \(Q\) has the larger sample. At \((n_P,n_Q)=(50,250)\) and
+0.02 nats, Wald rejects
 \(\ImbalancePHigherWaldRate\) and Expanded Welch
 \(\ImbalancePHigherExpandedRate\); both calculations are valid. Direction and
 allocation therefore matter even at the same absolute MI difference.}
@@ -450,10 +452,16 @@ about 1.17 times the finite-sample variance of the MI difference estimated
 from the independent pilot. The population
 first-order variance was smaller than that finite-sample variance. These
 differences help explain why the three denominators produce different
-rejection rates. The two fixed denominators are diagnostics, not proposed
-tests: Expanded Welch changes neither the observed MI differences nor
-their plug-in standard errors. Full pilot and method-comparison results are
-retained in the experiment supplement.
+rejection rates. But replacing each sample's standard error with a fixed
+number also removes its variation and its dependence on the estimated MI
+difference. The contrast between the rejection rates cannot be assigned to
+variance inflation alone or split into separate shares.
+Section~\ref{sec:mi-variance-covariance}
+shows why each population's MI and variance estimates can be related. The
+two fixed denominators are diagnostics, not proposed tests: Expanded Welch
+changes neither the observed MI differences nor their plug-in standard
+errors. Full pilot and method-comparison results are retained in the
+experiment supplement.
 
 \section{Runtime and summary of evidence}
 \label{sec:runtime-summary}

@@ -53,13 +53,26 @@ adaptive calibration method that can move the threshold in both directions.
 It also does not alter the leading bias correction or re-estimate the
 numerator's finite-sample distribution.
 
+In the larger different-skew null tables, Wald can reject too often even
+with equal sample sizes. The shared leading MI bias correction then cancels
+from the estimated difference, but the two populations can still have
+different remaining finite-sample biases. This can shift the statistic away
+from zero; the plots do not isolate how much of the excess rejection it
+explains. A larger Student critical value cannot remove such a shift.
+
 The estimated MI difference and its standard error come from the same count
-tables. Independence between the two groups lets us add their variance
-contributions, but it does not make the MI difference independent of its
-estimated standard error. The diagnostic in Chapter~\ref{chap:results} shows
-that both can differ from their large-sample approximations. Adjusting the
-reference for the standard error alone therefore cannot guarantee an exact
-Student distribution or correct every small-sample error.
+tables. Section~\ref{sec:mi-variance-covariance} shows that, for small
+positive MI along the fixed-margin path, each table's MI estimate and
+variance estimate have positive first-order covariance. The two-sample
+difference subtracts the MI estimates, while its
+standard error combines the variance estimates, so the relationship between
+the resulting numerator and standard error also depends on both populations.
+The fixed-denominator diagnostic in Chapter~\ref{chap:results} removes both
+variation in the standard error and its dependence on the estimated
+difference. It shows a substantial change in rejection but does not separate
+those effects. Choosing a Student reference from the variance fluctuations
+alone does not model their joint behaviour or make the test exactly Student
+distributed.
 
 Near independence, the calculation in Chapter~\ref{chap:expanded} gives an
 approximate component degree of freedom of \(nI\). When MI is small, that
@@ -112,8 +125,9 @@ pairs representative of every application. The tables are at most
 sample ladders and only a two-sided nominal level of 0.05. The main
 construction emphasises a local four-cell association; spread, rare-cell and
 log-linear checks probe but do not exhaust other possibilities. The study
-does not validate paired observations, continuous estimators, a real-data
-workflow or growing alphabets.
+does not pair equal-MI populations with association placed in different
+cells. It also does not validate paired observations, continuous estimators,
+a real-data workflow or growing alphabets.
 
 The protocol was frozen before the final simulation, after exploratory
 development of the method and design. It is a reproducible final run without
