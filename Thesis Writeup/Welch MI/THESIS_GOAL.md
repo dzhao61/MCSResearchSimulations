@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (29 September) | 68 pages | 97 pages |
+| Current Welch-MI manuscript (29 September) | 67 pages | 97 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -59,9 +59,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 19,310
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-80
-(printed pages 1-72). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 18,125
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-75
+(printed pages 1-67). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Working chapter allocation
@@ -108,7 +108,7 @@ Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed and
 the external assessment addressed on 20 September 2026. T8 was completed on
 26 September 2026 after the declaration page was removed at the author's
 request; T1-T8 were revalidated on 27-29 September.** The current main text
-ends on numbered page 68.
+ends on numbered page 67.
 T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and

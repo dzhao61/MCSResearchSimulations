@@ -139,6 +139,20 @@ $\widehat p_{ij}>0$. Direct substitution gives
 These expressions are the direct $O(rc)$ implementation of the population
 derivation.
 
+\section{Dependence between the MI and variance estimates}
+
+Both \(\Ihat(P)\) and \(\Vhat(P)\) are calculated from the same sample. Under
+fixed positive support, their first-order covariance is
+\begin{equation}
+  \operatorname{Cov}\{\Ihat(P),\Vhat(P)\}
+  \approx \frac{1}{n_P}\E_P\!
+  \left[\{\pmi_P(X,Y)-I(P)\}g_P(X,Y)\right].
+\end{equation}
+The corresponding expression for \(Q\) replaces \(P\) and \(n_P\) with
+\(Q\) and \(n_Q\). This covariance need not be zero. Matching the variability
+of the estimated variance alone therefore does not make the test statistic
+exactly Student distributed.
+
 \section{Reference ordering and zero components}
 
 For positive component degrees of freedom, substituting

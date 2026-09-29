@@ -601,32 +601,25 @@ first-order Student adjustment need not improve finite-sample calibration.
 \medskip
 \noindent\textbf{Theoretical status and validity conditions.}
 
-The influence-function calculations in Equations~\eqref{eq:mi-derivative}
-and \eqref{eq:g-final} are directional derivatives of the corresponding
-population functionals. Under fixed positive support, they provide the usual
-first-order asymptotic linear representations.
+Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} describe how MI and
+its estimated variance change when the underlying table changes slightly.
+For tables with positive cell probabilities, these changes give their
+first-order large-sample approximations.
 
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and the
-final Student reference are working approximations. They match the first two
-moments of the estimated variance and do not provide an exact finite-sample
-law. Moreover, \(\Ihat(P)\) and \(\Vhat(P)\) use the same observations; their
-first-order covariance is generally
-\(\E_P[\{\pmi_P(X,Y)-I(P)\}g_P(X,Y)]/n_P\), not zero. Moment matching
-the denominator does not establish independence from the numerator or an
-exact Student law. Under regular large-sample conditions with positive
-variance sensitivities,
-\(\widehat\nu_P\), \(\widehat\nu_Q\), and
-\(\widehat\nu_{\mathrm{expanded}}\) increase, so the Student reference
-approaches the same normal limit as Wald inference.
+Student reference are approximations, not exact finite-sample distributions.
+In particular, \(\Ihat(P)\) and \(\Vhat(P)\) come from the same sample and can
+vary together. Adjusting the reference for uncertainty in \(\Vhat(P)\) does
+not account fully for this dependence or make the statistic exactly Student
+distributed. Appendix~\ref{app:derivation-details} gives the first-order
+covariance. As sample sizes grow under regular conditions, the estimated
+degrees of freedom increase and the Student reference approaches the normal
+reference used by Wald.
 
-The software first requires matching table shapes, at least two rows and two
-columns, finite nonnegative integer counts, and more than one observation in
-each table. Wald is then valid only when the corrected difference and standard
-error are finite and $\Vhat(P)+\Vhat(Q)>10^{-14}$. Expanded Welch
-additionally requires positive finite component and combined degrees of
-freedom. The software does not evaluate a combined degree of freedom when a
-component degenerates. Failed conditions are recorded as invalid
-calculations. The validation in
-Chapters~\ref{chap:design} and~\ref{chap:results} evaluates how often these
-conditions occur and whether the finite-sample correction improves
-calibration.
+Both tests need a finite corrected MI difference and a positive, finite
+estimated standard error. Expanded Welch also needs positive, finite degrees
+of freedom for each population and for their combination. If a requirement
+fails, the calculation is recorded as invalid, not as evidence for the null.
+Appendix~\ref{app:reproducibility} gives the exact software rules.
+Chapters~\ref{chap:design} and~\ref{chap:results} report how often valid
+results are obtained and whether the correction improves calibration.

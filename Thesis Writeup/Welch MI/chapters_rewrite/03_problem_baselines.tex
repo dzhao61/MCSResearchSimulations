@@ -49,9 +49,11 @@ The row and column categories are fixed in advance and aligned between the two
 tables.
 \end{assumption}
 
-\begin{assumption}[Positive support]
-Every population cell has positive probability. Empirical zero cells are
-allowed, but widespread observed support loss is recorded as a diagnostic.
+\begin{assumption}[Positive cell probabilities]
+Every cell in the population table has a probability greater than zero. A
+sample can still contain no observations in a cell, especially when that cell
+is rare. Such samples remain in the study; we record how often cells have
+zero observed counts to show how sparse the samples are.
 \end{assumption}
 
 \begin{assumption}[Regular MI]
@@ -60,9 +62,12 @@ excludes exact independence and other degenerate cases from the regular
 first-order approximation.
 \end{assumption}
 
-All logarithms are natural. MI differences and standard errors are therefore
-reported in nats. Changing the logarithm base scales both by the same positive
-constant and leaves the standardised statistic unchanged.
+\begin{assumption}[Logarithm units]
+All logarithms in this thesis are natural, so MI differences and standard
+errors are reported in nats. Changing the logarithm base scales both by the
+same positive constant and leaves the standardised statistic unchanged.
+This is a choice of units, not a condition for the test to be valid.
+\end{assumption}
 
 \medskip
 \noindent\textbf{Bias-corrected estimator.}

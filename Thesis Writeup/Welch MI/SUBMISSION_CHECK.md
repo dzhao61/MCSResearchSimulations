@@ -20,7 +20,7 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The current A4 PDF has 97 pages, including 68 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The current A4 PDF has 97 pages, including 67 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 36 active references. The local bibliography contains the same 36 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
@@ -140,8 +140,11 @@ or overfull boxes, and the revised passage was inspected in the rendered PDF.
 
 The 29 September readability pass simplified the abstract, introduction,
 literature synthesis, method bridges, discussion and conclusion without
-changing the experiment or its numerical results. The current PDF has 97
-pages, with main text ending on numbered page 68. Both the full manuscript and
+changing the experiment or its numerical results. A further targeted pass
+shortened the regression precedent, removed its redundant summary table, and
+moved covariance, software validity and population-construction detail to the
+appendices. The current PDF has 97 pages, with main text ending on numbered
+page 67. Both the full manuscript and
 chapter-only working draft rebuild without missing references or overfull boxes.
 
 Final deliverables are stored in `deliverables/`:

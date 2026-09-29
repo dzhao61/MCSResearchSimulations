@@ -497,30 +497,16 @@ calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
 the probability tables. Chapter~\ref{chap:expanded} derives these
 MI-specific inputs to the same moment-matching structure.
 
-Using the variability of a variance estimate to choose a reference
-distribution also has precedents in regression.
-\citet{panwall2002} account for variability in sandwich variance estimates
-using approximate Student and $F$ references. \citet{bell2002} use
-Satterthwaite moment matching for regression variance estimates under
-multi-stage sampling after showing that traditional linearisation estimators
-can have substantial negative bias. \citet{kauermann2001} examine the
-variability and efficiency of sandwich covariance estimation and propose an
-adjustment for the resulting confidence-interval undercoverage. Related
-adjustments and practical guidance are given by \citet{fay2001} and
-\citet{imbens2016}. These are close
-methodological precedents: estimating the variability of a variance estimator
-and using it in a finite-sample reference are established strategies. The
-present task is to derive the required inputs for the discrete MI
-functional and assess whether the resulting reference is useful.
-
-The direction of the finite-sample problem is nevertheless different here.
-The cited regression corrections respond to underestimated uncertainty or
-anti-conservative coverage, so a heavier-tailed reference can move inference
-in the required direction. Near independence, the plug-in MI variance can
-instead be biased upward. A heavier-tailed Student reference may then
-reinforce, rather than offset, the resulting conservatism. This possibility is
-examined in the supplementary mechanism check in
-Section~\ref{sec:mechanism-results}.
+Regression studies have also adjusted reference distributions to account for
+uncertainty in estimated variances
+\citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
+They establish the general strategy, but not whether it helps with MI.
+For example, \citet{bell2002} report regression variance estimates biased
+downward, while \citet{kauermann2001} examine intervals that cover too
+rarely. A more cautious reference can help in such settings. Near
+independence, however, the estimated MI variance can be biased upward.
+A Student reference may then make an already cautious test reject even less
+often. Section~\ref{sec:mechanism-results} examines this possibility.
 
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}
@@ -572,42 +558,6 @@ its second-order variation becomes important \citep{marinescu2025}. The
 positive-MI comparison developed here is therefore not a replacement for a
 one-table independence test. Second-order effects can also matter near that
 boundary.
-
-Table~\ref{tab:prior-work-scope} distinguishes the relevant established
-ideas by the problem each addresses. This is not a claim that no other MI
-comparison has been proposed. It states which pieces are used here and why
-the final comparison still needs empirical validation.
-
-\begin{table}[htbp]
-\centering
-\caption{Selected prior work, grouped by the question it addresses.}
-\label{tab:prior-work-scope}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}X@{}}
-\toprule
-Topic & Established result and relation to this thesis\\
-\midrule
-MI estimation & \citet{miller1955} and \citet{paninski2003}
-establish bias and sparse-sample limitations of plug-in information estimates.\\
-MI variance & \citet{moddemeijer1989} and \citet{brillinger2004}
-give predecessors for the first-order MI variance, while
-\citet{moddemeijer1999} treats dependent observation pairs. This thesis instead
-studies the sampling uncertainty of the plug-in variance estimate itself in
-the independent two-sample problem.\\
-Welch principle & \citet{satterthwaite1946} and \citet{welch1947}
-provide moment-matching ideas; \citet{hutcheson1970} applies the same structure
-to Shannon diversity using component degrees of freedom \(n_i\).\\
-Other comparisons & \citet{mora2009,mora2011} study an MI-based segregation
-index. They do not derive the variance-sensitivity degrees of freedom used here.\\
-Different MI nulls & \citet{guha2014} and \citet{drake2014} test
-distributional equality;
-\citet{marinescu2025} study one-table independence. These are not the
-two-population equal-MI null.\\
-Permutation tests & Simply shuffling group labels need not test equal MI when
-\(P\ne Q\) \citep{chung2013}. Modified permutation methods are possible in some
-such settings \citep{janssen1997}.\\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \medskip
 \noindent\textbf{Resampling alternatives.}

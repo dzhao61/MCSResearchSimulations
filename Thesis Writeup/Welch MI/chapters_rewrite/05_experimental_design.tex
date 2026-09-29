@@ -117,17 +117,16 @@ reverse-direction imbalance experiment assigns the higher target to \(P\).
 The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
 the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
 
-Two focused checks change where or how association is placed while keeping
-the same interpretation of target MI\@. A ``rare block'' moves the four-cell
-change in Equation~\eqref{eq:first-change-block} to the final two rows and
-columns, whose margins are smaller in skewed profiles. A ``spread'' pattern
-changes cells throughout the table using increasing row and column scores;
-its positive and negative changes cancel within each margin. The ordinal
-log-linear construction uses the product of those scores inside an
-exponential cell weight, then rescales the rows and columns to preserve the
-prescribed margins. Its strength is chosen to reach the target MI\@.
-Matching margins and MI across constructors does not imply matching all
-cell probabilities or expected counts.
+Two focused checks ask whether results depend on where the association sits
+in the table. The ``rare block'' moves the four changed cells from the
+upper-left corner to rows and columns with smaller probabilities in skewed
+populations. The ``spread'' pattern changes cells throughout the table while
+keeping the row and column totals fixed. The log-linear comparison also
+spreads association through the table, using a different rule. In each case, the
+population is built to have the specified margins and target MI\@. Tables
+can therefore agree on margins and MI while assigning different
+probabilities to individual cells. Appendix~\ref{app:construction} gives the
+three construction formulas.
 
 \section{Sampling, tests and measured outcomes}
 
@@ -152,17 +151,12 @@ Under an alternative, higher detection is useful only alongside acceptable
 null calibration and a usable test result.
 
 An invalid calculation contributes no rejection to Equation
-\eqref{eq:unconditional-rate}. This convention reports the behaviour of the
-implemented procedure, but an invalid result is not a valid acceptance of the
-null. The companion valid-result rate is the fraction of replicates with a
-usable p-value. The saved data also give rejection conditional on each
-method's valid outputs and on the subset where both are valid. Those
-denominators answer different questions: conditioning each method on its own
-valid samples can change which tables are compared. For a single rate, saved
-Wilson 95\% intervals \citep{wilson1927} represent Monte Carlo uncertainty at the fixed
-population pair. Paired method differences use the same replicates and their
-saved paired standard errors. These intervals do not describe uncertainty
-over all possible population distributions.
+\eqref{eq:unconditional-rate}, but it does not count as evidence for the null.
+The companion valid-result rate shows how often each test returns a usable
+p-value. The reported 95\% intervals show simulation uncertainty at each
+fixed population pair. Intervals for the difference between methods account
+for applying both tests to the same sampled tables. Appendix~\ref{app:evidence-index}
+gives the interval calculations and rates restricted to valid results.
 
 The ``minimum expected count'' diagnostic is
 \(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).

@@ -15,6 +15,16 @@ denominators, paired method outputs, validity rules and generated atlas.
 Chapter~\ref{chap:results} uses the same frozen tables; no population was
 resimulated for a thesis figure.
 
+The software requires matching table shapes, at least two rows and columns,
+finite nonnegative integer counts, and more than one observation in each
+table. Wald requires a finite corrected difference and standard error,
+\(\Vhat(P)+\Vhat(Q)>10^{-14}\), and a finite p-value. Expanded Welch also
+requires positive finite component and combined degrees of freedom and a
+finite p-value. It does not calculate a combined degree of freedom when a
+component degenerates, even if the direct combined expression in
+Appendix~\ref{app:derivation-details} has a value. Failed conditions are
+recorded as invalid calculations.
+
 The exact software versions, seeds and source hashes are recorded in
 \path{WelchSatterthwaiteMI/results/thesis_redesign/run_metadata.json}.
 The experiment supplement contains the protocol, implementation, consolidated
