@@ -1,43 +1,31 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-This thesis examined whether uncertainty in an estimated MI standard error
-can be represented through an MI-specific Welch--Satterthwaite correction
-when comparing two independent categorical populations. The null is equality
-of their population MI values, not independence within either population or
-equality of the complete joint distributions.
+This thesis compared two tests of whether independent groups have the same
+population MI. Equal MI does not require independence within either group or
+identical population tables. Normal Wald and Expanded Welch calculate the
+same estimated difference and standard error; they use different reference
+distributions to decide whether that difference is unusual.
 
-The derivation starts from the pointwise-MI variance governing first-order
-sampling error. A one-cell perturbation changes the joint probabilities,
-the margins and the pointwise values. Differentiating the variance functional
-supplies the sensitivity; the variance of that sensitivity supplies the
-sampling variability needed for component effective degrees of freedom. The
-resulting Expanded Welch procedure retains Wald's
-bias-corrected MI difference and plug-in standard error but evaluates the
-shared statistic against a Student reference. This is a principled
-moment-matching construction, not an exact finite-sample Student law.
+Expanded Welch chooses its Student reference by calculating how the estimated
+MI variance responds when a count table changes. The calculation includes
+changes to cell probabilities and to the row and column totals used in MI.
+It provides a reasoned way to choose degrees of freedom, but not an exact
+small-sample distribution.
 
-The fixed-population experiment found both benefits and costs.
-Expanded Welch can make a liberal Wald null rate closer to the nominal 5\%
-level. Where Wald is already conservative, the heavier-tailed reference moves
-rejection farther below that target. In sparse regimes, Expanded Welch also
-returns fewer valid results under the strict component-validity rule used in
-the implementation. Some of those failures arise from the rule rather than
-the combined formula, and a low
-unconditional rate there is not reliable evidence of good calibration. At
-ordinary positive MI and sufficiently large samples, both methods approached
-the nominal null rate in the tested fixed populations, while near-independence
-settings remained difficult even at large finite sample sizes. The expanded
-call used about 1.75 times the runtime of Wald in the measured implementation.
+The experiment found both benefits and costs. Expanded Welch can bring an
+excessive Wald false-positive rate closer to 5\%. If Wald already rejects too
+rarely, Expanded Welch lowers rejection further. In sparse samples it also
+returns fewer usable results, partly because of the implementation's validity
+rule. A low rejection rate caused by failed calculations should not be
+mistaken for good calibration. Both methods approached 5\% in some tested
+large-sample populations, but populations close to independence remained
+difficult. Expanded Welch took about 1.75 times as long per test in the
+measured implementation.
 
-Near independence, the component degree of freedom is approximately \(nI\),
-so Expanded Welch can impose a very heavy-tailed reference where the
-first-order approximation remains weak. A supplementary diagnostic confirms
-that errors can arise in both the estimated standard error and the numerator.
-Changing only the reference distribution leaves both approximation errors
-unchanged and therefore cannot provide a general correction.
-
-The evidence therefore supports Normal Wald as the general baseline. Expanded
-Welch is only a conditional sensitivity analysis; future corrections must
-address the numerator, standard error and population structure together rather
-than changing the reference law alone.
+The difficulty near independence helps explain why the correction is not a
+general solution. It can choose a Student reference that requires stronger
+evidence to reject, while leaving any error in the estimated MI difference or
+standard error unchanged. The evidence therefore supports Normal Wald as the
+simpler general baseline. Expanded Welch is an additional check where Wald
+is known to reject equal MI too often, not a universal replacement.

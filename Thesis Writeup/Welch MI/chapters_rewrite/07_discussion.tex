@@ -9,43 +9,36 @@ in those quantities untouched.
 
 \section{Answers to the research questions}
 
-The first research question asked how an MI-specific effective degree of
-freedom can be constructed. Chapter~\ref{chap:expanded} does so by differentiating
-the variance of pointwise MI along one-cell probability perturbations. The
-derivative includes changes to row and column margins, not just to the
-selected cell. Its sampling variance supplies the component degrees of
-freedom used in Satterthwaite moment matching. These derivative and
-moment-matching steps define a reproducible reference distribution.
+The first question was how to choose degrees of freedom for an MI test.
+Chapter~\ref{chap:expanded} shows how one extra observation changes the
+estimated MI variance. That observation changes not only its cell but also
+the row and column totals used in other MI calculations. Measuring how much
+the variance estimate changes provides the degrees of freedom used by
+Expanded Welch.
 
-The second question concerned false positives, detection and validity.
-Table~\ref{tab:null-paired-examples} contains both a fully valid small-sample
-null case where Expanded Welch moves an excessive Wald false-positive rate
-toward 0.05 and a larger-sample null case where the same adjustment moves a
-below-nominal Wald rate farther from 0.05. In the sparsest panels, a low
-unconditional rejection rate may largely reflect invalid outputs under the
-implemented rule. Thus improved calibration at selected null points does not
-imply that the expanded procedure performs better overall. Under alternatives,
-its rejection rate is generally lower; these comparisons are not power at a
-matched achieved size.
+The second question concerned false positives, detection and usable results.
+Table~\ref{tab:null-paired-examples} shows both sides of the trade-off. In one
+case Wald rejects equal MI too often, and Expanded Welch moves the rate toward
+0.05. In another, Wald already rejects too rarely, and the same adjustment
+moves the rate farther from 0.05. In very sparse settings, some low rejection
+rates arise because the method fails to return a p-value. Thus a smaller
+false-positive rate in one case is not evidence that Expanded Welch is better
+overall. Under unequal MI, it usually detects fewer differences, although
+the methods are not being compared at matched false-positive rates.
 
-The third question asked whether population features alter this judgement.
-The main landscape varies alphabet size and margins explicitly. The focused
-comparisons show that baseline MI, changed-cell location, sample allocation
-and population constructor can change the finite-sample behaviour even when
-the target MI difference is held fixed. The construction comparison is
-particularly instructive: equal margins and MI do not determine the table's
-full sampling distribution. A scalar target is useful for organising
-experiments, but cannot guarantee identical difficulty across distinct
-population tables.
+The third question asked which population features matter. The results vary
+table size, uneven probabilities, starting MI, the cells carrying the
+association, and the allocation of samples between the groups. These features
+can change rejection rates even when the true MI difference is held fixed.
+In particular, tables with the same row totals, column totals and MI can
+still have different cell probabilities and behave differently when sampled.
 
-The fourth question concerned sample size and computation. For the tested
-first-block positive-MI populations with true MI 0.02, both null rates are
-near 0.05 at \(n=50{,}000\). The corresponding very-small-MI fixed
-populations remain noticeably conservative at that sample size. Expanded
-Welch has the same linear-in-cell-count order as Wald but costs about 1.75
-times as much per scalar call in the measured implementation. The extra
-expense is modest compared with a full resampling procedure but not cost-free,
-particularly for many repeated comparisons.
+The fourth question concerned larger samples and computation. For the tested
+populations with MI 0.02, both methods reject equal MI at close to the target
+5\% rate when each sample contains 50,000 observations. They still reject too
+rarely for the tested populations with very small MI. In the measured
+implementation, one Expanded Welch calculation takes about 1.75 times as
+long as one Wald calculation.
 
 \section{What the correction can and cannot change}
 
@@ -58,27 +51,24 @@ adaptive calibration method that can move the threshold in both directions.
 It also does not alter the leading bias correction or re-estimate the
 numerator's finite-sample distribution.
 
-The estimated numerator and denominator come from the same count tables.
-Independence of the two samples allows their variance contributions to be
-added, but it does not make \(T\)'s numerator independent of its estimated
-standard error. The representative pilot in Chapter~\ref{chap:results} shows
-that both parts can depart from their first-order approximations. Moment
-matching the denominator alone therefore cannot guarantee a Student law or
-correct every finite-sample error.
+The estimated MI difference and its standard error come from the same count
+tables. Independence between the two groups lets us add their variance
+contributions, but it does not make the MI difference independent of its
+estimated standard error. The diagnostic in Chapter~\ref{chap:results} shows
+that both can differ from their large-sample approximations. Adjusting the
+reference for the standard error alone therefore cannot guarantee an exact
+Student distribution or correct every small-sample error.
 
-Near independence, the local calculation gives \(V\approx2I\),
-\(\tau^2\approx4V\), and hence a population component degree of freedom near
-\(nI\). This explains why the reference can become very heavy-tailed at low
-MI, exactly where the first-order approximation is least reliable. The result
-identifies a mechanism behind the low effective degrees of freedom.
+Near independence, the calculation in Chapter~\ref{chap:expanded} gives an
+approximate component degree of freedom of \(nI\). When MI is small, that
+number can remain small even with a sizeable sample. The resulting Student
+reference requires a larger observed difference to reject, just where the
+large-sample approximation to MI is also least reliable.
 
-At exact independence, \(I=0\) and the population first-order MI variance
-vanishes. This does not mean finite empirical MI estimates are always zero.
-It means their leading stochastic variation is quadratic rather than linear
-in the probability errors. The standard one-table likelihood-ratio statistic
-uses that second-order behaviour. Neither setting a reference \(Q\) to an
-independent distribution nor squaring the current \(T\) makes Expanded Welch
-the classical independence test. Appendix~\ref{app:independence-boundary}
+At exact independence, the usual first-order MI variance is zero. An MI
+estimate from a finite sample can still vary, but a different, second-order
+approximation is then needed. Comparing two positive MI values and testing
+one table for independence are therefore different problems. Appendix~\ref{app:independence-boundary}
 gives the mathematical distinction.
 
 \section{Interpretation of invalid samples}
@@ -86,14 +76,11 @@ gives the mathematical distinction.
 The validity diagnostics matter most where expected counts are very small.
 Wald needs a usable total estimated variance. The expanded implementation
 additionally requires each component sensitivity variance and effective
-degree of freedom to be positive and finite. An observed table can have a
-positive total variance while one component is zero. The equivalent combined
-formula in Equation~\eqref{eq:expanded-df-direct} remains defined when one
-table has \(\Vhat=\widehat\tau^2=0\), but the frozen implementation first
-requires two positive finite component degrees of freedom. Some
-Expanded-only invalidity therefore reflects the implementation rule rather
-than the combined formula. The primary unconditional rate records a failed
-calculation as a non-rejection.
+degree of freedom to be positive and finite. A sample can therefore yield a
+valid Wald p-value but no Expanded Welch p-value. Part of this extra
+invalidity comes from the implementation rule rather than the combined
+formula, as shown in Appendix~\ref{app:derivation-details}. The primary
+unconditional rate records a failed calculation as a non-rejection.
 
 That rate answers an operational question: how often does the implemented
 procedure produce a valid rejection? It should not be mistaken for the
@@ -142,7 +129,7 @@ Future work should address the joint finite-sample behaviour of the
 numerator and denominator or use a calibrated reference tailored to sparse
 tables. The transition near independence is a separate problem
 because the first-order variance tends to zero. A likelihood-ratio or
-resampling alternative must be assessed under the equal-MI \emph{weak null},
+resampling alternative must be assessed when \(I(P)=I(Q)\) but \(P\ne Q\),
 not imported from a test of full distributional equality or one-table
 independence without checking its target. These are directions for new
 validation, not remedies established by the present results.

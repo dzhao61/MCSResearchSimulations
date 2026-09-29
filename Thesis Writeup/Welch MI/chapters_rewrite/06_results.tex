@@ -75,11 +75,10 @@ Welch lies between \(\MainThousandExpandedMinRate\) and
 \(\MainThousandExpandedMaxRate\). Neither is uniformly at the nominal
 level.
 
-The interpretation is directional. Expanded Welch uses a heavier-tailed
-reference and therefore lowers rejection; it does not diagnose whether Wald
-started above or below 0.05. The same adjustment can consequently improve a
-liberal regime and worsen a conservative one. Closeness to 0.05 must be read
-regime by regime and not treated as an inherent advantage of either method.
+Expanded Welch uses a heavier-tailed reference and can only lower rejection
+relative to Wald on the same table pairs. This can bring a liberal null rate
+toward 0.05, but moves a conservative rate farther below it. Closeness to
+0.05 must therefore be judged regime by regime.
 
 Two fully valid null points make the contrast concrete. With uniform
 \(8\times8\) populations, \(n_P=n_Q=20\), and equal true MI of 0.02,
@@ -91,12 +90,6 @@ rates are \(\TwoUniformThousandWaldRate\) and
 conservative procedure farther below the target. Both methods are valid on
 all replicates in these examples, so the change is attributable to their
 different references, not missing outputs.
-
-These two examples isolate the central trade-off. In the \(8\times8\) case,
-the lower rejection rate corrects part of Wald's excess. In the \(2\times2\)
-case, the same downward movement is harmful because Wald was already
-conservative. Expanded Welch is therefore a one-direction adjustment, not an
-adaptive calibration procedure.
 
 \begin{table}[htbp]
 \centering
@@ -405,8 +398,8 @@ replicates.}
 The main-grid null contains two cases distinguished by whether the population
 tables themselves are equal. The 72 uniform and same-skew configurations have
 \(P=Q\), whereas the 36 different-skew configurations have \(P\ne Q\) but
-\(I(P)=I(Q)\). The latter are the weak-null cases that most directly match
-the thesis motivation. Table~\ref{tab:null-band-summary} reports these
+\(I(P)=I(Q)\). These cases, where the tables differ but their MI values
+agree, most directly match the thesis motivation. Table~\ref{tab:null-band-summary} reports these
 profiles separately. The broad interval 0.025--0.075 is used only to describe
 the landscape; it is not a formal acceptance region for calibration.
 

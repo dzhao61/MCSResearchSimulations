@@ -4,8 +4,8 @@
 Suppose two independent groups are observed on the same categorical variables
 \(X\) and \(Y\). Mutual information (MI) describes the strength of association
 between those variables in each group. If the estimated MI differs, the
-difference alone does not tell us whether the populations differ: both estimates
-vary when new observations are drawn. The question in this thesis is whether
+difference alone does not tell us whether the population MI values differ:
+both estimates vary when new observations are drawn. The question in this thesis is whether
 the two \emph{population} MI values can plausibly be equal.
 
 This is not the usual test of whether \(X\) and \(Y\) are independent within
@@ -22,91 +22,79 @@ not imply independence of \(X\) and \(Y\) within either population.
 
 \section{Why the comparison is difficult}
 
-MI is a nonlinear function of all cell probabilities and their row and column
-margins. With a small sample or rare population cells, an observed table can
-contain many zeros even though every population probability is positive. The
-same sampled tables determine both the MI difference and its standard error,
-so sparsity affects both estimates. A first-order Normal Wald test is simple,
-but its finite-sample rejection rate need not be close to the nominal level.
+MI uses the probabilities in every cell of a table and the totals of its rows
+and columns. In a small sample, some cells can be empty even when their
+population probabilities are positive. The observed tables determine both
+the estimated MI difference and its standard error, so sparse data can affect
+both. The Normal Wald test compares their ratio with a normal curve, but in
+small samples it may reject equal MI more or less often than the intended 5\%.
 
-Welch--Satterthwaite inference offers a possible adjustment. Instead of
-comparing the standardised difference with a normal reference, it compares
-the same statistic with a Student reference whose effective degrees of
-freedom describe uncertainty in the estimated variance. For MI, that variance
-is itself a nonlinear function of the full table. Hutcheson's earlier
-information-theoretic test assigns each variance component its sample size as
-degrees of freedom; the familiar ordinary-Welch analogue instead uses \(n-1\).
-Neither assignment accounts for the way a changed cell also changes the margins
-and pointwise MI values. The method examined here estimates those degrees of
-freedom from the sensitivity of the full variance functional.
+Expanded Welch offers a possible adjustment. It uses the same estimated
+difference and standard error as Wald, but compares their ratio with a
+Student \(t\) distribution. Its degrees of freedom depend on how much
+the estimated MI variance changes from sample to sample. To calculate that
+change, we must account for the fact that changing one cell also changes its
+row and column totals and the MI values calculated from them. This thesis
+derives that calculation and tests whether the adjustment helps.
 
-The resulting reference is an approximation, not a guarantee of better
-inference. A heavier-tailed reference can reduce excessive false positives,
-but it can also suppress useful detection when Wald already rejects too
-rarely. Moreover, one method can fail to produce a valid p-value on samples
-where the other succeeds. Calibration, detection and valid-result frequency
-must therefore be considered together.
+The adjustment is not automatically better. It can reduce false positives
+where Wald rejects too often, but it can also reduce detection where Wald
+already rejects too rarely. In sparse samples, it may fail to return a usable
+p-value when Wald succeeds. The experiment therefore examines false
+positives, detection and the frequency of usable results together.
 
 \section{Research questions}
 
-The thesis asks four related questions. First, how can the sampling
-uncertainty of the estimated MI variance be turned into an MI-specific
-Welch--Satterthwaite reference? Second, how does that reference affect false
-positives, detection and numerical validity relative to Normal Wald? Third,
-how do table size, margins, baseline dependence, the location of association
-and unequal sample sizes change the comparison? Fourth, do the observed
-calibration errors diminish with larger samples, and what additional
-computation does the correction require?
+The thesis asks four related questions. First, how can changes in the
+estimated MI variance be used to choose the degrees of freedom for a Student
+test? Second, does this choice improve false-positive rates without losing
+too much detection or producing too many invalid results? Third, how does the
+answer depend on table size, uneven cell probabilities, the amount and
+location of association, and unequal sample sizes? Fourth, do the problems
+disappear as samples grow, and how much extra computation does the method
+require?
 
 \section{Contributions to the field}
 
-This thesis contributes to two-sample inference for discrete information
-measures in four connected ways. The established ingredients are first-order
-MI inference and Satterthwaite moment matching; the contribution lies in
-connecting, implementing and testing them for the equal-MI problem.
+This thesis combines established ideas about MI and Welch--Satterthwaite
+tests for a specific question: whether two populations have equal MI. Its
+contributions are the calculation needed for that test and evidence about
+whether the test is useful.
 
 \begin{enumerate}
-  \item \textbf{Mathematical contribution.} The thesis derives the sensitivity
-  of the plug-in MI variance to every cell probability. The derivative
-  retains the induced changes in both margins and in the pointwise MI values,
-  providing the quantities needed to estimate MI-specific component degrees of
-  freedom.
+  \item \textbf{Mathematical contribution.} The thesis derives how changing
+  one observation affects the estimated MI variance. The calculation includes
+  the resulting changes in the row and column totals and in pointwise MI.
 
-  \item \textbf{Methodological contribution.} The resulting Expanded Welch
-  procedure turns that variance sensitivity into a usable two-sample test. Its
-  relationship to the Hutcheson sample-size assignment, the ordinary
-  \(n-1\) assignment and Normal Wald is made explicit, so the effect of the
-  full variance-sensitivity expansion can be distinguished from generic Welch correction; the
-  detailed ablation is retained in the experiment supplement.
+  \item \textbf{Methodological contribution.} Expanded Welch uses this
+  calculation to choose the degrees of freedom for a two-sample Student test.
+  The main experiment compares it with Wald; a supplementary analysis checks
+  simpler sample-size choices for the degrees of freedom.
 
-  \item \textbf{Empirical contribution.} A frozen, reproducible experiment
-  evaluates false positives, detection, valid-result frequency and runtime on
-  fixed populations with known MI. It covers \(2\times2\) through \(8\times8\)
-  square tables, two rectangular shapes, unequal samples and stress regimes,
-  while preserving every configuration-level result in a companion atlas
-  instead of replacing the regimes by an overall average.
+  \item \textbf{Empirical contribution.} A reproducible experiment measures
+  false positives, detection, usable results and runtime on fixed populations
+  with known MI. It covers \(2\times2\) through \(8\times8\) square tables,
+  rectangular tables, unequal samples and very sparse settings. The companion
+  atlas retains the result for each setting rather than hiding it in an
+  overall average.
 
-  \item \textbf{Practical contribution.} The evidence establishes the limits
-  of a heavier-tailed reference correction. Expanded Welch can improve a
-  liberal Wald test, but it can also worsen an already conservative test and
-  return fewer valid results in sparse samples under the strict implemented
-  component-validity rule. Some of those failures come from the rule rather
-  than the combined formula. Expanded Welch therefore should not replace Wald
-  generally.
-  This negative result identifies when reference-tail adjustment is useful and
-  when bias, sparsity or failure of the first-order approximation requires a
-  different solution.
+  \item \textbf{Practical contribution.} Expanded Welch can help when Wald
+  rejects equal MI too often. It can also make an already-low rejection rate
+  lower and return fewer usable results in sparse samples. The evidence shows
+  why it should not replace Wald in general and points to problems that
+  changing the reference distribution alone cannot solve.
 \end{enumerate}
 
 \section{Scope and organisation}
 
-The analysis concerns independent multinomial samples on fixed, aligned
-categorical alphabets. The principal theory assumes strictly positive cell
-probabilities and positive first-order MI variances. Exact independence is
-studied separately as a boundary case, not treated as an ordinary positive-MI
-regime. The final experiment compares Normal Wald with Expanded Welch at a
-two-sided nominal level of 0.05. It does not establish performance for paired
-data, continuous MI estimators or alphabets that grow with sample size.
+The analysis concerns independent samples recorded in count tables with the
+same row and column categories. The main derivation assumes every population
+cell has positive probability and that its leading large-sample MI variance
+is greater than zero. Exact independence is considered separately because
+that variance becomes zero.
+The experiment compares Normal Wald with Expanded Welch using a two-sided 5\%
+test. It does not establish performance for paired data, continuous MI
+estimators or a number of categories that grows with sample size.
 
 Chapter~\ref{chap:background} supplies the statistical background.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared

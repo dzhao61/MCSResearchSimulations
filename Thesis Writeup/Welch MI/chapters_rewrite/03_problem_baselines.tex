@@ -1,10 +1,11 @@
 \chapter{Comparing Mutual Information with Normal Wald}
 \label{chap:baselines}
 
-This chapter defines the estimand and statistic shared by the two methods in
-the final experiment. Normal Wald evaluates it against a standard normal
-reference; Chapter~\ref{chap:expanded} develops a Student reference with
-estimated degrees of freedom.
+This chapter defines the population MI difference being tested and the
+statistic calculated from the observed tables. Both methods use this same
+statistic. Normal Wald judges it against a standard normal distribution;
+Chapter~\ref{chap:expanded} develops a Student distribution with estimated
+degrees of freedom.
 
 \section{Problem setup and bias-corrected estimator}
 
@@ -36,7 +37,7 @@ The principal test is two-sided:
   \label{eq:two-sample-null}
 \end{equation}
 
-The first-order construction uses the following assumptions.
+The large-sample argument uses the following assumptions.
 
 \begin{assumption}[Sampling]
 Observations are independent and identically distributed within each
@@ -146,24 +147,21 @@ distribution, not the effect estimate or plug-in standard error.
 
 \section{Normal Wald reference and motivation for expansion}
 
-Under the regular first-order asymptotics for a scalar Wald comparison
-\citep{wald1943,vanderVaart1998},
+When both sample sizes grow while the table dimensions and positive
+population probabilities stay fixed, the statistic approaches a standard
+normal distribution under equal population MI
+\citep{wald1943,vanderVaart1998}:
 \begin{equation}
   T\xrightarrow{d}N(0,1)
   \qquad\text{under }H_0.
 \end{equation}
-Here both $n_P$ and $n_Q$ increase while the aligned alphabet and the two
-positive-support population tables remain fixed.
 The two-sided Normal Wald p-value is
 \begin{equation}
   p_{\mathrm{Wald}}
   =2\{1-\Phi(|T|)\},
   \label{eq:wald-pvalue}
 \end{equation}
-where \(\Phi\) is the standard normal distribution function. The thesis
-evaluates this test through p-values and rejection rates. It does
-not claim confidence-interval coverage, which would require a separate
-coverage experiment.
+where \(\Phi\) is the standard normal distribution function.
 
 The normal reference is a large-sample approximation. Wald estimates the
 standard error from the tables but applies no degrees-of-freedom adjustment.
@@ -172,20 +170,18 @@ standard error from the tables but applies no degrees-of-freedom adjustment.
 \noindent\textbf{Why consider an expanded reference?}
 
 The shared statistic supplies the estimated effect and its first-order
-standard error. The direct Hutcheson-style information-theoretic analogue
-assigns component degrees of freedom \(n_P\) and \(n_Q\)
-\citep{hutcheson1970}; a familiar ordinary-Welch analogue uses
-\(n_P-1\) and \(n_Q-1\) \citep{welch1947}. For positive variance contributions,
-their combined degree of freedom is at least
-\(\min(n_P,n_Q)-1\), so at sample sizes of 50 or more their Student reference
-is already close to normal. The supplementary ablation retains these baselines
-alongside Expanded Welch. However, \(\Vhat(P)\) is a nonlinear functional of a
-table whose margins and pointwise MI values also change with the data. The
-expanded method instead estimates component degrees of freedom from that full
-functional.
+standard error. Earlier information-theoretic and ordinary-Welch analogues
+set each variance component's degrees of freedom from its sample size:
+\(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment
+measures how much the plug-in MI variance changes when the observed table
+changes. That variance depends on joint cells, margins and pointwise MI
+values. Expanded Welch instead estimates each component's degrees of freedom
+from the sensitivity of the full variance functional. The sample-size
+assignments remain in the supplementary ablation.
 
-Satterthwaite moment matching requires the first two moments of each positive
-variance estimate \citep{satterthwaite1946}. To first order,
+To choose the degrees of freedom, we need the average value of each estimated
+MI variance and how much that estimate varies across samples
+\citep{satterthwaite1946}. For \(P\), to first order,
 \begin{equation}
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}

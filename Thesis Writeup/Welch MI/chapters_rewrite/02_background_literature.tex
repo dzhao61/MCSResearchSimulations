@@ -71,18 +71,15 @@ conventionally written as \(I(X;Y)\). Equivalently,
 The quantity is nonnegative and equals zero exactly when
 \(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells.
 
-Equation~\eqref{eq:background-mi} is also the Kullback--Leibler divergence
-between the joint distribution and the product of its margins. MI therefore
-measures the overall departure from independence, not one particular
+MI measures the overall departure from independence, not one particular
 shape of association.
 
 This scalar summary deliberately discards much of the information in the
 joint distribution. Two populations can have the same MI while assigning
 probability to different cells, having different margins, or exhibiting
 different association patterns. Equality of MI is therefore weaker than
-equality of distributions. This distinction is central to the present test:
-the null fixes one scalar functional while leaving the remaining features of
-each population unrestricted.
+equality of distributions. Our null requires only this one number to agree,
+not that the two tables match cell by cell.
 
 The logarithm base determines the reporting unit. This thesis uses natural
 logarithms, so MI is measured in nats; dividing by \(\log 2\) converts to bits.
@@ -570,13 +567,11 @@ distributions, not equality of two within-population MI values. For discrete
 data, \citet{drake2014} develop an MI-based \(k\)-sample test for the same
 distributional-equality question.
 
-The exact-independence boundary has likewise been studied separately.
-\citet{marinescu2025} use a second-order delta-method argument for MI under
-independence. More generally, their expansion combines a normal term with a
-linear combination of chi-squared terms; the normal term vanishes at exact
-independence. That setting explains why a first-order positive-MI comparison
-must not be presented as a replacement for a one-table independence test and
-suggests why second-order effects can remain relevant near that boundary.
+At exact independence, the first-order sampling variation of MI vanishes and
+its second-order variation becomes important \citep{marinescu2025}. The
+positive-MI comparison developed here is therefore not a replacement for a
+one-table independence test. Second-order effects can also matter near that
+boundary.
 
 Table~\ref{tab:prior-work-scope} distinguishes the relevant established
 ideas by the problem each addresses. This is not a claim that no other MI
@@ -607,62 +602,46 @@ Different MI nulls & \citet{guha2014} and \citet{drake2014} test
 distributional equality;
 \citet{marinescu2025} study one-table independence. These are not the
 two-population equal-MI null.\\
-Weak-null tests & \citet{chung2013} explain why a raw pooled-label
-permutation need not be valid when the compared parameters agree but
-\(P\ne Q\); \citet{janssen1997} gives an earlier studentized permutation
-result for heterogeneous two-sample nulls.\\
+Permutation tests & Simply shuffling group labels need not test equal MI when
+\(P\ne Q\) \citep{chung2013}. Modified permutation methods are possible in some
+such settings \citep{janssen1997}.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \medskip
-\noindent\textbf{Resampling and the weak null.}
+\noindent\textbf{Resampling alternatives.}
 
-Bootstrap methods can approximate a statistic's repeated-sampling behaviour
-by drawing from fitted empirical populations, at greater computational cost
-than a direct analytic table scan \citep{efron1979}. Sparse empirical support
-can still be a problem. A label permutation instead pools the observations and
-reallocates their group labels; it targets a different symmetry assumption.
+A bootstrap would draw many new samples from the observed tables to estimate
+how much the test statistic varies. This requires repeating the calculation
+many times \citep{efron1979}. A simple permutation test instead combines the
+two samples and shuffles their group labels. That shuffle is justified when
+the populations have the same complete distribution, \(P=Q\). Our hypothesis
+requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
+equal. Shuffling labels could therefore test a stronger claim than this thesis
+asks about \citep{chung2013}. More specialised permutation methods are possible
+for some such comparisons \citep{janssen1997,chung2013}, but assessing one for
+equal MI would be a separate study. The present comparison focuses on Normal
+Wald and Expanded Welch.
 
-Permutation requires a separate distinction. Pooling two samples and
-permuting their group labels is exact under the strong null \(P=Q\), because
-the observations are exchangeable. Under the weak null \(I(P)=I(Q)\), the two
-complete distributions may differ, so raw label permutation generally targets
-the wrong null. Studentized permutation can recover asymptotic validity for
-some weak-null parameter comparisons \citep{janssen1997,chung2013}, but it is not the
-standard one-table MI shuffle used to test independence.
+\section{Previous work and this thesis's contribution}
 
-The final comparison uses Normal Wald and the proposed Expanded Welch method,
-which share the same effect estimate and standard error. Resampling is relevant
-future work, but is not an exact finite-sample solution for the unrestricted
-weak null without additional assumptions.
+Previous research explains how to estimate MI, correct its leading
+small-sample bias and approximate its sampling variance. Wald's method uses
+that variance to compare two estimates. Welch--Satterthwaite methods also
+allow for uncertainty in an estimated variance. Researchers have also
+compared entropy and MI-related quantities.
 
-\section{Literature synthesis and methodological gap}
+The missing step for this test is to measure how much the \emph{estimated MI
+variance} changes from sample to sample. Assigning each population degrees of
+freedom based only on its sample size, as earlier information-based and Welch
+tests do, does not measure this change. A new observation affects a cell
+probability, its row and column totals, and the MI values calculated from
+them. This thesis derives how those changes affect the estimated variance and
+uses the result to choose a Student \(t\) distribution for comparing two MI values.
+It then tests the method on fixed population tables, showing when it brings
+false-positive rates closer to the target and when it instead rejects too
+rarely.
 
-The literature establishes all of the broad ingredients used in this thesis:
-plug-in MI estimation and bias correction, first-order MI variance, Wald
-comparison of smooth functionals, and Welch--Satterthwaite moment matching.
-It also contains prior comparisons of entropy and MI-related indices.
-
-This thesis makes three contributions to two-sample inference for mutual
-information. First, it derives an explicit observation-level sensitivity for
-the estimated MI variance. Second, it uses this sensitivity to construct a
-plug-in Welch--Satterthwaite degrees-of-freedom correction. Third, it provides
-a controlled empirical evaluation across distinct equal-MI multinomial
-populations. Together, these contributions clarify when Welch--Satterthwaite
-correction is useful for MI comparison and, importantly, why it can become
-overly conservative.
-
-The remaining task is specific to MI. Hutcheson's direct information-theoretic
-predecessor assigns each component its sample size; an ordinary-Welch analogue
-uses \(n-1\). Both are fixed assignments. By contrast, established sandwich
-adjustments derive effective degrees of freedom from the estimated variability
-of the variance estimator itself. The plug-in MI variance requires its own
-version of that calculation because it is a nonlinear function of the same
-empirical joint table used to calculate MI. A change in one observation
-modifies the cell probabilities, margins, pointwise-MI values, and their
-weighted variance.
-
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded} develop the MI-specific
-variance sensitivity and its Welch--Satterthwaite reference.
-Chapter~\ref{chap:results} evaluates when that adjustment helps.
+Chapter~\ref{chap:baselines} defines the comparison, Chapter~\ref{chap:expanded}
+derives the adjustment, and Chapter~\ref{chap:results} evaluates it.

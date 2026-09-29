@@ -20,12 +20,12 @@ This records the final verification status.
 
 | Area | Evidence available | Remaining work |
 | --- | --- | --- |
-| Manuscript | The current A4 PDF has 100 pages, including 72 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
+| Manuscript | The current A4 PDF has 97 pages, including 68 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 36 active references. The local bibliography contains the same 36 checked records, with no missing or unused citations. | Complete. |
 | Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 100 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
-| Visual presentation | The earlier 97-page version received a full visual and raster review. Pages affected by the later derivation and citation edits were reinspected at final size; the full-page raster comparison was not repeated for the current revision. | Targeted refresh complete. |
+| Build | The active source builds to 97 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
+| Visual presentation | An earlier version received a full visual and raster review. Pages affected by later derivation, citation and readability edits were reinspected at final size; the full-page raster comparison was not repeated for the current revision. | Targeted refresh complete. |
 | Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
 
@@ -135,8 +135,14 @@ The subsequent Section 2.4 flow edit removed the Student-ratio derivation and
 the squared-Wald digression from the background discussion. It retains a
 short explanation of the Student rejection threshold before returning to MI;
 the detailed distributional arguments remain in Chapter 4 and Appendix D.
-The revised PDF has 100 pages. The build passes with no undefined references
+At that stage the revised PDF had 100 pages. The build passes with no undefined references
 or overfull boxes, and the revised passage was inspected in the rendered PDF.
+
+The 29 September readability pass simplified the abstract, introduction,
+literature synthesis, method bridges, discussion and conclusion without
+changing the experiment or its numerical results. The current PDF has 97
+pages, with main text ending on numbered page 68. Both the full manuscript and
+chapter-only working draft rebuild without missing references or overfull boxes.
 
 Final deliverables are stored in `deliverables/`:
 

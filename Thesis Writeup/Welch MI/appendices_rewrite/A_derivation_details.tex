@@ -139,6 +139,45 @@ $\widehat p_{ij}>0$. Direct substitution gives
 These expressions are the direct $O(rc)$ implementation of the population
 derivation.
 
+\section{Reference ordering and zero components}
+
+For positive component degrees of freedom, substituting
+Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
+Equation~\eqref{eq:expanded-df} gives the equivalent combined form
+\begin{equation}
+  \widehat\nu_{\mathrm{expanded}}
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \widehat\tau^2(P)/(2n_P^3)
+  +
+  \widehat\tau^2(Q)/(2n_Q^3)
+  }.
+  \label{eq:expanded-df-direct}
+\end{equation}
+This direct form remains defined if one table has
+\(\Vhat=\widehat\tau^2=0\) and the other supplies a positive denominator
+contribution. The zero table drops out, leaving the other table's component
+degree of freedom. The evaluated implementation instead requires both
+component degrees of freedom to be positive and finite before combining
+them. It records such a one-zero-component case as invalid, even though the
+direct form has a value.
+
+The Student p-value is no smaller than the Normal Wald p-value for the same
+finite statistic. To see this, write a Student variable as \(Z/\sqrt S\),
+where \(Z\sim N(0,1)\), \(S\sim\chi^2_\nu/\nu\), and \(Z\) and \(S\) are
+independent. For \(c>0\), the conditional two-sided tail
+\(2\{1-\Phi(c\sqrt{s})\}\) is strictly convex in \(s\), since its second
+derivative is
+\(c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\). As \(\E S=1\),
+Jensen's inequality gives
+\(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\); at \(c=0\) both tails equal one.
+Moreover, the implemented Expanded-valid set is a subset of the Wald-valid
+set. At a common fixed threshold, every Expanded rejection is therefore
+also a Wald rejection, both replicate by replicate and in unconditional
+rates that count invalid outputs as non-rejections.
+
 \section{Numerical derivative checks}
 
 The implementation tests the analytic derivatives against centred finite

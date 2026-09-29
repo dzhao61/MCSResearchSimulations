@@ -46,7 +46,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (28 September) | 72 pages | 100 pages |
+| Current Welch-MI manuscript (29 September) | 68 pages | 97 pages |
 
 **Length target:** a main text within the observed **58-87-page range**, with
 **65-75 pages as the working centre**. The complete PDF should be comparable to
@@ -107,13 +107,13 @@ and reason; the target date does not relax the acceptance criteria.
 Current status: **T1-T3 completed on 15 September 2026; T4-T7 completed and
 the external assessment addressed on 20 September 2026. T8 was completed on
 26 September 2026 after the declaration page was removed at the author's
-request; T1-T8 were revalidated on 27-28 September.** The current page count
-includes the conclusion's final page (72), not its opening page (71).
+request; T1-T8 were revalidated on 27-29 September.** The current main text
+ends on numbered page 68.
 T2 evidence is recorded in
 `SCIENTIFIC_AUDIT.md`: the mathematical
 tests pass, both worked examples are independently reproduced, all Taylor and
 distributional approximations in the method chapters are identified, and the
-current 100-page PDF builds without undefined references, citations or overfull
+current 97-page PDF builds without undefined references, citations or overfull
 boxes. T3 evidence is recorded in `LITERATURE_SOURCE_CHECK.md`: all 36 sources
 cited by the active manuscript have a source and claim disposition, the newly
 identified Moddemeijer (1999) variance paper and Berrett--Samworth construction
@@ -128,7 +128,7 @@ in the companion atlas. Detailed mechanism checks remain available in the
 experiment supplement without changing the frozen run. T6 records
 a separate scientific-continuity and readability
 disposition for every active chapter and appendix in `SUBMISSION_CHECK.md`.
-T7 then built the final 100-page A4 manuscript from the active source, with
+T7 then built the final 97-page A4 manuscript from the active source, with
 zero errors, undefined citations or references, missing assets, and overfull
 boxes. All 101 tests and the complete evidence audit pass. The previously
 reviewed pages and the passages affected by the targeted prose refresh have
@@ -216,8 +216,9 @@ sentences that combine several claims. Review sentences longer than about
 
 ### Prose clarity: explain the mechanism
 
-Write for an honours or master's reader encountering this MI argument for the
-first time. Prefer a concrete explanation of what changes, why it changes,
+Write for an undergraduate honours reader who knows basic calculus and
+probability but has not studied this MI inference problem. Prefer a concrete
+explanation of what changes, why it changes,
 and what follows over a technical label that merely names the phenomenon.
 Anchor causal claims to the relevant equation or comparison. Do not use vague
 shorthand such as "the denominator is random" when both methods estimate a
@@ -238,6 +239,11 @@ central calculations, but background sections need only the detail that
 supports their purpose. In sentences describing a connection, comparison or
 change, name both quantities or methods explicitly instead of leaving the
 reader to infer what is being connected or compared.
+
+Peripheral technical distinctions may be left to an appendix or supplement
+when they distract from the main argument. Keep the assumptions and
+limitations that would change how a result is interpreted; readability is not
+a reason to make a stronger statistical claim than the evidence supports.
 
 ### Derivation depth: use Section 2.3 as the model
 

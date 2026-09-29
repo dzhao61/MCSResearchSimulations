@@ -1,13 +1,13 @@
 \chapter{Expanded Welch--Satterthwaite Method}
 \label{chap:expanded}
 
-The expanded method retains the bias-corrected difference, standard error, and
-test statistic from Chapter~\ref{chap:baselines}. It evaluates that statistic
-against an estimated Student reference rather than the standard normal. This
-chapter derives the required degrees of freedom from the sampling variability
-of the full MI variance estimator.
+Expanded Welch keeps the estimated MI difference, standard error and test
+statistic from Chapter~\ref{chap:baselines}. It changes the distribution used
+to judge that statistic from normal to Student. To choose the Student degrees
+of freedom, this chapter calculates how much the estimated MI variance changes
+between samples.
 
-\section{From Welch--Satterthwaite to the required MI quantity}
+\section{What degrees of freedom does MI require?}
 
 For the two MI estimates, the Welch--Satterthwaite equation combines their
 estimated variance contributions as in the original moment-matching framework
@@ -29,12 +29,11 @@ are the component degrees of freedom \(\nu_P\) and \(\nu_Q\), which should
 measure how reliably \(\Vhat(P)\) and \(\Vhat(Q)\) estimate their population
 counterparts.
 
-The derivation proceeds in four stages. First, Satterthwaite moment matching
-expresses \(\nu_P\) in terms of the mean and variance of \(\Vhat(P)\). Second,
-a one-cell perturbation gives the observation-level sensitivity of \(V(P)\).
-Third, the variability of these sensitivities gives the sampling variance of
-\(\Vhat(P)\). Finally, the two estimated component degrees of freedom are
-combined through Equation~\eqref{eq:ws-general}.
+The derivation has four steps. First, we relate the degrees of freedom to the
+average and across-sample variation of \(\Vhat(P)\). Second, we calculate how \(V(P)\)
+changes when a small amount of probability moves into one cell. Third, that
+change tells us how variable \(\Vhat(P)\) is. Finally, we combine the
+degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 
 \medskip
 \noindent\textbf{Moment matching for one component.}
@@ -90,9 +89,9 @@ therefore the sampling variance of \(\Vhat(P)\).
 
 \section{Deriving the sensitivity of the MI variance}
 
-The sampling behaviour of a smooth plug-in functional can be obtained by
-measuring its first-order response to one observation
-\citep{hampel1974,vanderVaart1998}. Fix a cell
+To find how much the estimated MI variance changes between samples, we first
+ask how the population variance responds when a small amount of probability
+is moved into one cell \citep{hampel1974,vanderVaart1998}. Fix a cell
 \((x,y)\) and define the perturbed distribution
 \begin{equation}
   P_\varepsilon
@@ -444,30 +443,6 @@ into Equation~\eqref{eq:ws-general} gives
   }.
   \label{eq:expanded-df}
 \end{equation}
-Substituting Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue gives the
-algebraically equivalent form
-\begin{equation}
-  \widehat\nu_{\mathrm{expanded}}
-  =
-  \frac{
-  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
-  }{
-  \widehat\tau^2(P)/(2n_P^3)
-  +
-  \widehat\tau^2(Q)/(2n_Q^3)
-  }.
-  \label{eq:expanded-df-direct}
-\end{equation}
-Equation~\eqref{eq:expanded-df-direct} remains defined when one table has
-\(\Vhat=\widehat\tau^2=0\) and the other supplies a positive denominator
-contribution. The zero table drops out, so the combined degree of freedom
-reduces to the other table's component. The implementation
-evaluated in this thesis does not use the direct form in that case: it first
-requires both component degrees of freedom in
-Equation~\eqref{eq:nu-p-hat} to be positive and finite. Reported
-Expanded-only invalidity can therefore reflect this rule rather than a failure
-of the combined Satterthwaite formula.
-
 The expanded two-sided p-value is
 \begin{equation}
   p_{\mathrm{expanded}}
@@ -475,32 +450,20 @@ The expanded two-sided p-value is
   \label{eq:expanded-p}
 \end{equation}
 where $F_{t_\nu}$ denotes the cumulative distribution function of a Student
-$t$ variable with $\nu$ degrees of freedom. As with Wald, only test behaviour
-is evaluated; no confidence-interval coverage claim is made.
+$t$ variable with $\nu$ degrees of freedom.
 
 The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
-\(T\). It changes only the quantile used to evaluate that statistic.
+\(T\). It changes only the reference distribution used to evaluate that
+statistic.
 
-\begin{proposition}[Nested rejection under the implemented rules]
-If the two calculations use the same finite statistic \(T\) and Expanded
-Welch has positive finite degrees of freedom, its two-sided p-value is at
-least the Normal Wald p-value. The implemented Expanded-valid set is a subset
-of the Wald-valid set. Thus, at a common fixed threshold, every Expanded
-Welch rejection is also a Wald rejection, both replicate by replicate and in
-the unconditional rates that count invalid outputs as non-rejections.
-\end{proposition}
-\begin{proof}
-Write a Student variable as \(Z/\sqrt S\), with independent
-\(Z\sim N(0,1)\) and \(S\sim\chi^2_\nu/\nu\). For \(c>0\),
-the conditional two-sided tail \(2\{1-\Phi(c\sqrt{s})\}\) is strictly
-convex in \(s\), because its second derivative is
-\(c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\). Since \(\E S=1\),
-Jensen's inequality gives
-\(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\). At \(c=0\) both tails equal one.
-\end{proof}
-Invalid Expanded outputs count as non-rejections in the reported
-unconditional rates. Because the correction changes only the reference, it
-cannot raise rejection where Wald is already too conservative.
+For a fixed finite \(T\), the Student reference gives a two-sided p-value at
+least as large as the Normal Wald reference. Under the implemented validity
+rules, every valid Expanded Welch result is also Wald-valid. Thus every
+Expanded Welch rejection is also a Wald rejection, including when invalid
+outputs count as non-rejections in the reported rates. The correction cannot
+raise rejection where Wald is already too conservative. Appendix~\ref{app:derivation-details}
+proves this ordering and examines a zero-component case in the combined
+degrees-of-freedom formula.
 
 \section{Worked example and implementation}
 
@@ -661,10 +624,9 @@ columns, finite nonnegative integer counts, and more than one observation in
 each table. Wald is then valid only when the corrected difference and standard
 error are finite and $\Vhat(P)+\Vhat(Q)>10^{-14}$. Expanded Welch
 additionally requires positive finite component and combined degrees of
-freedom. This is the strict component-validity convention stated after
-Equation~\eqref{eq:expanded-df-direct}; the software does not evaluate that
-direct combined form when a component degenerates. Failed conditions are
-recorded as invalid calculations. The validation in
+freedom. The software does not evaluate a combined degree of freedom when a
+component degenerates. Failed conditions are recorded as invalid
+calculations. The validation in
 Chapters~\ref{chap:design} and~\ref{chap:results} evaluates how often these
 conditions occur and whether the finite-sample correction improves
 calibration.
