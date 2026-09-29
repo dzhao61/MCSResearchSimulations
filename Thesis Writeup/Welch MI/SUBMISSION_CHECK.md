@@ -144,8 +144,9 @@ changing the experiment or its numerical results. A further targeted pass
 shortened the regression precedent, removed its redundant summary table, and
 moved covariance, software validity and population-construction detail to the
 appendices. The current PDF has 97 pages, with main text ending on numbered
-page 67. Both the full manuscript and
-chapter-only working draft rebuild without missing references or overfull boxes.
+page 67. Both the full manuscript and the working draft (Chapters 1--4 plus a
+headings-only outline of the remaining chapters and appendices) rebuild
+without missing references or overfull boxes.
 
 Final deliverables are stored in `deliverables/`:
 

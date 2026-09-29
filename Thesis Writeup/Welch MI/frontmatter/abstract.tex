@@ -1,39 +1,35 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Mutual information (MI) measures dependence between two variables. This
-thesis tests whether two independent categorical populations have equal MI,
-without requiring their joint distributions or margins to be the same.
+Mutual information (MI) measures association between two variables. This
+thesis asks whether two independently sampled populations have equal MI,
+even when their joint probability tables differ. The usual Normal Wald test
+uses a normal approximation that can be inaccurate in small or sparse
+samples.
 
-The Normal Wald test divides the estimated MI difference by its estimated
-standard error and judges the result against a normal curve. Expanded
-Welch--Satterthwaite uses the same difference and standard error but judges
-the result against a Student \(t\) distribution. It chooses the degrees of
-freedom by estimating how much the MI variance estimate changes across
-samples. The calculation
-accounts for changes to cell probabilities, row and column totals, and the
-MI values of individual cells. The Student reference is an approximation, not an
-exact small-sample result.
+The thesis develops an Expanded Welch--Satterthwaite adjustment for this
+comparison. It derives how changing one observation affects the estimated MI
+variance, including changes to the cell probabilities and their row and
+column totals. That calculation determines the degrees of freedom for a
+Student \(t\) reference. Expanded Welch retains Wald's estimated MI
+difference and standard error; it changes only the distribution used to judge
+the resulting statistic.
 
-The experiment uses fixed population tables from \(2\times2\) to
-\(8\times8\), including unequal sample sizes and very sparse tables. Each of
-3,111 settings uses 20,000 repeated pairs of samples and a 5\% test
-threshold. The study reports false positives, detection, how often a method
-returns a usable result, and runtime for each setting. It includes both
-identical populations and different populations with equal MI.
+The methods are evaluated in 3,111 fixed statistical settings, each with
+20,000 independently sampled table pairs. The design includes square tables
+from \(2\times2\) to \(8\times8\), selected rectangular tables, unequal
+sample sizes, sparse cells, and populations with different distributions but
+equal MI. At a nominal 5\% threshold, the experiment measures false
+positives, detection when MI differs, and the frequency of usable results.
 
-Expanded Welch reduces excessive false positives in some settings but makes
-already-low rejection rates lower still. It also produces fewer usable
-results in sparse samples under the implemented validity rule. Wald is closer
-to the target 5\% rate in all 24 main null settings at sample sizes 500 or
-1,000. When both samples have size 50,000 and population MI is 0.02, both
-methods are near 5\% in the tested populations;
-very small MI remains difficult. Expanded Welch takes about 1.75 times as
-long as Wald per test in the measured implementation.
-
-Near independence, the correction can become very cautious and reject too
-rarely. A separate diagnostic shows why changing the reference curve alone
-cannot fix errors in the estimated MI difference or its standard error.
-
-The evidence supports Wald as the simpler general baseline. Expanded Welch
-may be useful as an additional check where Wald is known to reject too often.
+Expanded Welch reduces excessive Wald false positives in some settings.
+However, when both tests return a p-value, its Student reference gives a
+p-value no smaller than Wald's. It therefore also lowers rejection where Wald
+already rejects too rarely and can reduce detection when MI differs. In
+sparse samples, Expanded Welch more often fails to return a usable p-value
+under the implemented rule. Wald is closer to the target 5\% rate in all 24
+main null settings with sample sizes 500 or 1,000. A supplementary diagnostic
+shows that changing the reference distribution cannot correct error in the
+standard error shared by both tests. For the settings studied, Wald remains
+the simpler general baseline; Expanded Welch is an additional check where
+Wald is known to reject equal MI too often.

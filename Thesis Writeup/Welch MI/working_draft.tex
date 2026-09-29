@@ -7,18 +7,6 @@
   pdftitle={Working Draft: Comparing Mutual Information in Finite Samples}
 }
 
-% Retain the full thesis's forward chapter numbers without including those chapters.
-\makeatletter
-\newlabel{chap:design}{{5}{}{Experimental design}{}{}}
-\newlabel{chap:results}{{6}{}{Results}{}{}}
-\newlabel{chap:discussion}{{7}{}{Discussion}{}{}}
-\newlabel{chap:conclusion}{{8}{}{Conclusion}{}{}}
-\newlabel{sec:mechanism-results}{{6.7}{}{Null Rejection Rates and the Standard-Error Check}{}{}}
-\newlabel{app:derivation-details}{{A}{}{Additional Derivation Details}{}{}}
-\newlabel{app:independence-boundary}{{D}{}{The Independence Boundary}{}{}}
-\newlabel{app:reproducibility}{{E}{}{Reproducibility and Protocol Record}{}{}}
-\makeatother
-
 \begin{document}
 \frontmatter
 \begin{titlepage}
@@ -28,7 +16,7 @@
   \vspace{18mm}
   {\Large\bfseries Working Draft\par}
   \vspace{4mm}
-  {\large Chapters 1--4\par}
+  {\large Chapters 1--4, with an outline of the remaining chapters and appendices\par}
   \vspace{18mm}
   {\large \thesisauthor\par}
   \vfill
@@ -48,6 +36,65 @@
 \input{chapters_rewrite/02_background_literature}
 \input{chapters_rewrite/03_problem_baselines}
 \input{chapters_rewrite/04_expanded_welch}
+
+% The remaining chapters show the planned structure only.
+\chapter{Experimental Design}
+\label{chap:design}
+\section{A Concrete Pair of Population Tables}
+\section{Constructing fixed joint distributions}
+\section{Sampling, tests and measured outcomes}
+\section{Experiment families and computation}
+
+\chapter{Experimental Results}
+\label{chap:results}
+\section{Main landscape: shape, margins and sample size}
+\section{Baseline MI and the location of changed cells}
+\section{Unequal samples and the direction of the difference}
+\section{Larger differences and rectangular tables}
+\section{Comparing Two Population Constructions}
+\section{Extreme skew, independence and larger samples}
+\section{Null Rejection Rates and the Standard-Error Check}
+\label{sec:mechanism-results}
+\section{Runtime and summary of evidence}
+
+\chapter{Discussion}
+\label{chap:discussion}
+\section{Answers to the research questions}
+\section{What the correction can and cannot change}
+\section{Interpretation of invalid samples}
+\section{Practical conclusion and limits of the evidence}
+
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+\appendix
+\chapter{Additional Derivation Details}
+\label{app:derivation-details}
+\section{Gradient of mutual information on the probability simplex}
+\section{Why the variance of pointwise MI appears}
+\section{Mean of the variance influence function}
+\section{Direct table substitutions}
+\section{Dependence between the MI and variance estimates}
+\section{Reference ordering and zero components}
+\section{Numerical derivative checks}
+
+\chapter{Population Construction and Exact Design Settings}
+\label{app:construction}
+\section{Additive construction}
+\section{Frozen statistical grids}
+
+\chapter{Evidence Index and Additional Diagnostics}
+\label{app:evidence-index}
+
+\chapter{The Independence Boundary}
+\label{app:independence-boundary}
+\section{Constructing the independent reference}
+\section{Why the first-order term vanishes}
+\section{Second-order behaviour}
+\section{What alternative constructions produce}
+
+\chapter{Reproducibility and Protocol Record}
+\label{app:reproducibility}
 
 \backmatter
 \bibliographystyle{plainnat}
