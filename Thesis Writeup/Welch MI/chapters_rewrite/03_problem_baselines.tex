@@ -1,4 +1,4 @@
-\chapter{Comparing Mutual Information with Normal Wald}
+\chapter{The Two-Sample MI Test and Wald Baseline}
 \label{chap:baselines}
 
 This chapter defines the population MI difference being tested and the
@@ -56,10 +56,11 @@ is rare. Such samples remain in the study; we record how often cells have
 zero observed counts to show how sparse the samples are.
 \end{assumption}
 
-\begin{assumption}[Regular MI]
-The first-order influence variances \(V(P)\) and \(V(Q)\) are positive. This
-excludes exact independence and other degenerate cases from the regular
-first-order approximation.
+\begin{assumption}[Positive MI]
+Both populations have positive MI: \(I(P)>0\) and \(I(Q)>0\). With the positive
+cell probabilities in Assumption~3, this is equivalent to requiring positive
+first-order variances \(V(P)>0\) and \(V(Q)>0\). It excludes exact
+independence, where the first-order approximation breaks down.
 \end{assumption}
 
 \begin{assumption}[Logarithm units]
@@ -181,8 +182,9 @@ set each variance component's degrees of freedom from its sample size:
 measures how much the plug-in MI variance changes when the observed table
 changes. That variance depends on joint cells, margins and pointwise MI
 values. Expanded Welch instead estimates each component's degrees of freedom
-from the sensitivity of the full variance functional. The sample-size
-assignments remain in the supplementary ablation.
+from how the complete MI variance estimate changes with the table. The
+supplementary analysis also compares these sample-size assignments with
+Expanded Welch.
 
 To choose the degrees of freedom, we need the average value of each estimated
 MI variance and how much that estimate varies across samples
@@ -191,5 +193,5 @@ MI variance and how much that estimate varies across samples
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}
 Chapter~\ref{chap:expanded} derives
-\(\Var\{\Vhat(P)\}\) by calculating how the full variance functional
-changes when one observation changes the joint table.
+\(\Var\{\Vhat(P)\}\) by tracking how the calculated MI variance changes
+when one observation changes the joint table.
