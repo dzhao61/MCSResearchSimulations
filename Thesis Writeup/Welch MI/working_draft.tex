@@ -16,7 +16,7 @@
   \vspace{18mm}
   {\Large\bfseries Working Draft\par}
   \vspace{4mm}
-  {\large Chapters 1--4, with an outline of the remaining chapters and appendices\par}
+  {\large Chapters 1--4, with titles for the remaining chapters\par}
   \vspace{18mm}
   {\large \thesisauthor\par}
   \vfill
@@ -37,63 +37,34 @@
 \input{chapters_rewrite/03_problem_baselines}
 \input{chapters_rewrite/04_expanded_welch}
 
-% The remaining chapters show the planned structure only.
+% The remaining chapters show their titles only.
 \chapter{Experimental Design}
 \label{chap:design}
-\section{A Concrete Pair of Population Tables}
-\section{Constructing fixed joint distributions}
-\section{Sampling, tests and measured outcomes}
-\section{Experiment families and computation}
 
 \chapter{Experimental Results}
 \label{chap:results}
-\section{Main landscape: shape, margins and sample size}
-\section{Baseline MI and the location of changed cells}
-\section{Unequal samples and the direction of the difference}
-\section{Larger differences and rectangular tables}
-\section{Comparing Two Population Constructions}
-\section{Extreme skew, independence and larger samples}
-\section{Null Rejection Rates and the Standard-Error Check}
+% Retain the full-thesis section number referenced by Chapter 2.
+\setcounter{section}{6}
+\refstepcounter{section}
 \label{sec:mechanism-results}
-\section{Runtime and summary of evidence}
 
 \chapter{Discussion}
 \label{chap:discussion}
-\section{Answers to the research questions}
-\section{What the correction can and cannot change}
-\section{Interpretation of invalid samples}
-\section{Practical conclusion and limits of the evidence}
 
 \chapter{Conclusion}
 \label{chap:conclusion}
 
+% Keep references in Chapters 1--4 resolved without printing appendix pages.
 \appendix
-\chapter{Additional Derivation Details}
+\refstepcounter{chapter}
 \label{app:derivation-details}
-\section{Gradient of mutual information on the probability simplex}
-\section{Why the variance of pointwise MI appears}
-\section{Mean of the variance influence function}
-\section{Direct table substitutions}
-\section{Dependence between the MI and variance estimates}
-\section{Reference ordering and zero components}
-\section{Numerical derivative checks}
-
-\chapter{Population Construction and Exact Design Settings}
+\refstepcounter{chapter}
 \label{app:construction}
-\section{Additive construction}
-\section{Frozen statistical grids}
-
-\chapter{Evidence Index and Additional Diagnostics}
+\refstepcounter{chapter}
 \label{app:evidence-index}
-
-\chapter{The Independence Boundary}
+\refstepcounter{chapter}
 \label{app:independence-boundary}
-\section{Constructing the independent reference}
-\section{Why the first-order term vanishes}
-\section{Second-order behaviour}
-\section{What alternative constructions produce}
-
-\chapter{Reproducibility and Protocol Record}
+\refstepcounter{chapter}
 \label{app:reproducibility}
 
 \backmatter

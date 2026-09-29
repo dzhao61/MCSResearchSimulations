@@ -71,7 +71,7 @@ def subset(section: str, **filters: object) -> pd.DataFrame:
     return rows
 
 
-def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference") -> None:
+def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference", scale=1.0) -> None:
     for method in ("normal_wald", "expanded_welch"):
         current = rows.loc[rows.method.eq(method)].sort_values("x_value")
         x = current.x_value.to_numpy(dtype=float)
@@ -79,14 +79,14 @@ def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference") -> None:
         ax.plot(
             x, y, label=LABELS[method], color=COLORS[method],
             linestyle=STYLES[method], marker=MARKERS[method],
-            linewidth=1.8, markersize=4.5,
+            linewidth=1.8 * scale, markersize=4.5 * scale,
         )
         invalid = current.loc[current.valid_rate.lt(0.9)]
         if not invalid.empty:
             ax.scatter(
                 invalid.x_value, invalid.unconditional_rejection_rate,
-                marker=MARKERS[method], s=42, facecolors="white",
-                edgecolors=COLORS[method], linewidths=1.1, zorder=4,
+                marker=MARKERS[method], s=42 * scale**2, facecolors="white",
+                edgecolors=COLORS[method], linewidths=1.1 * scale, zorder=4,
             )
     ax.axhline(0.05, color="#777777", linestyle=":", linewidth=1)
     ax.set_ylim(*ylim)
@@ -97,7 +97,7 @@ def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference") -> None:
         ax.set_xticks([1000, 2500, 10000, 50000])
         ax.set_xticklabels(["1k", "2.5k", "10k", "50k"])
     ax.grid(alpha=0.18)
-    ax.tick_params(labelsize=9)
+    ax.tick_params(labelsize=9 * scale)
 
 
 def save(name: str, fig, rows: pd.DataFrame, description: str) -> None:
@@ -116,26 +116,43 @@ def save(name: str, fig, rows: pd.DataFrame, description: str) -> None:
     )
 
 
-def grid(name: str, panels: list[tuple[str, pd.DataFrame]], *, zoom: float | None = 0.15) -> None:
+def grid(
+    name: str,
+    panels: list[tuple[str, pd.DataFrame]],
+    *,
+    zoom: float | None = 0.15,
+    landscape: bool = False,
+) -> None:
     columns = len(panels)
     rows_count = 2 if zoom is not None else 1
-    fig, axes = plt.subplots(rows_count, columns, figsize=(3.55 * columns, 2.95 * rows_count), squeeze=False)
+    size = (8.2, 7.0) if landscape else (3.55 * columns, 2.95 * rows_count)
+    scale = 1.2 if landscape else 1.0
+    fig, axes = plt.subplots(rows_count, columns, figsize=size, squeeze=False)
     all_rows = []
     for j, (title, rows) in enumerate(panels):
         all_rows.append(rows)
-        draw(axes[0, j], rows)
-        axes[0, j].set_title(title, fontsize=11)
+        draw(axes[0, j], rows, scale=scale)
+        axes[0, j].set_title(title, fontsize=11 * scale)
         if zoom is not None:
-            draw(axes[1, j], rows, ylim=(0, zoom))
-            axes[1, j].set_xlabel("True |MI difference| (nats)", fontsize=10)
+            draw(axes[1, j], rows, ylim=(0, zoom), scale=scale)
+            axes[1, j].set_xlabel(
+                "|MI difference| (nats)" if landscape else "True |MI difference| (nats)",
+                fontsize=10 * scale,
+            )
         else:
-            axes[0, j].set_xlabel("True |MI difference| (nats)", fontsize=10)
-    axes[0, 0].set_ylabel("Rejection rate", fontsize=10)
+            axes[0, j].set_xlabel("True |MI difference| (nats)", fontsize=10 * scale)
+        if landscape:
+            for ax in axes[:, j]:
+                ax.set_xticks([0, 0.01, 0.02])
+                if j:
+                    ax.tick_params(axis="y", labelleft=False)
+            axes[0, j].tick_params(axis="x", labelbottom=False)
+    axes[0, 0].set_ylabel("Rejection rate", fontsize=10 * scale)
     if zoom is not None:
-        axes[1, 0].set_ylabel("Rejection rate (zoom)", fontsize=10)
+        axes[1, 0].set_ylabel("Rejection rate (zoom)", fontsize=10 * scale)
     handles, labels = axes[0, 0].get_legend_handles_labels()
     fig.legend(
-        handles, labels, loc="upper center", ncol=2, fontsize=10,
+        handles, labels, loc="upper center", ncol=2, fontsize=10 * scale,
         frameon=False, bbox_to_anchor=(0.5, 0.99),
     )
     top = 0.80 if columns == 1 else 0.88
@@ -152,7 +169,7 @@ def main_landscape() -> None:
                 (fr"$n_P=n_Q={n}$", subset("main", shape=shape, profile=profile, n_p=n, n_q=n))
                 for n in samples
             ]
-            grid(f"main_{shape}_{profile}", panels)
+            grid(f"main_{shape}_{profile}", panels, landscape=True)
 
 
 def focused() -> None:
