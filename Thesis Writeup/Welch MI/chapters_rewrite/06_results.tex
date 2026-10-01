@@ -9,20 +9,19 @@ the rejection rate over 20,000 random table pairs. The blue solid circles are No
 magenta dashed squares are Expanded Welch. The dotted horizontal line marks
 the nominal 0.05 rejection rate. Each plotted rate divides the number of valid rejections
 by all 20,000 replicates. A hollow marker indicates a valid-result rate below
-0.90. The figure source manifest gives the exact saved
-configuration identifiers for every panel.
+0.90.
 
 \section{Main landscape: shape, margins and sample size}
 
 The first question is broad: do the methods behave differently as the table
 grows, margins become uneven and samples become larger?
-Figures~\ref{fig:main-2x2-uniform}--\ref{fig:main-8x8-different_skew} provide a
-systematic view, not a selection of favourable examples. Each of the
-four shapes is shown under all three margin profiles. Within every figure,
-the columns are the same three equal sample sizes. The full vertical scale
+Figures~\ref{fig:main-2x2-uniform}--\ref{fig:main-8x8-different_skew} show each of the
+four shapes under all three margin profiles. Within every figure,
+the columns show equal sample sizes of 10, 100 and 1,000. The full vertical scale
 preserves comparability of detection; the lower row enlarges the region in
-which calibration differences near 0.05 can be seen. The full nine-size
-ladder, including \(n=2,5,20,50,250,500\), remains in the companion atlas.
+which calibration differences near 0.05 can be seen. Results for the other
+six sample sizes are in the supplementary results report identified in
+Appendix~\ref{app:evidence-index}.
 
 \newcommand{\resultinterpretation}[1]{%
 \par\smallskip\noindent\begin{minipage}{\textwidth}
@@ -118,7 +117,7 @@ regime, it moves an already-below-target rate farther from 0.05. Both methods
 are valid on all replicates in these examples, so these changes reflect their
 different reference thresholds, not missing outputs.
 
-The \(n=5\) records in the companion atlas also show an important limit to
+The \(n=5\) results also show an important limit to
 interpreting small rejection rates. In the \(8\times8\) different-skew
 alternative with
 \(n_P=n_Q=5\), \(I(P)=0.02\) and \(I(Q)=0.021\), Wald rejects
@@ -161,8 +160,8 @@ null rate and further reduces detection.}
 
 Figure~\ref{fig:patterns-focus} asks whether the association being placed in
 an early, rare or distributed set of cells changes performance when the
-margins and target MI are fixed. The full \(3\times3\), \(5\times5\) and
-\(8\times8\) matched sets are in the atlas.
+margins and target MI are fixed. The supplementary results report includes
+the \(3\times3\), \(5\times5\) and \(8\times8\) matched sets.
 
 \begin{figure}[htbp]
 \centering
@@ -252,8 +251,7 @@ The main grid deliberately concentrates on small MI differences. A separate
 the axis units, using only targets the construction can reach. This shows where
 detection eventually rises, while retaining the zero-difference point that
 defines null calibration. Rectangular \(2\times3\) and \(3\times5\) tables
-check that the discussion is not tied only to square alphabets. The panels
-do not average over shapes.
+check that the discussion is not tied only to square alphabets.
 
 \begin{figure}[htbp]
 \centering

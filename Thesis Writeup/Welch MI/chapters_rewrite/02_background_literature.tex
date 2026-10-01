@@ -514,10 +514,10 @@ approximation. \citet{roulston1999} derives entropy and MI error estimates
 using error propagation and examines them numerically. \citet{hutter2002}
 and \citet{hutterzaffalon2005} derive moments of the posterior distribution
 of MI under a Dirichlet model, including higher-order variance and shape
-information. Their posterior uncertainty has a different conditioning from
-the repeated-sampling distribution studied here. Their results establish
-that higher-order MI uncertainty is not a new topic, but do not directly
-validate the two-sample Student reference in this thesis.
+information. Their analysis describes posterior uncertainty under a
+Dirichlet model, while this thesis evaluates repeated-sampling behaviour
+of a two-sample test. Their results therefore do not directly validate
+the Student reference used here.
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
@@ -542,9 +542,8 @@ The question of comparing MI values also has predecessors. In a segregation
 application, \citet{mora2009} develop inference for an MI index and discuss
 pairwise comparisons across groups and periods; the later peer-reviewed account
 places that MI index within the wider segregation literature \citep{mora2011}.
-They do not derive the
-variance-sensitivity degrees of freedom used here, but the general aim of
-comparing MI values is not new. \citet{guha2014} use MI for a different two-sample
+They do not derive the variance-sensitivity degrees of freedom used here.
+\citet{guha2014} use MI for a different two-sample
 question: whether two continuous distributions are identical. Their MI is
 between a pooled observation and its sample label; their null is equality of
 distributions, not equality of two within-population MI values. For discrete
