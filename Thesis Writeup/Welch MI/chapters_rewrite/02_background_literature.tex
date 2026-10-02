@@ -69,7 +69,8 @@ conventionally written as \(I(X;Y)\). Equivalently,
   \label{eq:mi-entropy-form}
 \end{equation}
 The quantity is nonnegative and equals zero exactly when
-\(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells.
+\(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells
+\citep{bossomaier2016}.
 
 MI measures the overall departure from independence, not one particular
 shape of association.
@@ -390,6 +391,14 @@ Equation~\eqref{eq:first-order-mi-var-background}. It is the familiar result
 that the variance of an average of \(n\) independent contributions is the
 variance of one contribution divided by \(n\).
 
+The independence of observations is needed in the second line of
+Equation~\eqref{eq:mi-variance-derived-background}: it makes covariance terms
+between different observations vanish. \citet{moddemeijer1999} studies MI
+sampling variance when observation pairs are dependent and those terms must
+instead be accounted for. The present test and experiment concern independent
+multinomial samples, so they use \(V(P)/n\) without a serial-dependence
+correction.
+
 When \(V(P)>0\), the central limit theorem also gives
 \begin{equation}
   \frac{\Ihat(P)-I(P)}{\sqrt{V(P)/n}}
@@ -421,6 +430,12 @@ in different settings.
 \clearpage
 \section{Approaches to Testing MI Differences}
 \label{sec:welch-background}
+
+The methods below answer related but different questions. Some quantify the
+sampling error of one MI estimate; others compare two estimates or adjust a
+test when its standard error is itself estimated. For this thesis, a useful
+predecessor must be assessed against the null \(I(P)=I(Q)\), which allows the
+two population tables to differ.
 
 \noindent\textbf{Normal Wald inference.}
 
@@ -498,7 +513,10 @@ MI-specific inputs to the same moment-matching structure.
 Regression studies have also adjusted reference distributions to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
-They establish the general strategy, but not whether it helps with MI.
+For example, \citet{panwall2002} calculate approximate degrees of freedom
+for inference using a sandwich variance estimate. This supports the idea of
+examining the variance estimator itself, but the MI variance is a different
+function of the observed table and needs its own calculation.
 For example, \citet{bell2002} report regression variance estimates biased
 downward, while \citet{kauermann2001} examine intervals that cover too
 rarely. A more cautious reference can help in such settings. Near
@@ -515,9 +533,9 @@ using error propagation and examines them numerically. \citet{hutter2002}
 and \citet{hutterzaffalon2005} derive moments of the posterior distribution
 of MI under a Dirichlet model, including higher-order variance and shape
 information. Their analysis describes posterior uncertainty under a
-Dirichlet model, while this thesis evaluates repeated-sampling behaviour
-of a two-sample test. Their results therefore do not directly validate
-the Student reference used here.
+Dirichlet model, while this thesis evaluates how a two-sample test behaves
+over repeated samples. These results therefore answer a different uncertainty
+question from the Student reference used here.
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
@@ -573,16 +591,29 @@ Wald and Expanded Welch.
 
 \section{Previous work and this thesis's contribution}
 
-Previous research explains how to estimate MI, correct its leading
-small-sample bias and approximate its sampling variance. Wald's method uses
-that variance to compare two estimates. Welch--Satterthwaite methods also
-allow for uncertainty in an estimated variance. Researchers have also
-compared entropy and MI-related quantities.
+The cited work supplies several parts of the present comparison.
+\citet{moddemeijer1989} and \citet{brillinger2004} give the leading
+sampling variance of an MI estimate; \citet{miller1955} and
+\citet{paninski2003} explain why finite-sample bias and sparse tables
+also matter. Hutcheson's entropy comparison uses a Student reference
+with degrees of freedom assigned from sample sizes
+\citep{hutcheson1970}. In a different setting, \citet{panwall2002}
+show how uncertainty in a non-classical variance estimate can inform
+degrees of freedom. These are useful precedents, but none supplies
+the change in the plug-in MI variance when its observed table changes.
 
-The missing step for this test is to measure how much the \emph{estimated MI
+The question of comparing information values also has precedents.
+\citet{mora2009} discusses comparisons of an MI-based segregation
+index. Tests based on MI between pooled observations and their group
+labels instead target equality of the complete distributions
+\citep{guha2014,drake2014}. The present null is narrower:
+\(I(P)=I(Q)\) permits \(P\ne Q\). This difference in the null
+hypothesis determines which existing reference distributions can be
+used directly.
+
+The remaining calculation is to measure how much the \emph{estimated MI
 variance} changes from sample to sample. Assigning each population degrees of
-freedom based only on its sample size, as earlier information-based and Welch
-tests do, does not measure this change. A new observation affects a cell
+freedom from its sample size does not measure this change. A new observation affects a cell
 probability, its row and column totals, and the MI values calculated from
 them. This thesis derives how those changes affect the estimated variance and
 uses the result to choose a Student \(t\) distribution for comparing two MI values.

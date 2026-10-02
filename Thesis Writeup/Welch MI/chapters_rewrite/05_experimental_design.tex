@@ -172,6 +172,15 @@ Table~\ref{tab:design-families} records the question answered by each family.
 The common population construction above applies unless the named factor
 changes. Exact parameter sets are in Appendix~\ref{app:construction}, and the
 machine-readable protocol is identified in Appendix~\ref{app:reproducibility}.
+The principal grid crosses square shapes \(2\times2,3\times3,5\times5,8\times8\)
+with the three margin profiles in Table~\ref{tab:margin-profiles}. It fixes
+\(I(P)=0.02\) nats and uses
+\(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\) nats and equal
+sample sizes \(n_P=n_Q\in\{2,5,10,20,50,100,250,500,1000\}\).
+For every feasible combination, the constructor fixes \(P\) and \(Q\) before
+the 20,000 table pairs are sampled and both tests are applied to each pair.
+The other families change one or more stated factors from this principal
+grid; Appendix~\ref{app:construction} lists their exact values.
 There are 534 distinct population pairs \((P,Q)\), each specifying two
 fixed joint probability tables. Reusing a pair at different sample sizes
 creates distinct sampling configurations. There are 3,111 unique statistical

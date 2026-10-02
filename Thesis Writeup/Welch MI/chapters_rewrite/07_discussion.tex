@@ -1,151 +1,65 @@
-\chapter{Discussion}
+\chapter{Implications and Limitations}
 \label{chap:discussion}
 
-The proposed correction models how the estimated MI variance changes across
-samples. The experiments show why this alone is insufficient: Wald and
-Expanded Welch use the same observed MI difference and plug-in standard
-error. Changing the reference distribution leaves any finite-sample error
-in those quantities untouched.
+Chapter~\ref{chap:results} interprets the figures as each question is
+answered. This chapter draws together what those results mean for using the
+test and how far the conclusions can be taken.
 
-\section{Answers to the research questions}
+\section{Implications for using Expanded Welch}
 
-The first question was how to choose degrees of freedom for an MI test.
-Chapter~\ref{chap:expanded} shows how one extra observation changes the
-estimated MI variance. That observation changes not only its cell but also
-the row and column totals used in other MI calculations. Measuring how much
-the variance estimate changes provides the degrees of freedom used by
-Expanded Welch.
+Normal Wald and Expanded Welch use the same estimated MI difference and
+standard error. Expanded Welch can only make a valid two-sided p-value
+larger. This is helpful when Wald rejects an equal-MI null too often;
+it is harmful when Wald already rejects too rarely. Its extra component
+validity requirements can also reduce the number of samples for which a
+p-value is available. Lower rejection is therefore not by itself evidence
+of better calibration.
 
-The second question was whether Expanded Welch offers a useful improvement
-over Normal Wald. Table~\ref{tab:null-paired-examples} shows both sides of
-the false-positive trade-off. In one case Wald rejects equal MI too often,
-and Expanded Welch moves the rate toward 0.05. In another, Wald already
-rejects too rarely, and the same adjustment moves the rate farther from
-0.05. In very sparse settings, some low rejection rates arise because the
-method fails to return a p-value. Thus a smaller false-positive rate in one
-case is not evidence that Expanded Welch is better overall. Under unequal
-MI, it usually detects fewer differences, although the methods are not being
-compared at matched false-positive rates.
+The tested populations include equal-MI pairs with different margins,
+so the comparison goes beyond the special case \(P=Q\). They show that
+table size, margin shape, starting MI and sampling allocation can change
+the trade-off. No single numerical adjustment worked well across all
+those settings. For applications resembling a tested regime, Normal
+Wald remains the simpler baseline. Expanded Welch can be a
+conservative sensitivity check if a separate calibration study shows
+that Wald is too liberal and the expanded calculation is usually valid.
+Choosing the method after seeing which p-value is more favourable would
+not be a calibrated test.
 
-The answer also depends on the populations and samples being compared. The
-experiment varies table size, uneven probabilities, starting MI, the cells
-carrying the association, and the allocation of samples between the groups.
-These features can change rejection rates even when the true MI difference
-is held fixed. In particular, tables with the same row totals, column totals
-and MI can still have different cell probabilities and behave differently
-when sampled.
+The extra computation is not the principal obstacle. In the measured
+implementation, an Expanded Welch call takes about 1.75 times as long
+as a Wald call, but both have the same \(O(rc)\) operation growth for
+an \(r\times c\) table. The statistical limitations matter more than
+this timing difference.
 
-For the tested populations with MI 0.02, both methods reject equal MI at
-close to the target 5\% rate when each sample contains 50,000 observations.
-They still reject too rarely for the tested populations with very small MI.
-In the measured implementation, one Expanded Welch calculation takes about
-1.75 times as long as one Wald calculation. These results do not support
-Expanded Welch as a general replacement for Wald.
+\section{Limits of the evidence}
 
-\section{What the correction can and cannot change}
+The study evaluates fixed, deliberately constructed population pairs,
+not a random sample from every possible joint distribution. Its 20,000
+replicates per configuration make the rate for each fixed pair precise;
+they do not make the selected pairs representative of every application.
+The main construction changes four cells. Rare-cell, spread and
+log-linear constructions test other patterns, but the study does not
+pair equal-MI populations whose association is placed in different
+cells. That is a specific remaining design limitation.
 
-Both methods compute the same \(\Deltahat\), \(\SEhat\) and \(T\). With
-valid positive degrees of freedom, Expanded Welch has a heavier-tailed
-reference and a two-sided p-value no smaller than Wald's for the same table
-pair. This gives a direct explanation for many plots: the correction lowers
-rejection whether the Wald rate is too high or already too low. It is not an
-adaptive calibration method that can move the threshold in both directions.
-It also does not alter the leading bias correction or re-estimate the
-numerator's finite-sample distribution.
+The methods are studied with two independent samples from fixed
+categorical alphabets, a two-sided 5\% threshold and the stated sample
+ladders. The analysis does not establish performance for paired
+observations, continuous MI estimators, growing alphabets or a real-data
+workflow. Exact independence is a separate boundary because the
+first-order MI variance vanishes there. The dedicated check and
+Appendix~\ref{app:independence-boundary} describe that boundary but
+do not turn the positive-MI test into a general independence test.
 
-In the larger different-skew null tables, Wald can reject too often even
-with equal sample sizes. The shared leading MI bias correction then cancels
-from the estimated difference, but the two populations can still have
-different remaining finite-sample biases. This can shift the statistic away
-from zero; the plots do not isolate how much of the excess rejection it
-explains. A larger Student critical value cannot remove such a shift.
+The protocol was fixed before the final simulation, following exploratory
+development; it was not externally preregistered. Some configurations
+appear in more than one figure, but each was simulated once. Repeated
+display is not independent confirmation, and the pointwise Monte Carlo
+intervals do not quantify uncertainty about untested populations.
 
-The estimated MI difference and its standard error come from the same count
-tables. Section~\ref{sec:mi-variance-covariance} shows that, for small
-positive MI along the fixed-margin path, each table's MI estimate and
-variance estimate have positive first-order covariance. The two-sample
-difference subtracts the MI estimates, while its
-standard error combines the variance estimates, so the relationship between
-the resulting numerator and standard error also depends on both populations.
-The fixed-denominator diagnostic in Chapter~\ref{chap:results} removes both
-variation in the standard error and its dependence on the estimated
-difference. It shows a substantial change in rejection but does not separate
-those effects. Choosing a Student reference from the variance fluctuations
-alone does not model their joint behaviour or make the test exactly Student
-distributed.
-
-Near independence, the calculation in Chapter~\ref{chap:expanded} gives an
-approximate component degree of freedom of \(nI\). When MI is small, that
-number can remain small even with a sizeable sample. The resulting Student
-reference requires a larger observed difference to reject, just where the
-large-sample approximation to MI is also least reliable.
-
-At exact independence, the usual first-order MI variance is zero. An MI
-estimate from a finite sample can still vary, but a different, second-order
-approximation is then needed. Comparing two positive MI values and testing
-one table for independence are therefore different problems. Appendix~\ref{app:independence-boundary}
-gives the mathematical distinction.
-
-\section{Interpretation of invalid samples}
-
-The validity diagnostics matter most where expected counts are very small.
-Wald needs a usable total estimated variance. The expanded implementation
-additionally requires each component sensitivity variance and effective
-degree of freedom to be positive and finite. A sample can therefore yield a
-valid Wald p-value but no Expanded Welch p-value. Part of this extra
-invalidity comes from the implementation rule rather than the combined
-formula, as shown in Appendix~\ref{app:derivation-details}. The primary
-unconditional rate records a failed calculation as a non-rejection.
-
-That rate answers an operational question: how often does the implemented
-procedure produce a valid rejection? It should not be mistaken for the
-conditional rejection probability among valid tables. Nor does a failure to
-return a p-value constitute a true negative. The saved validity and paired
-results allow readers to distinguish fewer rejections from fewer usable
-tests.
-
-\section{Practical conclusion and limits of the evidence}
-
-For the tested task, Normal Wald remains the simpler general baseline.
-Expanded Welch can be useful as a conservative sensitivity analysis in a
-regime where its validity is high and Wald's null rejection is demonstrably
-liberal. It should not be installed as a universal replacement merely
-because one null table shows a smaller false-positive rate. In applications,
-the population truth is unknown, so the most relevant calibration study is
-one matched to the anticipated alphabet, sample size and plausible margins.
-Selecting between the methods after inspecting a single p-value is not a
-validated selection rule.
-
-Several limitations bound this conclusion. The population families are
-deliberately constructed fixed examples, not a probability sample of
-all joint distributions. Twenty thousand replicates make a rate at a fixed
-population relatively precise; they do not make the 534 selected population
-pairs representative of every application. The tables are at most
-\(8\times8\) square and \(3\times5\) rectangular, with the stated finite
-sample ladders and only a two-sided nominal level of 0.05. The main
-construction emphasises a local four-cell association; spread, rare-cell and
-log-linear checks probe but do not exhaust other possibilities. The study
-does not pair equal-MI populations with association placed in different
-cells. It also does not validate paired observations, continuous estimators,
-a real-data workflow or growing alphabets.
-
-The protocol was frozen before the final simulation, after exploratory
-development of the method and design. It is a reproducible final run without
-external preregistration. Configurations
-displayed in several sections are the same sampled run. Repeating their
-figure appearances does not provide independent confirmation. The recorded
-Monte Carlo intervals also address repeated sampling of each fixed pair, not
-the broader uncertainty of generalising to an untested population.
-
-The alternative curves use the common nominal 0.05 threshold. They show
-practical detection under the tested procedures, not power after giving each
-method a simulation-specific critical value.
-
-Future work should address the joint finite-sample behaviour of the
-numerator and denominator or use a calibrated reference tailored to sparse
-tables. The transition near independence is a separate problem
-because the first-order variance tends to zero. A likelihood-ratio or
-resampling alternative must be assessed when \(I(P)=I(Q)\) but \(P\ne Q\),
-not imported from a test of full distributional equality or one-table
-independence without checking its target. These are directions for new
-validation, not remedies established by the present results.
+These limits point to two distinct next steps: studying the joint
+finite-sample behaviour of the estimated MI difference and its standard
+error, and validating any alternative test under the equal-MI null
+when \(P\ne Q\). A method for the stronger null \(P=Q\) cannot be
+adopted for that question without checking its assumptions.

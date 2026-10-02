@@ -1,31 +1,45 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-This thesis compared two tests of whether independent groups have the same
-population MI. Equal MI does not require independence within either group or
-identical population tables. Normal Wald and Expanded Welch calculate the
-same estimated difference and standard error; they use different reference
-distributions to decide whether that difference is unusual.
+This thesis studied how to compare the mutual information (MI) of two
+independently sampled categorical populations. Equal MI permits the
+population tables, their margins and their patterns of association to
+differ. The work makes two contributions to this problem. First, it
+derives how a change in one observation changes the plug-in estimate
+of MI variance, including the effects on cell probabilities and row
+and column totals. This gives an MI-specific Welch--Satterthwaite
+degrees-of-freedom calculation. Second, it evaluates that calculation
+against Normal Wald on fixed populations whose true MI differences
+are known, reporting false positives, detection, validity and runtime
+together.
 
-Expanded Welch chooses its Student reference by calculating how the estimated
-MI variance responds when a count table changes. The calculation includes
-changes to cell probabilities and to the row and column totals used in MI.
-It provides a reasoned way to choose degrees of freedom, but not an exact
-small-sample distribution.
+The main finding is a qualified negative result. Expanded Welch
+reduces rejection relative to Wald and can move an excessive
+false-positive rate toward 5\%. The same change makes an already-low
+rate lower and often reduces detection when MI differs. In sparse
+samples, it can also fail to return a p-value more often than Wald.
+The reference distribution alone cannot correct errors in the
+estimated MI difference or the standard error shared by both tests.
+This identifies both the value and the limit of a familiar
+variance-reference adjustment when applied to MI. Normal Wald remains
+the simpler general baseline for the tested task; Expanded Welch is
+best treated as a sensitivity check in a regime where its calibration
+and validity have been examined separately.
 
-The experiment found both benefits and costs. Expanded Welch can bring an
-excessive Wald false-positive rate closer to 5\%. If Wald already rejects too
-rarely, Expanded Welch lowers rejection further. In sparse samples it also
-returns fewer usable results, partly because of the implementation's validity
-rule. A low rejection rate caused by failed calculations should not be
-mistaken for good calibration. Both methods approached 5\% in some tested
-large-sample populations, but populations close to independence remained
-difficult. Expanded Welch took about 1.75 times as long per test in the
-measured implementation.
+That recommendation is bounded by the experiment. Its population
+pairs were chosen to expose particular table sizes, margins,
+association patterns and sample sizes, not to represent all joint
+distributions. The derivation assumes independent observations,
+positive population cell probabilities and positive first-order MI
+variance. Exact independence requires a different approximation,
+and the study does not establish a rule for paired data, continuous
+MI estimators or growing alphabets.
 
-The difficulty near independence helps explain why the correction is not a
-general solution. It can choose a Student reference that requires stronger
-evidence to reject, while leaving any error in the estimated MI difference or
-standard error unchanged. The evidence therefore supports Normal Wald as the
-simpler general baseline. Expanded Welch is an additional check where Wald
-is known to reject equal MI too often, not a universal replacement.
+The most useful next step is to study the estimated MI difference
+and its standard error together, especially near independence and
+in sparse tables. A likelihood-ratio or resampling method could
+provide a different comparison, but it would need validation for
+the actual null \(I(P)=I(Q)\), including cases where \(P\ne Q\).
+A real-data application and equal-MI pairs with association in
+different cells would then test how far the present simulation
+conclusions extend.
