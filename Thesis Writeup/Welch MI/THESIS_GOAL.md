@@ -275,6 +275,12 @@ identifying the comparison and any necessary panel guide. Put exact settings
 and interpretation in adjoining body paragraphs so the reader can understand
 each comparison without searching earlier subsections.
 
+Keep figures within the text margins and visually proportional to the body
+text. Single-panel plots usually need less width than multi-panel comparisons.
+Choose sizes for readable labels and a balanced page, not to increase or
+decrease the page count. Preserve the data, axes and scientific interpretation
+when making presentation changes.
+
 Select the main figures because each answers a question and motivates the next,
 not to exhibit the full grid in the main text. Put the first substantive
 reading of each figure immediately beside it: null behaviour, change over the

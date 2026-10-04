@@ -36,6 +36,10 @@ so the reader does not have to infer the missing subject.
 Keep figure captions short and descriptive. Put detailed experiment settings
 and interpretation in ordinary body paragraphs beside each figure, rather
 than in long captions or separate small-text interpretation blocks.
+Keep figures within the text margins and proportional to the surrounding
+prose. Size plots for readability, not page count; single-panel plots can be
+narrower than multi-panel comparisons. Do not shrink dense plots until their
+labels become difficult to read.
 
 The thesis must be understandable as a standalone manuscript without access
 to the codebase. Keep scientific construction details, parameter settings and
