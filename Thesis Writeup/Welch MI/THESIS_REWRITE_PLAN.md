@@ -13,6 +13,16 @@ the detailed chapter and evidence plan.
 `archive/previous_draft_2026-09-13/`. This plan remains the design record;
 the active manuscript and its evidence audit are described in `README.md`.
 
+**Appendix update (4 October 2026):** The active manuscript now uses three
+focused appendices: supporting calculations, experimental details, and
+additional results. Appendix A combines the retained mechanism calculations
+with a concise independence-boundary derivation. Appendix B combines exact
+construction and design settings with uncertainty and validity rules.
+Appendix C replaces repetitive square-table displays and the aggregate null
+summary with all 108 individual main null settings, two selected additional
+square-table curves and six controlled comparisons. The older allocations
+below are historical; `THESIS_GOAL.md` gives the current acceptance criteria.
+
 13 September 2026. This plan replaced the empirical direction in [THESIS_PLAN.md](THESIS_PLAN.md) and drew on the [exemplar review and writing notes](EXEMPLAR_REVIEW_NOTES.md). The remaining numbered sections record the decisions used to produce the active draft.
 
 ## 1. Thesis direction

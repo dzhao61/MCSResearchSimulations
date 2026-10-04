@@ -454,6 +454,58 @@ def main() -> None:
         assert plotted.unconditional_rejection_rate.between(0, 1).all()
         assert plotted.valid_rate.between(0, 1).all()
 
+    manuscript_files = sorted((HERE.parent / "chapters_rewrite").glob("*.tex"))
+    manuscript_files += sorted((HERE.parent / "appendices_rewrite").glob("*.tex"))
+    manuscript_text = "\n".join(path.read_text() for path in manuscript_files)
+    included_figures = {
+        f"figures_rewrite/{name}"
+        for name in re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", manuscript_text)
+        if "#" not in name
+    }
+    included_figures.update(
+        f"figures_rewrite/main_{shape}_{profile}.pdf"
+        for shape, profile in re.findall(
+            r"\\mainlandscapefigure\{(\dx\d)\}\{[^\n]*?\}\{(uniform|same_skew|different_skew)\}",
+            manuscript_text,
+        )
+    )
+    assert len(included_figures) == 15, sorted(included_figures)
+    assert included_figures <= expected_figures.keys()
+    active_appendices = re.findall(
+        r"\\include\{(appendices_rewrite/[^}]+)\}",
+        (HERE.parent / "main.tex").read_text(),
+    )
+    assert active_appendices == [
+        "appendices_rewrite/A_derivation_details",
+        "appendices_rewrite/B_population_construction",
+        "appendices_rewrite/C_additional_results",
+    ]
+
+    null_table = (HERE / "main_null_table.tex").read_text()
+    table_rows = re.findall(
+        r"\\\((\d+)\\times(\d+)\\\) & (Uniform|Same skew|Different skew) & (\d+)"
+        r" & (\d+\.\d{4}) & (\d+\.\d{4}) & (\d+\.\d{4}) & (\d+\.\d{4}) \\\\",
+        null_table,
+    )
+    assert len(table_rows) == 108
+    seen = set()
+    profile_keys = {"Uniform": "uniform", "Same skew": "same_skew", "Different skew": "different_skew"}
+    for rows, columns, profile_label, n, *values in table_rows:
+        key = (f"{rows}x{columns}", profile_keys[profile_label], int(n))
+        assert key not in seen, key
+        seen.add(key)
+        expected_rows = null_main.loc[
+            null_main["shape"].eq(key[0]) & null_main.profile.eq(key[1])
+            & null_main.n_p.eq(key[2])
+        ].set_index("method")
+        assert len(expected_rows) == 2
+        expected_values = [
+            expected_rows.loc[method, column]
+            for method in ("normal_wald", "expanded_welch")
+            for column in ("unconditional_rejection_rate", "valid_rate")
+        ]
+        assert values == [f"{value:.4f}" for value in expected_values], key
+
     macro_text = (HERE / "evidence_values.tex").read_text()
     assert macro_text.startswith(
         "% Generated from results/thesis_redesign/cell_results.csv; do not edit values by hand.\n"
@@ -609,7 +661,7 @@ def main() -> None:
     )
     assert len(unequal_components) == 12
     assert unequal_components.local_moment_df.notna().all()
-    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 confirmatory figures, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
+    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 available figures, 15 included figures, all 108 main null settings, three active appendices, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
 
 
 if __name__ == "__main__":

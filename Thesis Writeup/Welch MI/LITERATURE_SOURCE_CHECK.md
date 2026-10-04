@@ -8,6 +8,12 @@ information*, *asymptotic variance*, *two-sample comparison*, *equal mutual
 information*, *influence function of variance*, *Welch*, and *Satterthwaite*.
 Titles alone were not treated as evidence of a matching hypothesis.
 
+The 4 October appendix simplification leaves 35 active bibliography entries.
+The transfer-entropy likelihood-ratio aside and its sole `barnett2012` citation
+were removed; the original source check is retained below as historical
+evidence. The independence calculation is now in Section A.4, and
+`bossomaier2016` remains cited for the Chapter 2 foundations.
+
 | Original source inspected | What it establishes | Relation to this thesis |
 | --- | --- | --- |
 | [Moddemeijer (1989), original paper, Section 4 and Equation 4.11](https://ris.utwente.nl/ws/portalfiles/portal/6737096/Moddemeijer89on.pdf) | A leading histogram-MI variance proportional to the variance of pointwise log dependence, and a leading MI bias term. The author explicitly states that the calculations also apply to discrete systems. | Direct predecessor for the **MI estimator's variance** and bias. The thesis must not claim either leading formula as new. The paper does not present the thesis's two-component Welch degrees of freedom. |

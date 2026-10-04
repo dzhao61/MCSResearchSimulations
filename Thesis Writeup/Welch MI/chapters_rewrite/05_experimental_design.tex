@@ -1,17 +1,41 @@
 \chapter{Experimental Design}
 \label{chap:design}
 
-The purpose of the experiment is to compare the calibration, detection and
-validity of two tests across controlled populations. Each design point fixes
-two population distributions in advance. Repeated independent samples from
-those populations show how often each procedure returns a valid result and
-how often it rejects. Because the population MI values are known, a rejection
-at equal MI is a false positive; a rejection at unequal MI is detection.
+The simulation study evaluates whether Expanded Welch improves on Normal
+Wald when comparing the MI of two populations. It measures false positives
+when the population MI values are equal, detection when they differ, and how
+often each method returns a valid p-value.
 
-\section{A Concrete Pair of Population Tables}
+Each experimental setting starts with two joint probability tables,
+\(P\) and \(Q\), whose margins and MI values are chosen before sampling.
+Independent samples are then drawn from each population, and both tests are
+applied to the resulting count tables. Because the population MI values are
+known, we can assess the tests against the true difference rather than the
+differences that arise by chance in individual samples.
 
-Consider two \(2\times2\) populations whose row and column margins are
-\((0.7,0.3)\) for \(P\) and \((0.8,0.2)\) for \(Q\). The construction gives
+\section{Constructing fixed joint distributions}
+
+Each table is constructed to have prescribed row and column margins and a
+known MI\@. A binary example shows how the margins can remain fixed while
+\(X\) and \(Y\) become dependent.
+
+\medskip
+\noindent\textbf{A \(2\times2\) example.}
+
+To obtain one observation from \(P\), first draw \(X\) with category
+probabilities \((0.7,0.3)\). With probability approximately 20.35\%, set
+\(Y=X\); otherwise, draw \(Y\) independently with the same category
+probabilities. Copying \(X\) makes matching categories more likely than
+under independence. Both ways of choosing \(Y\) give it margins
+\((0.7,0.3)\), so their mixture keeps the row and column margins fixed.
+
+Construct \(Q\) in the same way, using category probabilities
+\((0.8,0.2)\) and a copying probability of approximately 26.09\%.
+The two copying probabilities are chosen to give \(I(P)=0.02\) and
+\(I(Q)=0.03\) nats.
+
+\begin{samepage}
+The resulting joint probability tables are
 \begin{equation}
  P\simeq
  \begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
@@ -20,69 +44,30 @@ Consider two \(2\times2\) populations whose row and column margins are
  \begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
  \label{eq:design-example-pair}
 \end{equation}
-In both populations, \(X\) and \(Y\) are dependent, with MI values of 0.02
-and 0.03 nats, respectively. Their absolute difference, 0.01 nats, is the
-horizontal-axis value used in the figures.
+Their absolute MI difference, 0.01 nats, is the horizontal-axis value
+used in the results figures.
+\par
+\end{samepage}
 
-\section{Constructing fixed joint distributions}
+\medskip
+\noindent\textbf{Probability transfers in larger tables.}
 
-For one population, let \(a=(a_1,\ldots,a_r)\) and
-\(b=(b_1,\ldots,b_c)\) be prescribed row and column probabilities. The
-independence table has cell probabilities \(a_i b_j\). Association is
-introduced by
-\begin{equation}
- R(t)=ab^{\mathsf T}+tH,
- \qquad H\mathbf{1}_c=0,
- \qquad \mathbf{1}_r^{\mathsf T}H=0.
- \label{eq:additive-construction}
-\end{equation}
-The zero row and column sums mean that changing \(t\) leaves the margins
-fixed.
+For larger tables, begin with independence by multiplying the prescribed
+row and column probabilities. The main construction adds the same amount
+to cells \((1,1)\) and \((2,2)\), and removes that amount from cells
+\((1,2)\) and \((2,1)\). Each affected row and column gains and loses the
+same amount, so its total is unchanged; all other cells stay unchanged.
+This four-cell transfer follows the sparse alternative of
+\citet[Section~3(b)]{berrett2021}. For the \(2\times2\) example, this
+transfer produces exactly the same table as the copying mechanism above.
 
-The main construction places that association in four cells. Here \(H\) is
-zero except in the first two rows
-and columns, where it is
-\begin{equation}
- H_{1:2,1:2}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
- \label{eq:first-change-block}
-\end{equation}
-Thus \(t\) is added to the two diagonal cells and removed from the other two
-cells. The changes cancel within each affected row and column. The same
-matrix specifies a \(2\times2\) association and a localised change in a larger
-table; only its embedding differs. This follows the minimal four-violation
-sparse alternative used by \citet[Section~3(b)]{berrett2021}. Here it is adapted to compare two fixed
-populations: their margins are prescribed separately and the perturbation
-strength is chosen to attain a specified MI and is not used directly as the
-horizontal-axis effect.
+For each population, the amount transferred is chosen to reach its target
+MI while keeping every cell probability positive. Before sampling, both
+tables are checked for positive cells, correct margins and target MI\@.
+Appendix~\ref{app:construction} gives the equivalent matrix construction,
+its feasible range and the numerical search used to select the amount.
 
-For the pair in Equation~\eqref{eq:design-example-pair}, the starting
-independence tables are
-\begin{equation}
- P_0=\begin{pmatrix}0.49&0.21\\0.21&0.09\end{pmatrix},
- \qquad
- Q_0=\begin{pmatrix}0.64&0.16\\0.16&0.04\end{pmatrix}.
-\end{equation}
-Adding the block in Equation~\eqref{eq:first-change-block} with strengths
-\(t_P\simeq0.04273\) and \(t_Q\simeq0.04175\), respectively, gives the
-displayed \(P\) and \(Q\). The strengths are chosen to reach their separate
-MI targets; the 0.01-nat difference is not a cell-probability increment.
-
-The largest nonnegative strength before a cell with \(H_{ij}<0\) reaches zero
-is
-\begin{equation}
- t_{\max}=\min_{H_{ij}<0}\frac{a_i b_j}{-H_{ij}}.
- \label{eq:design-tmax}
-\end{equation}
-The construction solves for \(0\le t<t_{\max}\) such that \(I\{R(t)\}\)
-equals the requested target. Targets at or beyond the endpoint are not
-admitted. This endpoint is specific to the chosen path, not the largest
-possible MI over every table with those margins.
-
-Before sampling, both constructed tables are checked for strictly positive
-cells, correct margins and target MI. These checks ensure that the samples
-come from the intended populations.
-Appendix~\ref{app:construction} gives the numerical details.
-
+The wider study uses three margin profiles.
 For a dimension of size \(k\), the skewed margin used in the design is
 \begin{equation}
  m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
@@ -116,9 +101,8 @@ Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
 \end{table}
 
 In the usual effect direction, \(I(P)=I_0\) and
-\(I(Q)=I_0+|\Delta|\). The paired solve chooses separate strengths for
-\(P\) and \(Q\); it does not add random noise to their true MI values. The
-reverse-direction imbalance experiment assigns the higher target to \(P\).
+\(I(Q)=I_0+|\Delta|\). The reverse-direction imbalance experiment assigns
+the higher target to \(P\).
 The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
 the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
 
@@ -150,8 +134,8 @@ primary plotted rejection rate is
 \end{equation}
 At \(|\Delta|=0\) this estimates the false-positive rate. At
 \(|\Delta|>0\) it estimates the probability of detecting the specified
-difference at the fixed nominal threshold, often called power. A rate near
-0.05 is desirable under the null; a smaller rate is not automatically better.
+difference at the fixed nominal threshold, often called power. Closer to
+0.05 means better calibration under the null.
 Under an alternative, higher detection is useful only alongside acceptable
 null calibration and a usable test result.
 
@@ -164,13 +148,12 @@ rate from a failure to calculate the test.
 The reported 95\% intervals quantify the simulation uncertainty in those
 rates at each
 fixed population pair. Intervals for the difference between methods account
-for applying both tests to the same sampled tables. Appendix~\ref{app:diagnostics}
+for applying both tests to the same sampled tables. Section~\ref{sec:simulation-uncertainty}
 gives the interval calculations and rates restricted to valid results.
 
 The ``minimum expected count'' diagnostic is
 \(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).
-It is not the expectation of the smallest observed count. No lower bound on
-that diagnostic was used to admit statistical configurations. Empty observed
+The design imposes no minimum expected-count requirement, so empty observed
 cells and rows remain possible.
 
 To make low validity visible, a hollow marker warns that fewer
@@ -191,19 +174,16 @@ sample sizes \(n_P=n_Q\in\{2,5,10,20,50,100,250,500,1000\}\).
 The other families change one or more stated factors from this principal
 grid.
 
-A population pair and a sampling configuration describe different parts of
-this design. There are 534 distinct population pairs \((P,Q)\), each specifying two
-fixed joint probability tables. Reusing a pair at different sample sizes
-creates distinct sampling configurations. There are 3,111 unique statistical
-configurations. Each unique configuration is sampled once, giving 62,220,000
-table pairs in the final statistical run.
+The design has 534 distinct population pairs \((P,Q)\). A pair combined
+with sample sizes \((n_P,n_Q)\) defines a statistical configuration.
+Reusing pairs at different sample sizes gives 3,111 unique configurations,
+each sampled 20,000 times, for 62,220,000 table pairs.
 
 Some configurations answer more than one experimental question. The within-family counts in
 Table~\ref{tab:design-families} do not sum to 3,111 because the same
 configuration can occur in several families. Results from the same
-configuration may therefore appear in more than one comparison; this is not
-an independent replication. Chapter~\ref{chap:results} presents the main
-comparisons, with supporting figures in Appendix~\ref{app:additional-results}.
+configuration may therefore appear in more than one comparison, using the
+same samples.
 
 \begin{table}[H]
 \centering
@@ -230,9 +210,8 @@ Runtime & 60 & Full-call timing regimes, separate from simulation.\\
 \end{tabularx}
 \end{table}
 
-The runtime experiment measures a full method call after count tables are
-already available. It varies table shape, profile, sample size and null or
-alternative status. Each regime uses 200 pre-generated table pairs, 20 warm-up calls and
-five timed passes. Thus it measures method computation, not the cost of
-constructing populations or generating random tables. Median call times and
+The runtime experiment times full method calls on pre-generated tables,
+excluding population construction and sampling. It varies table shape,
+profile, sample size and null or alternative status. Each regime uses 200
+table pairs, 20 warm-up calls and five timed passes. Median call times and
 interquartile ranges are reported in Chapter~\ref{chap:results}.

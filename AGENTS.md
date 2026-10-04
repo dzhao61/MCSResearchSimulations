@@ -27,6 +27,9 @@ State the scientific question or result directly. Avoid abstract commentary
 about how a method must be assessed when the actual comparison can be stated
 plainly. Use concrete subjects and verbs instead of making the reader infer
 the point from a description of the reasoning process.
+Delete framing or restatement that adds neither explanation nor evidence.
+Keep intermediate derivation steps that help the reader, but do not add
+sentences merely to complete a paragraph template or increase its length.
 Use complete names for statistical objects when the noun matters: write
 "Student t distribution" or "cutoff from the Student t distribution", not
 "Student" or "Student cutoff" alone. Do the same for normal and chi-squared

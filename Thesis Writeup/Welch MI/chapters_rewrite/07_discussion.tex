@@ -1,10 +1,6 @@
 \chapter{Implications and Limitations}
 \label{chap:discussion}
 
-Chapter~\ref{chap:results} interprets the figures as each question is
-answered. This chapter draws together what those results mean for using the
-test and how far the conclusions can be taken.
-
 \section{Implications for using Expanded Welch}
 
 Normal Wald and Expanded Welch use the same estimated MI difference and
@@ -13,26 +9,19 @@ larger. This is helpful when Wald rejects an equal-MI null too often;
 it is harmful when Wald already rejects too rarely. Lower rejection is
 therefore not by itself evidence of better calibration.
 
-Validity places a further limit on that interpretation. Expanded Welch's
-extra component requirements can reduce the number of samples for which a
-p-value is available. The sparse-sample results in
-Chapter~\ref{chap:results} show that this loss of valid outputs can also
-lower the reported rejection rate. A practical assessment must therefore
-consider calibration and usable results together.
+In sparse samples, Expanded Welch's extra component requirements can prevent
+it from returning a p-value. This also lowers the reported rejection rate,
+so calibration must be read alongside the frequency of usable results.
 
-The tested populations include equal-MI pairs with different margins,
-so the comparison goes beyond the special case \(P=Q\). They show that
-table size, margin shape, starting MI and sampling allocation can change
-the trade-off. No single numerical adjustment worked well across all
-those settings. This variation makes the recommendation specific to the
-population setting.
+The trade-off varies with table size, margins, starting MI and sampling
+allocation, including when equal-MI populations have different margins.
+Neither method is well calibrated across all tested settings.
 
 For applications resembling a tested regime, Normal
 Wald remains the simpler baseline. Expanded Welch can be a
 conservative sensitivity check if a separate calibration study shows
 that Wald is too liberal and the expanded calculation is usually valid.
-Choosing the method after seeing which p-value is more favourable would
-not be a calibrated test.
+Method choice should be set before examining the p-values.
 
 The extra computation is not the principal obstacle. In the measured
 implementation, an Expanded Welch call takes about 1.75 times as long
@@ -42,18 +31,15 @@ this timing difference.
 
 \section{Limits of the evidence}
 
-The study evaluates fixed, deliberately constructed population pairs,
-not a random sample from every possible joint distribution. Its 20,000
-replicates per configuration estimate the rate for each fixed pair, with
-pointwise Monte Carlo intervals quantifying simulation uncertainty.
-Neither the replicates nor those intervals establish performance in
-untested populations.
+The rejection rates and Monte Carlo intervals apply to the constructed
+population pairs. They quantify simulation uncertainty for those pairs,
+not performance in untested populations.
 
 One specific gap concerns the association patterns in equal-MI pairs.
 The main construction changes four cells. Rare-cell, spread and
 log-linear constructions test other patterns, but the study does not
 pair equal-MI populations whose association is placed in different
-cells. That is a specific remaining design limitation.
+cells.
 
 The methods are studied with two independent samples from fixed
 categorical alphabets, a two-sided 5\% threshold and the stated sample
@@ -62,12 +48,6 @@ observations, continuous MI estimators, growing alphabets or a real-data
 workflow.
 
 Exact independence also needs a different mathematical approximation. The
-first-order MI variance vanishes there. The dedicated check and
-Appendix~\ref{app:independence-boundary} describe that boundary but
-do not turn the positive-MI test into a general independence test.
-
-These limits point to two distinct next steps: studying the joint
-finite-sample behaviour of the estimated MI difference and its standard
-error, and validating any alternative test under the equal-MI null
-when \(P\ne Q\). A method for the stronger null \(P=Q\) cannot be
-adopted for that question without checking its assumptions.
+first-order MI variance vanishes there.
+Section~\ref{sec:independence-boundary} derives the second-order
+approximation needed there.

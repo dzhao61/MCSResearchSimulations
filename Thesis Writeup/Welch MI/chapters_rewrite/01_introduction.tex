@@ -65,29 +65,20 @@ and larger samples. It also measures the extra computation required.
 
 \section{Contributions to the field}
 
-This thesis combines established ideas about MI and Welch--Satterthwaite
-tests for a specific question: whether two populations have equal MI. Its
-contributions are the calculation needed for that test and evidence about
-whether the test is useful.
-
 \begin{enumerate}
-  \begin{samepage}
-  \item \textbf{Mathematical contribution.} The thesis derives how changing
+  \item \begin{samepage}\textbf{Mathematical contribution.} The thesis derives how changing
   one observation affects the estimated MI variance. The calculation includes
   the resulting changes in the row and column totals and in pointwise MI.
   \par
   \end{samepage}
 
-  \begin{samepage}
-  \item \textbf{Methodological contribution.} Expanded Welch uses this
+  \item \begin{samepage}\textbf{Methodological contribution.} Expanded Welch uses this
   calculation to choose the degrees of freedom for a two-sample test using a
   Student \(t\) distribution.
-  The experiment compares it with Normal Wald.
   \par
   \end{samepage}
 
-  \begin{samepage}
-  \item \textbf{Empirical contribution.} A reproducible experiment measures
+  \item \begin{samepage}\textbf{Empirical contribution.} A reproducible experiment measures
   false positives, detection, usable results and runtime on fixed populations
   with known MI. It covers \(2\times2\) through \(8\times8\) square tables,
   rectangular tables, unequal samples and very sparse settings.
@@ -96,9 +87,9 @@ whether the test is useful.
 
   \item \textbf{Practical contribution.} Expanded Welch can help when Wald
   rejects equal MI too often. It can also make an already-low rejection rate
-  lower and return fewer usable results in sparse samples. The evidence shows
-  why it should not replace Wald in general and points to problems that
-  changing the reference distribution alone cannot solve.
+  lower and return fewer usable results in sparse samples. Changing the
+  reference distribution alone cannot correct errors in the shared MI
+  difference or standard error.
 \end{enumerate}
 
 \section{Scope and organisation}

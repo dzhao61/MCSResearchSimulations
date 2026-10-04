@@ -23,17 +23,17 @@ T1-T8 are complete for the 4 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The standalone A4 PDF has 95 pages, including 50 numbered main-text pages. Chapter 6 contains seven lead figures; Appendix D contains 15 supporting figures. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
-| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 101 workspace tests and 36 archive-bundled tests pass. | Complete. |
-| Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks for all 36 active references. The clean build resolves every citation. | Complete. |
-| Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 regenerated figures, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
-| Build | A clean build from the extracted source and supplement produces 95 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
-| Visual presentation | All 95 pages of the paragraph-coherence revision were inspected as rendered contact sheets, with selected pages checked at larger size. The final introduction page breaks were reinspected after the last edits. The 12 square-table figures use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The figures remain within the margins with readable labels. | Complete. |
+| Manuscript | The standalone A4 PDF has 84 pages, including 49 numbered main-text pages and three focused appendices occupying 23 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
+| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 101 Welch-project tests, 27 DifferentialMI tests and 36 archive-bundled tests pass. The condensed independence calculation also passes 30 independent positive-table finite-difference checks. | Complete. |
+| Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks supporting all 35 remaining active references. The removed transfer-entropy aside and its citation are retained in the historical source check. The clean build resolves every citation. | Complete. |
+| Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 available figures, the 15 included figures, all 432 rejection/validity values in the 108-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
+| Build | A clean build from the extracted source produces 84 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Visual presentation | The revised manuscript was inspected as rendered contact sheets, with selected final pages checked at larger size. Paragraph and figure page breaks were reinspected after the last edits. The 12 square-table figures use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The figures remain within the margins with readable labels. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 14,695 whitespace-separated tokens
-from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
+The current main-text length diagnostic is 13,218 whitespace-separated tokens
+from `pdftotext` on PDF pages 9-57 (printed pages 1-49). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
 
@@ -43,6 +43,86 @@ one main idea per paragraph, with evidence, explanation and transitions where
 they advance the argument. Equations and their surrounding prose remain one
 explanatory unit. The pass changed no mathematical formulas, numerical results,
 experimental settings or references. The working draft was not rebuilt.
+
+The opening paragraph of Section 2.4 was then rewritten to state the equal-MI
+question directly, replacing abstract language about assessing predecessors.
+This targeted wording change leaves the scientific scope unchanged.
+
+The subsequent whole-thesis direct-explanation pass removed abstract framing,
+immediate restatements, repeated method contrasts and incidental instructions
+to the reader. Distinct literature findings, figure interpretations,
+reproduction settings and useful intermediate algebra were retained.
+Comparison with the pre-pass source confirms that every displayed equation,
+table and figure inclusion is unchanged and all 36 bibliography keys remain.
+The evidence audit passes. No statistical code or experimental result changed,
+and the working draft was not rebuilt. The main-text length diagnostic fell
+from 14,685 to 13,231 tokens, without changing typography or figure sizes.
+
+The Chapter 5 opening was subsequently reorganised to explain the simulation's
+purpose and fixed-population sampling before introducing the construction.
+The standalone numerical-example section was removed. Its independence
+tables, cell changes and resulting population pair now appear together after
+the general construction rule, within Section 5.1. Every displayed equation,
+table, reference label and citation in the chapter is unchanged, apart from
+the ordering and automatic numbering. The revised manuscript remains 93
+pages with 49 main-text pages. The evidence audit and build pass; the affected
+pages were reinspected. No experiment or working-draft content changed.
+
+The construction explanation was then simplified without replacing any
+population. Section 5.1 introduces the binary example through a mixture of
+copying and independent drawing, then explains larger tables through
+four-cell probability transfers. The general matrix formula, transfer block
+and feasible-strength equation are now in Appendix B, alongside the existing
+numerical search and checks. Appendix B also shows the exact algebraic
+equivalence between binary copying and the additive construction. The Chapter
+6 figure settings use the same plain-language transfer description.
+
+The binary mixture was checked against all 222 saved additive binary tables:
+the largest cell discrepancy was \(1.11\times10^{-16}\). The numerical
+example preserves the existing tables and MI values. The full evidence audit
+passes; no statistical code, population, sampled result or figure changed,
+and no simulation rerun was needed. The revised PDF has 94 pages, with the
+same 49 main-text pages. The affected pages were rendered and inspected, and
+the source archive was clean-built before refreshing the delivery checksums.
+The working draft remains unchanged.
+
+The appendix simplification replaces the five-appendix structure with:
+
+- A, Supporting Calculations: the mean-zero sensitivity check, fixed-margin
+  local expansions, MI/variance covariance, the independence boundary and the
+  zero-component combined formula.
+- B, Experimental Details: population formulas and searches, exact grids,
+  rate denominators, paired intervals, numerical validity rules and the
+  independent-pilot diagnostic.
+- C, Additional Results: all 108 individual main null settings, two selected
+  intermediate-shape curves and the six controlled comparisons cited by the
+  main discussion.
+
+The repeated MI-gradient and variance derivations and direct table
+substitutions were removed because Chapters 2-4 already provide them. The
+Student-tail convexity proof, independent-reference reconstruction and
+resampling/transfer-entropy digressions were removed. The independence
+calculation retains its positive-support and fixed-alphabet assumptions,
+Taylor steps and likelihood-ratio limit, with no association-residual symbol
+introduced solely to shorten the equation. Numerical derivative verification
+is recorded in one paragraph.
+
+Seven repetitive square-table plots and the aggregate null-band summary were
+replaced by the complete individual-setting null table. Rejection and validity
+remain separate, including the zero-validity n=2 settings. All six sensitivity
+figures referenced in Chapter 6 remain; no main-text lead figure was removed.
+The table generator and evidence audit were extended to check every table
+value, the 15 included figures and exactly three active appendix inputs.
+Population construction, test implementations, protocols and saved outcomes
+are unchanged. The prior 94-page PDF and source ZIP are archived in
+`archive/pre_appendix_simplification_2026-10-04/`.
+
+The final PDF is 84 pages, down from 94 without changing the 49 main-text
+pages or typography. All appendix pages and revised front-matter lists were
+rendered and inspected. The evidence audit and 128 workspace tests pass;
+the source and supplement were also checked in an isolated extraction before
+refreshing the named deliverables and checksums. The working draft was not
+rebuilt.
 
 ## Earlier Acceptance Record
 

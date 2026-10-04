@@ -45,7 +45,6 @@ def source_files() -> list[tuple[Path, Path]]:
         THESIS / "figures_rewrite", suffixes={".pdf", ".py", ".json", ".tex"}
     ):
         if source.name in {
-            "main_null_table.tex",
             "mechanism_ablation.pdf",
             "mechanism_tables.tex",
         }:

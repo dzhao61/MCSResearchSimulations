@@ -10,8 +10,8 @@ how much the estimated MI variance changes between samples.
 \section[Choosing Degrees of Freedom for Expanded Welch]{Choosing Degrees of
 Freedom for\\Expanded Welch}
 
-For the two MI estimates, the Welch--Satterthwaite equation combines their
-estimated variance contributions as in the original moment-matching framework
+The Welch--Satterthwaite equation combines the two estimated MI variance
+contributions
 \citep{satterthwaite1946,welch1947}:
 \begin{equation}
   \nu
@@ -39,9 +39,8 @@ degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 \medskip
 \noindent\textbf{Moment matching for one component.}
 
-Satterthwaite represents a positive variance estimate by a scaled chi-squared
-variable. For the first population, the working approximation represents
-\(\Vhat(P)\) by
+Satterthwaite approximates the positive variance estimate \(\Vhat(P)\) by
+the scaled chi-squared variable
 \begin{equation}
   \E\{\Vhat(P)\}
   \frac{\chi^2_{\nu_P}}{\nu_P}.
@@ -192,8 +191,8 @@ contributions cancel. Hence
   }.
   \label{eq:mi-derivative}
 \end{equation}
-This result recovers the centred pointwise-MI influence function used in
-Chapter~\ref{chap:baselines}.
+This is the centred pointwise-MI influence function from
+Section~\ref{sec:first-order-mi-background}.
 
 \medskip
 \noindent\textbf{Effect on the MI variance.}
@@ -379,14 +378,11 @@ absolute, uncertainty. Since
 the component degrees of freedom are approximately twice the reciprocal of
 this relative variance. A stable estimate relative to the size of $V(P)$ has
 large degrees of freedom; a relatively unstable estimate has smaller degrees
-of freedom and produces a heavier-tailed final reference.
+of freedom and a higher rejection cutoff from the Student \(t\) distribution.
 
-Using this first-order component formula requires \(\tau^2(P)>0\).
-Positive \(V(P)\)
-alone does not guarantee that condition. A small change in the table can have
-no first-order effect on \(V(P)\), even when MI and \(V(P)\) are positive.
-In that case, a higher-order analysis of \(\Vhat(P)\) would be needed to
-describe its finite-sample distribution.
+Positive \(V(P)\) does not guarantee positive \(\tau^2(P)\): table changes
+can have no first-order effect on \(V(P)\). In that case, describing the
+sampling variation of \(\Vhat(P)\) requires a higher-order approximation.
 
 \medskip
 \noindent\textbf{Table-based component degrees of freedom.}
@@ -459,19 +455,15 @@ The expanded two-sided p-value is
 where $F_{t_\nu}$ denotes the cumulative distribution function of a Student
 $t$ variable with $\nu$ degrees of freedom.
 
-The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
-\(T\). It changes only the reference distribution used to evaluate that
-statistic.
-
 For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
 p-value at least as large as the standard normal distribution used by Wald.
 Under the implemented validity rules, every valid Expanded Welch result is
 also Wald-valid. Thus every
 Expanded Welch rejection is also a Wald rejection, including when invalid
 outputs count as non-rejections in the reported rates. The correction cannot
-raise rejection where Wald is already too conservative. Appendix~\ref{app:derivation-details}
-proves this ordering and examines a zero-component case in the combined
-degrees-of-freedom formula.
+raise rejection where Wald is already too conservative.
+Section~\ref{sec:zero-component} examines a zero-component case in the
+combined degrees-of-freedom formula.
 
 \section{Worked example and implementation}
 
@@ -521,10 +513,9 @@ Equation~\eqref{eq:nu-p-hat} gives component degrees of freedom
   \qquad
   \widehat\nu_Q=45.86.
 \end{equation}
-Equation~\eqref{eq:expanded-df} combines them into
-\(\widehat\nu_{\mathrm{expanded}}=59.03\), giving \(p=0.15264\). Both methods
-fail to reject at the 5\% level for these tables. The example shows that
-Expanded Welch changes the reference, not the observed statistic.
+Combining them with Equation~\eqref{eq:expanded-df} gives
+\(\widehat\nu_{\mathrm{expanded}}=59.03\) and \(p=0.15264\).
+Neither method rejects at the 5\% level.
 
 \pagebreak[3]
 \medskip
@@ -562,7 +553,7 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 \noindent\textbf{Near independence.}
 
-The adjustment has a local explanation. Consider a population table that
+Consider a population table that
 approaches independence while its row and column margins stay fixed. At
 independence, MI is zero and its first-order change is also zero. The
 leading changes in MI, the pointwise-MI variance \(V(P)\), and the variance
@@ -575,8 +566,7 @@ that path, it gives
  \qquad \tau^2(P)\approx4V(P).
  \label{eq:near-independent-moments}
 \end{equation}
-Both relationships come from the same changes to the table; they are local
-approximations, not identities for all populations. Substituting them into
+Substituting these local approximations into
 the component degrees-of-freedom formula gives
 \begin{equation}
  \nu_P=\frac{2n_PV(P)^2}{\tau^2(P)}
@@ -588,30 +578,25 @@ The cancellation explains why a low starting MI can produce few effective
 degrees of freedom and a higher rejection cutoff from the Student \(t\)
 distribution.
 
-This near-independence interpretation is limited to the stated local path.
-It assumes fixed table size and positive cell
-probabilities; applying it to samples also requires the
-first-order approximation to be useful. It does not describe exact independence,
-where quadratic sampling variation matters and the first-order test may be
-poorly calibrated. Appendix~\ref{app:independence-boundary} treats that
-boundary separately.
+These approximations require the fixed-margin path, fixed table size and
+positive cell probabilities. Using them for samples also requires a useful
+first-order sampling approximation. At exact independence, quadratic sampling
+variation replaces the first-order term; Section~\ref{sec:independence-boundary}
+derives that case.
 
 \medskip
 \noindent\textbf{Theoretical status and validity conditions.}
 
-Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} describe how MI and
-its estimated variance change when the underlying table changes slightly.
-For tables with positive cell probabilities, these changes give their
-first-order large-sample approximations.
+Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
+derivatives for positive population tables. They provide first-order
+approximations to the sampling errors in MI and its estimated variance.
 
-Approximating \(\Vhat(P)\) by the scaled chi-squared model in
-Equation~\eqref{eq:scaled-chi-working} and evaluating \(T\) against a Student
-\(t\) distribution are working approximations, not exact finite-sample laws.
-In particular, \(\Ihat(P)\) and \(\Vhat(P)\) come from the same sample and can
-vary together. Adjusting the reference for uncertainty in \(\Vhat(P)\) does
-not account fully for this dependence or make the statistic follow a Student
-\(t\) distribution exactly. Appendix~\ref{app:derivation-details} gives the first-order
-covariance.
+The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
+the Student \(t\) distribution for \(T\) are finite-sample approximations.
+The MI difference and standard error come from the same tables and can vary
+together; the degrees-of-freedom adjustment does not model this dependence.
+Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
+between each population's MI and variance estimates.
 
 As sample sizes grow under regular conditions, the estimated
 degrees of freedom increase and the Student \(t\) distribution approaches the

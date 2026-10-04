@@ -1,78 +1,8 @@
-\chapter{Additional Derivation Details}
+\chapter{Supporting Calculations}
 \label{app:derivation-details}
 
-This appendix gives supporting derivations for
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded}.
-
-\section{Gradient of mutual information on the probability simplex}
-
-Mutual information can be written as
-\begin{equation}
-  I(P)
-  =\sum_{i,j}p_{ij}\log p_{ij}
-  -\sum_i p_{i+}\log p_{i+}
-  -\sum_j p_{+j}\log p_{+j}.
-  \label{eq:appendix-mi-entropy-form}
-\end{equation}
-Treating the cell probabilities as coordinates gives
-\begin{align}
-  \frac{\partial I(P)}{\partial p_{ij}}
-  &=(\log p_{ij}+1)
-    -(\log p_{i+}+1)
-    -(\log p_{+j}+1)\\
-  &=\log\frac{p_{ij}}{p_{i+}p_{+j}}-1\\
-  &=\pmi_P(i,j)-1.
-  \label{eq:appendix-mi-gradient}
-\end{align}
-Any valid probability perturbation $h=(h_{ij})$ satisfies
-$\sum_{i,j}h_{ij}=0$. Its directional derivative is therefore
-\begin{align}
-  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
-  I(P+\varepsilon h)\right|_{\varepsilon=0}
-  &=\sum_{i,j}\{\pmi_P(i,j)-1\}h_{ij}\\
-  &=\sum_{i,j}\pmi_P(i,j)h_{ij}.
-  \label{eq:appendix-mi-directional}
-\end{align}
-The constant in the unconstrained gradient disappears on the simplex. For
-the one-cell direction $h_{ij}=\mathbf 1\{i=x,j=y\}-p_{ij}$, Equation
-\eqref{eq:appendix-mi-directional} becomes
-\begin{equation}
-  \pmi_P(x,y)-\sum_{i,j}p_{ij}\pmi_P(i,j)
-  =\pmi_P(x,y)-I(P),
-\end{equation}
-which is Equation~\eqref{eq:mi-derivative}.
-
-\section{Why the variance of pointwise MI appears}
-
-For empirical cell probabilities,
-\begin{equation}
-  \widehat p_{ij}-p_{ij}
-  =\frac{1}{n_P}\sum_{a=1}^{n_P}
-  \{\mathbf 1(Z_a^{(P)}=(i,j))-p_{ij}\}.
-\end{equation}
-Substitution into the first-order Taylor expansion of MI around $P$ gives
-\begin{align}
-  \Ihat(P)-I(P)
-  &\approx
-  \sum_{i,j}\pmi_P(i,j)(\widehat p_{ij}-p_{ij})\\
-  &=\frac{1}{n_P}\sum_{a=1}^{n_P}
-  \left[
-  \sum_{i,j}\pmi_P(i,j)
-  \{\mathbf 1(Z_a^{(P)}=(i,j))-p_{ij}\}
-  \right]\\
-  &=\frac{1}{n_P}\sum_{a=1}^{n_P}
-  \{\pmi_P(Z_a^{(P)})-I(P)\}.
-  \label{eq:appendix-mi-linear}
-\end{align}
-The observation-level summand has variance
-\begin{align}
-  \Var_P\{\pmi_P(X,Y)-I(P)\}
-  &=\E_P\left[\{\pmi_P(X,Y)-I(P)\}^2\right]\\
-  &=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2\\
-  &=V(P).
-\end{align}
-This is why the first-order variance of the plug-in MI estimator is
-$V(P)/n_P$, not a variance of the numerical category labels.
+These calculations support the variance sensitivity, near-independence
+interpretation and validity conditions in Chapter~\ref{chap:expanded}.
 
 \section{Mean of the variance influence function}
 
@@ -99,42 +29,6 @@ weighted-average direction:
     \right|_{0}=0.
 \end{align}
 The same weighted cancellation holds after exact plug-in substitution.
-
-\section{Direct table substitutions}
-
-For observed counts $N^P=(N^P_{ij})$, the quantities used by expanded
-Welch are calculated as
-\begin{align}
-  \widehat p_{ij}&=\frac{N^P_{ij}}{n_P},
-  &\widehat p_{i+}&=\sum_j\widehat p_{ij},
-  &\widehat p_{+j}&=\sum_i\widehat p_{ij},\\
-  \widehat\pmi_P(i,j)
-  &=\log\frac{\widehat p_{ij}}
-  {\widehat p_{i+}\widehat p_{+j}},
-  &\Ihat(P)&=\sum_{i,j}\widehat p_{ij}\widehat\pmi_P(i,j),\\
-  \Vhat(P)&=\sum_{i,j}\widehat p_{ij}
-  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
-\end{align}
-All sums involving pointwise MI are restricted to cells with
-$\widehat p_{ij}>0$. Direct substitution gives
-\begin{align}
-  \widehat g_P(i,j)
-  ={}&\{\widehat\pmi_P(i,j)-\Ihat(P)\}^2-\Vhat(P)\\
-  &+2\left\{\widehat\pmi_P(i,j)
-  -\frac{\sum_{j'}\widehat p_{ij'}\widehat\pmi_P(i,j')}
-         {\widehat p_{i+}}
-  -\frac{\sum_{i'}\widehat p_{i'j}\widehat\pmi_P(i',j)}
-         {\widehat p_{+j}}
-  +\Ihat(P)\right\},\\
-  \widehat\tau^2(P)
-  ={}&\sum_{i,j}\widehat p_{ij}
-  \left\{\widehat g_P(i,j)
-  -\sum_{k,l}\widehat p_{kl}\widehat g_P(k,l)\right\}^2,\\
-  \widehat\nu_P
-  ={}&\frac{2n_P\Vhat(P)^2}{\widehat\tau^2(P)}.
-\end{align}
-These expressions are the direct $O(rc)$ implementation of the population
-derivation.
 
 \section{Fixed-margin behaviour near independence}
 \label{sec:fixed-margin-local-derivation}
@@ -192,7 +86,7 @@ Since \(g_{P_t}\) has mean zero, its probability-weighted variance is
 Comparing these three leading terms gives \(V(P_t)\approx2I(P_t)\) and
 \(\tau^2(P_t)\approx4V(P_t)\) for small positive MI along this path.
 At \(t=0\), the first-order sampling approximation itself degenerates;
-Appendix~\ref{app:independence-boundary} treats that case separately.
+Section~\ref{sec:independence-boundary} treats that case separately.
 
 \section{Dependence between the MI and variance estimates}
 \label{sec:mi-variance-covariance}
@@ -224,14 +118,84 @@ Substituting both expressions into the first-order covariance above gives
   &=\frac{2V(P_t)}{n_P}
       +O\!\left(\frac{t^3}{n_P}\right).
 \end{align}
-Thus the first-order large-sample approximation gives positive component
-covariance for small positive MI along this path. This is not a finite-sample
-guarantee or a result for exact independence: at \(t=0\), \(V(P_0)=0\) and
-the first-order MI approximation no longer describes its sampling variation.
-Nor does the component covariance alone determine the two-sample test's
-rejection rate.
+The first-order covariance is therefore positive for small positive MI
+along this path. At exact independence, \(V(P_0)=0\) and a second-order
+sampling approximation is needed. This component covariance alone does not
+determine the two-sample test's rejection rate.
 
-\section{Reference ordering and zero components}
+\section{The independence boundary}
+\label{sec:independence-boundary}
+
+At independence, \(p_{ij}=p_{i+}p_{+j}\), so every population
+pointwise-MI value is \(\pmi_P(i,j)=\log 1=0\). Consequently,
+\(I(P)=V(P)=0\), and the first-order change in MI is zero. Sampling can
+still produce positive estimated MI, but its leading variation comes from
+second-order cell errors.
+
+To calculate this variation, fix a strictly positive independent table
+\(P\) and let \(h=(h_{ij})\) describe a redistribution of probability,
+with \(\sum_{i,j}h_{ij}=0\). Define
+\begin{equation}
+ P_\varepsilon=P+\varepsilon h,
+ \qquad f(\varepsilon)=I(P_\varepsilon),
+\end{equation}
+for \(\varepsilon\) small enough that every cell remains positive.
+The expansion point is \(\varepsilon=0\), where \(f(0)=I(P)=0\).
+The second-order Taylor formula gives
+\begin{equation}
+ f(\varepsilon)
+ =f(0)+f'(0)\varepsilon+\frac{f''(0)}{2!}\varepsilon^2
+  +o(\varepsilon^2).
+\end{equation}
+The first derivative is
+\begin{equation}
+ f'(0)=\sum_{i,j}\{\pmi_P(i,j)-1\}h_{ij}
+       =-\sum_{i,j}h_{ij}=0.
+\end{equation}
+Here the pointwise-MI terms vanish at independence, and the remaining
+terms cancel because the probabilities must still sum to one.
+
+The row and column changes are \(h_{i+}=\sum_jh_{ij}\) and
+\(h_{+j}=\sum_ih_{ij}\). Applying
+\(\mathrm d^2(u\log u)/\mathrm du^2=1/u\) to the joint and marginal
+terms in Equation~\eqref{eq:mi-probability-sums} gives
+\begin{equation}
+ f''(0)=\sum_{i,j}\frac{h_{ij}^2}{p_{ij}}
+        -\sum_i\frac{h_{i+}^2}{p_{i+}}
+        -\sum_j\frac{h_{+j}^2}{p_{+j}}.
+\end{equation}
+Thus the leading change is
+\begin{equation}
+ I(P_\varepsilon)
+ =\frac{\varepsilon^2}{2}
+  \left\{\sum_{i,j}\frac{h_{ij}^2}{p_{ij}}
+        -\sum_i\frac{h_{i+}^2}{p_{i+}}
+        -\sum_j\frac{h_{+j}^2}{p_{+j}}\right\}
+  +o(\varepsilon^2).
+ \label{eq:appendix-mi-second-order}
+\end{equation}
+The first sum measures squared cell changes. The last two remove the
+contributions due to changed margins, leaving the change in association.
+The remainder is negligible relative to \(\varepsilon^2\) as
+\(\varepsilon\) approaches zero.
+
+For a multinomial sample, take \(\varepsilon h=\widehat P-P\).
+Cell-probability errors typically have size proportional to \(n^{-1/2}\).
+Squaring them makes \(\Ihat(P)\) proportional to \(n^{-1}\) under
+independence. Under fixed table dimensions and positive cell probabilities,
+the likelihood-ratio result is
+\begin{equation}
+ 2n\Ihat(P)\xrightarrow{d}\chi^2_{(r-1)(c-1)}
+ \label{eq:independence-chi-squared}
+\end{equation}
+\citep{wilks1938,brillinger2004}. This is the usual one-table likelihood-ratio,
+or \(G\), test of independence. Its chi-squared distribution comes from
+quadratic cell errors, whereas Normal Wald and Expanded Welch use the
+first-order MI error. The two-sample first-order approximation therefore
+does not apply unchanged at exact independence.
+
+\section{The combined formula when a component is zero}
+\label{sec:zero-component}
 
 For positive component degrees of freedom, substituting
 Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
@@ -254,35 +218,12 @@ The zero contribution drops out, leaving the other table's component degrees
 of freedom. The implementation nevertheless requires both components to have
 positive, finite degrees of freedom, so it records this case as invalid.
 
-For a fixed statistic, the Student \(t\) distribution gives a p-value no
-smaller than Wald's. Write a variable with this distribution as \(Z/\sqrt S\),
-where \(Z\sim N(0,1)\), \(S\sim\chi^2_\nu/\nu\), and \(Z\) and \(S\) are
-independent. For \(c>0\), the conditional two-sided tail
-\(2\{1-\Phi(c\sqrt{s})\}\) is strictly convex in \(s\), since its second
-derivative is
-\(c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\). As \(\E S=1\),
-Jensen's inequality gives
-\(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\); at \(c=0\) both tails equal one.
+\medskip
+\noindent\textbf{Numerical derivative checks.}
 
-The validity rules preserve this ordering in the reported rejection rates.
-The implemented Expanded-valid set is a subset of the Wald-valid
-set. At a common fixed threshold, every Expanded rejection is therefore
-also a Wald rejection, both replicate by replicate and in unconditional
-rates that count invalid outputs as non-rejections.
-
-\section{Numerical derivative checks}
-
-Centred finite differences on positive tables independently check the
-analytic derivatives. For a selected cell and a small
-positive step $\eta$, define
-\begin{equation}
-  P_{\pm\eta}=(1\mp\eta)P\pm\eta\delta_{(x,y)}.
-\end{equation}
-For sufficiently small $\eta$ that keeps both perturbed tables positive,
-the checks compare
-\begin{align}
-  \frac{I(P_\eta)-I(P_{-\eta})}{2\eta}
-  &\quad\text{with}\quad \pmi_P(x,y)-I(P),\\
-  \frac{V(P_\eta)-V(P_{-\eta})}{2\eta}
-  &\quad\text{with}\quad g_P(x,y).
-\end{align}
+The analytic derivatives in Equations~\eqref{eq:mi-derivative} and
+\eqref{eq:g-final} were also checked by centred finite differences along
+the one-cell perturbation paths in Chapter~\ref{chap:expanded}. Small
+positive and negative steps were chosen to keep every cell positive; the
+change in MI or variance divided by the distance between the two steps
+agreed with its analytic derivative.

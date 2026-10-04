@@ -34,13 +34,15 @@ thesis. Internal verification and delivery records may retain those details.
 - The active manuscript and completed fixed-population experiments are the starting point. Existing verified work counts toward the targets below; it should be extended where incomplete.
 - Routine writing, editing, verification and small diagnostic calculations can proceed autonomously. Supervisor consultation is not a prerequisite for each decision.
 - The final research comparison is Normal Wald versus Expanded Welch. The central contribution is the derivation and careful evaluation of the proposed correction, including its limitations.
+- Retain the completed population tables. Explain the binary construction through its equivalent copying-and-independent-drawing mechanism and larger tables through probability transfers; keep the general matrix formulas, feasibility limits and numerical search in Appendix B.
+- Use three focused appendices: A, supporting calculations; B, experimental details; C, additional results. Remove repeated derivations and peripheral arguments while retaining assumptions, exact settings, validity rules and evidence needed to assess the thesis. Keep all 108 main null settings visible individually rather than substituting an aggregate summary.
 
 ### Questions the thesis must answer
 
 | Research question | Required evidence | Main location |
 | --- | --- | --- |
 | RQ1. How can changes in the estimated MI variance be used to choose degrees of freedom for a two-sample test using a Student t distribution? | Checked derivation, defined assumptions, implemented algorithm and worked calculations. | Chapters 3-4; Appendix A. |
-| RQ2. Does the resulting Expanded Welch test offer a useful improvement over Normal Wald? | Corresponding null and alternative regimes, validity, paired comparisons, effects of margins, association and sample allocation, convergence, runtime and a bounded practical recommendation. | Chapters 5-8; Appendices B-D. |
+| RQ2. Does the resulting Expanded Welch test offer a useful improvement over Normal Wald? | Corresponding null and alternative regimes, validity, paired comparisons, effects of margins, association and sample allocation, convergence, runtime and a bounded practical recommendation. | Chapters 5-8; Appendices B-C. |
 
 These are the two questions stated in the current Introduction. The earlier
 four-question list is retained in substance as evidence strands for RQ2, not
@@ -57,7 +59,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (4 October) | 50 pages | 95 pages |
+| Current Welch-MI manuscript (4 October) | 49 pages | 84 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -70,9 +72,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 14,695
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
-(printed pages 1-50). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 13,218
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-57
+(printed pages 1-49). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Working chapter allocation
@@ -83,12 +85,12 @@ chapters when the explanation requires it.
 | Chapter | Current pages | Required purpose |
 | --- | ---: | --- |
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
-| 2. Background and Literature Review | 12 | Teach the necessary concepts and locate the contribution in verified prior work. |
+| 2. Background and Literature Review | 11 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 10 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
-| 5. Experimental Design | 5 | Explain concrete population construction, controlled factors, sampling and evaluation; place exact grids in Appendix B. |
-| 6. Experimental Results and Discussion | 12 | Develop the argument around selected figures, interpreting each beside the evidence; preserve other figures in Appendix D. |
-| 7. Implications and Limitations | 2 | Synthesize the practical trade-off, evidence limits and justified next steps without repeating the figure readings. |
+| 5. Experimental Design | 5 | Explain the binary sampling mechanism, larger-table probability transfers, controlled factors, sampling and evaluation; place general construction formulas, numerical search and exact grids in Appendix B. |
+| 6. Experimental Results and Discussion | 12 | Develop the argument around selected figures, interpreting each beside the evidence; retain the individual main null table and focused supporting figures in Appendix C. |
+| 7. Implications and Limitations | 2 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
 | 8. Conclusion | 2 | Restate contributions and impact, limitations, future work and the resulting recommendation. |
 
 ## 3. SMART targets
@@ -104,7 +106,7 @@ reproduce and assess the thesis's scientific argument.
 | T2 | Finish the mathematical explanation. | Check every central equation against an independent derivation and the implemented estimator. Define every substantive symbol at first use; label all Taylor expansions and distributional approximations. Verify the worked examples and relevant mathematical tests. | 16 Sep |
 | T3 | Finish the literature argument. | Map every substantive prior-work and novelty claim to an inspected source and location. Verify every cited bibliography entry; resolve or explicitly narrow any unsupported claim. Cover MI estimation and variance, related information comparisons, Welch-Satterthwaite theory, simulation construction and the independence boundary. | 17 Sep |
 | T4 | Complete the experimental design chapter. | Account for every frozen experiment family and all 3,111 unique configurations, 534 population pairs and 20,000 replicates per configuration. Explain P and Q construction with a numerical example and distinguish fixed population differences from sample randomness. Reconcile all repeated design values with the protocol. | 18 Sep |
-| T5 | Complete the results and interpretation. | Answer both research questions with equations and results presented in the manuscript. Select main figures for a question-led argument, interpret each beside its evidence, and keep supporting figures in the appendix. Address every experimental family and retain every individual regime in separate project records without making their availability a condition for reading the thesis. Verify all numerical claims and all 22 included plots against exact source rows. | 19 Sep |
+| T5 | Complete the results and interpretation. | Answer both research questions with equations and results presented in the manuscript. Select main figures for a question-led argument, interpret each beside its evidence, and keep focused supporting figures in the appendix. Address every experimental family and retain every individual regime in separate project records without making their availability a condition for reading the thesis. Verify all numerical claims, all 15 included plots and every cell of the 108-setting main null table against exact source rows. | 19 Sep |
 | T6 | Complete the substantive and language edits. | Review every chapter and appendix once for scientific coherence and once for readability. Resolve every material issue found in those passes. Check notation, equation explanations, repeated settings, terminology and parallel presentation across all experiment sections. | 20 Sep |
 | T7 | Complete technical and visual verification. | Build from a clean copy of the final source package; obtain zero build errors, undefined citations/references, missing figures or overfull boxes. Inspect every rendered page at its final size, resolve visual defects and rerun the relevant evidence checks after final changes. | 21 Sep |
 | T8 | Deliver the final thesis package. | Provide the standalone PDF, self-contained source, bibliography and figures, plus separate experiment records, reproduction instructions and completed acceptance record. Include accurate front matter with no editing placeholders or invented personal attestations. All material findings must be resolved before marking the goal complete. | 22 Sep |
@@ -115,13 +117,15 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 4 October 2026:** T1-T8 are complete for the current 95-page A4
-manuscript, with 50 printed main-text pages. Chapter 6 uses seven lead figures
-and Appendix D retains 15 supporting figures. The focused paragraph-coherence
-pass and full-document visual review are complete. All 101 workspace tests and 36
-archive-bundled tests pass. The full evidence audit passes against the frozen
-results and all 22 regenerated confirmatory figures. A clean build from the
-extracted source and experiment archives produces the same 95-page text with
+**Status at 4 October 2026:** T1-T8 are complete for the current 84-page A4
+manuscript, with 49 printed main-text pages. Chapter 6 uses seven lead figures
+and Appendix C retains eight supporting figures plus all 108 individual main
+null settings. The three appendices occupy 23 pages, down from 33 before the
+appendix simplification. The paragraph-coherence and direct-explanation passes
+and full-document visual review are complete. All 128 workspace tests and 36
+archive-bundled tests pass. The full evidence audit verifies all 22 available
+figures, the 15 included figures and every displayed main-null table cell.
+A clean build from the extracted source and experiment archives produces the same 84-page text with
 no errors, undefined citations/references or overfull boxes. The named PDF,
 source archive, experiment supplement and checksums are synchronized; the
 current verification record is in `SUBMISSION_CHECK.md`.
@@ -238,6 +242,9 @@ State the scientific question or result directly, using concrete subjects and
 verbs. Avoid abstract commentary about how a method must be assessed when the
 actual comparison can be stated plainly. Explain the point itself rather than
 making the reader reconstruct it from a description of the reasoning process.
+Delete framing or restatement that adds neither explanation nor evidence.
+Keep useful intermediate derivation steps; do not add sentences to complete
+a paragraph template or increase its length.
 
 Omit incidental editorial and logistical commentary: notes about how the
 document is presented, obvious workflow properties, and assurances about
@@ -309,6 +316,12 @@ synthesise across figures instead of repeating their first interpretation.
 The appendices must contain the supporting comparisons needed to assess the
 argument, without directing the reader to a codebase or external atlas. Avoid
 duplicating the same numerical reading in the caption and the discussion.
+Use supporting calculations, experimental details and additional results as
+the three appendix roles. Do not repeat the central derivations already taught
+in Chapters 2-4, or retain peripheral distributional proofs and alternative
+methods merely because they were developed during the project. Present all
+main null settings individually, alongside validity, and select supplementary
+curves for the additional question each answers.
 Use normal body typography for the discussion, without separate small-text
 interpretation blocks.
 

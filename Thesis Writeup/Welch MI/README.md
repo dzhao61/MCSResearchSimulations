@@ -13,7 +13,7 @@ Expanded Welch. It replaces the older draft's empirical argument with an
 assessment of calibration, power, validity and computational cost by exact
 regime.
 
-The active unsigned manuscript is `main.pdf`, built from `chapters_rewrite/` and
+The active manuscript is `main.pdf`, built from `chapters_rewrite/` and
 `appendices_rewrite/`. It uses the completed fixed-population comparison of
 Normal Wald and Expanded Welch, including validity and runtime. The preceding
 LaTeX source and PDF are preserved in `archive/previous_draft_2026-09-13/`;
@@ -24,7 +24,7 @@ for history and are not read by `main.tex`. `THESIS_PLAN.md` and
 ## Build
 
 With the experiment supplement extracted beside this source directory,
-regenerate the 22 thesis figures and numerical macros from the final saved
+regenerate the 22 available figures, individual main-null table and numerical macros from the final saved
 CSVs with:
 
 ```bash
@@ -38,11 +38,11 @@ From this thesis directory, build the PDF with:
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The 36 actively cited and source-audited bibliography records are stored in
+The 35 actively cited and source-audited bibliography records are stored in
 the local `references.bib`, so the manuscript can compile without the parent
 methods project. The active preamble searches only `figures_rewrite/`,
 preventing an old pilot figure from being used silently.
-`figures_rewrite/figure_manifest.json` maps every thesis
+`figures_rewrite/figure_manifest.json` maps every available
 figure to the final display/configuration identifiers. In the workspace, the
 full companion atlas is
 `../../WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md`; after
@@ -60,8 +60,8 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `preamble.tex`: shared packages, notation, and formatting.
 - `frontmatter/`: title page, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
-- `appendices_rewrite/`: active derivations, exact design grids, simulation
-  uncertainty and validity diagnostics, supporting figures and independence boundary.
+- `appendices_rewrite/`: three active appendices: supporting calculations,
+  experimental details, and additional results.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
 - `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
 - `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
@@ -74,16 +74,22 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `THESIS_PLAN.md`: previous research and chapter plan.
 - `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
 
-Detailed independent-pilot, degree-of-freedom ablation and complete main-null
-diagnostics are retained in the experiment supplement rather than the
-reader-facing thesis.
+Detailed mechanism diagnostics and the full figure atlas remain in the
+experiment supplement. The thesis itself includes all 108 main null settings
+individually, with rejection and validity rates for both methods.
 
 The 4 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 95-page manuscript. Chapter 6 has seven
-lead figures, and Appendix D has 15 supporting figures. The source archive
+in `deliverables/` match the active 84-page manuscript. Chapter 6 has seven
+lead figures, and Appendix C has eight supporting figures and the complete
+main-null table. The source archive
 builds independently when extracted with the supplement; the evidence audit
 and bundled tests also pass there. The declaration page is intentionally
 excluded at the author's request.
+
+The preceding 94-page PDF and source package are retained in
+`archive/pre_appendix_simplification_2026-10-04/`. No experiment or statistical
+implementation changed during the appendix reorganisation. The working-draft
+PDF has not been refreshed.
 
 The manuscript is standalone. Scientific settings and validity rules are
 included in its chapters and appendices; file inventories, build commands and

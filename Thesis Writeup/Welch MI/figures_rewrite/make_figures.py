@@ -387,6 +387,55 @@ def null_band_table() -> None:
     (HERE / "null_band_summary.tex").write_text(content + "\n")
 
 
+def main_null_table() -> None:
+    """Keep every main null setting visible without cross-setting averages."""
+    main_null = subset("main", mi_difference=0.0).drop_duplicates(
+        ["configuration_id", "method"]
+    )
+    assert main_null.configuration_id.nunique() == 108
+    lines = [
+        r"\begingroup\small",
+        r"\setlength{\tabcolsep}{4pt}",
+        r"\begin{longtable}{@{}llrrrrr@{}}",
+        r"\caption{False-positive and valid-result rates for all 108 main null settings.}",
+        r"\label{tab:all-main-null}\\",
+        r"\toprule",
+        r"Shape & Margins & $n$ & \multicolumn{2}{c}{Normal Wald} & \multicolumn{2}{c}{Expanded Welch}\\",
+        r"\cmidrule(lr){4-5}\cmidrule(l){6-7}",
+        r" & & & Reject & Valid & Reject & Valid\\",
+        r"\midrule\endfirsthead",
+        r"\toprule",
+        r"Shape & Margins & $n$ & \multicolumn{2}{c}{Normal Wald} & \multicolumn{2}{c}{Expanded Welch}\\",
+        r"\cmidrule(lr){4-5}\cmidrule(l){6-7}",
+        r" & & & Reject & Valid & Reject & Valid\\",
+        r"\midrule\endhead",
+    ]
+    for shape in ("2x2", "3x3", "5x5", "8x8"):
+        shape_label = shape.replace("x", r"\times")
+        for profile, profile_label in (
+            ("uniform", "Uniform"),
+            ("same_skew", "Same skew"),
+            ("different_skew", "Different skew"),
+        ):
+            group = main_null.loc[
+                main_null["shape"].eq(shape) & main_null.profile.eq(profile)
+            ]
+            assert group.n_p.nunique() == 9 and group.n_p.eq(group.n_q).all()
+            for n in sorted(group.n_p.unique()):
+                values = group.loc[group.n_p.eq(n)].set_index("method")
+                assert len(values) == 2
+                wald = values.loc["normal_wald"]
+                expanded = values.loc["expanded_welch"]
+                lines.append(
+                    rf"\({shape_label}\) & {profile_label} & {int(n)} & "
+                    f"{wald.unconditional_rejection_rate:.4f} & {wald.valid_rate:.4f} & "
+                    f"{expanded.unconditional_rejection_rate:.4f} & {expanded.valid_rate:.4f} \\\\"
+                )
+            lines.append(r"\addlinespace")
+    lines.extend([r"\bottomrule\end{longtable}", r"\endgroup"])
+    (HERE / "main_null_table.tex").write_text("\n".join(lines) + "\n")
+
+
 def main() -> None:
     HERE.mkdir(exist_ok=True)
     main_landscape()
@@ -394,6 +443,7 @@ def main() -> None:
     convergence()
     evidence_macros()
     null_band_table()
+    main_null_table()
     (HERE / "figure_manifest.json").write_text(json.dumps(RECORDS, indent=2) + "\n")
     print(f"Generated {len(RECORDS)} PDF figures from {len(DISPLAY)} display points.")
 

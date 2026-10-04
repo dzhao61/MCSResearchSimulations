@@ -1,17 +1,32 @@
-\chapter{Population Construction and Exact Design Settings}
+\chapter{Experimental Details}
 \label{app:construction}
 
-The experiment uses fixed population tables. This appendix states the
-construction precisely enough to reproduce any plotted point and records the
-finite parameter grids.
+This appendix specifies the population construction, exact parameter grids,
+uncertainty intervals and validity rules used in the experiments.
 
 \section{Additive construction}
 
-For prescribed positive row vector \(a\) and column vector \(b\), form
-\(B=ab^{\mathsf T}\). The principal first-cell direction \(H\) contains
-\(\left(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\right)\) in
-rows and columns 1 and 2 and zero elsewhere. The rare-cell direction places
-the same block in the last two rows and columns. The spread direction is
+For prescribed positive row probabilities \(a=(a_1,\ldots,a_r)\) and
+column probabilities \(b=(b_1,\ldots,b_c)\), form the independence table
+\(B=ab^{\mathsf T}\), whose cell probabilities are \(B_{ij}=a_i b_j\).
+Let \(H\) specify which cells gain or lose probability and \(t\ge0\)
+control the amount transferred. Define
+\begin{equation}
+ R(t)=ab^{\mathsf T}+tH,
+ \qquad H\mathbf{1}_c=0,
+ \qquad \mathbf{1}_r^{\mathsf T}H=0.
+ \label{eq:additive-construction}
+\end{equation}
+Here \(\mathbf{1}_k\) is a vector of \(k\) ones. The zero row and column
+sums of \(H\) ensure that the transfers leave both margins unchanged.
+The principal first-cell direction is zero outside rows and columns 1
+and 2, where it has the block
+\begin{equation}
+ H_{1:2,1:2}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+ \label{eq:first-change-block}
+\end{equation}
+The rare-cell direction places the same block in the last two rows and
+columns. The spread direction is
 \begin{equation}
  H_{ij}=u_i v_j,
  \quad u_i=-1+\frac{2(i-1)}{r-1},
@@ -20,32 +35,55 @@ the same block in the last two rows and columns. The spread direction is
 \end{equation}
 Both score vectors sum to zero, so every direction preserves margins.
 
-For \(t\ge0\), define \(R(t)=B+tH\). Calculate the first strength at which
-a decreasing cell reaches zero,
+The largest nonnegative strength before a decreasing cell reaches zero is
 \begin{equation}
  t_{\max}=\min_{H_{ij}<0}\frac{B_{ij}}{-H_{ij}}.
+ \label{eq:design-tmax}
 \end{equation}
 Evaluate the path endpoint MI\@. A target MI must lie strictly below this
-endpoint, within the stated numerical tolerance. For a positive target,
+endpoint, within the stated numerical tolerance, so the chosen strength
+satisfies \(0\le t<t_{\max}\). This endpoint is specific to the chosen
+transfer pattern, not the largest possible MI over all tables with those
+margins. For a positive target,
 Brent's one-dimensional root search \citep{brent1973} solves \(I\{R(t)\}=I_{\rm target}\)
 on \([0,t_{\max}]\); a zero target uses \(t=0\). The final table is accepted
 only if every cell is strictly positive, the sum is one, both margins agree
 with their prescribed vectors, and achieved MI agrees with the target. The
 normalisation and margin tolerances are \(10^{-12}\); the MI tolerance is
-\(10^{-12}+10^{-8}I_{\rm target}\). These numerical checks ensure that a
-horizontal-axis difference denotes constructed population truth, not an
-empirical estimate. They do not impose an expected-count floor on the
-subsequent sample.
+\(10^{-12}+10^{-8}I_{\rm target}\).
 
-The row and column vectors are separately constructed for each population.
-For shape \(r\times c\), the uniform profile uses uniform vectors of
-lengths \(r\) and \(c\) for both \(P\) and \(Q\). The same-skew profile
-uses \(m_r(0.8)\), \(m_c(0.8)\) for both. The different-skew profile
-uses \(m_r(0.7)\), \(m_c(0.7)\) for \(P\) and
-\(m_r(0.8)\), \(m_c(0.8)\) for \(Q\). The extreme regimes instead state the
-two dominant probabilities directly. The direction of the alternative is a
-separate parameter and should not be inferred from which population has the
-more skewed margin.
+\medskip
+\noindent\textbf{Equivalence to the binary sampling mechanism.}
+
+In the binary example, both variables have category probabilities
+\(a=(a_1,a_2)\). With probability \(w\), \(Y\) copies \(X\), giving
+joint probabilities \(a_1,a_2\) on the diagonal and zero elsewhere.
+With probability \(1-w\), \(Y\) is drawn independently, giving
+\(B=aa^{\mathsf T}\). Combining these two possibilities
+gives
+\begin{align}
+ R
+ &= (1-w)
+    \begin{pmatrix}a_1^2&a_1a_2\\a_1a_2&a_2^2\end{pmatrix}
+    +w\begin{pmatrix}a_1&0\\0&a_2\end{pmatrix}\\
+ &= \begin{pmatrix}a_1^2&a_1a_2\\a_1a_2&a_2^2\end{pmatrix}
+    +wa_1a_2\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+ \label{eq:binary-copy-equivalence}
+\end{align}
+The second line uses \(a_1+a_2=1\), so
+\(a_1-a_1^2=a_1a_2\) and \(a_2-a_2^2=a_1a_2\).
+Thus the copying mechanism is exactly the first-cell additive
+construction with \(t=wa_1a_2\). For the margins in Chapter~\ref{chap:design},
+\(t_P\simeq0.04272945\) and \(t_Q\simeq0.04174587\) give
+\(w_P\simeq0.20347356\) and \(w_Q\simeq0.26091171\), respectively.
+
+\medskip
+
+Row and column margins follow Table~\ref{tab:margin-profiles}, with its
+formula applied separately to the two dimensions. The extreme regimes
+specify their dominant probabilities directly in Table~\ref{tab:exact-grids}.
+
+\section{Log-linear comparison}
 
 The log-linear comparison uses the scores \(u_i,v_j\) from
 Equation~\eqref{eq:appendix-spread}, but starts from positive cell weights
@@ -59,8 +97,8 @@ gives the independence table; a numerical search then chooses \(\lambda\)
 to reach the target MI\@. The final table passes the same positivity,
 normalisation, margin and target-MI checks as the additive table. Unlike
 the first-block additive construction used in the comparison, it changes
-cells throughout the table. Matching margins and MI does not imply
-matching all cell probabilities or expected counts.
+cells throughout the table. Its cell probabilities can therefore differ
+from additive tables with the same margins and MI\@.
 
 \section{Statistical experiment grids}
 
@@ -68,8 +106,9 @@ Unless a row of Table~\ref{tab:exact-grids} says otherwise, both populations
 use the first-cell additive direction, \(I(P)=I_0\),
 \(I(Q)=I_0+|\Delta|\), and the three standard margin profiles. The
 symbol \(n\) means \(n_P=n_Q=n\). Only targets producing strictly positive
-population tables are used. Curves should not be extrapolated beyond their
-last constructed target.
+population tables are used.
+At \(n=1\), neither statistic is evaluable, so all sampled results are
+recorded as invalid.
 
 \begin{longtable}{@{}p{0.18\textwidth}p{0.75\textwidth}@{}}
 \caption{Exact statistical experiment grids; MI values are in nats.}
@@ -132,9 +171,63 @@ and five timed passes.\\
 \bottomrule
 \end{longtable}
 
-Every unique statistical configuration has 20,000 sampled table pairs.
-When the same
-population pair and sample sizes appear in another section, the same
-simulation results are shown rather than generating a new set of samples.
-At \(n=1\), neither statistic is evaluable, so all sampled results in that
-configuration are recorded as invalid.
+\section{Rejection rates and simulation uncertainty}
+\label{sec:simulation-uncertainty}
+
+The plotted rejection rate divides valid rejections by all 20,000 sampled
+table pairs. The method-valid conditional rate instead divides by that
+method's valid outputs; it is undefined if there are none. The common-valid
+rate restricts the calculation to pairs for which both methods are valid.
+Comparing unconditional and common-valid rates separates the effect of the
+reference distribution from lost validity.
+
+For the paired comparison, let \(D_s\) equal the Wald valid-rejection
+indicator minus the Expanded Welch valid-rejection indicator for sampled
+pair \(s\), matching the sign in Table~\ref{tab:null-paired-examples}.
+Its average is \(\bar D=(1/20{,}000)\sum_{s=1}^{20{,}000}D_s\), with
+approximate 95\% interval
+\begin{equation}
+ \bar D\ \pm\ 1.96
+ \left\{\frac{1}{20{,}000(19{,}999)}
+ \sum_{s=1}^{20{,}000}(D_s-\bar D)^2\right\}^{1/2}.
+\end{equation}
+This calculation preserves the within-replicate pairing. Individual-method
+intervals use Wilson's binomial score construction \citep{wilson1927}.
+Both types of interval describe Monte Carlo uncertainty for one setting,
+not simultaneous uncertainty across all settings.
+
+\section{Validity and sparse-sample diagnostics}
+\label{sec:validity-rules}
+
+Both tests require matching table shapes with at least two rows and columns,
+finite nonnegative integer counts, and more than one observation in each
+table. Normal Wald requires a finite corrected MI difference, a positive
+finite standard error, \(\Vhat(P)+\Vhat(Q)>10^{-14}\), and a finite p-value.
+The variance threshold treats values extremely close to zero as numerically
+unusable.
+
+Expanded Welch adds component-level conditions to those shared requirements.
+It requires positive finite degrees of freedom for both populations and
+their combination. If one component's degrees of freedom cannot be
+calculated, the expanded test is invalid even when the direct combined
+expression in Section~\ref{sec:zero-component} has a value. Failed
+calculations contribute no rejection to the unconditional rate.
+
+For population \(P\) with sample size \(n_P\), the minimum expected cell
+count is \(\min_{ij}n_Pp_{ij}\); define \(Q\)'s analogously. Sparsity
+diagnostics include empty observed rows and columns and the fraction of
+zero-count cells. They help describe why a statistic might fail but are not
+used to exclude settings from the study.
+
+\section{Independent-pilot standard-error check}
+
+The diagnostic in Section~\ref{sec:mechanism-results} uses two independent
+sets of 20,000 sampled table pairs from the stated null populations. The
+pilot set gives the sample standard deviation of the corrected MI
+differences. The evaluation set is tested twice: once with each pair's
+plug-in standard error, and once with that fixed pilot standard deviation.
+Both calculations use the standard normal distribution and the two-sided
+5\% threshold. The comparison of variance estimates divides the evaluation
+set's average squared plug-in standard error by the squared pilot standard
+deviation. This check retains the population pair and estimated differences
+while changing how they are standardised.

@@ -1,12 +1,8 @@
 \chapter{Background and Literature Review}
 \label{chap:background}
 
-This chapter develops the concepts needed to compare MI between two
-categorical populations. It begins with entropy, pointwise MI, and population
-MI\@. It then reviews plug-in estimation, first-order inference, the
-Welch--Satterthwaite approximation, and prior comparisons of information
-quantities. The final section identifies the gap addressed by the expanded
-method.
+This chapter introduces MI, its estimation and sampling variance, then
+reviews methods for comparing MI values between populations.
 
 \section{Information-theoretic foundations}
 
@@ -63,9 +59,8 @@ Here the summations are nested: for each row \(i\), the inner sum runs over
 all columns \(j\). Equivalently, the expression sums once over every cell in
 the table and may be written with the shorthand \(\sum_{i,j}\).
 
-The same MI can also be expressed through the entropies introduced above.
-Because \(P\) is the joint distribution of \((X,Y)\), it is
-conventionally written as \(I(X;Y)\). Equivalently,
+Because \(P\) is the joint distribution of \((X,Y)\), we also write
+\(I(P)\) as \(I(X;Y)\). Its entropy form is
 \begin{equation}
   I(X;Y)=H(X)+H(Y)-H(X,Y).
   \label{eq:mi-entropy-form}
@@ -145,9 +140,8 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \section{Sampling variance of plug-in MI}
 \label{sec:first-order-mi-background}
 
-To compare two estimated MI values, it is necessary to know how much each
-estimate would vary across repeated samples. The goal of this section is to
-derive the large-sample approximation
+Comparing two MI estimates requires knowing how much each varies across
+repeated samples. We derive the large-sample approximation
 \begin{equation}
   \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
   \label{eq:first-order-mi-var-background}
@@ -356,10 +350,9 @@ zero because
   =0.
   \label{eq:mi-if-mean-zero-background}
 \end{align}
-In formal asymptotic terminology, the centred function
-\(\pmi_P(i,j)-I(P)\) is the influence function of MI; Equation
-\eqref{eq:mi-error-as-average-background} is its first-order linear
-representation \citep{hampel1974,vanderVaart1998,kandasamy2015}.
+The centred function \(\pmi_P(i,j)-I(P)\) is called the influence function
+of MI\@. Equation~\eqref{eq:mi-error-as-average-background} uses it to
+approximate the sampling error \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 
 \medskip
 \noindent\textbf{Step 3: Calculate the sampling variance.}
@@ -391,18 +384,10 @@ is therefore zero. Hence
   =\frac{V(P)}{n}.
   \label{eq:mi-variance-derived-background}
 \end{align}
-This proves the approximation stated in
-Equation~\eqref{eq:first-order-mi-var-background}. It is the familiar result
-that the variance of an average of \(n\) independent contributions is the
-variance of one contribution divided by \(n\).
-
-The independence of observations is needed in the second line of
-Equation~\eqref{eq:mi-variance-derived-background}: it makes covariance terms
-between different observations vanish. \citet{moddemeijer1999} studies MI
-sampling variance when observation pairs are dependent and those terms must
-instead be accounted for. The present test and experiment concern independent
-multinomial samples, so they use \(V(P)/n\) without a serial-dependence
-correction.
+Averaging \(n\) independent contributions therefore divides their variance
+by \(n\). For dependent observations, covariance terms must also be included
+in Equation~\eqref{eq:mi-variance-derived-background}, as studied by
+\citet{moddemeijer1999}. The present experiment uses independent observations.
 
 When \(V(P)>0\), the central limit theorem also gives
 \begin{equation}
@@ -428,9 +413,9 @@ vanishes.
 A finite sample can still have positive MI. Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
 produces the usual chi-squared limiting distribution
-\citep{brillinger2004,marinescu2025}. The normal limiting distribution for comparing positive
-MI values and the chi-squared limiting distribution for testing independence therefore apply
-in different settings.
+\citep{brillinger2004,marinescu2025}. Testing independence therefore uses a
+chi-squared distribution rather than the normal approximation for comparing
+positive MI values.
 
 \section{Approaches to Testing MI Differences}
 \label{sec:welch-background}
@@ -517,8 +502,7 @@ uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
 by examining how a regression variance estimate varies between samples.
-This supports examining the variance estimate itself, but the estimated MI
-variance is calculated differently and needs its own analysis.
+Expanded Welch applies this approach to the estimated MI variance.
 
 Whether this adjustment helps depends on the direction of the variance error.
 \citet{bell2002} report regression variance estimates biased downward,
@@ -532,8 +516,7 @@ discrepancy and lowers rejection further in that setting.
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}
 
-Other MI uncertainty calculations provide context for this variance-based
-approach. \citet{roulston1999} derives entropy and MI error estimates
+\citet{roulston1999} derives entropy and MI error estimates
 using error propagation and examines them numerically. These calculations
 describe the uncertainty of an individual estimate, a necessary input to a
 comparison of two estimates.
@@ -541,10 +524,9 @@ comparison of two estimates.
 A Bayesian approach instead describes uncertainty about the unknown
 population MI after observing a table. \citet{hutter2002}
 and \citet{hutterzaffalon2005} model the unknown cell probabilities to
-calculate the variance and shape of the resulting MI distribution. This differs from the
-repeated-sample question here: how often a test comparing two MI values
-rejects. Their results therefore do not directly justify using a Student
-\(t\) distribution for the test in this thesis.
+calculate the variance and shape of the resulting MI distribution.
+They describe uncertainty about population MI given an observed table;
+this thesis measures how often a test rejects across repeated samples.
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
@@ -560,32 +542,19 @@ as its effective degrees of freedom \citep{hutcheson1970}. Here each of
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).
 
-Hutcheson's assignment provides an analogue for the MI comparison. Applying it to the
-two MI variance contributions gives a clear historical baseline. It does not,
-however, derive how the plug-in MI variance itself fluctuates: MI depends on a
-joint distribution and both margins, so moving mass into one cell changes
-pointwise values elsewhere in its row and column. The expanded calculation
-retains these changes.
+Hutcheson's rule assigns degrees of freedom from sample sizes. Expanded
+Welch instead calculates how the estimated MI variance changes with the
+table, including the effects of a cell change on its row and column totals.
 
-The question of comparing MI values also has predecessors. In a segregation
-application, \citet{mora2009} develop inference for an MI index and discuss
+In a segregation application, \citet{mora2009} develop inference for an MI index and discuss
 pairwise comparisons across groups and periods; the later peer-reviewed account
 places that MI index within the wider segregation literature \citep{mora2011}.
-They do not derive the variance-sensitivity degrees of freedom used here.
 
-Other two-sample tests use MI to compare complete distributions rather than
-two within-population MI values. \citet{guha2014} use MI for
-the question of whether two continuous distributions are identical. Their MI is
-between a pooled observation and its sample label; their null is equality of
-distributions, not equality of two within-population MI values. For discrete
-data, \citet{drake2014} develop an MI-based \(k\)-sample test for the same
-distributional-equality question.
-
-At exact independence, the first-order sampling variation of MI vanishes and
-its second-order variation becomes important \citep{marinescu2025}. The
-positive-MI comparison developed here is therefore not a replacement for a
-one-table independence test. Second-order effects can also matter near that
-boundary.
+\citet{guha2014} test whether two continuous distributions are identical
+using MI between pooled observations and their sample labels.
+For discrete data, \citet{drake2014} develop an MI-based \(k\)-sample test
+for equality of distributions. These tests compare complete distributions,
+not the MI of two variables within each population.
 
 \medskip
 \noindent\textbf{Resampling alternatives.}
@@ -597,42 +566,24 @@ two samples and shuffles their group labels. That shuffle is justified when
 the populations have the same complete distribution, \(P=Q\). Our hypothesis
 requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
 equal. Shuffling labels could therefore test a stronger claim than this thesis
-asks about \citep{chung2013}. More specialised permutation methods are possible
-for some such comparisons \citep{janssen1997,chung2013}, but assessing one for
-equal MI would be a separate study. The present comparison focuses on Normal
-Wald and Expanded Welch.
+asks about \citep{chung2013}. Specialised permutation methods allow distinct
+populations in some parameter comparisons \citep{janssen1997,chung2013};
+their validity for equal MI would need to be established.
 
 \section{Previous work and this thesis's contribution}
 
-The cited work supplies several parts of the present comparison.
-\citet{moddemeijer1989} and \citet{brillinger2004} give the leading
-sampling variance of an MI estimate; \citet{miller1955} and
-\citet{paninski2003} explain why finite-sample bias and sparse tables
-also matter. Hutcheson's entropy comparison uses a Student \(t\) distribution
-with degrees of freedom assigned from sample sizes
-\citep{hutcheson1970}. In a different setting, \citet{panwall2002}
-show how uncertainty in a non-classical variance estimate can inform
-degrees of freedom. These are useful precedents, but none supplies
-the change in the plug-in MI variance when its observed table changes.
+Existing work provides the leading bias and sampling variance of MI
+\citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
+Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
+\citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
+regression variance estimate to choose degrees of freedom. Applying the
+latter approach to MI requires calculating how its estimated variance
+changes with the observed table.
 
-The question of comparing information values also has precedents.
-\citet{mora2009} discusses comparisons of an MI-based segregation
-index. Tests based on MI between pooled observations and their group
-labels instead target equality of the complete distributions
-\citep{guha2014,drake2014}. The present null is narrower:
-\(I(P)=I(Q)\) permits \(P\ne Q\). This difference in the null
-hypothesis determines which existing reference distributions can be
-used directly.
-
-The remaining calculation is to measure how much the \emph{estimated MI
-variance} changes from sample to sample. Assigning each population degrees of
-freedom from its sample size does not measure this change. A new observation affects a cell
-probability, its row and column totals, and the MI values calculated from
-them. This thesis derives how those changes affect the estimated variance and
+A new observation affects a cell probability, its row and column totals,
+and the MI values calculated from them. This thesis derives how those
+changes affect the estimated variance and
 uses the result to choose a Student \(t\) distribution for comparing two MI values.
 It then tests the method on fixed population tables, showing when it brings
 false-positive rates closer to the target and when it instead rejects too
 rarely.
-
-Chapter~\ref{chap:baselines} defines the comparison, Chapter~\ref{chap:expanded}
-derives the adjustment, and Chapter~\ref{chap:results} evaluates it.
