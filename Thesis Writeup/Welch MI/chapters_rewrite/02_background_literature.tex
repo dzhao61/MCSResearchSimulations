@@ -422,9 +422,9 @@ vanishes.
 
 A finite sample can still have positive MI. Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
-produces the usual chi-squared limit
-\citep{brillinger2004,marinescu2025}. The normal limit for comparing positive
-MI values and the chi-squared limit for testing independence therefore apply
+produces the usual chi-squared limiting distribution
+\citep{brillinger2004,marinescu2025}. The normal limiting distribution for comparing positive
+MI values and the chi-squared limiting distribution for testing independence therefore apply
 in different settings.
 
 \section{Approaches to Testing MI Differences}
@@ -439,7 +439,7 @@ two population tables to differ.
 \noindent\textbf{Normal Wald inference.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
-standard error, and compares the result with its asymptotic normal reference
+standard error, and compares the result with a standard normal distribution
 \citep{wald1943,vanderVaart1998}.
 For two independent MI estimates, the two first-order variance contributions
 add:
@@ -466,7 +466,7 @@ to the numerator and specifies the full Normal Wald test.
 
 With smaller samples, the MI difference may not follow the normal
 approximation closely, and the estimated standard error can vary between
-samples. The Wald test still uses a normal reference; it makes no separate
+samples. The Wald test still uses a normal distribution; it makes no separate
 small-sample adjustment for that standard-error variability.
 
 \medskip
@@ -495,10 +495,11 @@ component values affect \(\nu\). Satterthwaite obtains this form by matching
 the mean and variance of their sum to a scaled chi-squared variable
 \citep{satterthwaite1946}.
 
-Welch compares the statistic with a Student distribution using the calculated
+Welch compares the statistic with a Student \(t\) distribution using the calculated
 \(\nu\). At the same significance level, this requires a larger absolute
-statistic to reject the null than a standard normal reference does.
-The difference between the Student and normal rejection thresholds becomes
+statistic to reject the null than a standard normal distribution does.
+The difference between the rejection thresholds from the Student \(t\)
+and standard normal distributions becomes
 smaller as \(\nu\) increases.
 
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
@@ -511,16 +512,16 @@ Regression studies have also adjusted reference distributions to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
-for inference using a sandwich variance estimate. This supports the idea of
-examining the variance estimator itself, but the MI variance is a different
-function of the observed table and needs its own calculation.
+by examining how a regression variance estimate varies between samples.
+This supports examining the variance estimate itself, but the estimated MI
+variance is calculated differently and needs its own analysis.
 \citet{bell2002} report regression variance estimates biased downward,
 while \citet{kauermann2001} examine intervals that cover too rarely. A more
 cautious reference can help in such settings. In the MI comparison examined
 in Section~\ref{sec:mechanism-results}, the average squared plug-in standard
 error exceeds the measured finite-sample variance of the estimated
-difference. A Student reference cannot correct that discrepancy and further
-lowers rejection in that setting.
+difference. Using a Student \(t\) distribution does not correct that
+discrepancy and lowers rejection further in that setting.
 
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}
@@ -528,16 +529,16 @@ lowers rejection in that setting.
 MI uncertainty also has a broader literature than its leading normal
 approximation. \citet{roulston1999} derives entropy and MI error estimates
 using error propagation and examines them numerically. \citet{hutter2002}
-and \citet{hutterzaffalon2005} derive moments of the posterior distribution
-of MI under a Dirichlet model, including higher-order variance and shape
-information. Their analysis describes posterior uncertainty under a
-Dirichlet model, while this thesis evaluates how a two-sample test behaves
-over repeated samples. These results therefore answer a different uncertainty
-question from the Student reference used here.
+and \citet{hutterzaffalon2005} use a Bayesian model for the unknown cell
+probabilities to calculate uncertainty about MI after observing a table,
+including its variance and distributional shape. That differs from the
+repeated-sample question here: how often a test comparing two MI values
+rejects. Their results therefore do not directly justify using a Student
+\(t\) distribution for the test in this thesis.
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
-Student reference, using
+Student \(t\) distribution, using
 \begin{equation}
   \nu_H=
   \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
@@ -593,7 +594,7 @@ The cited work supplies several parts of the present comparison.
 \citet{moddemeijer1989} and \citet{brillinger2004} give the leading
 sampling variance of an MI estimate; \citet{miller1955} and
 \citet{paninski2003} explain why finite-sample bias and sparse tables
-also matter. Hutcheson's entropy comparison uses a Student reference
+also matter. Hutcheson's entropy comparison uses a Student \(t\) distribution
 with degrees of freedom assigned from sample sizes
 \citep{hutcheson1970}. In a different setting, \citet{panwall2002}
 show how uncertainty in a non-classical variance estimate can inform

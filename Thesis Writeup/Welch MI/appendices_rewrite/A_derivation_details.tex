@@ -139,6 +139,64 @@ $\widehat p_{ij}>0$. Direct substitution gives
 These expressions are the direct $O(rc)$ implementation of the population
 derivation.
 
+\section{Fixed-margin behaviour near independence}
+\label{sec:fixed-margin-local-derivation}
+
+Let \(P_0=(q_{ij})\) be independent, with positive cells
+\(q_{ij}=a_i b_j\). Consider \(P_t=P_0+tH\), where every row and column
+sum of \(H\) is zero. For sufficiently small \(t\), all cells remain
+positive and the margins remain \(a\) and \(b\). We expand around
+\(t=0\), where \(I(P_0)=0\).
+
+For \(f(t)=I(P_t)\), the second-order Taylor formula is
+\begin{equation}
+ f(t)=f(0)+f'(0)t+\frac{f''(0)}{2!}t^2+O(t^3).
+\end{equation}
+The fixed margins make the pointwise MI in cell \((i,j)\)
+\begin{equation}
+ \pmi_{P_t}(i,j)
+ =\log\left(1+\frac{tH_{ij}}{q_{ij}}\right)
+ =\frac{tH_{ij}}{q_{ij}}-
+  \frac{t^2H_{ij}^2}{2q_{ij}^2}+O(t^3),
+\end{equation}
+using \(\log(1+z)=z-z^2/2+O(z^3)\). Multiplying by the cell
+probability gives
+\begin{equation}
+ (q_{ij}+tH_{ij})\pmi_{P_t}(i,j)
+ =tH_{ij}+\frac{t^2H_{ij}^2}{2q_{ij}}+O(t^3).
+\end{equation}
+The first-order terms sum to zero because \(\sum_{i,j}H_{ij}=0\).
+Thus \(f(0)=f'(0)=0\), \(f''(0)=\sum_{i,j}H_{ij}^2/q_{ij}\), and
+\begin{equation}
+ I(P_t)=\frac{t^2}{2}\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
+\end{equation}
+
+To calculate \(V(P_t)\), square the leading pointwise-MI term. Its
+probability-weighted average is
+\(t^2\sum_{i,j}H_{ij}^2/q_{ij}+O(t^3)\), while \(I(P_t)^2\) is of order
+\(t^4\). Hence
+\begin{equation}
+ V(P_t)=t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
+\end{equation}
+
+For the sensitivity in Equation~\eqref{eq:g-final}, the row conditional
+mean of pointwise MI has first-order term
+\(t\sum_j H_{ij}/a_i=0\); the column mean likewise has first-order term
+\(t\sum_i H_{ij}/b_j=0\). The squared centred pointwise MI and \(V(P_t)\)
+are both of order \(t^2\). Therefore the bracket in Equation
+\eqref{eq:g-final} supplies the first-order term:
+\begin{equation}
+ g_{P_t}(i,j)=\frac{2tH_{ij}}{q_{ij}}+O(t^2).
+\end{equation}
+Since \(g_{P_t}\) has mean zero, its probability-weighted variance is
+\begin{equation}
+ \tau^2(P_t)=4t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
+\end{equation}
+Comparing these three leading terms gives \(V(P_t)\approx2I(P_t)\) and
+\(\tau^2(P_t)\approx4V(P_t)\) for small positive MI along this path.
+At \(t=0\), the first-order sampling approximation itself degenerates;
+Appendix~\ref{app:independence-boundary} treats that case separately.
+
 \section{Dependence between the MI and variance estimates}
 \label{sec:mi-variance-covariance}
 
@@ -151,9 +209,9 @@ fixed positive support, their first-order covariance is
 \end{equation}
 The corresponding expression for \(Q\) replaces \(P\) and \(n_P\) with
 \(Q\) and \(n_Q\). To see its direction near independence, use the fixed-margin
-path \(P_t=(q_{ij}+tH_{ij})\) from Section~\ref{sec:near-independence-mechanism},
-where \(q_{ij}=a_i b_j>0\) and \(H\) has zero row and column sums. For small
-positive \(t\), the expansions in that section give
+path \(P_t=(q_{ij}+tH_{ij})\) from
+Section~\ref{sec:fixed-margin-local-derivation}. For small positive \(t\),
+the expansions there give
 \begin{equation}
   \pmi_{P_t}(i,j)-I(P_t)
   =\frac{tH_{ij}}{q_{ij}}+O(t^2),
@@ -193,16 +251,14 @@ Equation~\eqref{eq:expanded-df} gives the equivalent combined form
   }.
   \label{eq:expanded-df-direct}
 \end{equation}
-This direct form remains defined if one table has
-\(\Vhat=\widehat\tau^2=0\) and the other supplies a positive denominator
-contribution. The zero table drops out, leaving the other table's component
-degree of freedom. The evaluated implementation instead requires both
-component degrees of freedom to be positive and finite before combining
-them. It records such a one-zero-component case as invalid, even though the
-direct form has a value.
+This direct form remains defined when one table has
+\(\Vhat=\widehat\tau^2=0\) and the other gives a positive denominator.
+The zero contribution drops out, leaving the other table's component degrees
+of freedom. The implementation nevertheless requires both components to have
+positive, finite degrees of freedom, so it records this case as invalid.
 
-The Student p-value is no smaller than the Normal Wald p-value for the same
-finite statistic. To see this, write a Student variable as \(Z/\sqrt S\),
+For a fixed statistic, the Student \(t\) distribution gives a p-value no
+smaller than Wald's. Write a variable with this distribution as \(Z/\sqrt S\),
 where \(Z\sim N(0,1)\), \(S\sim\chi^2_\nu/\nu\), and \(Z\) and \(S\) are
 independent. For \(c>0\), the conditional two-sided tail
 \(2\{1-\Phi(c\sqrt{s})\}\) is strictly convex in \(s\), since its second

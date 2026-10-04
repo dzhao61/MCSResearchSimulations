@@ -3,9 +3,9 @@
 
 Expanded Welch keeps the estimated MI difference, standard error and test
 statistic from Chapter~\ref{chap:baselines}. It changes the distribution used
-to judge that statistic from normal to Student. To choose the Student degrees
-of freedom, this chapter calculates how much the estimated MI variance changes
-between samples.
+to judge that statistic from the standard normal distribution to a Student
+\(t\) distribution. To choose its degrees of freedom, this chapter calculates
+how much the estimated MI variance changes between samples.
 
 \section[Choosing Degrees of Freedom for Expanded Welch]{Choosing Degrees of
 Freedom for\\Expanded Welch}
@@ -309,6 +309,7 @@ The first line is the change if the pointwise-MI values were held fixed. The
 bracket accounts for changes in those values, including the effects of the
 selected joint probability and both margins.
 
+\pagebreak[4]
 \section{Component degrees of freedom and final test}
 
 \noindent\textbf{Population component degrees of freedom.}
@@ -318,27 +319,30 @@ Define the population variability of the observation-level sensitivities by
   \tau^2(P)=\Var_P\{g_P(X,Y)\}.
   \label{eq:tau-definition}
 \end{equation}
-Averaging the one-cell perturbation directions gives
-\(\sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=0\). The derivative is linear in
-its direction, so \(\E_P\{g_P(X,Y)\}=0\); Appendix~\ref{app:derivation-details}
-shows the steps. Explicit centring protects the numerical calculation if
-roundoff produces a small nonzero empirical mean.
+The sensitivities average to zero under \(P\), as shown in
+Appendix~\ref{app:derivation-details}. Their variation, not their average,
+determines how much the estimated MI variance changes between samples.
 
 \begin{assumption}[Regular variance sensitivity]
 For the first-order Expanded Welch construction,
 \(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
 \end{assumption}
 
-The empirical distribution is
+An observation in cell \(Z_a^{(P)}\) can be represented by a table that places
+probability one in that cell, denoted \(\delta_{Z_a^{(P)}}\). Relative to
+\(P\), that observation contributes the table change
+\(\delta_{Z_a^{(P)}}-P\). The empirical table averages these one-observation
+tables, so its difference from \(P\) is
 \begin{equation}
   \widehat P-P
   =\frac{1}{n_P}\sum_{a=1}^{n_P}
   \left\{\delta_{Z_a^{(P)}}-P\right\}.
 \end{equation}
-Taylor's first-order term is linear in this difference
-\citep[Chapter~20]{vanderVaart1998}. By
-Equation~\eqref{eq:g-definition}, each summand has sensitivity
-\(g_P(Z_a^{(P)})\). Therefore,
+The plug-in \(\Vhat(P)\) applies the variance calculation to this empirical
+table. Equation~\eqref{eq:g-definition} gives its first-order change for
+one observation's direction. Because a first-order change is linear in the
+table error \citep[Chapter~20]{vanderVaart1998}, the changes from the
+observations can be averaged:
 \begin{equation}
   \Vhat(P)-V(P)
   \approx
@@ -457,9 +461,10 @@ The expanded calculation does not change \(\Deltahat\), \(\SEhat\), or
 \(T\). It changes only the reference distribution used to evaluate that
 statistic.
 
-For a fixed finite \(T\), the Student reference gives a two-sided p-value at
-least as large as the Normal Wald reference. Under the implemented validity
-rules, every valid Expanded Welch result is also Wald-valid. Thus every
+For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
+p-value at least as large as the standard normal distribution used by Wald.
+Under the implemented validity rules, every valid Expanded Welch result is
+also Wald-valid. Thus every
 Expanded Welch rejection is also a Wald rejection, including when invalid
 outputs count as non-rejections in the reported rates. The correction cannot
 raise rejection where Wald is already too conservative. Appendix~\ref{app:derivation-details}
@@ -540,7 +545,7 @@ Step & Calculation \\
 4 & Compute the row and column pointwise-MI means needed in \(\widehat g_P\) and \(\widehat g_Q\). \\
 5 & Compute \(\widehat\tau^2(P)\), \(\widehat\tau^2(Q)\), and the two component degrees of freedom. \\
 6 & Combine the components using Equation~\eqref{eq:expanded-df}. \\
-7 & Return the Student p-value, effective degrees of freedom, and validity diagnostics. \\
+7 & Return the p-value from the Student \(t\) distribution, effective degrees of freedom, and validity diagnostics. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -555,49 +560,37 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 \noindent\textbf{Near independence.}
 
-The adjustment has a local explanation. Let \(P_t=P_0+tH\), where
-\(P_0=(q_{ij})\) is independent with positive cells \(q_{ij}=a_i b_j\), and
-\(H\) has zero row and column sums. Thus \(t=0\) is the expansion point
-and the margins stay fixed. For \(f(t)=I(P_t)\), the second-order Taylor
-expansion has \(f(0)=0\), \(f'(0)=\sum_{i,j}H_{ij}=0\), and
-\(f''(0)=\sum_{i,j}H_{ij}^2/q_{ij}\).
-\begin{align}
- I(P_t)
- &=\underbrace{0}_{\text{population value}}
-   +\underbrace{0t}_{\text{first order}}
-   +\underbrace{\frac{t^2}{2}\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}}_{\text{second order}}
-   +O(t^3),\\
- \pmi_{P_t}(i,j)
- &=\log\left(1+\frac{tH_{ij}}{q_{ij}}\right)
-   =\frac{tH_{ij}}{q_{ij}}+O(t^2),\\
- V(P_t)
- &=t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
-\end{align}
-Appendix~\ref{app:independence-boundary} gives the second-order MI result
-when the margins can also change.
-The row and column conditional means of pointwise MI have no first-order
-term because the corresponding sums of \(H\) are zero. Equation~\eqref{eq:g-final}
-then gives \(g_{P_t}(i,j)=2tH_{ij}/q_{ij}+O(t^2)\), and hence
-\begin{equation}
- \tau^2(P_t)
- =4t^2\sum_{i,j}\frac{H_{ij}^2}{q_{ij}}+O(t^3).
-\end{equation}
-For a distribution close to independence on this path, these expansions give
+The adjustment has a local explanation. Consider a population table that
+approaches independence while its row and column margins stay fixed. At
+independence, MI is zero and its first-order change is also zero. The
+leading changes in MI, the pointwise-MI variance \(V(P)\), and the variance
+sensitivity \(\tau^2(P)\) can therefore be compared using a second-order
+expansion. Appendix~\ref{sec:fixed-margin-local-derivation} gives the
+calculation and its fixed-margin assumptions. Close to independence on
+that path, it gives
 \begin{equation}
  V(P)\approx 2I(P),
  \qquad \tau^2(P)\approx4V(P).
  \label{eq:near-independent-moments}
 \end{equation}
-Substitution into the component formula then gives
+Both relationships come from the same changes to the table; they are local
+approximations, not identities for all populations. Substituting them into
+the component degrees-of-freedom formula gives
 \begin{equation}
- \nu_P=\frac{2n_PV(P)^2}{\tau^2(P)}\approx n_PI(P).
+ \nu_P=\frac{2n_PV(P)^2}{\tau^2(P)}
+ \approx\frac{n_PV(P)}{2}
+ \approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-Thus low MI can produce a small effective degree of freedom and a much
-heavier-tailed reference. The approximation is local: it assumes fixed table
-dimension, positive probabilities and sufficiently regular cell counts. Very
-near independence, quadratic sampling variation can still be important, so a
-first-order Student adjustment need not improve finite-sample calibration.
+The cancellation explains why a low starting MI can produce few effective
+degrees of freedom and a higher rejection cutoff from the Student \(t\)
+distribution. This result assumes fixed table size, positive cell
+probabilities and a population close to
+independence along the stated path; applying it to samples also requires the
+first-order approximation to be useful. It does not describe exact independence,
+where quadratic sampling variation matters and the first-order test may be
+poorly calibrated. Appendix~\ref{app:independence-boundary} treats that
+boundary separately.
 
 \medskip
 \noindent\textbf{Theoretical status and validity conditions.}
@@ -607,20 +600,22 @@ its estimated variance change when the underlying table changes slightly.
 For tables with positive cell probabilities, these changes give their
 first-order large-sample approximations.
 
-The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and the
-Student reference are approximations, not exact finite-sample distributions.
+Approximating \(\Vhat(P)\) by the scaled chi-squared model in
+Equation~\eqref{eq:scaled-chi-working} and evaluating \(T\) against a Student
+\(t\) distribution are working approximations, not exact finite-sample laws.
 In particular, \(\Ihat(P)\) and \(\Vhat(P)\) come from the same sample and can
 vary together. Adjusting the reference for uncertainty in \(\Vhat(P)\) does
-not account fully for this dependence or make the statistic exactly Student
-distributed. Appendix~\ref{app:derivation-details} gives the first-order
+not account fully for this dependence or make the statistic follow a Student
+\(t\) distribution exactly. Appendix~\ref{app:derivation-details} gives the first-order
 covariance. As sample sizes grow under regular conditions, the estimated
-degrees of freedom increase and the Student reference approaches the normal
-reference used by Wald.
+degrees of freedom increase and the Student \(t\) distribution approaches the
+standard normal distribution used by Wald.
 
 Both tests need a finite corrected MI difference and a positive, finite
 estimated standard error. Expanded Welch also needs positive, finite degrees
 of freedom for each population and for their combination. If a requirement
 fails, the calculation is recorded as invalid, not as evidence for the null.
-Appendix~\ref{app:reproducibility} gives the exact software rules.
+Appendix~\ref{sec:validity-rules} gives the numerical validity criteria used
+in the experiment.
 Chapters~\ref{chap:design} and~\ref{chap:results} report how often valid
 results are obtained and whether the correction improves calibration.

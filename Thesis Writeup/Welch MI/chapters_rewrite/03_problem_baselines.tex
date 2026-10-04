@@ -4,7 +4,7 @@
 This chapter defines the population MI difference being tested and the
 statistic calculated from the observed tables. Both methods use this same
 statistic. Normal Wald judges it against a standard normal distribution;
-Chapter~\ref{chap:expanded} develops a Student distribution with estimated
+Chapter~\ref{chap:expanded} develops a Student \(t\) distribution with estimated
 degrees of freedom.
 
 \section{Problem setup and bias-corrected estimator}
@@ -169,7 +169,8 @@ The two-sided Normal Wald p-value is
 \end{equation}
 where \(\Phi\) is the standard normal distribution function.
 
-The normal reference is a large-sample approximation. Wald estimates the
+Using the standard normal distribution is a large-sample approximation here.
+Wald estimates the
 standard error from the tables but applies no degrees-of-freedom adjustment.
 
 \medskip
@@ -182,9 +183,7 @@ set each variance component's degrees of freedom from its sample size:
 measures how much the plug-in MI variance changes when the observed table
 changes. That variance depends on joint cells, margins and pointwise MI
 values. Expanded Welch instead estimates each component's degrees of freedom
-from how the complete MI variance estimate changes with the table. The
-supplementary analysis also compares these sample-size assignments with
-Expanded Welch.
+from how the complete MI variance estimate changes with the table.
 
 To choose the degrees of freedom, we need the average value of each estimated
 MI variance and how much that estimate varies across samples

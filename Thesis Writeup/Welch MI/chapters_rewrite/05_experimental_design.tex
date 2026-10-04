@@ -11,8 +11,7 @@ at equal MI is a false positive; a rejection at unequal MI is detection.
 \section{A Concrete Pair of Population Tables}
 
 Consider two \(2\times2\) populations whose row and column margins are
-\((0.7,0.3)\) for \(P\) and \((0.8,0.2)\) for \(Q\). The construction produces,
-to the displayed precision,
+\((0.7,0.3)\) for \(P\) and \((0.8,0.2)\) for \(Q\). The construction gives
 \begin{equation}
  P\simeq
  \begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
@@ -21,12 +20,9 @@ to the displayed precision,
  \begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
  \label{eq:design-example-pair}
 \end{equation}
-These are \emph{probability} tables, not observed counts. Their target MI
-values are 0.02 and 0.03 nats, so the true magnitude of the difference is
-0.01 nats. Sampling new count tables changes the estimated MI values, but
-does not move this fixed population pair to a new horizontal-axis location.
-Calculations use the stored unrounded probabilities; the rounded display in
-Equation~\eqref{eq:design-example-pair} does not determine the samples.
+In both populations, \(X\) and \(Y\) are dependent, with MI values of 0.02
+and 0.03 nats, respectively. Their absolute difference, 0.01 nats, is the
+horizontal-axis value used in the figures.
 
 \section{Constructing fixed joint distributions}
 
@@ -155,7 +151,7 @@ An invalid calculation contributes no rejection to Equation
 The valid-result rate shows how often each test returns a usable
 p-value. The reported 95\% intervals show simulation uncertainty at each
 fixed population pair. Intervals for the difference between methods account
-for applying both tests to the same sampled tables. Appendix~\ref{app:evidence-index}
+for applying both tests to the same sampled tables. Appendix~\ref{app:diagnostics}
 gives the interval calculations and rates restricted to valid results.
 
 The ``minimum expected count'' diagnostic is
@@ -170,8 +166,7 @@ not a validated safety threshold.
 
 Table~\ref{tab:design-families} records the question answered by each family.
 The common population construction above applies unless the named factor
-changes. Exact parameter sets are in Appendix~\ref{app:construction}, and the
-machine-readable protocol is identified in Appendix~\ref{app:reproducibility}.
+changes. Exact parameter sets are in Appendix~\ref{app:construction}.
 The principal grid crosses square shapes \(2\times2,3\times3,5\times5,8\times8\)
 with the three margin profiles in Table~\ref{tab:margin-profiles}. It fixes
 \(I(P)=0.02\) nats and uses
@@ -184,45 +179,43 @@ grid; Appendix~\ref{app:construction} lists their exact values.
 There are 534 distinct population pairs \((P,Q)\), each specifying two
 fixed joint probability tables. Reusing a pair at different sample sizes
 creates distinct sampling configurations. There are 3,111 unique statistical
-configurations but 4,001 display points:
-some configurations are deliberately shown in more than one comparison.
+configurations.
 Each unique configuration is sampled once, giving 62,220,000 table pairs in
 the final statistical run. The within-family counts in
 Table~\ref{tab:design-families} do not sum to 3,111 because the same
-configuration can occur in several families. Display reuse is not an
-independent replication.
-The supplementary results report contains the full set of plotted points;
-Appendix~\ref{app:evidence-index} identifies that report and the
-per-configuration data files.
+configuration can occur in several families. Results from the same
+configuration may therefore appear in more than one comparison; this is not
+an independent replication. Chapter~\ref{chap:results} presents the main
+comparisons, with supporting figures in Appendix~\ref{app:additional-results}.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{The fixed experiment families. All statistical points use 20,000
 paired replicates and the 5\% threshold.}
 \label{tab:design-families}
-\begin{tabularx}{\textwidth}{@{}lrrX@{}}
+\begin{tabularx}{\textwidth}{@{}lrX@{}}
 \toprule
-Family & Displays & Unique & Factor examined\\
+Family & Configurations & Factor examined\\
 \midrule
-Main & 648 & 648 & Square table size, three margin profiles and equal sample size.\\
-Baseline & 648 & 648 & Starting positive MI of 0.0001, 0.001 or 0.02 nats.\\
-Changed cells & 144 & 144 & First, rare or spread association patterns.\\
-Imbalance & 1,152 & 1,056 & Sample allocation and which population has higher MI.\\
-Larger effects & 162 & 162 & MI differences up to 0.2 nats where feasible.\\
-Rectangular & 108 & 108 & \(2\times3\) and \(3\times5\) tables.\\
-Construction & 432 & 432 & Additive versus ordinal log-linear population tables.\\
-Extreme skew & 315 & 315 & Dominant margins up to 0.9995, including \(n=1\) stress.\\
-Rare-cell stress & 140 & 140 & First- versus rare-block changes, including \(n=1\) stress.\\
-Independence & 144 & 144 & Exact \(I(P)=0\) boundary.\\
-Convergence & 108 & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
-Runtime & 60 & 60 & Full-call timing regimes, separate from simulation.\\
+Main & 648 & Square table size, three margin profiles and equal sample size.\\
+Baseline & 648 & Starting positive MI of 0.0001, 0.001 or 0.02 nats.\\
+Changed cells & 144 & First, rare or spread association patterns.\\
+Imbalance & 1,056 & Sample allocation and which population has higher MI.\\
+Larger effects & 162 & MI differences up to 0.2 nats where feasible.\\
+Rectangular & 108 & \(2\times3\) and \(3\times5\) tables.\\
+Construction & 432 & Additive versus ordinal log-linear population tables.\\
+Extreme skew & 315 & Dominant margins up to 0.9995, including \(n=1\) stress.\\
+Rare-cell stress & 140 & First- versus rare-block changes, including \(n=1\) stress.\\
+Independence & 144 & Exact \(I(P)=0\) boundary.\\
+Convergence & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
+Runtime & 60 & Full-call timing regimes, separate from simulation.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 The runtime experiment measures a full method call after count tables are
 already available. It varies table shape, profile, sample size and null or
-alternative status. Each regime uses 200 saved inputs, 20 warm-up calls and
+alternative status. Each regime uses 200 pre-generated table pairs, 20 warm-up calls and
 five timed passes. Thus it measures method computation, not the cost of
 constructing populations or generating random tables. Median call times and
 interquartile ranges are reported in Chapter~\ref{chap:results}.

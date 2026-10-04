@@ -147,11 +147,11 @@ therefore produces a statistic with a non-vanishing scale:
 \end{equation}
 This is the usual likelihood-ratio, or $G$, test of independence under a fixed
 alphabet and the standard positive-support large-sample conditions
-\citep{wilks1938,brillinger2004}. The chi-squared reference describes the squared cell
+\citep{wilks1938,brillinger2004}. The chi-squared distribution describes the squared cell
 errors in Equation~\eqref{eq:appendix-mi-second-order}. Expanded Welch instead
 standardises a signed first-order MI error on the $n^{-1/2}$ scale. At
-independence that signed term is absent, so its Student reference is not the
-chi-squared reference in another form.
+independence that signed term is absent, so the Student \(t\) distribution
+used by Expanded Welch is not the chi-squared distribution in another form.
 
 Although squaring a regular asymptotic \(N(0,1)\) statistic gives a
 \(\chi^2_1\) limit, the present \(T\) is degenerate at independence. Its
@@ -159,7 +159,7 @@ square is therefore not the likelihood-ratio \(G\) statistic.
 
 The same likelihood-ratio connection appears for conditional information
 measures. For finite Markov chains, \citet{barnett2012} relate transfer entropy
-to a log-likelihood ratio with an asymptotic chi-squared reference; the wider
+to a log-likelihood ratio with an asymptotic chi-squared distribution; the wider
 information-theoretic setting is reviewed by \citet{bossomaier2016}. This is an
 adjacent application of the same second-order likelihood principle, not a
 two-sample equal-MI Welch test.

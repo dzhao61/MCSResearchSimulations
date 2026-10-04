@@ -26,7 +26,8 @@ MI uses the probabilities in every cell of a table and the totals of its rows
 and columns. In a small sample, some cells can be empty even when their
 population probabilities are positive. The observed tables determine both
 the estimated MI difference and its standard error, so sparse data can affect
-both. The Normal Wald test compares their ratio with a normal curve, but in
+both. The Normal Wald test compares their ratio with a standard normal
+distribution, but in
 small samples it may reject equal MI more or less often than the intended 5\%.
 
 Expanded Welch offers a possible adjustment. It uses the same estimated
@@ -46,7 +47,8 @@ positives, detection and the frequency of usable results together.
 \section{Research questions}
 
 The thesis asks two main questions. First, how can changes in the estimated
-MI variance be used to choose the degrees of freedom for a Student test?
+MI variance be used to choose the degrees of freedom for a test using a
+Student \(t\) distribution?
 Second, does the resulting Expanded Welch test offer a useful improvement
 over Normal Wald? Answering the second question requires looking at false
 positives, detection when MI differs, and the frequency of usable results.
@@ -67,7 +69,8 @@ whether the test is useful.
   the resulting changes in the row and column totals and in pointwise MI.
 
   \item \textbf{Methodological contribution.} Expanded Welch uses this
-  calculation to choose the degrees of freedom for a two-sample Student test.
+  calculation to choose the degrees of freedom for a two-sample test using a
+  Student \(t\) distribution.
   The main experiment compares it with Wald; a supplementary analysis checks
   simpler sample-size choices for the degrees of freedom.
 
@@ -102,4 +105,4 @@ Chapter~\ref{chap:results} presents and interprets the main comparisons
 in sequence. Chapter~\ref{chap:discussion} draws out their broader
 implications and limits, and Chapter~\ref{chap:conclusion} states the
 contribution and recommendation. The appendices give the detailed algebra,
-population settings, supporting figures and source-to-result record.
+population settings, simulation diagnostics and supporting figures.

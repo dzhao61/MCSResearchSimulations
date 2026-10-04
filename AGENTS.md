@@ -23,12 +23,26 @@ one denominator random when both methods estimate it). Use formal, direct,
 confident language at an honours/master's level. Define necessary jargon,
 state real approximations or limitations once where they matter, and avoid
 repeated defensive caveats. Simpler wording must remain statistically precise.
+Use complete names for statistical objects when the noun matters: write
+"Student t distribution" or "cutoff from the Student t distribution", not
+"Student" or "Student cutoff" alone. Do the same for normal and chi-squared
+distributions instead of relying on the reader to supply "distribution".
 
 Keep each passage focused on the question it is answering. Detailed explanation
 belongs where it advances the argument; omit or relocate short technical
 digressions that interrupt the transition to the next idea. When describing a
 connection, comparison or change, explicitly name both quantities or methods
 so the reader does not have to infer the missing subject.
+Keep figure captions short and descriptive. Put detailed experiment settings
+and interpretation in ordinary body paragraphs beside each figure, rather
+than in long captions or separate small-text interpretation blocks.
+
+The thesis must be understandable as a standalone manuscript without access
+to the codebase. Keep scientific construction details, parameter settings and
+validity rules in the text or appendices. Omit file inventories, local paths,
+configuration identifiers, build commands, version-control history and
+protocol-freeze administration from the manuscript; internal project records
+can retain them.
 
 Keep ordinary chat answers as concise as the user's question warrants; this
 preference chiefly governs substantial derivations and thesis exposition.

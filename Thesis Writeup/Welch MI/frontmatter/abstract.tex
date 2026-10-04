@@ -11,7 +11,7 @@ The thesis develops an Expanded Welch--Satterthwaite adjustment for this
 comparison. It derives how changing one observation affects the estimated MI
 variance, including changes to the cell probabilities and their row and
 column totals. That calculation determines the degrees of freedom for a
-Student \(t\) reference. Expanded Welch retains Wald's estimated MI
+Student \(t\) distribution. Expanded Welch retains Wald's estimated MI
 difference and standard error; it changes only the distribution used to judge
 the resulting statistic.
 
@@ -23,7 +23,7 @@ equal MI. At a nominal 5\% threshold, the experiment measures false
 positives, detection when MI differs, and the frequency of usable results.
 
 Expanded Welch reduces excessive Wald false positives in some settings.
-However, when both tests return a p-value, its Student reference gives a
+However, when both tests return a p-value, its Student \(t\) distribution gives a
 p-value no smaller than Wald's. It therefore also lowers rejection where Wald
 already rejects too rarely and can reduce detection when MI differs. In
 sparse samples, Expanded Welch more often fails to return a usable p-value

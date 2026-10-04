@@ -3,9 +3,7 @@
 
 The experiment uses fixed population tables. This appendix states the
 construction precisely enough to reproduce any plotted point and records the
-finite parameter grids. Full-precision probabilities for every constructed
-pair are stored in \texttt{population\_definitions.csv}; rounded examples in
-the thesis are for reading, not simulation input.
+finite parameter grids.
 
 \section{Additive construction}
 
@@ -40,10 +38,10 @@ empirical estimate. They do not impose an expected-count floor on the
 subsequent sample.
 
 The row and column vectors are separately constructed for each population.
-For shape \(r\times c\), profile \texttt{uniform} uses uniform vectors of
-lengths \(r\) and \(c\) for both \(P\) and \(Q\). Profile
-\texttt{same\_skew} uses \(m_r(0.8)\), \(m_c(0.8)\) for both. Profile
-\texttt{different\_skew} uses \(m_r(0.7)\), \(m_c(0.7)\) for \(P\) and
+For shape \(r\times c\), the uniform profile uses uniform vectors of
+lengths \(r\) and \(c\) for both \(P\) and \(Q\). The same-skew profile
+uses \(m_r(0.8)\), \(m_c(0.8)\) for both. The different-skew profile
+uses \(m_r(0.7)\), \(m_c(0.7)\) for \(P\) and
 \(m_r(0.8)\), \(m_c(0.8)\) for \(Q\). The extreme regimes instead state the
 two dominant probabilities directly. The direction of the alternative is a
 separate parameter and should not be inferred from which population has the
@@ -64,16 +62,14 @@ the first-block additive construction used in the comparison, it changes
 cells throughout the table. Matching margins and MI does not imply
 matching all cell probabilities or expected counts.
 
-\section{Frozen statistical grids}
+\section{Statistical experiment grids}
 
 Unless a row of Table~\ref{tab:exact-grids} says otherwise, both populations
 use the first-cell additive direction, \(I(P)=I_0\),
 \(I(Q)=I_0+|\Delta|\), and the three standard margin profiles. The
-symbol \(n\) means \(n_P=n_Q=n\). A requested point was simulated only after
-the population constructor verified a strictly positive feasible table.
-The final display contains no infeasible slots, but that is a result of
-choosing feasible finite grids. Curves should not be extrapolated beyond
-their last constructed target.
+symbol \(n\) means \(n_P=n_Q=n\). Only targets producing strictly positive
+population tables are used. Curves should not be extrapolated beyond their
+last constructed target.
 
 \begin{longtable}{@{}p{0.18\textwidth}p{0.75\textwidth}@{}}
 \caption{Exact statistical experiment grids; MI values are in nats.}
@@ -128,11 +124,16 @@ Convergence & Main square shapes and profiles; equal MI
 \(n\in\{1000,2500,10000,50000\}\). Additional rare-block controls
 use \(3\times3,5\times5,8\times8\), different-skew margins and common
 MI 0.0001.\\
+Runtime & Shapes \(2\times2,3\times3,3\times5,5\times5,8\times8\);
+uniform and different-skew profiles; \(I_0=0.02\);
+\(|\Delta|\in\{0,0.02\}\); \(n\in\{20,100,1000\}\).
+Each of the 60 regimes uses 200 pre-generated table pairs, 20 warm-up calls
+and five timed passes.\\
 \bottomrule
 \end{longtable}
 
 At \(n=1\), neither statistic is evaluable, so the result is recorded as
 invalid. Every unique
 statistical configuration has 20,000 sampled table pairs. When the same
-population pair and sample sizes appear in another section, the saved
-configuration is reused for presentation and not simulated again.
+population pair and sample sizes appear in another section, the same
+simulation results are shown rather than generating a new set of samples.

@@ -88,7 +88,7 @@ confirmatory estimator, or the thesis's substantive conclusions.
 - The paired interval formula and the meaning of 534 fixed population pairs are now stated.
 - Bibliographic capitalisation and the Marinescu--Balcau arXiv identifier were corrected. The Berrett--Samworth pointer is Section 3(b).
 - No Brillinger DOI was added because one was not verified from the primary record; the author-hosted paper remains linked.
-- The declaration page was removed at the author's request. The title-page degree name, Master of Complex Systems, matches the official University of Sydney course title.
+- The declaration page was removed at the author's request. The earlier degree-title check was mistaken: the author clarified on 4 October 2026 that the degree is Master of Computer Science, and the active title page was corrected.
 
 ## New evidence files
 
@@ -128,7 +128,7 @@ turning the thesis into a study of every possible implementation variant.
   variant experiments were not added. They would answer narrower questions
   without changing the main conclusion and would distract from the master's-
   level narrative.
-- No degree-title change was made: the title page already names the confirmed
-  Master of Complex Systems degree. The existing weak-null summaries and
+- The earlier degree-title claim was superseded by the 4 October correction
+  above. The existing weak-null summaries and
   companion atlas already provide the requested regime-level evidence, so an
   additional weak-null figure was not necessary.

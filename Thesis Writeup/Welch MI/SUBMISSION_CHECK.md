@@ -23,17 +23,17 @@ T1-T8 are complete for the 4 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The A4 PDF has 98 pages, including 51 numbered main-text pages. Chapter 6 contains seven lead figures; Appendix D contains 15 supporting figures. | Complete. |
+| Manuscript | The standalone A4 PDF has 95 pages, including 50 numbered main-text pages. Chapter 6 contains seven lead figures; Appendix D contains 15 supporting figures. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 101 workspace tests and 36 archive-bundled tests pass. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks for all 36 active references. The clean build resolves every citation. | Complete. |
 | Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 regenerated figures, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
-| Build | A clean build from the extracted source and supplement produces 98 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
-| Visual presentation | All 98 pages were inspected as rendered contact sheets; affected prose, figure flow and appendix pages were checked at larger size and their layout issues corrected. | Complete. |
+| Build | A clean build from the extracted source and supplement produces 95 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Visual presentation | The earlier full manuscript was inspected as rendered contact sheets. The current contents lists, design, results, limitations and affected appendix pages were reviewed as contact sheets, with selected pages checked at larger size. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
-| Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the confirmed degree name. The declaration page remains excluded at the author's request. | Complete. |
+| Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 14,447 whitespace-separated tokens
-from `pdftotext` on PDF pages 9-59 (printed pages 1-51). This includes
+The current main-text length diagnostic is 14,274 whitespace-separated tokens
+from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
 

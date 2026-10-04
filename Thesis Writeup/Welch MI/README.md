@@ -60,8 +60,8 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `preamble.tex`: shared packages, notation, and formatting.
 - `frontmatter/`: title page, abstract, and acknowledgements.
 - `chapters_rewrite/`: eight active main chapters.
-- `appendices_rewrite/`: active derivations, exact design grids, evidence index,
-  supporting experimental figures, independence boundary and reproduction record.
+- `appendices_rewrite/`: active derivations, exact design grids, simulation
+  uncertainty and validity diagnostics, supporting figures and independence boundary.
 - `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
 - `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
 - `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
@@ -79,11 +79,15 @@ diagnostics are retained in the experiment supplement rather than the
 reader-facing thesis.
 
 The 4 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 98-page manuscript. Chapter 6 has seven
+in `deliverables/` match the active 95-page manuscript. Chapter 6 has seven
 lead figures, and Appendix D has 15 supporting figures. The source archive
 builds independently when extracted with the supplement; the evidence audit
 and bundled tests also pass there. The declaration page is intentionally
 excluded at the author's request.
+
+The manuscript is standalone. Scientific settings and validity rules are
+included in its chapters and appendices; file inventories, build commands and
+protocol history remain in separate project records rather than the PDF.
 
 The source archive includes the current goal, detailed rewrite plan and review
 records. Links in those records to the supplied example theses and historical
