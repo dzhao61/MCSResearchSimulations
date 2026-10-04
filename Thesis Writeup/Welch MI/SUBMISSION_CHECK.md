@@ -1,7 +1,9 @@
 # Thesis completion check
 
-Updated 28 September 2026. The current objective, SMART targets and working
-schedule are in [THESIS_GOAL.md](THESIS_GOAL.md).
+The 4 October 2026 record below verifies the current thesis and deliverables.
+The later dated September notes are retained as historical audit evidence;
+their earlier page counts and references to a "current" PDF do not supersede
+this record. The acceptance targets are in [THESIS_GOAL.md](THESIS_GOAL.md).
 
 ## Agreed requirements
 
@@ -11,25 +13,36 @@ incorrect course assumption; its assessment restrictions and report length have
 been removed from the active requirements.
 
 The examples have 58, 65 and 87 pages of main text and complete PDFs of 75,
-126 and 104 pages. The working goal is comparable depth and length, with
-65-75 main-text pages as a useful planning centre within the observed range.
+126 and 104 pages. They set a benchmark for depth and presentation, not a
+minimum page count. The current main text is shorter because secondary plots
+and technical detail are in the appendices.
 
-## Current evidence
+## Current Verification
 
-This records the final verification status.
+T1-T8 are complete for the 4 October revision.
 
-| Area | Evidence available | Remaining work |
+| Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The current A4 PDF has 97 pages, including 67 numbered main-text pages (Introduction through the end of Conclusion). The active source reads `chapters_rewrite/` and `appendices_rewrite/`. | Complete. |
-| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative checks, local near-independence limits, implementation comparisons, worked-example reproduction and regularity qualifications. All 101 tests pass. | Complete. |
-| Literature | `LITERATURE_SOURCE_CHECK.md` records a source and claim disposition for all 36 active references. The local bibliography contains the same 36 checked records, with no missing or unused citations. | Complete. |
-| Experimental evidence | The audit reconstructs the frozen protocol and checks every Chapter 6 value, the exact source rows for all 22 confirmatory figures, generated macros, paired results, convergence and runtime. It also checks the 809-configuration supplementary mechanism study, its 169 independent null pilots, ablations, local-moment predictions and quoted diagnostic values. | Complete. |
-| Build | The active source builds to 97 A4 pages with zero errors, undefined citations or references, missing assets, and overfull boxes. Fonts are embedded. | Complete. |
-| Visual presentation | An earlier version received a full visual and raster review. Pages affected by later derivation, citation and readability edits were reinspected at final size; the full-page raster comparison was not repeated for the current revision. | Targeted refresh complete. |
-| Source package | `references.bib`, all active source files and all 22 figure PDFs are local. The isolated copy compiles without an old draft or parent bibliography. | Complete. |
-| Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the official University course title. The declaration page was removed at the author's request. | Complete for the current version. |
+| Manuscript | The A4 PDF has 98 pages, including 51 numbered main-text pages. Chapter 6 contains seven lead figures; Appendix D contains 15 supporting figures. | Complete. |
+| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 101 workspace tests and 36 archive-bundled tests pass. | Complete. |
+| Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks for all 36 active references. The clean build resolves every citation. | Complete. |
+| Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 regenerated figures, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
+| Build | A clean build from the extracted source and supplement produces 98 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Visual presentation | All 98 pages were inspected as rendered contact sheets; affected prose, figure flow and appendix pages were checked at larger size and their layout issues corrected. | Complete. |
+| Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
+| Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. “Master of Complex Systems” matches the confirmed degree name. The declaration page remains excluded at the author's request. | Complete. |
 
-## Substantive and readability pass
+The current main-text length diagnostic is 14,447 whitespace-separated tokens
+from `pdftotext` on PDF pages 9-59 (printed pages 1-51). This includes
+headings, captions, mathematical tokens and plot labels, so it is not a
+prose-only word count. `git diff --check` passes for the thesis tree.
+
+## Earlier Acceptance Record
+
+The following dated records describe earlier manuscript states. They show how
+the checks developed but are not the current release specification.
+
+### Substantive and readability pass
 
 T6 was completed on 16 September 2026. Each active chapter and appendix was
 read once for scientific continuity and once for clarity. The pass used the

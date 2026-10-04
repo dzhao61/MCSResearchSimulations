@@ -427,7 +427,6 @@ produces the usual chi-squared limit
 MI values and the chi-squared limit for testing independence therefore apply
 in different settings.
 
-\clearpage
 \section{Approaches to Testing MI Differences}
 \label{sec:welch-background}
 
@@ -488,8 +487,6 @@ testing equal population means and its effective degrees of freedom are
   \label{eq:background-ordinary-welch}
 \end{align}
 
-\pagebreak[4]
-
 The denominator of the statistic contains one estimated variance contribution
 from each sample. Under normal sampling, their component degrees of freedom
 are \(n_P-1\) and \(n_Q-1\). If \(s_P^2/n_P\) dominates, the formula makes the
@@ -517,12 +514,13 @@ For example, \citet{panwall2002} calculate approximate degrees of freedom
 for inference using a sandwich variance estimate. This supports the idea of
 examining the variance estimator itself, but the MI variance is a different
 function of the observed table and needs its own calculation.
-For example, \citet{bell2002} report regression variance estimates biased
-downward, while \citet{kauermann2001} examine intervals that cover too
-rarely. A more cautious reference can help in such settings. Near
-independence, however, the estimated MI variance can be biased upward.
-A Student reference may then make an already cautious test reject even less
-often. Section~\ref{sec:mechanism-results} examines this possibility.
+\citet{bell2002} report regression variance estimates biased downward,
+while \citet{kauermann2001} examine intervals that cover too rarely. A more
+cautious reference can help in such settings. In the MI comparison examined
+in Section~\ref{sec:mechanism-results}, the average squared plug-in standard
+error exceeds the measured finite-sample variance of the estimated
+difference. A Student reference cannot correct that discrepancy and further
+lowers rejection in that setting.
 
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}

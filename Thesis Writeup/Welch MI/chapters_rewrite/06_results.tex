@@ -23,7 +23,7 @@ matched figures are in Appendix~\ref{app:additional-results}; Appendix~
 }
 
 \newcommand{\mainlandscapefigure}[6]{%
-\begin{figure}[p]
+\begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.18\textwidth]{main_#1_#3.pdf}}
 \caption[Main landscape: #2 tables, #5 margins]{#2 tables, #4. Columns: \(n_P=n_Q=10,100,1000\), respectively.
@@ -49,33 +49,16 @@ the target 0.05 at each size.
 \mainlandscapefigure{2x2}{\(2\times2\)}{uniform}{both \(P\) and \(Q\) have uniform row and column margins \((1/2,1/2)\)}{uniform}{At zero difference, both methods reject below 0.05 at \(n=100\) and 1,000; Expanded Welch is lower still. At \(n=10\), Wald is slightly above 0.05 and Expanded Welch below it. Validity is high in all three panels. Rejection grows most clearly with MI difference at \(n=1{,}000\), where the two curves are close. At the smaller sizes, low rejection should not be mistaken for better detection.}
 \FloatBarrier
 
-At \(n=10\), Wald starts slightly above 0.05 and Expanded Welch below
-it. At \(n=100\) and 1,000, Wald is already below the target, so the
-further reduction is not an improvement in calibration. The next
-question is whether larger tables change this balance. Figure~
-\ref{fig:main-8x8-uniform} keeps uniform margins and the same true MI
-targets and displayed sample sizes, but uses \(8\times8\) tables.
+Figure~\ref{fig:main-8x8-uniform} asks whether the same comparison
+changes in a larger, still-uniform \(8\times8\) table.
 
-\mainlandscapefigure{8x8}{\(8\times8\)}{uniform}{both \(P\) and \(Q\) have uniform row and column margins \((1/8,\ldots,1/8)\)}{uniform}{At \(n=10\) and 100, the zero-difference rates exceed 0.05 for both methods; Expanded Welch reduces the excess but does not always reach the target. These plotted calculations are valid, so the difference is not caused by missing outputs. At \(n=100\), rejection changes little over the displayed alternatives; at \(n=1{,}000\), it grows strongly. Even with uniform margins, table size and sample size alter the trade-off.}
+\mainlandscapefigure{8x8}{\(8\times8\)}{uniform}{both \(P\) and \(Q\) have uniform row and column margins \((1/8,\ldots,1/8)\)}{uniform}{At \(n=10\) and 100, the zero-difference rates exceed 0.05 for both methods; Expanded Welch reduces the excess but does not always reach the target. These plotted calculations are valid, so the difference is not caused by missing outputs. At \(n=100\), rejection changes little over the displayed alternatives; at \(n=1{,}000\), it grows strongly. Even with uniform margins, table size and sample size alter the trade-off. The next comparison allows the two populations' margins to differ.}
 \FloatBarrier
-
-With \(8\times8\) uniform margins, both methods reject too often at
-the \(n=10\) and 100 null points, and Expanded Welch reduces the
-excess without always reaching 0.05. These calculations are valid, so
-the change is not caused by missing p-values. Yet equal MI does not
-require identical population tables. Figure~\ref{fig:main-8x8-different_skew}
-asks whether the conclusion persists when \(P\) and \(Q\) have
-different margins at the zero-difference point.
 
 \mainlandscapefigure{8x8}{\(8\times8\)}{different_skew}{\(P\) has row and column margins \(m_8(0.7)=(0.7,0.3/7,\ldots,0.3/7)\), while \(Q\) has \(m_8(0.8)=(0.8,0.2/7,\ldots,0.2/7)\)}{different skew}{At zero difference, both methods are too liberal at \(n=10\) and 100, although Expanded Welch rejects less. Its \(n=10\) markers are hollow, so validity contributes to that reduction. At \(n=100\), rejection falls rather than grows over the displayed alternative range; at \(n=1{,}000\), detection rises but stays lower for Expanded Welch. This is the clearest reminder not to infer power from the null rate alone.}
 
-\FloatBarrier
+\clearpage
 
-In that different-skew comparison, both methods still reject too often
-at the \(n=10\) and 100 null points. The hollow \(n=10\) markers show
-that validity contributes to Expanded Welch's lower rate. At \(n=100\),
-rejection falls as the true difference increases over the displayed
-range; null calibration alone cannot predict the alternative curve.
 Across the 24 main null regimes with \(n=10\) or 20,
 Expanded Welch is numerically closer to 0.05 in
 \(\MainTenTwentyExpandedCloserCount\), whereas Wald is closer in
@@ -127,7 +110,7 @@ The main grid shows only differences up to 0.02 nats. Figure~
 to 0.2 nats to check whether the low rejection over small effects
 persists as the true MI difference grows.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{broad_2x2_uniform.pdf}
 \caption[Wider MI differences, uniform \(2\times2\)]{Wider MI differences in a uniform \(2\times2\) population pair.
@@ -148,9 +131,8 @@ not a permanent ceiling on detection.}
 
 \FloatBarrier
 
-At 0.2 nats, both methods detect the difference in more than 90\% of
-samples. Their low rejection over the main grid's smaller differences
-is therefore not a permanent ceiling. But the starting association
+The wider effect range establishes that the low rejection in the main
+grid is not a permanent ceiling on detection. The starting association
 may also matter. Figure~\ref{fig:baseline-focus} repeats a \(3\times3\)
 different-skew comparison with three starting MI values while keeping
 the other displayed settings fixed.
@@ -179,8 +161,6 @@ null rate and further reduces detection.}
 
 \FloatBarrier
 
-All three baseline-MI null comparisons return valid calculations,
-yet both methods reject too rarely and Expanded Welch is lower.
 The local calculation in Chapter~\ref{chap:expanded} explains why
 its degrees of freedom can become small near independence: the
 Student cutoff becomes more demanding where the first-order MI
@@ -223,12 +203,8 @@ unconditional rejection cannot be read as good calibration in sparse data.}
 
 \FloatBarrier
 
-At the most extreme margins, both null rejection rates are zero, but
-only 0.0118 of Wald and 0.00005 of Expanded Welch calculations are
-valid. The low rejection mainly reflects a failure to return a
-p-value, not good calibration.
-
-There is a second, distinct small-sample effect. Expanded Welch
+Low validity explains much of the zero rejection in the most extreme
+panel. There is a second, distinct small-sample effect: Expanded Welch
 rejects in none of the \(\MainFiveNullCount\) main-grid null
 regimes with \(n=5\), including uniform \(3\times3\), \(5\times5\)
 and \(8\times8\) regimes where most calculations are valid. Thus its
@@ -325,7 +301,7 @@ under equal MI and increases the sample size. This tests whether the
 poor null rates are temporary small-sample effects for the chosen
 populations, and whether the answer changes with their common MI.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{convergence.pdf}
 \caption[Large-sample null behaviour]{Large-sample null behaviour. Rows compare \(2\times2\) and
@@ -350,12 +326,10 @@ Expanded Welch. At MI 0.0001, the ranges remain 0.0089--0.0280 and
 
 \FloatBarrier
 
-At common MI 0.02, the null rates approach 0.05 in the tested
-populations as sample size grows. At MI 0.0001, they remain low even
-at \(n=50{,}000\). This is consistent with the first-order
-approximation becoming useful more slowly near independence, but the
-four displayed panels do not establish a universal sample-size
-threshold for other populations.
+The slow approach to 0.05 at the smaller MI is consistent with the
+first-order approximation becoming useful more slowly near independence.
+These fixed populations do not establish a universal sample-size
+threshold for other tables.
 
 Expanded Welch also requires more computation. A full method call
 has the same \(O(rc)\) asymptotic complexity as Wald, but its extra
