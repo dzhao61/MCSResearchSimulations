@@ -1,8 +1,8 @@
 \chapter{Additional Derivation Details}
 \label{app:derivation-details}
 
-This appendix records algebra that supports Chapters~\ref{chap:baselines}
-and~\ref{chap:expanded} but is not required to follow the main argument.
+This appendix gives supporting derivations for
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded}.
 
 \section{Gradient of mutual information on the probability simplex}
 
@@ -98,10 +98,7 @@ weighted-average direction:
   &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
     \right|_{0}=0.
 \end{align}
-The same weighted cancellation holds after exact plug-in substitution. The
-implementation nevertheless subtracts the probability-weighted empirical
-mean inside Equation~\eqref{eq:tau-hat} to protect the variance calculation
-from floating-point roundoff; this does not change the population definition.
+The same weighted cancellation holds after exact plug-in substitution.
 
 \section{Direct table substitutions}
 
@@ -266,25 +263,26 @@ derivative is
 \(c\phi(c\sqrt{s})(s^{-3/2}+c^2s^{-1/2})/2>0\). As \(\E S=1\),
 Jensen's inequality gives
 \(\Pr(|Z/\sqrt S|>c)>\Pr(|Z|>c)\); at \(c=0\) both tails equal one.
-Moreover, the implemented Expanded-valid set is a subset of the Wald-valid
+
+The validity rules preserve this ordering in the reported rejection rates.
+The implemented Expanded-valid set is a subset of the Wald-valid
 set. At a common fixed threshold, every Expanded rejection is therefore
 also a Wald rejection, both replicate by replicate and in unconditional
 rates that count invalid outputs as non-rejections.
 
 \section{Numerical derivative checks}
 
-The implementation tests the analytic derivatives against centred finite
-differences on positive probability tables. For a selected cell and a small
+Centred finite differences on positive tables independently check the
+analytic derivatives. For a selected cell and a small
 positive step $\eta$, define
 \begin{equation}
   P_{\pm\eta}=(1\mp\eta)P\pm\eta\delta_{(x,y)}.
 \end{equation}
-For sufficiently small $\eta$, the checks compare
+For sufficiently small $\eta$ that keeps both perturbed tables positive,
+the checks compare
 \begin{align}
   \frac{I(P_\eta)-I(P_{-\eta})}{2\eta}
   &\quad\text{with}\quad \pmi_P(x,y)-I(P),\\
   \frac{V(P_\eta)-V(P_{-\eta})}{2\eta}
   &\quad\text{with}\quad g_P(x,y).
 \end{align}
-The perturbations preserve positive probabilities. These checks verify the
-algebra independently of the Monte Carlo experiment.

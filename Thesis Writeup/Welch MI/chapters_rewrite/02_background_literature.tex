@@ -62,7 +62,9 @@ values \citep{shannon1948,bossomaier2016}:
 Here the summations are nested: for each row \(i\), the inner sum runs over
 all columns \(j\). Equivalently, the expression sums once over every cell in
 the table and may be written with the shorthand \(\sum_{i,j}\).
-Because \(P\) is the joint distribution of \((X,Y)\), the same quantity is
+
+The same MI can also be expressed through the entropies introduced above.
+Because \(P\) is the joint distribution of \((X,Y)\), it is
 conventionally written as \(I(X;Y)\). Equivalently,
 \begin{equation}
   I(X;Y)=H(X)+H(Y)-H(X,Y).
@@ -72,11 +74,8 @@ The quantity is nonnegative and equals zero exactly when
 \(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells
 \citep{bossomaier2016}.
 
-MI measures the overall departure from independence, not one particular
-shape of association.
-
-This scalar summary deliberately discards much of the information in the
-joint distribution. Two populations can have the same MI while assigning
+Although MI measures the overall departure from independence, it does not
+specify the shape of association. Two populations can have the same MI while assigning
 probability to different cells, having different margins, or exhibiting
 different association patterns. Equality of MI is therefore weaker than
 equality of distributions. Our null requires only this one number to agree,
@@ -158,6 +157,7 @@ observation varies across the population. The derivation assumes that the
 population cell probabilities are positive, so the logarithms and their
 derivatives are well defined. This first-order variance is established for
 histogram and discrete MI \citep{moddemeijer1989,brillinger2004}.
+
 The argument proceeds in three steps. First, sampling changes the empirical
 cell probabilities. Second, a first-order Taylor expansion translates those
 probability errors into an MI error. Third, that error can be written as a
@@ -176,7 +176,9 @@ written directly in terms of the joint and marginal probabilities:
   -\sum_j p_{+j}\log p_{+j}.
   \label{eq:mi-probability-sums}
 \end{equation}
-Let \(f(u)=u\log u\). The derivative needed for its first-order Taylor
+Each sum contains the same function, \(f(u)=u\log u\). Expanding this
+function lets us translate probability errors into changes in MI. The
+derivative needed for its first-order Taylor
 expansion follows directly from the product rule:
 \begin{equation}
   f'(u)
@@ -248,8 +250,10 @@ For example, the row-margin sum can now be written as
 The inner sum over \(j\) is the probability error for a fixed row \(i\). It
 is multiplied by that row's coefficient \(\log p_{i+}+1\); the outer sum then
 adds these products over all rows. The column-margin sum can be rearranged in
-the same way. Consequently,
-the same cell error \(\widehat p_{ij}-p_{ij}\) appears in the joint term, its
+the same way.
+
+After this rearrangement, the same cell error \(\widehat p_{ij}-p_{ij}\)
+appears in the joint term, its
 row-margin term and its column-margin term. Its combined coefficient is
 \begin{align}
   &(\log p_{ij}+1)
@@ -337,8 +341,9 @@ is gathered inside one pair of brackets:
 The first sum inside the brackets selects the single cell containing
 \(Z_a\), giving \(\pmi_P(Z_a)\). The second is the probability-weighted
 average of all pointwise-MI values, which is \(I(P)\).
-This equation is the key step. To first order, the error in the plug-in MI
-estimate behaves like the average of \(n\) observation-level contributions.
+
+To first order, Equation~\eqref{eq:mi-error-as-average-background} expresses
+the MI error as an average of \(n\) observation-level contributions.
 The contribution of an observation in cell \((i,j)\) is simply that cell's
 pointwise MI minus the population average, \(\pmi_P(i,j)-I(P)\). Its mean is
 zero because
@@ -405,8 +410,7 @@ When \(V(P)>0\), the central limit theorem also gives
   \xrightarrow{d}N(0,1).
   \label{eq:mi-clt-background}
 \end{equation}
-This does not claim that every finite-sample MI estimate is normally
-distributed. It is a local, large-sample approximation for a fixed table with
+This gives a large-sample normal approximation for a fixed table with
 positive population cell probabilities. The \(1/n\) leading bias from
 Section~\ref{sec:background-mi-bias} decreases faster than the
 \(1/\sqrt n\) sampling error, so it does not change this limiting
@@ -414,6 +418,7 @@ distribution.
 
 \medskip
 \noindent\textbf{The independence boundary.}
+\nopagebreak[4]
 
 At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
 \(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
@@ -430,11 +435,10 @@ in different settings.
 \section{Approaches to Testing MI Differences}
 \label{sec:welch-background}
 
-The methods below answer related but different questions. Some quantify the
-sampling error of one MI estimate; others compare two estimates or adjust a
-test when its standard error is itself estimated. For this thesis, a useful
-predecessor must be assessed against the null \(I(P)=I(Q)\), which allows the
-two population tables to differ.
+This section reviews methods for estimating uncertainty in MI and testing
+differences between two MI values. The question in this thesis is whether two
+populations have the same MI, \(I(P)=I(Q)\). Their cell probabilities may
+differ even when their MI values are equal.
 
 \noindent\textbf{Normal Wald inference.}
 
@@ -508,13 +512,15 @@ calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
 the probability tables. Chapter~\ref{chap:expanded} derives these
 MI-specific inputs to the same moment-matching structure.
 
-Regression studies have also adjusted reference distributions to account for
+The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
 by examining how a regression variance estimate varies between samples.
 This supports examining the variance estimate itself, but the estimated MI
 variance is calculated differently and needs its own analysis.
+
+Whether this adjustment helps depends on the direction of the variance error.
 \citet{bell2002} report regression variance estimates biased downward,
 while \citet{kauermann2001} examine intervals that cover too rarely. A more
 cautious reference can help in such settings. In the MI comparison examined
@@ -526,12 +532,16 @@ discrepancy and lowers rejection further in that setting.
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}
 
-MI uncertainty also has a broader literature than its leading normal
-approximation. \citet{roulston1999} derives entropy and MI error estimates
-using error propagation and examines them numerically. \citet{hutter2002}
-and \citet{hutterzaffalon2005} use a Bayesian model for the unknown cell
-probabilities to calculate uncertainty about MI after observing a table,
-including its variance and distributional shape. That differs from the
+Other MI uncertainty calculations provide context for this variance-based
+approach. \citet{roulston1999} derives entropy and MI error estimates
+using error propagation and examines them numerically. These calculations
+describe the uncertainty of an individual estimate, a necessary input to a
+comparison of two estimates.
+
+A Bayesian approach instead describes uncertainty about the unknown
+population MI after observing a table. \citet{hutter2002}
+and \citet{hutterzaffalon2005} model the unknown cell probabilities to
+calculate the variance and shape of the resulting MI distribution. This differs from the
 repeated-sample question here: how often a test comparing two MI values
 rejects. Their results therefore do not directly justify using a Student
 \(t\) distribution for the test in this thesis.
@@ -548,7 +558,9 @@ Student \(t\) distribution, using
 as its effective degrees of freedom \citep{hutcheson1970}. Here each of
 \(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
 corresponding entropy estimator \(\widehat H\), and each variance component
-is assigned its sample size, not \(n_i-1\). Applying the same assignment to the
+is assigned its sample size, not \(n_i-1\).
+
+Hutcheson's assignment provides an analogue for the MI comparison. Applying it to the
 two MI variance contributions gives a clear historical baseline. It does not,
 however, derive how the plug-in MI variance itself fluctuates: MI depends on a
 joint distribution and both margins, so moving mass into one cell changes
@@ -560,8 +572,10 @@ application, \citet{mora2009} develop inference for an MI index and discuss
 pairwise comparisons across groups and periods; the later peer-reviewed account
 places that MI index within the wider segregation literature \citep{mora2011}.
 They do not derive the variance-sensitivity degrees of freedom used here.
-\citet{guha2014} use MI for a different two-sample
-question: whether two continuous distributions are identical. Their MI is
+
+Other two-sample tests use MI to compare complete distributions rather than
+two within-population MI values. \citet{guha2014} use MI for
+the question of whether two continuous distributions are identical. Their MI is
 between a pooled observation and its sample label; their null is equality of
 distributions, not equality of two within-population MI values. For discrete
 data, \citet{drake2014} develop an MI-based \(k\)-sample test for the same

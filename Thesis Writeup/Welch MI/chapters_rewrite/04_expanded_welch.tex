@@ -47,8 +47,8 @@ variable. For the first population, the working approximation represents
   \frac{\chi^2_{\nu_P}}{\nu_P}.
   \label{eq:scaled-chi-working}
 \end{equation}
-The approximation matches moments; it does not assert that the
-finite-sample distribution of \(\Vhat(P)\) is exactly chi-squared.
+The scale and degrees of freedom are chosen to match the mean and variance
+of \(\Vhat(P)\).
 
 For a chi-squared variable with \(\nu_P\) degrees of freedom,
 \begin{equation}
@@ -379,8 +379,10 @@ absolute, uncertainty. Since
 the component degrees of freedom are approximately twice the reciprocal of
 this relative variance. A stable estimate relative to the size of $V(P)$ has
 large degrees of freedom; a relatively unstable estimate has smaller degrees
-of freedom and produces a heavier-tailed final reference. This
-first-order component formula assumes \(\tau^2(P)>0\). Positive \(V(P)\)
+of freedom and produces a heavier-tailed final reference.
+
+Using this first-order component formula requires \(\tau^2(P)>0\).
+Positive \(V(P)\)
 alone does not guarantee that condition. A small change in the table can have
 no first-order effect on \(V(P)\), even when MI and \(V(P)\) are positive.
 In that case, a higher-order analysis of \(\Vhat(P)\) would be needed to
@@ -553,7 +555,7 @@ Step & Calculation \\
 Each empirical probability, pointwise-MI value, row mean, column mean, and
 variance contribution is calculated by a fixed number of table scans. The
 time complexity is therefore \(O(rc)\), and the working memory is also
-\(O(rc)\). The method is deterministic once the two count tables are given.
+\(O(rc)\).
 
 \section{Behaviour and limitations}
 \label{sec:near-independence-mechanism}
@@ -584,9 +586,11 @@ the component degrees-of-freedom formula gives
 \end{equation}
 The cancellation explains why a low starting MI can produce few effective
 degrees of freedom and a higher rejection cutoff from the Student \(t\)
-distribution. This result assumes fixed table size, positive cell
-probabilities and a population close to
-independence along the stated path; applying it to samples also requires the
+distribution.
+
+This near-independence interpretation is limited to the stated local path.
+It assumes fixed table size and positive cell
+probabilities; applying it to samples also requires the
 first-order approximation to be useful. It does not describe exact independence,
 where quadratic sampling variation matters and the first-order test may be
 poorly calibrated. Appendix~\ref{app:independence-boundary} treats that
@@ -607,15 +611,15 @@ In particular, \(\Ihat(P)\) and \(\Vhat(P)\) come from the same sample and can
 vary together. Adjusting the reference for uncertainty in \(\Vhat(P)\) does
 not account fully for this dependence or make the statistic follow a Student
 \(t\) distribution exactly. Appendix~\ref{app:derivation-details} gives the first-order
-covariance. As sample sizes grow under regular conditions, the estimated
+covariance.
+
+As sample sizes grow under regular conditions, the estimated
 degrees of freedom increase and the Student \(t\) distribution approaches the
 standard normal distribution used by Wald.
 
 Both tests need a finite corrected MI difference and a positive, finite
-estimated standard error. Expanded Welch also needs positive, finite degrees
-of freedom for each population and for their combination. If a requirement
-fails, the calculation is recorded as invalid, not as evidence for the null.
-Appendix~\ref{sec:validity-rules} gives the numerical validity criteria used
-in the experiment.
-Chapters~\ref{chap:design} and~\ref{chap:results} report how often valid
-results are obtained and whether the correction improves calibration.
+estimated standard error. Expanded Welch also needs positive, finite component
+and combined degrees of freedom. A failed requirement gives an invalid
+calculation, not evidence for the null.
+Appendix~\ref{sec:validity-rules} specifies the numerical criteria;
+the experiment evaluates validity alongside calibration.

@@ -2,9 +2,8 @@
 \label{app:additional-results}
 
 Chapter~\ref{chap:results} uses seven figures to develop the main argument.
-The figures below retain the other matched comparisons from the same
-simulation run. Population and sample settings precede each figure, and its
-discussion follows in ordinary prose. Each plotted point uses 20,000 paired
+The figures below present the other matched comparisons from the same
+simulation run. Each plotted point uses 20,000 paired
 samples; hollow markers show validity below 90\%. Except where stated,
 upper panels use a 0--1 rejection scale and lower panels enlarge 0--0.15.
 
@@ -60,8 +59,7 @@ zero-difference Wald rates are \(\PatternFirstWaldRate\),
 \(\PatternSpreadExpandedRate\). All displayed calculations are valid. The
 alternative curves remain nearly flat over this short MI range, so neither
 method detects these differences well. Changing the location of association
-does not remove the conservative gap here, although this one plot does not
-make all patterns equivalent.
+therefore leaves the conservative gap in this comparison.
 
 \clearpage
 
@@ -196,8 +194,7 @@ tables starting at exact independence.}
 At the uniform zero-difference point, Wald rejects
 0.00025 and Expanded Welch 0.00010 of samples; validity is high. Rejection grows little over
 most of the displayed alternative range, and Expanded Welch remains lower.
-This is not a routine positive-MI validation: at exact independence the
-population first-order MI variance is zero, so the approximation underlying
+At exact independence, the population first-order MI variance is zero, so the approximation underlying
 both curves changes. Appendix~\ref{app:independence-boundary} explains the
 different reference used by a one-table independence test.
 
@@ -214,7 +211,10 @@ descriptive aid, not a formal calibration test.
 Each margin profile contains 36 configurations. The final column counts
 configurations with validity below 90\% and overlaps the three rate-location
 columns. All four \(n=2\) configurations per profile have zero validity for
-both methods. Uniform and same-skew nulls have \(P=Q\), while different-skew
+both methods.
+
+The profiles differ in what their null populations have in common.
+Uniform and same-skew nulls have \(P=Q\), while different-skew
 nulls have \(P\ne Q\) and \(I(P)=I(Q)\).
 
 \input{figures_rewrite/null_band_summary}

@@ -4,24 +4,33 @@
 This thesis studied how to compare the mutual information (MI) of two
 independently sampled categorical populations. Equal MI permits the
 population tables, their margins and their patterns of association to
-differ. The work makes two contributions to this problem. First, it
-derives how a change in one observation changes the plug-in estimate
+differ. The mathematical contribution is a derivation of how a change in
+one observation changes the plug-in estimate
 of MI variance, including the effects on cell probabilities and row
 and column totals. This gives an MI-specific Welch--Satterthwaite
-degrees-of-freedom calculation. Second, it evaluates that calculation
-against Normal Wald on fixed populations whose true MI differences
+degrees-of-freedom calculation for comparing the two populations.
+
+The empirical contribution is a controlled evaluation of that calculation
+against Normal Wald. The experiment uses fixed populations whose true MI differences
 are known, reporting false positives, detection, validity and runtime
 together.
 
-The main finding is a qualified negative result. Expanded Welch
+The evaluation shows a benefit in some settings, but no general improvement.
+Expanded Welch
 reduces rejection relative to Wald and can move an excessive
 false-positive rate toward 5\%. The same change makes an already-low
 rate lower and often reduces detection when MI differs. In sparse
 samples, it can also fail to return a p-value more often than Wald.
+These results show that lowering rejection is useful only when it improves
+calibration without an unacceptable loss of detection or validity.
+
+The shared statistic explains a further limit of the adjustment.
 The reference distribution alone cannot correct errors in the
 estimated MI difference or the standard error shared by both tests.
 This identifies both the value and the limit of a familiar
-variance-reference adjustment when applied to MI. Normal Wald remains
+variance-reference adjustment when applied to MI.
+
+For these reasons, Normal Wald remains
 the simpler general baseline for the tested task; Expanded Welch is
 best treated as a sensitivity check in a regime where its calibration
 and validity have been examined separately.
@@ -29,7 +38,10 @@ and validity have been examined separately.
 That recommendation is bounded by the experiment. Its population
 pairs were chosen to expose particular table sizes, margins,
 association patterns and sample sizes, not to represent all joint
-distributions. The derivation assumes independent observations,
+distributions. Extending the recommendation to another application therefore
+requires evidence for that population setting.
+
+The mathematical scope also matters. The derivation assumes independent observations,
 positive population cell probabilities and positive first-order MI
 variance. Exact independence requires a different approximation,
 and the study does not establish a rule for paired data, continuous
@@ -40,6 +52,8 @@ and its standard error together, especially near independence and
 in sparse tables. A likelihood-ratio or resampling method could
 provide a different comparison, but it would need validation for
 the actual null \(I(P)=I(Q)\), including cases where \(P\ne Q\).
+
+The experimental evidence could also be extended to new population settings.
 A real-data application and equal-MI pairs with association in
 different cells would then test how far the present simulation
 conclusions extend.

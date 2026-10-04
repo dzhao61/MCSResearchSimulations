@@ -39,10 +39,12 @@ The principal test is two-sided:
 
 The large-sample argument uses the following assumptions.
 
+\begin{samepage}
 \begin{assumption}[Sampling]
 Observations are independent and identically distributed within each
 population, and the two population samples are independent.
 \end{assumption}
+\end{samepage}
 
 \begin{assumption}[Aligned fixed alphabets]
 The row and column categories are fixed in advance and aligned between the two
@@ -107,7 +109,10 @@ populations.
 The correction uses the declared alphabet dimensions, not the observed
 nonempty dimensions. A corrected estimate can be negative in a sparse sample
 and is not clipped at zero, since clipping would define a different nonlinear
-estimator. When \(n_P=n_Q\), the two corrections cancel in the difference;
+estimator.
+
+The effect of the correction on the difference depends on the sample sizes.
+When \(n_P=n_Q\), the two corrections cancel in the difference;
 otherwise, their difference removes the leading unequal-sample bias described
 in Section~\ref{sec:background-mi-bias}.
 
@@ -147,6 +152,7 @@ The null hypothesis is not imposed when calculating \(\Deltahat\),
 \(\SEhat\) or \(T\): they use the observed tables. Equal population MI
 enters when interpreting the reference distribution, which is centred at
 zero under \(H_0\).
+
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference
 distribution, not the effect estimate or plug-in standard error.

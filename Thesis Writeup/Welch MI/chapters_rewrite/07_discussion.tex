@@ -10,16 +10,24 @@ test and how far the conclusions can be taken.
 Normal Wald and Expanded Welch use the same estimated MI difference and
 standard error. Expanded Welch can only make a valid two-sided p-value
 larger. This is helpful when Wald rejects an equal-MI null too often;
-it is harmful when Wald already rejects too rarely. Its extra component
-validity requirements can also reduce the number of samples for which a
-p-value is available. Lower rejection is therefore not by itself evidence
-of better calibration.
+it is harmful when Wald already rejects too rarely. Lower rejection is
+therefore not by itself evidence of better calibration.
+
+Validity places a further limit on that interpretation. Expanded Welch's
+extra component requirements can reduce the number of samples for which a
+p-value is available. The sparse-sample results in
+Chapter~\ref{chap:results} show that this loss of valid outputs can also
+lower the reported rejection rate. A practical assessment must therefore
+consider calibration and usable results together.
 
 The tested populations include equal-MI pairs with different margins,
 so the comparison goes beyond the special case \(P=Q\). They show that
 table size, margin shape, starting MI and sampling allocation can change
 the trade-off. No single numerical adjustment worked well across all
-those settings. For applications resembling a tested regime, Normal
+those settings. This variation makes the recommendation specific to the
+population setting.
+
+For applications resembling a tested regime, Normal
 Wald remains the simpler baseline. Expanded Welch can be a
 conservative sensitivity check if a separate calibration study shows
 that Wald is too liberal and the expanded calculation is usually valid.
@@ -36,8 +44,12 @@ this timing difference.
 
 The study evaluates fixed, deliberately constructed population pairs,
 not a random sample from every possible joint distribution. Its 20,000
-replicates per configuration make the rate for each fixed pair precise;
-they do not make the selected pairs representative of every application.
+replicates per configuration estimate the rate for each fixed pair, with
+pointwise Monte Carlo intervals quantifying simulation uncertainty.
+Neither the replicates nor those intervals establish performance in
+untested populations.
+
+One specific gap concerns the association patterns in equal-MI pairs.
 The main construction changes four cells. Rare-cell, spread and
 log-linear constructions test other patterns, but the study does not
 pair equal-MI populations whose association is placed in different
@@ -47,13 +59,12 @@ The methods are studied with two independent samples from fixed
 categorical alphabets, a two-sided 5\% threshold and the stated sample
 ladders. The analysis does not establish performance for paired
 observations, continuous MI estimators, growing alphabets or a real-data
-workflow. Exact independence is a separate boundary because the
+workflow.
+
+Exact independence also needs a different mathematical approximation. The
 first-order MI variance vanishes there. The dedicated check and
 Appendix~\ref{app:independence-boundary} describe that boundary but
 do not turn the positive-MI test into a general independence test.
-
-The pointwise Monte Carlo intervals quantify simulation uncertainty for the
-chosen populations, not uncertainty about performance in untested populations.
 
 These limits point to two distinct next steps: studying the joint
 finite-sample behaviour of the estimated MI difference and its standard

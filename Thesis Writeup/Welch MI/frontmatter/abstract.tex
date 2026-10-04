@@ -22,15 +22,18 @@ sample sizes, sparse cells, and populations with different distributions but
 equal MI. At a nominal 5\% threshold, the experiment measures false
 positives, detection when MI differs, and the frequency of usable results.
 
-Expanded Welch reduces excessive Wald false positives in some settings.
-However, when both tests return a p-value, its Student \(t\) distribution gives a
-p-value no smaller than Wald's. It therefore also lowers rejection where Wald
+Expanded Welch reduces excessive Wald false positives in some settings, but
+the same adjustment also reduces rejection elsewhere. When both tests return
+a p-value, its Student \(t\) distribution gives a p-value no smaller than
+Wald's. It therefore lowers rejection where Wald
 already rejects too rarely and can reduce detection when MI differs. In
 sparse samples, Expanded Welch more often fails to return a usable p-value
 under the implemented rule. Wald is closer to the target 5\% rate in all 24
-main null settings with sample sizes 500 or 1,000. A supplementary diagnostic
-shows that changing the reference distribution cannot correct error in the
-standard error shared by both tests. For the settings studied, Wald remains
+main null settings with sample sizes 500 or 1,000.
+
+These findings show the limits of changing only the reference distribution.
+A supplementary diagnostic shows that this change cannot correct error in
+the standard error shared by both tests. For the settings studied, Wald remains
 the simpler general baseline. Expanded Welch is a potential additional check
 when a separate, closely matched calibration study shows that Wald rejects
 equal MI too often.

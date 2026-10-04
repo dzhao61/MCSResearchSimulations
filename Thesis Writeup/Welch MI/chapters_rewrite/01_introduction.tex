@@ -30,15 +30,21 @@ both. The Normal Wald test compares their ratio with a standard normal
 distribution, but in
 small samples it may reject equal MI more or less often than the intended 5\%.
 
+\begin{samepage}
 Expanded Welch offers a possible adjustment. It uses the same estimated
 difference and standard error as Wald, but compares their ratio with a
-Student \(t\) distribution. Its degrees of freedom depend on how much
+Student \(t\) distribution.
+\par
+\end{samepage}
+
+Choosing that Student \(t\) distribution requires a calculation specific to
+MI. Its degrees of freedom depend on how much
 the estimated MI variance changes from sample to sample. To calculate that
 change, we must account for the fact that changing one cell also changes its
 row and column totals and the MI values calculated from them. This thesis
 derives that calculation and tests whether the adjustment helps.
 
-The adjustment is not automatically better. It can reduce false positives
+Expanded Welch can reduce false positives
 where Wald rejects too often, but it can also reduce detection where Wald
 already rejects too rarely. In sparse samples, it may fail to return a usable
 p-value when Wald succeeds. The experiment therefore examines false
@@ -49,10 +55,11 @@ positives, detection and the frequency of usable results together.
 The thesis asks two main questions. First, how can changes in the estimated
 MI variance be used to choose the degrees of freedom for a test using a
 Student \(t\) distribution?
+
 Second, does the resulting Expanded Welch test offer a useful improvement
-over Normal Wald? Answering the second question requires looking at false
-positives, detection when MI differs, and the frequency of usable results.
-The experiment checks how these outcomes change with table size, uneven cell
+over Normal Wald?
+The experiment checks how false positives, detection and validity change with
+table size, uneven cell
 probabilities, the amount and location of association, unequal sample sizes
 and larger samples. It also measures the extra computation required.
 
@@ -64,20 +71,28 @@ contributions are the calculation needed for that test and evidence about
 whether the test is useful.
 
 \begin{enumerate}
+  \begin{samepage}
   \item \textbf{Mathematical contribution.} The thesis derives how changing
   one observation affects the estimated MI variance. The calculation includes
   the resulting changes in the row and column totals and in pointwise MI.
+  \par
+  \end{samepage}
 
+  \begin{samepage}
   \item \textbf{Methodological contribution.} Expanded Welch uses this
   calculation to choose the degrees of freedom for a two-sample test using a
   Student \(t\) distribution.
-  The main experiment compares it with Wald; a supplementary analysis checks
-  simpler sample-size choices for the degrees of freedom.
+  The experiment compares it with Normal Wald.
+  \par
+  \end{samepage}
 
+  \begin{samepage}
   \item \textbf{Empirical contribution.} A reproducible experiment measures
   false positives, detection, usable results and runtime on fixed populations
   with known MI. It covers \(2\times2\) through \(8\times8\) square tables,
   rectangular tables, unequal samples and very sparse settings.
+  \par
+  \end{samepage}
 
   \item \textbf{Practical contribution.} Expanded Welch can help when Wald
   rejects equal MI too often. It can also make an already-low rejection rate
@@ -93,7 +108,9 @@ same row and column categories. The main derivation assumes every population
 cell has positive probability and that its leading large-sample MI variance
 is greater than zero. Exact independence is considered separately because
 that variance becomes zero.
-The experiment compares Normal Wald with Expanded Welch using a two-sided 5\%
+
+Within this setting, the experiment compares Normal Wald with Expanded Welch
+using a two-sided 5\%
 test. It does not establish performance for paired data, continuous MI
 estimators or a number of categories that grows with sample size.
 

@@ -70,7 +70,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 14,274
+unverified word limit is imposed. The current main text has 14,695
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
 (printed pages 1-50). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
@@ -117,8 +117,8 @@ and reason; the target date does not relax the acceptance criteria.
 
 **Status at 4 October 2026:** T1-T8 are complete for the current 95-page A4
 manuscript, with 50 printed main-text pages. Chapter 6 uses seven lead figures
-and Appendix D retains 15 supporting figures. The focused editorial and
-full-document visual review is complete. All 101 workspace tests and 36
+and Appendix D retains 15 supporting figures. The focused paragraph-coherence
+pass and full-document visual review are complete. All 101 workspace tests and 36
 archive-bundled tests pass. The full evidence audit passes against the frozen
 results and all 22 regenerated confirmatory figures. A clean build from the
 extracted source and experiment archives produces the same 95-page text with
@@ -205,6 +205,15 @@ define technical terms. Give each paragraph one main point; revise long
 sentences that combine several claims. Review sentences longer than about
 35 words as an editing aid, while allowing necessary mathematical qualifications.
 
+Use TEEL as a flexible guide to paragraph structure: establish one main idea,
+support it with evidence or an equation, explain why that support matters,
+and connect it to the argument or next question. Separate a second main idea
+into its own paragraph. An equation and its surrounding prose form one
+explanatory unit; a derivation need not repeat a four-sentence template at
+every step. Transitions must explain how successive ideas relate, not merely
+announce what comes next. Avoid artificial linking sentences and unnecessary
+repetition of the preceding paragraph.
+
 ### Prose clarity: explain the mechanism
 
 Write for an undergraduate honours reader who knows basic calculus and
@@ -225,6 +234,17 @@ language. State a genuine assumption, approximation or limitation where it
 matters, without repeating caveats around every sentence. A reader should
 be able to tell exactly what a claim means and why it follows from the
 preceding argument. Simpler wording must not weaken the statistical claim.
+State the scientific question or result directly, using concrete subjects and
+verbs. Avoid abstract commentary about how a method must be assessed when the
+actual comparison can be stated plainly. Explain the point itself rather than
+making the reader reconstruct it from a description of the reasoning process.
+
+Omit incidental editorial and logistical commentary: notes about how the
+document is presented, obvious workflow properties, and assurances about
+rounding or numerical housekeeping. Retain numerical details that affect
+the calculation, reproduction or interpretation. Explain approximations
+positively through their purpose and conditions rather than disclaiming
+stronger claims that the manuscript has not made.
 
 Preserve the progression of the argument. Explain a technical detail where
 the reader needs it to follow the next step; omit or relocate short digressions
@@ -234,7 +254,7 @@ supports their purpose. In sentences describing a connection, comparison or
 change, name both quantities or methods explicitly instead of leaving the
 reader to infer what is being connected or compared.
 
-Peripheral technical distinctions may be left to an appendix or supplement
+Peripheral technical distinctions may be left to an appendix
 when they distract from the main argument. Keep the assumptions and
 limitations that would change how a result is interpreted; readability is not
 a reason to make a stronger statistical claim than the evidence supports.

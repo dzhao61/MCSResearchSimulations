@@ -28,14 +28,21 @@ T1-T8 are complete for the 4 October revision.
 | Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks for all 36 active references. The clean build resolves every citation. | Complete. |
 | Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 regenerated figures, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
 | Build | A clean build from the extracted source and supplement produces 95 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
-| Visual presentation | The earlier full manuscript was inspected as rendered contact sheets. The current contents lists, design, results, limitations and affected appendix pages were reviewed as contact sheets, with selected pages checked at larger size. The 12 square-table figures now use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The resized figures remain within the margins with readable labels. | Complete. |
+| Visual presentation | All 95 pages of the paragraph-coherence revision were inspected as rendered contact sheets, with selected pages checked at larger size. The final introduction page breaks were reinspected after the last edits. The 12 square-table figures use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The figures remain within the margins with readable labels. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 14,274 whitespace-separated tokens
+The current main-text length diagnostic is 14,695 whitespace-separated tokens
 from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
+
+The 4 October paragraph-coherence pass reviewed the abstract, all eight main
+chapters and the active appendices. Mixed-focus passages were separated into
+one main idea per paragraph, with evidence, explanation and transitions where
+they advance the argument. Equations and their surrounding prose remain one
+explanatory unit. The pass changed no mathematical formulas, numerical results,
+experimental settings or references. The working draft was not rebuilt.
 
 ## Earlier Acceptance Record
 

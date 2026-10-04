@@ -37,7 +37,10 @@ introduced by
  \label{eq:additive-construction}
 \end{equation}
 The zero row and column sums mean that changing \(t\) leaves the margins
-fixed. For the main construction, \(H\) is zero except in the first two rows
+fixed.
+
+The main construction places that association in four cells. Here \(H\) is
+zero except in the first two rows
 and columns, where it is
 \begin{equation}
  H_{1:2,1:2}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
@@ -73,9 +76,12 @@ is
 The construction solves for \(0\le t<t_{\max}\) such that \(I\{R(t)\}\)
 equals the requested target. Targets at or beyond the endpoint are not
 admitted. This endpoint is specific to the chosen path, not the largest
-possible MI over every table with those margins. Both constructed tables are
-checked for strictly positive cells, correct margins and target MI before any
-sampling. Appendix~\ref{app:construction} gives the numerical details.
+possible MI over every table with those margins.
+
+Before sampling, both constructed tables are checked for strictly positive
+cells, correct margins and target MI. These checks ensure that the samples
+come from the intended populations.
+Appendix~\ref{app:construction} gives the numerical details.
 
 For a dimension of size \(k\), the skewed margin used in the design is
 \begin{equation}
@@ -86,7 +92,10 @@ For a dimension of size \(k\), the skewed margin used in the design is
 The three principal profiles are specified separately for the two
 populations in Table~\ref{tab:margin-profiles}. For a rectangular
 \(r\times c\) table, the formula is applied with \(k=r\) to row margins and
-\(k=c\) to column margins. At a zero MI difference, the same-margin profiles
+\(k=c\) to column margins.
+
+The margin profiles also determine whether equal MI gives identical tables.
+At a zero MI difference, the same-margin profiles
 produce \(P=Q\) under this construction; the different-skew profile has
 \(I(P)=I(Q)\) but \(P\ne Q\).
 
@@ -129,11 +138,11 @@ three construction formulas.
 For each unique configuration, 20,000 independent pairs of multinomial count
 tables are drawn from its fixed \(P\) and \(Q\). Normal Wald and Expanded
 Welch are applied to the \emph{same} count-table pair. This pairing makes
-method differences more precisely measurable than unrelated simulations,
-though it does not remove Monte Carlo uncertainty. The two-sided nominal
-threshold is \(\alpha=0.05\) throughout the statistical study.
+method differences more precisely measurable than unrelated simulations.
 
-For each method, the primary plotted rejection rate is
+Rejection is measured at the same two-sided nominal threshold,
+\(\alpha=0.05\), throughout the statistical study. For each method, the
+primary plotted rejection rate is
 \begin{equation}
  \frac{\#\{\text{sample pairs giving a valid p-value no larger than }0.05\}}
       {20{,}000}.
@@ -149,7 +158,11 @@ null calibration and a usable test result.
 An invalid calculation contributes no rejection to Equation
 \eqref{eq:unconditional-rate}, but it does not count as evidence for the null.
 The valid-result rate shows how often each test returns a usable
-p-value. The reported 95\% intervals show simulation uncertainty at each
+p-value. Reporting it alongside rejection distinguishes a low rejection
+rate from a failure to calculate the test.
+
+The reported 95\% intervals quantify the simulation uncertainty in those
+rates at each
 fixed population pair. Intervals for the difference between methods account
 for applying both tests to the same sampled tables. Appendix~\ref{app:diagnostics}
 gives the interval calculations and rates restricted to valid results.
@@ -158,7 +171,9 @@ The ``minimum expected count'' diagnostic is
 \(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).
 It is not the expectation of the smallest observed count. No lower bound on
 that diagnostic was used to admit statistical configurations. Empty observed
-cells and rows remain possible. In the plots a hollow marker warns that fewer
+cells and rows remain possible.
+
+To make low validity visible, a hollow marker warns that fewer
 than 90\% of outputs of that method were valid; 90\% is a display convention,
 not a validated safety threshold.
 
@@ -167,21 +182,23 @@ not a validated safety threshold.
 Table~\ref{tab:design-families} records the question answered by each family.
 The common population construction above applies unless the named factor
 changes. Exact parameter sets are in Appendix~\ref{app:construction}.
+
 The principal grid crosses square shapes \(2\times2,3\times3,5\times5,8\times8\)
 with the three margin profiles in Table~\ref{tab:margin-profiles}. It fixes
 \(I(P)=0.02\) nats and uses
 \(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\) nats and equal
 sample sizes \(n_P=n_Q\in\{2,5,10,20,50,100,250,500,1000\}\).
-For every feasible combination, the constructor fixes \(P\) and \(Q\) before
-the 20,000 table pairs are sampled and both tests are applied to each pair.
 The other families change one or more stated factors from this principal
-grid; Appendix~\ref{app:construction} lists their exact values.
-There are 534 distinct population pairs \((P,Q)\), each specifying two
+grid.
+
+A population pair and a sampling configuration describe different parts of
+this design. There are 534 distinct population pairs \((P,Q)\), each specifying two
 fixed joint probability tables. Reusing a pair at different sample sizes
 creates distinct sampling configurations. There are 3,111 unique statistical
-configurations.
-Each unique configuration is sampled once, giving 62,220,000 table pairs in
-the final statistical run. The within-family counts in
+configurations. Each unique configuration is sampled once, giving 62,220,000
+table pairs in the final statistical run.
+
+Some configurations answer more than one experimental question. The within-family counts in
 Table~\ref{tab:design-families} do not sum to 3,111 because the same
 configuration can occur in several families. Results from the same
 configuration may therefore appear in more than one comparison; this is not
