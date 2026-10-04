@@ -256,6 +256,42 @@ class ThesisDerivationAudit(unittest.TestCase):
             float(implementation["expanded_welch_p_value"]), expanded_p
         )
 
+    def test_worked_example_first_cell_calculations(self) -> None:
+        counts = np.array([[35, 10, 5], [10, 20, 5], [5, 5, 10]], dtype=float)
+        probability = counts / counts.sum()
+        rows = probability.sum(axis=1)
+        columns = probability.sum(axis=0)
+        pointwise = np.log(probability / (rows[:, None] * columns[None, :]))
+        mi = float(np.sum(probability * pointwise))
+        variance = float(np.sum(probability * (pointwise - mi) ** 2))
+        row_mean = np.sum(probability * pointwise, axis=1) / rows
+        column_mean = np.sum(probability * pointwise, axis=0) / columns
+        sensitivity = (
+            (pointwise - mi) ** 2 - variance
+            + 2 * (pointwise - row_mean[:, None] - column_mean[None, :] + mi)
+        )
+        sensitivity_mean = float(np.sum(probability * sensitivity))
+        variance_contribution = probability[0, 0] * (pointwise[0, 0] - mi) ** 2
+        sensitivity_contribution = (
+            probability[0, 0] * (sensitivity[0, 0] - sensitivity_mean) ** 2
+        )
+
+        np.testing.assert_allclose(
+            np.round(pointwise[0], 5), [0.38526, -0.51083, -0.64436],
+            rtol=0, atol=1e-12,
+        )
+        self.assertAlmostEqual(pointwise[0, 0], np.log(1.47), places=14)
+        self.assertAlmostEqual(row_mean[0], 0.10308, places=5)
+        self.assertAlmostEqual(row_mean[0], column_mean[0], places=14)
+        self.assertAlmostEqual(variance_contribution, 0.02056, places=5)
+        self.assertAlmostEqual(sensitivity[0, 0], 0.4218, places=4)
+        self.assertAlmostEqual(sensitivity_contribution, 0.0593, places=4)
+        self.assertAlmostEqual(sensitivity_mean, 0.0, places=14)
+        self.assertAlmostEqual(
+            float(np.sum(probability * (sensitivity - sensitivity_mean) ** 2)),
+            0.93212, places=5,
+        )
+
     def test_worked_population_pair_has_stated_margins_and_mi(self) -> None:
         probability_p = np.array(
             [
@@ -275,6 +311,9 @@ class ThesisDerivationAudit(unittest.TestCase):
         np.testing.assert_allclose(probability_q.sum(axis=0), [0.8, 0.2])
         self.assertAlmostEqual(mi_and_variance(probability_p)[0], 0.02, places=14)
         self.assertAlmostEqual(mi_and_variance(probability_q)[0], 0.03, places=14)
+        first_cell_from_copying = 0.7 * (0.20347 + (1.0 - 0.20347) * 0.7)
+        self.assertAlmostEqual(first_cell_from_copying, probability_p[0, 0], places=5)
+        self.assertAlmostEqual(first_cell_from_copying, 0.53273, places=5)
 
 
 if __name__ == "__main__":

@@ -182,3 +182,12 @@ One mathematical wording change is especially important: Normal Wald uses an **e
 A good version of this thesis will let a reader answer four questions: what the method calculates, why that calculation was proposed, what the experiments actually establish, and when the resulting recommendation applies. The contribution is the derivation and a careful assessment of its usefulness. That contribution remains meaningful when the assessment finds substantial limitations.
 
 The [rewrite plan](THESIS_REWRITE_PLAN.md) turns these observations into chapter specifications, an evidence map, figure rules and a drafting sequence.
+
+## 8. Additional exemplar: Daniel Li
+
+The [Daniel Li language and structure review](DLI_EXEMPLAR_REVIEW_NOTES.md),
+completed 4 October 2026, examines the supplied finance thesis as a separate
+writing exemplar. Its most transferable features are concrete mechanism
+explanations and the correspondence between literature questions and results.
+It supplements these notes; it does not replace the user's Section 2.3
+standard for intermediate mathematical steps or introduce manuscript changes.

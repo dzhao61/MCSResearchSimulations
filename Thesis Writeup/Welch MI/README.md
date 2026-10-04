@@ -79,7 +79,7 @@ experiment supplement. The thesis itself includes all 108 main null settings
 individually, with rejection and validity rates for both methods.
 
 The 4 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 84-page manuscript. Chapter 6 has seven
+in `deliverables/` match the active 86-page manuscript. Chapter 6 has seven
 lead figures, and Appendix C has eight supporting figures and the complete
 main-null table. The source archive
 builds independently when extracted with the supplement; the evidence audit

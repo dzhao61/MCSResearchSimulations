@@ -59,7 +59,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (4 October) | 49 pages | 84 pages |
+| Current Welch-MI manuscript (4 October) | 50 pages | 86 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -72,9 +72,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,218
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-57
-(printed pages 1-49). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 13,659
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
+(printed pages 1-50). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Working chapter allocation
@@ -87,7 +87,7 @@ chapters when the explanation requires it.
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
 | 2. Background and Literature Review | 11 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
-| 4. The Expanded Welch--Satterthwaite Test for MI | 10 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
+| 4. The Expanded Welch--Satterthwaite Test for MI | 11 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 5 | Explain the binary sampling mechanism, larger-table probability transfers, controlled factors, sampling and evaluation; place general construction formulas, numerical search and exact grids in Appendix B. |
 | 6. Experimental Results and Discussion | 12 | Develop the argument around selected figures, interpreting each beside the evidence; retain the individual main null table and focused supporting figures in Appendix C. |
 | 7. Implications and Limitations | 2 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
@@ -117,15 +117,15 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 4 October 2026:** T1-T8 are complete for the current 84-page A4
-manuscript, with 49 printed main-text pages. Chapter 6 uses seven lead figures
+**Status at 4 October 2026:** T1-T8 are complete for the current 86-page A4
+manuscript, with 50 printed main-text pages. Chapter 6 uses seven lead figures
 and Appendix C retains eight supporting figures plus all 108 individual main
-null settings. The three appendices occupy 23 pages, down from 33 before the
+null settings. The three appendices occupy 24 pages, down from 33 before the
 appendix simplification. The paragraph-coherence and direct-explanation passes
-and full-document visual review are complete. All 128 workspace tests and 36
+and full-document visual review are complete. All 129 workspace tests and 37
 archive-bundled tests pass. The full evidence audit verifies all 22 available
 figures, the 15 included figures and every displayed main-null table cell.
-A clean build from the extracted source and experiment archives produces the same 84-page text with
+A clean build from the extracted source and experiment archives produces the same 86-page text with
 no errors, undefined citations/references or overfull boxes. The named PDF,
 source archive, experiment supplement and checksums are synchronized; the
 current verification record is in `SUBMISSION_CHECK.md`.
@@ -283,6 +283,13 @@ of summation order, product-rule terms, cancellations and uses of independence
 visible instead of asking the reader to infer them. Distinguish approximate
 steps from exact algebra after the approximation has been made. After a key
 equation, say what it means and how it advances the derivation.
+
+Expand an existing step when doing so saves the reader from reconstructing
+algebra or carrying several quantities in memory; do not introduce additional
+concepts solely to elaborate the explanation. In worked calculations, trace
+one representative cell through the formulas before reporting full-table
+totals. Keep the calculation beside its explanation rather than listing
+unexplained numerical outputs.
 
 This is a clarity standard, not a request to expand routine arithmetic or
 repeat every point. Prefer a slightly longer equation to a new symbol that

@@ -29,6 +29,19 @@ probabilities. Copying \(X\) makes matching categories more likely than
 under independence. Both ways of choosing \(Y\) give it margins
 \((0.7,0.3)\), so their mixture keeps the row and column margins fixed.
 
+\begin{samepage}
+For example, cell \((1,1)\) requires \(X=1\), which has probability 0.7.
+Given \(X=1\), copying always gives \(Y=1\), while an independent draw
+gives \(Y=1\) with probability 0.7. Combining the two possibilities gives
+\begin{equation*}
+ p_{11}\simeq0.7\{0.20347+(1-0.20347)(0.7)\}
+ \simeq0.53273.
+\end{equation*}
+This is the first entry of \(P\) below; the other entries follow by
+considering their corresponding category pairs.
+\par
+\end{samepage}
+
 Construct \(Q\) in the same way, using category probabilities
 \((0.8,0.2)\) and a copying probability of approximately 26.09\%.
 The two copying probabilities are chosen to give \(I(P)=0.02\) and

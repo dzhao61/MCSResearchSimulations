@@ -23,17 +23,17 @@ T1-T8 are complete for the 4 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The standalone A4 PDF has 84 pages, including 49 numbered main-text pages and three focused appendices occupying 23 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
-| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 101 Welch-project tests, 27 DifferentialMI tests and 36 archive-bundled tests pass. The condensed independence calculation also passes 30 independent positive-table finite-difference checks. | Complete. |
+| Manuscript | The standalone A4 PDF has 86 pages, including 50 numbered main-text pages and three focused appendices occupying 24 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
+| Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 102 Welch-project tests, 27 DifferentialMI tests and 37 archive-bundled tests pass. The added cell-level check verifies the intermediate pointwise MI, conditional means, variance contribution and variance sensitivity in Section 4.4; the binary construction check also verifies Section 5.1's new first-cell calculation. The condensed independence calculation also passes 30 independent positive-table finite-difference checks. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks supporting all 35 remaining active references. The removed transfer-entropy aside and its citation are retained in the historical source check. The clean build resolves every citation. | Complete. |
 | Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 available figures, the 15 included figures, all 432 rejection/validity values in the 108-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
-| Build | A clean build from the extracted source produces 84 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Build | A clean build from the extracted source produces 86 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
 | Visual presentation | The revised manuscript was inspected as rendered contact sheets, with selected final pages checked at larger size. Paragraph and figure page breaks were reinspected after the last edits. The 12 square-table figures use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The figures remain within the margins with readable labels. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 13,218 whitespace-separated tokens
-from `pdftotext` on PDF pages 9-57 (printed pages 1-49). This includes
+The current main-text length diagnostic is 13,659 whitespace-separated tokens
+from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
 
@@ -117,12 +117,36 @@ Population construction, test implementations, protocols and saved outcomes
 are unchanged. The prior 94-page PDF and source ZIP are archived in
 `archive/pre_appendix_simplification_2026-10-04/`.
 
-The final PDF is 84 pages, down from 94 without changing the 49 main-text
+The appendix-simplification PDF was 84 pages, down from 94 without changing the 49 main-text
 pages or typography. All appendix pages and revised front-matter lists were
 rendered and inspected. The evidence audit and 128 workspace tests pass;
 the source and supplement were also checked in an isolated extraction before
 refreshing the named deliverables and checksums. The working draft was not
 rebuilt.
+
+The subsequent targeted explanation pass adds intermediate steps within the
+existing argument, without new theory or sections:
+
+- Section 4.2 shows the substituted logarithm derivatives, the constant
+  cancellation and the completion of the square in the variance sensitivity.
+- Section 4.4 traces cell (1,1) from its count and margins to pointwise MI,
+  its MI-variance contribution, the row and column conditional means, its
+  variance sensitivity and its contribution to the sensitivity variance.
+- Section 5.1 calculates the first joint probability directly from copying
+  or independent drawing.
+- Appendix A.2 explains the remainder notation and shows the multiplication,
+  second-moment calculation and conditional-mean cancellation behind the
+  local MI, variance and sensitivity approximations.
+
+The added cell-level regression check passes, along with all 129 workspace
+tests and the full evidence audit. The prior statistical formulas, worked
+example totals, populations, test implementations and saved results are
+unchanged. The final PDF has 86 pages, with 50 main-text pages and 24 appendix
+pages. A stale forced page break was removed; short calculations and their
+explanations are kept together. The affected pages and revised front-matter
+lists were rendered and inspected, and the final source package was checked
+in an isolated extraction. The named artifacts and checksums are refreshed;
+the working-draft PDF was not rebuilt.
 
 ## Earlier Acceptance Record
 

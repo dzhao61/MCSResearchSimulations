@@ -140,20 +140,27 @@ Along the perturbation path, pointwise MI is
   -\log p_{i+}(\varepsilon)
   -\log p_{+j}(\varepsilon).
 \end{equation}
-Differentiating the three logarithms and substituting the probability
-derivatives gives
-\begin{equation}
+For each logarithm, the derivative is the probability derivative divided by
+the probability. Substituting the joint and marginal derivatives gives
+\begin{align}
   \left.
   \frac{\mathrm d}{\mathrm d\varepsilon}
   \pmi_{P_\varepsilon}(i,j)
   \right|_{0}
-  =
+  &={}
+  \frac{\mathbf 1\{i=x,j=y\}-p_{ij}}{p_{ij}}
+  -\frac{\mathbf 1\{i=x\}-p_{i+}}{p_{i+}}
+  -\frac{\mathbf 1\{j=y\}-p_{+j}}{p_{+j}}
+  \notag\\*
+  &={}
   \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
   -\frac{\mathbf 1\{i=x\}}{p_{i+}}
   -\frac{\mathbf 1\{j=y\}}{p_{+j}}
   +1.
   \label{eq:pmi-derivative}
-\end{equation}
+\end{align}
+The joint term supplies \(-1\), while subtracting the row and column
+terms supplies \(+1\) each. Their sum is the final \(+1\).
 
 MI along the path is
 \begin{equation}
@@ -287,7 +294,22 @@ Substitution of Equation~\eqref{eq:pmi-derivative} gives
 
 Combining Equations~\eqref{eq:mi-derivative},
 \eqref{eq:g-decomposition}, \eqref{eq:m2-weight-term}, and
-\eqref{eq:m2-score-term} yields
+\eqref{eq:m2-score-term} gives the variance sensitivity. To see how its
+squared term arises, combine the weight-change term in
+Equation~\eqref{eq:m2-weight-term} with the derivative of \(-I(P)^2\):
+\begin{align*}
+ &\pmi_P(x,y)^2-\E_P\{\pmi_P(X,Y)^2\}
+       -2I(P)\{\pmi_P(x,y)-I(P)\}\\*
+ &\quad=\pmi_P(x,y)^2-\{V(P)+I(P)^2\}
+       -2I(P)\pmi_P(x,y)+2I(P)^2\\*
+ &\quad=\pmi_P(x,y)^2-2I(P)\pmi_P(x,y)+I(P)^2-V(P)\\*
+ &\quad=\{\pmi_P(x,y)-I(P)\}^2-V(P).
+\end{align*}
+\begin{samepage}
+The second line uses
+\(\E_P\{\pmi_P(X,Y)^2\}=V(P)+I(P)^2\); the last line completes the
+square. Adding twice the expression in Equation~\eqref{eq:m2-score-term}
+gives
 \begin{equation}
 \boxed{
 \begin{aligned}
@@ -307,8 +329,9 @@ g_P(x,y)
 The first line is the change if the pointwise-MI values were held fixed. The
 bracket accounts for changes in those values, including the effects of the
 selected joint probability and both margins.
+\par
+\end{samepage}
 
-\pagebreak[4]
 \section{Component degrees of freedom and final test}
 
 \noindent\textbf{Population component degrees of freedom.}
@@ -484,8 +507,18 @@ Consider the two observed \(3\times3\) tables
   \end{pmatrix}.
   \label{eq:worked-tables}
 \end{equation}
-Their totals are \(n_P=105\) and \(n_Q=100\). The plug-in MI estimates are
-0.13693 and 0.25848 nats. Since \((3-1)(3-1)=4\), the corrected difference is
+Their totals are \(n_P=105\) and \(n_Q=100\). In the first table, cell
+\((1,1)\) has count 35, and its row and column each total 50. Its empirical
+pointwise MI is therefore
+\begin{equation*}
+ \widehat\pmi_P(1,1)
+ =\log\left\{\frac{35/105}{(50/105)(50/105)}\right\}
+ =\log(1.47)\simeq0.38526.
+\end{equation*}
+This cell contributes \((35/105)(0.38526)\) to the plug-in MI estimate.
+Summing the contributions from all nine cells gives
+\(\Ihat(P)=0.13693\); the same calculation for the second table gives
+\(\Ihat(Q)=0.25848\) nats. Since \((3-1)(3-1)=4\), the corrected difference is
 \begin{equation}
   \Deltahat
   =\left(0.13693-\frac{4}{2(105)}\right)
@@ -493,8 +526,11 @@ Their totals are \(n_P=105\) and \(n_Q=100\). The plug-in MI estimates are
   =-0.12059.
 \end{equation}
 
-The empirical influence variances are
-\(\Vhat(P)=0.27189\) and \(\Vhat(Q)=0.43371\). Hence
+The variance calculation weights each squared deviation from the estimated
+MI by its cell probability. Cell \((1,1)\), for example, contributes
+\((35/105)(0.38526-0.13693)^2\simeq0.02056\) to \(\Vhat(P)\).
+Summing over all cells gives \(\Vhat(P)=0.27189\) and
+\(\Vhat(Q)=0.43371\). Hence
 \begin{equation}
   \SEhat
   =\left(\frac{0.27189}{105}+\frac{0.43371}{100}\right)^{1/2}
@@ -504,8 +540,25 @@ The empirical influence variances are
 \end{equation}
 Normal Wald gives \(p=0.14734\).
 
-For Expanded Welch, the table-based sensitivity calculation first gives
-\(\widehat\tau^2(P)=0.93212\) and
+For Expanded Welch, the same cell illustrates the sensitivity calculation.
+The first row's pointwise-MI values are 0.38526, \(-0.51083\) and
+\(-0.64436\), weighted by its counts 35, 10 and 5. Its conditional mean is
+\begin{equation*}
+ \frac{35(0.38526)+10(-0.51083)+5(-0.64436)}{50}
+ \simeq0.10308.
+\end{equation*}
+The first column has the same conditional mean because this count table is
+symmetric. Substituting these values into Equation~\eqref{eq:g-hat} gives
+\begin{align*}
+ \widehat g_P(1,1)
+ &\simeq (0.38526-0.13693)^2-0.27189\\*
+ &\quad+2\{0.38526-0.10308-0.10308+0.13693\}\\*
+ &\simeq0.4218.
+\end{align*}
+The probability-weighted mean of the sensitivities is zero, so this cell
+contributes \((35/105)(0.4218)^2\simeq0.0593\) to
+\(\widehat\tau^2(P)\). Repeating the calculation for all cells in both
+tables gives \(\widehat\tau^2(P)=0.93212\) and
 \(\widehat\tau^2(Q)=0.82035\). Substitution into
 Equation~\eqref{eq:nu-p-hat} gives component degrees of freedom
 \begin{equation}
