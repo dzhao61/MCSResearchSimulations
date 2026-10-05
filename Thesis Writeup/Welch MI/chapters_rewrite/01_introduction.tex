@@ -30,13 +30,9 @@ both. The Normal Wald test compares their ratio with a standard normal
 distribution, but in
 small samples it may reject equal MI more or less often than the intended 5\%.
 
-\begin{samepage}
 Expanded Welch offers a possible adjustment. It uses the same estimated
 difference and standard error as Wald, but compares their ratio with a
 Student \(t\) distribution.
-\par
-\end{samepage}
-
 Choosing that Student \(t\) distribution requires a calculation specific to
 MI. Its degrees of freedom depend on how much
 the estimated MI variance changes from sample to sample. To calculate that
@@ -99,7 +95,6 @@ same row and column categories. The main derivation assumes every population
 cell has positive probability and that its leading large-sample MI variance
 is greater than zero. Exact independence is considered separately because
 that variance becomes zero.
-
 Within this setting, the experiment compares Normal Wald with Expanded Welch
 using a two-sided 5\%
 test. It does not establish performance for paired data, continuous MI

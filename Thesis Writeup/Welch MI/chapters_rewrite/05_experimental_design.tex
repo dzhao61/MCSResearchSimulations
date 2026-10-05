@@ -5,7 +5,6 @@ The simulation study evaluates whether Expanded Welch improves on Normal
 Wald when comparing the MI of two populations. It measures false positives
 when the population MI values are equal, detection when they differ, and how
 often each method returns a valid p-value.
-
 Each experimental setting starts with two joint probability tables,
 \(P\) and \(Q\), whose margins and MI values are chosen before sampling.
 Independent samples are then drawn from each population, and both tests are
@@ -92,7 +91,6 @@ The three principal profiles are specified separately for the two
 populations in Table~\ref{tab:margin-profiles}. For a rectangular
 \(r\times c\) table, the formula is applied with \(k=r\) to row margins and
 \(k=c\) to column margins.
-
 The margin profiles also determine whether equal MI gives identical tables.
 At a zero MI difference, the same-margin profiles
 produce \(P=Q\) under this construction; the different-skew profile has
@@ -171,7 +169,6 @@ The ``minimum expected count'' diagnostic is
 \(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).
 The design imposes no minimum expected-count requirement, so empty observed
 cells and rows remain possible.
-
 To make low validity visible, a hollow marker warns that fewer
 than 90\% of outputs of that method were valid; 90\% is a display convention,
 not a validated safety threshold.
@@ -194,7 +191,6 @@ The design has 534 distinct population pairs \((P,Q)\). A pair combined
 with sample sizes \((n_P,n_Q)\) defines a statistical configuration.
 Reusing pairs at different sample sizes gives 3,111 unique configurations,
 each sampled 20,000 times, for 62,220,000 table pairs.
-
 Some configurations answer more than one experimental question. The within-family counts in
 Table~\ref{tab:design-families} do not sum to 3,111 because the same
 configuration can occur in several families. Results from the same

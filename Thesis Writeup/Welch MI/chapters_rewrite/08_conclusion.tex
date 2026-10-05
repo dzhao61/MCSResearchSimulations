@@ -6,7 +6,6 @@ two independently sampled categorical populations. Its mathematical
 contribution is the calculation of how changing one observation affects the
 estimated MI variance, including changes to cell probabilities and their
 row and column totals. This determines the test's degrees of freedom.
-
 The empirical contribution is a controlled evaluation of that calculation
 against Normal Wald. The experiment uses fixed populations whose true MI differences
 are known, reporting false positives, detection, validity and runtime
@@ -19,11 +18,9 @@ rate lower and often reduces detection when MI differs. In sparse
 samples, it can also fail to return a p-value more often than Wald.
 These results show that lowering rejection is useful only when it improves
 calibration without an unacceptable loss of detection or validity.
-
 Changing the reference distribution leaves the estimated MI difference and
 standard error unchanged. Errors in those shared quantities can therefore
 affect both tests despite the degrees-of-freedom adjustment.
-
 Normal Wald remains
 the simpler general baseline for the tested task; Expanded Welch is
 best treated as a sensitivity check in a regime where its calibration
@@ -44,9 +41,8 @@ accounts for errors in the statistic itself, rather than only changing its
 reference distribution. A likelihood-ratio or resampling method would need
 validation for equal population MI, including cases where the complete
 tables differ.
-\par
-\end{samepage}
-
 A real-data application and equal-MI pairs with association in
 different cells would test how far the present simulation
 conclusions extend.
+\par
+\end{samepage}

@@ -96,6 +96,9 @@ implementation changed during the appendix reorganisation. The working-draft
 PDF has not been refreshed. The 5 October writing pass makes the explanations
 and result sequence more concrete; the mathematical formulas, tables,
 figures, citations and scientific implementation are unchanged.
+The subsequent paragraph-cohesion pass combines connected claims,
+explanations and qualifications into more developed prose paragraphs,
+without adding substantive material. Short equation-guiding passages remain.
 
 The manuscript is standalone. Scientific settings and validity rules are
 included in its chapters and appendices; file inventories, build commands and

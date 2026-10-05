@@ -73,7 +73,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,953
+unverified word limit is imposed. The current main text has 13,958
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
 (printed pages 1-50). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
@@ -126,8 +126,11 @@ appendix simplification. The paragraph-coherence and direct-explanation passes
 and full-document visual review are complete. The Daniel Li-informed writing
 pass strengthens concrete explanations, literature-to-method links and
 findings-first result discussion while preserving all displayed mathematics,
-tables, figures and citations. All 129 workspace tests and 37
-archive-bundled tests pass. The full evidence audit verifies all 22 available
+tables, figures and citations. The subsequent paragraph-cohesion pass combines
+short claims with their connected explanations and qualifications, including
+four developed conclusion paragraphs instead of eight short blocks. It adds
+no substantive material and leaves the mathematical explanation intact. All
+129 workspace tests and 37 archive-bundled tests pass. The full evidence audit verifies all 22 available
 figures, the 15 included figures and every displayed main-null table cell.
 A clean build from the extracted source and experiment archives produces the same 86-page text with
 no errors, undefined citations/references or overfull boxes. The named PDF,
@@ -221,6 +224,14 @@ explanatory unit; a derivation need not repeat a four-sentence template at
 every step. Transitions must explain how successive ideas relate, not merely
 announce what comes next. Avoid artificial linking sentences and unnecessary
 repetition of the preceding paragraph.
+Give prose paragraphs enough development to read as connected academic
+arguments, rather than a sequence of isolated claims. One main idea need
+not mean one sentence or one small supporting point. Combine adjacent short
+paragraphs when they form a single explanation, comparison or recommendation;
+keep a break for a genuinely new question or stage of the argument. Do not
+pad the prose to reach a paragraph length. Short passages remain appropriate
+when introducing or interpreting a displayed equation, and the abstract and
+lists have their own structure.
 
 ### Prose clarity: explain the mechanism
 

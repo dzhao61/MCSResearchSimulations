@@ -412,7 +412,6 @@ At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
 \(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
 first-order average in Equation~\eqref{eq:mi-error-as-average-background}
 vanishes.
-
 A finite sample can still have positive MI. Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
 produces the usual chi-squared limiting distribution
@@ -455,7 +454,6 @@ Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
 conditions of Section~\ref{sec:first-order-mi-background} and increasing
 sample sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
 to the numerator and specifies the full Normal Wald test.
-
 With smaller samples, the MI difference may not follow the normal
 approximation closely, and the estimated standard error can vary between
 samples. The Wald test still uses a normal distribution; it makes no separate
@@ -493,7 +491,6 @@ statistic to reject the null than a standard normal distribution does.
 The difference between the rejection thresholds from the Student \(t\)
 and standard normal distributions becomes
 smaller as \(\nu\) increases.
-
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
 calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
@@ -506,7 +503,6 @@ uncertainty in estimated variances
 For example, \citet{panwall2002} calculate approximate degrees of freedom
 by examining how a regression variance estimate varies between samples.
 Expanded Welch applies this approach to the estimated MI variance.
-
 These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
@@ -523,7 +519,6 @@ that variance error unchanged and makes rejection less likely still.
 using error propagation and examines them numerically. These calculations
 describe the uncertainty of an individual estimate, a necessary input to a
 comparison of two estimates.
-
 A Bayesian approach describes uncertainty about population MI given an
 observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
 unknown cell probabilities to calculate the variance and shape of the
@@ -544,7 +539,6 @@ as its effective degrees of freedom \citep{hutcheson1970}. Here each of
 \(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).
-
 Hutcheson's rule assigns degrees of freedom from sample sizes. Expanded
 Welch instead calculates how the estimated MI variance changes with the
 table, including the effects of a cell change on its row and column totals.
@@ -552,8 +546,7 @@ table, including the effects of a cell change on its row and column totals.
 In a segregation application, \citet{mora2009} develop inference for an MI index and discuss
 pairwise comparisons across groups and periods; the later peer-reviewed account
 places that MI index within the wider segregation literature \citep{mora2011}.
-
-\citet{guha2014} test whether two continuous distributions are identical
+By contrast, \citet{guha2014} test whether two continuous distributions are identical
 using MI between pooled observations and their sample labels.
 For discrete data, \citet{drake2014} develop an MI-based \(k\)-sample test
 for equality of distributions. These tests compare complete distributions,
@@ -588,7 +581,6 @@ totals, and pointwise MI values. The remaining calculation is how these
 changes affect the estimated MI variance. This thesis uses that calculation
 to choose the degrees of freedom for a Student \(t\) distribution, then
 evaluates whether it improves false positives and detection.
-
 Both tests start with the same estimated MI difference and standard error.
 Chapter~\ref{chap:baselines} defines this shared statistic before
 Chapter~\ref{chap:expanded} derives the additional variance calculation.

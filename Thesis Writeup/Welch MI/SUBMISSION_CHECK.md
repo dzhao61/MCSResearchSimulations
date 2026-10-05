@@ -32,7 +32,7 @@ T1-T8 are complete for the 5 October revision.
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 13,953 whitespace-separated tokens
+The current main-text length diagnostic is 13,958 whitespace-separated tokens
 from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
@@ -54,6 +54,21 @@ explanation units were kept together and a stale forced page break was
 removed. The source archive now includes the Daniel Li review note linked
 from the goal and README. The final isolated build, archive evidence audit,
 37 bundled tests and delivery checksums also pass.
+
+The subsequent 5 October paragraph-cohesion pass addresses overly fragmented
+prose. Connected claims, evidence, explanations and qualifications now form
+developed paragraphs in the literature, methods, design, results and closing
+chapters. The conclusion has four paragraphs rather than eight; the practical
+implications have three rather than five. Short passages around equations and
+separate research questions retain their useful breaks. Apart from a two-word
+contrast between earlier comparison methods, the prose wording is unchanged:
+the improvement comes from grouping the existing argument, not padding it.
+The new preference is recorded in the goal. Page-break controls prevent a
+single prose line being detached from its paragraph, and the closing
+future-work paragraph is kept together. Equations, tables, figures, citation
+counts, scientific code and the working draft remain unchanged. The evidence
+audit and 129 workspace tests pass; the delivery package is clean-built and
+checked again after the final layout review.
 
 The 4 October paragraph-coherence pass reviewed the abstract, all eight main
 chapters and the active appendices. Mixed-focus passages were separated into

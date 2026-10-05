@@ -102,11 +102,9 @@ from each plug-in estimate gives the estimated effect:
 \end{equation}
 The two terms in braces are the bias-corrected MI estimates for the separate
 populations.
-
 The correction uses the fixed numbers of row and column categories, even
 when some are unobserved in a sample. Corrected estimates can be negative;
 those values are retained when calculating the difference.
-
 When \(n_P=n_Q\), the two corrections cancel in the difference;
 otherwise, their difference removes the leading unequal-sample bias described
 in Section~\ref{sec:background-mi-bias}.
@@ -147,7 +145,6 @@ The sign of \(T\) indicates which sample has the larger corrected MI
 estimate. Its magnitude measures the difference relative to its estimated
 standard error. Under \(H_0\), we compare \(T\) with a reference distribution
 centred at zero.
-
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference
 distribution, not the effect estimate or plug-in standard error.
@@ -177,7 +174,6 @@ Wald uses the standard normal distribution at every sample size, even
 though its standard error is estimated from the observed tables. Expanded
 Welch uses the variability of that variance estimate to choose a Student
 \(t\) distribution instead.
-
 Hutcheson's entropy test and ordinary Welch's test
 set each variance component's degrees of freedom from its sample size:
 \(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment

@@ -8,7 +8,6 @@ standard error. Expanded Welch can only make a valid two-sided p-value
 larger. This is helpful when Wald rejects an equal-MI null too often;
 it is harmful when Wald already rejects too rarely. Lower rejection is
 therefore not by itself evidence of better calibration.
-
 In sparse samples, Expanded Welch's extra component requirements can prevent
 it from returning a p-value. This also lowers the reported rejection rate,
 so calibration must be read alongside the frequency of usable results.
@@ -16,7 +15,6 @@ so calibration must be read alongside the frequency of usable results.
 The trade-off varies with table size, margins, starting MI and sampling
 allocation, including when equal-MI populations have different margins.
 Neither method is well calibrated across all tested settings.
-
 For applications resembling a tested regime, Normal
 Wald remains the simpler baseline. Expanded Welch can be a
 supplementary check if a separate calibration study shows
@@ -29,12 +27,15 @@ as a Wald call, but both have the same \(O(rc)\) operation growth for
 an \(r\times c\) table. The statistical limitations matter more than
 this timing difference.
 
+\begin{samepage}
 \section{Limits of the evidence}
 
 The rejection rates and Monte Carlo intervals apply to the constructed
 population pairs. The intervals quantify uncertainty from the finite number
 of simulated samples; they do not describe how performance varies across
 untested populations.
+\par
+\end{samepage}
 
 One specific gap concerns the association patterns in equal-MI pairs.
 The main construction changes four cells. Rare-cell, spread and
@@ -48,7 +49,6 @@ categorical alphabets, a two-sided 5\% threshold and the stated sample
 ladders. The analysis does not establish performance for paired
 observations, continuous MI estimators, growing alphabets or a real-data
 workflow.
-
 Exact independence also needs a different mathematical approximation. The
 first-order MI variance vanishes there.
 Section~\ref{sec:independence-boundary} derives the second-order
