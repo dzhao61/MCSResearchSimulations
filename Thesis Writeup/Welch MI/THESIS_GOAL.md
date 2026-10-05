@@ -1,6 +1,6 @@
 # Goal: complete the master's thesis
 
-Set 15 September 2026; acceptance criteria refreshed 4 October 2026. The
+Set 15 September 2026; acceptance criteria refreshed 5 October 2026. The
 original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
@@ -31,6 +31,7 @@ thesis. Internal verification and delivery records may retain those details.
 
 - The user clarified on 15 September that there is no AI-use limitation for this task and that CSYS5061 is the wrong course. Its report length, assessment dates and AI restrictions do not apply to this thesis.
 - Length and writing quality are benchmarked against the supplied Grace Yan, Michael Fang and Riley Jones theses, using the analysis in [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md).
+- Use the later Daniel Li exemplar review in [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md) for concrete mechanisms, question-led transitions, purpose-led literature and findings-first discussion. It is a language and narrative model, not an additional length requirement or a reason to shorten the central derivations.
 - The active manuscript and completed fixed-population experiments are the starting point. Existing verified work counts toward the targets below; it should be extended where incomplete.
 - Routine writing, editing, verification and small diagnostic calculations can proceed autonomously. Supervisor consultation is not a prerequisite for each decision.
 - The final research comparison is Normal Wald versus Expanded Welch. The central contribution is the derivation and careful evaluation of the proposed correction, including its limitations.
@@ -59,7 +60,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (4 October) | 50 pages | 86 pages |
+| Current Welch-MI manuscript (5 October) | 50 pages | 86 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -72,7 +73,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,659
+unverified word limit is imposed. The current main text has 13,953
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
 (printed pages 1-50). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
@@ -117,12 +118,15 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 4 October 2026:** T1-T8 are complete for the current 86-page A4
+**Status at 5 October 2026:** T1-T8 are complete for the current 86-page A4
 manuscript, with 50 printed main-text pages. Chapter 6 uses seven lead figures
 and Appendix C retains eight supporting figures plus all 108 individual main
 null settings. The three appendices occupy 24 pages, down from 33 before the
 appendix simplification. The paragraph-coherence and direct-explanation passes
-and full-document visual review are complete. All 129 workspace tests and 37
+and full-document visual review are complete. The Daniel Li-informed writing
+pass strengthens concrete explanations, literature-to-method links and
+findings-first result discussion while preserving all displayed mathematics,
+tables, figures and citations. All 129 workspace tests and 37
 archive-bundled tests pass. The full evidence audit verifies all 22 available
 figures, the 15 included figures and every displayed main-null table cell.
 A clean build from the extracted source and experiment archives produces the same 86-page text with
@@ -348,6 +352,11 @@ leave such claims unsupported merely because they seem familiar. Do not pad
 the review with tangential papers or turn introductory definitions into a
 citation list. This review and the method chapters should remain readable by
 an honours student with basic calculus and probability.
+Organise prior work around the problem it solves and the remaining calculation
+needed here, rather than a sequence of author summaries. Keep the connection
+visible between those earlier methods, the proposed adjustment and the
+results that test it. In results paragraphs, state the finding before the
+supporting rates when that order makes the comparison easier to follow.
 
 Each panel represents one fixed regime with both methods. Preserve consistent
 colours, distinguishable line styles and comparable axes; clearly identify any

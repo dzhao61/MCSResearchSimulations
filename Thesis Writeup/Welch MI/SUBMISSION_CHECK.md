@@ -1,6 +1,6 @@
 # Thesis completion check
 
-The 4 October 2026 record below verifies the current thesis and deliverables.
+The 5 October 2026 record below verifies the current thesis and deliverables.
 The later dated September notes are retained as historical audit evidence;
 their earlier page counts and references to a "current" PDF do not supersede
 this record. The acceptance targets are in [THESIS_GOAL.md](THESIS_GOAL.md).
@@ -19,7 +19,7 @@ and technical detail are in the appendices.
 
 ## Current Verification
 
-T1-T8 are complete for the 4 October revision.
+T1-T8 are complete for the 5 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
@@ -32,10 +32,28 @@ T1-T8 are complete for the 4 October revision.
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 13,659 whitespace-separated tokens
+The current main-text length diagnostic is 13,953 whitespace-separated tokens
 from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
+
+The 5 October Daniel Li-informed writing pass reviewed the abstract, all eight
+chapters and the three active appendices. It strengthens concrete explanations
+of sampling and variance-estimate variability, sharpens the literature-to-method
+transition, puts findings before supporting rates, and removes repeated
+commentary. Chapter 1 already meets those aims and is unchanged. The central
+derivation steps and the existing evidence limits are retained.
+
+A comparison against the pre-pass source verifies all 126 displayed
+mathematics blocks, 17 table/figure blocks, reference labels, figure assets
+and the occurrence counts of all 35 citation keys are unchanged. No
+statistical source, population, saved result or working-draft file changed.
+The evidence audit and 129 workspace tests pass. All 86 pages were rendered
+and reviewed, with key revised pages inspected at larger size. Short
+explanation units were kept together and a stale forced page break was
+removed. The source archive now includes the Daniel Li review note linked
+from the goal and README. The final isolated build, archive evidence audit,
+37 bundled tests and delivery checksums also pass.
 
 The 4 October paragraph-coherence pass reviewed the abstract, all eight main
 chapters and the active appendices. Mixed-focus passages were separated into

@@ -15,9 +15,11 @@ than 90\% of calculations were valid.
 Where a zoom is shown, the upper panels use a 0--1 rejection axis and the
 lower panels enlarge the 0--0.15 range.
 
-The comparisons proceed from null calibration to detection, sparse-sample
-validity, possible causes of error and larger-sample behaviour. Additional
-matched figures are in Appendix~\ref{app:additional-results}.
+We first ask whether lower rejection improves false-positive rates, then
+examine its effect on detection. Sparse-sample validity shows when a low
+rate instead reflects failed calculations. The final comparisons examine
+errors shared by both methods and whether larger samples reduce them.
+Additional matched figures are in Appendix~\ref{app:additional-results}.
 
 \newcommand{\mainlandscapefigure}[6]{%
 \par
@@ -39,8 +41,8 @@ enlarge the 0--0.15 range.}
 
 \section{Calibration across table size and margins}
 
-The first comparison keeps both populations uniform in a \(2\times2\)
-table. Figure~\ref{fig:main-2x2-uniform} shows three equal sample sizes
+The first comparison uses a \(2\times2\) table with uniform margins in
+both populations. Figure~\ref{fig:main-2x2-uniform} shows three equal sample sizes
 and asks whether the lower Expanded Welch rejection rate is closer to
 the target 0.05 at each size.
 
@@ -154,23 +156,24 @@ The lower panels enlarge the 0--0.15 range.}
 \label{fig:baseline-focus}
 \end{figure}
 
-For \(I(P)=0.0001,0.001,0.02\), the zero-difference Wald rates are
+Starting closer to independence does not improve calibration in this
+comparison. For \(I(P)=0.0001,0.001,0.02\), the zero-difference Wald rates are
 \(\BaselineTinyWaldRate\), \(\BaselineSmallWaldRate\) and
 \(\BaselineRegularWaldRate\); Expanded Welch gives
 \(\BaselineTinyExpandedRate\), \(\BaselineSmallExpandedRate\) and
 \(\BaselineRegularExpandedRate\). All these null calculations are valid.
 Rejection rises only modestly across the displayed alternatives, and both
-methods remain mostly below 0.05. Starting closer to independence does not
-make the higher cutoff from the Student \(t\) distribution helpful here: it
-lowers an already-conservative null rate and further reduces detection.
+methods remain mostly below 0.05. Expanded Welch's higher cutoff lowers an
+already-conservative null rate and further reduces detection.
 
 \FloatBarrier
 
-The local calculation in Chapter~\ref{chap:expanded} helps explain this
-loss of detection near independence. Expanded Welch's degrees of freedom
-can become small, so the
-cutoff from the Student \(t\) distribution becomes more demanding where the
-first-order MI approximation is also less reliable.
+The local calculation in Chapter~\ref{chap:expanded} explains why the
+adjustment can be particularly restrictive near independence. For a fixed
+sample size, smaller population MI can give fewer degrees of freedom and
+a higher cutoff from the Student \(t\) distribution. The test then needs
+a larger absolute statistic to reject, while the first-order MI
+approximation is also less reliable.
 
 These detection rates use the common nominal 5\% threshold. The methods
 have different false-positive rates, so the curves compare detection under
@@ -201,9 +204,13 @@ panels enlarge the 0--0.15 range.}
 \label{fig:extreme-focus}
 \end{figure}
 
-For dominant margins 0.9 and 0.95, the null rates are
+The adjustment can reduce false positives too far even before the most
+extreme sparsity is reached. For dominant margins 0.9 and 0.95, the null rates are
 0.0701 for Wald and 0.0088 for Expanded Welch: the adjustment moves an
-excessive rate past 0.05. At the most extreme margins, 0.999 and 0.9995,
+excessive rate past 0.05.
+
+At the most extreme margins, zero rejection mostly reflects failed
+calculations. With dominant probabilities 0.999 and 0.9995,
 both rates are zero, but only 0.0118 of Wald and 0.00005 of Expanded Welch
 null calculations are valid. Rejection does not meaningfully grow over the
 displayed alternatives there. The hollow markers show why near-zero
@@ -223,22 +230,23 @@ rejects \(\EightSparseFiveAlternativeExpandedRate\), while their
 valid-result rates are \(\EightSparseFiveAlternativeWaldValid\)
 and \(\EightSparseFiveAlternativeExpandedValid\).
 
-Wald needs a positive usable total estimated variance. The expanded
-implementation additionally requires positive finite component
-sensitivities and degrees of freedom. Some count tables therefore
+Wald needs a positive usable total estimated variance. Expanded Welch also
+needs positive finite degrees of freedom for both components and their
+combination. Some count tables therefore
 produce a Wald p-value but no Expanded Welch p-value. The primary
 rate counts such failures as non-rejections. The exact
 numerical validity criteria are given in Appendix~\ref{sec:validity-rules}.
 
 \section{Checks on population and sampling choices}
 
-Moving association between
-early, rare and spread cells changes the underlying table even when
-margins and MI are fixed (Figure~\ref{fig:patterns-focus}). An
-ordinal log-linear construction also changes rates under matched
-margins and MI (Figure~\ref{fig:construction-focus}). Thus margins and MI
-alone do not determine finite-sample performance. The corresponding plots
-and specifications are in Appendix~\ref{app:additional-results}.
+Margins and MI alone do not determine finite-sample performance.
+Moving association between the first block, rare cells and a spread pattern
+changes rejection rates even though each population's margins and MI stay
+fixed (Figure~\ref{fig:patterns-focus}). Changing from a four-cell transfer
+to an ordinal log-linear construction also changes rates under matched
+margins and MI (Figure~\ref{fig:construction-focus}). The cell probabilities
+therefore matter beyond these summaries. The corresponding plots and
+specifications are in Appendix~\ref{app:additional-results}.
 
 Sampling allocation also changes the detection comparison. Reversing which
 population has the larger sample or higher MI changes
@@ -246,7 +254,7 @@ the alternative curves (Figures~\ref{fig:imbalance-q} and
 \ref{fig:imbalance-p}). The direction of the MI difference therefore matters
 alongside the number of observations assigned to each population.
 
-Changing the table shape does not remove the conservative pattern.
+The low null rates are not confined to square tables.
 Rectangular tables also show conservative rejection
 (Figure~\ref{fig:rectangular-focus}). Calibration and validity therefore
 depend on the particular populations and sampling allocation.
@@ -263,14 +271,15 @@ Changing the reference distribution leaves errors in the shared statistic
 untouched. Both methods use the same estimated MI difference and the same
 plug-in standard error, so any error in either quantity affects both tests.
 
-One source is residual bias in the estimated difference. Even when the population MIs
-are equal, the two estimates can retain different small-sample biases
-if \(P\) and \(Q\) have different margins. Their leading equal-sample
-corrections cancel, but the remaining biases need not; the estimated
-difference can therefore be shifted away from zero. Its contribution to
-excess rejection was not isolated.
+Different small-sample biases can shift the estimated MI difference away
+from zero even when the population MIs are equal. At equal sample sizes,
+the leading bias corrections cancel in the difference. The remaining
+biases need not cancel when \(P\) and \(Q\) have different margins.
+The study does not separately measure how much this residual bias
+contributes to rejection.
 
-A supplementary check illustrates the shared-standard-error problem.
+A supplementary check shows that replacing the shared standard error can
+bring Wald's false-positive rate closer to 0.05.
 For a \(3\times3\) different-skew null with \(I(P)=I(Q)=0.02\) and
 \(n=100\), Wald rejects 0.0166 of independently simulated table pairs.
 Keeping the same estimated MI differences but dividing each by one
@@ -284,9 +293,10 @@ In this setting, the average squared plug-in standard error is about
 standard error tends to make the absolute test statistic smaller and rejection
 less likely.
 
-Replacing the standard error with a fixed value also removes the way it
-and the estimated MI difference move together between samples. The check
-therefore cannot isolate the effect of standard-error size.
+This replacement changes two properties at once: the size of the standard
+error and its dependence on the estimated MI difference. A fixed standard
+error cannot rise or fall with the difference across samples, so the check
+does not separate these two effects.
 Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
 between each population's MI and variance estimates.
 
@@ -314,15 +324,15 @@ ranges from 0 to 0.10.}
 \label{fig:convergence-focus}
 \end{figure}
 
-All displayed calculations are valid. In the
-displayed \(2\times2\) and \(8\times8\) settings, rates move toward 0.05
-more clearly when common MI is 0.02 than when it is 0.0001. Across all 12
+In the displayed \(2\times2\) and \(8\times8\) settings, larger samples
+improve calibration much more clearly at MI 0.02 than at MI 0.0001.
+All displayed calculations are valid. Across all 12
 first-block shape--margin combinations at \(n=50{,}000\), the 0.02-MI
 null rates range from 0.0470 to 0.0527 for Wald and 0.0466 to 0.0526 for
 Expanded Welch. At MI 0.0001, the ranges remain 0.0089--0.0280 and
 0.0076--0.0138. Convergence can therefore be slow near independence.
-Because its rate depends on the chosen populations, these results do not
-establish a universal sample-size threshold.
+The sample size needed for acceptable calibration therefore depends on the
+population setting.
 
 \FloatBarrier
 

@@ -103,10 +103,9 @@ from each plug-in estimate gives the estimated effect:
 The two terms in braces are the bias-corrected MI estimates for the separate
 populations.
 
-The correction uses the declared alphabet dimensions, not the observed
-nonempty dimensions. A corrected estimate can be negative in a sparse sample
-and is not clipped at zero, since clipping would define a different nonlinear
-estimator.
+The correction uses the fixed numbers of row and column categories, even
+when some are unobserved in a sample. Corrected estimates can be negative;
+those values are retained when calculating the difference.
 
 When \(n_P=n_Q\), the two corrections cancel in the difference;
 otherwise, their difference removes the leading unequal-sample bias described
@@ -144,9 +143,10 @@ The common standardised statistic is
   T=\frac{\Deltahat}{\SEhat}.
   \label{eq:shared-t}
 \end{equation}
-The observed tables determine \(\Deltahat\), \(\SEhat\) and \(T\) without
-imposing equal MI\@. Under \(H_0\), the statistic is compared with a reference
-distribution centred at zero.
+The sign of \(T\) indicates which sample has the larger corrected MI
+estimate. Its magnitude measures the difference relative to its estimated
+standard error. Under \(H_0\), we compare \(T\) with a reference distribution
+centred at zero.
 
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference
@@ -170,19 +170,19 @@ The two-sided Normal Wald p-value is
 \end{equation}
 where \(\Phi\) is the standard normal distribution function.
 
-Using the standard normal distribution is a large-sample approximation here.
-Wald estimates the
-standard error from the tables but applies no degrees-of-freedom adjustment.
-
 \medskip
 \noindent\textbf{Why consider an expanded reference?}
+
+Wald uses the standard normal distribution at every sample size, even
+though its standard error is estimated from the observed tables. Expanded
+Welch uses the variability of that variance estimate to choose a Student
+\(t\) distribution instead.
 
 Hutcheson's entropy test and ordinary Welch's test
 set each variance component's degrees of freedom from its sample size:
 \(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment
 measures how cell probabilities and margins make the estimated MI variance
-change between samples. Expanded Welch uses that variability to choose each
-component's degrees of freedom.
+change between samples.
 
 To choose the degrees of freedom, we need the average value of each estimated
 MI variance and how much that estimate varies across samples

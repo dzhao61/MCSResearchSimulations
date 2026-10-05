@@ -3,10 +3,13 @@
 ## Final manuscript
 
 The goal and SMART acceptance targets are in
-[THESIS_GOAL.md](THESIS_GOAL.md), refreshed 4 October 2026. The detailed chapter plan is
+[THESIS_GOAL.md](THESIS_GOAL.md), refreshed 5 October 2026. The detailed chapter plan is
 [THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). The companion [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
 records the review of the three example theses and the writing conventions
-for the new draft.
+for the new draft. [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md)
+records the later Daniel Li review, used to strengthen concrete explanations,
+question-led transitions and findings-first discussion without copying its
+subject-specific structure or reducing the mathematical detail.
 
 The plan uses the completed fixed-population comparison of Normal Wald and
 Expanded Welch. It replaces the older draft's empirical argument with an
@@ -71,6 +74,7 @@ neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 - `SUBMISSION_CHECK.md`: current verification record and historical acceptance checks.
 - `THESIS_REWRITE_PLAN.md`: active research, chapter and evidence plan.
 - `EXEMPLAR_REVIEW_NOTES.md`: current exemplar analysis and writing guidance.
+- `DLI_EXEMPLAR_REVIEW_NOTES.md`: Daniel Li language and narrative review.
 - `THESIS_PLAN.md`: previous research and chapter plan.
 - `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
 
@@ -78,7 +82,7 @@ Detailed mechanism diagnostics and the full figure atlas remain in the
 experiment supplement. The thesis itself includes all 108 main null settings
 individually, with rejection and validity rates for both methods.
 
-The 4 October named PDF, source archive, experiment supplement and checksums
+The 5 October named PDF, source archive, experiment supplement and checksums
 in `deliverables/` match the active 86-page manuscript. Chapter 6 has seven
 lead figures, and Appendix C has eight supporting figures and the complete
 main-null table. The source archive
@@ -89,7 +93,9 @@ excluded at the author's request.
 The preceding 94-page PDF and source package are retained in
 `archive/pre_appendix_simplification_2026-10-04/`. No experiment or statistical
 implementation changed during the appendix reorganisation. The working-draft
-PDF has not been refreshed.
+PDF has not been refreshed. The 5 October writing pass makes the explanations
+and result sequence more concrete; the mathematical formulas, tables,
+figures, citations and scientific implementation are unchanged.
 
 The manuscript is standalone. Scientific settings and validity rules are
 included in its chapters and appendices; file inventories, build commands and

@@ -15,9 +15,10 @@ differences that arise by chance in individual samples.
 
 \section{Constructing fixed joint distributions}
 
-Each table is constructed to have prescribed row and column margins and a
-known MI\@. A binary example shows how the margins can remain fixed while
-\(X\) and \(Y\) become dependent.
+To vary association without changing category frequencies, we construct
+each table with prescribed row and column margins and a known MI\@. A binary
+example shows how the margins can remain fixed while \(X\) and \(Y\)
+become dependent.
 
 \medskip
 \noindent\textbf{A \(2\times2\) example.}
@@ -119,23 +120,25 @@ the higher target to \(P\).
 The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
 the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
 
-Two focused checks ask whether results depend on where the association sits
-in the table. The ``rare block'' moves the four changed cells from the
+The changed-cell experiments ask whether results depend on where association
+sits in the table. The ``rare block'' moves the four changed cells from the
 upper-left corner to rows and columns with smaller probabilities in skewed
 populations. The ``spread'' pattern changes cells throughout the table while
-keeping the row and column totals fixed. The log-linear comparison also
-spreads association through the table, using a different rule. In each case, the
-population is built to have the specified margins and target MI\@. Tables
-can therefore agree on margins and MI while assigning different
-probabilities to individual cells. Appendix~\ref{app:construction} gives the
-three construction formulas.
+keeping the row and column totals fixed. Each population retains its
+specified margins and target MI. Comparing the patterns at these matched
+values tests how the placement of association affects performance.
+
+A separate comparison changes the construction rule. The log-linear method
+also spreads association through the table but produces different cell
+probabilities from the four-cell transfer at matched margins and MI\@.
+Appendix~\ref{app:construction} gives the construction formulas.
 
 \section{Sampling, tests and measured outcomes}
 
 For each unique configuration, 20,000 independent pairs of multinomial count
 tables are drawn from its fixed \(P\) and \(Q\). Normal Wald and Expanded
-Welch are applied to the \emph{same} count-table pair. This pairing makes
-method differences more precisely measurable than unrelated simulations.
+Welch are applied to the \emph{same} count-table pair. Differences in their
+test outcomes therefore arise from the methods rather than different draws.
 
 Rejection is measured at the same two-sided nominal threshold,
 \(\alpha=0.05\), throughout the statistical study. For each method, the

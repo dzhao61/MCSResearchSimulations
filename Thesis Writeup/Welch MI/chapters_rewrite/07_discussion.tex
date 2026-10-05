@@ -19,8 +19,8 @@ Neither method is well calibrated across all tested settings.
 
 For applications resembling a tested regime, Normal
 Wald remains the simpler baseline. Expanded Welch can be a
-conservative sensitivity check if a separate calibration study shows
-that Wald is too liberal and the expanded calculation is usually valid.
+supplementary check if a separate calibration study shows
+that Wald rejects equal MI too often and the expanded calculation is usually valid.
 Method choice should be set before examining the p-values.
 
 The extra computation is not the principal obstacle. In the measured
@@ -32,14 +32,16 @@ this timing difference.
 \section{Limits of the evidence}
 
 The rejection rates and Monte Carlo intervals apply to the constructed
-population pairs. They quantify simulation uncertainty for those pairs,
-not performance in untested populations.
+population pairs. The intervals quantify uncertainty from the finite number
+of simulated samples; they do not describe how performance varies across
+untested populations.
 
 One specific gap concerns the association patterns in equal-MI pairs.
 The main construction changes four cells. Rare-cell, spread and
 log-linear constructions test other patterns, but the study does not
 pair equal-MI populations whose association is placed in different
-cells.
+cells. Such pairs would test whether the method comparison changes when
+the populations differ in association location as well as their margins.
 
 The methods are studied with two independent samples from fixed
 categorical alphabets, a two-sided 5\% threshold and the stated sample

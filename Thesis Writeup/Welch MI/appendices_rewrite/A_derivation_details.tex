@@ -6,12 +6,13 @@ interpretation and validity conditions in Chapter~\ref{chap:expanded}.
 
 \section{Mean of the variance influence function}
 
-The influence function $g_P(x,y)$ is centred at the population level. This
-can be shown without expanding its individual terms. The probability-weighted
-average of the one-cell perturbation directions is
+The observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
+mean of zero. Averaging the one-cell perturbation directions leaves the
+population table unchanged:
 \begin{equation}
   \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
 \end{equation}
+This weighted cancellation also holds after exact plug-in substitution.
 The first derivative is linear in the direction of change. Therefore, the
 weighted average of the one-cell derivatives is the derivative in the
 weighted-average direction:
@@ -28,8 +29,7 @@ weighted-average direction:
   &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
     \right|_{0}=0.
 \end{align}
-The same weighted cancellation holds after exact plug-in substitution.
-
+\begin{samepage}
 \section{Fixed-margin behaviour near independence}
 \label{sec:fixed-margin-local-derivation}
 
@@ -38,6 +38,8 @@ Let \(P_0=(q_{ij})\) be independent, with positive cells
 sum of \(H\) is zero. For sufficiently small \(t\), all cells remain
 positive and the margins remain \(a\) and \(b\). We expand around
 \(t=0\), where \(I(P_0)=0\).
+\par
+\end{samepage}
 
 For \(f(t)=I(P_t)\), the second-order Taylor formula is
 \begin{equation}
@@ -124,7 +126,7 @@ Since \(g_{P_t}\) has mean zero, its variance is its second moment:
 \end{align}
 Comparing these three leading terms gives \(V(P_t)\approx2I(P_t)\) and
 \(\tau^2(P_t)\approx4V(P_t)\) for small positive MI along this path.
-At \(t=0\), the first-order sampling approximation itself degenerates;
+At \(t=0\), the first-order sampling variance is zero;
 Section~\ref{sec:independence-boundary} treats that case separately.
 
 \section{Dependence between the MI and variance estimates}
@@ -158,9 +160,11 @@ Substituting both expressions into the first-order covariance above gives
       +O\!\left(\frac{t^3}{n_P}\right).
 \end{align}
 The first-order covariance is therefore positive for small positive MI
-along this path. At exact independence, \(V(P_0)=0\) and a second-order
-sampling approximation is needed. This component covariance alone does not
-determine the two-sample test's rejection rate.
+along this path: samples with a larger MI estimate also tend to have a
+larger variance estimate. The two-sample rejection rate depends on both
+populations and the ratio of the difference to its standard error.
+At exact independence, \(V(P_0)=0\) and a second-order sampling
+approximation is needed.
 
 \section{The independence boundary}
 \label{sec:independence-boundary}

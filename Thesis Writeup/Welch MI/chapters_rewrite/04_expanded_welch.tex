@@ -24,11 +24,10 @@ contributions
   }.
   \label{eq:ws-general}
 \end{equation}
-The numerator contains the two terms in the squared standard error. The
-remaining quantities
-are the component degrees of freedom \(\nu_P\) and \(\nu_Q\), which should
-measure how reliably \(\Vhat(P)\) and \(\Vhat(Q)\) estimate their population
-counterparts.
+The variance contributions \(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\) already
+appear in the shared standard error. The new quantities are the component
+degrees of freedom \(\nu_P\) and \(\nu_Q\). They describe how much each
+estimated MI variance varies between samples relative to its mean.
 
 The derivation has four steps. First, we relate the degrees of freedom to the
 average and across-sample variation of \(\Vhat(P)\). Second, we calculate how \(V(P)\)
@@ -84,9 +83,15 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
   }.
   \label{eq:component-df-moments}
 \end{equation}
-To first order, \(\E\{\Vhat(P)\}\approx V(P)\). The required calculation is
-therefore the sampling variance of \(\Vhat(P)\).
+\begin{samepage}
+The numerator depends on the mean of the estimated MI variance; the
+denominator measures how much that estimate fluctuates between samples.
+To first order, \(\E\{\Vhat(P)\}\approx V(P)\), so the remaining task is
+to calculate \(\Var\{\Vhat(P)\}\).
+\par
+\end{samepage}
 
+\begin{samepage}
 \section{How the MI Variance Changes with the Table}
 
 To find how much the estimated MI variance changes between samples, we first
@@ -102,6 +107,8 @@ where \(\delta_{(x,y)}\) places probability one on cell \((x,y)\). At
 \(\varepsilon=0\), the distribution is \(P\). Increasing \(\varepsilon\)
 moves a small amount of probability toward the selected cell while preserving
 total probability one.
+\par
+\end{samepage}
 
 For an arbitrary cell \((i,j)\),
 \begin{equation}
@@ -140,6 +147,7 @@ Along the perturbation path, pointwise MI is
   -\log p_{i+}(\varepsilon)
   -\log p_{+j}(\varepsilon).
 \end{equation}
+\begin{samepage}
 For each logarithm, the derivative is the probability derivative divided by
 the probability. Substituting the joint and marginal derivatives gives
 \begin{align}
@@ -161,6 +169,8 @@ the probability. Substituting the joint and marginal derivatives gives
 \end{align}
 The joint term supplies \(-1\), while subtracting the row and column
 terms supplies \(+1\) each. Their sum is the final \(+1\).
+\par
+\end{samepage}
 
 MI along the path is
 \begin{equation}
@@ -168,8 +178,6 @@ MI along the path is
   =\sum_{i,j}p_{ij}(\varepsilon)
   \pmi_{P_\varepsilon}(i,j).
 \end{equation}
-
-\pagebreak[4]
 
 The product rule separates its derivative into the change in probability
 weights and the change in pointwise-MI values:
@@ -327,8 +335,10 @@ g_P(x,y)
 \label{eq:g-final}
 \end{equation}
 The first line is the change if the pointwise-MI values were held fixed. The
-bracket accounts for changes in those values, including the effects of the
-selected joint probability and both margins.
+bracket accounts for the fact that they change too: each pointwise-MI value
+uses a cell probability and its row and column totals. The conditional means
+collect the effects of those changing totals. Both parts are needed to
+describe how the estimated variance varies across samples.
 \par
 \end{samepage}
 
@@ -392,16 +402,19 @@ population component degree of freedom
   }.
   \label{eq:population-component-df}
 \end{equation}
-Equation~\eqref{eq:population-component-df} depends on relative, not
-absolute, uncertainty. Since
+To interpret Equation~\eqref{eq:population-component-df}, divide the
+sampling variance of \(\Vhat(P)\) by the square of the population
+quantity it estimates:
 \begin{equation}
   \frac{\Var\{\Vhat(P)\}}{V(P)^2}
   \approx \frac{\tau^2(P)}{n_PV(P)^2},
 \end{equation}
-the component degrees of freedom are approximately twice the reciprocal of
-this relative variance. A stable estimate relative to the size of $V(P)$ has
-large degrees of freedom; a relatively unstable estimate has smaller degrees
-of freedom and a higher rejection cutoff from the Student \(t\) distribution.
+so the component degrees of freedom are approximately twice the reciprocal of
+this relative variance. When the estimate fluctuates little compared with
+the size of \(V(P)\), the degrees of freedom are large and the Student
+\(t\) distribution is close to the standard normal distribution. Greater
+relative fluctuation gives fewer degrees of freedom and a larger rejection
+cutoff.
 
 Positive \(V(P)\) does not guarantee positive \(\tau^2(P)\): table changes
 can have no first-order effect on \(V(P)\). In that case, describing the
@@ -627,9 +640,10 @@ the component degrees-of-freedom formula gives
  \approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-The cancellation explains why a low starting MI can produce few effective
-degrees of freedom and a higher rejection cutoff from the Student \(t\)
-distribution.
+For a fixed sample size, this approximation makes the degrees of freedom
+smaller as population MI approaches zero. The cutoff from the Student
+\(t\) distribution then increases, so a larger absolute statistic is
+needed to reject equal MI.
 
 These approximations require the fixed-margin path, fixed table size and
 positive cell probabilities. Using them for samples also requires a useful
@@ -646,8 +660,10 @@ approximations to the sampling errors in MI and its estimated variance.
 
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
-The MI difference and standard error come from the same tables and can vary
-together; the degrees-of-freedom adjustment does not model this dependence.
+The MI difference and standard error come from the same tables. A sample
+that changes the estimated difference can also change its standard error,
+and the degrees-of-freedom adjustment does not account for how the two move
+together.
 Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
 between each population's MI and variance estimates.
 

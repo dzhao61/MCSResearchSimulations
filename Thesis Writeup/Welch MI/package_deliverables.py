@@ -32,7 +32,8 @@ def source_files() -> list[tuple[Path, Path]]:
     root_names = [
         "main.tex", "preamble.tex", "metadata.tex", "references.bib", "README.md",
         "package_deliverables.py",
-        "EXEMPLAR_REVIEW_NOTES.md", "LITERATURE_SOURCE_CHECK.md", "REVIEW_RESPONSE.md",
+        "EXEMPLAR_REVIEW_NOTES.md", "DLI_EXEMPLAR_REVIEW_NOTES.md",
+        "LITERATURE_SOURCE_CHECK.md", "REVIEW_RESPONSE.md",
         "BIBLIOGRAPHY_REVIEW_RESPONSE.md",
         "SCIENTIFIC_AUDIT.md", "SUBMISSION_CHECK.md", "THESIS_GOAL.md",
         "THESIS_REWRITE_PLAN.md",

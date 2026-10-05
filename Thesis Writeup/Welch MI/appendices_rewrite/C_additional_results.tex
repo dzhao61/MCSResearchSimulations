@@ -56,14 +56,15 @@ column, \(P\)'s row and column margins are
 \label{fig:patterns-focus}
 \end{figure}
 
-For first, rare and spread patterns, respectively, the
+All three association patterns give below-target null rejection in this
+comparison. For first, rare and spread patterns, respectively, the
 zero-difference Wald rates are \(\PatternFirstWaldRate\),
 \(\PatternRareWaldRate\) and \(\PatternSpreadWaldRate\); Expanded Welch gives
 \(\PatternFirstExpandedRate\), \(\PatternRareExpandedRate\) and
 \(\PatternSpreadExpandedRate\). All displayed calculations are valid. The
 alternative curves remain nearly flat over this short MI range, so neither
-method detects these differences well. Changing the location of association
-therefore leaves the conservative gap in this comparison.
+method detects these differences well. The low null rejection and limited
+detection persist across the three association patterns.
 
 \clearpage
 
@@ -83,13 +84,15 @@ allocations when \(Q\) has the higher MI.}
 \label{fig:imbalance-q}
 \end{figure}
 
-At zero difference, Wald is near or above 0.05 while
+Allocating more observations to \(Q\), the population with higher MI,
+gives stronger detection in this comparison. At zero difference, Wald is near or above 0.05 while
 Expanded Welch is below it in both allocations. When \(Q\) has more observations
 \((n_P,n_Q)=(50,250)\), rejection rises with \(I(Q)-I(P)\); at 0.02 nats it
 reaches \(\ImbalanceQHigherWaldRate\) for Wald and
 \(\ImbalanceQHigherExpandedRate\) for Expanded Welch. With \(P\) larger, the
 curves rise much less. These points are valid, but the alternative gap is not
-a size-adjusted power comparison because their matched null rates differ.
+a comparison at matched false-positive rates: the null rates differ even
+though both tests use the nominal 5\% threshold.
 
 \clearpage
 
@@ -108,7 +111,8 @@ allocations when \(P\) has the higher MI.}
 \label{fig:imbalance-p}
 \end{figure}
 
-The zero-difference rates are the same as in
+Reversing the MI direction also reverses which sample allocation gives
+stronger detection. The zero-difference rates are the same as in
 Figure~\ref{fig:imbalance-q}, because each allocation uses the same pair of
 populations in both figures at that point; \(P\) and \(Q\) still have different
 margins. Reversing the MI direction changes what happens next: when \(P\) has
@@ -165,14 +169,15 @@ additive and ordinal log-linear constructions for \(5\times5\) tables.}
 \label{fig:construction-focus}
 \end{figure}
 
-At zero difference, the additive and log-linear Wald
+Both constructions give conservative null rejection despite producing
+different cell probabilities. At zero difference, the additive and log-linear Wald
 rates are \(\ConstructionAdditiveWaldRate\) and
 \(\ConstructionLoglinearWaldRate\); Expanded Welch gives
 \(\ConstructionAdditiveExpandedRate\) and
 \(\ConstructionLoglinearExpandedRate\). All four are valid and below 0.05.
 Rejection stays low or falls slightly as the displayed difference grows.
-The constructions give different null rates despite matching margins and
-MI, but both remain conservative.
+Matching margins and MI therefore does not ensure identical rejection
+rates.
 
 \clearpage
 

@@ -20,28 +20,32 @@ samples, it can also fail to return a p-value more often than Wald.
 These results show that lowering rejection is useful only when it improves
 calibration without an unacceptable loss of detection or validity.
 
-The shared statistic explains a further limit of the adjustment.
-The reference distribution alone cannot correct errors in the
-estimated MI difference or the standard error shared by both tests.
+Changing the reference distribution leaves the estimated MI difference and
+standard error unchanged. Errors in those shared quantities can therefore
+affect both tests despite the degrees-of-freedom adjustment.
 
 Normal Wald remains
 the simpler general baseline for the tested task; Expanded Welch is
 best treated as a sensitivity check in a regime where its calibration
 and validity have been examined separately.
 
-The tested population pairs cover selected table sizes, margins,
-association patterns and sample sizes. Applying the recommendation elsewhere
-requires validation for the new population setting.
+The recommendation is based on selected table sizes, margins, association
+patterns and sample sizes. The derivation assumes independent categorical
+samples with positive population cell probabilities and positive first-order
+MI variance; exact independence requires a different approximation.
+Applying the method in a new population setting requires a calibration check
+for that setting.
 
-The derivation applies to independent categorical samples with positive
-population cell probabilities and positive first-order MI variance.
-Exact independence requires a different approximation.
-
-The most useful next step is to study the estimated MI difference
-and its standard error together, especially near independence and
-in sparse tables. A likelihood-ratio or resampling method could
-provide a different comparison, but it would need validation for
-the actual null \(I(P)=I(Q)\), including cases where \(P\ne Q\).
+\begin{samepage}
+The most useful next step is to study how the estimated MI difference and
+its standard error move together across samples, especially near
+independence and in sparse tables. This could guide a comparison that
+accounts for errors in the statistic itself, rather than only changing its
+reference distribution. A likelihood-ratio or resampling method would need
+validation for equal population MI, including cases where the complete
+tables differ.
+\par
+\end{samepage}
 
 A real-data application and equal-MI pairs with association in
 different cells would test how far the present simulation

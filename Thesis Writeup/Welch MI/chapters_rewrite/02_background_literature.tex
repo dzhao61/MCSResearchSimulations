@@ -1,8 +1,9 @@
 \chapter{Background and Literature Review}
 \label{chap:background}
 
-This chapter introduces MI, its estimation and sampling variance, then
-reviews methods for comparing MI values between populations.
+Testing whether two populations have equal MI requires an estimate from each
+sample and a measure of its sampling error. This chapter develops those
+inputs and reviews methods for comparing them.
 
 \section{Information-theoretic foundations}
 
@@ -105,11 +106,13 @@ The zero-cell convention follows from
 they still affect the empirical margins and the finite-sample behaviour of the
 estimator.
 
-Under multinomial sampling, the cell counts are random but constrained to sum
-to \(n\), so they are dependent. The plug-in estimator remains consistent for
-a fixed alphabet, but its finite-sample behaviour depends on the complete
-probability table. In particular, rare cells can change the sampling
-behaviour even when the alphabet and sample sizes are unchanged
+Under multinomial sampling, the cell counts vary between samples but must
+sum to \(n\). An extra observation in one cell therefore leaves fewer
+observations for the others. For a fixed set of categories, the plug-in
+estimate approaches population MI as the sample grows, but its small-sample
+behaviour depends on the complete probability table. In particular, rare
+cells can change this behaviour even when the categories and sample size are
+unchanged
 \citep{paninski2003}.
 
 For a fixed positive \(r\times c\) support, the plug-in estimator has a
@@ -504,14 +507,14 @@ For example, \citet{panwall2002} calculate approximate degrees of freedom
 by examining how a regression variance estimate varies between samples.
 Expanded Welch applies this approach to the estimated MI variance.
 
-Whether this adjustment helps depends on the direction of the variance error.
-\citet{bell2002} report regression variance estimates biased downward,
-while \citet{kauermann2001} examine intervals that cover too rarely. A more
-cautious reference can help in such settings. In the MI comparison examined
-in Section~\ref{sec:mechanism-results}, the average squared plug-in standard
-error exceeds the measured finite-sample variance of the estimated
-difference. Using a Student \(t\) distribution does not correct that
-discrepancy and lowers rejection further in that setting.
+These regression precedents address variance estimates that are too small
+or confidence intervals that cover too rarely
+\citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
+distribution can widen the intervals and reduce excessive rejection in such
+settings. The MI comparison in Section~\ref{sec:mechanism-results} has the
+opposite problem: the average squared plug-in standard error exceeds the
+measured variance of the estimated difference. The larger cutoff leaves
+that variance error unchanged and makes rejection less likely still.
 
 \medskip
 \noindent\textbf{Prior MI inference and related comparisons.}
@@ -521,12 +524,12 @@ using error propagation and examines them numerically. These calculations
 describe the uncertainty of an individual estimate, a necessary input to a
 comparison of two estimates.
 
-A Bayesian approach instead describes uncertainty about the unknown
-population MI after observing a table. \citet{hutter2002}
-and \citet{hutterzaffalon2005} model the unknown cell probabilities to
-calculate the variance and shape of the resulting MI distribution.
-They describe uncertainty about population MI given an observed table;
-this thesis measures how often a test rejects across repeated samples.
+A Bayesian approach describes uncertainty about population MI given an
+observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
+unknown cell probabilities to calculate the variance and shape of the
+resulting MI distribution. Our repeated-sampling comparison instead asks
+how often each test rejects when new samples are drawn from fixed
+populations.
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
@@ -580,10 +583,12 @@ regression variance estimate to choose degrees of freedom. Applying the
 latter approach to MI requires calculating how its estimated variance
 changes with the observed table.
 
-A new observation affects a cell probability, its row and column totals,
-and the MI values calculated from them. This thesis derives how those
-changes affect the estimated variance and
-uses the result to choose a Student \(t\) distribution for comparing two MI values.
-It then tests the method on fixed population tables, showing when it brings
-false-positive rates closer to the target and when it instead rejects too
-rarely.
+A new observation changes the empirical cell probabilities, row and column
+totals, and pointwise MI values. The remaining calculation is how these
+changes affect the estimated MI variance. This thesis uses that calculation
+to choose the degrees of freedom for a Student \(t\) distribution, then
+evaluates whether it improves false positives and detection.
+
+Both tests start with the same estimated MI difference and standard error.
+Chapter~\ref{chap:baselines} defines this shared statistic before
+Chapter~\ref{chap:expanded} derives the additional variance calculation.
