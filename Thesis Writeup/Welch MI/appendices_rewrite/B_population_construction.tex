@@ -107,8 +107,6 @@ use the first-cell additive direction, \(I(P)=I_0\),
 \(I(Q)=I_0+|\Delta|\), and the three standard margin profiles. The
 symbol \(n\) means \(n_P=n_Q=n\). Only targets producing strictly positive
 population tables are used.
-At \(n=1\), neither statistic is evaluable, so all sampled results are
-recorded as invalid.
 
 \begin{longtable}{@{}p{0.18\textwidth}p{0.75\textwidth}@{}}
 \caption{Exact statistical experiment grids; MI values are in nats.}
@@ -123,7 +121,7 @@ Family & Settings\\
 \endhead
 Main & Shapes \(2\times2,3\times3,5\times5,8\times8\); three profiles;
 \(I_0=0.02\); \(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\);
-\(n\in\{2,5,10,20,50,100,250,500,1000\}\).\\
+\(n\in\{10,20,50,100,250,500,1000\}\).\\
 Baseline & Main shapes and profiles; \(I_0\in\{0.0001,0.001,0.02\}\);
 main difference grid; \(n\in\{20,100,1000\}\).\\
 Changed cells & Shapes \(3\times3,5\times5,8\times8\);
@@ -150,14 +148,14 @@ Extreme skew & Shapes \(2\times2,3\times3,8\times8\); dominant margin
 probability pairs \((\rho_P,\rho_Q)\in\{(0.9,0.95),(0.99,0.995),
 (0.999,0.9995)\}\); \(I_0=0.00001\);
 \(|\Delta|\in\{0,0.00001,0.00005,0.0001,0.0002\}\);
-\(n\in\{1,2,5,20,100,1000,10000\}\).\\
+\(n\in\{20,100,1000,10000\}\).\\
 Rare-cell stress & Shapes \(3\times3,8\times8\); dominant pair
 \((0.9,0.95)\); first and rare blocks; \(I_0=0.00001\);
 \(|\Delta|\in\{0,0.00001,0.000025,0.00005,0.0001\}\);
 same \(n\) ladder as extreme skew.\\
 Independence & Shapes \(2\times2,8\times8\); three profiles;
 \(I_0=0\); main difference grid;
-\(n\in\{2,20,100,1000\}\).\\
+\(n\in\{20,100,1000\}\).\\
 Convergence & Main square shapes and profiles; equal MI
 \(I(P)=I(Q)\in\{0.0001,0.02\}\);
 \(n\in\{1000,2500,10000,50000\}\). Additional rare-block controls

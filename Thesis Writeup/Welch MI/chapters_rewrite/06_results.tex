@@ -66,9 +66,8 @@ Across the 24 main null regimes with \(n=10\) or 20,
 Expanded Welch is numerically closer to 0.05 in
 \(\MainTenTwentyExpandedCloserCount\), whereas Wald is closer in
 \(\MainTenTwentyWaldCloserCount\). At \(n=500\) or 1,000, Wald is
-closer in all \(\MainLateNullCount\) main null regimes. The \(n=5\)
-regimes need separate treatment below because Expanded Welch never
-rejects there. Appendix~\ref{app:additional-results} lists all 108 main null
+closer in all \(\MainLateNullCount\) main null regimes.
+Appendix~\ref{app:additional-results} lists all 84 main null
 rates and shows selected additional curves.
 
 Table~\ref{tab:null-paired-examples} compares two null settings where both
@@ -209,18 +208,6 @@ displayed alternatives there. The hollow markers show why near-zero
 unconditional rejection cannot be read as good calibration in sparse data.
 
 \FloatBarrier
-
-Low validity explains much of the zero rejection in the most extreme
-panel. There is a second, distinct small-sample effect: Expanded Welch
-rejects in none of the \(\MainFiveNullCount\) main-grid null
-regimes with \(n=5\), including uniform \(3\times3\), \(5\times5\)
-and \(8\times8\) regimes where most calculations are valid. Thus its
-zero rejection cannot always be explained by missing outputs. In
-one \(8\times8\) different-skew alternative at \(n=5\), Wald
-rejects \(\EightSparseFiveAlternativeWaldRate\) and Expanded Welch
-rejects \(\EightSparseFiveAlternativeExpandedRate\), while their
-valid-result rates are \(\EightSparseFiveAlternativeWaldValid\)
-and \(\EightSparseFiveAlternativeExpandedValid\).
 
 Wald needs a positive usable total estimated variance. Expanded Welch also
 needs positive finite degrees of freedom for both components and their

@@ -3,7 +3,7 @@
 ## Final manuscript
 
 The goal and SMART acceptance targets are in
-[THESIS_GOAL.md](THESIS_GOAL.md), refreshed 5 October 2026. The detailed chapter plan is
+[THESIS_GOAL.md](THESIS_GOAL.md), refreshed 6 October 2026. The detailed chapter plan is
 [THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). The companion [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
 records the review of the three example theses and the writing conventions
 for the new draft. [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md)
@@ -87,11 +87,11 @@ them with `python -m unittest discover -s figures_rewrite -p test_figure_layout.
 - `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
 
 Detailed mechanism diagnostics and the full figure atlas remain in the
-experiment supplement. The thesis itself includes all 108 main null settings
+experiment supplement. The thesis itself includes all 84 reported main null settings
 individually, with rejection and validity rates for both methods.
 
-The 5 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 87-page manuscript. Chapter 6 has seven
+The 6 October named PDF, source archive, experiment supplement and checksums
+in `deliverables/` match the active 86-page manuscript. Chapter 6 has seven
 lead figures, and Appendix C has eight supporting figures and the complete
 main-null table. The source archive
 builds independently when extracted with the supplement; the evidence audit
@@ -113,11 +113,30 @@ the standard indent, and equation continuations are unchanged.
 The subsequent figure-layout pass regenerates all 22 assets using shared
 printed-size templates, including the 15 figures in the manuscript. Numerical
 results, tables and body text are unchanged; the PDF remains 87 pages.
-Table 5.2 now adds italic arithmetic beneath every configuration count, with
+Table 5.2 previously added italic arithmetic beneath every configuration count, with
 a positional key in the column heading. Shape-dependent patterns and extra
 convergence controls use explicit sums, and the imbalance breakdown counts
 the equal-MI case once. The evidence audit verifies all 12 displayed
 breakdowns against the saved statistical and timing regimes.
+
+The 6 October sample-size revision reports only configurations with both
+`n_p >= 10` and `n_q >= 10`. The original 3,111 configurations and 4,001
+display slots remain in the experiment supplement. The manuscript uses 2,760
+unique configurations, 3,626 display slots and the same 534 population pairs,
+for 55,200,000 sampled table pairs. The plotter applies this scope before
+generating tables and macros; the evidence audit independently reconstructs
+both the full archive and the reported subset. All 22 figure assets and their
+manifest are unchanged. Five scope regression tests check both sample sizes,
+counts, retained figure selections, the 84-row null table and obsolete macros.
+Run all 16 figure/scope/table tests with
+`python -m unittest discover -s figures_rewrite -p 'test_*.py'`.
+The working draft is not refreshed.
+
+Section 5.3 subsequently returns to its earlier plain three-column table,
+retaining the revised sample sizes and counts. The bracketed products,
+positional key and paragraph explaining overlapping family counts are removed.
+The evidence audit checks all 12 plain counts against the retained saved
+settings; two table regression tests also detect an incorrect count.
 
 The manuscript is standalone. Scientific settings and validity rules are
 included in its chapters and appendices; file inventories, build commands and

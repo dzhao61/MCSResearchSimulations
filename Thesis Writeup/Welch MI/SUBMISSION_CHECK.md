@@ -1,6 +1,6 @@
 # Thesis completion check
 
-The 5 October 2026 record below verifies the current thesis and deliverables.
+The 6 October 2026 record below verifies the current thesis and deliverables.
 The later dated September notes are retained as historical audit evidence;
 their earlier page counts and references to a "current" PDF do not supersede
 this record. The acceptance targets are in [THESIS_GOAL.md](THESIS_GOAL.md).
@@ -19,23 +19,53 @@ and technical detail are in the appendices.
 
 ## Current Verification
 
-T1-T8 are complete for the 5 October revision.
+T1-T8 are complete for the 6 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The standalone A4 PDF has 87 pages, including 51 numbered main-text pages and three focused appendices occupying 24 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
+| Manuscript | The standalone A4 PDF has 86 pages, including 51 numbered main-text pages and three focused appendices occupying 23 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 84 reported main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 102 Welch-project tests, 27 DifferentialMI tests and 37 archive-bundled tests pass. The added cell-level check verifies the intermediate pointwise MI, conditional means, variance contribution and variance sensitivity in Section 4.4; the binary construction check also verifies Section 5.1's new first-cell calculation. The condensed independence calculation also passes 30 independent positive-table finite-difference checks. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks supporting all 35 remaining active references. The removed transfer-entropy aside and its citation are retained in the historical source check. The clean build resolves every citation. | Complete. |
-| Experimental evidence | The full audit reconstructs the frozen protocol and verifies all 12 Table 5.2 count breakdowns, Chapter 6 claims, all 22 available figures, the 15 included figures, all 432 rejection/validity values in the 108-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
-| Build | A clean build from the extracted source produces 87 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
-| Visual presentation | All 87 pages and 22 regenerated figures were inspected as rendered contact sheets, with representative included figures checked on full-size pages. All three-column plots are 142 mm wide, two-column plots 116 mm and the single-panel plot 85 mm. Panels share a 34 mm height; ticks are 8 pt and titles, axis labels and legends 9 pt. The PDFs are included at native size, within the text margins. Nine layout regression tests pass. | Complete. |
+| Experimental evidence | The full audit reconstructs the original protocol and independently selects all 2,760 reported configurations with both samples at least 10. It verifies all 12 plain Table 5.2 counts, Chapter 6 claims, all 22 available figures, the 15 included figures, all 336 rejection/validity values in the 84-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
+| Build | A clean build from the extracted source produces 86 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Visual presentation | All 86 pages were inspected as rendered contact sheets in the preceding pass. This table simplification changes only PDF pages 42-43, which were checked again at larger size; all other rendered pages match the preceding version. The 22 figure assets are unchanged. All three-column plots are 142 mm wide, two-column plots 116 mm and the single-panel plot 85 mm. Panels share a 34 mm height; ticks are 8 pt and titles, axis labels and legends 9 pt. The PDFs are included at native size, within the text margins. Nine layout, five scope and two table regression tests pass. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 13,996 whitespace-separated tokens
+The current main-text length diagnostic is 13,700 whitespace-separated tokens
 from `pdftotext` on PDF pages 9-59 (printed pages 1-51). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
+
+The 6 October sample-size revision applies the same rule across every
+statistical family: both populations have at least 10 observations. It removes
+351 of the original 3,111 unique configurations from the reported study,
+leaving 2,760 configurations and all 534 population pairs, each sampled 20,000
+times, for 55,200,000 table pairs. The main grid has seven sample sizes and
+504 configurations; extreme skew has 180, rare-cell stress 80 and exact
+independence 108. The other family counts and all plotted values are unchanged.
+The abstract, design totals, bracketed count breakdowns, exact grids and
+main-null table agree with this scope. The n=5-specific discussion and macros
+are removed. Original simulation files, the full protocol, statistical code,
+all figure PDFs, their manifest and the working draft are unchanged.
+
+All 129 scientific workspace tests and 14 figure/scope tests pass. The evidence
+audit retains its full-archive reconstruction and adds independent checks of
+the reported subset; it does not rewrite the original protocol. The clean
+archive build, archive evidence audit, 37 bundled scientific tests and 14
+figure/scope tests pass. Delivery checksums validate the refreshed PDF and
+source package alongside the unchanged experiment supplement.
+
+The subsequent 6 October Section 5.3 simplification restores the earlier
+family/count/description table and removes the bracketed arithmetic, positional
+key and highlighted paragraph about overlapping family counts. The current
+sample-size range and all configuration counts are preserved. The audit now
+checks the 12 plain counts directly; two regression tests verify the table and
+reject an incorrect main-family count. All 16 figure/scope/table tests and the
+evidence audit pass in the workspace and extracted source package. The clean
+build reproduces the working PDF text, with no undefined references, citations
+or overfull boxes. No scientific implementation, stored result, figure or
+working-draft file changed. The refreshed deliverable checksums pass.
 
 The 5 October Daniel Li-informed writing pass reviewed the abstract, all eight
 chapters and the three active appendices. It strengthens concrete explanations

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import ast
 import json
 import hashlib
 import os
@@ -46,28 +45,19 @@ POPULATIONS = pd.read_csv(RESULTS / "population_definitions.csv")
 CELLS = pd.read_csv(RESULTS / "cell_results.csv")
 RUNTIME = pd.read_csv(RESULTS / "runtime_summary.csv")
 PAIRED = pd.read_csv(RESULTS / "paired_method_results.csv")
+# Keep the archive audit separate from the manuscript's sample-size scope.
+REPORTED_DISPLAY = DISPLAY.loc[DISPLAY.n_p.ge(10) & DISPLAY.n_q.ge(10)].copy()
+REPORTED_CONFIGURATIONS = CONFIGURATIONS.loc[
+    CONFIGURATIONS.n_p.ge(10) & CONFIGURATIONS.n_q.ge(10)
+].copy()
 
 
 def equal(actual: float, expected: float, *, tolerance: float = 5e-6) -> None:
     assert np.isclose(actual, expected, atol=tolerance, rtol=0), (actual, expected)
 
 
-def count_expression(node: ast.AST) -> int:
-    """Evaluate only the integer sums and products used in Table 5.2."""
-    if isinstance(node, ast.Expression):
-        return count_expression(node.body)
-    if isinstance(node, ast.Constant) and type(node.value) is int and node.value >= 0:
-        return node.value
-    if isinstance(node, ast.BinOp):
-        left, right = count_expression(node.left), count_expression(node.right)
-        if isinstance(node.op, ast.Add):
-            return left + right
-        if isinstance(node.op, ast.Mult):
-            return left * right
-    raise AssertionError(f"Unsupported configuration-count expression: {ast.dump(node)}")
-
-
-def check_family_breakdowns(section_counts: pd.DataFrame) -> None:
+def check_family_counts(section_counts: pd.DataFrame, *, source: str | None = None) -> None:
+    """Check the plain configuration counts in Table 5.2 against saved rows."""
     families = {
         "Main": "main", "Baseline": "baseline", "Changed cells": "patterns",
         "Imbalance": "imbalance", "Larger effects": "broad_effect",
@@ -76,20 +66,20 @@ def check_family_breakdowns(section_counts: pd.DataFrame) -> None:
         "Independence": "independence", "Convergence": "convergence",
         "Runtime": "runtime",
     }
-    source = (HERE.parent / "chapters_rewrite/05_experimental_design.tex").read_text()
+    if source is None:
+        source = (HERE.parent / "chapters_rewrite/05_experimental_design.tex").read_text()
     rows = re.findall(
-        r"^([A-Za-z -]+) & \\familycount\{([\d,]+)\}\{([^}]+)\}", source, re.M,
+        r"^([A-Za-z -]+) & ([\d,]+) &", source, re.M,
     )
     assert len(rows) == len(families) and {row[0] for row in rows} == set(families)
     runtime_count = len(RUNTIME.drop_duplicates([
         "shape", "profile", "n_p", "n_q", "baseline_mi", "mi_difference",
     ]))
-    for family, written_count, formula in rows:
+    for family, written_count in rows:
         section = families[family]
         expected = runtime_count if section == "runtime" else int(section_counts.loc[section, "unique_configurations"])
-        arithmetic = formula.replace(r"\(\times\)", "*").replace(r"\\", " ").strip()
-        actual = count_expression(ast.parse(arithmetic, mode="eval"))
-        assert actual == int(written_count.replace(",", "")) == expected, (family, actual, expected)
+        actual = int(written_count.replace(",", ""))
+        assert actual == expected, (family, actual, expected)
 
 
 def result(configuration_id: str, method: str, column: str) -> float:
@@ -102,7 +92,7 @@ def result(configuration_id: str, method: str, column: str) -> float:
 
 def display_subset(section: str, **filters: object) -> pd.DataFrame:
     """Select the display rows that a manuscript figure is required to use."""
-    rows = DISPLAY.loc[DISPLAY.section.eq(section)].copy()
+    rows = REPORTED_DISPLAY.loc[REPORTED_DISPLAY.section.eq(section)].copy()
     for column, value in filters.items():
         if isinstance(value, (tuple, list, set)):
             rows = rows.loc[rows[column].isin(value)]
@@ -223,7 +213,36 @@ def main() -> None:
         actual = tuple(int(value) for value in section_counts.loc[section])
         assert actual == expected, (section, actual, expected)
 
-    check_family_breakdowns(section_counts)
+    reported_section_counts = REPORTED_DISPLAY.groupby("section").agg(
+        display_slots=("display_id", "size"),
+        unique_configurations=("configuration_id", "nunique"),
+    )
+    expected_reported_counts = {
+        **expected_section_counts,
+        "main": (504, 504), "extreme": (180, 180),
+        "rare_stress": (80, 80), "independence": (108, 108),
+    }
+    for section, expected in expected_reported_counts.items():
+        actual = tuple(int(value) for value in reported_section_counts.loc[section])
+        assert actual == expected, (section, actual, expected)
+    check_family_counts(reported_section_counts)
+
+    assert len(REPORTED_DISPLAY) == 3626
+    assert len(REPORTED_CONFIGURATIONS) == 2760
+    assert REPORTED_CONFIGURATIONS.pair_id.nunique() == 534
+    assert set(REPORTED_DISPLAY.configuration_id) == set(REPORTED_CONFIGURATIONS.configuration_id)
+    assert REPORTED_CONFIGURATIONS.replicates.sum() == 55200000
+    assert REPORTED_CONFIGURATIONS.replicates.eq(protocol["replicates"]).all()
+    design = (HERE.parent / "chapters_rewrite/05_experimental_design.tex").read_text()
+    abstract = (HERE.parent / "frontmatter/abstract.tex").read_text()
+    assert "2,760 fixed statistical settings" in abstract
+    assert "534 distinct population pairs" in design
+    assert "2,760 unique configurations" in design
+    assert "55,200,000 table pairs" in design
+    assert r"n_P=n_Q\in\{10,20,50,100,250,500,1000\}" in design
+    assert set(REPORTED_DISPLAY.loc[REPORTED_DISPLAY.section.eq("main"), "n_p"]) == {
+        10, 20, 50, 100, 250, 500, 1000,
+    }
 
     assert json.loads((RESULTS / "verification.json").read_text())["all_pass"]
     assert json.loads((RESULTS / "report_verification.json").read_text())["all_pass"]
@@ -260,7 +279,6 @@ def main() -> None:
     anchors = {
         "config_313a5e5c05280f9e": (0.06870, 0.05695, 1, 1),
         "config_700945d218841f2e": (0.04450, 0.03865, 1, 1),
-        "config_e9b5baebbe3f5535": (0.30865, 0, 0.83840, 0.31415),
     }
     for configuration_id, (wald_rate, expanded_rate, wald_valid, expanded_valid) in anchors.items():
         for method, rate, valid in (
@@ -281,7 +299,7 @@ def main() -> None:
         equal(-row.paired_95_high, low)
         equal(-row.paired_95_low, high)
 
-    display_results = DISPLAY.merge(
+    display_results = REPORTED_DISPLAY.merge(
         CELLS[["configuration_id", "method", "unconditional_rejection_rate", "valid_rate"]],
         on="configuration_id",
         validate="many_to_many",
@@ -290,17 +308,15 @@ def main() -> None:
         display_results.section.eq("main") & display_results.mi_difference.eq(0)
     ]
     paired = null_main.pivot(index="configuration_id", columns="method", values="unconditional_rejection_rate")
-    specs = DISPLAY.loc[
-        DISPLAY.section.eq("main") & DISPLAY.mi_difference.eq(0),
+    specs = REPORTED_DISPLAY.loc[
+        REPORTED_DISPLAY.section.eq("main") & REPORTED_DISPLAY.mi_difference.eq(0),
         ["configuration_id", "n_p", "shape", "profile"],
     ].drop_duplicates().set_index("configuration_id")
     paired = paired.join(specs, validate="one_to_one")
-    assert len(paired) == 108
-    smallest = paired.loc[paired.n_p.eq(5)]
+    assert len(paired) == 84
     early = paired.loc[paired.n_p.isin([10, 20])]
     late = paired.loc[paired.n_p.isin([500, 1000])]
-    assert len(smallest) == 12 and len(early) == 24 and len(late) == 24
-    assert smallest.expanded_welch.eq(0).all()
+    assert len(early) == 24 and len(late) == 24
     early_expanded_closer = (
         (early.expanded_welch - .05).abs() < (early.normal_wald - .05).abs()
     ).sum()
@@ -313,25 +329,13 @@ def main() -> None:
     assert early_expanded_closer == 15 and early_wald_closer == 9
     assert late_wald_closer == 24
 
-    smallest_expanded = null_main.loc[
-        null_main.n_p.eq(5) & null_main.method.eq("expanded_welch")
-    ]
-    equal(smallest_expanded.valid_rate.min(), 0.20820)
-    equal(smallest_expanded.valid_rate.max(), 0.99085)
-    uniform_larger_shapes = smallest_expanded.loc[
-        smallest_expanded.profile.eq("uniform")
-        & smallest_expanded["shape"].isin(["3x3", "5x5", "8x8"])
-    ]
-    assert len(uniform_larger_shapes) == 3
-    assert uniform_larger_shapes.valid_rate.gt(.9).all()
-
     expected_null_summary = {
-        ("uniform", "normal_wald"): (10, 18, 8, 4),
-        ("uniform", "expanded_welch"): (19, 16, 1, 5),
-        ("same_skew", "normal_wald"): (14, 15, 7, 8),
-        ("same_skew", "expanded_welch"): (25, 11, 0, 12),
-        ("different_skew", "normal_wald"): (9, 16, 11, 8),
-        ("different_skew", "expanded_welch"): (19, 13, 4, 12),
+        ("uniform", "normal_wald"): (6, 18, 4, 0),
+        ("uniform", "expanded_welch"): (11, 16, 1, 0),
+        ("same_skew", "normal_wald"): (10, 15, 3, 0),
+        ("same_skew", "expanded_welch"): (17, 11, 0, 4),
+        ("different_skew", "normal_wald"): (5, 16, 7, 0),
+        ("different_skew", "expanded_welch"): (11, 13, 4, 4),
     }
     for (profile, method), expected in expected_null_summary.items():
         rows = null_main.loc[
@@ -530,11 +534,12 @@ def main() -> None:
         r" & (\d+\.\d{4}) & (\d+\.\d{4}) & (\d+\.\d{4}) & (\d+\.\d{4}) \\\\",
         null_table,
     )
-    assert len(table_rows) == 108
+    assert len(table_rows) == 84
     seen = set()
     profile_keys = {"Uniform": "uniform", "Same skew": "same_skew", "Different skew": "different_skew"}
     for rows, columns, profile_label, n, *values in table_rows:
         key = (f"{rows}x{columns}", profile_keys[profile_label], int(n))
+        assert key[2] >= 10, key
         assert key not in seen, key
         seen.add(key)
         expected_rows = null_main.loc[
@@ -562,7 +567,6 @@ def main() -> None:
     for name, configuration_id in {
         "EightUniformTwenty": "config_313a5e5c05280f9e",
         "TwoUniformThousand": "config_700945d218841f2e",
-        "EightSparseFiveAlternative": "config_e9b5baebbe3f5535",
     }.items():
         for method, stem in (("normal_wald", "Wald"), ("expanded_welch", "Expanded")):
             macro(
@@ -575,7 +579,7 @@ def main() -> None:
                 result(configuration_id, method, "valid_rate"),
                 5,
             )
-    macro("MainFiveNullCount", len(smallest))
+    assert not any(name.startswith(("MainFive", "EightSparseFive")) for name in macros)
     macro("MainTenTwentyNullCount", len(early))
     macro("MainTenTwentyExpandedCloserCount", early_expanded_closer)
     macro("MainTenTwentyWaldCloserCount", early_wald_closer)
@@ -632,12 +636,12 @@ def main() -> None:
 
     null_band = (HERE / "null_band_summary.tex").read_text()
     for profile, method, expected in (
-        ("Uniform", "Normal Wald", (10, 18, 8, 4)),
-        ("Uniform", "Expanded Welch", (19, 16, 1, 5)),
-        ("Same skew", "Normal Wald", (14, 15, 7, 8)),
-        ("Same skew", "Expanded Welch", (25, 11, 0, 12)),
-        ("Different skew", "Normal Wald", (9, 16, 11, 8)),
-        ("Different skew", "Expanded Welch", (19, 13, 4, 12)),
+        ("Uniform", "Normal Wald", (6, 18, 4, 0)),
+        ("Uniform", "Expanded Welch", (11, 16, 1, 0)),
+        ("Same skew", "Normal Wald", (10, 15, 3, 0)),
+        ("Same skew", "Expanded Welch", (17, 11, 0, 4)),
+        ("Different skew", "Normal Wald", (5, 16, 7, 0)),
+        ("Different skew", "Expanded Welch", (11, 13, 4, 4)),
     ):
         assert f"{profile} & {method} & {' & '.join(map(str, expected))} \\\\" in null_band
 
@@ -704,7 +708,7 @@ def main() -> None:
     )
     assert len(unequal_components) == 12
     assert unequal_components.local_moment_df.notna().all()
-    print("PASS: protocol reconstruction, family counts and all 12 table breakdowns, manuscript claims, 22 available figures, 15 included figures, all 108 main null settings, three active appendices, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
+    print("PASS: original archive reconstruction, 2,760 reported configurations with both samples >=10, all 12 family counts, manuscript claims, 22 available figures, 15 included figures, all 84 main null settings, three active appendices, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
 
 
 if __name__ == "__main__":

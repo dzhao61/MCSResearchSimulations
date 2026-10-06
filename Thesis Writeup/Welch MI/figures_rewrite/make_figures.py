@@ -37,7 +37,18 @@ PROJECT = find_workspace_root() / "WelchSatterthwaiteMI"
 RESULTS = PROJECT / "results" / "thesis_redesign"
 PROTOCOL = json.loads((RESULTS / "protocol.json").read_text())
 REPLICATES = int(PROTOCOL["replicates"])
-DISPLAY = pd.read_csv(RESULTS / "display_manifest.csv")
+MIN_REPORTED_SAMPLE_SIZE = 10
+
+
+def reported_rows(rows: pd.DataFrame) -> pd.DataFrame:
+    """Apply the manuscript's sample-size scope to both populations."""
+    return rows.loc[
+        rows.n_p.ge(MIN_REPORTED_SAMPLE_SIZE)
+        & rows.n_q.ge(MIN_REPORTED_SAMPLE_SIZE)
+    ].copy()
+
+
+DISPLAY = reported_rows(pd.read_csv(RESULTS / "display_manifest.csv"))
 CELLS = pd.read_csv(RESULTS / "cell_results.csv")
 RUNTIME = pd.read_csv(RESULTS / "runtime_summary.csv")
 VALUES = CELLS[
@@ -325,7 +336,6 @@ def evidence_macros() -> None:
     identifiers = {
         "EightUniformTwenty": "config_313a5e5c05280f9e",
         "TwoUniformThousand": "config_700945d218841f2e",
-        "EightSparseFiveAlternative": "config_e9b5baebbe3f5535",
     }
     lines = ["% Generated from results/thesis_redesign/cell_results.csv; do not edit values by hand."]
     for name, identifier in identifiers.items():
@@ -355,10 +365,8 @@ def evidence_macros() -> None:
     main_pivot = main_null.pivot(
         index="configuration_id", columns="method", values="unconditional_rejection_rate"
     ).join(main_meta)
-    smallest = main_pivot.loc[main_pivot.n_p.eq(5)]
     early = main_pivot.loc[main_pivot.n_p.isin([10, 20])]
     late = main_pivot.loc[main_pivot.n_p.isin([500, 1000])]
-    add("MainFiveNullCount", len(smallest))
     add("MainTenTwentyNullCount", len(early))
     add("MainTenTwentyExpandedCloserCount", int(
         ((early.expanded_welch - .05).abs() < (early.normal_wald - .05).abs()).sum()
@@ -477,12 +485,12 @@ def main_null_table() -> None:
     main_null = subset("main", mi_difference=0.0).drop_duplicates(
         ["configuration_id", "method"]
     )
-    assert main_null.configuration_id.nunique() == 108
+    assert main_null.configuration_id.nunique() == 84
     lines = [
         r"\begingroup\small",
         r"\setlength{\tabcolsep}{4pt}",
         r"\begin{longtable}{@{}llrrrrr@{}}",
-        r"\caption{False-positive and valid-result rates for all 108 main null settings.}",
+        r"\caption{False-positive and valid-result rates for all 84 main null settings.}",
         r"\label{tab:all-main-null}\\",
         r"\toprule",
         r"Shape & Margins & $n$ & \multicolumn{2}{c}{Normal Wald} & \multicolumn{2}{c}{Expanded Welch}\\",
@@ -505,7 +513,7 @@ def main_null_table() -> None:
             group = main_null.loc[
                 main_null["shape"].eq(shape) & main_null.profile.eq(profile)
             ]
-            assert group.n_p.nunique() == 9 and group.n_p.eq(group.n_q).all()
+            assert group.n_p.nunique() == 7 and group.n_p.eq(group.n_q).all()
             for n in sorted(group.n_p.unique()):
                 values = group.loc[group.n_p.eq(n)].set_index("method")
                 assert len(values) == 2

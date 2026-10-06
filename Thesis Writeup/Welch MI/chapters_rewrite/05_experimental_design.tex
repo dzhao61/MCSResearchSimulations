@@ -133,6 +133,7 @@ Appendix~\ref{app:construction} gives the construction formulas.
 
 \section{Sampling, tests and measured outcomes}
 
+The study uses at least 10 observations per population.
 For each unique configuration, 20,000 independent pairs of multinomial count
 tables are drawn from its fixed \(P\) and \(Q\). Normal Wald and Expanded
 Welch are applied to the \emph{same} count-table pair. Differences in their
@@ -183,70 +184,38 @@ The principal grid crosses square shapes \(2\times2,3\times3,5\times5,8\times8\)
 with the three margin profiles in Table~\ref{tab:margin-profiles}. It fixes
 \(I(P)=0.02\) nats and uses
 \(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\) nats and equal
-sample sizes \(n_P=n_Q\in\{2,5,10,20,50,100,250,500,1000\}\).
+sample sizes \(n_P=n_Q\in\{10,20,50,100,250,500,1000\}\).
 The other families change one or more stated factors from this principal
 grid.
 
 The design has 534 distinct population pairs \((P,Q)\). A pair combined
 with sample sizes \((n_P,n_Q)\) defines a statistical configuration.
-Reusing pairs at different sample sizes gives 3,111 unique configurations,
-each sampled 20,000 times, for 62,220,000 table pairs.
-Some configurations answer more than one experimental question. The within-family counts in
-Table~\ref{tab:design-families} do not sum to 3,111 because the same
-configuration can occur in several families. Results from the same
-configuration may therefore appear in more than one comparison, using the
-same samples.
+Reusing pairs at different sample sizes gives 2,760 unique configurations,
+each sampled 20,000 times, for 55,200,000 table pairs.
 
 \begin{table}[H]
 \centering
 \caption{The fixed experiment families. All statistical points use 20,000
 paired replicates and the 5\% threshold.}
 \label{tab:design-families}
-\begingroup
-\small
-\setstretch{1.08}
-\setlength{\tabcolsep}{5pt}
-\newcommand{\familycount}[2]{%
-  \parbox[t]{\linewidth}{\centering\setstretch{1}\setlength{\parskip}{0pt}%
-    #1\par {\footnotesize\itshape (#2)\par}}%
-}
-\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}>{\centering\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}X@{}}
+\begin{tabularx}{\textwidth}{@{}lrX@{}}
 \toprule
-Family & \parbox[t]{\linewidth}{\centering\setstretch{1}\setlength{\parskip}{0pt}%
-Configurations\par\smallskip
-{\footnotesize\itshape (shape/pattern choices\\
-\(\times\) margin choices\\
-\(\times\) MI/construction choices\\
-\(\times\) sample-size pairs)\par}}
-& Factor examined\\
+Family & Configurations & Factor examined\\
 \midrule
-Main & \familycount{648}{4 \(\times\) 3 \(\times\) 6 \(\times\) 9} &
-Square table size, three margin profiles and equal sample size.\\
-Baseline & \familycount{648}{4 \(\times\) 3 \(\times\) (3 \(\times\) 6) \(\times\) 3} &
-Three starting MI values, each crossed with six MI differences.\\
-Changed cells & \familycount{144}{(3 \(\times\) 2 + 2) \(\times\) 1 \(\times\) 6 \(\times\) 3} &
-First and rare blocks for three shapes; spread pattern for two.\\
-Imbalance & \familycount{1,056}{4 \(\times\) 3 \(\times\) (1 + 5 \(\times\) 2) \(\times\) 8} &
-One equal-MI case and five differences in each direction; eight sample-size pairs.\\
-Larger effects & \familycount{162}{2 \(\times\) 3 \(\times\) 9 \(\times\) 3} &
-Nine MI differences up to 0.2 nats.\\
-Rectangular & \familycount{108}{2 \(\times\) 3 \(\times\) 6 \(\times\) 3} &
-Two rectangular shapes: \(2\times3\) and \(3\times5\).\\
-Construction & \familycount{432}{3 \(\times\) 2 \(\times\) (2 \(\times\) 6 \(\times\) 2) \(\times\) 3} &
-Two starting MI values, six differences and two construction methods.\\
-Extreme skew & \familycount{315}{3 \(\times\) 3 \(\times\) 5 \(\times\) 7} &
-Three dominant-margin pairs up to 0.9995, including \(n=1\) stress.\\
-Rare-cell stress & \familycount{140}{(2 \(\times\) 2) \(\times\) 1 \(\times\) 5 \(\times\) 7} &
-First or rare block in two shapes, including \(n=1\) stress.\\
-Independence & \familycount{144}{2 \(\times\) 3 \(\times\) 6 \(\times\) 4} &
-Exact \(I(P)=0\), with six MI differences.\\
-Convergence & \familycount{108}{4 \(\times\) 3 \(\times\) 2 \(\times\) 4\\ + 3 \(\times\) 1 \(\times\) 1 \(\times\) 4} &
-Equal-MI comparisons up to \(n=50{,}000\), plus three rare-block controls.\\
-Runtime & \familycount{60}{5 \(\times\) 2 \(\times\) 2 \(\times\) 3} &
-Full-call timings, separate from the simulation replicates.\\
+Main & 504 & Square table size, three margin profiles and equal sample size.\\
+Baseline & 648 & Starting positive MI of 0.0001, 0.001 or 0.02 nats.\\
+Changed cells & 144 & First, rare or spread association patterns.\\
+Imbalance & 1,056 & Sample allocation and which population has higher MI.\\
+Larger effects & 162 & MI differences up to 0.2 nats where feasible.\\
+Rectangular & 108 & \(2\times3\) and \(3\times5\) tables.\\
+Construction & 432 & Additive versus ordinal log-linear population tables.\\
+Extreme skew & 180 & Dominant margins up to 0.9995.\\
+Rare-cell stress & 80 & First- versus rare-block changes.\\
+Independence & 108 & Exact \(I(P)=0\) boundary.\\
+Convergence & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
+Runtime & 60 & Full-call timing regimes, separate from simulation.\\
 \bottomrule
 \end{tabularx}
-\endgroup
 \end{table}
 
 The runtime experiment times full method calls on pre-generated tables,

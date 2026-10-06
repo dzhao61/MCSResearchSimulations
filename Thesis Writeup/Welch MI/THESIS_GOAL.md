@@ -1,6 +1,6 @@
 # Goal: complete the master's thesis
 
-Set 15 September 2026; acceptance criteria refreshed 5 October 2026. The
+Set 15 September 2026; acceptance criteria refreshed 6 October 2026. The
 original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
@@ -36,7 +36,8 @@ thesis. Internal verification and delivery records may retain those details.
 - Routine writing, editing, verification and small diagnostic calculations can proceed autonomously. Supervisor consultation is not a prerequisite for each decision.
 - The final research comparison is Normal Wald versus Expanded Welch. The central contribution is the derivation and careful evaluation of the proposed correction, including its limitations.
 - Retain the completed population tables. Explain the binary construction through its equivalent copying-and-independent-drawing mechanism and larger tables through probability transfers; keep the general matrix formulas, feasibility limits and numerical search in Appendix B.
-- Use three focused appendices: A, supporting calculations; B, experimental details; C, additional results. Remove repeated derivations and peripheral arguments while retaining assumptions, exact settings, validity rules and evidence needed to assess the thesis. Keep all 108 main null settings visible individually rather than substituting an aggregate summary.
+- Use three focused appendices: A, supporting calculations; B, experimental details; C, additional results. Remove repeated derivations and peripheral arguments while retaining assumptions, exact settings, validity rules and evidence needed to assess the thesis. Keep all 84 reported main null settings visible individually rather than substituting an aggregate summary.
+- Report settings with at least 10 observations in each population. Apply this sample-size rule across all families, without filtering on validity or rejection outcomes. Preserve the original runs internally, including the omitted n=1, 2 and 5 settings; do not change populations, statistical methods or retained results.
 
 ### Questions the thesis must answer
 
@@ -60,7 +61,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (5 October) | 51 pages | 87 pages |
+| Current Welch-MI manuscript (6 October) | 51 pages | 86 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -73,7 +74,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,996
+unverified word limit is imposed. The current main text has 13,700
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-59
 (printed pages 1-51). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
@@ -106,8 +107,8 @@ reproduce and assess the thesis's scientific argument.
 | T1 | Agree the scope and exemplar benchmark. | Record all three exemplar lengths, the chapter allocation, two research questions and the evidence each requires. Remove the unrelated course restriction from active notes. | 15 Sep |
 | T2 | Finish the mathematical explanation. | Check every central equation against an independent derivation and the implemented estimator. Define every substantive symbol at first use; label all Taylor expansions and distributional approximations. Verify the worked examples and relevant mathematical tests. | 16 Sep |
 | T3 | Finish the literature argument. | Map every substantive prior-work and novelty claim to an inspected source and location. Verify every cited bibliography entry; resolve or explicitly narrow any unsupported claim. Cover MI estimation and variance, related information comparisons, Welch-Satterthwaite theory, simulation construction and the independence boundary. | 17 Sep |
-| T4 | Complete the experimental design chapter. | Account for every frozen experiment family and all 3,111 unique configurations, 534 population pairs and 20,000 replicates per configuration. Explain P and Q construction with a numerical example and distinguish fixed population differences from sample randomness. Reconcile all repeated design values with the protocol. | 18 Sep |
-| T5 | Complete the results and interpretation. | Answer both research questions with equations and results presented in the manuscript. Select main figures for a question-led argument, interpret each beside its evidence, and keep focused supporting figures in the appendix. Address every experimental family and retain every individual regime in separate project records without making their availability a condition for reading the thesis. Verify all numerical claims, all 15 included plots and every cell of the 108-setting main null table against exact source rows. | 19 Sep |
+| T4 | Complete the experimental design chapter. | Account for every experiment family and all 2,760 reported configurations, 534 population pairs and 20,000 replicates per configuration. Explain P and Q construction with a numerical example and distinguish fixed population differences from sample randomness. Reconcile repeated design values with the stated sample-size scope and the original protocol records. | 18 Sep |
+| T5 | Complete the results and interpretation. | Answer both research questions with equations and results presented in the manuscript. Select main figures for a question-led argument, interpret each beside its evidence, and keep focused supporting figures in the appendix. Address every experimental family and retain every individual regime in separate project records without making their availability a condition for reading the thesis. Verify all numerical claims, all 15 included plots and every cell of the 84-setting main null table against exact source rows. | 19 Sep |
 | T6 | Complete the substantive and language edits. | Review every chapter and appendix once for scientific coherence and once for readability. Resolve every material issue found in those passes. Check notation, equation explanations, repeated settings, terminology and parallel presentation across all experiment sections. | 20 Sep |
 | T7 | Complete technical and visual verification. | Build from a clean copy of the final source package; obtain zero build errors, undefined citations/references, missing figures or overfull boxes. Inspect every rendered page at its final size, resolve visual defects and rerun the relevant evidence checks after final changes. | 21 Sep |
 | T8 | Deliver the final thesis package. | Provide the standalone PDF, self-contained source, bibliography and figures, plus separate experiment records, reproduction instructions and completed acceptance record. Include accurate front matter with no editing placeholders or invented personal attestations. All material findings must be resolved before marking the goal complete. | 22 Sep |
@@ -118,10 +119,10 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 5 October 2026:** T1-T8 are complete for the current 87-page A4
+**Status at 6 October 2026:** T1-T8 are complete for the current 86-page A4
 manuscript, with 51 printed main-text pages. Chapter 6 uses seven lead figures
-and Appendix C retains eight supporting figures plus all 108 individual main
-null settings. The three appendices occupy 24 pages, down from 33 before the
+and Appendix C retains eight supporting figures plus all 84 reported main
+null settings. The three appendices occupy 23 pages, down from 33 before the
 appendix simplification. The paragraph-coherence and direct-explanation passes
 and full-document visual review are complete. The Daniel Li-informed writing
 pass strengthens concrete explanations, literature-to-method links and
@@ -132,10 +133,18 @@ four developed conclusion paragraphs instead of eight short blocks. It adds
 no substantive material and leaves the mathematical explanation intact. All
 129 workspace tests and 37 archive-bundled tests pass. The full evidence audit verifies all 22 available
 figures, the 15 included figures and every displayed main-null table cell.
-A clean build from the extracted source and experiment archives produces the same 87-page text with
+A clean build from the extracted source and experiment archives produces the same 86-page text with
 no errors, undefined citations/references or overfull boxes. The named PDF,
 source archive, experiment supplement and checksums are synchronized; the
 current verification record is in `SUBMISSION_CHECK.md`.
+The sample-size scope now requires both samples to contain at least 10
+observations. Five scope regression tests supplement the nine figure-layout
+tests. The original 3,111-configuration archive remains intact; the reported
+2,760 configurations comprise 55,200,000 sampled table pairs. Plot assets and
+their source selections are unchanged. Section 5.3 returns to a plain
+family/count/description table, without bracketed arithmetic or the paragraph
+about overlapping family counts. Two additional tests verify the plain table
+counts and reject an incorrect count; all 16 figure, scope and table tests pass.
 
 ## 4. Scientific acceptance criteria
 
@@ -178,8 +187,8 @@ different margins, baseline MI, locations of association, unequal samples and
 both effect directions, wider feasible MI differences, rectangular tables,
 alternative population construction, extreme skew, exact independence,
 large-sample convergence and runtime. Document the actual finite sample and
-skewness ranges, including n=1 stress cases and the absence of an expected-cell-
-count eligibility filter. Broad claims about all sample sizes or all tables
+skewness ranges, with at least 10 observations per population and no
+expected-cell-count eligibility filter. Broad claims about all sample sizes or all tables
 must not exceed those tested ranges.
 
 Every displayed empirical quantity must identify its source configuration,
