@@ -45,6 +45,13 @@
 \renewcommand{\arraystretch}{1.16}
 \makeatletter
 \setlength{\@fptop}{0pt}
+% Match numbered headings: keep an unindented opening paragraph with the heading.
+\newcommand{\thesisminiheading}[1]{%
+  \par\noindent\textbf{#1}\par
+  \nobreak
+  \@afterindentfalse
+  \@afterheading
+}
 \makeatother
 
 \newtheorem{assumption}{Assumption}

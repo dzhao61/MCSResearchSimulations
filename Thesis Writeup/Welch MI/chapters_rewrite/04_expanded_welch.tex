@@ -36,7 +36,7 @@ change tells us how variable \(\Vhat(P)\) is. Finally, we combine the
 degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 
 \medskip
-\noindent\textbf{Moment matching for one component.}
+\thesisminiheading{Moment matching for one component.}
 
 Satterthwaite approximates the positive variance estimate \(\Vhat(P)\) by
 the scaled chi-squared variable
@@ -138,7 +138,7 @@ The derivatives of the joint probabilities sum to zero because
 \end{equation}
 
 \medskip
-\noindent\textbf{Effect on pointwise MI and MI.}
+\thesisminiheading{Effect on pointwise MI and MI.}
 
 Along the perturbation path, pointwise MI is
 \begin{equation}
@@ -210,7 +210,7 @@ This is the centred pointwise-MI influence function from
 Section~\ref{sec:first-order-mi-background}.
 
 \medskip
-\noindent\textbf{Effect on the MI variance.}
+\thesisminiheading{Effect on the MI variance.}
 
 The target is the first-order change in
 \begin{equation}
@@ -344,7 +344,7 @@ describe how the estimated variance varies across samples.
 
 \section{Component degrees of freedom and final test}
 
-\noindent\textbf{Population component degrees of freedom.}
+\thesisminiheading{Population component degrees of freedom.}
 
 Define the population variability of the observation-level sensitivities by
 \begin{equation}
@@ -420,7 +420,7 @@ can have no first-order effect on \(V(P)\). In that case, describing the
 sampling variation of \(\Vhat(P)\) requires a higher-order approximation.
 
 \medskip
-\noindent\textbf{Table-based component degrees of freedom.}
+\thesisminiheading{Table-based component degrees of freedom.}
 
 The observed table replaces every population quantity in Equation
 \eqref{eq:g-final} by its empirical counterpart. The sums below are over
@@ -463,7 +463,7 @@ Repeating the same calculation for the second table gives
 \(\widehat\nu_Q\).
 
 \medskip
-\noindent\textbf{Combining the two components.}
+\thesisminiheading{Combining the two components.}
 
 Substituting the two variance contributions and component degrees of freedom
 into Equation~\eqref{eq:ws-general} gives
@@ -584,7 +584,7 @@ Neither method rejects at the 5\% level.
 
 \pagebreak[3]
 \medskip
-\noindent\textbf{Operational algorithm and complexity.}
+\thesisminiheading{Operational algorithm and complexity.}
 \label{sec:expanded-complexity}
 
 Table~\ref{tab:expanded-algorithm} summarises one comparison.
@@ -616,7 +616,7 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 \section{Behaviour and limitations}
 \label{sec:near-independence-mechanism}
 
-\noindent\textbf{Near independence.}
+\thesisminiheading{Near independence.}
 
 Consider a population table that
 approaches independence while its row and column margins stay fixed. At
@@ -649,8 +649,9 @@ first-order sampling approximation. At exact independence, quadratic sampling
 variation replaces the first-order term; Section~\ref{sec:independence-boundary}
 derives that case.
 
+\begin{samepage}
 \medskip
-\noindent\textbf{Theoretical status and validity conditions.}
+\thesisminiheading{Theoretical status and validity conditions.}
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
 derivatives for positive population tables. They provide first-order
@@ -666,6 +667,7 @@ between each population's MI and variance estimates.
 As sample sizes grow under regular conditions, the estimated
 degrees of freedom increase and the Student \(t\) distribution approaches the
 standard normal distribution used by Wald.
+\par\nopagebreak[4]
 
 Both tests need a finite corrected MI difference and a positive, finite
 estimated standard error. Expanded Welch also needs positive, finite component
@@ -673,3 +675,5 @@ and combined degrees of freedom. A failed requirement gives an invalid
 calculation, not evidence for the null.
 Appendix~\ref{sec:validity-rules} specifies the numerical criteria;
 the experiment evaluates validity alongside calibration.
+\par
+\end{samepage}

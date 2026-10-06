@@ -161,7 +161,7 @@ probability errors into an MI error. Third, that error can be written as a
 sample average, whose variance is straightforward to calculate.
 
 \medskip
-\noindent\textbf{Step 1: From probability errors to MI error.}
+\thesisminiheading{Step 1: From probability errors to MI error.}
 
 Using the entropy identity in Equation~\eqref{eq:mi-entropy-form}, MI can be
 written directly in terms of the joint and marginal probabilities:
@@ -297,7 +297,7 @@ reduced to a weighted sum of cell-probability errors. The weight for a cell is
 its population pointwise MI.
 
 \medskip
-\noindent\textbf{Step 2: From cell errors to observation-level errors.}
+\thesisminiheading{Step 2: From cell errors to observation-level errors.}
 
 Let \(Z_a=(X_a,Y_a)\) be observation \(a\). An empirical cell probability is
 the proportion of observations in that cell, so
@@ -358,7 +358,7 @@ of MI\@. Equation~\eqref{eq:mi-error-as-average-background} uses it to
 approximate the sampling error \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 
 \medskip
-\noindent\textbf{Step 3: Calculate the sampling variance.}
+\thesisminiheading{Step 3: Calculate the sampling variance.}
 
 Define the population variance of these centred contributions by
 \begin{equation}
@@ -405,7 +405,7 @@ Section~\ref{sec:background-mi-bias} decreases faster than the
 distribution.
 
 \medskip
-\noindent\textbf{The independence boundary.}
+\thesisminiheading{The independence boundary.}
 \nopagebreak[4]
 
 At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
@@ -427,7 +427,7 @@ differences between two MI values. The question in this thesis is whether two
 populations have the same MI, \(I(P)=I(Q)\). Their cell probabilities may
 differ even when their MI values are equal.
 
-\noindent\textbf{Normal Wald inference.}
+\thesisminiheading{Normal Wald inference.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with a standard normal distribution
@@ -460,7 +460,7 @@ samples. The Wald test still uses a normal distribution; it makes no separate
 small-sample adjustment for that standard-error variability.
 
 \medskip
-\noindent\textbf{The Welch--Satterthwaite principle.}
+\thesisminiheading{The Welch--Satterthwaite principle.}
 
 Welch's test compares two means when their population variances may differ
 \citep{welch1947}. For two independent samples with means
@@ -513,7 +513,7 @@ measured variance of the estimated difference. The larger cutoff leaves
 that variance error unchanged and makes rejection less likely still.
 
 \medskip
-\noindent\textbf{Prior MI inference and related comparisons.}
+\thesisminiheading{Prior MI inference and related comparisons.}
 
 \citet{roulston1999} derives entropy and MI error estimates
 using error propagation and examines them numerically. These calculations
@@ -553,7 +553,7 @@ for equality of distributions. These tests compare complete distributions,
 not the MI of two variables within each population.
 
 \medskip
-\noindent\textbf{Resampling alternatives.}
+\thesisminiheading{Resampling alternatives.}
 
 A bootstrap would draw many new samples from the observed tables to estimate
 how much the test statistic varies. This requires repeating the calculation

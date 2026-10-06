@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import hashlib
 import os
@@ -49,6 +50,46 @@ PAIRED = pd.read_csv(RESULTS / "paired_method_results.csv")
 
 def equal(actual: float, expected: float, *, tolerance: float = 5e-6) -> None:
     assert np.isclose(actual, expected, atol=tolerance, rtol=0), (actual, expected)
+
+
+def count_expression(node: ast.AST) -> int:
+    """Evaluate only the integer sums and products used in Table 5.2."""
+    if isinstance(node, ast.Expression):
+        return count_expression(node.body)
+    if isinstance(node, ast.Constant) and type(node.value) is int and node.value >= 0:
+        return node.value
+    if isinstance(node, ast.BinOp):
+        left, right = count_expression(node.left), count_expression(node.right)
+        if isinstance(node.op, ast.Add):
+            return left + right
+        if isinstance(node.op, ast.Mult):
+            return left * right
+    raise AssertionError(f"Unsupported configuration-count expression: {ast.dump(node)}")
+
+
+def check_family_breakdowns(section_counts: pd.DataFrame) -> None:
+    families = {
+        "Main": "main", "Baseline": "baseline", "Changed cells": "patterns",
+        "Imbalance": "imbalance", "Larger effects": "broad_effect",
+        "Rectangular": "rectangular", "Construction": "construction",
+        "Extreme skew": "extreme", "Rare-cell stress": "rare_stress",
+        "Independence": "independence", "Convergence": "convergence",
+        "Runtime": "runtime",
+    }
+    source = (HERE.parent / "chapters_rewrite/05_experimental_design.tex").read_text()
+    rows = re.findall(
+        r"^([A-Za-z -]+) & \\familycount\{([\d,]+)\}\{([^}]+)\}", source, re.M,
+    )
+    assert len(rows) == len(families) and {row[0] for row in rows} == set(families)
+    runtime_count = len(RUNTIME.drop_duplicates([
+        "shape", "profile", "n_p", "n_q", "baseline_mi", "mi_difference",
+    ]))
+    for family, written_count, formula in rows:
+        section = families[family]
+        expected = runtime_count if section == "runtime" else int(section_counts.loc[section, "unique_configurations"])
+        arithmetic = formula.replace(r"\(\times\)", "*").replace(r"\\", " ").strip()
+        actual = count_expression(ast.parse(arithmetic, mode="eval"))
+        assert actual == int(written_count.replace(",", "")) == expected, (family, actual, expected)
 
 
 def result(configuration_id: str, method: str, column: str) -> float:
@@ -181,6 +222,8 @@ def main() -> None:
     for section, expected in expected_section_counts.items():
         actual = tuple(int(value) for value in section_counts.loc[section])
         assert actual == expected, (section, actual, expected)
+
+    check_family_breakdowns(section_counts)
 
     assert json.loads((RESULTS / "verification.json").read_text())["all_pass"]
     assert json.loads((RESULTS / "report_verification.json").read_text())["all_pass"]
@@ -661,7 +704,7 @@ def main() -> None:
     )
     assert len(unequal_components) == 12
     assert unequal_components.local_moment_df.notna().all()
-    print("PASS: protocol reconstruction, family counts, manuscript claims, 22 available figures, 15 included figures, all 108 main null settings, three active appendices, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
+    print("PASS: protocol reconstruction, family counts and all 12 table breakdowns, manuscript claims, 22 available figures, 15 included figures, all 108 main null settings, three active appendices, supplementary mechanism diagnostics, nested rejections, convergence and runtime")
 
 
 if __name__ == "__main__":

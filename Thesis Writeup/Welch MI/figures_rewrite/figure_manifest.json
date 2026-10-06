@@ -397,7 +397,7 @@
   },
   {
     "file": "figures_rewrite/baseline_3x3_different_skew.pdf",
-    "description": "Panels: I0 = 0.0001, I0 = 0.001, I0 = 0.02",
+    "description": "Panels: $I(P)=0.0001$, $I(P)=0.001$, $I(P)=0.02$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -430,7 +430,7 @@
   },
   {
     "file": "figures_rewrite/patterns_5x5_different_skew.pdf",
-    "description": "Panels: Changed cells: first, Changed cells: rare, Changed cells: spread",
+    "description": "Panels: Changed cells:\nfirst, Changed cells:\nrare, Changed cells:\nspread",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -541,7 +541,7 @@
   },
   {
     "file": "figures_rewrite/rectangular_different_skew.pdf",
-    "description": "Panels: 2x3, 3x5",
+    "description": "Panels: $2\\times3$, $3\\times5$",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -568,7 +568,7 @@
   },
   {
     "file": "figures_rewrite/construction_5x5_different_skew.pdf",
-    "description": "Panels: additive, loglinear",
+    "description": "Panels: Additive, Log-linear",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"
@@ -595,7 +595,7 @@
   },
   {
     "file": "figures_rewrite/extreme_3x3.pdf",
-    "description": "Panels: P 0.9, Q 0.95, P 0.99, Q 0.995, P 0.999, Q 0.9995",
+    "description": "Panels: P 0.9\nQ 0.95, P 0.99\nQ 0.995, P 0.999\nQ 0.9995",
     "source_files": [
       "display_manifest.csv",
       "cell_results.csv"

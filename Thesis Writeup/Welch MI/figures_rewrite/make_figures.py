@@ -11,6 +11,7 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter, FuncFormatter
 import numpy as np
 import pandas as pd
 
@@ -56,6 +57,85 @@ MARKERS = {"normal_wald": "o", "expanded_welch": "s"}
 STYLES = {"normal_wald": "-", "expanded_welch": "--"}
 RECORDS: list[dict] = []
 
+# Export at the printed size; LaTeX includes these PDFs without rescaling.
+FIGURE_WIDTH_MM = {1: 85.0, 2: 116.0, 3: 142.0}
+PANEL_HEIGHT_MM = 34.0
+LEFT_MM, RIGHT_MM = 16.0, 6.0
+TOP_MM, BOTTOM_MM = 20.0, 13.0
+COLUMN_GAP_MM, ROW_GAP_MM = 8.0, 16.0
+TICK_PT, LABEL_PT, TITLE_PT, LEGEND_PT = 8.0, 9.0, 9.0, 9.0
+LINE_PT, MARKER_PT = 1.25, 3.5
+
+plt.rcParams.update({
+    "font.family": "DejaVu Sans",
+    "font.size": TICK_PT,
+    "axes.titlesize": TITLE_PT,
+    "axes.labelsize": LABEL_PT,
+    "xtick.labelsize": TICK_PT,
+    "ytick.labelsize": TICK_PT,
+    "legend.fontsize": LEGEND_PT,
+    "pdf.fonttype": 42,
+    "savefig.bbox": None,
+})
+
+
+def figure_axes(rows_count: int, columns: int):
+    width = FIGURE_WIDTH_MM[columns]
+    height = (
+        TOP_MM + BOTTOM_MM + rows_count * PANEL_HEIGHT_MM
+        + (rows_count - 1) * ROW_GAP_MM
+    )
+    panel_width = (width - LEFT_MM - RIGHT_MM - (columns - 1) * COLUMN_GAP_MM) / columns
+    fig = plt.figure(figsize=(width / 25.4, height / 25.4))
+    axes = np.empty((rows_count, columns), dtype=object)
+    for i in range(rows_count):
+        bottom = BOTTOM_MM + (rows_count - 1 - i) * (PANEL_HEIGHT_MM + ROW_GAP_MM)
+        for j in range(columns):
+            left = LEFT_MM + j * (panel_width + COLUMN_GAP_MM)
+            axes[i, j] = fig.add_axes([
+                left / width, bottom / height,
+                panel_width / width, PANEL_HEIGHT_MM / height,
+            ])
+    return fig, axes
+
+
+def figure_legend(fig, ax) -> None:
+    handles, labels = ax.get_legend_handles_labels()
+    height_mm = fig.get_figheight() * 25.4
+    fig.legend(
+        handles, labels, loc="upper center", ncol=2, fontsize=LEGEND_PT,
+        frameon=False, bbox_to_anchor=(0.5, 1 - 2 / height_mm), borderaxespad=0,
+        handlelength=2.2, columnspacing=1.5,
+    )
+
+
+def check_layout(fig) -> None:
+    """Fail generation if the fixed canvas clips labels or crowds x ticks."""
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    canvas = fig.bbox
+    texts = list(fig.legends)
+    for ax in fig.axes:
+        texts.extend([ax.title, ax.xaxis.label, ax.yaxis.label])
+        texts.extend(ax.get_xticklabels() + ax.get_yticklabels())
+        ticks = [
+            label.get_window_extent(renderer)
+            for label in ax.get_xticklabels() if label.get_visible()
+        ]
+        for left, right in zip(ticks, ticks[1:]):
+            if left.x1 + 2 > right.x0:
+                raise ValueError("Overlapping x-axis tick labels")
+    for artist in texts:
+        if not artist.get_visible():
+            continue
+        box = artist.get_window_extent(renderer)
+        outside = (
+            box.x0 < -1 or box.y0 < -1
+            or box.x1 > canvas.x1 + 1 or box.y1 > canvas.y1 + 1
+        )
+        if box.width and box.height and outside:
+            raise ValueError(f"Figure label outside the fixed canvas: {artist}")
+
 
 def subset(section: str, **filters: object) -> pd.DataFrame:
     rows = DATA.loc[DATA.section.eq(section)].copy()
@@ -71,7 +151,7 @@ def subset(section: str, **filters: object) -> pd.DataFrame:
     return rows
 
 
-def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference", scale=1.0) -> None:
+def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference") -> None:
     for method in ("normal_wald", "expanded_welch"):
         current = rows.loc[rows.method.eq(method)].sort_values("x_value")
         x = current.x_value.to_numpy(dtype=float)
@@ -79,29 +159,41 @@ def draw(ax, rows: pd.DataFrame, *, ylim=(0, 1), x_kind="difference", scale=1.0)
         ax.plot(
             x, y, label=LABELS[method], color=COLORS[method],
             linestyle=STYLES[method], marker=MARKERS[method],
-            linewidth=1.8 * scale, markersize=4.5 * scale,
+            linewidth=LINE_PT, markersize=MARKER_PT,
         )
         invalid = current.loc[current.valid_rate.lt(0.9)]
         if not invalid.empty:
             ax.scatter(
                 invalid.x_value, invalid.unconditional_rejection_rate,
-                marker=MARKERS[method], s=42 * scale**2, facecolors="white",
-                edgecolors=COLORS[method], linewidths=1.1 * scale, zorder=4,
+                marker=MARKERS[method], s=25, facecolors="white",
+                edgecolors=COLORS[method], linewidths=0.8, zorder=4,
             )
-    ax.axhline(0.05, color="#777777", linestyle=":", linewidth=1)
+    ax.axhline(0.05, color="#777777", linestyle=":", linewidth=0.8)
     ax.set_ylim(*ylim)
+    ax.set_yticks(
+        np.linspace(0, 1, 6) if ylim == (0, 1)
+        else np.arange(0, ylim[1] + 0.001, 0.05)
+    )
+    ax.yaxis.set_major_formatter(FormatStrFormatter("%.1f" if ylim == (0, 1) else "%.2f"))
     if x_kind == "difference":
-        ax.set_xlim(0, float(rows.x_value.max()) * 1.015)
+        maximum = float(rows.x_value.max())
+        ax.set_xlim(0, maximum * 1.015)
+        ax.set_xticks([0, maximum / 2, maximum])
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda value, position: f"{value:g}"))
     else:
         ax.set_xscale("log")
         ax.set_xticks([1000, 2500, 10000, 50000])
         ax.set_xticklabels(["1k", "2.5k", "10k", "50k"])
     ax.grid(alpha=0.18)
-    ax.tick_params(labelsize=9 * scale)
+    ax.tick_params(labelsize=TICK_PT, width=0.65, length=2.8, pad=2.5)
+    for spine in ax.spines.values():
+        spine.set_linewidth(0.65)
 
 
 def save(name: str, fig, rows: pd.DataFrame, description: str) -> None:
-    fig.savefig(HERE / f"{name}.pdf", bbox_inches="tight", metadata={"Creator": "make_figures.py"})
+    check_layout(fig)
+    # A tight crop would change the printed scale when tick labels differ.
+    fig.savefig(HERE / f"{name}.pdf", metadata={"Creator": "make_figures.py"})
     plt.close(fig)
     RECORDS.append(
         {
@@ -121,42 +213,31 @@ def grid(
     panels: list[tuple[str, pd.DataFrame]],
     *,
     zoom: float | None = 0.15,
-    landscape: bool = False,
 ) -> None:
     columns = len(panels)
     rows_count = 2 if zoom is not None else 1
-    size = (8.2, 7.0) if landscape else (3.55 * columns, 2.95 * rows_count)
-    scale = 1.2 if landscape else 1.0
-    fig, axes = plt.subplots(rows_count, columns, figsize=size, squeeze=False)
+    fig, axes = figure_axes(rows_count, columns)
     all_rows = []
     for j, (title, rows) in enumerate(panels):
         all_rows.append(rows)
-        draw(axes[0, j], rows, scale=scale)
-        axes[0, j].set_title(title, fontsize=11 * scale)
+        draw(axes[0, j], rows)
+        axes[0, j].set_title(title, fontsize=TITLE_PT, pad=4)
         if zoom is not None:
-            draw(axes[1, j], rows, ylim=(0, zoom), scale=scale)
+            draw(axes[1, j], rows, ylim=(0, zoom))
             axes[1, j].set_xlabel(
-                "|MI difference| (nats)" if landscape else "True |MI difference| (nats)",
-                fontsize=10 * scale,
+                "|MI difference| (nats)", fontsize=LABEL_PT, labelpad=4,
             )
         else:
-            axes[0, j].set_xlabel("True |MI difference| (nats)", fontsize=10 * scale)
-        if landscape:
+            axes[0, j].set_xlabel("|MI difference| (nats)", fontsize=LABEL_PT, labelpad=4)
+        if j:
             for ax in axes[:, j]:
-                ax.set_xticks([0, 0.01, 0.02])
-                if j:
-                    ax.tick_params(axis="y", labelleft=False)
+                ax.tick_params(axis="y", labelleft=False)
+        if zoom is not None:
             axes[0, j].tick_params(axis="x", labelbottom=False)
-    axes[0, 0].set_ylabel("Rejection rate", fontsize=10 * scale)
+    axes[0, 0].set_ylabel("Rejection rate", fontsize=LABEL_PT, labelpad=4)
     if zoom is not None:
-        axes[1, 0].set_ylabel("Rejection rate (zoom)", fontsize=10 * scale)
-    handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(
-        handles, labels, loc="upper center", ncol=2, fontsize=10 * scale,
-        frameon=False, bbox_to_anchor=(0.5, 0.99),
-    )
-    top = 0.80 if columns == 1 else 0.88
-    fig.subplots_adjust(top=top, wspace=0.28, hspace=0.35)
+        axes[1, 0].set_ylabel("Rejection rate (zoom)", fontsize=LABEL_PT, labelpad=4)
+    figure_legend(fig, axes[0, 0])
     save(name, fig, pd.concat(all_rows), "Panels: " + ", ".join(title for title, _ in panels))
 
 
@@ -169,18 +250,18 @@ def main_landscape() -> None:
                 (fr"$n_P=n_Q={n}$", subset("main", shape=shape, profile=profile, n_p=n, n_q=n))
                 for n in samples
             ]
-            grid(f"main_{shape}_{profile}", panels, landscape=True)
+            grid(f"main_{shape}_{profile}", panels)
 
 
 def focused() -> None:
     grid(
         "baseline_3x3_different_skew",
-        [(f"I0 = {value:g}", subset("baseline", shape="3x3", profile="different_skew", baseline_mi=value, n_p=100))
+        [(fr"$I(P)={value:g}$", subset("baseline", shape="3x3", profile="different_skew", baseline_mi=value, n_p=100))
          for value in (0.0001, 0.001, 0.02)],
     )
     grid(
         "patterns_5x5_different_skew",
-        [(f"Changed cells: {pattern}", subset("patterns", shape="5x5", profile="different_skew", pattern=pattern, n_p=100))
+        [(f"Changed cells:\n{pattern}", subset("patterns", shape="5x5", profile="different_skew", pattern=pattern, n_p=100))
          for pattern in ("first", "rare", "spread")],
     )
     # Keep the unequal-sample comparison symmetric in sample allocation and MI direction.
@@ -198,17 +279,17 @@ def focused() -> None:
     )
     grid(
         "rectangular_different_skew",
-        [(shape, subset("rectangular", shape=shape, profile="different_skew", n_p=100))
+        [("$" + shape.replace("x", r"\times") + "$", subset("rectangular", shape=shape, profile="different_skew", n_p=100))
          for shape in ("2x3", "3x5")],
     )
     grid(
         "construction_5x5_different_skew",
-        [(constructor, subset("construction", shape="5x5", profile="different_skew", baseline_mi=0.02, n_p=100, constructor=constructor))
+        [("Additive" if constructor == "additive" else "Log-linear", subset("construction", shape="5x5", profile="different_skew", baseline_mi=0.02, n_p=100, constructor=constructor))
          for constructor in ("additive", "loglinear")],
     )
     grid(
         "extreme_3x3",
-        [(f"P {p:g}, Q {q:g}", subset("extreme", shape="3x3", dominant_p=p, dominant_q=q, n_p=100))
+        [(f"P {p:g}\nQ {q:g}", subset("extreme", shape="3x3", dominant_p=p, dominant_q=q, n_p=100))
          for p, q in ((0.9, 0.95), (0.99, 0.995), (0.999, 0.9995))],
     )
     grid(
@@ -223,16 +304,20 @@ def convergence() -> None:
     for shape in ("2x2", "8x8"):
         for baseline in (0.0001, 0.02):
             panels.append((shape, baseline, subset("convergence", shape=shape, profile="different_skew", baseline_mi=baseline, pattern="first")))
-    fig, axes = plt.subplots(2, 2, figsize=(7.0, 5.5))
-    for ax, (shape, baseline, rows) in zip(axes.flat, panels):
+    fig, axes = figure_axes(2, 2)
+    for index, (ax, (shape, baseline, rows)) in enumerate(zip(axes.flat, panels)):
         draw(ax, rows, ylim=(0, 0.1), x_kind="sample")
-        ax.set_title(f"{shape}, I(P)=I(Q)={baseline:g}", fontsize=11)
-        ax.set_xlabel(r"$n_P=n_Q$", fontsize=10)
-    axes[0, 0].set_ylabel("Null rejection rate", fontsize=10)
-    axes[1, 0].set_ylabel("Null rejection rate", fontsize=10)
-    handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc="upper center", ncol=2, fontsize=10, frameon=False)
-    fig.subplots_adjust(top=0.89, hspace=0.42, wspace=0.28)
+        shape_title = "$" + shape.replace("x", r"\times") + "$"
+        ax.set_title(f"{shape_title}\n$I(P)=I(Q)={baseline:g}$", fontsize=TITLE_PT, pad=4)
+        if index >= 2:
+            ax.set_xlabel(r"$n_P=n_Q$", fontsize=LABEL_PT, labelpad=4)
+        else:
+            ax.tick_params(axis="x", labelbottom=False)
+        if index % 2:
+            ax.tick_params(axis="y", labelleft=False)
+    axes[0, 0].set_ylabel("Null rejection rate", fontsize=LABEL_PT, labelpad=4)
+    axes[1, 0].set_ylabel("Null rejection rate", fontsize=LABEL_PT, labelpad=4)
+    figure_legend(fig, axes[0, 0])
     save("convergence", fig, pd.concat([panel[2] for panel in panels]), "Different-skew null, first block, both baseline MI values")
 
 

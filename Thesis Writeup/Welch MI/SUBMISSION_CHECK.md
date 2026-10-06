@@ -23,17 +23,17 @@ T1-T8 are complete for the 5 October revision.
 
 | Area | Evidence available | Status |
 | --- | --- | --- |
-| Manuscript | The standalone A4 PDF has 86 pages, including 50 numbered main-text pages and three focused appendices occupying 24 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
+| Manuscript | The standalone A4 PDF has 87 pages, including 51 numbered main-text pages and three focused appendices occupying 24 pages. Chapter 6 contains seven lead figures; Appendix C contains eight supporting figures and all 108 individual main null settings. File inventories, local paths, build commands, configuration IDs and protocol-freeze records are excluded from the reader-facing manuscript. | Complete. |
 | Mathematics | `SCIENTIFIC_AUDIT.md` records independent derivative, worked-example and implementation checks. The 102 Welch-project tests, 27 DifferentialMI tests and 37 archive-bundled tests pass. The added cell-level check verifies the intermediate pointwise MI, conditional means, variance contribution and variance sensitivity in Section 4.4; the binary construction check also verifies Section 5.1's new first-cell calculation. The condensed independence calculation also passes 30 independent positive-table finite-difference checks. | Complete. |
 | Literature | `LITERATURE_SOURCE_CHECK.md` records the claim checks supporting all 35 remaining active references. The removed transfer-entropy aside and its citation are retained in the historical source check. The clean build resolves every citation. | Complete. |
-| Experimental evidence | The full audit reconstructs the frozen protocol and verifies Chapter 6 claims, all 22 available figures, the 15 included figures, all 432 rejection/validity values in the 108-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
-| Build | A clean build from the extracted source produces 86 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
-| Visual presentation | The revised manuscript was inspected as rendered contact sheets, with selected final pages checked at larger size. Paragraph and figure page breaks were reinspected after the last edits. The 12 square-table figures use 96% of the text width rather than 118%; the single-panel wider-difference plot uses 70%. The figures remain within the margins with readable labels. | Complete. |
+| Experimental evidence | The full audit reconstructs the frozen protocol and verifies all 12 Table 5.2 count breakdowns, Chapter 6 claims, all 22 available figures, the 15 included figures, all 432 rejection/validity values in the 108-setting null table, paired results, convergence, runtime and supplementary mechanism diagnostics against saved rows. It passes both in the workspace and in the extracted archives. | Complete. |
+| Build | A clean build from the extracted source produces 87 A4 pages with the same extracted text as the working PDF. The log has no errors, undefined citations or references, missing characters or overfull boxes. | Complete. |
+| Visual presentation | All 87 pages and 22 regenerated figures were inspected as rendered contact sheets, with representative included figures checked on full-size pages. All three-column plots are 142 mm wide, two-column plots 116 mm and the single-panel plot 85 mm. Panels share a 34 mm height; ticks are 8 pt and titles, axis labels and legends 9 pt. The PDFs are included at native size, within the text margins. Nine layout regression tests pass. | Complete. |
 | Source package | The named PDF, source ZIP and supplement ZIP are synchronized. The extracted package includes the bibliography, active source, all 22 figures and the result files needed by the audit. `SHA256SUMS.txt` validates the three named artifacts. | Complete. |
 | Front matter | The title page, abstract and acknowledgements contain no drafting placeholders. The title page names the author's confirmed degree, “Master of Computer Science.” The declaration page remains excluded at the author's request. | Complete. |
 
-The current main-text length diagnostic is 13,958 whitespace-separated tokens
-from `pdftotext` on PDF pages 9-58 (printed pages 1-50). This includes
+The current main-text length diagnostic is 13,996 whitespace-separated tokens
+from `pdftotext` on PDF pages 9-59 (printed pages 1-51). This includes
 headings, captions, mathematical tokens and plot labels, so it is not a
 prose-only word count. `git diff --check` passes for the thesis tree.
 
@@ -69,6 +69,57 @@ future-work paragraph is kept together. Equations, tables, figures, citation
 counts, scientific code and the working draft remain unchanged. The evidence
 audit and 129 workspace tests pass; the delivery package is clean-built and
 checked again after the final layout review.
+
+The subsequent 5 October indentation fix standardises all 23 bold mini-headings
+using the same unindented-opening rule as numbered headings. Later new
+paragraphs remain indented; equation continuations keep their existing
+paragraph structure. PDF coordinates verify all 23 heading/opening alignments.
+The Chapter 4 closing explanation is kept together to avoid a two-line spill
+onto a separate page. Source comparison confirms that the manuscript changes
+are formatting substitutions and page-break controls only. All 126 displayed
+mathematics blocks, 17 table/figure blocks and 35 citation occurrence counts
+are unchanged, as are the scientific code, evidence and working draft.
+The evidence audit passes. All 87 pages were rendered and reviewed, with
+affected pages checked at larger size; the refreshed source archive builds
+cleanly and reproduces the working PDF text. Delivery checksums pass.
+
+The binary example's heading was then changed to "Constructing a non-independent
+2 x 2 joint distribution" to identify its purpose explicitly. The example
+and calculations are unchanged. The affected pages were reinspected; the PDF
+remains 87 pages and the refreshed source package builds cleanly.
+
+The subsequent 5 October figure-layout pass removes inconsistent export sizes
+and LaTeX scale factors. Shared three-column, two-column and single-panel
+templates give every plot the same printed panel height, typography, markers
+and line widths. Fixed PDF canvases prevent different tick labels from changing
+the printed scale through tight cropping. Longer titles wrap within their
+panels; repeated tick labels are omitted and the same three labelled MI-axis
+positions are used consistently. Axis ranges and all plotted values remain
+unchanged.
+
+All 22 figure selections, source columns and denominators match the pre-pass
+manifest. Numerical macros and both generated result tables are byte-identical.
+The full evidence audit and nine new layout tests pass, including physical PDF
+dimensions and clipping/crowding checks. The body text and scientific sources
+are unchanged. The lower token diagnostic reflects plot-label changes, not
+removed prose. The working draft is unchanged. The 87-page PDF and source
+package were rebuilt and visually checked; an isolated source build reproduces
+the same extracted PDF text, and archive audits, layout tests and delivery
+checksums pass.
+
+Table 5.2 subsequently gains a bracketed, italic breakdown under each
+configuration count and a four-position key beneath the column heading.
+The grouped positions count shape/pattern choices, margin choices,
+MI/construction choices and sample-size pairs. Nested products separate
+starting MI, MI difference and construction choices where relevant. Explicit
+sums account for shape-specific patterns, the single equal-MI case in the
+imbalance grid and additional rare-block convergence controls. The evidence
+audit parses and evaluates all 12 printed breakdowns, checking their totals
+against the saved distinct configurations and runtime regimes. The table fits
+on its existing page with readable text; the surrounding Chapter 5 prose,
+scientific settings, figures and working draft are unchanged. The manuscript
+remains 87 pages. The affected pages were rendered and checked, and the
+refreshed source package builds cleanly and reproduces the working PDF text.
 
 The 4 October paragraph-coherence pass reviewed the abstract, all eight main
 chapters and the active appendices. Mixed-focus passages were separated into

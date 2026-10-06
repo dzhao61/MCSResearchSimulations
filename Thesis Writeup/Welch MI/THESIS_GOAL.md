@@ -60,7 +60,7 @@ including its figures and tables, before references and appendices.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (5 October) | 50 pages | 86 pages |
+| Current Welch-MI manuscript (5 October) | 51 pages | 87 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -73,9 +73,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,958
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-58
-(printed pages 1-50). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 13,996
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-59
+(printed pages 1-51). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Working chapter allocation
@@ -88,7 +88,7 @@ chapters when the explanation requires it.
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
 | 2. Background and Literature Review | 11 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
-| 4. The Expanded Welch--Satterthwaite Test for MI | 11 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
+| 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 5 | Explain the binary sampling mechanism, larger-table probability transfers, controlled factors, sampling and evaluation; place general construction formulas, numerical search and exact grids in Appendix B. |
 | 6. Experimental Results and Discussion | 12 | Develop the argument around selected figures, interpreting each beside the evidence; retain the individual main null table and focused supporting figures in Appendix C. |
 | 7. Implications and Limitations | 2 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
@@ -118,8 +118,8 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 5 October 2026:** T1-T8 are complete for the current 86-page A4
-manuscript, with 50 printed main-text pages. Chapter 6 uses seven lead figures
+**Status at 5 October 2026:** T1-T8 are complete for the current 87-page A4
+manuscript, with 51 printed main-text pages. Chapter 6 uses seven lead figures
 and Appendix C retains eight supporting figures plus all 108 individual main
 null settings. The three appendices occupy 24 pages, down from 33 before the
 appendix simplification. The paragraph-coherence and direct-explanation passes
@@ -132,7 +132,7 @@ four developed conclusion paragraphs instead of eight short blocks. It adds
 no substantive material and leaves the mathematical explanation intact. All
 129 workspace tests and 37 archive-bundled tests pass. The full evidence audit verifies all 22 available
 figures, the 15 included figures and every displayed main-null table cell.
-A clean build from the extracted source and experiment archives produces the same 86-page text with
+A clean build from the extracted source and experiment archives produces the same 87-page text with
 no errors, undefined citations/references or overfull boxes. The named PDF,
 source archive, experiment supplement and checksums are synchronized; the
 current verification record is in `SUBMISSION_CHECK.md`.
@@ -232,6 +232,10 @@ keep a break for a genuinely new question or stage of the argument. Do not
 pad the prose to reach a paragraph length. Short passages remain appropriate
 when introducing or interpreting a displayed equation, and the abstract and
 lists have their own structure.
+Use consistent paragraph indentation: the first paragraph after either a
+numbered heading or a bold mini-heading is unindented; subsequent new
+paragraphs are indented. Text continuing after a displayed equation remains
+part of its existing paragraph. Keep headings with their opening text.
 
 ### Prose clarity: explain the mechanism
 
@@ -327,8 +331,12 @@ each comparison without searching earlier subsections.
 Keep figures within the text margins and visually proportional to the body
 text. Single-panel plots usually need less width than multi-panel comparisons.
 Choose sizes for readable labels and a balanced page, not to increase or
-decrease the page count. Preserve the data, axes and scientific interpretation
-when making presentation changes.
+decrease the page count. Use shared three-column, two-column and single-panel
+templates with the same printed panel height, typography, markers and line
+widths. Export at the intended physical dimensions and include plots without
+rescaling; equal overall figure widths are not the goal. Preserve the plotted
+values, axis ranges and scientific interpretation when making presentation
+changes.
 
 Select the main figures because each answers a question and motivates the next,
 not to exhibit the full grid in the main text. Put the first substantive

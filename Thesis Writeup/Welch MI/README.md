@@ -56,6 +56,14 @@ can be run with the same environment. Both scripts automatically locate a
 neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
 `WELCH_MI_WORKSPACE_ROOT` to the directory containing that tree.
 
+Figures are exported at their intended printed dimensions and included without
+LaTeX rescaling. Three-column comparisons are 142 mm wide, two-column plots
+116 mm and single-panel plots 85 mm. Every panel is 34 mm high; tick labels
+are 8 pt and titles, axis labels and legends are 9 pt. The regression checks
+in `figures_rewrite/test_figure_layout.py` verify geometry, typography, label
+bounds, native PDF dimensions and preservation of the plotted values. Run
+them with `python -m unittest discover -s figures_rewrite -p test_figure_layout.py`.
+
 ## Structure
 
 - `main.tex`: document entry point.
@@ -83,7 +91,7 @@ experiment supplement. The thesis itself includes all 108 main null settings
 individually, with rejection and validity rates for both methods.
 
 The 5 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 86-page manuscript. Chapter 6 has seven
+in `deliverables/` match the active 87-page manuscript. Chapter 6 has seven
 lead figures, and Appendix C has eight supporting figures and the complete
 main-null table. The source archive
 builds independently when extracted with the supplement; the evidence audit
@@ -99,6 +107,17 @@ figures, citations and scientific implementation are unchanged.
 The subsequent paragraph-cohesion pass combines connected claims,
 explanations and qualifications into more developed prose paragraphs,
 without adding substantive material. Short equation-guiding passages remain.
+The subsequent indentation fix gives every bold mini-heading an unindented
+opening paragraph, matching numbered headings. Later new paragraphs retain
+the standard indent, and equation continuations are unchanged.
+The subsequent figure-layout pass regenerates all 22 assets using shared
+printed-size templates, including the 15 figures in the manuscript. Numerical
+results, tables and body text are unchanged; the PDF remains 87 pages.
+Table 5.2 now adds italic arithmetic beneath every configuration count, with
+a positional key in the column heading. Shape-dependent patterns and extra
+convergence controls use explicit sums, and the imbalance breakdown counts
+the equal-MI case once. The evidence audit verifies all 12 displayed
+breakdowns against the saved statistical and timing regimes.
 
 The manuscript is standalone. Scientific settings and validity rules are
 included in its chapters and appendices; file inventories, build commands and
