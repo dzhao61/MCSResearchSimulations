@@ -1,5 +1,18 @@
 # Thesis Rewrite Plan
 
+**Focused revision (6 October 2026):**
+[FOCUSED_EXPERIMENT_PLAN.md](FOCUSED_EXPERIMENT_PLAN.md) is now the active plan
+for the experiment and affected chapters. It specifies the copying
+construction, 2 x 2 through 16 x 16 size progression, three margin regimes,
+three controlled studies, estimation diagnostics and four supporting
+four-cell settings. Implementation, all 232 simulations and the manuscript
+revision are complete. The isolated build, 62 bundled tests, independent
+raw-record audit and exact figure/table regeneration pass.
+The earlier design, numerical conclusions and broad
+family requirements below are historical, not requirements for the new run.
+Retain the mathematical and writing guidance where it agrees with
+THESIS_GOAL.md and the new plan.
+
 **Current completion target (15 September 2026):** See
 [THESIS_GOAL.md](THESIS_GOAL.md) for the SMART targets, exemplar length
 benchmark and final acceptance criteria. These supersede the earlier page

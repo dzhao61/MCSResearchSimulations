@@ -1,148 +1,84 @@
 # Welch-MI Thesis
 
-## Final manuscript
+## Active manuscript
 
-The goal and SMART acceptance targets are in
-[THESIS_GOAL.md](THESIS_GOAL.md), refreshed 6 October 2026. The detailed chapter plan is
-[THESIS_REWRITE_PLAN.md](THESIS_REWRITE_PLAN.md). The companion [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md)
-records the review of the three example theses and the writing conventions
-for the new draft. [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md)
-records the later Daniel Li review, used to strengthen concrete explanations,
-question-led transitions and findings-first discussion without copying its
-subject-specific structure or reducing the mathematical detail.
+The focused revision uses the design in
+[FOCUSED_EXPERIMENT_PLAN.md](FOCUSED_EXPERIMENT_PLAN.md): three question-led
+studies, estimation diagnostics and a four-setting construction check.
+All 232 settings and 68 population pairs have been simulated, with 20,000
+table pairs per setting. The two statistical methods are unchanged.
 
-The plan uses the completed fixed-population comparison of Normal Wald and
-Expanded Welch. It replaces the older draft's empirical argument with an
-assessment of calibration, power, validity and computational cost by exact
-regime.
+`main.pdf` is built from `chapters_rewrite/`, `appendices_rewrite/` and
+`frontmatter/`. It presents five lead figures, a diagnostic table, a timing
+table, three focused appendices and the complete 120-setting null table.
+Interpretation accompanies each comparison. The degree is Master of
+Computer Science. The thesis itself contains the scientific reproduction
+details and does not require access to this project.
 
-The active manuscript is `main.pdf`, built from `chapters_rewrite/` and
-`appendices_rewrite/`. It uses the completed fixed-population comparison of
-Normal Wald and Expanded Welch, including validity and runtime. The preceding
-LaTeX source and PDF are preserved in `archive/previous_draft_2026-09-13/`;
-the older `chapters/`, `appendices/`, and `figures/` directories remain only
-for history and are not read by `main.tex`. `THESIS_PLAN.md` and
-`WRITING_STYLE_GUIDE.md` are historical planning material.
+The goals and writing preferences are in [THESIS_GOAL.md](THESIS_GOAL.md).
+The current verification record is [SUBMISSION_CHECK.md](SUBMISSION_CHECK.md),
+and the mathematical and evidence checks are in
+[SCIENTIFIC_AUDIT.md](SCIENTIFIC_AUDIT.md). Earlier records below their current
+sections are historical. The earlier thesis source, PDF and deliverables
+are preserved in `archive/pre_focused_20261006/`; the previous simulation
+archives remain unchanged. The working-draft PDF has not been rebuilt.
 
 ## Build
 
-With the experiment supplement extracted beside this source directory,
-regenerate the 22 available figures, individual main-null table and numerical macros from the final saved
-CSVs with:
-
-```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  python figures_rewrite/make_figures.py
-```
-
-From this thesis directory, build the PDF with:
+The source archive is self-contained for compilation. From its thesis
+directory, run:
 
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The 35 actively cited and source-audited bibliography records are stored in
-the local `references.bib`, so the manuscript can compile without the parent
-methods project. The active preamble searches only `figures_rewrite/`,
-preventing an old pilot figure from being used silently.
-`figures_rewrite/figure_manifest.json` maps every available
-figure to the final display/configuration identifiers. In the workspace, the
-full companion atlas is
-`../../WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md`; after
-extracting the two archives together, it is
-`WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md`.
-The source-linked numerical audit is `figures_rewrite/audit_evidence.py` and
-can be run with the same environment. Both scripts automatically locate a
-neighbouring `WelchSatterthwaiteMI/` tree; alternatively set
-`WELCH_MI_WORKSPACE_ROOT` to the directory containing that tree.
+To regenerate the figures with the supplement beside the source directory,
+run its `WelchSatterthwaiteMI/experiments/report_focused_study.py` and supply
+`--figures` with this source directory's `figures_rewrite/` path. This makes
+the source and supplement usable without the original workspace layout.
 
-Figures are exported at their intended printed dimensions and included without
-LaTeX rescaling. Three-column comparisons are 142 mm wide, two-column plots
-116 mm and single-panel plots 85 mm. Every panel is 34 mm high; tick labels
-are 8 pt and titles, axis labels and legends are 9 pt. The regression checks
-in `figures_rewrite/test_figure_layout.py` verify geometry, typography, label
-bounds, native PDF dimensions and preservation of the plotted values. Run
-them with `python -m unittest discover -s figures_rewrite -p test_figure_layout.py`.
+In the development workspace, the experiment commands are:
 
-## Structure
+```bash
+python WelchSatterthwaiteMI/experiments/run_focused_study.py preflight
+python WelchSatterthwaiteMI/experiments/run_focused_study.py pilot
+python WelchSatterthwaiteMI/experiments/run_focused_study.py full
+python WelchSatterthwaiteMI/experiments/run_focused_study.py audit
+python WelchSatterthwaiteMI/experiments/run_focused_study.py timing
+python WelchSatterthwaiteMI/experiments/audit_focused_study.py
+python WelchSatterthwaiteMI/experiments/report_focused_study.py
+```
 
-- `main.tex`: document entry point.
-- `metadata.tex`: author, degree, supervisor, and submission metadata.
-- `preamble.tex`: shared packages, notation, and formatting.
-- `frontmatter/`: title page, abstract, and acknowledgements.
-- `chapters_rewrite/`: eight active main chapters.
-- `appendices_rewrite/`: three active appendices: supporting calculations,
-  experimental details, and additional results.
-- `figures_rewrite/`: source-linked PDFs, generation script and figure manifest.
-- `LITERATURE_SOURCE_CHECK.md`: targeted check of close primary sources and contribution scope.
-- `SCIENTIFIC_AUDIT.md`: independent mathematical, implementation, and evidence review.
-- `REVIEW_RESPONSE.md`: point-by-point disposition of the external assessment.
-- `BIBLIOGRAPHY_REVIEW_RESPONSE.md`: disposition of the later source and literature assessment.
-- `THESIS_GOAL.md`: current objective, exemplar length benchmark, SMART targets and completion criteria.
-- `SUBMISSION_CHECK.md`: current verification record and historical acceptance checks.
-- `THESIS_REWRITE_PLAN.md`: active research, chapter and evidence plan.
-- `EXEMPLAR_REVIEW_NOTES.md`: current exemplar analysis and writing guidance.
-- `DLI_EXEMPLAR_REVIEW_NOTES.md`: Daniel Li language and narrative review.
-- `THESIS_PLAN.md`: previous research and chapter plan.
-- `WRITING_STYLE_GUIDE.md`: previous writing guide, with outdated empirical examples.
+Use the pinned packages in `WelchSatterthwaiteMI/requirements-thesis.txt`.
+The full run resumes verified fixed-size chunks; the pilot uses separate
+streams and output. `--batch-size` and `--workers` affect resource use, not
+the simulated samples. A changed scientific-source fingerprint requires
+a separate output directory. Set `MPLCONFIGDIR` to a writable directory
+when running in a restricted environment.
 
-Detailed mechanism diagnostics and the full figure atlas remain in the
-experiment supplement. The thesis itself includes all 84 reported main null settings
-individually, with rejection and validity rates for both methods.
+## Evidence and presentation
 
-The 6 October named PDF, source archive, experiment supplement and checksums
-in `deliverables/` match the active 86-page manuscript. Chapter 6 has seven
-lead figures, and Appendix C has eight supporting figures and the complete
-main-null table. The source archive
-builds independently when extracted with the supplement; the evidence audit
-and bundled tests also pass there. The declaration page is intentionally
-excluded at the author's request.
+`WelchSatterthwaiteMI/results/focused_study/` contains the population
+definitions and arrays, configuration/display manifests, method rates,
+paired contrasts, estimation diagnostics, timing records and audits.
+Its `records/` directory retains all per-repetition scalar outputs in
+checksum-verified NPZ chunks. These large reproducible checkpoints are
+not versioned; the compact definitions and summaries are retained.
 
-The preceding 94-page PDF and source package are retained in
-`archive/pre_appendix_simplification_2026-10-04/`. No experiment or statistical
-implementation changed during the appendix reorganisation. The working-draft
-PDF has not been refreshed. The 5 October writing pass makes the explanations
-and result sequence more concrete; the mathematical formulas, tables,
-figures, citations and scientific implementation are unchanged.
-The subsequent paragraph-cohesion pass combines connected claims,
-explanations and qualifications into more developed prose paragraphs,
-without adding substantive material. Short equation-guiding passages remain.
-The subsequent indentation fix gives every bold mini-heading an unindented
-opening paragraph, matching numbered headings. Later new paragraphs retain
-the standard indent, and equation continuations are unchanged.
-The subsequent figure-layout pass regenerates all 22 assets using shared
-printed-size templates, including the 15 figures in the manuscript. Numerical
-results, tables and body text are unchanged; the PDF remains 87 pages.
-Table 5.2 previously added italic arithmetic beneath every configuration count, with
-a positional key in the column heading. Shape-dependent patterns and extra
-convergence controls use explicit sums, and the imbalance breakdown counts
-the equal-MI case once. The evidence audit verifies all 12 displayed
-breakdowns against the saved statistical and timing regimes.
+All eight new figure assets are exported at their intended printed width
+of 148 mm with 8 pt ticks and 9 pt main labels. Null figures use matching
+rejection panels and validity strips. The detection companions show the
+full effect range without compressing the small-effect main figures.
+The layout tests verify printed geometry, label bounds, CSV selection and
+unaltered plotted values:
 
-The 6 October sample-size revision reports only configurations with both
-`n_p >= 10` and `n_q >= 10`. The original 3,111 configurations and 4,001
-display slots remain in the experiment supplement. The manuscript uses 2,760
-unique configurations, 3,626 display slots and the same 534 population pairs,
-for 55,200,000 sampled table pairs. The plotter applies this scope before
-generating tables and macros; the evidence audit independently reconstructs
-both the full archive and the reported subset. All 22 figure assets and their
-manifest are unchanged. Five scope regression tests check both sample sizes,
-counts, retained figure selections, the 84-row null table and obsolete macros.
-Run all 16 figure/scope/table tests with
-`python -m unittest discover -s figures_rewrite -p 'test_*.py'`.
-The working draft is not refreshed.
+```bash
+python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
+python -m unittest discover -s DifferentialMI/tests -p 'test_*.py'
+```
 
-Section 5.3 subsequently returns to its earlier plain three-column table,
-retaining the revised sample sizes and counts. The bracketed products,
-positional key and paragraph explaining overlapping family counts are removed.
-The evidence audit checks all 12 plain counts against the retained saved
-settings; two table regression tests also detect an incorrect count.
-
-The manuscript is standalone. Scientific settings and validity rules are
-included in its chapters and appendices; file inventories, build commands and
-protocol history remain in separate project records rather than the PDF.
-
-The source archive includes the current goal, detailed rewrite plan and review
-records. Links in those records to the supplied example theses and historical
-workspace material are context references, not compilation dependencies; that
-material is not redistributed in the final archives.
+The named thesis PDF, self-contained source ZIP, full experimental
+supplement ZIP and checksums are generated by `package_deliverables.py`.
+The supplement includes the raw scalar chunks needed by the independent
+audit. Earlier broad-study figures, evidence scripts and plans remain
+historical and are not used to produce the focused manuscript.

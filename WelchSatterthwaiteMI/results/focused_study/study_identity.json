@@ -1,0 +1,15 @@
+{
+  "alpha": 0.05,
+  "chunk_size": 1000,
+  "count": 20000,
+  "design_digest": "834e5013aaa6db9405b6cc360a81cff74c634e28790dcb6158abaaf58dc6b951",
+  "machine": "arm64",
+  "master_seed": 20261006,
+  "numpy": "2.4.4",
+  "phase": "full",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "schema": 1,
+  "scipy": "1.17.1",
+  "source": "d30ef44891c632a96be95d64b748b93339c746990df458ef07dac1fb66a18662"
+}

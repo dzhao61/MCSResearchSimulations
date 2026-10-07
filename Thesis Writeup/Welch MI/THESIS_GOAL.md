@@ -1,18 +1,44 @@
 # Goal: complete the master's thesis
 
-Set 15 September 2026; acceptance criteria refreshed 6 October 2026. The
+Set 15 September 2026; acceptance criteria refreshed 7 October 2026. The
 original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Active writing pass (7 October 2026):** The user approved targeted depth
+within the existing focused study. The edits and verification gates are in
+[THESIS_DEPTH_PLAN.md](THESIS_DEPTH_PLAN.md): concrete computing motivation,
+closer literature synthesis, design rationale, worked results explanations,
+practical implications and prioritised future work. The rebuilt main text
+has 54 pages, within an 87-page PDF, without new experiments, figures or
+changes to typography. All 147 workspace tests, 65 extracted-package tests,
+the independent raw-record audit and clean source build pass. Rendered-page
+review is complete, the named deliverables are refreshed, and older working
+drafts are unchanged. SUBMISSION_CHECK.md records verification of this pass.
+
+**Focused experiment revision (6 October 2026):** The user approved a focused replacement
+experiment using 2 x 2, 4 x 4, 8 x 8 and 16 x 16 tables, three margin regimes
+and a copying construction. The final detailed specification is
+[FOCUSED_EXPERIMENT_PLAN.md](FOCUSED_EXPERIMENT_PLAN.md). It includes estimation
+diagnostics and four alternative-construction settings: 232 distinct
+statistical settings, 68 population pairs and 20,000 repetitions per setting.
+Implementation, all new simulations and the manuscript revision are complete.
+The independent raw-record audit, 144 scientific/layout tests and the visual
+review of all 81 PDF pages pass. The extracted source builds identical thesis
+text; the extracted supplement passes all 62 bundled tests and its independent
+audit, and regenerates all eight rendered figures and five table fragments
+exactly. T1-T8 are complete for this revision. Earlier completion records
+below describe the previous manuscript.
+
 ## 1. Objective
 
-Complete a clear, technically sound, submission-ready master's thesis titled
+Complete a clear, technically sound, submission-ready Master of Computer
+Science thesis titled
 **Comparing Mutual Information in Finite Samples: Wald and Expanded
 Welch-Satterthwaite Inference**, with depth, length and presentation comparable
 to the three supplied example theses. The final work must explain and derive
-the proposed method, evaluate it fairly against Normal Wald using the completed
-experiments, and give a practical conclusion supported by the individual
+the proposed method, evaluate it fairly against Normal Wald using the agreed
+focused experiments, and give a practical conclusion supported by the individual
 regimes. Deliver the finished PDF, reproducible LaTeX source, supporting
 experimental material and a completed verification record.
 
@@ -31,20 +57,21 @@ thesis. Internal verification and delivery records may retain those details.
 
 - The user clarified on 15 September that there is no AI-use limitation for this task and that CSYS5061 is the wrong course. Its report length, assessment dates and AI restrictions do not apply to this thesis.
 - Length and writing quality are benchmarked against the supplied Grace Yan, Michael Fang and Riley Jones theses, using the analysis in [EXEMPLAR_REVIEW_NOTES.md](EXEMPLAR_REVIEW_NOTES.md).
-- Use the later Daniel Li exemplar review in [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md) for concrete mechanisms, question-led transitions, purpose-led literature and findings-first discussion. It is a language and narrative model, not an additional length requirement or a reason to shorten the central derivations.
-- The active manuscript and completed fixed-population experiments are the starting point. Existing verified work counts toward the targets below; it should be extended where incomplete.
+- Use the later Daniel Li exemplar review in [DLI_EXEMPLAR_REVIEW_NOTES.md](DLI_EXEMPLAR_REVIEW_NOTES.md) only for language and narrative techniques: concrete mechanisms, question-led transitions, purpose-led literature and findings-first discussion. The user excludes it from length, research-depth and academic-expectation comparisons because it is in a different field and has a different supervisor. Do not use it to justify a shorter thesis or shorten the central derivations.
+- The active manuscript, mathematical derivation and implemented tests are the starting point. The approved focused study replaces the broad primary empirical design; retain earlier verified simulations as project records rather than pooling them into the new evidence.
 - Routine writing, editing, verification and small diagnostic calculations can proceed autonomously. Supervisor consultation is not a prerequisite for each decision.
 - The final research comparison is Normal Wald versus Expanded Welch. The central contribution is the derivation and careful evaluation of the proposed correction, including its limitations.
-- Retain the completed population tables. Explain the binary construction through its equivalent copying-and-independent-drawing mechanism and larger tables through probability transfers; keep the general matrix formulas, feasibility limits and numerical search in Appendix B.
-- Use three focused appendices: A, supporting calculations; B, experimental details; C, additional results. Remove repeated derivations and peripheral arguments while retaining assumptions, exact settings, validity rules and evidence needed to assess the thesis. Keep all 84 reported main null settings visible individually rather than substituting an aggregate summary.
-- Report settings with at least 10 observations in each population. Apply this sample-size rule across all families, without filtering on validity or rejection outcomes. Preserve the original runs internally, including the omitted n=1, 2 and 5 settings; do not change populations, statistical methods or retained results.
+- Use the copying-and-independent-drawing construction across all four sizes, with target MI chosen separately for P and Q. Retain the four-cell transfer only for four matched supporting settings. Explain both mechanisms in ordinary language; put complete formulas, feasible ranges and numerical searches in Appendix B.
+- Use three focused appendices: A, supporting calculations; B, experimental details; C, additional results. Retain assumptions, exact settings, validity rules, focused diagnostics and the construction check. Keep all 120 new main null settings visible individually rather than substituting an aggregate summary; do not require an appendix containing every old family.
+- Report settings with at least 10 observations per population, without filtering on validity or rejection outcomes. Preserve the original runs, including omitted n=1, 2 and 5 settings. Construct the newly approved populations without changing the statistical methods or archived results.
+- Add depth through bias of the estimated MI difference, empirical versus estimated sampling variance, the population first-order variance and degrees-of-freedom summaries. These use the planned repetitions. Check one representative null and alternative against the four-cell construction at two sample sizes, rather than restoring a full construction grid.
 
 ### Questions the thesis must answer
 
 | Research question | Required evidence | Main location |
 | --- | --- | --- |
 | RQ1. How can changes in the estimated MI variance be used to choose degrees of freedom for a two-sample test using a Student t distribution? | Checked derivation, defined assumptions, implemented algorithm and worked calculations. | Chapters 3-4; Appendix A. |
-| RQ2. Does the resulting Expanded Welch test offer a useful improvement over Normal Wald? | Corresponding null and alternative regimes, validity, paired comparisons, effects of margins, association and sample allocation, convergence, runtime and a bounded practical recommendation. | Chapters 5-8; Appendices B-C. |
+| RQ2. Does the resulting Expanded Welch test offer a useful improvement over Normal Wald? | Controlled null and alternative regimes, validity, paired comparisons, effects of table size, margins and association, large-sample behaviour, estimation diagnostics, a small construction check, concise runtime evidence and a bounded practical recommendation. | Chapters 5-8; Appendices B-C. |
 
 These are the two questions stated in the current Introduction. The earlier
 four-question list is retained in substance as evidence strands for RQ2, not
@@ -56,12 +83,16 @@ The following lengths were checked against the supplied PDFs and their tables
 of contents on 15 September. Main text means Introduction through Conclusion,
 including its figures and tables, before references and appendices.
 
+Use only Michael Fang, Grace Yan and Riley Jones for this comparison. Daniel
+Li's finance thesis is excluded; its separate review informs writing style,
+not the expected length or research depth of this thesis.
+
 | Thesis | Main text | Complete PDF |
 | --- | ---: | ---: |
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current Welch-MI manuscript (6 October) | 51 pages | 86 pages |
+| Current focused Welch-MI manuscript (7 October depth pass) | 54 pages | 87 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -74,41 +105,44 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 13,700
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-59
-(printed pages 1-51). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 15,396
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-62
+(printed pages 1-54). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
-### Working chapter allocation
+### Last verified chapter allocation
 
-These are the current printed-page allocations, not quotas. Move space between
-chapters when the explanation requires it.
+These are the 7 October depth pass's printed-page allocations, not quotas.
+The Chapter 5-6 structure is specified in FOCUSED_EXPERIMENT_PLAN.md.
+Move space between chapters when explanation requires it, rather than
+preserving these lengths.
 
 | Chapter | Current pages | Required purpose |
 | --- | ---: | --- |
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
-| 2. Background and Literature Review | 11 | Teach the necessary concepts and locate the contribution in verified prior work. |
+| 2. Background and Literature Review | 12 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
-| 5. Experimental Design | 5 | Explain the binary sampling mechanism, larger-table probability transfers, controlled factors, sampling and evaluation; place general construction formulas, numerical search and exact grids in Appendix B. |
-| 6. Experimental Results and Discussion | 12 | Develop the argument around selected figures, interpreting each beside the evidence; retain the individual main null table and focused supporting figures in Appendix C. |
-| 7. Implications and Limitations | 2 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
+| 5. Experimental Design | 7 | Explain copying across table sizes, the three controlled studies, the two supporting improvements, sampling and evaluation; put complete reproduction details in Appendix B. |
+| 6. Experimental Results and Discussion | 11 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. |
+| 7. Implications and Limitations | 3 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
 | 8. Conclusion | 2 | Restate contributions and impact, limitations, future work and the resulting recommendation. |
 
 ## 3. SMART targets
 
-Each target identifies a specific outcome, measurable acceptance evidence and
-a due date. The work is achievable from the existing manuscript, implementation
-and completed simulations. Its relevance is the reader's ability to understand,
-reproduce and assess the thesis's scientific argument.
+Each target identifies an outcome and measurable acceptance evidence. The
+dates are the original September milestones, not new deadlines for the
+focused revision. T2-T8 have been rechecked for the replacement experiment
+and are complete; the final evidence is in SUBMISSION_CHECK.md.
+The implementation order and completion gates are in FOCUSED_EXPERIMENT_PLAN.md.
 
-| ID | Specific outcome | Measurable acceptance criterion | Due |
+| ID | Specific outcome | Measurable acceptance criterion | Previous milestone |
 | --- | --- | --- | --- |
 | T1 | Agree the scope and exemplar benchmark. | Record all three exemplar lengths, the chapter allocation, two research questions and the evidence each requires. Remove the unrelated course restriction from active notes. | 15 Sep |
 | T2 | Finish the mathematical explanation. | Check every central equation against an independent derivation and the implemented estimator. Define every substantive symbol at first use; label all Taylor expansions and distributional approximations. Verify the worked examples and relevant mathematical tests. | 16 Sep |
 | T3 | Finish the literature argument. | Map every substantive prior-work and novelty claim to an inspected source and location. Verify every cited bibliography entry; resolve or explicitly narrow any unsupported claim. Cover MI estimation and variance, related information comparisons, Welch-Satterthwaite theory, simulation construction and the independence boundary. | 17 Sep |
-| T4 | Complete the experimental design chapter. | Account for every experiment family and all 2,760 reported configurations, 534 population pairs and 20,000 replicates per configuration. Explain P and Q construction with a numerical example and distinguish fixed population differences from sample randomness. Reconcile repeated design values with the stated sample-size scope and the original protocol records. | 18 Sep |
-| T5 | Complete the results and interpretation. | Answer both research questions with equations and results presented in the manuscript. Select main figures for a question-led argument, interpret each beside its evidence, and keep focused supporting figures in the appendix. Address every experimental family and retain every individual regime in separate project records without making their availability a condition for reading the thesis. Verify all numerical claims, all 15 included plots and every cell of the 84-setting main null table against exact source rows. | 19 Sep |
+| T4 | Complete the experimental design chapter. | Specify all 232 settings, 68 population pairs and 20,000 repetitions per setting. Explain copying, target-MI selection, the four-cell supporting construction, the three studies and estimation diagnostics. Give sufficient settings, estimators, validity and uncertainty rules to reproduce the results without code. | 18 Sep |
+| T5 | Complete the results and interpretation. | Answer both research questions with checked derivations and new results. Use approximately five lead figures and a compact diagnostic table for the three experimental questions, with immediate discussion. Interpret the four-setting construction check. Verify every numerical claim and displayed value, including the 120-setting main null table, against the new source records; do not require all old families. | 19 Sep |
 | T6 | Complete the substantive and language edits. | Review every chapter and appendix once for scientific coherence and once for readability. Resolve every material issue found in those passes. Check notation, equation explanations, repeated settings, terminology and parallel presentation across all experiment sections. | 20 Sep |
 | T7 | Complete technical and visual verification. | Build from a clean copy of the final source package; obtain zero build errors, undefined citations/references, missing figures or overfull boxes. Inspect every rendered page at its final size, resolve visual defects and rerun the relevant evidence checks after final changes. | 21 Sep |
 | T8 | Deliver the final thesis package. | Provide the standalone PDF, self-contained source, bibliography and figures, plus separate experiment records, reproduction instructions and completed acceptance record. Include accurate front matter with no editing placeholders or invented personal attestations. All material findings must be resolved before marking the goal complete. | 22 Sep |
@@ -119,7 +153,20 @@ review the assembled work. If a stage uncovers a scientific error, fix and
 recheck the affected material before proceeding. Record any revised work date
 and reason; the target date does not relax the acceptance criteria.
 
-**Status at 6 October 2026:** T1-T8 are complete for the current 86-page A4
+**Focused revision verified on 6 October 2026, before the depth pass:** All 232 settings and 68
+population pairs have audited results at 20,000 repetitions per setting.
+The 81-page A4 manuscript contains 48 main-text pages, five lead figures,
+three supporting figures and the complete 120-setting null table. Scientific
+reproduction details are in Appendix B; diagnostics and the four-setting
+construction check are interpreted in Chapter 6 and Appendix C. All 144
+workspace tests pass. The isolated source build, independent raw-record
+audit, 62 bundled tests and exact figure/table regeneration also pass.
+Named PDF, source ZIP, full experimental supplement and checksums are in
+`deliverables/`. The prior source, manuscript and deliverables are preserved;
+earlier simulations and the working-draft PDF are unchanged.
+
+**Last verified manuscript, before the focused redesign:** T1-T8 were complete
+for the existing 86-page A4
 manuscript, with 51 printed main-text pages. Chapter 6 uses seven lead figures
 and Appendix C retains eight supporting figures plus all 84 reported main
 null settings. The three appendices occupy 23 pages, down from 33 before the
@@ -178,18 +225,20 @@ why the independence boundary needs second-order reasoning.
 
 ### The experiments can be understood and reconstructed
 
-Explain the fixed joint tables, both sets of margins, changed cells, MI targets,
-feasibility limits and sample sizes. Show why changing the true MI difference
-is a design choice, while repeated sampling produces random observed estimates.
+Explain the fixed joint tables, copying probabilities, both populations'
+margins, MI targets, feasible ranges and sample sizes. Explain the four-cell
+transfer for the small supporting comparison. Distinguish chosen population
+differences from random differences in sampled estimates.
 
-Retain all completed experiment families: the main square-table landscape,
-different margins, baseline MI, locations of association, unequal samples and
-both effect directions, wider feasible MI differences, rectangular tables,
-alternative population construction, extreme skew, exact independence,
-large-sample convergence and runtime. Document the actual finite sample and
-skewness ranges, with at least 10 observations per population and no
-expected-cell-count eligibility filter. Broad claims about all sample sizes or all tables
-must not exceed those tested ranges.
+Use the approved three-study design and two improvements in
+FOCUSED_EXPERIMENT_PLAN.md: table size, margin regime and sample-size comparisons;
+a representative common-MI sweep; controlled detection curves; estimation
+diagnostics; and four alternative-construction settings. Keep all planned
+settings regardless of outcomes and report all 120 main null settings.
+Retain earlier broad experiments internally, not as mandatory main-text or
+appendix families. Keep at least 10 observations per population and no
+expected-cell-count eligibility filter. Limit empirical claims to the tested
+square tables, equal sample sizes, positive MI and construction rules.
 
 Every displayed empirical quantity must identify its source configuration,
 method, denominator and units in the evidence record. Reused display points
@@ -402,19 +451,29 @@ captions. A successful LaTeX build is necessary but does not replace this review
 
 ## 6. Deliverables and proof of completion
 
+### Working draft versioning
+
+The user requested that future working-draft rebuilds be named **Working
+Draft v3**. Preserve the existing Working Draft and Working Draft v2 PDFs,
+including the unversioned working-draft source and PDF, as historical
+artifacts. Use a separate versioned source and output target for v3; do not
+overwrite an earlier draft. This records a future-build preference, not a
+request to rebuild or sync the working draft now.
+
 | Deliverable | Required contents | Evidence of completion |
 | --- | --- | --- |
 | Final thesis PDF | Full main argument, appendices, references and accurate front matter at exemplar-comparable length. | Page count, complete visual review and closed editorial findings. |
 | LaTeX source package | Main source, chapter/appendix files, metadata, preamble, bibliography, all required figure assets and build instructions. | Successful build in a clean directory without relying on an undocumented parent-workspace file. |
-| Experimental supplement | Complete atlas and the saved records needed to identify every plotted regime and quoted result. | Working links, complete source mappings, consistent units and denominators. |
+| Experimental supplement | Focused-study results, reproduction settings, per-repetition diagnostics and the saved records needed to identify every plotted regime and quoted result. | Complete planned settings, checked source mappings, consistent units and denominators. |
 | Scientific and source audits | Equation checks, checked worked examples, claim-to-source records and any resolved findings. | Relevant tests pass; every material audit finding has a disposition and supporting evidence. |
 | Final acceptance record | T1-T8 status, final artifact locations, checks performed, dates and remaining author actions. | All required gates pass and personal statements are accurate. |
 
 Use the existing `SCIENTIFIC_AUDIT.md`, `LITERATURE_SOURCE_CHECK.md` and
 `SUBMISSION_CHECK.md` as the review records. Extend them where needed instead
-of creating another collection of overlapping overview documents. Keep
-`THESIS_REWRITE_PLAN.md` as the detailed chapter/evidence plan and this file as
-the current goal and acceptance standard.
+of creating another collection of overlapping overview documents. Use
+FOCUSED_EXPERIMENT_PLAN.md as the active experimental and affected-chapter
+plan, THESIS_REWRITE_PLAN.md as the retained earlier chapter/evidence record,
+and this file as the current goal and acceptance standard.
 
 The existing figure export, evidence audit, mathematical tests and LaTeX build
 commands are documented in `README.md` and `SCIENTIFIC_AUDIT.md`. Apply checks
@@ -428,9 +487,11 @@ verification set once on the final artifacts and retain the outcomes.
 Proceed with authorized writing and verification without repeated supervisor
 approval rounds. When a scientific uncertainty can be settled with a focused
 calculation or diagnostic, perform it and record the result. Preserve the
-frozen experiment record; additional analysis must state its purpose and
-provenance. Further experiments are warranted only when a specific remaining
-claim cannot be resolved from existing evidence or mathematical checks.
+existing experiment records; additional analysis must state its purpose and
+provenance. Implement the approved focused study when the user authorises
+implementation. Beyond that agreed scope, add experiments only for a specific
+remaining question that cannot be resolved from saved outputs or mathematical
+checks, and distinguish exploratory follow-up from the planned comparisons.
 
 Use the current metadata as the working basis. Personal acknowledgements and
 final dates can be handled during final assembly; they do not stop the

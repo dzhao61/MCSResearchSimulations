@@ -497,6 +497,17 @@ calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
 the probability tables. Chapter~\ref{chap:expanded} derives these
 MI-specific inputs to the same moment-matching structure.
 
+This distinction matters because the size of a variance estimate and its
+stability answer different questions. The estimate \(\Vhat(P)/n_P\)
+describes the expected spread of an MI estimate across samples. The
+variability of \(\Vhat(P)\) describes how much that assessment of spread
+itself changes across samples. Two variance estimators with the same mean
+can have different variability. Satterthwaite's calculation uses both
+moments: greater variability relative to the squared mean gives fewer
+degrees of freedom and a larger rejection cutoff
+\citep{satterthwaite1946}. A sample-size assignment alone does not adapt
+to differences in this relative variability between probability tables.
+
 The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
@@ -507,10 +518,11 @@ These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
 distribution can widen the intervals and reduce excessive rejection in such
-settings. The MI comparison in Section~\ref{sec:mechanism-results} has the
-opposite problem: the average squared plug-in standard error exceeds the
-measured variance of the estimated difference. The larger cutoff leaves
-that variance error unchanged and makes rejection less likely still.
+settings. In the small-MI comparisons in
+Section~\ref{sec:mechanism-results}, the average squared plug-in standard
+error instead exceeds the measured variance of the estimated difference.
+The larger cutoff leaves that variance error unchanged and makes an
+already-conservative test reject less often.
 
 \medskip
 \thesisminiheading{Prior MI inference and related comparisons.}
@@ -519,6 +531,14 @@ that variance error unchanged and makes rejection less likely still.
 using error propagation and examines them numerically. These calculations
 describe the uncertainty of an individual estimate, a necessary input to a
 comparison of two estimates.
+The first-order results of \citet{moddemeijer1989} and
+\citet{brillinger2004} give this uncertainty as \(V(P)/n_P\), with
+\(V(P)\) determined by the population table. Replacing its probabilities
+by observed proportions produces the variance estimate used by Wald.
+This supplies a standard error for the MI difference. Choosing a
+Welch--Satterthwaite cutoff requires one further quantity: how much the
+estimated variance varies when a new sample produces a different table.
+
 A Bayesian approach describes uncertainty about population MI given an
 observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
 unknown cell probabilities to calculate the variance and shape of the
@@ -542,6 +562,18 @@ is assigned its sample size, not \(n_i-1\).
 Hutcheson's rule assigns degrees of freedom from sample sizes. Expanded
 Welch instead calculates how the estimated MI variance changes with the
 table, including the effects of a cell change on its row and column totals.
+
+The entropy comparison establishes that a Student \(t\) distribution can
+be used to compare estimated information quantities, but MI requires
+more than substituting a different numerator. MI combines the row,
+column and joint entropies of the same observations. Their estimation
+errors are connected, because one cell count contributes to all three.
+The MI variance formulas in Section~\ref{sec:first-order-mi-background}
+account for that connection. The additional calculation in Expanded
+Welch follows it through to the estimated variance: a cell change alters
+both the weights and the pointwise-MI values whose weighted variance is
+being estimated. Thus Hutcheson supplies a close comparison framework,
+while the cell and margin derivatives supply the MI-specific inputs.
 
 In a segregation application, \citet{mora2009} develop inference for an MI index and discuss
 pairwise comparisons across groups and periods; the later peer-reviewed account
@@ -576,11 +608,27 @@ regression variance estimate to choose degrees of freedom. Applying the
 latter approach to MI requires calculating how its estimated variance
 changes with the observed table.
 
+These results address two successive sources of uncertainty. The MI
+sampling variance describes how much the estimated association changes
+between samples. The variability of the estimated MI variance describes
+how consistently those samples estimate that uncertainty. This thesis
+derives the second quantity and uses it within the established
+Welch--Satterthwaite framework. The resulting test retains the same MI
+difference and standard error as Normal Wald, allowing the experiment
+to isolate the consequences of its additional cutoff calculation.
+
 A new observation changes the empirical cell probabilities, row and column
 totals, and pointwise MI values. The remaining calculation is how these
 changes affect the estimated MI variance. This thesis uses that calculation
 to choose the degrees of freedom for a Student \(t\) distribution, then
 evaluates whether it improves false positives and detection.
-Both tests start with the same estimated MI difference and standard error.
+That evaluation also needs to examine the shared estimates themselves.
+\citet{paninski2003} shows that finite-sample information estimates can
+retain substantial bias after a leading correction. A larger rejection
+cutoff does not remove such bias, nor does it replace a poor first-order
+variance approximation. The experiment therefore measures these errors
+alongside rejection, to distinguish a useful cutoff adjustment from a
+reduction in rejection that leaves the underlying estimation problem
+unchanged.
 Chapter~\ref{chap:baselines} defines this shared statistic before
 Chapter~\ref{chap:expanded} derives the additional variance calculation.

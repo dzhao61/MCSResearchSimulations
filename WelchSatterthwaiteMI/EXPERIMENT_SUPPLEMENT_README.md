@@ -1,115 +1,82 @@
-# Welch-MI Experiment Supplement
+# Welch-MI Focused Experiment Supplement
 
-This archive contains the frozen confirmatory protocol, implementation,
-consolidated results, individual-regime atlas and tests used by the thesis.
-It also contains the separately labelled supplementary mechanism check under
-`results/thesis_mechanism_check/`; that check does not modify the frozen run.
-The 3,111 individual checkpoint files are included alongside the consolidated
-tables so each configuration can be inspected directly.
+This supplement reproduces the focused study in the current Master of
+Computer Science thesis: 232 settings, 68 population pairs and 20,000 paired
+samples per setting. It contains the unchanged Normal Wald and Expanded
+Welch implementations, all population definitions, per-repetition scalar
+records, summaries, figure-generation scripts and independent audits.
+The earlier broad-study archive is not part of this supplement.
 
 ## Environment
 
-The retained run used Python 3.13.5 on macOS, with the exact numerical package
-versions in `WelchSatterthwaiteMI/requirements-thesis.txt`. From the directory
-containing `WelchSatterthwaiteMI/` and `DifferentialMI/`, create an environment:
+The recorded environment is Python 3.13.5, NumPy 2.4.4, SciPy 1.17.1,
+pandas 3.0.3 and Matplotlib 3.10.9. From the extracted archive root:
 
 ```bash
 python3.13 -m venv .venv
 .venv/bin/python -m pip install -r WelchSatterthwaiteMI/requirements-thesis.txt
 ```
 
-The code supports Python 3.10 or later, but the pinned versions reproduce the
-recorded software environment most closely.
+The timing check used macOS 26.6.2 on arm64. Timing remains machine-dependent;
+the statistical samples are determined by the recorded random streams.
+Set `MPLCONFIGDIR` to a writable directory in restricted environments.
 
-## Inspect and verify the saved run
+## Inspect and verify the results
 
-The principal human-readable result is
-`WelchSatterthwaiteMI/docs/experiments/THESIS_EXPERIMENTS.md`. The frozen
-protocol and consolidated tables are under `experiments/` and
-`results/thesis_redesign/` respectively.
+`WelchSatterthwaiteMI/results/focused_study/` contains the population arrays
+and definitions, configuration and display manifests, method and paired
+results, diagnostics, timing measurements and verification records.
+`records/` contains all 4,640,000 scalar record pairs in compressed NPZ chunks
+with checksums. Invalid test outputs are retained. Pilot records are excluded
+because they do not contribute to the reported results.
 
-Run the mathematical and protocol tests from this archive root with:
-
-```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python -m unittest \
-  WelchSatterthwaiteMI.tests.test_thesis_redesign \
-  WelchSatterthwaiteMI.tests.test_thesis_derivation_audit \
-  WelchSatterthwaiteMI.tests.test_thesis_mechanism_check \
-  WelchSatterthwaiteMI.tests.test_welch
-```
-
-To regenerate the complete atlas and verification records from the saved
-tables without resampling:
+Run the bundled tests and independent audit from the extracted archive root:
 
 ```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/run_thesis_redesign.py \
-  --report-only \
-  --output-dir WelchSatterthwaiteMI/results/thesis_redesign
+.venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
+.venv/bin/python -m unittest discover -s DifferentialMI/tests -p 'test_*.py'
+.venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py
 ```
 
-## Reconstruct or rerun the protocol
+The independent audit validates raw checksums and counts, regenerates sampled
+inputs, and recomputes statistics, degrees of freedom, p-values, validity,
+rejection rates, intervals and estimation diagnostics. The two older helper
+modules are included because the focused code imports their four-cell
+constructor and interval functions; they are not instructions to run the old
+experiment.
 
-The preflight mode reconstructs all populations and configuration manifests
-without simulation:
+## Reconstruct or rerun
+
+Use a separate output directory for a new run. Reusing saved checkpoints
+requires the recorded source fingerprint and software environment to match.
 
 ```bash
-.venv/bin/python WelchSatterthwaiteMI/experiments/run_thesis_redesign.py \
-  --preflight-only --output-dir WelchSatterthwaiteMI/results/reproduction_preflight
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_study.py preflight --output reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_study.py pilot --output reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_study.py full --output reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_study.py audit --output reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_study.py timing --output reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py --results reproduction
 ```
 
-The complete run requests 62,220,000 paired count tables and can be reproduced
-with:
+The master seed is 20261006. Configuration-specific, independent P and Q
+streams use fixed chunks of 1,000 repetitions. Changing `--workers` or
+`--batch-size` does not change the statistical outputs. Interrupted runs
+resume only checksum-verified chunks. The pilot uses separate streams and
+does not enter the full results.
+
+## Rebuild the figures
+
+The separately supplied thesis source already contains the figure PDFs and
+tables needed to compile it. To regenerate them from this supplement, give
+the extracted source directory explicitly:
 
 ```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/run_thesis_redesign.py \
-  --full --workers 4 --output-dir WelchSatterthwaiteMI/results/reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_study.py --figures /path/to/thesis-source/figures_rewrite
 ```
 
-Stable configuration-specific seeds make the statistical outputs independent
-of worker completion order. Runtime measurements remain machine-dependent.
-
-To regenerate the mechanism-check report from its saved CSV files, run:
-
-```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/report_thesis_mechanism_check.py
-```
-
-The full follow-up simulation can be reproduced with
-`run_thesis_mechanism_check.py`; it evaluates 809 configurations and uses an
-independent pilot for each of 169 nulls.
-
-The saved `run_metadata.json` records the exact source hashes used for the
-confirmatory run. The protocol, simulation core, test implementation, and
-imported statistical dependencies still match those hashes. The bundled
-orchestration runner has since gained atlas-count metadata, hashes for saved
-outputs on future runs, and one-pass handling of a failed preflight. Its
-population construction, simulation, and method-evaluation path are unchanged.
-The recorded runner SHA-256 is
-`42c0ef36f46c88e7828a628ee68fbeb18dbde5d978291d849dc4847c2b857908`;
-the supplied runner SHA-256 is
-`0fd0247da05e5bea92e4f56c9956b0671ae93244a4e433c421ccf53aac8095bf`.
-The historical metadata are intentionally not rewritten. Their figure count
-of 99 refers to primary atlas figures; the later report and preflight records
-add seven companion calibration zooms, giving 106 files in total. The original
-metadata predate per-output hashes, so `SHA256SUMS.txt` authenticates the
-delivered archives and the verification scripts check their internal evidence.
-
-## Use with the thesis source archive
-
-Extract the thesis source and this supplement into the same directory. The
-thesis can then regenerate its 22 selected figures and verify every reported
-Chapter 6 value with:
-
-```bash
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python figures_rewrite/make_figures.py
-MPLBACKEND=Agg MPLCONFIGDIR="$PWD/.mplcache" XDG_CACHE_HOME="$PWD/.cache" \
-  .venv/bin/python figures_rewrite/audit_evidence.py
-```
-
-If the two trees are stored separately, set `WELCH_MI_WORKSPACE_ROOT` to the
-directory containing `WelchSatterthwaiteMI/` before running either script.
+This generates five lead figures, three companions and five table fragments
+at the manuscript's intended printed dimensions. Complete scientific
+construction, parameter grids, validity and uncertainty rules are also in
+Appendix B of the thesis; a reader does not need this codebase to understand
+or independently recreate the study.

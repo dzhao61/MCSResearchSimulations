@@ -37,6 +37,8 @@ def source_files() -> list[tuple[Path, Path]]:
         "BIBLIOGRAPHY_REVIEW_RESPONSE.md",
         "SCIENTIFIC_AUDIT.md", "SUBMISSION_CHECK.md", "THESIS_GOAL.md",
         "THESIS_REWRITE_PLAN.md",
+        "FOCUSED_EXPERIMENT_PLAN.md",
+        "THESIS_DEPTH_PLAN.md",
     ]
     files.extend((THESIS / name, Path(name)) for name in root_names)
     for directory in ("frontmatter", "chapters_rewrite", "appendices_rewrite"):
@@ -45,10 +47,7 @@ def source_files() -> list[tuple[Path, Path]]:
     for source in clean_files(
         THESIS / "figures_rewrite", suffixes={".pdf", ".py", ".json", ".tex"}
     ):
-        if source.name in {
-            "mechanism_ablation.pdf",
-            "mechanism_tables.tex",
-        }:
+        if not (source.name.startswith("focused_") or source.name == "evidence_values.tex"):
             continue
         files.append((source, source.relative_to(THESIS)))
     return files
@@ -64,33 +63,28 @@ def supplement_files() -> list[tuple[Path, Path]]:
         project / "requirements-thesis.txt",
         differential / "pyproject.toml",
     ]
-    experiments = [
-        "THESIS_REDESIGN_PROTOCOL.json", "THESIS_REDESIGN_CONFIGURATION_MANIFEST.csv",
-        "README.md", "run_detection_breakdown_sweep.py", "run_thesis_redesign.py",
-        "report_thesis_redesign.py", "thesis_redesign_core.py",
-        "run_thesis_mechanism_check.py", "report_thesis_mechanism_check.py",
-    ]
+    experiments = ["focused_study_core.py", "run_focused_study.py",
+                   "report_focused_study.py", "audit_focused_study.py",
+                   "thesis_redesign_core.py", "run_detection_breakdown_sweep.py"]
     tests = [
-        "test_thesis_redesign.py", "test_thesis_derivation_audit.py",
-        "test_thesis_mechanism_check.py", "test_welch.py",
+        "test_focused_study.py", "test_focused_report.py",
+        "test_thesis_derivation_audit.py", "test_welch.py",
     ]
     exact.extend(project / "experiments" / name for name in experiments)
     exact.extend(project / "tests" / name for name in tests)
-    exact.extend([
-        project / "docs/experiments/THESIS_EXPERIMENTS.md",
-        project / "docs/experiments/THESIS_EXPERIMENT_PLAN.md",
-    ])
     for source in exact:
         files.append((source, source.relative_to(WORKSPACE)))
     for directory in (
         project / "src",
         differential / "src",
-        project / "results/thesis_redesign",
-        project / "results/thesis_mechanism_check",
-        project / "docs/experiments/figures/thesis_redesign",
+        project / "results/focused_study",
     ):
         for source in clean_files(directory):
+            if "pilot" in source.relative_to(directory).parts:
+                continue
             files.append((source, source.relative_to(WORKSPACE)))
+    for source in clean_files(differential / "tests", suffixes={".py"}):
+        files.append((source, source.relative_to(WORKSPACE)))
     return files
 
 

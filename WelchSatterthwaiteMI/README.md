@@ -16,7 +16,23 @@ Two methods form the final thesis comparison:
 Simple Welch appears only in supplementary checks; constrained
 likelihood-ratio methods remained exploratory.
 
-## Current status
+## Current focused study (6 October 2026)
+
+The thesis now uses the [focused study](results/focused_study/): 232 settings,
+68 population pairs and 20,000 paired repetitions per setting. Three studies
+vary sample size and population structure, common positive MI, and the true
+MI difference. The primary construction is a copying mixture; four matched
+settings use a four-cell transfer. Diagnostics and strict validity rules are
+reported alongside rejection. Neither statistical method changed.
+
+Run `experiments/run_focused_study.py` with `preflight`, `pilot`, `full`,
+`audit` or `timing`. `experiments/audit_focused_study.py` independently checks
+raw records, regenerated count inputs, formulas and summaries.
+`experiments/report_focused_study.py` generates the new manuscript figures
+and tables. The active plan is in
+`../Thesis Writeup/Welch MI/FOCUSED_EXPERIMENT_PLAN.md`.
+
+## Previous experiment (preserved)
 
 The final thesis experiment is the frozen
 [`thesis_redesign`](results/thesis_redesign/) run. Its

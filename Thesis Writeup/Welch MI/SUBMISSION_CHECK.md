@@ -1,6 +1,79 @@
 # Thesis completion check
 
-The 6 October 2026 record below verifies the current thesis and deliverables.
+## Targeted depth pass: 7 October 2026
+
+The approved edits in THESIS_DEPTH_PLAN.md develop the computing motivation,
+closest-method literature synthesis, design rationale, results mechanisms,
+practical implications and future-work priorities. There are no new
+experiments, figures, test variants or typography changes. The active PDF
+has 87 A4 pages: eight front-matter pages, 54 main-text pages, 21 appendix
+pages and four bibliography pages. The main-text diagnostic is 15,396
+whitespace-separated `pdftotext` tokens from PDF pages 9-62, including
+captions, equations and plot labels, not a prose-only word count.
+
+All 147 workspace tests and the independent raw-record audit pass. Three
+new regression checks verify the added bias arithmetic, numerical cutoffs
+and margin-related precision examples directly from the saved diagnostics.
+The build resolves all citations and references and has no warnings,
+missing characters or overfull/underfull boxes. All pages have been covered
+by rendered contact-sheet review, with the new calculations, design layout
+and conclusion also inspected at larger size. Short calculations stay with
+their introductions; the design summary table no longer interrupts a
+paragraph. The methods in Chapters 3-4 and all figure assets are unchanged.
+
+The extracted source builds to the same 87 pages and exactly the same
+`pdftotext` output as the workspace manuscript, without warnings or unresolved
+references. All 38 bundled Welch-project tests and 27 DifferentialMI tests
+pass, as does the independent audit using the extracted repetition records.
+The named PDF and source/supplement packages are refreshed. The original
+unversioned working-draft PDF and Working Draft.pdf retain SHA-256
+`ef4d9a7f39101ed0cb4f0624179d5fd32b78bc765e917d5d2d08656f4b260897`;
+Working Draft v2.pdf retains
+`a8f6f47cc3f8b660dc3269d0fdcb2765ff5702bb06949da9deffad4b8f7de932`.
+No working-draft source was edited.
+The pre-pass manuscript/source snapshot is in
+`archive/pre_depth_20261006/manuscript.tar`. Earlier working drafts remain
+historical artifacts; this pass does not request or produce Working Draft v3.
+
+## Focused revision: 6 October 2026
+
+The current PDF is the focused-study manuscript, with 81 A4 pages: eight
+front-matter pages, 48 main-text pages, 21 appendix pages and four bibliography
+pages. It uses five lead figures, a compact diagnostic table, a small timing
+table, three companion figures and the complete 120-setting main null table.
+All 81 pages have been reviewed as rendered contact sheets. Main-text length
+is 13,369 whitespace-separated `pdftotext` tokens from PDF pages 9-56, including
+captions, equations and plot labels; this is not a prose-only word count.
+
+The 232-setting, 68-population-pair run is complete at 20,000 repetitions per
+setting. All 117 Welch-project and 27 DifferentialMI tests pass. The independent
+audit verifies all raw records, regenerates 3,944 sampled inputs, and checks
+population construction, p-values, rates, uncertainty and diagnostics. All
+eight new figure layouts have tested printed bounds and unchanged plotted
+values. The final build resolves all citations and references and has no
+errors, missing characters or overfull boxes. The association-strength heading
+was shortened to remove its awkward spacing. The degree remains Master of Computer
+Science, and the working-draft PDF has not been rebuilt.
+
+The extracted source compiles from a clean directory to the same 81 pages
+and exactly the same `pdftotext` output. The extracted supplement passes all
+35 bundled Welch tests and 27 DifferentialMI tests, and passes the full
+independent audit against its own raw records. Its report generator reproduces
+all eight rendered figures and five table fragments byte-for-byte. ZIP CRC
+checks and the three delivery checksums pass. The source archive has 44 files;
+the supplement has 9,551 files, including all raw scalar chunks. The report
+generator's final status line was subsequently corrected to say five tables;
+this does not change any generated output or scientific-source fingerprint.
+T1-T8 are complete for the focused revision.
+
+The preceding manuscript and deliverables are preserved under
+`archive/pre_focused_20261006/`; all earlier simulation archives are unchanged.
+The remaining dated records below apply to that earlier manuscript, not the
+new study's counts, findings or artifacts.
+
+## Historical verification records
+
+The earlier 6 October 2026 record below verifies the pre-focused thesis and deliverables.
 The later dated September notes are retained as historical audit evidence;
 their earlier page counts and references to a "current" PDF do not supersede
 this record. The acceptance targets are in [THESIS_GOAL.md](THESIS_GOAL.md).

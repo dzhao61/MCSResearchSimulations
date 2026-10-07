@@ -5,27 +5,71 @@
 
 Normal Wald and Expanded Welch use the same estimated MI difference and
 standard error. Expanded Welch can only make a valid two-sided p-value
-larger. This is helpful when Wald rejects an equal-MI null too often;
-it is harmful when Wald already rejects too rarely. Lower rejection is
-therefore not by itself evidence of better calibration.
-In sparse samples, Expanded Welch's extra component requirements can prevent
-it from returning a p-value. This also lowers the reported rejection rate,
-so calibration must be read alongside the frequency of usable results.
+larger, reducing rejection for the same sampled tables. When
+Wald's false-positive rate exceeds 5\%, reducing it towards 5\% can
+help. When Wald already rejects too rarely, the same adjustment moves
+the rate further from the target and can reduce detection. A comparison
+of the two methods therefore needs both measures: false positives show
+whether the reduction improves calibration, and detection shows its
+cost when population MI differs.
 
-The trade-off varies with table size, margins, starting MI and sampling
-allocation, including when equal-MI populations have different margins.
-Neither method is well calibrated across all tested settings.
-For applications resembling a tested regime, Normal
-Wald remains the simpler baseline. Expanded Welch can be a
-supplementary check if a separate calibration study shows
-that Wald rejects equal MI too often and the expanded calculation is usually valid.
-Method choice should be set before examining the p-values.
+The controlled studies show why a general rejection reduction is not a
+general improvement. At small positive MI, Wald is already conservative
+in the association-strength sweep, and Expanded Welch reduces rejection
+further. At \(16\times16\) with different skew and \(n=1{,}000\),
+both tests instead have excessive false positives despite full validity.
+There the adjustment provides only a small reduction. By
+\(n=10{,}000\), the bias and variance diagnostics improve and the
+methods give similar detection.
 
-The extra computation is not the principal obstacle. In the measured
-implementation, an Expanded Welch call takes about 1.75 times as long
-as a Wald call, but both have the same \(O(rc)\) operation growth for
-an \(r\times c\) table. The statistical limitations matter more than
-this timing difference.
+Unequal estimation biases can produce an apparent change in association
+when population MI is equal. In
+Equation~\eqref{eq:focused-null-bias-shift}, the larger different-skew
+tables produce an estimated difference centred above zero even under
+equal MI. Increasing the rejection cutoff leaves that centre unchanged.
+Reliable decisions in such settings require attention to the MI
+estimates, not only to which distribution supplies the cutoff.
+
+A usable calculation and a well-calibrated test are also different
+requirements. Validity here means that the quantities needed for the
+calculation are finite and satisfy the method's positivity conditions.
+It does not mean that the resulting p-values achieve the intended
+false-positive rate. The fully valid \(16\times16\) comparison at
+\(n=1{,}000\) demonstrates that distinction. Conversely, sparse samples
+can prevent Expanded Welch from returning a p-value, lowering its
+reported rejection rate without providing a decision about equal MI.
+Rejection and valid-result frequency therefore need to be read together.
+
+For a categorical feature--label comparison, the estimated MI difference
+reports the size and direction of the observed change. Its standard
+error describes the sampling uncertainty assigned by the method, and
+the p-value supplies the test decision. Reporting these quantities
+together makes the comparison more informative than reporting a
+p-value alone. If Expanded Welch is used, its estimated degrees of
+freedom explain the additional cutoff adjustment. A small p-value is
+evidence against equal MI within the test's approximation; a large
+p-value does not establish that the population MI values are equal.
+
+Normal Wald remains the simpler baseline, but its reliability also
+depends on the population setting. Expanded Welch can provide a
+supplementary comparison where simulations representative of the
+application show excessive Wald rejection and frequent usable Expanded
+Welch results. Such an assessment should match the category definitions,
+sample sizes and margin patterns, and vary plausible association
+strengths. Equal-MI pairs with different tables are important when
+the application's populations may differ. The assessment should compare
+false positives, detection and usable results, rather than selecting
+the method with fewer rejections alone. The present study supplies
+controlled examples of this reasoning, not a universal sample-size
+threshold. Method choice should be set before examining the observed
+p-values.
+
+The main obstacle is statistical rather than computational. An Expanded
+Welch call takes approximately 1.7--1.8 times as long as a Wald call in
+the measured implementation, with medians below 160 microseconds over
+the tested sizes. Both have \(O(rc)\) operation growth for an
+\(r\times c\) table. The extra calculation is modest, but it does not
+remove bias or inaccurate uncertainty in the shared statistic.
 
 \begin{samepage}
 \section{Limits of the evidence}
@@ -37,19 +81,48 @@ untested populations.
 \par
 \end{samepage}
 
-One specific gap concerns the association patterns in equal-MI pairs.
-The main construction changes four cells. Rare-cell, spread and
-log-linear constructions test other patterns, but the study does not
-pair equal-MI populations whose association is placed in different
-cells. Such pairs would test whether the method comparison changes when
-the populations differ in association location as well as their margins.
+The primary populations use a copying mixture with identical row and
+column margins within each population. This gives a clear way to vary
+association without changing category frequencies. The four-cell check
+supports the direction of the method comparison at its four matched
+settings, while showing that detection can still change numerically.
 
-The methods are studied with two independent samples from fixed
-categorical alphabets, a two-sided 5\% threshold and the stated sample
-ladders. The analysis does not establish performance for paired
-observations, continuous MI estimators, growing alphabets or a real-data
-workflow.
-Exact independence also needs a different mathematical approximation. The
-first-order MI variance vanishes there.
+Copying favours matching categories in both
+populations, whereas the four-cell transfer concentrates association
+in the same chosen block. The different-skew regime changes category
+frequencies while keeping those association locations aligned. Its
+results therefore demonstrate that distinct equal-MI tables can be
+difficult to compare, but do not describe every way two tables with
+equal MI can differ. A broader assessment would vary association
+locations as well as their strengths and margins, including unequal
+row and column margins within a population.
+
+Equal sample sizes simplify the comparison by making the two leading
+bias corrections cancel in \(\Deltahat\). The remaining difference
+bias in the experiment consequently comes from estimation errors not
+removed by that common correction. With unequal sample sizes, the
+corrections no longer cancel, and the two contributions to the standard
+error and degrees of freedom can become less balanced. The derivation
+allows unequal sample sizes, but the experiment does not assess how well
+those additional adjustments perform. That requires a separate sample
+allocation study.
+
+The sampling assumptions also limit transfer to other applications.
+Paired observations would require a covariance term in the variance of
+the difference, whereas the present samples are independent. Continuous
+MI estimators have different estimation errors from fixed categorical
+tables. Similarly, increasing the number of categories with sample size
+changes the fixed-alphabet setting of the derivation. The empirical
+recommendation concerns the independent categorical comparisons studied
+here, at a two-sided 5\% threshold; a real-data evaluation would test how
+well these constructed comparisons represent an application.
+
+Exact independence needs a different mathematical approximation because
+the first-order MI variance vanishes there. The association-strength
+study also shows that being positive is not enough to make that
+approximation accurate at a particular sample size: small positive MI
+can remain close to the problematic region. This explains why improving
+the first-order cutoff and improving the approximation near independence
+are separate tasks.
 Section~\ref{sec:independence-boundary} derives the second-order
 approximation needed there.

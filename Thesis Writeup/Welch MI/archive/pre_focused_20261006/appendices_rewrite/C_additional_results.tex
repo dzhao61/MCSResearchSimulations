@@ -1,0 +1,205 @@
+\chapter{Additional Results}
+\label{app:additional-results}
+
+These results extend the comparisons in Chapter~\ref{chap:results}.
+Each setting uses 20,000 paired samples at the two-sided 5\% threshold.
+
+\section{Individual main-grid null results}
+
+Table~\ref{tab:all-main-null} gives every main-grid null setting separately,
+across four table sizes, three margin profiles and seven sample sizes.
+All have \(I(P)=I(Q)=0.02\) nats. Uniform and same-skew settings have
+\(P=Q\); different-skew settings have \(P\ne Q\) with equal MI\@.
+The margins are specified in Table~\ref{tab:margin-profiles}.
+Rejection rates divide valid rejections by all 20,000 samples; the valid-result
+rate shows the fraction returning a usable p-value.
+
+\input{figures_rewrite/main_null_table}
+
+\section{Selected additional square-table curves}
+
+The following curves add the intermediate \(3\times3\) and \(5\times5\)
+shapes to the \(2\times2\) and \(8\times8\) comparisons in
+Chapter~\ref{chap:results}. The first uses uniform margins; the second
+compares different margins. Upper panels use a 0--1 rejection scale and
+lower panels enlarge 0--0.15. Hollow markers indicate validity below 90\%.
+
+\mainlandscapefigure{3x3}{\(3\times3\)}{uniform}{both \(P\) and \(Q\) have uniform row and column margins \((1/3,1/3,1/3)\)}{uniform}{At \(n=10\), Wald's zero-difference rate is above 0.05 and Expanded Welch brings it below the line; both methods are almost always valid. At \(n=100\), however, both start well below 0.05 and the correction lowers rejection further. Detection grows strongly at \(n=1{,}000\), where Wald remains slightly higher. Whether the adjustment helps calibration changes with sample size, not just table shape.}
+\mainlandscapefigure{5x5}{\(5\times5\)}{different_skew}{the margins are \((0.7,0.075,0.075,0.075,0.075)\) for \(P\) and \((0.8,0.05,0.05,0.05,0.05)\) for \(Q\), each used for both rows and columns}{different skew}{The \(n=10\) null is liberal for both methods, though less so for Expanded Welch; its hollow markers also show reduced validity. At \(n=100\), rejection stays low and falls across this short alternative range. At \(n=1{,}000\), detection rises and Wald remains slightly higher. Expanded Welch lowers rejection at every size, helping only where the null rate is too high.}
+
+\FloatBarrier
+
+\section{Other controlled comparisons}
+
+The following comparisons change association location, sample allocation,
+table shape or population construction. The final figure starts at exact
+independence, where the first-order MI variance is zero.
+
+Figure~\ref{fig:patterns-focus} compares the location of association in
+\(5\times5\) tables. Columns place
+association in the first \(2\times2\) block, last (rare) \(2\times2\)
+block, or a centred score outer product spread across all cells. For every
+column, \(P\)'s row and column margins are
+\((0.7,0.075,0.075,0.075,0.075)\), and \(Q\)'s are
+\((0.8,0.05,0.05,0.05,0.05)\). Here \(I(P)=0.0001\),
+\(I(Q)=I(P)+|\Delta|\), \(n_P=n_Q=100\), and
+\(|\Delta|=0,0.0001,0.00025,0.0005,0.001,0.002\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{patterns_5x5_different_skew.pdf}
+\caption[Changed-cell comparison, \(5\times5\) tables]{Rejection rates for
+\(5\times5\) tables with association in different cells.}
+\label{fig:patterns-focus}
+\end{figure}
+
+All three association patterns give below-target null rejection in this
+comparison. For first, rare and spread patterns, respectively, the
+zero-difference Wald rates are \(\PatternFirstWaldRate\),
+\(\PatternRareWaldRate\) and \(\PatternSpreadWaldRate\); Expanded Welch gives
+\(\PatternFirstExpandedRate\), \(\PatternRareExpandedRate\) and
+\(\PatternSpreadExpandedRate\). All displayed calculations are valid. The
+alternative curves remain nearly flat over this short MI range, so neither
+method detects these differences well. The low null rejection and limited
+detection persist across the three association patterns.
+
+\clearpage
+
+Figure~\ref{fig:imbalance-q} compares unequal samples when \(Q\) has the
+higher MI. Columns have
+\((n_P,n_Q)=(50,250)\) and \((250,50)\). For both columns, \(P\) has
+\(3\times3\) row and column margins \((0.7,0.15,0.15)\) and \(Q\) has
+\((0.8,0.1,0.1)\); the first-cell change block is used.
+\(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), with
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{imbalance_3x3_q_higher.pdf}
+\caption[Unequal samples, \(Q\) higher]{Rejection rates under two sample
+allocations when \(Q\) has the higher MI.}
+\label{fig:imbalance-q}
+\end{figure}
+
+Allocating more observations to \(Q\), the population with higher MI,
+gives stronger detection in this comparison. At zero difference, Wald is near or above 0.05 while
+Expanded Welch is below it in both allocations. When \(Q\) has more observations
+\((n_P,n_Q)=(50,250)\), rejection rises with \(I(Q)-I(P)\); at 0.02 nats it
+reaches \(\ImbalanceQHigherWaldRate\) for Wald and
+\(\ImbalanceQHigherExpandedRate\) for Expanded Welch. With \(P\) larger, the
+curves rise much less. These points are valid, but the alternative gap is not
+a comparison at matched false-positive rates: the null rates differ even
+though both tests use the nominal 5\% threshold.
+
+\clearpage
+
+Figure~\ref{fig:imbalance-p} reverses the MI direction. Columns have
+\((n_P,n_Q)=(50,250)\) and \((250,50)\). \(P\)'s \(3\times3\) row and
+column margins are \((0.7,0.15,0.15)\); \(Q\)'s are \((0.8,0.1,0.1)\).
+Both use the first-cell change block. \(I(Q)=0.02\) and
+\(I(P)=0.02+|\Delta|\), with
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{imbalance_3x3_p_higher.pdf}
+\caption[Unequal samples, \(P\) higher]{Rejection rates under two sample
+allocations when \(P\) has the higher MI.}
+\label{fig:imbalance-p}
+\end{figure}
+
+Reversing the MI direction also reverses which sample allocation gives
+stronger detection. The zero-difference rates are the same as in
+Figure~\ref{fig:imbalance-q}, because each allocation uses the same pair of
+populations in both figures at that point; \(P\) and \(Q\) still have different
+margins. Reversing the MI direction changes what happens next: when \(P\) has
+the larger sample, Wald rises well above its null rate, whereas it stays
+nearly flat when \(Q\) has the larger sample. At \((n_P,n_Q)=(50,250)\) and
+0.02 nats, Wald rejects
+\(\ImbalancePHigherWaldRate\) and Expanded Welch
+\(\ImbalancePHigherExpandedRate\); both calculations are valid. Direction and
+allocation therefore matter even at the same absolute MI difference.
+
+\clearpage
+
+Figure~\ref{fig:rectangular-focus} compares rectangular tables.
+Columns are \(2\times3\) and \(3\times5\).
+In each dimension \(k\), \(P\)'s corresponding margin is \(m_k(0.7)\)
+and \(Q\)'s is \(m_k(0.8)\), for both rows and columns. Thus the first
+column uses \(P\) rows \((0.7,0.3)\), columns
+\((0.7,0.15,0.15)\), and \(Q\) rows \((0.8,0.2)\), columns
+\((0.8,0.1,0.1)\); the second applies the same formula to 3 and 5
+categories. Both use first-cell changes, \(n_P=n_Q=100\),
+\(I(P)=0.02\), and \(I(Q)=0.02+|\Delta|\) for
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{rectangular_different_skew.pdf}
+\caption[Rectangular tables]{Rejection rates for \(2\times3\) and
+\(3\times5\) tables with different margins.}
+\label{fig:rectangular-focus}
+\end{figure}
+
+Both rectangular panels start below 0.05, with
+Expanded Welch lower. Rejection grows only modestly by 0.02 nats and remains
+below 0.05 for both methods throughout the displayed range; validity is high.
+Both methods therefore detect these differences poorly. Expanded Welch
+also lowers an already-conservative null rate, as in the square tables.
+
+\clearpage
+
+Figure~\ref{fig:construction-focus} compares additive and ordinal log-linear
+constructions for \(5\times5\) tables. The left column uses the first-cell additive block;
+the right fits an ordinal interaction while preserving the margins. In both,
+\(P\)'s row and column margins are
+\((0.7,0.075,0.075,0.075,0.075)\) and \(Q\)'s are
+\((0.8,0.05,0.05,0.05,0.05)\). Both have
+\(I(P)=0.02\), \(I(Q)=0.02+|\Delta|\), \(n_P=n_Q=100\), and
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{construction_5x5_different_skew.pdf}
+\caption[Additive versus log-linear construction]{Rejection rates under
+additive and ordinal log-linear constructions for \(5\times5\) tables.}
+\label{fig:construction-focus}
+\end{figure}
+
+Both constructions give conservative null rejection despite producing
+different cell probabilities. At zero difference, the additive and log-linear Wald
+rates are \(\ConstructionAdditiveWaldRate\) and
+\(\ConstructionLoglinearWaldRate\); Expanded Welch gives
+\(\ConstructionAdditiveExpandedRate\) and
+\(\ConstructionLoglinearExpandedRate\). All four are valid and below 0.05.
+Rejection stays low or falls slightly as the displayed difference grows.
+Matching margins and MI therefore does not ensure identical rejection
+rates.
+
+\clearpage
+
+Figure~\ref{fig:independence-focus} starts at exact independence in
+\(2\times2\) tables. Columns are
+uniform margins \((0.5,0.5)\) for both populations, same skew
+\((0.8,0.2)\) for both, and different skew with \(P=(0.7,0.3)\) and
+\(Q=(0.8,0.2)\); each vector is used for both rows and columns. The
+first-cell block is used, \(I(P)=0\), \(I(Q)=|\Delta|\),
+\(n_P=n_Q=100\), and
+\(|\Delta|=0,0.001,0.002,0.005,0.01,0.02\) nats.
+
+\begin{figure}[H]
+\centering
+\includegraphics{independence_2x2.pdf}
+\caption[Exact-independence boundary]{Rejection rates for \(2\times2\)
+tables starting at exact independence.}
+\label{fig:independence-focus}
+\end{figure}
+
+At the uniform zero-difference point, Wald rejects
+0.00025 and Expanded Welch 0.00010 of samples; validity is high. Rejection grows little over
+most of the displayed alternative range, and Expanded Welch remains lower.
+At exact independence, the population first-order MI variance is zero, so the approximation underlying
+both curves changes. Section~\ref{sec:independence-boundary} explains the
+different reference used by a one-table independence test.
+
+\FloatBarrier

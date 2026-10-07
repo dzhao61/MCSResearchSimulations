@@ -70,3 +70,11 @@ made.
 
 Keep ordinary chat answers as concise as the user's question warrants; this
 preference chiefly governs substantial derivations and thesis exposition.
+
+# Working Draft Preservation
+
+Any future working-draft rebuild must be named "Working Draft v3". Preserve
+"Working Draft.pdf", "Working Draft v2.pdf" and the existing unversioned
+working-draft source and PDF unchanged as historical artifacts. Build v3
+from a separate versioned source/output target, not by overwriting an older
+draft. This naming instruction does not itself request a rebuild.

@@ -8,6 +8,16 @@ difference alone does not tell us whether the population MI values differ:
 both estimates vary when new observations are drawn. The question in this thesis is whether
 the two \emph{population} MI values can plausibly be equal.
 
+For example, suppose \(X\) is a categorical input feature and \(Y\) is
+a class label in two independently collected datasets. The feature may
+have a higher estimated MI with the label in one dataset than in the
+other. Before interpreting this as a difference in association, we need
+to distinguish a population difference from variation caused by sampling.
+The datasets can have different feature and class frequencies, so the
+question is not whether all their cell probabilities match. It is whether
+the feature--label association, as measured by MI, is equally strong in
+the two populations.
+
 This is not the usual test of whether \(X\) and \(Y\) are independent within
 one group. The null hypothesis here permits dependence in both groups and
 permits their complete joint distributions to differ. It specifies only
@@ -54,10 +64,11 @@ Student \(t\) distribution?
 
 Second, does the resulting Expanded Welch test offer a useful improvement
 over Normal Wald?
-The experiment checks how false positives, detection and validity change with
-table size, uneven cell
-probabilities, the amount and location of association, unequal sample sizes
-and larger samples. It also measures the extra computation required.
+The experiment checks how false positives, detection and validity change
+with sample size, table size, margin regime and association strength.
+Bias and variance diagnostics explain the main patterns, and a small
+alternative-construction check tests a representative comparison under a
+different association pattern. It also measures the extra computation required.
 
 \section{Contributions to the field}
 
@@ -76,8 +87,10 @@ and larger samples. It also measures the extra computation required.
 
   \item \begin{samepage}\textbf{Empirical contribution.} A reproducible experiment measures
   false positives, detection, usable results and runtime on fixed populations
-  with known MI. It covers \(2\times2\) through \(8\times8\) square tables,
-  rectangular tables, unequal samples and very sparse settings.
+  with known MI. Three controlled studies cover \(2\times2\) through
+  \(16\times16\) square tables, three margin regimes and positive MI
+  targets at equal sample sizes. Estimation diagnostics connect observed
+  test performance to errors in the shared difference and standard error.
   \par
   \end{samepage}
 

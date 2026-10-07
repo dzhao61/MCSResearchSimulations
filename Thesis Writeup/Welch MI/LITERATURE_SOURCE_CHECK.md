@@ -1,5 +1,47 @@
 # Targeted literature and contribution check
 
+## Targeted depth pass: 7 October 2026
+
+Sections 2.4-2.5 now distinguish the MI estimator's sampling variance
+from the sampling variability of its estimated variance, and connect
+Hutcheson's entropy comparison to the cell-and-margin calculation needed
+for MI. The latter explanation follows the thesis's existing entropy
+identity and MI variance derivation; it is not a new claim about a formula
+in Hutcheson's original article. The prior access limitation below remains.
+
+The expanded comparison was checked against the
+[Pan and Wall publisher abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1142),
+which explicitly describes taking variance-estimator variability into
+account in an approximate t/F test. The near-independence discussion was
+checked against [Brillinger's original paper, Section 3.2.2 and Theorem 3.1](https://www.stat.berkeley.edu/~brill/Papers/MIBJPS.pdf),
+which separates non-null first-order MI variance from the quadratic
+independence approximation. The statement that a leading correction can
+leave substantial finite-sample bias was checked against
+[Paninski's original paper](https://sites.stat.columbia.edu/liam/research/pubs/info_est-nc.pdf),
+including its abstract and Sections 4-5. These sources support the theory;
+the particular variance ratios and bias shifts in Chapter 6 are evidence
+from the focused experiment, not numerical results attributed to the papers.
+The active bibliography still contains 35 entries.
+
+## Focused revision: 6 October 2026
+
+The current manuscript has 35 active bibliography entries. The new
+`morris2019` entry was checked against the primary
+[Wiley article](https://onlinelibrary.wiley.com/doi/10.1002/sim.8086):
+Tim P. Morris, Ian R. White and Michael J. Crowther, *Using simulation studies
+to evaluate statistical methods*, Statistics in Medicine 38(11), 2074-2102,
+DOI 10.1002/sim.8086. It supports defining simulation questions, performance
+measures and Monte Carlo uncertainty explicitly; it does not endorse the
+specific MI test. Iterative proportional fitting is no longer used in the
+active experiment, so `deming1940` is no longer cited.
+
+The copying distribution is derived directly from its sampling mechanism
+in Chapter 5 and Appendix B. Berrett and Samworth (2021), Section 3(b), now
+supports only the four-cell construction used in the four-setting supporting
+check, not the principal construction. The prior mathematical and literature
+checks remain relevant to unchanged claims. The tables below record the
+earlier broad-study manuscript and should be read with this updated scope.
+
 Checked 13 September, extended twice on 20 September, and updated for
 method citations on 28 September 2026. This is a source-level check
 of close methodological predecessors, not proof that no earlier paper contains

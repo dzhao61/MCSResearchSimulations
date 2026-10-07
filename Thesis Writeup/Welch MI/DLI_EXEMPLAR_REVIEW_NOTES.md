@@ -2,6 +2,12 @@
 
 Reviewed 4 October 2026.
 
+Scope clarified by the user on 6 October 2026: retain this as a language and
+narrative model only. Exclude it from length, research-depth and academic-
+expectation comparisons because its field and supervisor differ. The page
+allocations below describe the source; they are not benchmarks for the MI
+thesis.
+
 ## 1. Source and scope
 
 Source: Daniel Li, *Central Banks and Private Equity: The Impact of Monetary

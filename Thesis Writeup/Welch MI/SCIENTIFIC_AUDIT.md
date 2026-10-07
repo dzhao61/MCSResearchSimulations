@@ -1,5 +1,70 @@
 # Scientific audit of the active thesis
 
+## Targeted depth checks: 7 October 2026
+
+The depth pass adds explanations, not experiments or changes to either test.
+The independent raw-record audit passes again for all 232 settings, with
+3,944 regenerated input pairs. All 120 Welch-project tests and 27
+DifferentialMI tests pass. The three added regression checks verify:
+
+- the individual-bias subtraction and mean estimated differences at the
+  16x16, different-skew, n=1000 null and two alternatives;
+- Student t distribution cutoffs of 2.277 and 1.991 at the reported median
+  degrees of freedom 8.62 and 78.24, compared with the normal cutoff 1.960;
+- the observed SDs 0.00327, 0.00364 and 0.00361 for the matched 4x4,
+  n=10000, 0.01-nat detection contrast across the three margin regimes.
+
+The exact bias identity is stated separately from its empirical numerical
+evaluation. The explanation retains the measured change in bias across
+alternatives; it does not assume a constant shift. Cutoffs at median degrees
+of freedom are illustrations, not replacements for replicate-specific
+cutoffs. Near independence, the text distinguishes population and plug-in
+first-order variance calculations from observed sampling variance; it does
+not claim an additive causal decomposition of rejection errors.
+
+Chapters 3-4 are byte-identical to their pre-pass sources. Appendix B's only
+change is the missing backslash in its copying equation. Primary-source
+checks for the expanded synthesis are recorded in LITERATURE_SOURCE_CHECK.md.
+The statistical implementations, populations, repetition records and figure
+assets are unchanged. Packaging verification is recorded in SUBMISSION_CHECK.md.
+
+## Focused-study audit: 6 October 2026
+
+The active manuscript now uses the focused study specified in
+`FOCUSED_EXPERIMENT_PLAN.md`, not the earlier broad experiment. All 232
+settings, 68 strictly positive population pairs and 4,640,000 sampled table
+pairs are complete. The two statistical implementations are unchanged.
+
+`results/focused_study/independent_audit.json` passes. The independent audit
+checks every raw chunk checksum and repetition count; reconstructs all
+population margins, MI and variance quantities; regenerates 3,944 actual
+sampled input pairs; and independently recomputes statistics, component and
+combined degrees of freedom, normal and Student t distribution p-values,
+validity masks, rejection denominators, Wilson intervals, paired contrasts,
+bias, variance and degrees-of-freedom summaries. Checkpoint identity and
+batch/resume invariance are covered by tests.
+
+All 117 Welch-project tests and 27 DifferentialMI tests pass. Fifteen new
+tests cover the focused construction, scope, sampling and reporting, including
+CSV selection, unaltered plotted rates, printed figure geometry and label
+bounds. The existing independent mathematical tests continue to verify the
+variance sensitivity and worked calculations. No method code changed.
+
+Chapters 5-8 and Appendices B-C were rewritten around the three controlled
+questions, estimation diagnostics and four-setting construction check.
+The unequal finite-sample bias explanation uses the new population and
+repetition records; old numerical mechanism checks are not transferred to
+this study. Findings about unequal sample sizes, rectangular tables or
+arbitrary association locations are excluded from the new empirical scope.
+
+The manuscript retains 35 active references. Morris, White and Crowther
+(2019), checked against the primary Wiley article, supports question-led
+simulation design and explicit performance measures. Earlier claim/source
+checks remain applicable to the unchanged mathematical and literature
+material. Final build, visual and package checks are in `SUBMISSION_CHECK.md`.
+
+## Historical audit of the earlier broad-study manuscript
+
 Initially checked 13 September 2026 and extended through 28 September 2026 against `chapters_rewrite/`,
 `WelchSatterthwaiteMI/src/welch_differential_mi/welch.py`, the frozen
 `results/thesis_redesign/` outputs, and the primary sources in
