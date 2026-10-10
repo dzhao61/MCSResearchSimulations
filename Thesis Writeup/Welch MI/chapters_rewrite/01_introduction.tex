@@ -67,8 +67,9 @@ over Normal Wald?
 The experiment checks how false positives, detection and validity change
 with sample size, table size, margin regime and association strength.
 Bias and variance diagnostics explain the main patterns, and a small
-alternative-construction check tests a representative comparison under a
-different association pattern. It also measures the extra computation required.
+alternative-construction check examines both a representative comparison
+and the largest table under a different association pattern. It also
+measures the extra computation required.
 
 \section{Contributions to the field}
 
@@ -85,20 +86,22 @@ different association pattern. It also measures the extra computation required.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Empirical contribution.} A reproducible experiment measures
-  false positives, detection, usable results and runtime on fixed populations
-  with known MI. Three controlled studies cover \(2\times2\) through
-  \(16\times16\) square tables, three margin regimes and positive MI
-  targets at equal sample sizes. Estimation diagnostics connect observed
-  test performance to errors in the shared difference and standard error.
+  \item \begin{samepage}\textbf{Empirical contribution.} Three controlled studies compare
+  false positives, detection, validity and runtime across \(2\times2\)
+  through \(16\times16\) tables and three margin regimes.
+  Supporting checks vary construction and sample allocation.
+  Estimation diagnostics explain the shared statistic's errors, and a
+  direct variability check assesses the calculation supplying the new
+  degrees of freedom.
   \par
   \end{samepage}
 
-  \item \textbf{Practical contribution.} Expanded Welch can help when Wald
-  rejects equal MI too often. It can also make an already-low rejection rate
-  lower and return fewer usable results in sparse samples. Changing the
-  reference distribution alone cannot correct errors in the shared MI
-  difference or standard error.
+  \item \textbf{Practical contribution.} The evaluation identifies
+  estimation problems that a cutoff adjustment leaves unresolved. Near
+  independence, the first-order calculations can poorly describe sampling
+  variation. In sparse different-skew tables, unequal MI bias can produce
+  excessive false positives and reverse the estimated ordering among
+  rejections. These sparse-table findings persist under both tested constructions.
 \end{enumerate}
 
 \section{Scope and organisation}

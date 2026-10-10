@@ -5,30 +5,40 @@ This thesis derives an Expanded Welch--Satterthwaite test for comparing
 MI between independent categorical populations. Its mathematical
 contribution is the observation-level sensitivity of the estimated MI
 variance, which determines the degrees of freedom. Its empirical
-contribution is a controlled 232-setting comparison with Normal Wald.
-Three connected studies, estimation diagnostics and a supporting
-construction check explain the observed false positives and detection.
+contribution is a controlled 240-setting comparison with Normal Wald
+that identifies the estimation errors behind the observed false
+positives and detection. Three connected studies are supported by direct
+checks of variance-estimate variability, population construction and
+sample allocation.
 
-Together, these contributions connect the stability of an estimated MI
-variance to an explicit, computable cutoff adjustment. They also show
-why that adjustment must be evaluated alongside the accuracy of the
-MI difference and standard error. This separates three questions that
-can otherwise be confused: whether the effect estimate is centred
-correctly, whether its uncertainty is estimated accurately, and whether
-the reference distribution gives a useful rejection threshold.
+The variance-sensitivity calculation connects the stability of an estimated
+MI variance to an explicit, computable cutoff adjustment. Direct checks
+show close agreement between predicted and observed variability in the
+well-sampled \(4\times4\) setting, but substantial approximation and
+plug-in errors near independence. This identifies where the first-order
+calculation describes the variance estimate's behaviour and where it
+needs further development. The usefulness of the resulting test also
+depends on the accuracy of the MI difference and standard error.
 
 Expanded Welch lowers rejection, but its benefit depends on the errors
 already present in Wald. Near independence it makes conservative rates
 lower still. In larger different-skew tables, unequal MI bias can instead
-produce excessive false positives and an initial decline in detection
-as the true difference grows. The adjustment leaves the shared estimates
-unchanged. Larger samples improve the estimation diagnostics and observed
-performance, and the tests become similar. Normal Wald remains the simpler
-baseline; Expanded Welch is a supplementary check where a closely matched
-calibration study supports its use.
+produce excessive false positives and reverse the estimated direction
+even among rejections. The matched \(16\times16\) construction check
+reproduces both excessive false positives and reversed estimated ordering
+at \(n=1{,}000\). These failures occur under both copying and a four-cell
+transfer, although their numerical rejection rates differ.
+The adjustment leaves the shared estimates unchanged.
+Larger samples improve the estimation diagnostics and observed
+performance, and the tests become similar. These findings do not support
+Expanded Welch as a general replacement for Normal Wald. Normal Wald remains
+the simpler baseline, although sparse estimation can make neither test
+reliable. The main practical requirement is accurate estimation of the
+MI difference and its uncertainty, which a larger cutoff cannot supply.
 
 The evaluation covers four square table sizes, three margin regimes and
-equal sample sizes, primarily under a copying construction. The derivation
+mainly equal sample sizes under a copying construction. A small fixed-total
+check also examines both directions of unequal allocation. The derivation
 requires positive cell probabilities and positive first-order MI variance;
 exact independence needs a different approximation. These conditions
 bound the practical recommendation.
@@ -48,8 +58,8 @@ Near independence, a second-order comparison may be more appropriate
 than refining the first-order reference distribution. A likelihood-ratio
 or resampling method would need validation for equal MI even when the
 complete population tables differ. This would address the approximation
-problem revealed by the association-strength diagnostics. Unequal sample
-sizes, other association
+problem revealed by the association-strength diagnostics. Broader unequal-sample
+comparisons, other association
 patterns and a real-data application would then test the practical reach
 of these conclusions.
 \par

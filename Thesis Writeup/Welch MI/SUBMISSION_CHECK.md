@@ -1,5 +1,139 @@
 # Thesis completion check
 
+## Matched large-table construction check: 10 October 2026
+
+The approved four-setting construction check, contribution alignment and
+examiner-focused claim/evidence review are complete. The extension compares
+16 x 16 different-skew four-cell transfer populations with the four existing
+copying settings at MI pairs (0.02, 0.02) and (0.02, 0.03), each at n=1000
+and 10000. It adds 80000 sampled table pairs without changing either method
+or any original samples. The combined scope is 240 unique settings, 70
+population pairs and 4800000 distinct sampled pairs.
+
+At n=1000, the four-cell null has difference bias 0.03145 nats and rejection
+rates 0.30945 for Wald and 0.29770 for Expanded Welch. At the alternative,
+2493 of 2494 Wald rejections and 2350 of 2351 Expanded Welch rejections have
+the opposite estimated direction. The estimation failure therefore occurs
+under both tested constructions. At n=10000, the four-cell null rates are
+0.04990 and 0.04910, and all alternative rejections have the correct sign.
+Detection differs between constructions, so the manuscript reports agreement
+on the sparse failure rather than identical performance or universal
+robustness. Complete matched results are in Appendix C; Chapter 6 gives
+brief interpretations alongside the main bias and direction findings.
+
+All 179 workspace tests pass (152 Welch-project and 27 DifferentialMI),
+including 11 new construction-check tests. All three independent raw-record
+audits pass. The new runner, reporter, records, scientific construction
+details and reproduction instructions are included in the delivery packages.
+Normal Wald and Expanded Welch remain the only compared methods.
+
+The main PDF has 93 A4 pages: eight front-matter pages, 54 main-text pages,
+27 appendix pages and four bibliography pages. Its main-text diagnostic is
+16172 whitespace-separated pdftotext tokens on PDF pages 9-62, including
+headings, captions, equations and plot labels, not prose-only words.
+All citations/references resolve with no warnings, missing characters or
+overfull/underfull boxes. All 93 pages have rendered visual coverage, with
+the new table, main-text interpretations and construction equations also
+inspected at larger size. No page-count or global typography adjustment was
+made; the supporting table uses locally reduced column spacing to stay
+within the text margins.
+
+The extracted supplement passes all 97 bundled tests (70 Welch-project and
+27 DifferentialMI), with no skips, and all three independent raw-record
+audits. It reproduces all nine table fragments and three evidence JSON files
+byte-for-byte. All eight figure PDFs have identical content after excluding
+creation-date metadata. The isolated source builds to the same 93 pages
+and exactly the same pdftotext output, without warnings or unresolved
+references. ZIP CRC checks pass, and all 54 source-archive members and 9989
+supplement-archive members match their workspace files. Delivery SHA-256
+checks pass, and the named PDF matches main.pdf.
+
+The 43 pre-pass preservation hashes match: older working drafts, original
+method and experiment code, original population/summary records and figure
+assets are unchanged. Chapters 2-4 and Appendix A were not edited. The
+pre-pass manuscript/source is preserved in
+archive/pre_construction_20261010/manuscript.tar. No working draft was rebuilt.
+The named PDF and packages are refreshed. Older records below remain
+historical verification of their respective versions.
+
+## Saved-sample mechanism checks: 10 October 2026
+
+The approved direction check, direct variance-estimate variability check and
+conclusion alignment are implemented. Both analyses revealed interpretable
+findings and are reported in Chapter 6, with complete calculations and two
+supporting tables in Appendices B-C. Neither analysis changes the methods,
+experiment settings, populations or sampled-pair count.
+
+All 168 workspace tests pass (141 Welch-project and 27 DifferentialMI),
+including 13 new mechanism tests. Both independent raw-record audits pass.
+The mechanism reporter recomputes population sensitivities, verifies the
+saved rejection totals and regenerates its two tables and evidence JSON.
+
+The main PDF has 91 A4 pages: eight front-matter pages, 54 main-text pages,
+25 appendix pages and four bibliography pages. Its main-text diagnostic is
+15967 whitespace-separated pdftotext tokens on PDF pages 9-62, including
+headings, captions, equations and plot labels, not prose-only words.
+All citations/references resolve with no warnings, missing characters or
+overfull/underfull boxes. All 91 pages have rendered visual coverage; the
+new tables and main-text interpretations were also inspected at larger size.
+No typography changes were made to adjust length.
+
+Chapters 2-4, Appendix A, all eight figure assets, method code, original
+population/summary records and older working drafts retain their pre-pass
+hashes. The pre-pass manuscript/source is preserved in
+archive/pre_mechanism_20261010/manuscript.tar. No working draft was rebuilt.
+
+The extracted supplement passes all 86 bundled tests (59 Welch-project and
+27 DifferentialMI), with no skips, and both independent raw-record audits.
+It reproduces all eight table fragments and both evidence JSON files
+byte-for-byte. All eight figure PDFs have byte-identical content after
+excluding their creation-date metadata; the original figure assets remain
+unchanged. The isolated source builds to the same 91 pages and exactly the
+same pdftotext output, without warnings or unresolved references. Both ZIP
+CRC checks and all delivery SHA-256 checks pass. The named PDF and packages
+are refreshed. Older dated records below remain historical verification of
+their respective versions.
+
+## Unequal-sample extension: 10 October 2026
+
+The approved fixed-total allocation check and final verification are complete.
+Six comparisons reuse two balanced settings
+and add four unequal settings. The combined evidence is 236 settings, 68
+population pairs and 4720000 distinct sampled table pairs. Neither statistical
+method nor the original population/simulation records changed.
+
+All 155 workspace tests pass (128 Welch-project and 27 DifferentialMI).
+Both independent audits pass, including exact allocation scope, checkpoint
+provenance, copied balanced records and unequal correction/variance/df
+calculations. The new appendix table is generated from audited summaries,
+and tests verify its selection, numerical values and rendered text fragment.
+
+The main PDF has 89 A4 pages: eight front-matter pages, 54 main-text pages,
+23 appendix pages and four bibliography pages. All citations and references
+resolve with no warnings, missing characters or overfull/underfull boxes.
+All pages are covered by rendered visual review, with the final allocation
+table inspected at full size. Its interpretation stays on the same page;
+the original figures, typography and Chapters 2-4 are unchanged.
+
+The source and experimental supplement include the allocation runner,
+reporter, eight tests, full records and replication instructions. The
+extracted supplement passes all 73 bundled tests (46 Welch-project and 27
+DifferentialMI), both independent evidence audits and byte-identical
+regeneration of the allocation table and its evidence JSON. The extracted
+source builds cleanly to 89 pages and exactly the same pdftotext output as
+the workspace PDF. Both ZIP CRC checks and all delivery SHA-256 checks pass.
+The named PDF and packages are refreshed. Older dated checks below remain
+historical records of their respective versions.
+
+The pre-extension manuscript is preserved in
+`archive/pre_unequal_20261010/manuscript.tar`. No working draft has been
+edited or rebuilt. The unversioned source retains SHA-256
+`b0e8aaf52ac589cf6cab551e1cf1ae31536d1a04339010b6f52090e80adeb419`.
+The unversioned PDF and Working Draft.pdf retain
+`ef4d9a7f39101ed0cb4f0624179d5fd32b78bc765e917d5d2d08656f4b260897`;
+Working Draft v2.pdf retains
+`a8f6f47cc3f8b660dc3269d0fdcb2765ff5702bb06949da9deffad4b8f7de932`.
+
 ## Targeted depth pass: 7 October 2026
 
 The approved edits in THESIS_DEPTH_PLAN.md develop the computing motivation,

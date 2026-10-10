@@ -13,8 +13,8 @@ Two methods form the final thesis comparison:
 2. **Expanded Welch** keeps the same statistic but uses MI-specific
    Satterthwaite degrees of freedom.
 
-Simple Welch appears only in supplementary checks; constrained
-likelihood-ratio methods remained exploratory.
+Historical exploratory work also considered Simple Welch and constrained
+likelihood-ratio tests; neither is part of the current thesis comparison.
 
 ## Current focused study (6 October 2026)
 
@@ -32,9 +32,33 @@ raw records, regenerated count inputs, formulas and summaries.
 and tables. The active plan is in
 `../Thesis Writeup/Welch MI/FOCUSED_EXPERIMENT_PLAN.md`.
 
+The 10 October supporting [allocation check](results/unequal_sample_check/)
+adds four unequal-sample settings and reuses two balanced settings. It keeps
+two 4 x 4 different-skew pairs fixed and allocates 2000 observations as
+1000/1000, 400/1600 or 1600/400. Combined evidence has 236 unique settings
+and 4720000 sampled pairs. `experiments/run_unequal_sample_check.py` runs and
+audits the extension; `experiments/report_unequal_sample_check.py` builds its
+appendix table. The main study and statistical methods remain unchanged.
+
+The saved-sample mechanism checks in `experiments/report_focused_mechanisms.py`
+generate two additional appendix tables without sampling new observations.
+They assess the variance-variability formula at six existing null settings
+and estimated direction among rejections at four existing alternatives.
+The evidence distinguishes population and plug-in predictions and retains
+opposite-sign rejections in the original two-sided detection rates.
+
+The supporting [large-table construction check](results/large_table_construction_check/)
+adds four 16 x 16 four-cell settings matched to existing copying populations
+in margins, MI targets and sample sizes. The combined study has 240 unique
+settings, 70 population pairs and 4800000 distinct sampled pairs.
+`experiments/run_large_table_construction_check.py` runs and audits the new
+settings; `experiments/report_large_table_construction_check.py` compares
+all eight matched rows with rejection, validity, bias, variance and estimated
+direction. The original study, allocation results and methods are unchanged.
+
 ## Previous experiment (preserved)
 
-The final thesis experiment is the frozen
+The previous thesis experiment is the preserved
 [`thesis_redesign`](results/thesis_redesign/) run. Its
 [`protocol`](experiments/THESIS_REDESIGN_PROTOCOL.json) and
 [`results`](docs/experiments/THESIS_EXPERIMENTS.md) compare Normal Wald with

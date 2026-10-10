@@ -11,3 +11,10 @@ WelchSatterthwaiteMI/results/supervisor_smoke/
 # Focused-study scalar checkpoints are reproducible; retain the compact summaries.
 WelchSatterthwaiteMI/results/focused_study/records/
 WelchSatterthwaiteMI/results/focused_study/pilot/
+WelchSatterthwaiteMI/results/unequal_sample_check/records/
+WelchSatterthwaiteMI/results/unequal_sample_check/pilot/
+WelchSatterthwaiteMI/results/large_table_construction_check/records/
+WelchSatterthwaiteMI/results/large_table_construction_check/pilot/
+
+# Keep the generated experiment supplement local; it exceeds GitHub's file limit.
+/Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip

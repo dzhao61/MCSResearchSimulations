@@ -1,5 +1,133 @@
 # Scientific audit of the active thesis
 
+## Large-table construction check: 10 October 2026
+
+The four new settings in LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md are complete:
+16 x 16 first-block transfers, different-skew margins m_16(0.7)/m_16(0.8),
+MI pairs (0.02,0.02)/(0.02,0.03) and n=1000/10000. Both methods and the
+original focused/allocation records are unchanged. The combined scope is
+240 unique settings, 70 population pairs and 4800000 distinct sampled pairs.
+
+The extension's independent audit checks all 80000 scalar record pairs and
+regenerates 68 input pairs. It reconstructs exact transfer populations and
+independently checks positivity, margins, MI, variance/sensitivity moments,
+statistics, degrees of freedom, distribution p-values, validity, rejection,
+Wilson intervals, paired method contrasts and diagnostics. The original
+232-setting audit and six-comparison allocation audit also pass.
+
+All 152 Welch-project and 27 DifferentialMI tests pass. Eleven new tests
+protect scope and combined counts, independent population moments, matching
+controls while changing association, fixed-stream batching and resume,
+checkpoint identity, bias/variance summaries, exact saved rejection totals,
+independently classified directions, manuscript values and table generation.
+
+At n=1000 the four-cell null bias is 0.03145199 nats, and the Wald/Expanded
+false-positive rates are 0.30945/0.29770 with full validity. The alternative
+bias is 0.03135981, so its mean corrected difference is approximately
+0.02135981 despite true difference -0.01. Opposite-sign rejection counts
+are 2493/2494 and 2350/2351. The failures therefore persist under the two
+tested constructions, rather than arising only under copying.
+
+At n=10000 the four-cell null rates are 0.04990/0.04910, with bias
+-0.00097242. Alternative direction is correct in every rejection under
+both constructions, but detection differs numerically: Wald 0.69920 under
+copying versus 0.63230 under transfer. Observed alternative SD changes from
+0.00433173 to 0.00468424 nats. The text reports this precision contrast;
+it does not claim identical performance or validate the full falling curve
+under the alternative construction.
+
+Chapter 6 gives the short immediate interpretations; Appendix C contains
+all eight matched rows and numerical discussion. Chapter 5 and Appendix B
+specify the new settings and a cell-wise transfer formula. Contribution
+statements distinguish the automatic rejection reduction from the measured
+calibration, approximation and direction findings. The examiner-focused
+claim/evidence check is in the extension plan. Original method, core,
+population/summary and figure hashes, and older working drafts, are unchanged.
+Final build and package verification are in SUBMISSION_CHECK.md.
+
+## Saved-sample mechanism checks: 10 October 2026
+
+Two additional analyses use existing repetitions, without changing either
+test, any population, the 236-setting scope or the 4720000 distinct sampled
+table pairs. Six different-skew copying null settings compare the observed
+sample variance of Vhat with population tau-squared/n and the mean plug-in
+prediction, separately for P and Q. Every row includes all 20000 finite
+outputs; finite zeros and outputs with invalid tests would be retained.
+Population sensitivities are recomputed independently from the probability
+arrays and checked against the recorded moments.
+
+At 4 x 4, MI 0.02 and n=10000, both predictions are within 2% of observed
+variability. At MI 0.0001 and n=1000, population/observed ratios are 0.047
+and 0.051, while plug-in/observed ratios are 1.950 and 2.093. The 16 x 16
+comparison shows intermediate errors. These diagnose the variance-estimate
+variability calculation, separately from the existing MI sampling-variance
+diagnostics. Agreement does not establish a Student t distribution for the
+complete test statistic.
+
+Four existing 16 x 16 different-skew alternatives classify estimated direction
+among two-sided rejections. At n=1000 and true difference -0.01, opposite-sign
+counts are 2009/2010 for Wald and 1905/1906 for Expanded Welch. At -0.02 they
+are 713/725 and 669/680. At n=10000, no rejection has the opposite sign in
+either comparison. These supplement, rather than redefine, the existing
+two-sided detection rates. Rejection under an alternative is not labelled a
+false positive, and the test is not recast as a test of direction.
+
+Thirteen new tests check sign classification, rejection denominators,
+finite-zero inclusion, independent population moments, paired-output
+bootstrap resampling, exact saved counts, numerical interpretations and
+generated tables/evidence. All 141 Welch-project and 27 DifferentialMI
+workspace tests pass. Both raw-record audits pass. Internal Monte Carlo
+precision checks use 1000 deterministic bootstrap resamples of paired saved
+variance/sensitivity outputs, not new multinomial samples.
+
+Chapter 6 gives short interpretations; Appendices B-C provide calculations
+and two new tables. The abstract, Introduction, practical discussion and
+Conclusion agree on the supported contribution and lack of evidence for a
+general replacement of Wald. Chapters 2-4, Appendix A, the eight figure assets,
+methods, original study records and older working drafts retain their
+pre-pass SHA-256 hashes. Final delivery verification is in SUBMISSION_CHECK.md.
+
+## Unequal-sample check: 10 October 2026
+
+The six fixed-total comparisons in UNEQUAL_SAMPLE_CHECK_PLAN.md are complete:
+4 x 4 copying populations, different-skew margins, MI pairs (0.02, 0.02)
+and (0.02, 0.03), and allocations 1000/1000, 400/1600 and 1600/400.
+The two balanced records are byte-identical copies of the original study.
+Four new settings add 80000 independent sampled pairs; there are no new
+populations or changes to either statistical method. The combined evidence
+has 236 distinct settings, 68 population pairs and 4720000 table pairs.
+
+Both independent audits pass: the unchanged 232-setting study and all six
+allocation comparisons. The latter verifies checkpoint provenance and exact
+design, checks all 120000 scalar record pairs (including reused balance),
+and regenerates 102 input pairs. It independently recalculates the unequal
+variance weights, component/combined degrees of freedom, distribution
+p-values, validity, rejection, Wilson intervals, paired contrasts and
+diagnostics. The shared auditor now accepts explicit scope counts; its
+original defaults and statistical calculations are unchanged.
+
+All 128 Welch-project and 27 DifferentialMI tests pass. Eight new tests
+protect the constant-total scope, unchanged populations, balanced reuse,
+unequal corrections, sample weighting, batching/resume, saved results and
+the generated allocation table. The correction contribution is -0.0084375
+at 400/1600 and +0.0084375 at 1600/400, with remaining bias measured after
+that correction.
+
+All allocation results are finite and valid. Null Wald rates for balance,
+400/1600 and 1600/400 are 0.0394, 0.0463 and 0.0454. Expanded rates are
+0.0331, 0.0306 and 0.02515. Alternative Wald rates are 0.1132, 0.12945
+and 0.05395; Expanded rates are 0.1013, 0.0997 and 0.0340. The generated
+table rounds half-way rate values upward to four decimal places. It reports
+all settings with intervals, validity and estimation diagnostics. The text
+does not treat fixed-total detection differences as comparisons at equal
+achieved false-positive rates or apportion their causal mechanisms.
+
+Chapters 2-4, Appendix A and all eight figure assets are unchanged. Appendix
+B specifies the new settings/corrections; Appendix C contains the full
+comparison; Chapter 6 interprets it briefly. Counts and scope statements
+in the abstract, Introduction, design, limitations and Conclusion agree.
+Build, visual review and package verification are in SUBMISSION_CHECK.md.
+
 ## Targeted depth checks: 7 October 2026
 
 The depth pass adds explanations, not experiments or changes to either test.

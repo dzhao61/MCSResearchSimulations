@@ -123,7 +123,17 @@ remaining difference in biases. This is the finite-sample problem
 highlighted by \citet{paninski2003}: a leading bias correction need not
 remove the error in sparsely sampled information estimates.
 
-On average, 147 of \(P\)'s 256 cells and 183 of \(Q\)'s cells
+The four-cell construction gives a similar failure at the matched
+\(16\times16\), \(n=1{,}000\) null setting. Its difference bias is
+0.03145 nats, and the false-positive rates are 0.3095 for Wald and
+0.2977 for Expanded Welch, with every calculation valid. The shifted
+difference and excessive rejection therefore occur under both tested
+arrangements of association. At \(n=10{,}000\), the four-cell rates
+are 0.0499 and 0.0491, and its difference bias is much smaller.
+Appendix Table~\ref{tab:large-construction-check} gives the full matched
+comparison.
+
+Under copying, an average of 147 of \(P\)'s 256 cells and 183 of \(Q\)'s cells
 are empty. The shifted difference and sparse sampling occur together,
 while the observed individual biases directly identify the source of
 the shift.
@@ -184,8 +194,22 @@ Wald but not under Expanded Welch with 8.62 degrees of freedom; at
 78.24 both would reject. These examples use the reported medians.
 Each sampled table pair uses its own estimated degrees of freedom.
 
-The estimation diagnostics show that the reference distribution is not
-the only issue. At MI 0.0001 and \(n=1{,}000\), mean squared standard
+The calculation underlying those degrees of freedom can also be checked
+directly. Appendix Table~\ref{tab:variance-stability} compares the measured
+variation of \(\Vhat(P)\) across samples with the population prediction
+\(\tau^2(P)/n_P\) and the average plug-in prediction
+\(\widehat\tau^2(P)/n_P\), and repeats the comparison for \(Q\).
+In \(4\times4\) tables at common MI 0.02 and \(n=10{,}000\), both
+predictions are within 2\% of the observed variability. At common MI
+0.0001 and \(n=1{,}000\), the population prediction accounts for only
+about 5\% of that variability, while the average plug-in prediction is
+1.95 times the observed value for \(P\) and 2.09 times for \(Q\).
+Near independence, the first-order calculation and its estimated inputs
+therefore introduce substantial errors in predicting how stable the
+variance estimate is.
+
+Errors also arise in the shared MI statistic. At MI 0.0001 and
+\(n=1{,}000\), mean squared standard
 error is 1.74 times the observed variance. The population first-order
 variance is only about 0.04 times that variance, indicating that the
 first-order approximation is poor this close to independence at this
@@ -268,10 +292,23 @@ biased estimates, not evidence that the two population MI values have
 become more similar. The full-range comparison
 shows rejection rising again at larger differences.
 
+The bias can also reverse the estimated direction of the difference.
+Although \(Q\) has the larger population MI at \(|\Delta|=0.01\),
+2,009 of the 2,010 Wald rejections and 1,905 of the 1,906 Expanded
+Welch rejections have a positive estimated difference, indicating larger
+MI for \(P\). The detection curves count all two-sided rejections;
+they do not show whether the estimated ordering is correct.
+Appendix Table~\ref{tab:rejection-direction} separates these outcomes.
+Under the matched four-cell construction, 2,493 of 2,494 Wald
+rejections and 2,350 of 2,351 Expanded Welch rejections also indicate
+the opposite ordering. Concentrating association in four cells therefore
+does not resolve this estimated-direction error at \(n=1{,}000\).
+
 At \(n=10{,}000\), the \(16\times16\) bias is much smaller, and
 detection increases across the small differences. Wald detects a
 0.01-nat difference at 0.6992 and Expanded Welch at 0.6968; by 0.02
-the rates are 0.9932 and 0.9931. The larger sample therefore improves
+the rates are 0.9932 and 0.9931. Every rejection in these two larger-sample
+comparisons has the correct negative estimated direction. The larger sample therefore improves
 both the null behaviour and the detection pattern. High rejection in
 the smaller sample was not evidence of a more sensitive test.
 
@@ -321,6 +358,20 @@ at 10,000. Appendix~\ref{app:additional-results} gives the rates and
 diagnostics. This agreement supports the representative comparison
 across those two constructions, while the main curves retain their
 specific copying populations.
+
+The unequal-sample check keeps these \(4\times4\) different-skew
+populations fixed and allocates 2,000 observations as \((1000,1000)\),
+\((400,1600)\) or \((1600,400)\). Appendix
+Table~\ref{tab:allocation-check} reports the full comparison. Under equal
+MI, the two unequal allocations give Wald rates 0.0463 and 0.0454;
+Expanded Welch reduces them to 0.0306 and 0.0252. For the 0.01-nat
+difference, giving \(Q\) only 400 observations reduces detection to
+0.0540 and 0.0340, compared with balanced rates 0.1132 and 0.1013.
+Giving \(Q\) 1,600 observations instead gives 0.1295 and 0.0997.
+All calculations are valid. The lower degrees of freedom under imbalance
+strengthen the cutoff adjustment, but Wald's null rates remain below 5\%.
+Unequal samples therefore change detection without creating a benefit
+from that adjustment in this check.
 
 \section{Computation and practical implications}
 

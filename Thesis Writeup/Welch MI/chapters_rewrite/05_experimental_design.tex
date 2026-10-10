@@ -33,7 +33,7 @@ population tables with equal association strength.
 
 \begin{table}[H]
 \centering
-\caption{The three controlled studies and supporting construction check.}
+\caption{The three controlled studies and supporting checks.}
 \label{tab:design-families}
 \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
@@ -43,6 +43,7 @@ Equal MI & Sample size, table size and margins & False positives and usable resu
 Association strength & Common positive MI & Degrees of freedom and near-independence behaviour.\\
 Detection & True MI difference & Detection alongside null calibration.\\
 Construction check & Copying or four-cell transfer & Sensitivity to a different association pattern.\\
+Sample allocation & Relative sample sizes at fixed total & False positives and detection with unequal samples.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -138,7 +139,7 @@ rule as the table grows. Uniform versus same skew instead compares even
 and uneven category frequencies at a fixed size; different skew allows the
 two populations' frequencies to differ as well.
 
-\section{The three studies and construction check}
+\section{The three studies and supporting checks}
 
 \subsection{Sample size, table size and margins}
 
@@ -211,24 +212,48 @@ already excessive.
 
 \subsection{A supporting change in construction}
 
-A four-setting check asks whether representative findings persist when
+An eight-setting check asks whether representative findings persist when
 association is concentrated in four cells. Start from the independence
 table, add the same amount to cells \((1,1)\) and \((2,2)\), and subtract
 it from \((1,2)\) and \((2,1)\). Each affected row and column gains and
 loses the same amount. This transfer follows the sparse construction of
 \citet[Section~3(b)]{berrett2021}.
 
-Use \(4\times4\) different-skew tables at \(n=1{,}000\) and 10,000,
+Use \(4\times4\) and \(16\times16\) different-skew tables at
+\(n=1{,}000\) and 10,000,
 with MI pairs \((0.02,0.02)\) and \((0.02,0.03)\). Match the targets
 and margins to the corresponding copying populations. In a binary table
 the two constructions are equivalent; in a larger table copying changes
 all diagonal and off-diagonal cells, whereas the transfer changes only four.
-This check tests that specific change in association pattern.
+The smaller table checks a representative comparison; the larger table
+examines whether the sparse-table bias and reversed estimated ordering
+persist under a different arrangement of association. Compare rejection,
+validity and estimation diagnostics at every matched setting, including
+estimated direction under the alternative.
 
-The complete design contains 68 population pairs and 232 distinct settings.
+\subsection{A supporting unequal-sample comparison}
+
+A second supporting check changes sample allocation while keeping the
+total number of observations fixed at 2,000. It uses the copying
+\(4\times4\) different-skew populations with MI pairs
+\((0.02,0.02)\) and \((0.02,0.03)\) nats. For each pair, compare
+\((n_P,n_Q)=(1000,1000),(400,1600)\) and \((1600,400)\).
+Reversing the allocation leaves the populations unchanged: \(Q\) retains
+its more uneven margins and has higher MI in the alternative.
+This asks whether the same data budget gives different false-positive
+and detection rates when one population has fewer observations.
+
+Unequal sample sizes change both the bias corrections in
+Equation~\eqref{eq:bias-corrected-difference} and the weights in the
+standard error and degrees of freedom. The check applies the same
+estimators and validity rules to every allocation. Its two balanced
+comparisons are already part of the main studies, so the unequal
+allocations add four settings.
+
+The complete design contains 70 population pairs and 240 distinct settings.
 Shared settings, such as the zero-difference points in the detection study,
 use the same simulation results in each comparison. At 20,000 repetitions
-per setting, the study samples 4,640,000 table pairs.
+per setting, the study samples 4,800,000 table pairs.
 
 \section{Sampling and performance measures}
 

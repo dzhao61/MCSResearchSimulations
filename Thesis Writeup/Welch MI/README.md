@@ -5,8 +5,14 @@
 The focused revision uses the design in
 [FOCUSED_EXPERIMENT_PLAN.md](FOCUSED_EXPERIMENT_PLAN.md): three question-led
 studies, estimation diagnostics and a four-setting construction check.
-All 232 settings and 68 population pairs have been simulated, with 20,000
-table pairs per setting. The two statistical methods are unchanged.
+The original 232 settings and 68 population pairs have been simulated, with
+20,000 table pairs per setting. The bounded extension in
+[UNEQUAL_SAMPLE_CHECK_PLAN.md](UNEQUAL_SAMPLE_CHECK_PLAN.md) adds four unequal
+allocations and reuses two balanced settings. The extension in
+[LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md](LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md)
+adds four matched 16 x 16 four-cell settings: 240 unique settings,
+70 population pairs and 4,800,000 sampled pairs overall. The two statistical
+methods are unchanged.
 
 `main.pdf` is built from `chapters_rewrite/`, `appendices_rewrite/` and
 `frontmatter/`. It presents five lead figures, a diagnostic table, a timing
@@ -14,6 +20,14 @@ table, three focused appendices and the complete 120-setting null table.
 Interpretation accompanies each comparison. The degree is Master of
 Computer Science. The thesis itself contains the scientific reproduction
 details and does not require access to this project.
+
+Two saved-sample analyses directly check the variance-variability prediction
+at six existing null settings and the estimated direction among rejections
+at four existing alternatives. Their appendix tables and main-text readings
+add no populations or sampled table pairs. The generator is
+`report_focused_mechanisms.py`; its evidence includes deterministic
+Monte Carlo precision checks by resampling paired variance/sensitivity
+outputs, not observations.
 
 The goals and writing preferences are in [THESIS_GOAL.md](THESIS_GOAL.md).
 The current verification record is [SUBMISSION_CHECK.md](SUBMISSION_CHECK.md),
@@ -47,6 +61,11 @@ python WelchSatterthwaiteMI/experiments/run_focused_study.py audit
 python WelchSatterthwaiteMI/experiments/run_focused_study.py timing
 python WelchSatterthwaiteMI/experiments/audit_focused_study.py
 python WelchSatterthwaiteMI/experiments/report_focused_study.py
+python WelchSatterthwaiteMI/experiments/run_unequal_sample_check.py audit
+python WelchSatterthwaiteMI/experiments/report_unequal_sample_check.py
+python WelchSatterthwaiteMI/experiments/report_focused_mechanisms.py
+python WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py audit
+python WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py
 ```
 
 Use the pinned packages in `WelchSatterthwaiteMI/requirements-thesis.txt`.
@@ -64,6 +83,11 @@ paired contrasts, estimation diagnostics, timing records and audits.
 Its `records/` directory retains all per-repetition scalar outputs in
 checksum-verified NPZ chunks. These large reproducible checkpoints are
 not versioned; the compact definitions and summaries are retained.
+The separate `results/unequal_sample_check/` directory holds all six allocation
+comparisons, with identical copies of the two original balanced records.
+The separate `results/large_table_construction_check/` directory contains
+the four newly sampled first-block transfer settings. Its reporter compares
+these with the four original copying settings, including estimated direction.
 
 All eight new figure assets are exported at their intended printed width
 of 148 mm with 8 pt ticks and 9 pt main labels. Null figures use matching

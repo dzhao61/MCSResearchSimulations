@@ -1,0 +1,19 @@
+{
+  "all_pass": true,
+  "checks": [
+    "population positivity, total, margins, MI, variance and sensitivity",
+    "all raw checksums and counts",
+    "regenerated count inputs match saved outputs",
+    "independent statistic and df algebra",
+    "normal and Student t distribution p-values",
+    "rejection and validity denominators",
+    "Wilson intervals",
+    "paired indicator contrasts and intervals",
+    "bias and variance masks",
+    "degrees-of-freedom validity mask and percentiles"
+  ],
+  "population_pairs": 2,
+  "regenerated_input_pairs": 68,
+  "settings": 4,
+  "table_pairs": 80000
+}

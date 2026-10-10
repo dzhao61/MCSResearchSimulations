@@ -29,7 +29,7 @@ def independent_interval(successes, total):
     return center-half, center+half
 
 
-def audit(output: Path):
+def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 68):
     identity = json.loads((output / "study_identity.json").read_text())
     if identity["phase"] != "full" or identity["count"] != 20000 or identity["source"] != source_fingerprint():
         raise AssertionError("Unexpected run identity or scientific source changed.")
@@ -38,7 +38,8 @@ def audit(output: Path):
     methods = pd.read_csv(output / "method_results.csv").set_index(["configuration_id", "method", "denominator"])
     paired = pd.read_csv(output / "paired_results.csv").set_index(["configuration_id", "denominator"])
     diagnostics = pd.read_csv(output / "diagnostics.csv").set_index("configuration_id")
-    if len(configs) != 232 or len(populations) != 68 or len(methods) != 232*6 or len(paired) != 232*2:
+    if (len(configs) != expected_settings or len(populations) != expected_pairs
+            or len(methods) != expected_settings*6 or len(paired) != expected_settings*2):
         raise AssertionError("Unexpected summary counts.")
     with np.load(output / "populations.npz", allow_pickle=False) as arrays:
         for config in configs.to_dict("records"):
@@ -136,8 +137,8 @@ def audit(output: Path):
             close(row.degrees_of_freedom_count, good.sum())
             for side in "pq":
                 close(row[f"bias_{side}"], np.mean(records[f"corrected_mi_{side}"])-populations[config["pair_id"]][f"mi_{side}"])
-    result = {"all_pass": True, "settings": 232, "population_pairs": 68,
-              "table_pairs": 4640000, "regenerated_input_pairs": 232*17,
+    result = {"all_pass": True, "settings": expected_settings, "population_pairs": expected_pairs,
+              "table_pairs": expected_settings*20000, "regenerated_input_pairs": expected_settings*17,
               "checks": ["population positivity, total, margins, MI, variance and sensitivity", "all raw checksums and counts",
                          "regenerated count inputs match saved outputs", "independent statistic and df algebra",
                          "normal and Student t distribution p-values", "rejection and validity denominators",

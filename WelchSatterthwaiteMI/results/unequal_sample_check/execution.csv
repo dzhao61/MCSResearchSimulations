@@ -1,0 +1,7 @@
+configuration_id,origin,new_replicates,seconds,replicates,resumed_replicates
+setting_179b0e11ab74dfb7,reused_balanced,0,,,
+setting_2616bb885ef6af6c,new_unequal,20000,0.15145791601389647,20000.0,0.0
+setting_3015072b24080ed1,reused_balanced,0,,,
+setting_3b5f181553121d8b,new_unequal,20000,0.1544895829865709,20000.0,0.0
+setting_5041f0b79ecbed34,new_unequal,20000,0.14874441595748067,20000.0,0.0
+setting_7ee74ccbf51438eb,new_unequal,20000,0.1486758750397712,20000.0,0.0

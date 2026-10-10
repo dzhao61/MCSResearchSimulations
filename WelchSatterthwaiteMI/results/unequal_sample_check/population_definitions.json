@@ -1,0 +1,78 @@
+[
+  {
+    "achieved_mi_p": 0.01999999999999997,
+    "achieved_mi_q": 0.019999999999999813,
+    "column_margin_error_p": 1.1102230246251565e-16,
+    "column_margin_error_q": 1.1102230246251565e-16,
+    "construction": "copying",
+    "endpoint_mi_p": 0.9404479886553265,
+    "endpoint_mi_q": 0.7201248812718097,
+    "k": 4,
+    "margin_p": [
+      0.7,
+      0.10000000000000002,
+      0.10000000000000002,
+      0.10000000000000002
+    ],
+    "margin_q": [
+      0.8,
+      0.06666666666666665,
+      0.06666666666666665,
+      0.06666666666666665
+    ],
+    "mi_p": 0.02,
+    "mi_q": 0.02,
+    "minimum_probability_p": 0.008711370362335458,
+    "minimum_probability_q": 0.0038334064979638543,
+    "normalization_error_p": 0.0,
+    "normalization_error_q": 0.0,
+    "pair_id": "pair_61b60d58d388f6d3",
+    "profile": "different_skew",
+    "row_margin_error_p": 1.1102230246251565e-16,
+    "row_margin_error_q": 1.1102230246251565e-16,
+    "strength_p": 0.12886296376645445,
+    "strength_q": 0.13748353795813242,
+    "variance_p": 0.04746802811398013,
+    "variance_q": 0.051813007715504,
+    "variance_sensitivity_variance_p": 0.2946243819810004,
+    "variance_sensitivity_variance_q": 0.39459625583346136
+  },
+  {
+    "achieved_mi_p": 0.01999999999999997,
+    "achieved_mi_q": 0.029999999999999794,
+    "column_margin_error_p": 1.1102230246251565e-16,
+    "column_margin_error_q": 2.220446049250313e-16,
+    "construction": "copying",
+    "endpoint_mi_p": 0.9404479886553265,
+    "endpoint_mi_q": 0.7201248812718097,
+    "k": 4,
+    "margin_p": [
+      0.7,
+      0.10000000000000002,
+      0.10000000000000002,
+      0.10000000000000002
+    ],
+    "margin_q": [
+      0.8,
+      0.06666666666666665,
+      0.06666666666666665,
+      0.06666666666666665
+    ],
+    "mi_p": 0.02,
+    "mi_q": 0.03,
+    "minimum_probability_p": 0.008711370362335458,
+    "minimum_probability_q": 0.003674727168629594,
+    "normalization_error_p": 0.0,
+    "normalization_error_q": 0.0,
+    "pair_id": "pair_61cec858d6cf1715",
+    "profile": "different_skew",
+    "row_margin_error_p": 1.1102230246251565e-16,
+    "row_margin_error_q": 2.220446049250313e-16,
+    "strength_p": 0.12886296376645445,
+    "strength_q": 0.17318638705834108,
+    "variance_p": 0.04746802811398013,
+    "variance_q": 0.07985821591272496,
+    "variance_sensitivity_variance_p": 0.2946243819810004,
+    "variance_sensitivity_variance_q": 0.6350700855955276
+  }
+]

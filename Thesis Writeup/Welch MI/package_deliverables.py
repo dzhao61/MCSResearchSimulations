@@ -39,6 +39,8 @@ def source_files() -> list[tuple[Path, Path]]:
         "THESIS_REWRITE_PLAN.md",
         "FOCUSED_EXPERIMENT_PLAN.md",
         "THESIS_DEPTH_PLAN.md",
+        "UNEQUAL_SAMPLE_CHECK_PLAN.md",
+        "LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md",
     ]
     files.extend((THESIS / name, Path(name)) for name in root_names)
     for directory in ("frontmatter", "chapters_rewrite", "appendices_rewrite"):
@@ -65,10 +67,17 @@ def supplement_files() -> list[tuple[Path, Path]]:
     ]
     experiments = ["focused_study_core.py", "run_focused_study.py",
                    "report_focused_study.py", "audit_focused_study.py",
-                   "thesis_redesign_core.py", "run_detection_breakdown_sweep.py"]
+                   "thesis_redesign_core.py", "run_detection_breakdown_sweep.py",
+                   "run_unequal_sample_check.py", "report_unequal_sample_check.py",
+                   "report_focused_mechanisms.py",
+                   "run_large_table_construction_check.py",
+                   "report_large_table_construction_check.py"]
     tests = [
         "test_focused_study.py", "test_focused_report.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
+        "test_unequal_sample_check.py",
+        "test_focused_mechanisms.py",
+        "test_large_table_construction_check.py",
     ]
     exact.extend(project / "experiments" / name for name in experiments)
     exact.extend(project / "tests" / name for name in tests)
@@ -78,6 +87,8 @@ def supplement_files() -> list[tuple[Path, Path]]:
         project / "src",
         differential / "src",
         project / "results/focused_study",
+        project / "results/unequal_sample_check",
+        project / "results/large_table_construction_check",
     ):
         for source in clean_files(directory):
             if "pilot" in source.relative_to(directory).parts:

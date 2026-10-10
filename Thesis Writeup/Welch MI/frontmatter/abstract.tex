@@ -15,23 +15,25 @@ and column totals. It supplies the degrees of freedom for a Student
 standard error.
 
 Three controlled studies examine false positives, association strength
-and detection. The design uses \(2\times2,4\times4,8\times8\) and
-\(16\times16\) probability tables, three margin regimes and equal
-sample sizes, with 20,000 sampled table pairs in each of 232 settings.
-Bias and variance diagnostics explain the observed patterns, and a
-small alternative-construction check assesses a representative comparison.
+and detection across \(2\times2,4\times4,8\times8\) and
+\(16\times16\) tables and three margin regimes. Supporting checks
+vary construction and sample allocation. Each of the 240 settings uses
+20,000 sampled table pairs. Diagnostics assess the shared MI estimates
+and the variance-estimate variability calculation.
 
 Expanded Welch lowers rejection, helping where Wald rejects equal MI
 too often but making conservative rates lower still. Near independence,
 small estimated degrees of freedom reinforce this conservatism. In
-\(16\times16\) different-skew tables at \(n=1{,}000\), unequal MI
+\(16\times16\) different-skew copying tables at \(n=1{,}000\), unequal MI
 bias shifts the estimated difference away from zero: false-positive
 rates are 0.2522 for Wald and 0.2402 for Expanded Welch despite full
-validity. At \(n=10{,}000\), the bias is much smaller and the rates
-are 0.0463 and 0.0453. Larger samples also improve detection and reduce
-the difference between methods.
+validity. At small nonzero differences, this bias can also reverse the
+estimated direction among rejections. Excessive false positives and reversed
+ordering also occur under the matched four-cell construction.
+At \(n=10{,}000\), bias is much smaller under both constructions.
+Larger samples also improve detection and reduce the difference between methods.
 
-Changing the reference distribution cannot correct errors in the shared
-MI difference or standard error. Normal Wald remains the simpler baseline
-for this task, with Expanded Welch a potential supplementary check where
-a closely matched calibration study supports its use.
+The variance-sensitivity calculation gives an explicit MI-specific
+adjustment, but the evaluation does not support Expanded Welch as a
+general replacement for Normal Wald. Changing the reference distribution
+cannot correct errors in the shared MI difference or standard error.

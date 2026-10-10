@@ -27,6 +27,10 @@ when population MI is equal. In
 Equation~\eqref{eq:focused-null-bias-shift}, the larger different-skew
 tables produce an estimated difference centred above zero even under
 equal MI. Increasing the rejection cutoff leaves that centre unchanged.
+When \(Q\) has slightly larger population MI, the same bias can make
+the estimated difference indicate larger MI for \(P\), including among
+rejected comparisons. Rejecting equal MI does not ensure that the estimated
+direction is correct.
 Reliable decisions in such settings require attention to the MI
 estimates, not only to which distribution supplies the cutoff.
 
@@ -50,19 +54,13 @@ freedom explain the additional cutoff adjustment. A small p-value is
 evidence against equal MI within the test's approximation; a large
 p-value does not establish that the population MI values are equal.
 
-Normal Wald remains the simpler baseline, but its reliability also
-depends on the population setting. Expanded Welch can provide a
-supplementary comparison where simulations representative of the
-application show excessive Wald rejection and frequent usable Expanded
-Welch results. Such an assessment should match the category definitions,
-sample sizes and margin patterns, and vary plausible association
-strengths. Equal-MI pairs with different tables are important when
-the application's populations may differ. The assessment should compare
-false positives, detection and usable results, rather than selecting
-the method with fewer rejections alone. The present study supplies
-controlled examples of this reasoning, not a universal sample-size
-threshold. Method choice should be set before examining the observed
-p-values.
+Normal Wald remains the simpler baseline, but neither method is reliable
+in every studied setting. An application-specific comparison should match
+category definitions, sample sizes and margin patterns, and include
+plausible association strengths and distinct equal-MI tables. Judge Expanded
+Welch by whether its lower rejection brings excessive false positives closer
+to 5\% without an unacceptable loss of detection or usable results. Choose
+the method using that comparison before examining the observed p-values.
 
 The main obstacle is statistical rather than computational. An Expanded
 Welch call takes approximately 1.7--1.8 times as long as a Wald call in
@@ -84,8 +82,9 @@ untested populations.
 The primary populations use a copying mixture with identical row and
 column margins within each population. This gives a clear way to vary
 association without changing category frequencies. The four-cell check
-supports the direction of the method comparison at its four matched
-settings, while showing that detection can still change numerically.
+supports the representative \(4\times4\) method comparison and
+reproduces the main \(16\times16\) estimation failures at its matched
+settings. Detection still changes numerically with the construction.
 
 Copying favours matching categories in both
 populations, whereas the four-cell transfer concentrates association
@@ -97,15 +96,18 @@ equal MI can differ. A broader assessment would vary association
 locations as well as their strengths and margins, including unequal
 row and column margins within a population.
 
-Equal sample sizes simplify the comparison by making the two leading
+Equal sample sizes simplify the main studies by making the two leading
 bias corrections cancel in \(\Deltahat\). The remaining difference
 bias in the experiment consequently comes from estimation errors not
 removed by that common correction. With unequal sample sizes, the
 corrections no longer cancel, and the two contributions to the standard
 error and degrees of freedom can become less balanced. The derivation
-allows unequal sample sizes, but the experiment does not assess how well
-those additional adjustments perform. That requires a separate sample
-allocation study.
+allows unequal sample sizes. The supporting fixed-total check assesses
+both allocation directions in two \(4\times4\) different-skew pairs.
+There, imbalance changes bias, uncertainty and detection, while the
+Expanded Welch adjustment lowers already-conservative null rates.
+This extends the comparison beyond equal samples, but a wider allocation
+study would be needed for other table sizes and population structures.
 
 The sampling assumptions also limit transfer to other applications.
 Paired observations would require a covariance term in the variance of

@@ -11,6 +11,19 @@ experiment family. The previous manuscript is preserved in
 archive/pre_focused_20261006/ and the earlier simulation archives remain
 intact. Replacement evidence is in WelchSatterthwaiteMI/results/focused_study/.
 
+The bounded extension agreed on 10 October is specified separately in
+[UNEQUAL_SAMPLE_CHECK_PLAN.md](UNEQUAL_SAMPLE_CHECK_PLAN.md). It reuses two
+balanced settings and adds four unequal-sample settings, giving 236 unique
+settings overall. The original 232-setting populations, records and plan
+below are unchanged; the new check does not restore the broad imbalance grid.
+
+The subsequent bounded construction extension is specified in
+[LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md](LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md).
+It adds four matched 16 x 16 first-block transfer settings to check the
+strongest sparse-table finding. The combined study has 240 unique settings,
+70 population pairs and 4800000 distinct sampled pairs. The original design
+below and both methods remain unchanged; no third comparator is added.
+
 ## 1. Purpose and narrative
 
 Evaluate when Expanded Welch provides a useful change to Normal Wald for

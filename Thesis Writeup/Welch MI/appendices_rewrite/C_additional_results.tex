@@ -84,6 +84,45 @@ discrepancy at \(16\times16\) is larger than that at \(4\times4\).
 \input{figures_rewrite/focused_large_sample_table}
 \end{table}
 
+\medskip
+\thesisminiheading{Variability of the estimated MI variance.}
+
+Table~\ref{tab:variance-stability} checks the additional calculation
+that supplies Expanded Welch's degrees of freedom. Observed variability
+is the sample variance of \(\Vhat(P)\) across repetitions, with the
+corresponding calculation for \(Q\). Pop./obs. divides
+\(\tau^2(P)/n_P\) by this observed value; plug-in/obs. instead uses
+the average \(\widehat\tau^2(P)/n_P\). The predictions are defined
+in Equation~\eqref{eq:variance-stability-predictions}. The six selected
+settings use different-skew copying populations, and each row includes
+all 20,000 finite outputs.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Predicted and observed variability of the estimated MI variance.}
+\label{tab:variance-stability}
+\input{figures_rewrite/focused_stability_table}
+\end{table}
+
+At \(4\times4\), common MI 0.02 and \(n=10{,}000\), both
+predictions are close to observed variability. At common MI 0.05 and
+\(n=1{,}000\), the ratios are also close to one. Near independence
+at common MI 0.0001, however, the population first-order prediction
+accounts for about 5\% of observed variability, while the plug-in
+prediction is approximately twice that variability. Thus the
+approximation at the true table and substitution of empirical
+probabilities produce different errors.
+
+The larger table gives another intermediate case. At \(16\times16\)
+and \(n=1{,}000\), the population predictions account for approximately
+72--77\% of observed variability, while the plug-in predictions are
+1.70--1.82 times that variability. At \(n=10{,}000\), the population
+ratios are close to one, but the plug-in predictions remain about 10\%
+too large. These comparisons assess the sampling approximation used to
+calculate degrees of freedom. The usefulness of the resulting cutoff
+also depends on the shared MI statistic, as the main results demonstrate.
+
 \section{Detection over the full difference range}
 
 Figures~\ref{fig:focused-detection-full} and
@@ -122,7 +161,36 @@ a smaller difference between methods says little about their relative
 performance for weaker effects; the enlarged main figures show those
 effects more clearly.
 
+\medskip
+\thesisminiheading{Estimated direction among rejections.}
+
+Table~\ref{tab:rejection-direction} examines the \(16\times16\)
+different-skew copying populations at two small MI differences.
+\(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), so the true signed
+difference is negative. Opposite-sign rejections have
+\(\Deltahat>0\), indicating larger estimated MI for \(P\).
+Every setting has 20,000 repetitions and full validity; the opposite-sign
+count is a subset of the rejection count, not a percentage of all samples.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Estimated direction among two-sided rejections.}
+\label{tab:rejection-direction}
+\input{figures_rewrite/focused_direction_table}
+\end{table}
+
+At \(n=1{,}000\) and a 0.01-nat difference, only one rejection
+for each method has the correct estimated direction. At 0.02 nats,
+713 of 725 Wald rejections and 669 of 680 Expanded Welch rejections
+still have the opposite sign. The larger cutoff reduces rejection
+without changing any estimated difference. At \(n=10{,}000\), all
+rejections in these comparisons have the correct negative sign,
+accompanying the much smaller bias and improved detection.
+
 \section{Four-cell construction check}
+
+\thesisminiheading{Representative \(4\times4\) comparison.}
 
 Table~\ref{tab:construction-check} compares the copying and four-cell
 populations at matched \(4\times4\) different-skew margins and MI
@@ -143,8 +211,103 @@ The same qualitative method comparison persists: at \(n=1{,}000\),
 Expanded Welch lowers an already-low null rate and reduces detection;
 at 10,000 its effect is smaller. The construction still changes the
 numerical detection rate. For the 0.01-nat difference at \(n=10{,}000\),
-Wald detects at 0.7962 under copying and 0.7865 under the four-cell
+Wald detects at 0.7962 under copying and 0.7864 under the four-cell
 transfer. The difference, 0.0098, has approximate independent-stream
 95\% interval [0.0018, 0.0177]. Thus the check supports the direction
 of the method comparison at these settings, not identical performance
 under every association pattern.
+
+\medskip
+\thesisminiheading{Sparse \(16\times16\) comparison.}
+
+Table~\ref{tab:large-construction-check} tests the larger-table failure
+under the same two constructions. Both use different-skew margins
+\(m_{16}(0.7)\) for \(P\) and \(m_{16}(0.8)\) for \(Q\), with
+the MI targets and sample sizes matched. Every setting has 20,000
+repetitions and full validity. Rejection brackets give Wilson 95\%
+intervals. Bias and its Monte Carlo standard error (MCSE), and observed
+SD, describe the corrected MI difference in nats. Est./obs. divides
+mean squared standard error by observed sampling variance.
+Opposite W/E reports the percentage of Wald and Expanded Welch
+rejections whose estimated difference has the opposite sign to the
+population difference. It applies only to the nonzero alternative.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Matched \(16\times16\) comparisons under two constructions.}
+\label{tab:large-construction-check}
+\setlength{\tabcolsep}{4.5pt}
+\input{figures_rewrite/focused_large_construction_table}
+\end{table}
+
+At \(n=1{,}000\), the four-cell null has difference bias
+0.03145 nats and false-positive rates 0.3095 for Wald and 0.2977 for
+Expanded Welch. Both rates exceed those under copying, where the
+corresponding bias is 0.02960 nats. For the 0.01-nat alternative,
+the four-cell bias of 0.03136 moves the mean estimated difference to
+approximately \(-0.01+0.03136=0.02136\) nats. This is positive
+although \(Q\) has larger population MI. Opposite-sign counts are
+2,493 of 2,494 Wald rejections and 2,350 of 2,351 Expanded Welch
+rejections; only one rejection for each method has the correct sign.
+The sparse-table bias and reversed estimated ordering therefore persist
+under both tested constructions.
+
+At \(n=10{,}000\), the four-cell null rates are 0.0499 and 0.0491,
+with much smaller difference bias. Every rejection at the alternative
+has the correct estimated direction under either construction.
+Detection nevertheless differs: Wald gives 0.6992 under copying and
+0.6323 under the four-cell transfer. Their biases are similar, but the
+observed SD rises from approximately 0.00433 to 0.00468 nats, making
+the same population difference harder to detect under the transfer.
+Changing association arrangement thus changes precision even when
+table size, margins and MI targets match. The agreement concerns the
+sparse estimation failure and the small effect of the cutoff adjustment,
+rather than identical performance across constructions.
+
+\section{Unequal sample sizes at a fixed total}
+\label{sec:allocation-check}
+
+Table~\ref{tab:allocation-check} compares three allocations of 2,000
+observations between the same copying \(4\times4\) populations.
+The row and column margins are \((0.7,0.1,0.1,0.1)\) in \(P\) and
+\((0.8,0.2/3,0.2/3,0.2/3)\) in \(Q\). Both MI values are 0.02 nats
+under the null; under the alternative, \(I(Q)=0.03\) and
+\(\Delta=-0.01\) nats. Each allocation uses 20,000 independent
+table pairs, and the balanced results are the corresponding main-study
+comparisons. Different allocations use independent repetitions, whereas
+the two methods receive the same samples within each allocation.
+
+Rejection divides valid rejections by all repetitions; brackets give
+pointwise Wilson 95\% intervals. Valid W/E gives the valid-result
+percentages for Wald and Expanded Welch. Difference bias and observed
+SD are in nats. Est./obs. compares mean squared standard error with
+observed sampling variance, and DF is the combined degrees of freedom.
+All estimates and test results are finite and valid in these comparisons.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Rejection and estimation diagnostics at fixed total sample size.}
+\label{tab:allocation-check}
+\input{figures_rewrite/focused_allocation_table}
+\end{table}
+
+With equal MI, Wald rejects at 0.0394 for balanced samples and at 0.0463
+and 0.0454 for the two unequal allocations. Expanded Welch lowers these
+rates to 0.0331, 0.0306 and 0.0252, respectively. The imbalance therefore
+does not create excessive Wald rejection in these settings, and the
+adjustment makes already-low rates lower. The null median degrees of
+freedom fall from 35.70 under balance to 14.42 and 10.97, increasing the
+cutoff from the Student \(t\) distribution.
+
+For the 0.01-nat difference, giving \(Q\) only 400 observations lowers
+detection for both methods. The observed SD rises from 0.01167 nats
+under balance to 0.01610; with \(P\) limited to 400, it is 0.01431.
+Reversing the allocation also changes the remaining difference bias:
+\(+0.00073\) nats when \(P\) has fewer observations and
+\(-0.00143\) when \(Q\) has fewer. The null biases have the same
+signs, with Monte Carlo standard error about 0.00010 in either case.
+Mean squared standard error exceeds observed variance in each comparison.
+Allocation therefore changes the shared estimates as well as the cutoff
+adjustment.

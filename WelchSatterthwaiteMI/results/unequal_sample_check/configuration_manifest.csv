@@ -1,0 +1,7 @@
+configuration_id,pair_id,k,profile,mi_p,mi_q,construction,n_p,n_q,delta,replicates
+setting_179b0e11ab74dfb7,pair_61cec858d6cf1715,4,different_skew,0.02,0.03,copying,1000,1000,-0.01,20000
+setting_2616bb885ef6af6c,pair_61b60d58d388f6d3,4,different_skew,0.02,0.02,copying,1600,400,0.0,20000
+setting_3015072b24080ed1,pair_61b60d58d388f6d3,4,different_skew,0.02,0.02,copying,1000,1000,0.0,20000
+setting_3b5f181553121d8b,pair_61cec858d6cf1715,4,different_skew,0.02,0.03,copying,400,1600,-0.01,20000
+setting_5041f0b79ecbed34,pair_61cec858d6cf1715,4,different_skew,0.02,0.03,copying,1600,400,-0.01,20000
+setting_7ee74ccbf51438eb,pair_61b60d58d388f6d3,4,different_skew,0.02,0.02,copying,400,1600,0.0,20000
