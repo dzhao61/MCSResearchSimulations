@@ -59,8 +59,9 @@ and uses that calculation to obtain degrees of freedom for Expanded Welch.
 
 The Student \(t\) distribution gives Expanded Welch a larger rejection
 cutoff than Normal Wald, so it rejects less often. This can reduce false
-positives, but it can also reduce the ability to detect genuine MI
-differences. The evaluation therefore examines both outcomes, together
+positives, but it can also reduce statistical power: the probability of
+rejecting equal MI when the population MI values genuinely differ.
+The evaluation therefore examines both outcomes, together
 with how often each method returns a usable p-value, to determine whether
 the larger cutoff offers a useful improvement.
 
@@ -71,7 +72,7 @@ The thesis addresses two research questions:
   \item How can the sampling variability of the estimated MI variance
   determine MI-specific degrees of freedom for Expanded Welch?
   \item Under what conditions does Expanded Welch improve false-positive
-  rates relative to Normal Wald, and what are the costs in detection,
+  rates relative to Normal Wald, and what are the costs in power,
   usable results and computation?
 \end{enumerate}
 
@@ -97,7 +98,7 @@ results.
   \end{samepage}
 
   \item \begin{samepage}\textbf{Empirical contribution.} Three controlled studies compare
-  false positives, detection and the frequency of usable results across
+  false positives, power and the frequency of usable results across
   four table sizes and three category-frequency regimes. Diagnostics
   assess errors in the MI difference and its standard error, and directly
   check the predicted variability of the MI variance estimate. Supporting

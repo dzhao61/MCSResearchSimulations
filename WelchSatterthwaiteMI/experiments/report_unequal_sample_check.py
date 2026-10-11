@@ -47,7 +47,7 @@ def table_text(rows):
              r"\midrule"]
     for target in (.02, .03):
         title = (r"\(I(P)=I(Q)=0.02\): false positives" if target == .02 else
-                 r"\(I(P)=0.02,\ I(Q)=0.03\): detection")
+                 r"\(I(P)=0.02,\ I(Q)=0.03\): power")
         lines.append(r"\multicolumn{4}{@{}l}{"+title+r"}\\")
         for row in rows:
             if row["mi_q"] != target:

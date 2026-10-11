@@ -5,6 +5,30 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Statistical power terminology (11 October 2026):** The user approves the
+terminology change but does not want a glossary. Introduce statistical power
+as the probability of rejecting equal MI when the population MI values
+genuinely differ, then use power in subsequent comparisons. Use "Power to
+detect MI differences" for the main experimental headings. Retain rejection
+rate for curves and captions that include both equal-MI and nonzero-difference
+settings: the zero point estimates false positives, not power. Keep the
+estimated-direction diagnostics distinct from power. Update the two table
+headings and their reporting templates without changing calculations or data.
+Preserve historical working drafts and do not rerun experiments.
+All 217 tests pass and the active build is clean. The PDF has 102 pages
+with 59 main-text pages; verification is recorded in SUBMISSION_CHECK.md.
+
+**Specific statistical terminology (11 October 2026):** Replace the four
+remaining manuscript uses of "inference" with the task actually meant:
+tests in the thesis title, the Normal Wald test, MI uncertainty and
+comparisons, and methods for comparing an MI index across groups and periods.
+Prefer these specific names to the broad umbrella term when describing this
+study. Keep original publication titles in the bibliography unchanged.
+Keep the PDF's internal title metadata consistent with its visible title.
+The scientific content and historical working drafts are preserved.
+All 217 tests pass and the active build is clean. The PDF remains 101 pages
+with 58 main-text pages; verification is recorded in SUBMISSION_CHECK.md.
+
 **Lecture-aligned terminology pass (11 October 2026):** Define MI as average
 uncertainty reduction and describe the feature--label comparison in terms of
 the information provided about the label. Use population MI or common
@@ -245,7 +269,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (11 October lecture terminology pass) | 58 pages | 101 pages |
+| Current focused Welch-MI manuscript (11 October statistical power terminology pass) | 59 pages | 102 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -258,9 +282,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,649
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-66
-(printed pages 1-58). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 17,685
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-67
+(printed pages 1-59). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Last verified chapter allocation
@@ -277,7 +301,7 @@ preserving these lengths.
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 7 | Explain copying across table sizes, the three controlled studies, diagnostics, construction and allocation checks, sampling and evaluation; put complete reproduction details in Appendix B. |
-| 6. Experimental Results and Discussion | 13 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. Include the self-contained shopping application. |
+| 6. Experimental Results and Discussion | 14 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. Include the self-contained shopping application. |
 | 7. Implications and Limitations | 3 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
 | 8. Conclusion | 2 | Restate contributions and impact, limitations, future work and the resulting recommendation. |
 
@@ -434,6 +458,10 @@ comparisons. Retain "association" for relationships and patterns. Define
 local MI, alphabet sizes and undersampling alongside the existing academic
 terms, without adding unrelated information-dynamics concepts or changing
 the equal-MI hypothesis into an independence test.
+Prefer specific tasks such as statistical testing, MI comparison or
+estimating uncertainty to the broad word "inference" in this manuscript.
+Choose the wording by context; retain original publication titles in citations
+and the bibliography.
 
 Use TEEL as a flexible guide to paragraph structure: establish one main idea,
 support it with evidence or an equation, explain why that support matters,

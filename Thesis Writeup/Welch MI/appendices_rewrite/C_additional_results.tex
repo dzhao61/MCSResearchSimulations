@@ -227,11 +227,11 @@ This check supports its use for improving the identified sparse
 differences, while showing that the gain does not extend to every
 performance measure or sample size.
 
-\section{Detection over the full difference range}
+\section{Power over the full MI-difference range}
 
 Figures~\ref{fig:focused-detection-full} and
 \ref{fig:focused-margin-detection-full} show the same settings as the
-main detection figures, extending the horizontal range through 0.2 nats.
+main power comparisons, extending the horizontal range through 0.2 nats.
 They retain the zero-difference points and Wilson interval bands.
 The population targets are \(I(P)=0.02\) and
 \(I(Q)=0.02+|\Delta|\); every result is valid in these settings.
@@ -239,11 +239,11 @@ The population targets are \(I(P)=0.02\) and
 \begin{figure}[H]
 \centering
 \includegraphics{focused_detection_sizes_full.pdf}
-\caption{Full-range detection under different-skew margins.}
+\caption{Full-range rejection rates under different-skew margins.}
 \label{fig:focused-detection-full}
 \end{figure}
 
-At \(n=1{,}000\), detection of a 0.05-nat difference falls with table
+At \(n=1{,}000\), power for a 0.05-nat difference falls with table
 size: Wald rates are 0.9642, 0.9079, 0.7699 and 0.0471 from
 \(2\times2\) through \(16\times16\). The last curve first falls
 from its high null rate, then rises to 0.6297 at 0.1 nats and 0.9997
@@ -254,7 +254,7 @@ detect every simulated 0.05-nat difference at all four sizes.
 \begin{figure}[H]
 \centering
 \includegraphics{focused_detection_margins_full.pdf}
-\caption{Full-range detection across \(4\times4\) margin regimes.}
+\caption{Full-range rejection rates across \(4\times4\) margin regimes.}
 \label{fig:focused-margin-detection-full}
 \end{figure}
 
@@ -290,7 +290,7 @@ for each method has the correct estimated direction. At 0.02 nats,
 still have the opposite sign. The larger cutoff reduces rejection
 without changing any estimated difference. At \(n=10{,}000\), all
 rejections in these comparisons have the correct negative sign,
-accompanying the much smaller bias and improved detection.
+accompanying the much smaller bias and improved power.
 
 \section{Four-cell construction check}
 
@@ -312,10 +312,10 @@ Wald and Expanded Welch receive the same table pairs.
 \end{table}
 
 The same qualitative method comparison persists: at \(n=1{,}000\),
-Expanded Welch lowers an already-low null rate and reduces detection;
+Expanded Welch lowers an already-low null rate and reduces power;
 at 10,000 its effect is smaller. The construction still changes the
-numerical detection rate. For the 0.01-nat difference at \(n=10{,}000\),
-Wald detects at 0.7962 under copying and 0.7864 under the four-cell
+estimated power. For the 0.01-nat difference at \(n=10{,}000\),
+Wald's estimated power is 0.7962 under copying and 0.7864 under the four-cell
 transfer. The difference, 0.0098, has approximate independent-stream
 95\% interval [0.0018, 0.0177]. Thus the check supports the direction
 of the method comparison at these settings, not identical performance
@@ -360,7 +360,7 @@ under both tested constructions.
 At \(n=10{,}000\), the four-cell null rates are 0.0499 and 0.0491,
 with much smaller difference bias. Every rejection at the alternative
 has the correct estimated direction under either construction.
-Detection nevertheless differs: Wald gives 0.6992 under copying and
+Power nevertheless differs: Wald gives 0.6992 under copying and
 0.6323 under the four-cell transfer. The MI difference biases under
 copying and the four-cell transfer are similar, but the
 observed SD rises from approximately 0.00433 to 0.00468 nats, making
@@ -407,7 +407,7 @@ degrees of freedom fall from 35.70 under balance to 14.42 and 10.97, increasing 
 cutoff from the Student \(t\) distribution.
 
 For the 0.01-nat difference, giving \(Q\) only 400 observations lowers
-detection for both methods. The observed SD rises from 0.01167 nats
+power for both methods. The observed SD rises from 0.01167 nats
 under balance to 0.01610; with \(P\) limited to 400, it is 0.01431.
 Reversing the allocation also changes the remaining difference bias:
 \(+0.00073\) nats when \(P\) has fewer observations and

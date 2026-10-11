@@ -5,7 +5,7 @@ The experiment evaluates whether Expanded Welch's larger rejection cutoff
 improves performance compared with Normal Wald. It first measures false
 positives when the two populations have equal MI, then examines the
 estimation errors behind those results,
-and finally measures detection when MI differs. Bias and variance diagnostics
+and finally estimates power when MI differs. Bias and variance diagnostics
 link rejection rates to errors in the estimated MI difference and standard
 error. Each comparison starts from fixed joint probability tables with
 known MI values, so the
@@ -16,7 +16,7 @@ true difference is available when assessing the sampled estimates.
 Three questions organise the study: how sample size and population structure
 affect false positives, how common population MI changes Expanded Welch's
 estimated degrees of freedom, and how its larger rejection cutoff affects
-detection of a true MI difference. Table~\ref{tab:design-families}
+power to detect a true MI difference. Table~\ref{tab:design-families}
 summarises the comparisons. Holding the other stated factors fixed makes
 each change easier to interpret. Specifying the questions, populations,
 methods and performance measures follows the simulation-design guidance of
@@ -44,9 +44,9 @@ Study & Factor varied & Main purpose\\
 \midrule
 Equal MI & Sample size, table size and margins & False positives and usable results.\\
 Population MI & Common positive MI & Degrees of freedom and near-independence behaviour.\\
-Detection & True MI difference & Detection alongside null calibration.\\
+Power & True MI difference & Power alongside null calibration.\\
 Construction check & Copying or four-cell transfer & Sensitivity to a different association pattern.\\
-Sample allocation & Relative sample sizes at fixed total & False positives and detection with unequal samples.\\
+Sample allocation & Relative sample sizes at fixed total & False positives and power with unequal samples.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -101,7 +101,7 @@ For \(Q\), use \(a=(0.8,0.2)\) and a copying probability of approximately
 \end{equation}
 Both joint distributions have positive MI, and their true difference has
 magnitude 0.01 nats. Sampling changes the estimated MI values, but the
-population difference used to assess detection remains 0.01 nats.
+population difference used to assess power remains 0.01 nats.
 
 \medskip
 \thesisminiheading{Table sizes and margin regimes.}
@@ -189,7 +189,7 @@ targets show whether the same tests behave differently away from that
 region. Two sample sizes show whether the pattern across MI values
 persists when more data are available.
 
-\subsection{Detection of a true MI difference}
+\subsection{Power to detect MI differences}
 
 The third study fixes \(I(P)=0.02\) and sets \(I(Q)=0.02+|\Delta|\),
 using
@@ -200,15 +200,15 @@ using
 \end{equation}
 At \(n=1{,}000\) and 10,000, compare all four sizes under different skew,
 then all three margin regimes at \(4\times4\). Keeping the zero-difference
-point in each curve makes detection interpretable alongside false positives.
+point in each curve makes power interpretable alongside false positives.
 The signed thesis parameter is \(\Delta=I(P)-I(Q)\), which is negative
 when \(Q\) has the larger MI; figures use its known nonnegative magnitude.
 
-The two sample sizes connect detection to the null study at the same
+The two sample sizes connect power to the null study at the same
 population settings. Keeping \(P\)'s MI fixed makes each curve start
 from a common baseline as \(Q\)'s MI increases. Small differences show
 the range in which the methods may disagree; the larger differences
-show whether detection eventually becomes high. Reading each curve
+show whether power eventually becomes high. Reading each curve
 from its zero-difference point prevents high rejection under alternatives
 from being mistaken for useful sensitivity when false positives are
 already excessive.
@@ -244,7 +244,7 @@ total number of observations fixed at 2,000. It uses the copying
 Reversing the allocation leaves the populations unchanged: \(Q\) retains
 its more uneven margins and has higher MI in the alternative.
 This asks whether the same data budget gives different false-positive
-and detection rates when one population has fewer observations.
+rates and power when one population has fewer observations.
 
 Unequal sample sizes change both the bias corrections in
 Equation~\eqref{eq:bias-corrected-difference} and the weights in the
@@ -254,7 +254,7 @@ comparisons are already part of the main studies, so the unequal
 allocations add four settings.
 
 The complete design contains 70 population pairs and 240 distinct settings.
-Shared settings, such as the zero-difference points in the detection study,
+Shared settings, such as the zero-difference points in the power study,
 use the same simulation results in each comparison. At 20,000 repetitions
 per setting, the study samples 4,800,000 table pairs.
 
@@ -273,8 +273,8 @@ All settings use a two-sided 5\% test. The primary rejection rate is
  \frac{\#\{\text{valid p-values no larger than }0.05\}}{20{,}000}.
  \label{eq:unconditional-rate}
 \end{equation}
-At equal MI this estimates false positives; when MI differs it measures
-detection. Invalid calculations contribute no rejection but are not
+At equal MI this estimates the false-positive rate; when MI differs it
+estimates power. Invalid calculations contribute no rejection but are not
 evidence for equal MI. The valid-result frequency is therefore reported
 alongside rejection. Rates restricted to method-valid or common-valid
 samples and their denominators are specified in

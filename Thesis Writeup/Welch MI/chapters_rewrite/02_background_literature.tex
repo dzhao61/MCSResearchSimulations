@@ -480,7 +480,7 @@ differences between two MI values. The question in this thesis is whether two
 populations have the same MI, \(I(P)=I(Q)\). Their cell probabilities may
 differ even when their MI values are equal.
 
-\thesisminiheading{Normal Wald inference.}
+\thesisminiheading{The Normal Wald test.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with a standard normal distribution
@@ -579,7 +579,7 @@ The larger cutoff leaves that variance error unchanged and makes an
 already-conservative test reject less often.
 
 \medskip
-\thesisminiheading{Prior MI inference and related comparisons.}
+\thesisminiheading{Previous work on MI uncertainty and comparisons.}
 
 \citet{roulston1999} derives entropy and MI error estimates
 using error propagation and examines them numerically. These calculations
@@ -629,8 +629,8 @@ both the weights and the pointwise-MI values whose weighted variance is
 being estimated. Thus Hutcheson supplies a close comparison framework,
 while the cell and margin derivatives supply the MI-specific inputs.
 
-In a segregation application, \citet{mora2009} develop inference for an MI index and discuss
-pairwise comparisons across groups and periods; the later peer-reviewed account
+In a segregation application, \citet{mora2009} develop methods for comparing
+an MI index across groups and periods; the later peer-reviewed account
 places that MI index within the wider segregation literature \citep{mora2011}.
 By contrast, \citet{guha2014} test whether two continuous distributions are identical
 using MI between pooled observations and their sample labels.
@@ -693,7 +693,7 @@ A new observation changes the empirical cell probabilities, row and column
 totals, and pointwise MI values. The remaining calculation is how these
 changes affect the estimated MI variance. This thesis uses that calculation
 to choose the degrees of freedom for a Student \(t\) distribution, then
-compares Expanded Welch's false-positive and detection rates with Normal
+compares Expanded Welch's false-positive rates and power with Normal
 Wald's.
 That evaluation also needs to examine the shared estimates themselves.
 \citet{paninski2003} shows that finite-sample information estimates can

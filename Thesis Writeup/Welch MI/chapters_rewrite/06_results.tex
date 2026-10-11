@@ -3,8 +3,8 @@
 
 The results follow the three experimental questions: when the tests give
 reliable false-positive rates, how common population MI affects Expanded
-Welch's estimated degrees of freedom, and how often a true MI difference
-is detected. Each simulation rate uses
+Welch's estimated degrees of freedom, and their power to detect MI
+differences. Each simulation rate uses
 20,000 sampled table pairs. Blue solid curves show Normal Wald and magenta
 dashed curves show Expanded Welch. Error bars or bands give pointwise
 Wilson 95\% intervals, and the dotted line marks 0.05. Hollow markers
@@ -242,32 +242,32 @@ the observed variance, and the population first-order variance is 0.95
 times the observed variance. Detailed values are in
 Appendix~\ref{app:additional-results}. Changing the rejection cutoff cannot
 correct errors in the estimated MI difference or standard error. The next
-study examines detection when the populations have different MI values.
+study examines power when the populations have different MI values.
 
-\section{Detection when population MI differs}
+\section{Power to detect MI differences}
 
-\subsection{Detection across table sizes}
+\subsection{Power across table sizes}
 
 Figure~\ref{fig:focused-detection-sizes} fixes \(I(P)=0.02\) nats,
 sets \(I(Q)=0.02+|\Delta|\), and uses different-skew margins. Each
 panel compares \(n=1{,}000\) and 10,000 at one table size. The figure
 enlarges differences up to 0.02 nats; the full grid through 0.2 is in
-Figure~\ref{fig:focused-detection-full}. Every displayed detection
+Figure~\ref{fig:focused-detection-full}. Every displayed
 setting is fully valid.
 
 \begin{figure}[H]
 \centering
 \includegraphics{focused_detection_sizes.pdf}
-\caption{Detection over small MI differences under different-skew margins.}
+\caption{Rejection rates over small MI differences under different-skew margins.}
 \label{fig:focused-detection-sizes}
 \end{figure}
 
 For the smaller tables, increasing the true difference generally
-increases detection, and larger samples make a clear improvement.
-In \(4\times4\) tables, a 0.01-nat difference is detected at rates
-0.1132 and 0.1013 by Wald and Expanded Welch at \(n=1{,}000\),
+increases power, and larger samples make a clear improvement.
+In \(4\times4\) tables, Wald and Expanded Welch have estimated power
+of 0.1132 and 0.1013 for a 0.01-nat difference at \(n=1{,}000\),
 compared with 0.7962 and 0.7940 at \(n=10{,}000\). Expanded Welch's larger
-cutoff costs some detection at the smaller sample size and very little at
+cutoff costs some power at the smaller sample size and very little at
 the larger one. Higher estimated degrees of freedom in the larger sample
 bring Expanded Welch's cutoff closer to Wald's.
 The null points remain essential: these curves compare tests at the
@@ -301,7 +301,7 @@ The bias can also reverse the estimated direction of the difference.
 Although \(Q\) has the larger population MI at \(|\Delta|=0.01\),
 2,009 of the 2,010 Wald rejections and 1,905 of the 1,906 Expanded
 Welch rejections have a positive estimated difference, indicating larger
-MI for \(P\). The detection curves count all two-sided rejections;
+MI for \(P\). The rejection curves count all two-sided rejections;
 they do not show whether the estimated ordering is correct.
 Appendix Table~\ref{tab:rejection-direction} separates these outcomes.
 Under the matched four-cell construction, 2,493 of 2,494 Wald
@@ -310,11 +310,11 @@ the opposite ordering. Concentrating association in four cells therefore
 does not resolve this estimated-direction error at \(n=1{,}000\).
 
 At \(n=10{,}000\), the \(16\times16\) bias is much smaller, and
-detection increases across the small differences. Wald detects a
-0.01-nat difference at 0.6992 and Expanded Welch at 0.6968; by 0.02
+power increases across the small differences. For a 0.01-nat difference,
+Wald's estimated power is 0.6992 and Expanded Welch's is 0.6968; by 0.02
 the rates are 0.9932 and 0.9931. Every rejection in these two larger-sample
 comparisons has the correct negative estimated direction. The larger sample therefore improves
-both the null behaviour and the detection pattern. High rejection in
+both the null behaviour and power. High rejection in
 the smaller sample was not evidence of a more sensitive test.
 
 Replacing Wald's analytic MI bias correction with a jackknife correction
@@ -324,28 +324,28 @@ error and standard normal distribution cutoff; its null rejection rate
 of 0.845\% remains below the 5\% target.
 Appendix Section~\ref{sec:jackknife-difference-check} reports this four-setting check.
 
-\subsection{Detection across margin regimes}
+\subsection{Power across margin regimes}
 
 Figure~\ref{fig:focused-detection-margins} fixes the table size at
 \(4\times4\), sets \(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), and
 compares the three margin regimes at \(n=1{,}000\) and 10,000. This
-isolates the effect of the margin regime on detection at a fixed table size.
+isolates the effect of the margin regime on power at a fixed table size.
 
 \begin{figure}[H]
 \centering
 \includegraphics{focused_detection_margins.pdf}
-\caption{Detection over small MI differences in \(4\times4\) tables.}
+\caption{Rejection rates over small MI differences in \(4\times4\) tables.}
 \label{fig:focused-detection-margins}
 \end{figure}
 
-Uniform margins give somewhat higher detection in these settings.
-At \(n=10{,}000\) and a 0.01-nat difference, Wald detects at 0.8635
+Uniform margins give somewhat higher power in these settings.
+At \(n=10{,}000\) and a 0.01-nat difference, Wald's estimated power is 0.8635
 under uniform margins, 0.7790 under same skew, and 0.7962 under
 different skew. Expanded Welch gives 0.8619, 0.7768 and 0.7940.
 The margin-related change is larger than the difference between tests
 at this sample size.
 
-The observed precision helps explain the detection ordering. For this
+The observed precision helps explain the ordering of power. For this
 0.01-nat difference at \(n=10{,}000\), the sample SD of the estimated
 difference is approximately 0.00327 nats under uniform margins, 0.00364
 under same skew and 0.00361 under different skew. The biases are small
@@ -359,13 +359,13 @@ margin comparison to the first-order MI variance, rather than to the
 choice of rejection cutoff alone.
 
 At \(n=1{,}000\), Expanded Welch's larger cutoff produces a
-more visible detection reduction, while all three null points are
+more visible reduction in power, while all three null points are
 already below 0.05. By a difference of 0.2 nats, both methods reject
 every simulated pair in all three regimes at both sample sizes.
 
 The supporting four-cell check gives the same qualitative comparison
 at its matched \(4\times4\) settings: Expanded Welch lowers an
-already-low null rate at \(n=1{,}000\), and changes detection little
+already-low null rate at \(n=1{,}000\), and changes power little
 at 10,000. Appendix~\ref{app:additional-results} gives the rates and
 diagnostics. This agreement supports the representative comparison
 across those two constructions, while the main curves retain their
@@ -377,12 +377,12 @@ populations fixed and allocates 2,000 observations as \((1000,1000)\),
 Table~\ref{tab:allocation-check} reports the full comparison. Under equal
 MI, the two unequal allocations give Wald rates 0.0463 and 0.0454;
 Expanded Welch reduces them to 0.0306 and 0.0252. For the 0.01-nat
-difference, giving \(Q\) only 400 observations reduces detection to
+difference, giving \(Q\) only 400 observations reduces power to
 0.0540 for Wald and 0.0340 for Expanded Welch, compared with their
 balanced rates of 0.1132 and 0.1013.
 Giving \(Q\) 1,600 observations instead gives 0.1295 and 0.0997.
 All calculations are valid. The lower degrees of freedom under imbalance
-increase Expanded Welch's rejection cutoff. Unequal samples change detection,
+increase Expanded Welch's rejection cutoff. Unequal samples change power,
 but Expanded Welch still moves already-conservative false-positive rates
 further below 5\%.
 
@@ -416,7 +416,7 @@ Both methods require \(O(k^2)\) work for a \(k\times k\) table, but
 fixed call overhead can be important for these small arrays. The statistical
 trade-off is more consequential than this modest absolute cost: the
 larger cutoff helps only when its lower rejection improves an excessive
-false-positive rate without too much loss of detection or validity.
+false-positive rate without too much loss of power or validity.
 
 \section{Application to Online Shopping Data}
 \label{sec:shoppers-application}

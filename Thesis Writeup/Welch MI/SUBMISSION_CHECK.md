@@ -1,5 +1,63 @@
 # Thesis completion check
 
+## Statistical power terminology: 11 October 2026
+
+The Introduction defines statistical power as the probability of rejecting
+equal MI when the population MI values differ. The subsequent text, headings
+and two supporting table headings use power instead of detection. Figure
+captions retain rejection rate because the curves include both equal-MI
+and alternative settings. The design states that the zero point estimates
+false positives and nonzero differences estimate power. Estimated-direction
+diagnostics remain distinct from power. No glossary is added.
+
+All mathematics, citations and labels match the pre-pass sources across
+17 TeX files, and Section 2.3 remains byte-identical. All figure assets and
+numerical table content are unchanged. Both edited reporting templates have
+only one presentation-string substitution, and reproduce their tables
+exactly from the saved evidence. All 10773 scientific preservation hashes
+and four historical working-draft hashes match. No experiment is rerun.
+
+All 217 tests pass: 174 Welch-project, 27 DifferentialMI and 16 practical-data
+tests. The active build has no warnings, unresolved references/citations,
+missing characters or overfull/underfull boxes. All pages are rendered for
+contact-sheet review, with detailed inspection of changed headings, the
+definition and result paragraphs. The PDF has 102 A4 pages: eight front-matter,
+59 main-text, 30 appendix and five bibliography pages. The main-text token
+diagnostic is 17685, extracted from PDF pages 9-67. Typography, margins and
+figure dimensions are unchanged; pagination changes naturally with the prose.
+
+The extracted source package builds cleanly and produces identical
+102-page layout text. All 56 source-archive members pass CRC, inventory and
+content checks. The named delivery PDF matches main.pdf. The supplement
+archive updates exactly the two reporting-template members; all other
+members retain their content, and all archive CRCs pass. Delivery checksums
+are refreshed and verified. The statistical study remains unchanged.
+
+## Specific statistical terminology: 11 October 2026
+
+The four remaining uses of "inference" in the manuscript are replaced by
+the specific task. The title ends in "Wald and Expanded Welch--Satterthwaite
+Tests". The literature mini-headings are "The Normal Wald test" and
+"Previous work on MI uncertainty and comparisons". The segregation example
+describes methods for comparing an MI index across groups and periods.
+The PDF's internal title metadata is updated to match the visible title.
+Original publication titles in references.bib remain unchanged.
+
+All mathematics, citations and labels match the pre-pass sources, and
+Section 2.3 remains byte-identical. The four historical working-draft
+hashes match. No scientific methods, results, code or experiments change.
+All 217 tests pass: 174 Welch-project, 27 DifferentialMI and 16 practical-data
+tests. The active build is clean, with no warnings, unresolved references,
+missing characters or overfull/underfull boxes. The title page and three
+affected literature pages are rendered and visually checked. The PDF remains
+101 A4 pages, including 58 main-text pages, with a token diagnostic of 17648
+from PDF pages 9-66.
+
+The extracted source package also builds cleanly, with identical 101-page
+layout text and matching title metadata. All 56 archive members pass CRC,
+inventory and content checks. The delivery PDF matches main.pdf, the scientific
+supplement is unchanged, and delivery checksums are verified.
+
 ## Lecture-aligned terminology: 11 October 2026
 
 The supplied information-theory lectures inform a targeted terminology review

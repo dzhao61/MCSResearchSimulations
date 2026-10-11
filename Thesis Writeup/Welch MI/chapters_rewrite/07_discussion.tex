@@ -8,9 +8,9 @@ standard error. Expanded Welch can only make a valid two-sided p-value
 larger, reducing rejection for the same sampled tables. When
 Wald's false-positive rate exceeds 5\%, reducing it towards 5\% can
 help. When Wald already rejects too rarely, Expanded Welch's larger cutoff moves
-the rate further from the target and can reduce detection. A comparison
+the rate further from the target and can reduce power. A comparison
 of the two methods therefore needs both measures: false positives show
-whether the reduction improves calibration, and detection shows its
+whether the reduction improves calibration, and power shows its
 cost when population MI differs.
 
 The bias and direction findings show why a lower rejection rate can leave
@@ -52,7 +52,7 @@ in every studied setting. An application-specific comparison should match
 category definitions, sample sizes and margin patterns, and include
 plausible population MI values and distinct equal-MI tables. Judge Expanded
 Welch by whether its lower rejection brings excessive false positives closer
-to 5\% without an unacceptable loss of detection or usable results. Choose
+to 5\% without an unacceptable loss of power or usable results. Choose
 the method using that comparison before examining the observed p-values.
 
 \begin{samepage}
@@ -70,7 +70,7 @@ column margins within each population. This gives a clear way to vary
 association without changing category frequencies. The four-cell check
 supports the representative \(4\times4\) method comparison and
 reproduces the main \(16\times16\) estimation failures at its matched
-settings, although detection changes numerically with the construction.
+settings, although power changes numerically with the construction.
 Copying favours matching categories in both
 populations, whereas the four-cell transfer concentrates association
 in the same chosen block. The different-skew regime changes category
@@ -89,7 +89,7 @@ corrections no longer cancel, and the two contributions to the standard
 error and degrees of freedom can become less balanced. The derivation
 allows unequal sample sizes. The supporting fixed-total check assesses
 both allocation directions in two \(4\times4\) different-skew pairs.
-There, imbalance changes bias, uncertainty and detection, while the
+There, imbalance changes bias, uncertainty and power, while the
 larger Expanded Welch cutoff lowers already-conservative null rates.
 This extends the comparison beyond equal samples, but a wider allocation
 study would be needed for other table sizes and population structures.
@@ -103,7 +103,7 @@ changes the fixed-alphabet setting of the derivation. The empirical
 recommendation concerns the independent categorical comparisons studied
 here, at a two-sided 5\% threshold. The online-shopping application
 illustrates interpretation on observed data, but its unknown population
-MI values do not allow a direct measurement of false positives or detection.
+MI values do not allow a direct measurement of false-positive rates or power.
 
 Exact independence needs a different mathematical approximation because
 the first-order MI variance vanishes there. The population-MI

@@ -67,7 +67,17 @@ It introduces local MI, alphabet sizes, marginal probabilities and
 undersampling alongside the existing academic terminology. Association
 patterns retain their distinct meaning. The study, equations, citations
 and older working drafts are unchanged.
-The current PDF has 101 pages, including 58 main-text pages; verification is
+The four remaining manuscript uses of "inference" are replaced with the
+specific task: tests in the title, the Normal Wald test, MI uncertainty
+and comparisons, or methods for comparing an MI index. Bibliographic
+publication titles remain unchanged.
+The power-terminology pass introduces statistical power with a definition,
+then uses power in the alternative comparisons, headings and supporting
+tables. Curves that include equal MI retain rejection-rate captions; their
+zero point estimates false positives rather than power. The two table
+reporting templates use the same terminology. No glossary is added, and
+no calculations, numerical evidence or historical working drafts change.
+The current PDF has 102 pages, including 59 main-text pages; verification is
 recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction
