@@ -1,10 +1,11 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Mutual information (MI) measures association between two variables.
-This thesis compares the MI of two independently sampled categorical
-populations, allowing their joint probability tables to differ even
-when their MI values are equal. The Normal Wald test uses a normal
+Mutual information (MI) measures the average reduction in uncertainty about
+one variable obtained by observing another.
+This thesis compares MI between the same two categorical variables in
+two independently sampled populations. Their joint probability tables
+can differ even when their MI values are equal. Normal Wald uses a normal
 approximation that can be inaccurate in small or sparse samples.
 
 The thesis develops an Expanded Welch--Satterthwaite test by
@@ -14,8 +15,8 @@ and column totals. It supplies the degrees of freedom for a Student
 \(t\) distribution, while retaining Wald's estimated difference and
 standard error.
 
-Three controlled studies examine false positives, association strength
-and detection across \(2\times2,4\times4,8\times8\) and
+Three controlled studies examine false positives, degrees of freedom across
+population MI values, and detection across \(2\times2,4\times4,8\times8\) and
 \(16\times16\) tables and three margin regimes. Supporting checks
 vary construction and sample allocation. Each of the 240 settings uses
 20,000 sampled table pairs. Diagnostics assess the shared MI estimates
@@ -33,8 +34,6 @@ ordering also occur under the matched four-cell construction.
 At \(n=10{,}000\), bias is much smaller under both constructions.
 Larger samples also improve detection and reduce the difference between methods.
 
-The variance-sensitivity formula supplies MI-specific degrees of freedom,
-but the evaluation does not support Expanded Welch as a general replacement
-for Normal Wald. Replacing the standard normal distribution with a Student
-\(t\) distribution cannot correct errors in the shared MI difference or
-standard error.
+The evaluation does not support Expanded Welch as a general replacement
+for Normal Wald. Its larger rejection cutoff cannot correct errors in the
+shared MI difference or standard error.

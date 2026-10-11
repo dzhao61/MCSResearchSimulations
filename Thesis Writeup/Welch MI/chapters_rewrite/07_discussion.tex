@@ -15,7 +15,7 @@ cost when population MI differs.
 
 The bias and direction findings show why a lower rejection rate can leave
 the main estimation problem unresolved. Unequal biases can create an
-apparent change in association when population MI is equal, as
+apparent MI difference when population MI is equal, as
 Equation~\eqref{eq:focused-null-bias-shift} demonstrates. They can also
 reverse the estimated ordering when the population MI values differ,
 including among rejected comparisons. Increasing the cutoff changes
@@ -36,7 +36,8 @@ can prevent Expanded Welch from returning a p-value, lowering its
 reported rejection rate without providing a decision about equal MI.
 Rejection and valid-result frequency therefore need to be read together.
 
-For a categorical feature--label comparison, the estimated MI difference
+When comparing feature--label MI between two populations, the estimated
+MI difference
 reports the size and direction of the observed change. Its standard
 error describes the sampling uncertainty assigned by the method, and
 the p-value supplies the test decision. Reporting these quantities
@@ -49,7 +50,7 @@ p-value does not establish that the population MI values are equal.
 Normal Wald remains the simpler baseline, but neither method is reliable
 in every studied setting. An application-specific comparison should match
 category definitions, sample sizes and margin patterns, and include
-plausible association strengths and distinct equal-MI tables. Judge Expanded
+plausible population MI values and distinct equal-MI tables. Judge Expanded
 Welch by whether its lower rejection brings excessive false positives closer
 to 5\% without an unacceptable loss of detection or usable results. Choose
 the method using that comparison before examining the observed p-values.
@@ -77,7 +78,7 @@ frequencies while keeping those association locations aligned. Its
 results therefore demonstrate that distinct equal-MI tables can be
 difficult to compare, but do not describe every way two tables with
 equal MI can differ. A broader assessment would vary association
-locations as well as their strengths and margins, including unequal
+locations, population MI values and margins, including unequal
 row and column margins within a population.
 
 Equal sample sizes simplify the main studies by making the two leading
@@ -105,7 +106,7 @@ illustrates interpretation on observed data, but its unknown population
 MI values do not allow a direct measurement of false positives or detection.
 
 Exact independence needs a different mathematical approximation because
-the first-order MI variance vanishes there. The association-strength
+the first-order MI variance vanishes there. The population-MI
 study also shows that positive population MI is not enough to make that
 approximation accurate at a particular sample size: small positive MI
 can remain close to the problematic region. This explains why improving

@@ -1,85 +1,85 @@
 \chapter{Introduction}
 \label{chap:introduction}
 
-Suppose two independent groups are observed on the same categorical variables
-\(X\) and \(Y\). Mutual information (MI) describes the strength of association
-between those variables in each group. If the estimated MI differs, the
-difference alone does not tell us whether the population MI values differ:
-both estimates vary when new observations are drawn. The question in this thesis is whether
-the two \emph{population} MI values can plausibly be equal.
+Mutual information (MI) measures the average reduction in uncertainty about
+one variable obtained by observing another \citep{bossomaier2016}.
+For example, a categorical input feature
+\(X\) may carry different amounts of information about a class label \(Y\) in two
+populations. Comparing feature--label MI asks whether the feature provides
+the same amount of information about the label in both populations,
+even when their feature and class
+frequencies differ. This thesis develops and evaluates a statistical test
+for that comparison using two independently collected samples.
 
-For example, suppose \(X\) is a categorical input feature and \(Y\) is
-a class label in two independently collected datasets. The feature may
-have a higher estimated MI with the label in one dataset than in the
-other. Before interpreting this as a difference in association, we need
-to distinguish a population difference from variation caused by sampling.
-The datasets can have different feature and class frequencies, so the
-question is not whether all their cell probabilities match. It is whether
-the feature--label association, as measured by MI, is equally strong in
-the two populations.
+In practice, MI is estimated from observed data. Two samples can produce
+different MI estimates even when the population MI values are equal,
+because their observed counts vary from sample to sample. A statistical
+test must account for this sampling variation before an estimated
+difference can be interpreted as evidence of a population difference.
 
-MI is also used in information-dynamics analyses to quantify relationships
-between observed variables \citep{lizier2014}. For example, independent
-experimental trials could record a stimulus category and a response
-category under each of two conditions. Comparing their MI would ask whether
-the strength of the stimulus--response association changes between
-conditions, even if both associations are nonzero.
-
-This is not the usual test of whether \(X\) and \(Y\) are independent within
-one group. The null hypothesis here permits dependence in both groups and
-permits their complete joint distributions to differ. It specifies only
+Let \(P\) and \(Q\) be the joint probability distributions of \(X\) and
+\(Y\) in the two populations. The null and alternative hypotheses are
 \begin{equation}
   H_0:I(P)=I(Q),
   \qquad H_1:I(P)\ne I(Q),
   \label{eq:introduction-null}
 \end{equation}
-where \(P\) and \(Q\) are the two joint distributions. The samples from
-\(P\) and \(Q\) are independent of each other; that sampling assumption does
-not imply independence of \(X\) and \(Y\) within either population.
+Under \(H_0\), the populations have equal MI, but their joint probability
+tables may differ and \(X\) and \(Y\) may be associated in both. The test
+therefore compares population MI values rather than
+testing independence within one population.
 
 \section{Why the comparison is difficult}
 
-MI uses the probabilities in every cell of a table and the totals of its rows
-and columns. In a small sample, some cells can be empty even when their
-population probabilities are positive. The observed tables determine both
-the estimated MI difference and its standard error, so sparse data can affect
-both. The Normal Wald test compares their ratio with a standard normal
-distribution, but in
-small samples it may reject equal MI more or less often than the intended 5\%.
+The Normal Wald test \citep{wald1943,vanderVaart1998} divides the estimated
+MI difference by its standard error and compares the resulting statistic
+with a standard normal distribution. At a 5\% significance level, the
+intended false-positive rate is 5\% when the population MI values are
+equal. The normal
+approximation can be inaccurate in small or sparse samples, causing the
+test to reject equal MI too often or too rarely.
 
-Expanded Welch uses a larger rejection cutoff than Normal Wald. It retains
-the same estimated difference and standard error, but compares their ratio
-with a Student \(t\) distribution rather than a standard normal distribution.
-The larger cutoff reduces rejection; the experiment asks whether this
-improves performance.
-Choosing the degrees of freedom for the Student \(t\) distribution requires
-knowing how much
-the estimated MI variance changes from sample to sample. To calculate that
-change, we must account for the fact that changing one cell also changes its
+Both the MI difference and its standard error are estimated from count
+tables, whose cells record how often each pair of categories occurs.
+MI depends on the cell probabilities and their row and column totals.
+When samples are small,
+rare combinations of categories may occur only a few times or not at all.
+The resulting probability estimates can distort both the MI difference
+and its estimated uncertainty.
+
+The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
+Wald's estimated MI difference and standard error but uses a Student
+\(t\) distribution instead of the standard normal distribution. Choosing
+its degrees of freedom requires estimating how much the MI variance
+estimates change from sample to sample. For MI, this calculation must
+account for the fact that changing a cell probability also changes its
 row and column totals and the MI values calculated from them. This thesis
-derives the sensitivity of the estimated MI variance and tests whether
-Expanded Welch's larger cutoff helps.
+derives how these probability changes affect the estimated MI variance
+and uses that calculation to obtain degrees of freedom for Expanded Welch.
 
-Expanded Welch can reduce false positives
-where Wald rejects too often, but it can also reduce detection where Wald
-already rejects too rarely. In sparse samples, it may fail to return a usable
-p-value when Wald succeeds. The experiment therefore examines false
-positives, detection and the frequency of usable results together.
+The Student \(t\) distribution gives Expanded Welch a larger rejection
+cutoff than Normal Wald, so it rejects less often. This can reduce false
+positives, but it can also reduce the ability to detect genuine MI
+differences. The evaluation therefore examines both outcomes, together
+with how often each method returns a usable p-value, to determine whether
+the larger cutoff offers a useful improvement.
 
 \section{Research questions}
 
-The thesis asks two main questions. First, how can changes in the estimated
-MI variance be used to choose the degrees of freedom for a test using a
-Student \(t\) distribution?
+The thesis addresses two research questions:
+\begin{enumerate}
+  \item How can the sampling variability of the estimated MI variance
+  determine MI-specific degrees of freedom for Expanded Welch?
+  \item Under what conditions does Expanded Welch improve false-positive
+  rates relative to Normal Wald, and what are the costs in detection,
+  usable results and computation?
+\end{enumerate}
 
-Second, does the resulting Expanded Welch test offer a useful improvement
-over Normal Wald?
-The experiment checks how false positives, detection and validity change
-with sample size, table size, margin regime and association strength.
-Bias and variance diagnostics explain the main patterns, and a small
-alternative-construction check examines both a representative comparison
-and the largest table under a different association pattern. It also
-measures the extra computation required.
+An analytical derivation addresses the first question. The second is
+examined through controlled simulations with known population MI, varying
+sample size, table size, category frequencies and population MI.
+Estimation diagnostics explain how bias and uncertainty affect the test
+results.
 
 \section{Contributions to the field}
 
@@ -97,31 +97,33 @@ measures the extra computation required.
   \end{samepage}
 
   \item \begin{samepage}\textbf{Empirical contribution.} Three controlled studies compare
-  false positives, detection, validity and runtime across \(2\times2\)
-  through \(16\times16\) tables and three margin regimes.
-  Supporting checks vary construction and sample allocation.
-  Estimation diagnostics explain the shared statistic's errors, and a
-  direct check compares the predicted and observed sampling variability of
-  the estimated MI variance used to choose degrees of freedom.
+  false positives, detection and the frequency of usable results across
+  four table sizes and three category-frequency regimes. Diagnostics
+  assess errors in the MI difference and its standard error, and directly
+  check the predicted variability of the MI variance estimate. Supporting
+  checks vary population construction and sample allocation, while a
+  timing comparison measures computational cost.
   \par
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies
-  estimation problems that a larger rejection cutoff leaves unresolved. Near
-  independence, the first-order calculations can poorly describe sampling
-  variation. In sparse different-skew tables, unequal MI bias can produce
-  excessive false positives and reverse the estimated ordering among
-  rejections. These sparse-table findings persist under both tested constructions.
+  where Expanded Welch's larger cutoff helps and where estimation errors
+  leave both tests unreliable. Near independence, both tests can reject
+  equal MI too rarely. In sparse populations with different category
+  frequencies, unequal MI bias can instead produce excessive false
+  positives and reversed estimated ordering among rejections. These
+  sparse-table findings persist under both tested population constructions.
 \end{enumerate}
 
 \section{Scope and organisation}
 
-The analysis concerns independent samples recorded in count tables with the
-same fixed row and column categories. The main derivation assumes positive
-population cell probabilities and a positive first-order MI variance.
-Exact independence is considered separately because that variance is zero.
-The experiment compares Normal Wald with Expanded Welch using a two-sided
-5\% test.
+The analysis concerns categorical observations recorded in count tables
+with the same fixed row and column categories. Observations are independent
+within and between the two samples. The main derivation assumes positive
+cell probabilities and positive MI in both populations. Exact independence
+is considered separately because the first-order MI variance is then zero.
+Normal Wald and Expanded Welch are compared using two-sided tests at the
+5\% significance level.
 
 Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared

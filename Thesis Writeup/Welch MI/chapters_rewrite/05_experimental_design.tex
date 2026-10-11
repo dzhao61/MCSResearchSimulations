@@ -14,7 +14,7 @@ true difference is available when assessing the sampled estimates.
 \section{Questions and controlled comparisons}
 
 Three questions organise the study: how sample size and population structure
-affect false positives, how association strength changes Expanded Welch's
+affect false positives, how common population MI changes Expanded Welch's
 estimated degrees of freedom, and how its larger rejection cutoff affects
 detection of a true MI difference. Table~\ref{tab:design-families}
 summarises the comparisons. Holding the other stated factors fixed makes
@@ -32,7 +32,7 @@ Three margin regimes compare uniform category frequencies, the same
 uneven frequencies in both populations, and different uneven frequencies.
 Under equal MI, the uniform and same-skew regimes provide identical-table
 controls. The different-skew regime tests comparisons between distinct
-population tables with equal association strength.
+population tables with equal MI.
 
 \begin{table}[H]
 \centering
@@ -43,7 +43,7 @@ population tables with equal association strength.
 Study & Factor varied & Main purpose\\
 \midrule
 Equal MI & Sample size, table size and margins & False positives and usable results.\\
-Association strength & Common positive MI & Degrees of freedom and near-independence behaviour.\\
+Population MI & Common positive MI & Degrees of freedom and near-independence behaviour.\\
 Detection & True MI difference & Detection alongside null calibration.\\
 Construction check & Copying or four-cell transfer & Sensitivity to a different association pattern.\\
 Sample allocation & Relative sample sizes at fixed total & False positives and detection with unequal samples.\\
@@ -116,8 +116,9 @@ remaining mass is shared equally:
 \end{equation}
 Each population uses the same vector for its row and column margins.
 Table~\ref{tab:margin-profiles} specifies the vectors for \(P\) and \(Q\).
-The copying probabilities are chosen separately to achieve their respective
-MI targets. Equal MI therefore gives identical tables in the uniform and
+The copying probabilities for \(P\) and \(Q\) are chosen separately to
+achieve the targets \(I(P)\) and \(I(Q)\). Equal MI therefore gives identical
+tables in the uniform and
 same-skew regimes, but different tables in the different-skew regime.
 
 \begin{table}[htbp]
@@ -158,9 +159,8 @@ as more observations become available, and whether table size or margins
 change that progression. Valid-result rates distinguish a genuinely low
 false-positive rate from a failure to calculate the test.
 
-The common target of 0.02 nats keeps association positive and comparable
-across these settings, while allowing all four sizes and three margin
-regimes to use the same target. Fixing population MI does not fix the
+The common target of 0.02 nats gives positive MI in all four table sizes
+and three margin regimes. Fixing population MI does not fix the
 difficulty of estimating it: tables with equal MI can have different
 cell probabilities and different MI sampling variances. Keeping each
 population pair fixed throughout the sample-size sweep separates
@@ -168,7 +168,7 @@ improvement from more observations from a change in the population.
 The sweep includes small samples, intermediate samples and large-sample
 checks so that both calculation failures and convergence are visible.
 
-\subsection{Association strength and degrees of freedom}
+\subsection{Population MI and degrees of freedom}
 
 The second study keeps \(4\times4\) tables and different-skew margins,
 and changes the common positive MI:
@@ -177,7 +177,7 @@ and changes the common positive MI:
  \label{eq:association-grid}
 \end{equation}
 Repeating this sweep at \(n=100\) and 1,000 separates the effect of
-association strength from a change in sample size. The estimated degrees
+common population MI from a change in sample size. The estimated degrees
 of freedom connect the observed rejection rates to the cutoff from the
 Student \(t\) distribution. All targets are positive, so this study
 approaches independence without evaluating its exact boundary.
@@ -186,7 +186,7 @@ Holding table size and margins fixed shows how rejection rates and
 estimated degrees of freedom change with population MI. The small positive
 targets examine where the first-order MI variance becomes small; the larger
 targets show whether the same tests behave differently away from that
-region. Two sample sizes show whether an association-strength pattern
+region. Two sample sizes show whether the pattern across MI values
 persists when more data are available.
 
 \subsection{Detection of a true MI difference}

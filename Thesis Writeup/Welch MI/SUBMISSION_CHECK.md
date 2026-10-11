@@ -1,5 +1,127 @@
 # Thesis completion check
 
+## Lecture-aligned terminology: 11 October 2026
+
+The supplied information-theory lectures inform a targeted terminology review
+of the abstract, eight chapters and three appendices. MI is defined through
+average uncertainty reduction; the feature-label example asks how much
+information the feature provides about the label. Numerical comparisons
+name population MI or common population MI instead of association strength.
+The experiment headings, caption and appendix references match this wording.
+Local MI is introduced as an alias for pointwise MI, alphabet sizes as category
+counts, margins as marginal probabilities, and undersampling as insufficient
+observations for reliable probability estimation. Existing academic terms
+are retained where appropriate, including descriptions of association patterns.
+No unrelated information-dynamics terminology is added.
+
+Displayed equations, citations and labels match the pre-pass sources.
+Inline mathematics only changes through naming existing symbols in the new
+definitions and removing a repeated Student t distribution sentence from
+the abstract. Section 2.3 remains byte-identical. All 10773 scientific
+preservation hashes and four historical working-draft hashes match. The
+study remains 240 settings, 70 population pairs and 4800000 sampled pairs;
+no experiment or working-draft rebuild is performed.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. The active build has no warnings, unresolved
+references/citations, missing characters or overfull/underfull boxes.
+The final PDF has 101 A4 pages: eight front-matter, 58 main-text, 30 appendix
+and five bibliography pages. The main-text token diagnostic is 17649,
+extracted from PDF pages 9-66. Chapter 2 naturally gains one page; typography,
+margins and figure dimensions are unchanged. The abstract remains one page.
+All pages are rendered for contact-sheet review, with detailed inspection of
+the abstract, Introduction, new definitions, experimental heading and MI
+figure.
+
+The extracted source package builds without warnings and produces the same
+101 pages with identical layout-extracted text. All 56 archive members pass
+CRC, inventory and content checks. The named delivery PDF matches main.pdf,
+the scientific supplement is unchanged and all delivery checksums match.
+Full scientific audits are not rerun for this terminology-only revision.
+
+## Introduction narrative: 11 October 2026
+
+The Introduction now develops one connected argument: the feature-label
+comparison motivates the sampling problem and equal-MI hypotheses; the
+Normal Wald baseline leads to sparse-estimation difficulties, Expanded
+Welch and the false-positive/detection trade-off. Two explicit research
+questions separate the derivation from its evaluation. The four contribution
+categories, scope and chapter roadmap remain, with repeated detail shortened.
+The additional stimulus-response example and corrective independence caveat
+are removed. Existing Bossomaier, Wald and van der Vaart references now
+support the MI definition and baseline in the Introduction; the removed
+example's Lizier citation is not retained merely as background decoration.
+
+Only Chapter 1 changes among the packaged LaTeX sources. Its displayed
+hypotheses, labels and headings are unchanged, as are all other equations,
+scientific methods and numerical evidence. All 10773 scientific preservation
+hashes and the four older working-draft hashes match. The evidence remains
+240 settings, 70 population pairs and 4800000 sampled pairs. No new experiment
+or working-draft rebuild is performed.
+
+The active PDF builds without warnings, unresolved citations/references,
+missing characters or overfull/underfull boxes. The three Introduction pages
+are rendered and reviewed, including paragraph transitions, question lists
+and the final chapter roadmap. Typography and page dimensions are unchanged.
+The PDF remains 100 A4 pages with 57 main-text pages; the current main-text
+token diagnostic is 17577, extracted from PDF pages 9-65.
+
+All 217 workspace tests pass on the final source: 174 Welch-project,
+27 DifferentialMI and 16 practical-data tests. The extracted source archive
+also builds cleanly and produces identical layout-extracted text and the same
+100 pages. All 56 source-archive members pass CRC, inventory and member-content
+checks. The named PDF matches main.pdf, the scientific supplement is unchanged
+and delivery checksums match. Full scientific audits are not rerun for this
+Introduction-only writing revision.
+
+## Explicit comparison subjects: 11 October 2026
+
+The full manuscript is reviewed for comparisons whose variables, populations,
+methods or estimators were only implied. The abstract and Conclusion now
+identify MI of the same categorical-variable pair across populations.
+Other edits identify P/Q MI biases, changes across alternatives rather than
+"between these populations", method labels for paired rates, the two
+jackknife variance ratios, and month-purchase/weekend-purchase comparisons
+between new and returning visitors. Clear local pronouns remain. The
+Introduction's runtime sentence now names the experiment, not the preceding
+construction check. Repeated framing is shortened rather than adding text
+merely to make every reference explicit.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. All 140 displayed equation blocks, citation
+sequences and labels match the pre-pass source; Section 2.3 is byte-identical.
+All 10773 scientific-source, input and result preservation hashes match,
+as do the four older working-draft artifacts. No method, population,
+experiment, sampled record or numerical result changes. The evidence remains
+240 settings, 70 population pairs and 4800000 sampled pairs.
+
+The PDF remains 100 A4 pages, including 57 main-text pages. The main-text
+token diagnostic is 17636, extracted from PDF pages 9-65. The build has no
+warnings, unresolved citations/references, missing characters or layout
+boxes. All 34 affected pages are rendered and reviewed, with closer checks
+of representative passages and section transitions. Full scientific evidence
+audits are not rerun for this wording-only pass.
+
+The extracted source archive also builds without warnings, unresolved
+references/citations, missing characters or overfull/underfull boxes.
+Its PDF has the same 100 pages and identical layout-extracted text.
+All 56 source-archive members pass CRC, inventory and member-content checks.
+The named thesis PDF matches main.pdf; the scientific supplement is unchanged
+and all delivery checksums match.
+
+## Trial-comparison wording: 11 October 2026
+
+The Introduction now names stimulus-response MI estimated from trials under
+each condition rather than "their MI". The wording identifies the variables
+and comparison groups without assigning an MI value to one observation.
+This preference is recorded in THESIS_GOAL.md. The PDF remains 100 pages,
+including 57 main-text pages; the current main-text token diagnostic is
+17590. The build has no warnings, unresolved references/citations or layout
+boxes, and the two affected Introduction pages are rendered and reviewed.
+Equations, citations, results, scientific inputs and older working drafts
+are unchanged. Tests are not rerun for this single-paragraph wording change;
+the preceding pass's 217-test verification remains recorded below.
+
 ## Explicit naming: 11 October 2026
 
 The abstract, all eight main chapters and three appendices now name the

@@ -1,9 +1,9 @@
 \chapter{Background and Literature Review}
 \label{chap:background}
 
-Testing whether two populations have equal MI requires an estimate from each
-sample and a measure of its sampling error. This chapter develops those
-inputs and reviews methods for comparing them.
+Testing for equal MI in two populations requires an estimate from each
+sample and its sampling variance. This chapter develops the MI estimator,
+derives its variance and reviews tests for equal population MI.
 
 \section{Information-theoretic foundations}
 
@@ -32,14 +32,15 @@ measures the uncertainty remaining in \(X\) after observing \(Y\).
 \subsection{Pointwise and average mutual information}
 
 Let \(P=(p_{ij})\) be the joint distribution of categorical variables
-\(X\in\{1,\ldots,r\}\) and \(Y\in\{1,\ldots,c\}\). Write
+\(X\in\{1,\ldots,r\}\) and \(Y\in\{1,\ldots,c\}\).
+The numbers of categories, \(r\) and \(c\), are their alphabet sizes. Write
 \begin{equation}
   p_{i+}=\sum_{j=1}^{c}p_{ij},
   \qquad
   p_{+j}=\sum_{i=1}^{r}p_{ij}
 \end{equation}
-for the row and column margins. The pointwise mutual information associated
-with cell \((i,j)\) is
+for the marginal probabilities, or row and column margins. The pointwise
+mutual information (also called local MI) associated with cell \((i,j)\) is
 \begin{equation}
   \pmi_P(i,j)
   =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
@@ -66,7 +67,9 @@ Because \(P\) is the joint distribution of \((X,Y)\), we also write
   I(X;Y)=H(X)+H(Y)-H(X,Y).
   \label{eq:mi-entropy-form}
 \end{equation}
-MI is nonnegative and equals zero exactly when
+MI is therefore the average reduction in uncertainty about \(X\) obtained
+by observing \(Y\), or equivalently about \(Y\) obtained by observing \(X\).
+It is nonnegative and equals zero exactly when
 \(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells
 \citep{bossomaier2016}.
 
@@ -74,8 +77,8 @@ Although MI measures the overall departure from independence, it does not
 specify the shape of association. Two populations can have the same MI while assigning
 probability to different cells, having different margins, or exhibiting
 different association patterns. Equality of MI is therefore weaker than
-equality of distributions. Our null requires only this one number to agree,
-not that the two tables match cell by cell.
+equality of distributions. The null hypothesis requires equal MI, not
+identical cell probabilities in the two population tables.
 
 The logarithm base determines the reporting unit. This thesis uses natural
 logarithms, so MI is measured in nats; dividing by \(\log 2\) converts to bits.
@@ -90,7 +93,8 @@ probabilities are
 \begin{equation}
   \widehat p_{ij}=\frac{N_{ij}}{n}.
 \end{equation}
-Substitution into Equation~\eqref{eq:background-mi} gives the plug-in estimator
+The plug-in estimator inserts these observed relative frequencies into
+Equation~\eqref{eq:background-mi}:
 \begin{equation}
   \Ihat(P)
   =\sum_{i,j:\widehat p_{ij}>0}
@@ -109,8 +113,8 @@ estimator.
 Under multinomial sampling, the cell counts vary between samples but must
 sum to \(n\). An extra observation in one cell therefore leaves fewer
 observations for the others. For a fixed set of categories, the plug-in
-estimate approaches population MI as the sample grows, but its small-sample
-bias and variability depend on the complete probability table. In particular,
+estimate approaches population MI as the sample grows, but its finite-sample
+bias and sampling variance depend on the complete probability table. In particular,
 rare cells can change both even when the categories and sample size are
 unchanged
 \citep{paninski2003}.
@@ -128,7 +132,7 @@ to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
 term appears in \citet{moddemeijer1989}. Sparse sampling can produce further
 error beyond this leading approximation \citep{paninski2003}.
 
-Bias matters directly when comparing two populations. If
+Bias matters directly when comparing MI estimates from two populations. If
 \(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
 \begin{equation}
   \frac{(r-1)(c-1)}{2}
@@ -143,8 +147,10 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \medskip
 \thesisminiheading{Estimation beyond the leading bias correction.}
 
-Sparse samples can require more information than table size and sample size
-provide. \citet{panzeri1996} derive analytical bias corrections that account
+Data are undersampled when too few observations are available to estimate
+the joint probabilities reliably. Rare category combinations can then be
+poorly represented or absent from the sample. \citet{panzeri1996} derive
+analytical bias corrections that account
 for the categories with nonzero population probability, but these remain
 large-sample approximations. \citet{paninski2003} shows that substantial
 error can remain after standard corrections, including the jackknife,
@@ -479,8 +485,8 @@ differ even when their MI values are equal.
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with a standard normal distribution
 \citep{wald1943,vanderVaart1998}.
-For two independent MI estimates, the two first-order variance contributions
-add:
+For MI estimated from independent samples from \(P\) and \(Q\), the
+first-order variance contributions add:
 \begin{equation}
   \Var\{\Ihat(P)-\Ihat(Q)\}
   \approx \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
@@ -591,8 +597,8 @@ A Bayesian approach describes uncertainty about population MI given an
 observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
 unknown cell probabilities to calculate the variance and shape of the
 resulting MI distribution. Our repeated-sampling comparison instead asks
-how often each test rejects when new samples are drawn from fixed
-populations.
+how often Normal Wald and Expanded Welch reject equal MI when new samples
+are drawn from fixed populations \(P\) and \(Q\).
 
 Hutcheson's test is a direct information-theoretic Welch predecessor. It
 compares two Shannon diversity estimates with an estimated variance and a
@@ -675,7 +681,7 @@ MI-specific degrees of freedom in this way requires calculating how the
 estimated MI variance changes with the observed table.
 
 These results address two successive sources of uncertainty. The MI
-sampling variance describes how much the estimated association changes
+sampling variance describes how much the MI estimate varies
 between samples. The variability of the estimated MI variance describes
 how consistently those samples estimate that uncertainty. This thesis
 derives the variability of the estimated MI variance and uses it within
@@ -687,7 +693,8 @@ A new observation changes the empirical cell probabilities, row and column
 totals, and pointwise MI values. The remaining calculation is how these
 changes affect the estimated MI variance. This thesis uses that calculation
 to choose the degrees of freedom for a Student \(t\) distribution, then
-evaluates whether it improves false positives and detection.
+compares Expanded Welch's false-positive and detection rates with Normal
+Wald's.
 That evaluation also needs to examine the shared estimates themselves.
 \citet{paninski2003} shows that finite-sample information estimates can
 retain substantial bias after a leading correction. A larger rejection

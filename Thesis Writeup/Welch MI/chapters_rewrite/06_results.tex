@@ -2,7 +2,7 @@
 \label{chap:results}
 
 The results follow the three experimental questions: when the tests give
-reliable false-positive rates, how association strength affects Expanded
+reliable false-positive rates, how common population MI affects Expanded
 Welch's estimated degrees of freedom, and how often a true MI difference
 is detected. Each simulation rate uses
 20,000 sampled table pairs. Blue solid curves show Normal Wald and magenta
@@ -108,7 +108,7 @@ The \(16\times16\), \(n=1{,}000\) difference has bias 0.02960 nats,
 more than twice its observed SD of approximately 0.01449. To see where
 this shift comes from, recall that bias is the mean estimate across
 samples minus the population value. The bias of a difference is exactly
-the first estimate's bias minus the second estimate's bias. Here the
+bias of \(P\)'s MI estimate minus the bias of \(Q\)'s MI estimate. Here the
 individual corrected MI biases are approximately \(-0.00794\) for \(P\)
 and \(-0.03754\) for \(Q\). Since the true difference is zero, the
 estimated difference is centred at
@@ -150,9 +150,9 @@ at 10,000, showing that the approximation itself also needs attention.
 These diagnostics describe distinct errors; they do not divide the
 rejection rate into additive contributions. Expanded Welch changes none
 of these shared estimates. Its separate role is to change the rejection
-cutoff, which the association-strength study examines next.
+cutoff, which the population-MI study examines next.
 
-\section{Association strength and degrees of freedom}
+\section{Population MI and degrees of freedom}
 \label{sec:mechanism-results}
 
 Figure~\ref{fig:focused-association} keeps \(4\times4\) different-skew
@@ -166,19 +166,19 @@ missing test outputs.
 \begin{figure}[H]
 \centering
 \includegraphics{focused_association.pdf}
-\caption{Association strength, false positives and estimated degrees of freedom.}
+\caption{Common population MI, false positives and estimated degrees of freedom.}
 \label{fig:focused-association}
 \end{figure}
 
 Both tests reject too rarely near independence, and Expanded Welch
 rejects still less. At common MI 0.0001 and \(n=1{,}000\), Wald's rate
-is 0.0101 and Expanded Welch's is 0.0044. At common MI 0.05, the rates
-are 0.0472 and 0.0438. Stronger association brings the rates closer to
+is 0.0101 and Expanded Welch's is 0.0044. At common MI 0.05, Wald rejects
+at 0.0472 and Expanded Welch at 0.0438. Larger common MI brings the rates closer to
 0.05 in this comparison, especially at the larger sample size. The
 \(n=100\) rates remain low even at the largest MI target, so a larger
 MI value does not substitute for enough observations.
 
-Estimated degrees of freedom increase with association strength. At
+Estimated degrees of freedom increase with common population MI. At
 \(n=1{,}000\), their median rises from 8.62 at MI 0.0001 to 78.24
 at MI 0.05; at \(n=100\), it rises from 4.23 to 13.80. Smaller
 degrees of freedom give a larger cutoff from the Student \(t\)
@@ -285,7 +285,8 @@ bias combine as follows:
  \mathbb{E}(\Deltahat)&\simeq-0.02+0.03164=0.01164.
  \label{eq:focused-detection-bias-shift}
 \end{align}
-The bias changes slightly between these populations, but remains
+The bias in the estimated MI difference changes slightly across these
+alternatives, but remains
 positive and larger than the magnitude of the true difference. As the
 true difference becomes more negative, it offsets more of that bias.
 The centre of the estimated difference therefore moves towards zero
@@ -326,9 +327,9 @@ Appendix Section~\ref{sec:jackknife-difference-check} reports this four-setting 
 \subsection{Detection across margin regimes}
 
 Figure~\ref{fig:focused-detection-margins} fixes the table size at
-\(4\times4\), retains the same MI targets, and compares the three
-margin regimes at the two sample sizes. This separates their effect
-on detection from the table-size comparison.
+\(4\times4\), sets \(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), and
+compares the three margin regimes at \(n=1{,}000\) and 10,000. This
+isolates the effect of the margin regime on detection at a fixed table size.
 
 \begin{figure}[H]
 \centering
@@ -377,7 +378,8 @@ Table~\ref{tab:allocation-check} reports the full comparison. Under equal
 MI, the two unequal allocations give Wald rates 0.0463 and 0.0454;
 Expanded Welch reduces them to 0.0306 and 0.0252. For the 0.01-nat
 difference, giving \(Q\) only 400 observations reduces detection to
-0.0540 and 0.0340, compared with balanced rates 0.1132 and 0.1013.
+0.0540 for Wald and 0.0340 for Expanded Welch, compared with their
+balanced rates of 0.1132 and 0.1013.
 Giving \(Q\) 1,600 observations instead gives 0.1295 and 0.0997.
 All calculations are valid. The lower degrees of freedom under imbalance
 increase Expanded Welch's rejection cutoff. Unequal samples change detection,
@@ -420,9 +422,8 @@ false-positive rate without too much loss of detection or validity.
 \label{sec:shoppers-application}
 
 The Online Shoppers Purchasing Intention dataset provides a practical
-setting for comparing MI between visitor groups \citep{sakar2018}.
-The question is whether the month of a website visit carries the same
-amount of information about purchasing for new and returning visitors.
+comparison of month--purchase MI between new and returning visitors
+\citep{sakar2018}.
 A larger MI means that knowing the month reduces uncertainty about
 purchasing more, on average. A second comparison uses the weekend indicator instead
 of month, giving a contrasting association in the same dataset.
@@ -452,7 +453,8 @@ bias correction subtracts \((10-1)(2-1)/(2n)=9/(2n)\) from each plug-in
 MI estimate \citep{moddemeijer1989};
 for the weekend tables, it subtracts \(1/(2n)\). Here \(n\) is the
 number of sessions in the relevant visitor group. The estimated
-difference is new-visitor MI minus returning-visitor MI. Normal Wald
+difference is new-visitor MI minus returning-visitor MI for the same
+predictor--purchase pair. Normal Wald
 compares this difference divided by its standard error with the standard
 normal distribution; Expanded Welch uses the same statistic with a
 Student t distribution and estimated degrees of freedom. Both tests
@@ -487,7 +489,8 @@ The corrected difference is \(-0.013563\) nats, with shared standard error
 \end{equation}
 With 26.79 estimated degrees of freedom, the Student t distribution gives
 a larger p-value than the standard normal distribution, but both tests
-reject equal MI. This application was selected from an initial exploration
+reject equal month--purchase MI for new and returning visitors. This
+application was selected from an initial exploration
 of six comparisons across three public datasets. Accounting for all six
 comparisons with Holm's multiple-testing adjustment \citep{holm1979}
 gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
@@ -495,8 +498,9 @@ Welch, so the conclusion remains unchanged. Appendix
 Table~\ref{tab:application-holm} lists all six comparisons and their raw
 and adjusted p-values.
 
-The weekend comparison gives a different result: its corrected MI
-estimates are both approximately 0.0007 nats. Their difference,
+The weekend comparison gives a different result: the corrected
+weekend--purchase MI estimates for new and returning visitors are both
+approximately 0.0007 nats. Their difference,
 \(-0.000063\) nats, is small relative to the shared standard error of
 \(0.001124\) nats, giving \(T\approx-0.056\). Although Expanded Welch
 estimates only 2.18 degrees of freedom, both p-values remain close to one.
@@ -505,13 +509,9 @@ the visitor groups; this does not establish that their population MI
 values are equal. The small statistic, rather than the degrees of freedom
 alone, explains the agreement between the methods here.
 
-These comparisons illustrate how Expanded Welch changes the p-values in
-an observed analysis while preserving the estimated MI
-differences and, in this case, both conclusions. The degrees of freedom
-depend on the estimated variability of the variance contributions, so
-thousands of sessions need not make Expanded Welch's p-values close to
-Normal Wald's. The
-simulation studies assess false positives and detection using known
-population MI; this application contextualises the test calculations
-when the population MI values are unknown. The results describe
+Expanded Welch gives larger p-values than Normal Wald while preserving the
+month--purchase and weekend--purchase MI differences and, here, both test
+decisions. Its degrees of freedom depend on the relative variability of
+the MI variance estimates, so large session counts alone need not make its
+p-values close to Normal Wald's. The results describe
 associations in the recorded sessions, not causal effects of visit timing.

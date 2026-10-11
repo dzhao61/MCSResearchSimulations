@@ -519,7 +519,7 @@ Consider the two observed \(3\times3\) tables
   \end{pmatrix}.
   \label{eq:worked-tables}
 \end{equation}
-Their totals are \(n_P=105\) and \(n_Q=100\). In the first table, cell
+Their totals are \(n_P=105\) and \(n_Q=100\). In \(N^P\), cell
 \((1,1)\) has count 35, and its row and column each total 50. Its empirical
 pointwise MI is therefore
 \begin{equation*}
@@ -529,7 +529,7 @@ pointwise MI is therefore
 \end{equation*}
 This cell contributes \((35/105)(0.38526)\) to the plug-in MI estimate.
 Summing the contributions from all nine cells gives
-\(\Ihat(P)=0.13693\); the same calculation for the second table gives
+\(\Ihat(P)=0.13693\); the same calculation for \(N^Q\) gives
 \(\Ihat(Q)=0.25848\) nats. Since \((3-1)(3-1)=4\), the corrected difference is
 \begin{equation}
   \Deltahat
@@ -660,8 +660,8 @@ The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
 The MI difference and standard error come from the same tables. A sample
 that changes the estimated difference can also change its standard error,
-and Expanded Welch's larger cutoff does not account for how the two move
-together.
+and Expanded Welch's larger cutoff does not account for how the estimated
+MI difference and its standard error move together.
 Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
 between each population's MI and variance estimates.
 As sample sizes grow under regular conditions, the estimated

@@ -35,16 +35,17 @@ Wilson 95\% intervals; the lower strips show validity.
 The smaller tables again give low false-positive rates at intermediate
 sample sizes. At \(n=100\), Wald rejects at 0.0128 under uniform
 margins and 0.0114 under same skew, with still lower Expanded Welch
-rates. In \(8\times8\) tables, uniform margins instead give rates
-0.0736 and 0.0651 at this size, whereas same-skew margins give 0.0189
-and 0.0121. The effect of the margin regime therefore changes with
+rates. In \(8\times8\) tables at \(n=100\), uniform margins give rates
+0.0736 and 0.0651 for Wald and Expanded Welch, respectively; same-skew
+margins give 0.0189 and 0.0121. The effect of the margin regime therefore changes with
 table size. By \(n=50{,}000\), all four comparisons have rates
 between 0.0489 and 0.0503 and full validity.
 
 \section{Supporting estimation diagnostics}
 
 Table~\ref{tab:association-diagnostics} gives the diagnostics behind
-the association-strength figure. Est./obs. is the ratio of mean squared
+the population-MI comparison in Figure~\ref{fig:focused-association}.
+Est./obs. is the ratio of mean squared
 standard error to observed sampling variance. Pop./obs. replaces the
 estimated variance with the population first-order variance
 \(V(P)/n+V(Q)/n\). DF denotes combined degrees of freedom; its bracketed
@@ -197,7 +198,8 @@ bias at \(n=1{,}000\). Under equal MI, it falls from 0.02960 to
 \(-0.00116\) nats; under the alternative, from 0.03061 to
 \(-0.00024\) nats. The individual jackknife estimates remain upward
 biased. Their null biases are 0.03439 nats for \(P\) and 0.03555 for
-\(Q\), and their alternative biases are 0.03452 and 0.03476 nats.
+\(Q\). Under the alternative, the jackknife MI biases are 0.03452 for
+\(P\) and 0.03476 nats for \(Q\).
 These similar biases largely cancel in the difference. The observed
 standard deviation increases slightly, but the root mean squared error
 falls from 0.03295 to 0.01525 nats under the null and from 0.03438 to
@@ -215,8 +217,9 @@ alternative. Better estimation of the difference therefore leaves a
 separate problem in estimating its uncertainty.
 
 At \(n=10{,}000\), the jackknife null rejection rate is 5.070\%,
-with a Wilson interval of 4.774--5.383\%, and both variance ratios are
-close to one. Alternative rejection falls from 69.920\% to 66.190\%,
+with a Wilson interval of 4.774--5.383\%. The estimated/observed variance
+ratios for the analytic and jackknife differences are both close to one.
+Alternative rejection falls from 69.920\% to 66.190\%,
 with every rejection indicating the correct direction for both
 corrections. The jackknife difference has less bias but slightly greater
 observed variability and root mean squared error at this sample size.
@@ -358,7 +361,8 @@ At \(n=10{,}000\), the four-cell null rates are 0.0499 and 0.0491,
 with much smaller difference bias. Every rejection at the alternative
 has the correct estimated direction under either construction.
 Detection nevertheless differs: Wald gives 0.6992 under copying and
-0.6323 under the four-cell transfer. Their biases are similar, but the
+0.6323 under the four-cell transfer. The MI difference biases under
+copying and the four-cell transfer are similar, but the
 observed SD rises from approximately 0.00433 to 0.00468 nats, making
 the same population difference harder to detect under the transfer.
 Changing association arrangement thus changes precision even when
@@ -394,8 +398,8 @@ All estimates and test results are finite and valid in these comparisons.
 \input{figures_rewrite/focused_allocation_table}
 \end{table}
 
-With equal MI, Wald rejects at 0.0394 for balanced samples and at 0.0463
-and 0.0454 for the two unequal allocations. Expanded Welch lowers these
+With equal MI, Wald rejects at 0.0394 for balanced samples, 0.0463 at
+\((n_P,n_Q)=(400,1600)\), and 0.0454 at \((1600,400)\). Expanded Welch lowers these
 rates to 0.0331, 0.0306 and 0.0252, respectively. The imbalance therefore
 does not create excessive Wald rejection in these settings, and the
 larger Expanded Welch cutoff makes already-low rates lower. The null median
@@ -427,7 +431,7 @@ and records are counted without survey weights. Only the occupation
 comparison excludes records with missing occupation.
 
 The Student Performance comparisons
-use Portuguese-language grades from schools GP and MS, with a final grade
+use Portuguese-language course records from schools GP and MS, with a final grade
 of at least 10 as the binary outcome. The predictors are the original
 study-time categories (four levels) and maternal-education categories
 (five levels) \citep{cortez2008}. The shopping comparisons use new and
@@ -460,7 +464,7 @@ Holm's multiple-testing adjustment is applied separately to each method's
 six p-values \citep{holm1979}. Order the raw p-values from smallest to largest and
 multiply them by 6, 5, 4, 3, 2 and 1, respectively. Moving through that
 order, replace any value smaller than the preceding adjusted value by
-that preceding value, and cap the results at one. Month has the
+that preceding value, and cap the results at one. The month--purchase comparison has the
 third-smallest raw p-value for both methods, and the earlier adjusted
 values are smaller, so its adjusted p-value is four times its raw value.
 Both adjusted month p-values remain below 0.05.

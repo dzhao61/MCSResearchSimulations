@@ -52,7 +52,22 @@ vague references with the actual method or quantity throughout the abstract,
 chapters and appendices, distinguishing rejection cutoffs, degrees of freedom,
 MI bias correction and Holm's multiple-testing adjustment. Equations,
 citations, methods, evidence and older working drafts are unchanged.
-The current PDF has 100 pages, including 57 main-text pages; verification is
+The explicit-comparison follow-up names the variables, populations, visitor
+groups, methods and estimators where a comparison's subjects were unclear.
+It distinguishes changes across alternatives from differences between
+populations, while retaining clear local pronouns.
+The Introduction narrative pass then gives the chapter one computing example
+and a connected progression through sampling variation, the hypotheses,
+the Wald baseline, Expanded Welch and the research questions. It removes
+the additional stimulus-response example and corrective sampling caveat,
+clarifies the evaluation trade-off, and retains the scientific contributions.
+The lecture-aligned terminology pass defines MI through average uncertainty
+reduction and names population MI directly in the controlled comparisons.
+It introduces local MI, alphabet sizes, marginal probabilities and
+undersampling alongside the existing academic terminology. Association
+patterns retain their distinct meaning. The study, equations, citations
+and older working drafts are unchanged.
+The current PDF has 101 pages, including 58 main-text pages; verification is
 recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction

@@ -5,6 +5,42 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Lecture-aligned terminology pass (11 October 2026):** Define MI as average
+uncertainty reduction and describe the feature--label comparison in terms of
+the information provided about the label. Use population MI or common
+population MI when naming the numerical quantity varied in an experiment,
+not "MI strength". Introduce local MI as an alias for pointwise MI, alphabet
+size as the number of categories, marginal probabilities as margins, and
+undersampling where limited observations impair probability estimation.
+Retain established academic terms and descriptions of association patterns.
+Do not import information-storage, transfer-entropy or surrogate-independence
+concepts into this independent, equal-MI comparison. Keep the scientific
+study and older working drafts unchanged.
+All 217 workspace tests pass, and the active PDF builds cleanly. Section 2.3,
+equations, citations and scientific evidence are unchanged. The PDF has 101
+pages, including 58 main-text pages; SUBMISSION_CHECK.md records verification.
+
+**Introduction narrative pass (11 October 2026):** Give the Introduction one
+connected progression: a computing example, sampling variation, the equal-MI
+hypotheses, the Normal Wald baseline, the reason for Expanded Welch, and the
+research questions and contributions. Remove the unrelated stimulus-response
+example and repeated corrective explanations. State assumptions positively
+and introduce mathematical detail only when its purpose is clear. Keep the
+two research questions and scientific scope; preserve all older working
+drafts. All 217 workspace tests and clean active/isolated-source builds pass.
+The PDF remains 100 pages, including 57 main-text pages. SUBMISSION_CHECK.md
+records verification of this writing-only pass.
+
+**Explicit comparison pass (11 October 2026):** Review the complete manuscript
+for unclear comparison subjects after the trial-example revision. Name the
+variables whose MI is measured, the populations or visitor groups being
+compared, and the methods or estimators attached to reported results. Distinguish
+a change across experimental settings from a difference between populations.
+Keep clear local pronouns rather than repeating every name mechanically.
+Equations, citations, numerical results and older working drafts are unchanged.
+All 217 workspace tests pass. The PDF remains 100 pages, including 57
+main-text pages; SUBMISSION_CHECK.md records the verification.
+
 **Explicit naming pass (11 October 2026):** Replace vague stand-ins with the
 quantity or method actually meant. In particular, distinguish Expanded
 Welch's rejection cutoff and estimated degrees of freedom from MI bias
@@ -209,7 +245,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (11 October explicit naming pass) | 57 pages | 100 pages |
+| Current focused Welch-MI manuscript (11 October lecture terminology pass) | 58 pages | 101 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -222,9 +258,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,583
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
-(printed pages 1-57). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 17,649
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-66
+(printed pages 1-58). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Last verified chapter allocation
@@ -237,7 +273,7 @@ preserving these lengths.
 | Chapter | Current pages | Required purpose |
 | --- | ---: | --- |
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
-| 2. Background and Literature Review | 13 | Teach the necessary concepts and locate the contribution in verified prior work. |
+| 2. Background and Literature Review | 14 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 7 | Explain copying across table sizes, the three controlled studies, diagnostics, construction and allocation checks, sampling and evaluation; put complete reproduction details in Appendix B. |
@@ -391,6 +427,14 @@ define technical terms. Give each paragraph one main point; revise long
 sentences that combine several claims. Review sentences longer than about
 35 words as an editing aid, while allowing necessary mathematical qualifications.
 
+Use the lecture terminology where it clarifies the same scientific concept,
+not as a wholesale vocabulary replacement. Describe MI through average
+uncertainty reduction; name MI values and population MI directly in numerical
+comparisons. Retain "association" for relationships and patterns. Define
+local MI, alphabet sizes and undersampling alongside the existing academic
+terms, without adding unrelated information-dynamics concepts or changing
+the equal-MI hypothesis into an independence test.
+
 Use TEEL as a flexible guide to paragraph structure: establish one main idea,
 support it with evidence or an equation, explain why that support matters,
 and connect it to the argument or next question. Separate a second main idea
@@ -399,6 +443,11 @@ explanatory unit; a derivation need not repeat a four-sentence template at
 every step. Transitions must explain how successive ideas relate, not merely
 announce what comes next. Avoid artificial linking sentences and unnecessary
 repetition of the preceding paragraph.
+Review introductions as connected arguments, not collections of locally
+clear sentences. Establish the motivating example and statistical question
+before discussing methods. Let each paragraph resolve a question raised by
+the preceding one, without repeating distinctions already made. State the
+setup directly rather than anticipating and correcting reader mistakes.
 Give prose paragraphs enough development to read as connected academic
 arguments, rather than a sequence of isolated claims. One main idea need
 not mean one sentence or one small supporting point. Combine adjacent short
@@ -448,6 +497,16 @@ to remember what "the adjustment" means. Likewise, identify both terms in
 a ratio and the relevant population construction. Keep an ordinary pronoun
 or short reference when its antecedent is clear and nearby; avoid needless
 repetition of full names.
+
+For comparisons, explicitly identify the variables and groups whose MI
+values are being compared. For example, name stimulus--response MI estimated
+from trials under each condition rather than "their MI" when several nouns
+could be its antecedent. Distinguish the MI estimated from a collection of
+trials from an individual trial, which provides one observation.
+Also name the methods or estimators attached to ordered results when their
+identity would otherwise need to be recalled from a preceding passage.
+Make clear whether a stated change is across population pairs, sample sizes,
+constructions or statistical methods.
 
 Omit incidental editorial and logistical commentary: notes about how the
 document is presented, obvious workflow properties, and assurances about

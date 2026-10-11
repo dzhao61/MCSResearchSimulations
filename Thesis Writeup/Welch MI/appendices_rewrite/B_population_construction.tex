@@ -107,7 +107,7 @@ formula and root search apply to every primary-study setting.
 Equal MI & All four sizes and three margin regimes;
 \(I(P)=I(Q)=0.02\); equal sample sizes
 \(n\in\{10,20,50,100,250,500,1000,2500,10000,50000\}\).\\
-Association & \(4\times4\), different skew;
+Population MI & \(4\times4\), different skew;
 \(I(P)=I(Q)\in\{0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\}\);
 \(n\in\{100,1000\}\).\\
 Detection & All four sizes with different skew, plus uniform and same-skew
@@ -189,8 +189,9 @@ known \(\Delta\). Its observed sampling variance is
 where \(M\) counts the finite differences used. Centre at their sample
 mean, rather than the true difference, so this measures variance
 separately from bias. Include finite differences even when the test
-output is invalid. Individual corrected MI biases are calculated in
-the same way against \(I(P)\) and \(I(Q)\).
+output is invalid. For \(P\) and \(Q\), the individual corrected MI biases
+are the mean finite corrected MI estimates minus \(I(P)\) and \(I(Q)\),
+respectively.
 
 For the estimated/observed variance ratio, restrict both averages to
 the same repetitions with a finite difference and finite squared
@@ -263,7 +264,7 @@ These intervals are used for both rejection and validity rates
 
 For the paired method contrast, let \(D_s\) equal the Wald
 valid-rejection indicator minus the Expanded Welch valid-rejection
-indicator on pair \(s\). The approximate interval for their average
+indicator on pair \(s\). The approximate interval for the average paired difference
 \(\bar D\) is
 \begin{equation}
  \bar D\ \pm\ 1.96
