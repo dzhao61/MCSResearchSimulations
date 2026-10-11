@@ -5,6 +5,22 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Straightforward narrative pass (11 October 2026):** The user approves the
+ten changes in NARRATIVE_REVIEW_2026-10-11.md. Finish each primary explanation
+before introducing supporting checks. Keep one clear motivation for each
+study, consolidate the research gap, and leave measured results in the
+results chapter. Give Chapter 6 the evidence and mechanisms, Chapter 7 the
+practical synthesis, and Chapter 8 the contribution, answer and next steps.
+Remove corrective framing and redundant numerical enumeration without
+removing scientific qualifications or evidence. Retain developed paragraphs
+and useful derivation steps; direct writing does not mean fragmentary prose.
+Relocate detailed timing procedure to Appendix B and separate derivative
+verification from the zero-component argument in Appendix A. Preserve the
+mathematics, citations, Section 2.3, Chapters 1/3/4, all data and historical
+working drafts. No experiments are rerun. All 217 tests and the active build
+pass. The PDF has 101 pages, including 57 main-text pages; final verification
+is recorded in SUBMISSION_CHECK.md. Earlier pass counts below are historical.
+
 **Statistical power terminology (11 October 2026):** The user approves the
 terminology change but does not want a glossary. Introduce statistical power
 as the probability of rejecting equal MI when the population MI values
@@ -269,7 +285,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (11 October statistical power terminology pass) | 59 pages | 102 pages |
+| Current focused Welch-MI manuscript (11 October straightforward narrative pass) | 57 pages | 101 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -282,9 +298,9 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,685
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-67
-(printed pages 1-59). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 17,044
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
+(printed pages 1-57). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Last verified chapter allocation
@@ -297,11 +313,11 @@ preserving these lengths.
 | Chapter | Current pages | Required purpose |
 | --- | ---: | --- |
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
-| 2. Background and Literature Review | 14 | Teach the necessary concepts and locate the contribution in verified prior work. |
+| 2. Background and Literature Review | 13 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 7 | Explain copying across table sizes, the three controlled studies, diagnostics, construction and allocation checks, sampling and evaluation; put complete reproduction details in Appendix B. |
-| 6. Experimental Results and Discussion | 14 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. Include the self-contained shopping application. |
+| 6. Experimental Results and Discussion | 13 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 main null settings and focused supporting results in Appendix C. Include the self-contained shopping application. |
 | 7. Implications and Limitations | 3 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
 | 8. Conclusion | 2 | Restate contributions and impact, limitations, future work and the resulting recommendation. |
 

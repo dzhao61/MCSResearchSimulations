@@ -275,3 +275,17 @@ contrast. Cross-construction comparisons use independent simulation
 streams, as do different sample allocations, so their difference uncertainty is not calculated from paired
 indicators. All intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
+
+\section{Timing procedure}
+\label{sec:timing-procedure}
+
+Scalar-call timings are measured on an arm64 machine running macOS
+26.6.2, Python 3.13.5, NumPy 2.4.4 and SciPy 1.17.1. Each setting
+uses 200 pre-generated different-skew null table pairs at
+\(n=1{,}000\), covering \(2\times2\) through \(16\times16\) tables.
+Sampling and population construction are excluded from the timings.
+After 20 warm-up calls per method, five timed passes are made through
+the 200 pairs. Calls are timed individually, and the method order
+alternates between passes. The median and interquartile range of the
+resulting 1,000 calls per method and setting are reported in
+Table~\ref{tab:focused-runtime}.

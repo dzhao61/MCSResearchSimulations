@@ -50,13 +50,12 @@ Validity and calibration therefore answer different questions.
 
 The \(16\times16\) table shows that valid calculations need not be
 well calibrated. At \(n=1{,}000\), every calculation is valid, yet Wald
-rejects at 0.2522 and Expanded Welch at 0.2402. Their Wilson intervals
-are approximately [0.2462, 0.2583] and [0.2343, 0.2462]. The paired
-reduction is 0.0120, with approximate 95\% interval [0.0105, 0.0135],
+rejects at 0.2522 and Expanded Welch at 0.2402. The paired reduction
+is 0.0120, with approximate 95\% interval [0.0105, 0.0135],
 so Expanded Welch's larger cutoff lowers rejection but leaves a large
 excess of false positives. At \(n=10{,}000\) the rates are 0.0463 and 0.0453;
-at 50,000 they are 0.0477 and 0.0474. More observations substantially
-improve this setting, although the path is not a simple steady decline.
+both remain near 5\% at 50,000. More observations substantially
+improve this setting.
 The next comparison asks how much of this pattern changes with the margins.
 
 \subsection{Changing the margin regime}
@@ -89,7 +88,7 @@ uneven margins alone.
 
 Bias in the estimated MI difference and errors in its standard error help
 explain this contrast.
-Table~\ref{tab:focused-diagnostics} reports the four preselected
+Table~\ref{tab:focused-diagnostics} reports four
 different-skew null settings. Observed SD is the sample standard deviation
 of the corrected MI difference. Estimated SD is the square root of the
 mean squared standard error, rather than the mean standard error. The
@@ -128,16 +127,6 @@ remove the error in sparsely sampled information estimates. In this
 copying setting, an average of 147 of \(P\)'s 256 cells and 183 of
 \(Q\)'s cells are empty.
 
-The four-cell construction gives a similar failure at the matched
-\(16\times16\), \(n=1{,}000\) null setting. Its difference bias is
-0.03145 nats, and the false-positive rates are 0.3095 for Wald and
-0.2977 for Expanded Welch, with every calculation valid. The shifted
-difference and excessive rejection therefore occur under both tested
-arrangements of association. At \(n=10{,}000\), the four-cell rates
-are 0.0499 and 0.0491, and its difference bias is much smaller.
-Appendix Table~\ref{tab:large-construction-check} gives the full matched
-comparison.
-
 For the copying \(16\times16\), \(n=1{,}000\) pair, estimated uncertainty
 is also inaccurate: mean squared standard error is about 1.94 times the
 observed variance. Excessive false
@@ -148,9 +137,19 @@ the improved null rate. The population first-order variance is about
 0.60 times the observed variance at \(n=1{,}000\), compared with 0.84
 at 10,000, showing that the approximation itself also needs attention.
 These diagnostics describe distinct errors; they do not divide the
-rejection rate into additive contributions. Expanded Welch changes none
-of these shared estimates. Its separate role is to change the rejection
-cutoff, which the population-MI study examines next.
+rejection rate into additive contributions.
+
+The four-cell construction gives a similar failure at the matched
+\(16\times16\), \(n=1{,}000\) null setting. Its difference bias is
+0.03145 nats, and the false-positive rates are 0.3095 for Wald and
+0.2977 for Expanded Welch, with every calculation valid. The shifted
+difference and excessive rejection therefore occur under both tested
+arrangements of association. At \(n=10{,}000\), the four-cell rates
+are 0.0499 and 0.0491, and its difference bias is much smaller.
+Appendix Table~\ref{tab:large-construction-check} gives the full matched
+comparison. Expanded Welch leaves the shared estimates unchanged;
+the next study examines how common population MI affects its estimated
+degrees of freedom and rejection cutoff.
 
 \section{Population MI and degrees of freedom}
 \label{sec:mechanism-results}
@@ -292,9 +291,8 @@ true difference becomes more negative, it offsets more of that bias.
 The centre of the estimated difference therefore moves towards zero
 rather than away from it. Dividing by the estimated standard error
 can then give smaller absolute statistics, despite the larger population
-difference. The declining rejection rate is a consequence of comparing
-biased estimates, not evidence that the two population MI values have
-become more similar. The full-range comparison
+difference. Unequal estimation bias therefore makes rejection fall as
+the true difference grows over this range. The full-range comparison
 shows rejection rising again at larger differences.
 
 The bias can also reverse the estimated direction of the difference.
@@ -304,19 +302,24 @@ Welch rejections have a positive estimated difference, indicating larger
 MI for \(P\). The rejection curves count all two-sided rejections;
 they do not show whether the estimated ordering is correct.
 Appendix Table~\ref{tab:rejection-direction} separates these outcomes.
-Under the matched four-cell construction, 2,493 of 2,494 Wald
-rejections and 2,350 of 2,351 Expanded Welch rejections also indicate
-the opposite ordering. Concentrating association in four cells therefore
-does not resolve this estimated-direction error at \(n=1{,}000\).
 
 At \(n=10{,}000\), the \(16\times16\) bias is much smaller, and
 power increases across the small differences. For a 0.01-nat difference,
 Wald's estimated power is 0.6992 and Expanded Welch's is 0.6968; by 0.02
 the rates are 0.9932 and 0.9931. Every rejection in these two larger-sample
-comparisons has the correct negative estimated direction. The larger sample therefore improves
-both the null behaviour and power. High rejection in
-the smaller sample was not evidence of a more sensitive test.
+comparisons has the correct negative estimated direction. The larger
+sample therefore improves both the null behaviour and power.
 
+Under the matched four-cell construction at \(n=1{,}000\),
+2,493 of 2,494 Wald rejections and 2,350 of 2,351 Expanded Welch rejections
+also indicate the opposite ordering. Concentrating association in four
+cells therefore leaves the estimated-direction error at this sample size.
+At \(n=10{,}000\), every rejection under either construction has the
+correct estimated direction, as shown in Appendix
+Table~\ref{tab:large-construction-check}.
+
+The jackknife check asks whether changing the MI bias correction can
+improve the estimated ordering without changing the rejection cutoff.
 Replacing Wald's analytic MI bias correction with a jackknife correction
 reduces wrong-direction rejections from 2,009 to 5 for the 0.01-nat
 alternative at \(n=1{,}000\). The check retains the existing standard
@@ -354,9 +357,7 @@ errors are close to these observed SDs. The same population difference
 is therefore easier to distinguish from sampling variation under the
 uniform construction. Equal MI targets do not imply equal precision:
 the cell probabilities also determine the variance in
-Equation~\eqref{eq:background-two-sample-variance}. This connects the
-margin comparison to the first-order MI variance, rather than to the
-choice of rejection cutoff alone.
+Equation~\eqref{eq:background-two-sample-variance}.
 
 At \(n=1{,}000\), Expanded Welch's larger cutoff produces a
 more visible reduction in power, while all three null points are
@@ -366,34 +367,26 @@ every simulated pair in all three regimes at both sample sizes.
 The supporting four-cell check gives the same qualitative comparison
 at its matched \(4\times4\) settings: Expanded Welch lowers an
 already-low null rate at \(n=1{,}000\), and changes power little
-at 10,000. Appendix~\ref{app:additional-results} gives the rates and
-diagnostics. This agreement supports the representative comparison
-across those two constructions, while the main curves retain their
-specific copying populations.
+at 10,000. Appendix Table~\ref{tab:construction-check} gives the
+rates and diagnostics for both constructions.
 
 The unequal-sample check keeps these \(4\times4\) different-skew
-populations fixed and allocates 2,000 observations as \((1000,1000)\),
-\((400,1600)\) or \((1600,400)\). Appendix
-Table~\ref{tab:allocation-check} reports the full comparison. Under equal
-MI, the two unequal allocations give Wald rates 0.0463 and 0.0454;
-Expanded Welch reduces them to 0.0306 and 0.0252. For the 0.01-nat
-difference, giving \(Q\) only 400 observations reduces power to
+populations fixed and changes the allocation of 2,000 observations.
+For the 0.01-nat difference, giving \(Q\) only 400 observations reduces power to
 0.0540 for Wald and 0.0340 for Expanded Welch, compared with their
 balanced rates of 0.1132 and 0.1013.
-Giving \(Q\) 1,600 observations instead gives 0.1295 and 0.0997.
 All calculations are valid. The lower degrees of freedom under imbalance
-increase Expanded Welch's rejection cutoff. Unequal samples change power,
-but Expanded Welch still moves already-conservative false-positive rates
-further below 5\%.
+increase Expanded Welch's rejection cutoff, moving already-conservative
+false-positive rates further below 5\%. Appendix
+Table~\ref{tab:allocation-check} reports both allocation directions.
 
 \section{Computation and practical implications}
 
-Table~\ref{tab:focused-runtime} reports scalar-call timings on an arm64
-machine running macOS 26.6.2, Python 3.13.5, NumPy 2.4.4 and SciPy 1.17.1.
-Each setting uses 200 pre-generated different-skew null table pairs at
-\(n=1{,}000\), 20 warm-up calls per method and five timed passes.
-Calls are timed individually, the method order alternates between passes,
-and the table shows the median and interquartile range of 1,000 calls.
+Table~\ref{tab:focused-runtime} compares time per test call on
+different-skew null table pairs at \(n=1{,}000\). The timings exclude
+sampling and population construction. Appendix
+Section~\ref{sec:timing-procedure} gives the measurement procedure and
+computing environment.
 
 \begin{table}[htbp]
 \centering
@@ -413,10 +406,9 @@ Size & Normal Wald & Expanded Welch\\
 
 Expanded Welch costs approximately 1.7--1.8 times as much in these timings.
 Both methods require \(O(k^2)\) work for a \(k\times k\) table, but
-fixed call overhead can be important for these small arrays. The statistical
-trade-off is more consequential than this modest absolute cost: the
-larger cutoff helps only when its lower rejection improves an excessive
-false-positive rate without too much loss of power or validity.
+fixed call overhead can be important for these small arrays. Median
+times remain below 100 microseconds for Wald and 160 microseconds for
+Expanded Welch across the four table sizes.
 
 \section{Application to Online Shopping Data}
 \label{sec:shoppers-application}
@@ -513,5 +505,5 @@ Expanded Welch gives larger p-values than Normal Wald while preserving the
 month--purchase and weekend--purchase MI differences and, here, both test
 decisions. Its degrees of freedom depend on the relative variability of
 the MI variance estimates, so large session counts alone need not make its
-p-values close to Normal Wald's. The results describe
-associations in the recorded sessions, not causal effects of visit timing.
+p-values close to Normal Wald's. These comparisons describe the
+month--purchase and weekend--purchase associations in the recorded sessions.

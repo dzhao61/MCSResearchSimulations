@@ -1,5 +1,47 @@
 # Thesis completion check
 
+## Straightforward narrative: 11 October 2026
+
+All ten recommendations in NARRATIVE_REVIEW_2026-10-11.md are implemented.
+Chapter 6 completes the copying-population bias and uncertainty explanation
+before the four-cell check, and the small/large-sample power comparison
+before supporting construction and jackknife results. Supporting allocation
+and construction summaries retain their findings with focused appendix
+pointers. The jackknife introduction is beside the other design checks.
+Section 2.5 and study motivations are consolidated; the literature no longer
+previews the thesis's measured small-MI result. Chapter 7 gives practical
+recommendations without re-teaching the result mechanisms, and Chapter 8
+retains contributions, limitations and future work. Corrective framing and
+redundant numerical summaries are shortened. Appendix B.7 retains the full
+timing environment and procedure, and Appendix A.6 separates derivative
+verification from the zero-component limitation. The report itself remains
+the historical pre-edit review.
+
+All 140 displayed mathematical blocks, 70 citation commands and existing
+labels are preserved. Two labels are added for the new appendix sections.
+Section 2.3 and Chapters 1, 3 and 4 are byte-identical, as are the Chapter 7
+evidence limitations and Chapter 8 limitations/future-work sections. All
+10773 scientific preservation hashes and the new 10079-file evidence,
+asset and historical-artifact manifest match. The four historical working
+drafts and experiment supplement ZIP are unchanged. No statistical method,
+population, sampled record, figure or numerical table changes; no experiment
+is rerun. The study remains 240 settings, 70 pairs and 4800000 sampled pairs.
+
+All 217 tests pass: 174 Welch-project, 27 DifferentialMI and 16 practical-data
+tests. The active build has no warnings, unresolved references/citations,
+missing characters or overfull/underfull boxes. All 101 pages are rendered
+for contact-sheet review, with detailed inspection of 15 affected pages.
+The PDF has eight front-matter, 57 main-text, 31 appendix and five
+bibliography pages. The main-text token diagnostic is 17044, extracted from
+PDF pages 9-65. Typography, margins and figure dimensions are unchanged;
+page counts follow the revised prose and relocated timing procedure.
+
+The separately extracted source builds cleanly and produces identical
+101-page layout text. The named delivery PDF matches main.pdf. The source
+archive retains its 56-member inventory, with CRC and member-content checks;
+the experiment supplement remains unchanged. Delivery checksums are refreshed
+and verified. The archived review remains separate from the manuscript.
+
 ## Statistical power terminology: 11 October 2026
 
 The Introduction defines statistical power as the probability of rejecting

@@ -17,8 +17,7 @@ Three questions organise the study: how sample size and population structure
 affect false positives, how common population MI changes Expanded Welch's
 estimated degrees of freedom, and how its larger rejection cutoff affects
 power to detect a true MI difference. Table~\ref{tab:design-families}
-summarises the comparisons. Holding the other stated factors fixed makes
-each change easier to interpret. Specifying the questions, populations,
+summarises the comparisons. Specifying the questions, populations,
 methods and performance measures follows the simulation-design guidance of
 \citet{morris2019}.
 
@@ -99,9 +98,8 @@ For \(Q\), use \(a=(0.8,0.2)\) and a copying probability of approximately
  Q\simeq\begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
  \label{eq:design-example-pair}
 \end{equation}
-Both joint distributions have positive MI, and their true difference has
-magnitude 0.01 nats. Sampling changes the estimated MI values, but the
-population difference used to assess power remains 0.01 nats.
+Both joint distributions have positive MI, and the true difference used
+to assess power has magnitude 0.01 nats.
 
 \medskip
 \thesisminiheading{Table sizes and margin regimes.}
@@ -176,18 +174,13 @@ and changes the common positive MI:
  I(P)=I(Q)\in\{0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\}.
  \label{eq:association-grid}
 \end{equation}
-Repeating this sweep at \(n=100\) and 1,000 separates the effect of
-common population MI from a change in sample size. The estimated degrees
-of freedom connect the observed rejection rates to the cutoff from the
-Student \(t\) distribution. All targets are positive, so this study
-approaches independence without evaluating its exact boundary.
-
-Holding table size and margins fixed shows how rejection rates and
-estimated degrees of freedom change with population MI. The small positive
-targets examine where the first-order MI variance becomes small; the larger
-targets show whether the same tests behave differently away from that
-region. Two sample sizes show whether the pattern across MI values
-persists when more data are available.
+The sweep is repeated at \(n=100\) and 1,000. Small positive MI targets
+approach independence, where the first-order MI variance becomes small;
+larger targets show how the tests behave away from that region. Tracking
+the estimated degrees of freedom connects changes in rejection to the
+cutoff from the Student \(t\) distribution. The two sample sizes show
+whether these patterns persist with more observations. All targets are
+positive, so the sweep approaches rather than reaches exact independence.
 
 \subsection{Power to detect MI differences}
 
@@ -199,19 +192,16 @@ using
  \label{eq:detection-grid}
 \end{equation}
 At \(n=1{,}000\) and 10,000, compare all four sizes under different skew,
-then all three margin regimes at \(4\times4\). Keeping the zero-difference
-point in each curve makes power interpretable alongside false positives.
+then all three margin regimes at \(4\times4\).
 The signed thesis parameter is \(\Delta=I(P)-I(Q)\), which is negative
 when \(Q\) has the larger MI; figures use its known nonnegative magnitude.
 
-The two sample sizes connect power to the null study at the same
-population settings. Keeping \(P\)'s MI fixed makes each curve start
-from a common baseline as \(Q\)'s MI increases. Small differences show
-the range in which the methods may disagree; the larger differences
-show whether power eventually becomes high. Reading each curve
-from its zero-difference point prevents high rejection under alternatives
-from being mistaken for useful sensitivity when false positives are
-already excessive.
+Keeping \(P\)'s MI fixed gives each curve a common starting population
+as \(Q\)'s MI increases. Small differences show where the methods may
+disagree; larger differences show whether power eventually becomes high.
+Each curve includes the corresponding equal-MI setting from the null
+study, so power can be read alongside the false-positive rate at the
+same sample size.
 
 \subsection{A supporting change in construction}
 
@@ -253,6 +243,15 @@ estimators and validity rules to every allocation. Its two balanced
 comparisons are already part of the main studies, so the unequal
 allocations add four settings.
 
+\medskip
+\thesisminiheading{A supporting bias-correction check.}
+
+A jackknife check changes the MI bias correction while keeping the
+original standard errors and standard normal distribution cutoff. It
+uses the same samples from four existing \(16\times16\) different-skew
+copying settings. Appendix Section~\ref{sec:jackknife-difference-check}
+specifies the correction and reports all four comparisons.
+
 The complete design contains 70 population pairs and 240 distinct settings.
 Shared settings, such as the zero-difference points in the power study,
 use the same simulation results in each comparison. At 20,000 repetitions
@@ -262,9 +261,8 @@ per setting, the study samples 4,800,000 table pairs.
 
 For each setting, draw 20,000 independent multinomial count-table pairs
 from its fixed \(P\) and \(Q\). The samples from the two populations are
-independent, and both methods are applied to the same pair. Copying creates
-dependence between \(X\) and \(Y\) within an observation, not between
-the two population samples. The MI estimator, bias correction and standard
+independent, and both methods are applied to the same pair. The MI estimator,
+bias correction and standard
 error are those in Chapter~\ref{chap:baselines}; the Expanded Welch
 calculation is given in Chapter~\ref{chap:expanded}.
 
@@ -301,23 +299,18 @@ Comparing the observed variance with
 \(V(P)/n_P+V(Q)/n_Q\) separately checks the first-order approximation
 with its population inputs.
 
-A supporting jackknife check changes the MI bias correction while keeping
-the original standard errors and normal distribution cutoff. It uses the
-same samples from four existing \(16\times16\) different-skew copying
-settings, specified in Appendix Section~\ref{sec:jackknife-difference-check}.
-
 Degrees-of-freedom summaries use the median and 5th--95th percentile range
 among valid Expanded Welch outputs. This range describes differences
 between sampled results, not uncertainty in the estimated median.
 Empty-cell, row and column counts describe sparse sampling.
 The diagnostics retain finite estimates even if the associated test is
 invalid; Appendix~\ref{app:construction} specifies the subsets used in
-each comparison. These measures help explain the curves without changing
-the test or excluding sparse settings.
+each comparison.
 
 Finally, a small timing comparison measures the computational cost on
 pre-generated \(2\times2\) through \(16\times16\) table pairs at
 \(n=1{,}000\) under different skew. Sampling and population construction
 are excluded from the timings. Both methods scan the cells, so their
 operation counts grow linearly with the number of cells. The timing
-procedure and measurement environment are reported with the results.
+procedure and measurement environment are given in Appendix
+Section~\ref{sec:timing-procedure}.

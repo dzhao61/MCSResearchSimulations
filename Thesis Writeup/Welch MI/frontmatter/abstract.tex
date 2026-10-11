@@ -25,14 +25,14 @@ and the predicted sampling variability of the estimated MI variance.
 Expanded Welch's larger cutoff lowers rejection, helping where Wald rejects
 equal MI too often but making conservative rates lower still. Near independence,
 small estimated degrees of freedom reinforce this conservatism. In
-\(16\times16\) different-skew copying tables at \(n=1{,}000\), unequal MI
-bias shifts the estimated difference away from zero: false-positive
-rates are 0.2522 for Wald and 0.2402 for Expanded Welch despite full
-validity. At small nonzero differences, this bias can also reverse the
-estimated direction among rejections. Excessive false positives and reversed
-ordering also occur under the matched four-cell construction.
-At \(n=10{,}000\), bias is much smaller under both constructions.
-Larger samples also improve power and reduce the difference between methods.
+\(16\times16\) tables with different marginal probabilities at
+\(n=1{,}000\), unequal MI bias shifts the estimated difference away
+from zero. In the primary construction, false-positive rates are
+0.2522 for Wald and 0.2402 for Expanded Welch, with every calculation
+valid. At small nonzero differences, this bias can also reverse the
+estimated ordering among rejections. Both failures persist under the
+second tested association pattern. Larger samples substantially reduce
+bias, improve power and bring the two methods closer together.
 
 The evaluation does not support Expanded Welch as a general replacement
 for Normal Wald. Its larger rejection cutoff cannot correct errors in the

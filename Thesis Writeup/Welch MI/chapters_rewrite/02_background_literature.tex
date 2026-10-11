@@ -572,11 +572,7 @@ These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
 distribution can widen the intervals and reduce excessive rejection in such
-settings. In the small-MI comparisons in
-Section~\ref{sec:mechanism-results}, the average squared plug-in standard
-error instead exceeds the measured variance of the estimated difference.
-The larger cutoff leaves that variance error unchanged and makes an
-already-conservative test reject less often.
+settings.
 
 \medskip
 \thesisminiheading{Previous work on MI uncertainty and comparisons.}
@@ -656,10 +652,7 @@ a difficulty. A cell with no observations has zero probability in an
 ordinary empirical bootstrap, so it cannot appear in any resample. The
 resampling distribution can therefore miss error arising from unobserved
 categories, a concern in sparse information estimation
-\citep{paninski2003}. Repeating the calculation also costs more than one
-analytic test call, but computational cost alone does not establish which
-method is statistically preferable. Bootstrap performance for these
-equal-MI comparisons remains a useful empirical question.
+\citep{paninski2003}.
 
 A simple permutation test instead combines the two samples and shuffles
 their group labels. That shuffle is justified when
@@ -676,32 +669,27 @@ Existing work provides the leading bias and sampling variance of MI
 \citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
 Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
 \citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
-regression variance estimate to choose degrees of freedom. Choosing
-MI-specific degrees of freedom in this way requires calculating how the
-estimated MI variance changes with the observed table.
+regression variance estimate to choose degrees of freedom. Applying this
+approach to MI requires calculating how the estimated MI variance changes
+with the observed table, including changes to the cell probabilities,
+row and column totals, and pointwise MI values.
 
 These results address two successive sources of uncertainty. The MI
 sampling variance describes how much the MI estimate varies
 between samples. The variability of the estimated MI variance describes
 how consistently those samples estimate that uncertainty. This thesis
-derives the variability of the estimated MI variance and uses it within
-the established Welch--Satterthwaite framework. The resulting test retains the same MI
-difference and standard error as Normal Wald, allowing the experiment
-to isolate the consequences of its larger rejection cutoff.
+derives the observation-level sensitivity needed to calculate the second
+quantity and uses it to choose degrees of freedom within the established
+Welch--Satterthwaite framework. The resulting Expanded Welch test retains
+Normal Wald's MI difference and standard error, so their comparison
+isolates the consequences of the larger rejection cutoff.
 
-A new observation changes the empirical cell probabilities, row and column
-totals, and pointwise MI values. The remaining calculation is how these
-changes affect the estimated MI variance. This thesis uses that calculation
-to choose the degrees of freedom for a Student \(t\) distribution, then
-compares Expanded Welch's false-positive rates and power with Normal
-Wald's.
-That evaluation also needs to examine the shared estimates themselves.
+The experiment measures errors in the shared MI difference and standard
+error alongside false-positive rates and power.
 \citet{paninski2003} shows that finite-sample information estimates can
-retain substantial bias after a leading correction. A larger rejection
-cutoff does not remove such bias, nor does it replace a poor first-order
-variance approximation. The experiment therefore measures these errors
-alongside rejection, because a lower rejection rate can leave the
-underlying estimation problem unchanged.
+retain substantial bias after a leading correction. Such bias or an
+inaccurate first-order variance approximation can undermine both tests,
+even when Expanded Welch lowers rejection.
 Chapter~\ref{chap:baselines} defines this shared statistic before
 Chapter~\ref{chap:expanded} derives the sampling variability of the estimated
 MI variance used to choose Expanded Welch's degrees of freedom.

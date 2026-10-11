@@ -77,7 +77,19 @@ tables. Curves that include equal MI retain rejection-rate captions; their
 zero point estimates false positives rather than power. The two table
 reporting templates use the same terminology. No glossary is added, and
 no calculations, numerical evidence or historical working drafts change.
-The current PDF has 102 pages, including 59 main-text pages; verification is
+The narrative-review pass implements the ten recommendations in
+NARRATIVE_REVIEW_2026-10-11.md. It completes primary result explanations
+before construction checks, shortens supporting summaries, consolidates
+the research gap and design motivations, and removes premature result
+previews and corrective framing. Chapter 7 concentrates on practical
+recommendations, while Chapter 8 retains contributions, limitations and
+future work. Timing reproduction details move to Appendix B.7, and the
+derivative verification receives its own Appendix A.6 section. The
+abstract keeps one headline comparison without unexplained construction
+names. The review report remains a historical pre-edit record.
+All displayed mathematics and citations, Section 2.3, Chapters 1/3/4,
+scientific evidence, figures and older working drafts are preserved.
+The current PDF has 101 pages, including 57 main-text pages; verification is
 recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction
