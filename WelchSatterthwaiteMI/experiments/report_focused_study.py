@@ -127,8 +127,8 @@ def association_figure(rates, diagnostics, output):
 
 
 def detection_sizes(frame, output, full=False):
-    fig, axes = plt.subplots(2, 2, figsize=(WIDTH, 4.45))
-    fig.subplots_adjust(left=.12, right=.975, top=.83, bottom=.13, hspace=.4, wspace=.3)
+    fig, axes = plt.subplots(2, 2, figsize=(WIDTH, 4.9))
+    fig.subplots_adjust(left=.12, right=.975, top=.83, bottom=.13, hspace=.65, wspace=.3)
     for k, ax in zip((2, 4, 8, 16), axes.ravel(), strict=True):
         for n in (1000, 10000):
             part = frame[(frame.k==k)&(frame.n_p==n)]
@@ -231,7 +231,7 @@ def write_supporting_tables(diagnostics, rates, output):
     for (construction, n, difference), row in pivot.iterrows():
         setting = selected[(selected.construction==construction)&(selected.n_p==n)&(selected.difference==difference)].iloc[0]
         bias = diag.loc[setting.configuration_id, "difference_bias"]
-        lines.append(f"{'Copying' if construction=='copying' else 'Four-cell'} & {n:,} & {difference:g} & {row.normal_wald:.4f} & {row.expanded_welch:.4f} & {bias:.5f}" + r"\\")
+        lines.append(f"{'Copying' if construction=='copying' else 'Four-cell'} & {n:,} & {abs(difference):g} & {row.normal_wald:.4f} & {row.expanded_welch:.4f} & {bias:.5f}" + r"\\")
     lines.extend([r"\bottomrule\end{tabular}"])
     (output / "focused_construction_table.tex").write_text("\n".join(lines)+"\n")
 
@@ -247,7 +247,7 @@ def main():
     displays = pd.read_csv(args.results / "display_manifest.csv", keep_default_na=False)
     rates = pd.read_csv(args.results / "method_results.csv")
     rates = rates[rates.denominator.eq("all")].merge(configs, on="configuration_id")
-    rates["difference"] = -rates.delta
+    rates["difference"] = rates.delta.abs()
     diagnostics = pd.read_csv(args.results / "diagnostics.csv").merge(configs, on="configuration_id")
     def study(frame, name):
         ids = displays.loc[displays.study.eq(name), "configuration_id"]

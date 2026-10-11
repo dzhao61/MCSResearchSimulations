@@ -140,6 +140,53 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \ref{chap:baselines} corrects this sample-size effect by subtracting
 \((r-1)(c-1)/(2n)\) from each estimate.
 
+\medskip
+\thesisminiheading{Estimation beyond the leading bias correction.}
+
+Sparse samples can require more information than table size and sample size
+provide. \citet{panzeri1996} derive analytical bias corrections that account
+for the categories with nonzero population probability, but these remain
+large-sample approximations. \citet{paninski2003} shows that substantial
+error can remain after standard corrections, including the jackknife,
+when many categories are poorly sampled. \citet{chaoshen2003} instead
+adjust entropy for categories missing from the sample. Their method uses
+sample coverage, the total population probability of the categories that
+have been observed, and accounts for the different probabilities of
+discovering common and rare categories.
+
+Bayesian estimators model the unknown probabilities rather than treating
+observed proportions as the complete population.
+\citet{nemenman2002} combine priors, or probability weights on possible
+populations, to avoid favouring a narrow range of entropy values before
+observing the data. This is the Nemenman--Shafee--Bialek (NSB) estimator.
+More recently, \citet{piga2024} estimate the strength of a Dirichlet prior
+from the observed counts. This strength controls how much the probability
+estimates are drawn towards a uniform distribution, including for
+unobserved categories. These approaches estimate entropy and related
+quantities by accounting for uncertainty about the underlying distribution.
+
+Entropy estimators can also be combined to estimate MI through
+\(I(X;Y)=H(X)+H(Y)-H(X,Y)\), as in
+Equation~\eqref{eq:mi-entropy-form}. \citet{archer2013} study this route
+alongside estimators that model the joint probabilities directly. Combining
+three separately constructed Bayesian entropy estimates need not correspond
+to one joint probability model and can produce negative MI estimates.
+Nevertheless, these combined estimators generally outperform the authors'
+fully Bayesian MI estimator in their tested examples. The comparison
+shows that Bayesian MI estimation still depends on how the probabilities
+are modelled.
+
+The sampling pattern can also suggest a more targeted estimator.
+\citet{hernandez2019} consider a well-sampled, low-entropy variable paired
+with a variable whose many categories are poorly sampled. They use the
+well-estimated marginal and model the conditional probabilities to estimate
+MI, rather than estimating three entropies separately. Their results also
+show that combining Bayesian entropy estimates can retain bias under severe
+undersampling. Estimation errors need not cancel when MI estimates from
+two distinct populations are subtracted. The two-sample problem therefore
+requires both a small bias in the estimated difference and a standard error
+that describes its sampling variation.
+
 \section{Sampling variance of plug-in MI}
 \label{sec:first-order-mi-background}
 
@@ -587,10 +634,28 @@ not the MI of two variables within each population.
 \medskip
 \thesisminiheading{Resampling alternatives.}
 
-A bootstrap would draw many new samples from the observed tables to estimate
-how much the test statistic varies. This requires repeating the calculation
-many times \citep{efron1979}. A simple permutation test instead combines the
-two samples and shuffles their group labels. That shuffle is justified when
+A bootstrap approximates sampling variation by repeatedly drawing samples
+with replacement from the observed data \citep{efron1979}. For this
+comparison, samples would be drawn separately from the two observed tables,
+using their original sample sizes, and the MI difference recalculated for
+each pair. This preserves differences between the observed populations and
+provides an estimated distribution of the MI difference. The bootstrap
+variation around the observed estimate could then be used to construct
+an uncertainty interval for the population difference and assess whether
+that interval includes zero.
+
+Resampling can help estimate uncertainty or bias, but sparse tables remain
+a difficulty. A cell with no observations has zero probability in an
+ordinary empirical bootstrap, so it cannot appear in any resample. The
+resampling distribution can therefore miss error arising from unobserved
+categories, a concern in sparse information estimation
+\citep{paninski2003}. Repeating the calculation also costs more than one
+analytic test call, but computational cost alone does not establish which
+method is statistically preferable. Bootstrap performance for these
+equal-MI comparisons remains a useful empirical question.
+
+A simple permutation test instead combines the two samples and shuffles
+their group labels. That shuffle is justified when
 the populations have the same complete distribution, \(P=Q\). Our hypothesis
 requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
 equal. Shuffling labels could therefore test a stronger claim than this thesis

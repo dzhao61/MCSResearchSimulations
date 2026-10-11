@@ -29,6 +29,14 @@ design. Its numerical checks use the separate PracticalMIExploration
 records and the original source data; the six-comparison exploratory
 selection and Holm adjustment are disclosed in the section.
 
+The 11 October core pass strengthens the sparse-estimation literature and
+resampling discussion, adds a short information-dynamics motivation, and
+reduces repetition in the final chapters. It fixes detection-panel spacing,
+negative-zero display and prose/table rounding in the report generator and
+manuscript. No statistical method, simulation or older working draft changes.
+The current PDF has 97 pages, including 57 main-text pages; verification is
+recorded in SUBMISSION_CHECK.md.
+
 Two saved-sample analyses directly check the variance-variability prediction
 at six existing null settings and the estimated direction among rejections
 at four existing alternatives. Their appendix tables and main-text readings

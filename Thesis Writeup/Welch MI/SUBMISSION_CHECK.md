@@ -1,5 +1,58 @@
 # Thesis completion check
 
+## Core literature and presentation fixes: 11 October 2026
+
+The approved main fixes are implemented without changing the statistical
+methods, population definitions, sampled records or application results.
+Section 2.2 now explains analytical, coverage-based and Bayesian approaches
+to sparse information estimation, their entropy-to-MI connection and their
+conditions. Seven primary-source-checked references are added, including
+a 2024 study. Section 2.4 explains separate-sample bootstrap uncertainty
+and the unobserved-cell difficulty without treating computational cost as
+a statistical reason to exclude it. Chapter 1 adds an independent-trial
+information-dynamics motivation. Existing Welch-Satterthwaite precedents
+remain credited, and Section 2.3 is identical to the pre-pass source.
+
+The abstract and Introduction identify the larger-cutoff rejection reduction
+as a consequence of the method. Chapters 6-8 retain the empirical bias,
+direction and validity findings, with less repeated numerical discussion.
+The outdated future real-data-evaluation sentence is corrected to reflect
+the completed shopping application. The focused report generator fixes the
+overlapping panel labels in Figures 6.4 and C.2 and displays null differences
+as zero rather than negative zero in Table C.6. The observed SD is consistently
+0.01449, and the 8 x 8 uniform n=100 Wald rate is consistently 0.0736.
+
+All 196 workspace tests pass: 155 Welch-project, 27 DifferentialMI and 14
+practical-data tests. Three additional tests cover displayed zero,
+source-derived manuscript rounding and citation-key consistency; the existing
+eight-figure geometry test now also checks upper-label/lower-title overlap.
+All three independent raw-record audits pass. All 4879 preservation hashes
+match, covering tracked method sources, simulation records, practical inputs
+and results, the earlier working-draft artifacts and unchanged Chapters 3-4.
+No working draft was edited or rebuilt. The pre-pass manuscript and delivery
+PDF/source are preserved in archive/pre_core_fixes_20261011/manuscript.tar.
+
+The main PDF has 97 A4 pages: eight front-matter pages, 57 main-text pages,
+27 appendix pages and five bibliography pages. The source bibliography has
+45 entries, with 44 cited in the manuscript. The final build has no warnings,
+unresolved citations/references, missing characters or overfull/underfull boxes.
+The affected prose, figures, table and bibliography pages have been visually
+checked. The introduction roadmap fits with its scope paragraph instead of
+spilling onto a nearly empty page. Unchanged plots retain their original PDFs;
+regeneration was checked to differ only in creation-date metadata.
+
+The named PDF, source ZIP, experiment supplement and delivery checksums are
+refreshed. All 54 source-archive members and 9989 supplement-archive members
+match the workspace, with CRC and SHA-256 checks passing. The isolated source
+build produces the same 97 pages and identical pdftotext output without
+warnings. The combined extraction of the two archives passes all 98 bundled
+tests (71 Welch-project and 27 DifferentialMI), with no skips, and all three
+independent audits. It regenerates nine table fragments and three evidence
+JSON files byte-for-byte; all eight figure PDFs match after excluding
+creation-date metadata. The standalone supplement skips only its existing
+manuscript-consistency check when the separate source archive is absent.
+No optional jackknife or bootstrap experiment was run.
+
 ## Self-contained shopping application: 11 October 2026
 
 Section 6.5, Application to Online Shopping Data, is complete on printed

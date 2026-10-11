@@ -1,5 +1,33 @@
 # Targeted literature and contribution check
 
+## Sparse-estimation and research-context pass: 11 October 2026
+
+Section 2.2 now explains alternatives to the leading bias correction and
+their connection to MI through the entropy identity. Section 2.4 describes
+separate-sample bootstrap uncertainty, the difficulty of unobserved cells,
+and the distinction from pooled-label permutation. Chapter 1 adds a short
+information-dynamics motivation using independent categorical trials.
+These are literature and interpretation changes, not new methods evaluated
+in the experiment. The bibliography has 45 entries, including seven additions.
+The earlier entry counts and study scopes below are historical records.
+
+| New citation | Primary source checked | Limited use in the manuscript |
+| --- | --- | --- |
+| `panzeri1996` | [Author-hosted paper](https://people.sissa.it/~ale/Pan%2B96a.pdf), Network 7(1), 87-107, DOI 10.1088/0954-898X/7/1/006 | Analytical limited-sampling corrections with support-dependent terms; not a guarantee in severely sparse samples. |
+| `chaoshen2003` | [Publisher abstract and metadata](https://link.springer.com/article/10.1023/A:1026096204727), Environmental and Ecological Statistics 10, 429-443 | Coverage and unequal-discovery adjustments for entropy with unseen categories. The accessible abstract supports this mechanism, not a detailed MI test formula. |
+| `nemenman2002` | [Original proceedings paper](https://papers.neurips.cc/paper_files/paper/2001/file/d46e1fcf4c07ce4a69ee07e4134bcef1-Paper.pdf), Advances in Neural Information Processing Systems 14, 471-478 | Mixture priors reduce prior concentration on a narrow entropy range. The conference is dated 2001; the proceedings volume is published in 2002. |
+| `archer2013` | [Authors' institutional abstract and metadata](https://collaborate.princeton.edu/en/publications/bayesian-and-quasi-bayesian-estimators-for-mutual-information-fro/), Entropy 15(5), 1738-1755 | Combining Bayesian entropy estimates need not define one joint posterior, can give negative MI, and generally outperformed the authors' fully Bayesian estimator in their examples. No universal estimator ranking is claimed. |
+| `hernandez2019` | [Full original paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7515115/), Entropy 21(6), 623 | Conditional estimation when the lower-entropy marginal is well sampled; remaining bias in severely undersampled entropy-combination estimates. This is not validation of the shopping application. |
+| `piga2024` | [Author-hosted published paper](https://seeslab.info/media/filer_public/db/34/db340fb0-b003-47c6-8989-0dffcb54b865/piga-2024.pdf), Chaos, Solitons & Fractals 180, 114564 | Empirical-Bayes estimation of Dirichlet concentration for sparse probability and information-quantity estimation. No calibrated two-sample MI test is attributed to it. |
+| `lizier2014` | [Original journal article](https://www.frontiersin.org/journals/robotics-and-ai/articles/10.3389/frobt.2014.00011/full), Frontiers in Robotics and AI 1, 11 | MI as a relationship measure in information-dynamics research. The proposed independent-trial comparison is a motivating example, not a claim that JIDT implements Expanded Welch or that the thesis covers serially dependent data. |
+
+The bootstrap remains a possible future comparator. The manuscript makes no
+measured bootstrap timing claim and does not dismiss it on cost alone.
+Paninski (2003) supports the general sparse-estimation concern; the inability
+of empirical resampling to generate an unobserved cell follows directly from
+its zero empirical probability. Established Welch-Satterthwaite precedents
+remain credited in Sections 2.4-2.5, without a redundant novelty disclaimer.
+
 ## Targeted depth pass: 7 October 2026
 
 Sections 2.4-2.5 now distinguish the MI estimator's sampling variance

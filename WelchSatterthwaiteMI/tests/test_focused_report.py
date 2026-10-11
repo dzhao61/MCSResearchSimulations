@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -49,6 +50,14 @@ class FocusedReportTests(unittest.TestCase):
             self.assertLessEqual(box.x1, bounds.x1+1)
             self.assertLessEqual(box.y1, bounds.y1+1)
             self.assertEqual(ax.xaxis.label.get_fontsize() in (8, 9), True)
+            if ax.get_xlabel():
+                label_box = ax.xaxis.label.get_window_extent(renderer)
+                for other in fig.axes:
+                    if (other is not ax and other.get_title()
+                            and other.get_position().y1 < ax.get_position().y0):
+                        title_box = other.title.get_window_extent(renderer)
+                        self.assertFalse(label_box.overlaps(title_box),
+                                         "Upper-panel axis label overlaps lower-panel title.")
         plt.close(fig)
 
     def test_all_main_and_companion_figure_bounds(self):
@@ -119,6 +128,13 @@ class FocusedReportTests(unittest.TestCase):
         np.testing.assert_allclose(np.sqrt(frame.mean_estimated_variance),
                                    np.sqrt(frame.observed_variance), rtol=.01)
 
+    def test_construction_table_displays_zero_without_a_minus_sign(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            report.write_supporting_tables(self.diagnostics, self.rates, output)
+            table = (output / "focused_construction_table.tex").read_text()
+        self.assertNotIn(" & -0 & ", table)
+        self.assertEqual(table.count(" & 0 & "), 4)
 
 if __name__ == "__main__":
     unittest.main()

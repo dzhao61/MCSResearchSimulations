@@ -13,33 +13,24 @@ of the two methods therefore needs both measures: false positives show
 whether the reduction improves calibration, and detection shows its
 cost when population MI differs.
 
-The controlled studies show why a general rejection reduction is not a
-general improvement. At small positive MI, Wald is already conservative
-in the association-strength sweep, and Expanded Welch reduces rejection
-further. At \(16\times16\) with different skew and \(n=1{,}000\),
-both tests instead have excessive false positives despite full validity.
-There the adjustment provides only a small reduction. By
-\(n=10{,}000\), the bias and variance diagnostics improve and the
-methods give similar detection.
-
-Unequal estimation biases can produce an apparent change in association
-when population MI is equal. In
-Equation~\eqref{eq:focused-null-bias-shift}, the larger different-skew
-tables produce an estimated difference centred above zero even under
-equal MI. Increasing the rejection cutoff leaves that centre unchanged.
-When \(Q\) has slightly larger population MI, the same bias can make
-the estimated difference indicate larger MI for \(P\), including among
-rejected comparisons. Rejecting equal MI does not ensure that the estimated
-direction is correct.
-Reliable decisions in such settings require attention to the MI
-estimates, not only to which distribution supplies the cutoff.
+The bias and direction findings show why a lower rejection rate can leave
+the main estimation problem unresolved. Unequal biases can create an
+apparent change in association when population MI is equal, as
+Equation~\eqref{eq:focused-null-bias-shift} demonstrates. They can also
+reverse the estimated ordering when the population MI values differ,
+including among rejected comparisons. Increasing the cutoff changes
+neither the centre nor the sign of the estimated difference. A significant
+comparison with the wrong estimated direction can therefore lead to the
+opposite substantive conclusion. Reliable interpretation requires
+accurate MI estimates as well as a suitable rejection cutoff.
 
 A usable calculation and a well-calibrated test are also different
 requirements. Validity here means that the quantities needed for the
 calculation are finite and satisfy the method's positivity conditions.
 It does not mean that the resulting p-values achieve the intended
-false-positive rate. The fully valid \(16\times16\) comparison at
-\(n=1{,}000\) demonstrates that distinction. Conversely, sparse samples
+false-positive rate. The fully valid large-table comparison in
+Figure~\ref{fig:focused-null-sizes} demonstrates that distinction.
+Conversely, sparse samples
 can prevent Expanded Welch from returning a p-value, lowering its
 reported rejection rate without providing a decision about equal MI.
 Rejection and valid-result frequency therefore need to be read together.
@@ -62,13 +53,6 @@ Welch by whether its lower rejection brings excessive false positives closer
 to 5\% without an unacceptable loss of detection or usable results. Choose
 the method using that comparison before examining the observed p-values.
 
-The main obstacle is statistical rather than computational. An Expanded
-Welch call takes approximately 1.7--1.8 times as long as a Wald call in
-the measured implementation, with medians below 160 microseconds over
-the tested sizes. Both have \(O(rc)\) operation growth for an
-\(r\times c\) table. The extra calculation is modest, but it does not
-remove bias or inaccurate uncertainty in the shared statistic.
-
 \begin{samepage}
 \section{Limits of the evidence}
 
@@ -84,8 +68,7 @@ column margins within each population. This gives a clear way to vary
 association without changing category frequencies. The four-cell check
 supports the representative \(4\times4\) method comparison and
 reproduces the main \(16\times16\) estimation failures at its matched
-settings. Detection still changes numerically with the construction.
-
+settings, although detection changes numerically with the construction.
 Copying favours matching categories in both
 populations, whereas the four-cell transfer concentrates association
 in the same chosen block. The different-skew regime changes category
@@ -116,8 +99,9 @@ MI estimators have different estimation errors from fixed categorical
 tables. Similarly, increasing the number of categories with sample size
 changes the fixed-alphabet setting of the derivation. The empirical
 recommendation concerns the independent categorical comparisons studied
-here, at a two-sided 5\% threshold; a real-data evaluation would test how
-well these constructed comparisons represent an application.
+here, at a two-sided 5\% threshold. The online-shopping application
+illustrates interpretation on observed data, but its unknown population
+MI values do not allow a direct measurement of false positives or detection.
 
 Exact independence needs a different mathematical approximation because
 the first-order MI variance vanishes there. The association-strength

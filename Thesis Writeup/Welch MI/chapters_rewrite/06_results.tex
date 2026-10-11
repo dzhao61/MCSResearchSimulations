@@ -103,7 +103,7 @@ variance. All four settings have full validity and finite diagnostics.
 \end{table}
 
 The \(16\times16\), \(n=1{,}000\) difference has bias 0.02960 nats,
-more than twice its observed SD of approximately 0.01448. To see where
+more than twice its observed SD of approximately 0.01449. To see where
 this shift comes from, recall that bias is the mean estimate across
 samples minus the population value. The bias of a difference is exactly
 the first estimate's bias minus the second estimate's bias. Here the
@@ -405,8 +405,6 @@ fixed call overhead can be important for these small arrays. The statistical
 trade-off is more consequential than this modest absolute cost: the
 adjustment helps only when its lower rejection improves an excessive
 false-positive rate without too much loss of detection or validity.
-Larger samples reduce several shared estimation errors, whereas changing
-the reference distribution alone leaves those errors in place.
 
 \section{Application to Online Shopping Data}
 \label{sec:shoppers-application}

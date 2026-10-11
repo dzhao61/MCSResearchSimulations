@@ -1,9 +1,24 @@
 # Goal: complete the master's thesis
 
-Set 15 September 2026; acceptance criteria refreshed 10 October 2026. The
+Set 15 September 2026; acceptance criteria refreshed 11 October 2026. The
 original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
+
+**Core literature and presentation pass (11 October 2026):** Keep the
+existing two-method comparison and scientific evidence unchanged. The
+approved edits add sparse-bias estimation literature, explain bootstrap
+resampling without dismissing it on computational cost, and connect equal-MI
+comparisons to an independent-trial information-dynamics example. Distinguish
+the automatic reduction from a larger cutoff from the empirical findings
+about unequal bias, detection and estimated direction. Reduce repeated
+numerical summaries in the final chapters while retaining their implications,
+limitations and future priorities. Section 2.3 remains unchanged. Figure
+spacing, displayed zero and prose/table rounding fixes now have regression
+checks. No jackknife or bootstrap experiment is added in this pass; any
+bounded diagnostic is a separate, optional decision. The main manuscript
+is 97 pages, including 57 main-text pages. SUBMISSION_CHECK.md records the
+verification and packaging checks. Older working drafts remain unchanged.
 
 **Large-table construction and contribution pass (10 October 2026):** Keep
 Normal Wald and Expanded Welch as the only methods. The user approved

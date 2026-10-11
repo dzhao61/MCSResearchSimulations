@@ -18,6 +18,13 @@ question is not whether all their cell probabilities match. It is whether
 the feature--label association, as measured by MI, is equally strong in
 the two populations.
 
+MI is also used in information-dynamics analyses to quantify relationships
+between observed variables \citep{lizier2014}. For example, independent
+experimental trials could record a stimulus category and a response
+category under each of two conditions. Comparing their MI would ask whether
+the strength of the stimulus--response association changes between
+conditions, even if both associations are nonzero.
+
 This is not the usual test of whether \(X\) and \(Y\) are independent within
 one group. The null hypothesis here permits dependence in both groups and
 permits their complete joint distributions to differ. It specifies only
@@ -43,6 +50,8 @@ small samples it may reject equal MI more or less often than the intended 5\%.
 Expanded Welch offers a possible adjustment. It uses the same estimated
 difference and standard error as Wald, but compares their ratio with a
 Student \(t\) distribution.
+Its larger cutoff reduces rejection; the experiment asks whether this
+improves performance.
 Choosing that Student \(t\) distribution requires a calculation specific to
 MI. Its degrees of freedom depend on how much
 the estimated MI variance changes from sample to sample. To calculate that
@@ -107,21 +116,17 @@ measures the extra computation required.
 \section{Scope and organisation}
 
 The analysis concerns independent samples recorded in count tables with the
-same row and column categories. The main derivation assumes every population
-cell has positive probability and that its leading large-sample MI variance
-is greater than zero. Exact independence is considered separately because
-that variance becomes zero.
-Within this setting, the experiment compares Normal Wald with Expanded Welch
-using a two-sided 5\%
-test. It does not establish performance for paired data, continuous MI
-estimators or a number of categories that grows with sample size.
+same fixed row and column categories. The main derivation assumes positive
+population cell probabilities and a positive first-order MI variance.
+Exact independence is considered separately because that variance is zero.
+The experiment compares Normal Wald with Expanded Welch using a two-sided
+5\% test.
 
-Chapter~\ref{chap:background} supplies the statistical background.
+Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
-statistic and derive the correction. Chapter~\ref{chap:design} explains how
-the populations and samples are generated and how the results are measured.
-Chapter~\ref{chap:results} presents and interprets the main comparisons
-in sequence. Chapter~\ref{chap:discussion} draws out their broader
-implications and limits, and Chapter~\ref{chap:conclusion} states the
-contribution and recommendation. The appendices give the detailed algebra,
-population settings, simulation diagnostics and supporting figures.
+statistic and derive Expanded Welch. Chapter~\ref{chap:design} describes
+the experiment, and Chapter~\ref{chap:results} interprets its results and
+the online-shopping application. Chapters~\ref{chap:discussion}
+and~\ref{chap:conclusion} discuss the implications, limitations and
+conclusions. The appendices provide supporting calculations, experimental
+settings and additional results.
