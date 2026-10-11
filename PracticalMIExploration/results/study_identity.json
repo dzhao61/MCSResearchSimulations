@@ -1,0 +1,50 @@
+{
+  "master_seed": 20261010,
+  "repetitions_per_subset_size": 5000,
+  "sample_sizes": [
+    50,
+    100,
+    200,
+    500,
+    1000,
+    2000,
+    5000
+  ],
+  "alpha": 0.05,
+  "subsample_settings": 30,
+  "sampled_table_pairs": 150000,
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.3"
+  },
+  "sources": {
+    "Adult": {
+      "archive": "adult.zip",
+      "url": "https://archive.ics.uci.edu/static/public/2/adult.zip",
+      "citation": "Becker and Kohavi (1996), doi:10.24432/C5XW20",
+      "page": "https://archive.ics.uci.edu/dataset/2/adult",
+      "sha256": "7537312dd56c2b98035880805ce99e68183a30ee468aa5329d6df0fbb3cc21bb"
+    },
+    "Online Shoppers": {
+      "archive": "online_shoppers.zip",
+      "url": "https://archive.ics.uci.edu/static/public/468/online%2Bshoppers%2Bpurchasing%2Bintention%2Bdataset.zip",
+      "citation": "Sakar and Kastro (2018), doi:10.24432/C5F88Q",
+      "page": "https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset",
+      "sha256": "2972e6184d3ad7beaaa831d9fc2b059dc3ee29df69d1ec593c466a5cd8485d14"
+    },
+    "Student Performance": {
+      "archive": "student_performance.zip",
+      "url": "https://archive.ics.uci.edu/static/public/320/student%2Bperformance.zip",
+      "citation": "Cortez (2008), doi:10.24432/C5TG7T",
+      "page": "https://archive.ics.uci.edu/dataset/320/student+performance",
+      "sha256": "82ae9d66437b9808df42e8c89d2bb179c46e9cfbcf06f38abc1d20b3b747e177"
+    }
+  },
+  "protocol_sha256": "5ef4b7ce07a643685dcb7e65fcbeb21ac7a0dbeb2a10328e7a76337d2f12aefe",
+  "runner_sha256": "a21bf6f004293ae7c72f073db387b62b1f06d90ddd55ac9cad222865d02125a4",
+  "method_sha256": "cbf59cb5da2ea3f78b15b2a6247ee12f2c7865de5dacbe5d64e9b9a8812c54a9",
+  "statistics_sha256": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5",
+  "interpretation": "Exploratory practical application and conditional subset stability; population MI unknown."
+}

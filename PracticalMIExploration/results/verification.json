@@ -1,0 +1,18 @@
+{
+  "all_pass": true,
+  "full_comparisons": 6,
+  "subset_settings": 30,
+  "sampled_table_pairs": 150000,
+  "independently_recomputed_pairs": 156,
+  "checks": [
+    "raw archive hashes",
+    "fixed comparisons and category alphabets",
+    "full-data independent MI/variance/sensitivity/df/p-value algebra",
+    "raw subset record checksums",
+    "all sample totals and finite-population bounds",
+    "all deterministic subset inputs regenerated",
+    "all saved method outputs recomputed",
+    "independent subset formula checkpoints",
+    "all summaries and Holm corrections"
+  ]
+}

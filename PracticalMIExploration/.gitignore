@@ -1,0 +1,3 @@
+# Retain local records while versioning the compact results and analysis.
+initial_run/
+results/records/
