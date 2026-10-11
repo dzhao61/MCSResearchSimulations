@@ -59,15 +59,12 @@ diagnostics and valid test outputs in these settings.
 \input{figures_rewrite/focused_association_table}
 \end{table}
 
-At the smallest MI targets, population first-order variance accounts
-for only a small fraction of the observed sampling variance at either sample size.
-Meanwhile, the mean squared standard error exceeds that variance. The
-population first-order approximation therefore underestimates sampling
-variation, whereas the plug-in estimate overestimates it. Both variance
-ratios become much closer to one as
-association strengthens, especially at \(n=1{,}000\). This supports
-reading the low rejection rates together with estimation error, rather
-than attributing them solely to the Student \(t\) distribution.
+At the smallest MI targets, the population first-order variance
+underestimates observed sampling variance, while the mean squared standard
+error overestimates it. Both ratios move closer to one as MI increases,
+especially at \(n=1{,}000\). An overestimated standard error reduces the
+statistic's magnitude, and Expanded Welch's larger rejection cutoff makes
+rejection still less likely.
 
 Table~\ref{tab:large-sample-diagnostics} continues the main diagnostic
 comparison to \(n=50{,}000\) at common MI 0.02. All outputs are valid.
@@ -90,13 +87,13 @@ at \(16\times16\) than at \(4\times4\).
 \medskip
 \thesisminiheading{Variability of the estimated MI variance.}
 
-Table~\ref{tab:variance-stability} checks the predicted sampling variability
-of the MI variance estimates used to choose Expanded Welch's degrees of
-freedom. Observed variability is the sample variance of \(\Vhat(P)\)
-across repetitions, with the
-corresponding calculation for \(Q\). Pop./obs. divides
-\(\tau^2(P)/n_P\) by this observed value; plug-in/obs. instead uses
-the average \(\widehat\tau^2(P)/n_P\). The predictions are defined
+Table~\ref{tab:variance-stability} compares predicted and observed sampling
+variability of \(\Vhat(P)\) and \(\Vhat(Q)\), used to choose Expanded
+Welch's degrees of freedom. Observed variability is the sample variance
+across repetitions. For \(P\), Pop./obs. divides \(\tau^2(P)/n_P\)
+by this observed value; plug-in/obs. uses the average
+\(\widehat\tau^2(P)/n_P\), with corresponding definitions for \(Q\).
+The predictions are defined
 in Equation~\eqref{eq:variance-stability-predictions}. The six selected
 settings use different-skew copying populations, and each row includes
 all 20,000 finite outputs.

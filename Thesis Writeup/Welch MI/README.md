@@ -47,7 +47,12 @@ The targeted consistency pass makes the main-text jackknife scope explicit,
 focuses interpretation on the MI difference and its uncertainty, removes
 calibration wording under alternatives, and places the empty-cell counts
 beside the copying-population bias explanation. Section 2.3 and Chapters 3-4
-remain unchanged. The current PDF has 100 pages, including 57 main-text pages; verification is
+remain unchanged in that pass. The subsequent explicit-naming pass replaces
+vague references with the actual method or quantity throughout the abstract,
+chapters and appendices, distinguishing rejection cutoffs, degrees of freedom,
+MI bias correction and Holm's multiple-testing adjustment. Equations,
+citations, methods, evidence and older working drafts are unchanged.
+The current PDF has 100 pages, including 57 main-text pages; verification is
 recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction

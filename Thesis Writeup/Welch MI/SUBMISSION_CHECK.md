@@ -1,5 +1,37 @@
 # Thesis completion check
 
+## Explicit naming: 11 October 2026
+
+The abstract, all eight main chapters and three appendices now name the
+quantity or method where vague shorthand made the reader reconstruct its
+meaning. Expanded Welch's rejection cutoff and estimated degrees of freedom
+are distinguished from MI bias correction and Holm's multiple-testing
+adjustment. Ratio descriptions name their numerator and denominator.
+Chapter 6 also identifies the copying population beside its variance-ratio
+result, preventing confusion with the preceding four-cell comparison.
+Clear local pronouns and the detailed derivations are retained.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. Independent source comparison confirms that all
+140 displayed equation blocks, citation sequences and labels are unchanged;
+Section 2.3 is byte-identical. All 10773 scientific-source, input and result
+preservation hashes match, as do the four older working-draft artifacts.
+No method, population, experiment, sampled record or numerical result changes.
+The study remains 240 settings, 70 population pairs and 4800000 sampled pairs.
+
+The PDF has 100 A4 pages: eight front-matter, 57 main-text, 30 appendix and
+five bibliography pages. The main-text token diagnostic is 17583, extracted
+with pdftotext from PDF pages 9-65. Affected pages are rendered and visually
+reviewed. The final source build and delivery checks are recorded below;
+full scientific evidence audits are not rerun for this prose-only pass.
+
+Both the active build and an isolated build from the extracted source
+archive finish without warnings, unresolved references/citations, missing
+characters or overfull/underfull boxes. The isolated PDF has the same 100
+pages and identical extracted text. All 56 source-archive members pass CRC,
+inventory and member-content checks. The named thesis PDF matches main.pdf;
+the scientific supplement is unchanged and all delivery checksums match.
+
 ## Examiner-facing signposting: 11 October 2026
 
 The marking guide is checked against the active manuscript. The Conclusion

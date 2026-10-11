@@ -14,6 +14,8 @@ would otherwise need to reconstruct the reference. Retain clear local
 pronouns; this is not a ban on every use of "adjustment" or "calculation".
 The pass covers the abstract, all eight main chapters and three appendices,
 without changing equations, data, methods or working drafts.
+All 217 workspace tests pass; the PDF has 100 pages, including 57 main-text
+pages. SUBMISSION_CHECK.md records the final verification.
 
 **Examiner-facing signposting (11 October 2026):** Make the evidence relevant
 to the marking guide easy to locate through natural academic headings and
@@ -207,7 +209,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (11 October consistency pass) | 57 pages | 100 pages |
+| Current focused Welch-MI manuscript (11 October explicit naming pass) | 57 pages | 100 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -220,7 +222,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,412
+unverified word limit is imposed. The current main text has 17,583
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
 (printed pages 1-57). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
