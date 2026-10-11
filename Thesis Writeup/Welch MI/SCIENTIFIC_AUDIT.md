@@ -1,5 +1,67 @@
 # Scientific audit of the active thesis
 
+## Targeted consistency and application inputs: 11 October 2026
+
+All six full-data application comparisons were recalculated from the
+original public-data count tables and checked against independent MI,
+variance-sensitivity and distribution calculations. The raw p-values match
+the saved results. Separate Holm adjustments for each method are recomputed
+using ordered multipliers, a running maximum and a cap at one; all 24
+displayed raw/adjusted p-values match their verified rounding. Month is
+third in both rankings, giving four times its raw p-value. The appendix
+identifies the groups, predictors, outcomes and relevant preparation,
+with primary-source-checked Adult and Student Performance citations.
+
+All 217 workspace tests pass, including two additional application tests
+and stronger protection of the main-text jackknife scope. The saved
+scientific inputs, method sources and result files pass all 10773
+pre-edit preservation hashes. Section 2.3, Chapters 3-4 and the older
+working-draft source/PDFs are unchanged. No experiments or statistical
+methods are added. The original four evidence audits remain recorded
+below; this pass adds the independent application calculation and
+preservation checks, rather than rerunning those simulations.
+
+## Bounded jackknife diagnostic: 11 October 2026
+
+The check reuses four original 16 x 16 different-skew copying settings,
+with MI pairs (0.02,0.02)/(0.02,0.03) at n=1000/10000. The delete-one
+jackknife replaces, rather than supplements, the analytic MI correction.
+Both margins are recalculated for each deletion; fixed categories and
+negative corrected MI estimates are retained. The original standard errors,
+validity masks and two-sided normal distribution cutoff are unchanged.
+Paninski (2003), Section 3, gives the delete-one formula for entropy; the
+same formula applies to MI through its three-entropy decomposition.
+
+The audit regenerates every one of the 80000 original input pairs and
+checks all saved baseline fields before recomputing the jackknife outputs.
+It independently checks the vectorized estimate against the cell-weighted
+leave-one-out definition on 16 full-size tables. Unit tests also check the
+equivalence to deleting every observation in a smaller table. All
+diagnostic records and summaries reproduce exactly, and original input
+hashes remain unchanged. Five reporting tests protect all eight rows,
+rate rounding, bias/variance identities, estimated-direction counts,
+manuscript values and the appendix-led scope. All 215 workspace tests and
+the original three audits plus the jackknife audit pass.
+
+At n=1000, null difference bias falls from +0.02959677 to -0.00115555
+nats; alternative difference bias falls from +0.03061020 to -0.00024073.
+Individual jackknife MI estimates remain upward biased: their similar
+biases largely cancel in the difference. Opposite-direction rejections
+fall from 2009 to 5, while correct-direction rejections rise from 1 to
+544. Null rejection is 0.00845, and estimated/observed variance ratios
+remain 1.762 and 1.652. At n=10000, jackknife null rejection is 0.05070;
+alternative rejection falls from 0.69920 to 0.66190, with slightly greater
+RMSE. This supports improved sparse difference estimation, not universal
+test improvement or a claim of validated jackknife Expanded Welch.
+
+Appendix C.3 contains the self-contained formula, settings, table and
+balanced interpretation. Chapter 5 describes the check beside estimation
+diagnostics; Section 6.3.1 briefly reports direction and null rejection.
+Chapters 3 and 4, the original methods and study records, and older working
+drafts are unchanged. The study still has 240 settings, 70 population
+pairs and 4800000 distinct sampled pairs. Final build and delivery checks
+are in SUBMISSION_CHECK.md.
+
 ## Large-table construction check: 10 October 2026
 
 The four new settings in LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md are complete:

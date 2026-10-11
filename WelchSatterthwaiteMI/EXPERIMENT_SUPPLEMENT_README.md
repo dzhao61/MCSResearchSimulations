@@ -10,6 +10,10 @@ The original study has 232 settings; the unequal-sample check adds four and
 reuses two balanced settings, without changing the original records.
 The large-table construction check adds another four settings and two
 population pairs, matched to existing copying comparisons.
+The bounded jackknife diagnostic reuses four original copying settings and
+80000 table pairs. It changes only the MI bias correction, retaining the
+original standard errors and normal distribution cutoff. It adds no
+settings, populations or sampled pairs to the study's counts.
 
 ## Environment
 
@@ -47,6 +51,12 @@ before the construction extension, not the sum of both directories' counts.
 sampled pairs are new. Its population definitions, raw chunks, summaries
 and independent audit bring the combined evidence to 4800000 distinct pairs.
 
+`WelchSatterthwaiteMI/results/focused_jackknife_check/` contains all four
+16 x 16 different-skew copying comparisons at MI pairs (0.02,0.02) and
+(0.02,0.03), each at n=1000 and 10000. Its protocol, per-repetition outputs,
+paired summaries and evidence retain all planned outcomes. The jackknife
+replaces the analytic correction; negative corrected estimates are retained.
+
 Run the bundled tests and independent audit from the extracted archive root:
 
 ```bash
@@ -55,6 +65,7 @@ Run the bundled tests and independent audit from the extracted archive root:
 .venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_unequal_sample_check.py audit
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py audit
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py audit
 ```
 
 The independent audit validates raw checksums and counts, regenerates sampled
@@ -69,6 +80,11 @@ provenance before applying the same independent formula and raw-record audit.
 The construction audit checks its four-setting scope, reconstructs the
 positive transfer populations and applies the same raw-record audit. Its
 reporter verifies the copying comparison's study identity as well.
+The jackknife audit regenerates all 80000 original input pairs, verifies
+their saved baseline outputs and reproduces every diagnostic output and
+summary. It also compares the vectorized jackknife with an independent
+cell-weighted leave-one-out calculation on 16 full-size sampled tables.
+Unit tests check the equivalence to deleting every observation in a smaller table.
 
 ## Reconstruct or rerun
 
@@ -116,6 +132,20 @@ settings; the reporter reads the four copying comparisons from the base run:
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py --base-results reproduction --results construction-reproduction --figures /path/to/thesis-source/figures_rewrite
 ```
 
+The jackknife check regenerates the original count tables from their saved
+streams and verifies them against the base records. After reproducing the
+base study, use another directory for its results:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py preflight --input reproduction --output jackknife-reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py run --input reproduction --output jackknife-reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py audit --input reproduction --output jackknife-reproduction
+```
+
+Keep the recorded scientific source files and environment for exact
+reproduction. The compact reporter checks provenance against the bundled
+base-study records; use its defaults for the delivered evidence.
+
 ## Rebuild the figures
 
 The separately supplied thesis source already contains the figure PDFs and
@@ -127,9 +157,10 @@ the extracted source directory explicitly:
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_unequal_sample_check.py --figures /path/to/thesis-source/figures_rewrite
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_mechanisms.py --figures /path/to/thesis-source/figures_rewrite
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py --figures /path/to/thesis-source/figures_rewrite
+.venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_jackknife_check.py --figures /path/to/thesis-source/figures_rewrite
 ```
 
-This generates five lead figures, three companions and nine table fragments
+This generates five lead figures, three companions and ten table fragments
 at the manuscript's intended printed dimensions. Complete scientific
 construction, parameter grids, validity and uncertainty rules are also in
 Appendix B of the thesis; a reader does not need this codebase to understand
@@ -144,3 +175,9 @@ underlying its two tables. Its precision check uses 1,000 deterministic
 bootstrap resamples of paired saved variance/sensitivity outputs, retaining
 their association within each population. These are not new multinomial
 samples, and do not alter the experiment's settings or its sample count.
+
+The jackknife evidence also quantifies Monte Carlo precision with 1000
+deterministic resamples of paired saved outputs. These are precision checks
+on the simulation summaries, not bootstrap MI tests or new sampled data.
+Appendix C.3 reports its estimator, exact settings and mixed findings within
+the standalone manuscript.

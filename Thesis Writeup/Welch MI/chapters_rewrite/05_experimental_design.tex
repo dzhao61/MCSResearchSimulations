@@ -297,6 +297,11 @@ too small on average. Comparing the observed variance with
 \(V(P)/n_P+V(Q)/n_Q\) separately checks the first-order approximation
 with its population inputs.
 
+A supporting jackknife check changes the MI bias correction while keeping
+the original standard errors and normal distribution cutoff. It uses the
+same samples from four existing \(16\times16\) different-skew copying
+settings, specified in Appendix Section~\ref{sec:jackknife-difference-check}.
+
 Degrees-of-freedom summaries use the median and 5th--95th percentile range
 among valid Expanded Welch outputs. This range describes differences
 between sampled results, not uncertainty in the estimated median.

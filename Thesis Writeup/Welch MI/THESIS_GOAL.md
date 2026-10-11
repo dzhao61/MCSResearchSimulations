@@ -5,6 +5,38 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Targeted consistency pass (11 October 2026):** The user approved the
+holistic review's remaining edits. Keep the interpretation focused on
+accuracy of the MI difference and its uncertainty, identify the normal
+distribution cutoff in the brief jackknife result, and distinguish null
+calibration from detection under alternatives. Keep copying-population
+empty-cell counts with their bias explanation rather than returning to
+that construction after a different comparison. For standalone multiple-
+testing claims, include the comparison family and raw p-values needed to
+recreate the adjustment. Appendix C.7 now supplies all six application
+comparisons, raw/adjusted p-values and the Holm calculation. No methods,
+experiments, sampled records or older working drafts change. All 217
+workspace tests pass. The PDF has 100 pages, including 57 main-text pages;
+SUBMISSION_CHECK.md records verification. Earlier pass counts below are
+historical.
+
+**Bounded jackknife diagnostic (11 October 2026):** The user approved a
+four-setting saved-sample experiment and its appendix-led presentation.
+Keep the primary Normal Wald versus Expanded Welch comparison unchanged.
+The jackknife replaces the analytic MI bias correction while retaining the
+original delta-method standard error and normal distribution cutoff. Report
+all four existing 16 x 16 different-skew copying settings: MI pairs
+(0.02,0.02)/(0.02,0.03), at n=1000/10000, with 20000 paired repetitions.
+The 80000 reused pairs add no populations, settings or sampled pairs to the
+study. Explain the estimator, settings and mixed results together in
+Appendix C.3, with brief notes in Chapters 5 and 6. Leave Chapters 3 and 4
+unchanged. Distinguish smaller difference bias from smaller individual MI
+bias, and improved estimated direction from a calibrated test. Do not imply
+that this check evaluates a jackknife standard error or jackknife Expanded
+Welch. All 215 workspace tests and four evidence audits pass. The PDF has
+99 pages, including 57 main-text pages. Final delivery verification is in
+SUBMISSION_CHECK.md. Older working drafts remain unchanged.
+
 **Core literature and presentation pass (11 October 2026):** Keep the
 existing two-method comparison and scientific evidence unchanged. The
 approved edits add sparse-bias estimation literature, explain bootstrap
@@ -127,6 +159,7 @@ thesis. Internal verification and delivery records may retain those details.
 - Report settings with at least 10 observations per population, without filtering on validity or rejection outcomes. Preserve the original runs, including omitted n=1, 2 and 5 settings. Construct the newly approved populations without changing the statistical methods or archived results.
 - Add depth through bias of the estimated MI difference, empirical versus estimated sampling variance, the population first-order variance and degrees-of-freedom summaries. These use the planned repetitions. Check a null and alternative against the four-cell construction at two sample sizes, at 4 x 4 and 16 x 16, rather than restoring a full construction grid.
 - Retain the approved six-comparison unequal-sample check at fixed total size, using the unchanged copying populations and both allocation directions. Keep its full evidence in the appendix rather than adding a new main landscape.
+- Retain the approved four-setting jackknife check as a supporting estimation diagnostic, not a third primary method. Keep its standard errors and cutoff fixed, include every planned setting regardless of outcome, and put the complete calculation and interpretation in Appendix C.3.
 
 ### Questions the thesis must answer
 
@@ -154,7 +187,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (10 October construction pass) | 54 pages | 93 pages |
+| Current focused Welch-MI manuscript (11 October consistency pass) | 57 pages | 100 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -167,14 +200,14 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 16,172
-whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-62
-(printed pages 1-54). This diagnostic includes headings, captions, mathematical
+unverified word limit is imposed. The current main text has 17,358
+whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
+(printed pages 1-57). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
 
 ### Last verified chapter allocation
 
-These are the 10 October manuscript's printed-page allocations, not quotas.
+These are the 11 October manuscript's printed-page allocations, not quotas.
 The Chapter 5-6 structure is specified in FOCUSED_EXPERIMENT_PLAN.md.
 Move space between chapters when explanation requires it, rather than
 preserving these lengths.
@@ -182,11 +215,11 @@ preserving these lengths.
 | Chapter | Current pages | Required purpose |
 | --- | ---: | --- |
 | 1. Introduction | 3 | Establish the problem, two research questions, contributions and scope. |
-| 2. Background and Literature Review | 12 | Teach the necessary concepts and locate the contribution in verified prior work. |
+| 2. Background and Literature Review | 13 | Teach the necessary concepts and locate the contribution in verified prior work. |
 | 3. The Two-Sample MI Test and Wald Baseline | 4 | Define the data, estimates, bias correction, variance, statistic and reference. |
 | 4. The Expanded Welch--Satterthwaite Test for MI | 12 | Derive variance sensitivity and degrees of freedom, with intuition, worked calculations and assumptions. |
 | 5. Experimental Design | 7 | Explain copying across table sizes, the three controlled studies, diagnostics, construction and allocation checks, sampling and evaluation; put complete reproduction details in Appendix B. |
-| 6. Experimental Results and Discussion | 11 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. |
+| 6. Experimental Results and Discussion | 13 | Answer the three experimental questions through approximately five lead figures and a diagnostic table, interpreting each beside its evidence; retain all 120 new main null settings and focused supporting results in Appendix C. Include the self-contained shopping application. |
 | 7. Implications and Limitations | 3 | Synthesize the practical trade-off and evidence limits without repeating the figure readings. |
 | 8. Conclusion | 2 | Restate contributions and impact, limitations, future work and the resulting recommendation. |
 

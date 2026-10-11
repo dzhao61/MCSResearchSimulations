@@ -27,14 +27,27 @@ count-table construction, two full-data comparisons and interpretation
 together. It does not add resampling results or change the simulation
 design. Its numerical checks use the separate PracticalMIExploration
 records and the original source data; the six-comparison exploratory
-selection and Holm adjustment are disclosed in the section.
+selection and Holm adjustment are disclosed in the section. Appendix C.7
+identifies all six comparisons, their preparation and raw/adjusted p-values,
+with the adjustment procedure explained beside the table.
 
 The 11 October core pass strengthens the sparse-estimation literature and
 resampling discussion, adds a short information-dynamics motivation, and
 reduces repetition in the final chapters. It fixes detection-panel spacing,
 negative-zero display and prose/table rounding in the report generator and
 manuscript. No statistical method, simulation or older working draft changes.
-The current PDF has 97 pages, including 57 main-text pages; verification is
+The subsequent bounded jackknife diagnostic reuses 80,000 original table
+pairs from four 16 x 16 copying settings. Appendix C.3 gives its formula,
+settings, eight paired result rows and interpretation. Chapters 5 and 6
+contain brief pointers; Chapters 3 and 4 and the primary two-method comparison
+are unchanged. The diagnostic retains the original standard errors and normal
+distribution cutoff, and reports both improved sparse difference estimates
+and remaining calibration error. No new populations or samples are added.
+The targeted consistency pass makes the main-text jackknife scope explicit,
+focuses interpretation on the MI difference and its uncertainty, removes
+calibration wording under alternatives, and places the empty-cell counts
+beside the copying-population bias explanation. Section 2.3 and Chapters 3-4
+remain unchanged. The current PDF has 100 pages, including 57 main-text pages; verification is
 recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction
@@ -82,6 +95,8 @@ python WelchSatterthwaiteMI/experiments/report_unequal_sample_check.py
 python WelchSatterthwaiteMI/experiments/report_focused_mechanisms.py
 python WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py audit
 python WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py
+python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py audit
+python WelchSatterthwaiteMI/experiments/report_focused_jackknife_check.py
 ```
 
 Use the pinned packages in `WelchSatterthwaiteMI/requirements-thesis.txt`.
@@ -104,6 +119,10 @@ comparisons, with identical copies of the two original balanced records.
 The separate `results/large_table_construction_check/` directory contains
 the four newly sampled first-block transfer settings. Its reporter compares
 these with the four original copying settings, including estimated direction.
+The separate `results/focused_jackknife_check/` directory contains the
+four saved-sample jackknife comparisons. Its audit regenerates all 80,000
+original input pairs, checks their baseline outputs, and reproduces the
+diagnostic records and summaries exactly.
 
 All eight new figure assets are exported at their intended printed width
 of 148 mm with 8 pt ticks and 9 pt main labels. Null figures use matching

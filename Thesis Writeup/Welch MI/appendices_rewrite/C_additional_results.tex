@@ -1,8 +1,9 @@
 \chapter{Additional Results}
 \label{app:additional-results}
 
-These comparisons complete the controlled studies in
-Chapter~\ref{chap:results}. Each statistical setting uses 20,000
+This appendix gives the complete simulation results and supporting checks
+for Chapter~\ref{chap:results}, followed by the multiple-testing adjustment
+for the online-shopping application. Each simulation setting uses 20,000
 sampled table pairs and the two-sided 5\% threshold.
 
 \section{Complete equal-MI results}
@@ -122,6 +123,106 @@ ratios are close to one, but the plug-in predictions remain about 10\%
 too large. These comparisons assess the sampling approximation used to
 calculate degrees of freedom. The usefulness of the resulting cutoff
 also depends on the shared MI statistic, as the main results demonstrate.
+
+\section{A jackknife check of MI difference bias}
+\label{sec:jackknife-difference-check}
+
+This check asks whether changing the bias correction improves the sparse
+MI differences that give wrong-direction rejections in the main results.
+The delete-one jackknife uses the change in an estimate after removing
+one observation to estimate its leading finite-sample bias
+\citep[Section~3]{paninski2003}.
+
+For the sample from \(P\), let
+\(\widehat I^{(-a)}(P)\) be the raw plug-in MI after removing observation
+\(a\). Each such estimate uses the remaining \(n_P-1\) observations and
+recalculates both margins. Subtracting \(n_P-1\) times the change between
+the average leave-one-out estimate and the full-sample estimate gives
+\begin{align}
+ \widehat I_{\mathrm J}(P)
+ &=\Ihat(P)-(n_P-1)
+ \left\{\frac{1}{n_P}\sum_{a=1}^{n_P}\widehat I^{(-a)}(P)-\Ihat(P)\right\}
+ \notag\\
+ &=n_P\Ihat(P)-\frac{n_P-1}{n_P}
+ \sum_{a=1}^{n_P}\widehat I^{(-a)}(P).
+ \label{eq:jackknife-mi-check}
+\end{align}
+Observations in the same cell give identical leave-one-out tables. The
+average can therefore be calculated once per occupied cell, weighting its
+leave-one-out MI by \(N^P_{ij}/n_P\). A cell reduced to zero contributes
+zero to the MI sum. Apply the same calculation to \(Q\), retaining
+all row and column categories and any negative corrected estimates.
+
+The jackknife replaces the analytic correction in
+Equation~\eqref{eq:bias-corrected-difference}. The estimated difference
+and statistic become
+\begin{equation}
+ \widehat\Delta_{\mathrm J}
+ =\widehat I_{\mathrm J}(P)-\widehat I_{\mathrm J}(Q),
+ \qquad
+ T_{\mathrm J}
+ =\frac{\widehat\Delta_{\mathrm J}}
+ {\sqrt{\Vhat(P)/n_P+\Vhat(Q)/n_Q}}.
+ \label{eq:jackknife-fixed-se-check}
+\end{equation}
+The variance estimates in the denominator are unchanged. Compare
+\(|T_{\mathrm J}|\) with the 97.5th percentile of the standard normal
+distribution, approximately 1.96, giving the same two-sided 5\% cutoff
+as Wald. This separates changing the MI estimate from changing its
+estimated uncertainty.
+
+Use \(16\times16\) copying populations. In both row and column margins,
+the first category has probability 0.7 for \(P\) and 0.8 for \(Q\).
+Each remaining category has probability \(0.3/15\) or \(0.2/15\),
+respectively. Copying sets \(Y=X\)
+with a probability chosen to attain the target MI; otherwise, \(Y\) is
+drawn independently with the same margins as \(X\). Fix \(I(P)=0.02\)
+and use \(I(Q)=0.02\) or 0.03 nats, each at
+\(n_P=n_Q=1{,}000\) and 10,000. The two corrections use the same
+20,000 table pairs at each setting. All calculations are valid, and
+rejection rates divide by all repetitions. In the table, Bias is mean
+estimation error in nats, Obs. SD is observed standard deviation, and
+Est./obs. is the ratio of mean squared standard error to observed variance.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Analytic and jackknife MI differences with the same standard error.}
+\label{tab:jackknife-difference-check}
+\input{figures_rewrite/focused_jackknife_table}
+\end{table}
+
+Table~\ref{tab:jackknife-difference-check} shows a much smaller difference
+bias at \(n=1{,}000\). Under equal MI, it falls from 0.02960 to
+\(-0.00116\) nats; under the alternative, from 0.03061 to
+\(-0.00024\) nats. The individual jackknife estimates remain upward
+biased. Their null biases are 0.03439 nats for \(P\) and 0.03555 for
+\(Q\), and their alternative biases are 0.03452 and 0.03476 nats.
+These similar biases largely cancel in the difference. The observed
+standard deviation increases slightly, but the root mean squared error
+falls from 0.03295 to 0.01525 nats under the null and from 0.03438 to
+0.01638 under the alternative.
+
+The jackknife difference also gives a more accurate estimated ordering at
+the sparse alternative. Opposite-direction rejections fall from 2,009 to
+5, while correct-direction rejections rise from 1 to 544. The total
+rejection rate falls because the original rejections almost all indicate
+the wrong ordering. Null rejection, however, falls to 0.845\%, with a
+Wilson 95\% Monte Carlo interval of 0.727--0.982\%. The mean squared
+standard error still exceeds the observed variance of the jackknife
+difference: their ratio is 1.76 under the null and 1.65 under the
+alternative. Better estimation of the difference therefore leaves a
+separate problem in estimating its uncertainty.
+
+At \(n=10{,}000\), the jackknife null rejection rate is 5.070\%,
+with a Wilson interval of 4.774--5.383\%, and both variance ratios are
+close to one. Alternative rejection falls from 69.920\% to 66.190\%,
+with every rejection indicating the correct direction for both
+corrections. The jackknife difference has less bias but slightly greater
+observed variability and root mean squared error at this sample size.
+This check supports its use for improving the identified sparse
+differences, while showing that the gain does not extend to every
+performance measure or sample size.
 
 \section{Detection over the full difference range}
 
@@ -311,3 +412,55 @@ signs, with Monte Carlo standard error about 0.00010 in either case.
 Mean squared standard error exceeds observed variance in each comparison.
 Allocation therefore changes the shared estimates as well as the cutoff
 adjustment.
+
+\section{Holm adjustment for the application}
+\label{sec:application-holm}
+
+Table~\ref{tab:application-holm} gives the raw and adjusted p-values for
+all six comparisons used to select the online-shopping application.
+Each comparison tests whether predictor--outcome MI is equal between
+two groups. The Adult comparisons use female and male records, with
+income above US\$50,000 as the binary outcome and the original education
+(16 categories) or occupation (14 categories) as the predictor
+\citep{becker1996}. The original training and test partitions are combined,
+and records are counted without survey weights. Only the occupation
+comparison excludes records with missing occupation.
+
+The Student Performance comparisons
+use Portuguese-language grades from schools GP and MS, with a final grade
+of at least 10 as the binary outcome. The predictors are the original
+study-time categories (four levels) and maternal-education categories
+(five levels) \citep{cortez2008}. The shopping comparisons use new and
+returning visitors, with purchase as the binary outcome and month or
+weekend as the predictor.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Raw and Holm-adjusted p-values for the six exploratory comparisons.}
+\label{tab:application-holm}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Normal Wald} & \multicolumn{2}{c}{Expanded Welch}\\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Comparison & Raw & Adjusted & Raw & Adjusted\\
+\midrule
+Adult: occupation & \(1.18\times10^{-44}\) & \(7.10\times10^{-44}\) & \(1.64\times10^{-42}\) & \(9.81\times10^{-42}\)\\
+Adult: education & \(1.89\times10^{-34}\) & \(9.45\times10^{-34}\) & \(4.93\times10^{-33}\) & \(2.46\times10^{-32}\)\\
+Online Shoppers: month & \(4.71\times10^{-5}\) & \(1.89\times10^{-4}\) & \(3.73\times10^{-4}\) & \(1.49\times10^{-3}\)\\
+Student Performance: study time & 0.1982 & 0.5946 & 0.2339 & 0.7016\\
+Student Performance: maternal education & 0.8361 & 1 & 0.8468 & 1\\
+Online Shoppers: weekend & 0.9554 & 1 & 0.9601 & 1\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Holm's adjustment is applied separately to each method's six p-values
+\citep{holm1979}. Order the raw p-values from smallest to largest and
+multiply them by 6, 5, 4, 3, 2 and 1, respectively. Moving through that
+order, replace any value smaller than the preceding adjusted value by
+that preceding value, and cap the results at one. Month has the
+third-smallest raw p-value for both methods, and the earlier adjusted
+values are smaller, so its adjusted p-value is four times its raw value.
+Both adjusted month p-values remain below 0.05.

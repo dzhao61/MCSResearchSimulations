@@ -70,6 +70,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "thesis_redesign_core.py", "run_detection_breakdown_sweep.py",
                    "run_unequal_sample_check.py", "report_unequal_sample_check.py",
                    "report_focused_mechanisms.py",
+                   "run_focused_jackknife_check.py", "report_focused_jackknife_check.py",
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py"]
     tests = [
@@ -77,6 +78,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
         "test_thesis_derivation_audit.py", "test_welch.py",
         "test_unequal_sample_check.py",
         "test_focused_mechanisms.py",
+        "test_focused_jackknife_check.py", "test_focused_jackknife_report.py",
         "test_large_table_construction_check.py",
     ]
     exact.extend(project / "experiments" / name for name in experiments)
@@ -89,6 +91,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
         project / "results/focused_study",
         project / "results/unequal_sample_check",
         project / "results/large_table_construction_check",
+        project / "results/focused_jackknife_check",
     ):
         for source in clean_files(directory):
             if "pilot" in source.relative_to(directory).parts:

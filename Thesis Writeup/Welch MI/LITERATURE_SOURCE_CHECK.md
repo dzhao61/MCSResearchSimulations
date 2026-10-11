@@ -1,5 +1,19 @@
 # Targeted literature and contribution check
 
+## Application adjustment inputs: 11 October 2026
+
+Appendix C.7 now identifies all six exploratory comparisons underlying the
+application's Holm adjustment. The two additional dataset citations were
+checked against their primary UCI records:
+[Adult](https://archive.ics.uci.edu/dataset/2/adult), Becker and Kohavi (1996),
+DOI 10.24432/C5XW20; and
+[Student Performance](https://archive.ics.uci.edu/dataset/320/student+performance),
+Cortez (2008), DOI 10.24432/C5TG7T. Their use is limited to dataset identity
+and original variable definitions; no population-general demographic or
+educational conclusion is added. The preparation and p-values describe
+the existing exploration, not a new study. The bibliography now has
+47 entries, 46 cited. Earlier entry counts below are historical.
+
 ## Sparse-estimation and research-context pass: 11 October 2026
 
 Section 2.2 now explains alternatives to the leading bias correction and

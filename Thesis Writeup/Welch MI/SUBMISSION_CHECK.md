@@ -1,5 +1,96 @@
 # Thesis completion check
 
+## Targeted consistency and standalone adjustment: 11 October 2026
+
+The five approved review findings are addressed. Section 6.5 points to
+Appendix C.7's compact six-comparison table, with raw and separately
+Holm-adjusted p-values for both methods, group/predictor/outcome definitions,
+relevant preparation and the adjustment procedure. The two additional
+dataset citations have primary-source-checked metadata. The main text
+identifies the jackknife check's unchanged standard error and normal
+distribution cutoff, focuses practical interpretation on the MI difference
+and its uncertainty, removes calibration wording under alternatives,
+and keeps copying-population sparse-cell counts beside their bias
+explanation. Section 2.4 names its conditions instead of using
+"regular positive-support" shorthand.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. Two new application tests independently recompute
+all six comparisons and their Holm adjustments, protect all 24 rounded
+table values and check the standalone inputs/citations. The jackknife
+reporting test now requires explicit main-text method/cutoff scope.
+All 10773 scientific-source, input and result preservation hashes match.
+Section 2.3, Chapters 3-4 and the older working-draft source/PDFs are
+unchanged. No statistical method, population, experiment or sampled record
+changes; the simulation scope remains 240 settings, 70 population pairs
+and 4800000 sampled pairs.
+
+The PDF has 100 A4 pages: eight front-matter, 57 main-text, 30 appendix and
+five bibliography pages. The main-text token diagnostic is 17358, using
+pdftotext on PDF pages 9-65; this includes captions, equations and labels.
+The final build has no warnings, unresolved citations/references, missing
+characters or overfull/underfull boxes. Affected prose, contents, table
+list, appendix opening, new table and bibliography pages are visually
+checked. The bibliography has 47 entries, 46 cited.
+
+The extracted source archive rebuilds the same 100 pages with identical
+pdftotext output and no build warnings or layout boxes. The named PDF
+matches main.pdf. Both archives pass CRC, inventory and member-content
+hash checks: 56 source members and 10004 supplement members. Delivery
+checksums match. The four full evidence audits remain recorded in the
+preceding pass; they were not rerun for this wording and reporting pass.
+
+## Bounded jackknife appendix addition: 11 October 2026
+
+Appendix C.3 gives the approved four-setting diagnostic, including the
+delete-one formula and intermediate algebra, occupied-cell weighting,
+fixed standard error and normal distribution cutoff, exact populations,
+all eight paired result rows and an integrated interpretation. Chapter 5
+contains a short description beside estimation diagnostics, and Section
+6.3.1 reports the direction improvement and low null rejection together.
+Chapters 3 and 4 are unchanged. The check replaces the analytic correction
+and does not evaluate a jackknife standard error or jackknife Expanded Welch.
+
+All four original 16 x 16 different-skew copying settings are reported:
+MI pairs (0.02,0.02)/(0.02,0.03), at n=1000/10000, with 20000 paired
+repetitions each. Every calculation is valid. At n=1000, difference bias
+falls mainly because similar positive individual MI biases cancel; wrong-
+direction rejections fall from 2009 to 5. The unchanged standard error
+still overestimates observed variability, and null rejection is 0.845%.
+At n=10000 the null rate is 5.070%, but alternative detection and RMSE
+do not improve. The text reports the gains and limitations together.
+
+All 215 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+14 practical-data tests. Fourteen diagnostic tests and five reporting tests
+cover exact saved outputs, scope, literal/weighted deletion, replacement
+of the analytic correction, unchanged standard error, rejection direction,
+Monte Carlo precision, eight-row table generation and manuscript values.
+The jackknife audit regenerates all 80000 original count-table pairs and
+reproduces all records and summaries exactly. The original three independent
+audits also pass. No original methods, populations or sampled records change;
+the combined study remains 240 settings, 70 pairs and 4800000 distinct samples.
+
+The main PDF has 99 A4 pages: eight front-matter pages, 57 main-text pages,
+29 appendix pages and five bibliography pages. Its build has no warnings,
+unresolved citations/references, missing characters or overfull/underfull
+boxes. The affected main-text, contents, table-list and appendix pages
+have been rendered and visually checked. Existing figures, typography
+and main-text length are unchanged. The pre-addition manuscript and
+delivery source/PDF are preserved in archive/pre_jackknife_20261011/manuscript.tar.
+Preservation hashes match for Chapters 3-4 and the original working-draft
+source/PDF plus named Working Draft and Working Draft v2 PDFs. No working
+draft was edited or rebuilt.
+
+The independently extracted source builds the same 99 pages and identical
+pdftotext output, without warnings. The combined source/supplement extraction
+passes all 117 bundled tests (90 Welch-project and 27 DifferentialMI), with
+no skips, and all four audits. It regenerates the new jackknife table and
+evidence JSON byte-for-byte. The source archive has 56 members; the supplement
+has 10004, including the diagnostic runner, reporter, tests and records.
+Archive CRC, inventory, member SHA-256 and delivery checksum checks pass;
+the named PDF matches main.pdf. The supplement instructions explain both
+auditing the delivered evidence and reproducing it in a separate directory.
+
 ## Core literature and presentation fixes: 11 October 2026
 
 The approved main fixes are implemented without changing the statistical

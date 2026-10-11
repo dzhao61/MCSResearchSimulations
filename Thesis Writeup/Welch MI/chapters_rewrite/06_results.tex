@@ -91,8 +91,8 @@ Table~\ref{tab:focused-diagnostics} reports the four preselected
 different-skew null settings. Observed SD is the sample standard deviation
 of the corrected MI difference. Estimated SD is the square root of the
 mean squared standard error, rather than the mean standard error. The
-variance ratio divides the latter variance estimate by the observed
-variance. All four settings have full validity and finite diagnostics.
+variance ratio divides the mean squared standard error by the observed
+sampling variance. All four settings have full validity and finite diagnostics.
 
 \begin{table}[htbp]
 \centering
@@ -122,7 +122,9 @@ though the population MI values match. The common leading correction
 cancels because the table and sample sizes match; it cannot remove the
 remaining difference in biases. This is the finite-sample problem
 highlighted by \citet{paninski2003}: a leading bias correction need not
-remove the error in sparsely sampled information estimates.
+remove the error in sparsely sampled information estimates. In this
+copying setting, an average of 147 of \(P\)'s 256 cells and 183 of
+\(Q\)'s cells are empty.
 
 The four-cell construction gives a similar failure at the matched
 \(16\times16\), \(n=1{,}000\) null setting. Its difference bias is
@@ -133,11 +135,6 @@ arrangements of association. At \(n=10{,}000\), the four-cell rates
 are 0.0499 and 0.0491, and its difference bias is much smaller.
 Appendix Table~\ref{tab:large-construction-check} gives the full matched
 comparison.
-
-Under copying, an average of 147 of \(P\)'s 256 cells and 183 of \(Q\)'s cells
-are empty. The shifted difference and sparse sampling occur together,
-while the observed individual biases directly identify the source of
-the shift.
 
 Estimated uncertainty is also inaccurate in this setting: mean squared
 standard error is about 1.94 times the observed variance. Excessive false
@@ -271,8 +268,7 @@ same nominal threshold, not at equal achieved false-positive rates.
 
 The \(16\times16\), \(n=1{,}000\) curve instead falls initially as
 the true difference grows. Wald rejects at 0.2522 under equal MI,
-0.1005 at a difference of 0.01, and 0.0363 at 0.02. This is not
-improved calibration under those alternatives. The positive bias
+0.1005 at a difference of 0.01, and 0.0363 at 0.02. The positive bias
 identified earlier opposes the negative true difference. The mean
 estimated difference is approximately 0.02960 at the null. Under the
 next two alternatives, the true difference and estimated difference
@@ -312,6 +308,13 @@ the rates are 0.9932 and 0.9931. Every rejection in these two larger-sample
 comparisons has the correct negative estimated direction. The larger sample therefore improves
 both the null behaviour and the detection pattern. High rejection in
 the smaller sample was not evidence of a more sensitive test.
+
+Replacing Wald's analytic MI bias correction with a jackknife correction
+reduces wrong-direction rejections from 2,009 to 5 for the 0.01-nat
+alternative at \(n=1{,}000\). The check retains the existing standard
+error and standard normal distribution cutoff; its null rejection rate
+of 0.845\% remains below the 5\% target.
+Appendix Section~\ref{sec:jackknife-difference-check} reports this four-setting check.
 
 \subsection{Detection across margin regimes}
 
@@ -481,7 +484,9 @@ reject equal MI. This application was selected from an initial exploration
 of six comparisons across three public datasets. Accounting for all six
 comparisons with Holm's multiple-testing adjustment \citep{holm1979}
 gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
-Welch, so the conclusion remains unchanged.
+Welch, so the conclusion remains unchanged. Appendix
+Table~\ref{tab:application-holm} lists all six comparisons and their raw
+and adjusted p-values.
 
 The weekend comparison gives a different result: its corrected MI
 estimates are both approximately 0.0007 nats. Their difference,
