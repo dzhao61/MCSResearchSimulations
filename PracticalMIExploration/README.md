@@ -3,7 +3,10 @@
 This folder is separate from the thesis and its packaged experiments.
 PROTOCOL.md fixes the six comparisons and their interpretation. The raw/
 archives are public CC BY 4.0 UCI datasets, cited there and in the generated
-report. No thesis, working draft or statistical method is edited.
+report. The initial exploration did not edit the thesis, any working draft or
+either statistical method. On 11 October 2026, the two full-data Online
+Shoppers comparisons were incorporated into the main thesis as a
+self-contained Section 6.5. Subset analyses remain outside the manuscript.
 
 From the workspace root:
 

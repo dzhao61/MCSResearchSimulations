@@ -3,13 +3,14 @@
 
 The results follow the three experimental questions: when the tests give
 reliable false-positive rates, how association strength affects the
-adjustment, and how often a true MI difference is detected. Each rate uses
+adjustment, and how often a true MI difference is detected. Each simulation rate uses
 20,000 sampled table pairs. Blue solid curves show Normal Wald and magenta
 dashed curves show Expanded Welch. Error bars or bands give pointwise
 Wilson 95\% intervals, and the dotted line marks 0.05. Hollow markers
 indicate valid-result frequency below 90\%. The parameter settings are
 those in Chapter~\ref{chap:design}; additional comparisons and the full
 120-setting null table are in Appendix~\ref{app:additional-results}.
+The chapter ends with a self-contained application to online shopping data.
 
 \section{False positives across sample size and population structure}
 
@@ -406,3 +407,100 @@ adjustment helps only when its lower rejection improves an excessive
 false-positive rate without too much loss of detection or validity.
 Larger samples reduce several shared estimation errors, whereas changing
 the reference distribution alone leaves those errors in place.
+
+\section{Application to Online Shopping Data}
+\label{sec:shoppers-application}
+
+The Online Shoppers Purchasing Intention dataset provides a practical
+setting for comparing MI between visitor groups \citep{sakar2018}.
+The question is whether the month of a website visit carries the same
+amount of information about purchasing for new and returning visitors.
+A larger MI means that knowing the month reduces uncertainty about
+purchasing more, on average. A second comparison uses the weekend indicator instead
+of month, giving a contrasting association in the same dataset.
+
+The dataset contains 12,330 sessions, with each session belonging to a
+different user according to the source documentation \citep{sakar2018}.
+The analysis retains all 1,694 sessions labelled \texttt{New\_Visitor}
+and 10,551 labelled \texttt{Returning\_Visitor}, excluding the 85
+\texttt{Other} sessions. The outcome is the original Boolean
+\texttt{Revenue} variable: true indicates a purchase and false indicates
+no purchase. The tests treat the two disjoint visitor groups as independent
+samples and the sessions within each group as independent observations.
+
+Each group forms a \(10\times2\) month--purchase count table. The rows
+are the ten months recorded in the dataset: February, March, May, June,
+July, August, September, October, November and December. The columns
+are no purchase and purchase, and each session adds one to its corresponding
+cell. Both groups use these same categories, with no smoothing or removal
+of zero cells. All ten months occur in both groups, although the new-visitor
+February row contains only one session and no purchase. Replacing month
+with the Boolean \texttt{Weekend} variable gives a \(2\times2\) table
+for each group, with weekday and weekend rows; all four cells are observed.
+
+Both methods use the bias-corrected MI estimates in
+Table~\ref{tab:shoppers-application}. For the month tables, the leading
+bias correction subtracts \((10-1)(2-1)/(2n)=9/(2n)\) from each plug-in
+MI estimate \citep{moddemeijer1989};
+for the weekend tables, it subtracts \(1/(2n)\). Here \(n\) is the
+number of sessions in the relevant visitor group. The estimated
+difference is new-visitor MI minus returning-visitor MI. Normal Wald
+compares this difference divided by its standard error with the standard
+normal distribution; Expanded Welch uses the same statistic with a
+Student t distribution and estimated degrees of freedom. Both tests
+are two-sided at the 5\% level.
+
+\begin{table}[H]
+\centering
+\caption{MI estimates and two-sample test results for online shopping sessions.}
+\label{tab:shoppers-application}
+\begingroup
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Corrected MI (nats)} & & \multicolumn{2}{c}{p-value}\\
+\cmidrule(lr){2-3}\cmidrule(l){5-6}
+Predictor & New & Returning & \shortstack{Expanded Welch\\degrees of freedom}
+ & \shortstack{Normal\\Wald} & \shortstack{Expanded\\Welch}\\
+\midrule
+Month & 0.004316 & 0.017880 & 26.79 & \(4.71\times10^{-5}\) & \(3.73\times10^{-4}\)\\
+Weekend & 0.000664 & 0.000727 & 2.18 & 0.9554 & 0.9601\\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}
+
+Month has higher estimated MI with purchasing among returning visitors.
+The corrected difference is \(-0.013563\) nats, with shared standard error
+\(0.003333\) nats, giving
+\begin{equation}
+  T\approx\frac{-0.013563}{0.003333}\approx-4.069.
+  \label{eq:shoppers-month-statistic}
+\end{equation}
+With 26.79 estimated degrees of freedom, the Student t distribution gives
+a larger p-value than the standard normal distribution, but both tests
+reject equal MI. This application was selected from an initial exploration
+of six comparisons across three public datasets. Accounting for all six
+comparisons with Holm's multiple-testing adjustment \citep{holm1979}
+gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
+Welch, so the conclusion remains unchanged.
+
+The weekend comparison gives a different result: its corrected MI
+estimates are both approximately 0.0007 nats. Their difference,
+\(-0.000063\) nats, is small relative to the shared standard error of
+\(0.001124\) nats, giving \(T\approx-0.056\). Although Expanded Welch
+estimates only 2.18 degrees of freedom, both p-values remain close to one.
+Neither test provides evidence that weekend--purchase MI differs between
+the visitor groups; this does not establish that their population MI
+values are equal. The small statistic, rather than the degrees of freedom
+alone, explains the agreement between the methods here.
+
+These comparisons illustrate how the adjustment affects an observed
+analysis: it changes the p-values while preserving the estimated MI
+differences and, in this case, both conclusions. The degrees of freedom
+depend on the estimated variability of the variance contributions, so
+thousands of sessions need not make the adjustment negligible. The
+simulation studies assess false positives and detection using known
+population MI; this application contextualises the test calculations
+when the population MI values are unknown. The results describe
+associations in the recorded sessions, not causal effects of visit timing.

@@ -1,5 +1,46 @@
 # Thesis completion check
 
+## Self-contained shopping application: 11 October 2026
+
+Section 6.5, Application to Online Shopping Data, is complete on printed
+pages 50-51. Its question, data preparation, group sizes, category definitions,
+bias corrections, result table and interpretation stay together in Chapter 6.
+It compares month-purchase and weekend-purchase MI between 1694 new-visitor
+and 10551 returning-visitor sessions. The methods, simulation design and
+simulation counts are unchanged. No subset analysis is added to the manuscript.
+The section discloses its selection from six exploratory comparisons and
+reports the original six-comparison Holm adjustment. The dataset and Holm
+procedure have primary-source citations. The conclusion now acknowledges
+the application rather than proposing it as unfinished future work.
+
+All 193 workspace tests pass: 152 Welch-project, 27 DifferentialMI and 14
+practical-data tests. Four new application regression tests check the original
+source count tables, preparation and sparse-cell details, independently
+recomputed estimates/standard errors/statistics/degrees of freedom/p-values,
+the rounded manuscript table and body values, the six-comparison adjustment
+and the self-contained section structure. All 30 saved subset-record hashes
+also match their original checksums; those records are not used in the thesis.
+
+The main PDF has 95 A4 pages: eight front-matter pages, 56 main-text pages,
+27 appendix pages and four bibliography pages. The two application pages
+and revised conclusion have been visually checked. The result table fits
+within the text margins at the existing body font size. Main and isolated
+source builds have no warnings, unresolved references/citations, missing
+characters or overfull/underfull boxes. The isolated source builds to the
+same 95 pages and identical pdftotext output. All 54 source-archive members
+match the workspace files, and the named PDF matches main.pdf.
+
+The named PDF, source ZIP and delivery checksum manifest are refreshed.
+The large experimental supplement remains unchanged and retains its
+simulation-only scope; the separate PracticalMIExploration records hold the
+application's numerical evidence. Preservation hashes match for all 11
+tracked method-source files, 4853 tracked simulation-result files, 12 tracked
+practical-data/input-result files and six older working-draft artifacts.
+No working draft was edited or rebuilt. The pre-addition manuscript and
+delivery source/PDF are preserved in
+archive/pre_shoppers_20261011/manuscript.tar. Earlier checks below remain
+historical verification of their respective versions.
+
 ## Matched large-table construction check: 10 October 2026
 
 The approved four-setting construction check, contribution alignment and

@@ -21,6 +21,14 @@ Interpretation accompanies each comparison. The degree is Master of
 Computer Science. The thesis itself contains the scientific reproduction
 details and does not require access to this project.
 
+Section 6.5 is a self-contained application to the UCI Online Shoppers
+Purchasing Intention dataset. It keeps the group selection, categorical
+count-table construction, two full-data comparisons and interpretation
+together. It does not add resampling results or change the simulation
+design. Its numerical checks use the separate PracticalMIExploration
+records and the original source data; the six-comparison exploratory
+selection and Holm adjustment are disclosed in the section.
+
 Two saved-sample analyses directly check the variance-variability prediction
 at six existing null settings and the estimated direction among rejections
 at four existing alternatives. Their appendix tables and main-text readings
