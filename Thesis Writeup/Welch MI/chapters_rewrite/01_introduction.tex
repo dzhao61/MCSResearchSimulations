@@ -47,17 +47,18 @@ both. The Normal Wald test compares their ratio with a standard normal
 distribution, but in
 small samples it may reject equal MI more or less often than the intended 5\%.
 
-Expanded Welch offers a possible adjustment. It uses the same estimated
-difference and standard error as Wald, but compares their ratio with a
-Student \(t\) distribution.
-Its larger cutoff reduces rejection; the experiment asks whether this
+Expanded Welch uses a larger rejection cutoff than Normal Wald. It retains
+the same estimated difference and standard error, but compares their ratio
+with a Student \(t\) distribution rather than a standard normal distribution.
+The larger cutoff reduces rejection; the experiment asks whether this
 improves performance.
-Choosing that Student \(t\) distribution requires a calculation specific to
-MI. Its degrees of freedom depend on how much
+Choosing the degrees of freedom for the Student \(t\) distribution requires
+knowing how much
 the estimated MI variance changes from sample to sample. To calculate that
 change, we must account for the fact that changing one cell also changes its
 row and column totals and the MI values calculated from them. This thesis
-derives that calculation and tests whether the adjustment helps.
+derives the sensitivity of the estimated MI variance and tests whether
+Expanded Welch's larger cutoff helps.
 
 Expanded Welch can reduce false positives
 where Wald rejects too often, but it can also reduce detection where Wald
@@ -90,8 +91,8 @@ measures the extra computation required.
   \end{samepage}
 
   \item \begin{samepage}\textbf{Methodological contribution.} Expanded Welch uses this
-  calculation to choose the degrees of freedom for a two-sample test using a
-  Student \(t\) distribution.
+  variance sensitivity to choose the degrees of freedom for a two-sample
+  test using a Student \(t\) distribution.
   \par
   \end{samepage}
 
@@ -100,13 +101,13 @@ measures the extra computation required.
   through \(16\times16\) tables and three margin regimes.
   Supporting checks vary construction and sample allocation.
   Estimation diagnostics explain the shared statistic's errors, and a
-  direct variability check assesses the calculation supplying the new
-  degrees of freedom.
+  direct check compares the predicted and observed sampling variability of
+  the estimated MI variance used to choose degrees of freedom.
   \par
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies
-  estimation problems that a cutoff adjustment leaves unresolved. Near
+  estimation problems that a larger rejection cutoff leaves unresolved. Near
   independence, the first-order calculations can poorly describe sampling
   variation. In sparse different-skew tables, unequal MI bias can produce
   excessive false positives and reverse the estimated ordering among

@@ -2,8 +2,9 @@
 \label{chap:results}
 
 The results follow the three experimental questions: when the tests give
-reliable false-positive rates, how association strength affects the
-adjustment, and how often a true MI difference is detected. Each simulation rate uses
+reliable false-positive rates, how association strength affects Expanded
+Welch's estimated degrees of freedom, and how often a true MI difference
+is detected. Each simulation rate uses
 20,000 sampled table pairs. Blue solid curves show Normal Wald and magenta
 dashed curves show Expanded Welch. Error bars or bands give pointwise
 Wilson 95\% intervals, and the dotted line marks 0.05. Hollow markers
@@ -52,8 +53,8 @@ well calibrated. At \(n=1{,}000\), every calculation is valid, yet Wald
 rejects at 0.2522 and Expanded Welch at 0.2402. Their Wilson intervals
 are approximately [0.2462, 0.2583] and [0.2343, 0.2462]. The paired
 reduction is 0.0120, with approximate 95\% interval [0.0105, 0.0135],
-so the adjustment lowers rejection but leaves a large excess of false
-positives. At \(n=10{,}000\) the rates are 0.0463 and 0.0453;
+so Expanded Welch's larger cutoff lowers rejection but leaves a large
+excess of false positives. At \(n=10{,}000\) the rates are 0.0463 and 0.0453;
 at 50,000 they are 0.0477 and 0.0474. More observations substantially
 improve this setting, although the path is not a simple steady decline.
 The next comparison asks how much of this pattern changes with the margins.
@@ -86,7 +87,8 @@ Expanded Welch gives 0.0331, 0.0059 and 0.2402, respectively.
 The different-skew excess is therefore not a general consequence of
 uneven margins alone.
 
-The shared estimates help explain this contrast.
+Bias in the estimated MI difference and errors in its standard error help
+explain this contrast.
 Table~\ref{tab:focused-diagnostics} reports the four preselected
 different-skew null settings. Observed SD is the sample standard deviation
 of the corrected MI difference. Estimated SD is the square root of the
@@ -118,7 +120,7 @@ estimated difference is centred at
 \end{equation}
 Both corrected estimates are too low on average, but \(Q\)'s is lower
 by more. Subtracting it therefore creates a positive difference even
-though the population MI values match. The common leading correction
+though the population MI values match. The common leading MI bias correction
 cancels because the table and sample sizes match; it cannot remove the
 remaining difference in biases. This is the finite-sample problem
 highlighted by \citet{paninski2003}: a leading bias correction need not
@@ -136,8 +138,9 @@ are 0.0499 and 0.0491, and its difference bias is much smaller.
 Appendix Table~\ref{tab:large-construction-check} gives the full matched
 comparison.
 
-Estimated uncertainty is also inaccurate in this setting: mean squared
-standard error is about 1.94 times the observed variance. Excessive false
+For the copying \(16\times16\), \(n=1{,}000\) pair, estimated uncertainty
+is also inaccurate: mean squared standard error is about 1.94 times the
+observed variance. Excessive false
 positives nevertheless remain, because a large standard error does not
 restore a difference estimate centred away from zero. At \(n=10{,}000\)
 the bias is much smaller and the variance ratio is 1.07, accompanying
@@ -181,8 +184,9 @@ at MI 0.05; at \(n=100\), it rises from 4.23 to 13.80. Smaller
 degrees of freedom give a larger cutoff from the Student \(t\)
 distribution, requiring a larger absolute statistic for rejection.
 The near-independence calculation in Section~\ref{sec:near-independence-mechanism}
-explains why small positive MI can make this adjustment restrictive.
-Here it acts on a Wald test that is already conservative.
+explains why small positive MI can give a large rejection cutoff.
+Here Expanded Welch requires a larger statistic for rejection than Wald,
+although Wald already rejects too rarely.
 
 The median degrees of freedom illustrate the change in cutoff. For a
 two-sided 5\% test, the cutoffs from the Student \(t\) distribution
@@ -192,9 +196,9 @@ Wald but not under Expanded Welch with 8.62 degrees of freedom; at
 78.24 both would reject. These examples use the reported medians.
 Each sampled table pair uses its own estimated degrees of freedom.
 
-The calculation underlying those degrees of freedom can also be checked
-directly. Appendix Table~\ref{tab:variance-stability} compares the measured
-variation of \(\Vhat(P)\) across samples with the population prediction
+The predicted sampling variability of the estimated MI variance can also
+be checked directly. Appendix Table~\ref{tab:variance-stability} compares
+the measured variation of \(\Vhat(P)\) across samples with the population prediction
 \(\tau^2(P)/n_P\) and the average plug-in prediction
 \(\widehat\tau^2(P)/n_P\), and repeats the comparison for \(Q\).
 In \(4\times4\) tables at common MI 0.02 and \(n=10{,}000\), both
@@ -202,18 +206,19 @@ predictions are within 2\% of the observed variability. At common MI
 0.0001 and \(n=1{,}000\), the population prediction accounts for only
 about 5\% of that variability, while the average plug-in prediction is
 1.95 times the observed value for \(P\) and 2.09 times for \(Q\).
-Near independence, the first-order calculation and its estimated inputs
-therefore introduce substantial errors in predicting how stable the
-variance estimate is.
+Near independence, predictions of the MI variance estimate's sampling
+variability therefore have substantial errors with both population and
+empirical inputs.
 
 Errors also arise in the shared MI statistic. At MI 0.0001 and
 \(n=1{,}000\), mean squared standard
 error is 1.74 times the observed variance. The population first-order
 variance is only about 0.04 times that variance, indicating that the
 first-order approximation is poor this close to independence at this
-sample size. These ratios compare two different calculations. The
-population calculation uses the true probabilities in \(V(P)/n_P+V(Q)/n_Q\).
-The estimated calculation replaces them by each sample's observed
+sample size. These ratios compare the population first-order variance and
+the plug-in estimate with observed sampling variance. The population
+first-order variance uses the true probabilities in \(V(P)/n_P+V(Q)/n_Q\).
+The plug-in variance estimate replaces them by each sample's observed
 proportions before averaging the resulting squared standard errors.
 They need not have the same error.
 
@@ -221,7 +226,7 @@ Near independence, the true first-order variance is small because the
 population cell probabilities are close to the products of their
 margins. A finite sample can still show apparent association: observed
 cell proportions generally differ from the products of their observed
-margins. The plug-in calculation treats those departures as features
+margins. The plug-in variance estimate treats those departures as features
 of an estimated population table and can therefore assign a substantially
 larger first-order variance. Meanwhile, the linear approximation at the
 true table omits the quadratic sampling terms that matter near
@@ -232,11 +237,12 @@ Thus a population first-order variance that is too small can coexist
 with a plug-in variance estimate that is too large. The observed ratios
 show both errors in this setting.
 
-At MI 0.05 the estimated/observed ratio is approximately
-1.00 and the population/observed ratio is 0.95. Detailed values are in
-Appendix~\ref{app:additional-results}. Improving the cutoff alone cannot
-correct errors in the statistic being compared with it. We now examine
-what that means when the populations have different MI values.
+At MI 0.05, mean squared standard error is approximately 1.00 times
+the observed variance, and the population first-order variance is 0.95
+times the observed variance. Detailed values are in
+Appendix~\ref{app:additional-results}. Changing the rejection cutoff cannot
+correct errors in the estimated MI difference or standard error. The next
+study examines detection when the populations have different MI values.
 
 \section{Detection when population MI differs}
 
@@ -260,9 +266,10 @@ For the smaller tables, increasing the true difference generally
 increases detection, and larger samples make a clear improvement.
 In \(4\times4\) tables, a 0.01-nat difference is detected at rates
 0.1132 and 0.1013 by Wald and Expanded Welch at \(n=1{,}000\),
-compared with 0.7962 and 0.7940 at \(n=10{,}000\). The adjustment
-costs some detection at the smaller sample size and very little at the
-larger one. This follows its larger degrees of freedom in larger samples.
+compared with 0.7962 and 0.7940 at \(n=10{,}000\). Expanded Welch's larger
+cutoff costs some detection at the smaller sample size and very little at
+the larger one. Higher estimated degrees of freedom in the larger sample
+bring Expanded Welch's cutoff closer to Wald's.
 The null points remain essential: these curves compare tests at the
 same nominal threshold, not at equal achieved false-positive rates.
 
@@ -350,13 +357,13 @@ Equation~\eqref{eq:background-two-sample-variance}. This connects the
 margin comparison to the first-order MI variance, rather than to the
 choice of rejection cutoff alone.
 
-At \(n=1{,}000\), the adjustment produces a
+At \(n=1{,}000\), Expanded Welch's larger cutoff produces a
 more visible detection reduction, while all three null points are
 already below 0.05. By a difference of 0.2 nats, both methods reject
 every simulated pair in all three regimes at both sample sizes.
 
 The supporting four-cell check gives the same qualitative comparison
-at its matched \(4\times4\) settings: the adjustment lowers an
+at its matched \(4\times4\) settings: Expanded Welch lowers an
 already-low null rate at \(n=1{,}000\), and changes detection little
 at 10,000. Appendix~\ref{app:additional-results} gives the rates and
 diagnostics. This agreement supports the representative comparison
@@ -373,9 +380,9 @@ difference, giving \(Q\) only 400 observations reduces detection to
 0.0540 and 0.0340, compared with balanced rates 0.1132 and 0.1013.
 Giving \(Q\) 1,600 observations instead gives 0.1295 and 0.0997.
 All calculations are valid. The lower degrees of freedom under imbalance
-strengthen the cutoff adjustment, but Wald's null rates remain below 5\%.
-Unequal samples therefore change detection without creating a benefit
-from that adjustment in this check.
+increase Expanded Welch's rejection cutoff. Unequal samples change detection,
+but Expanded Welch still moves already-conservative false-positive rates
+further below 5\%.
 
 \section{Computation and practical implications}
 
@@ -406,7 +413,7 @@ Expanded Welch costs approximately 1.7--1.8 times as much in these timings.
 Both methods require \(O(k^2)\) work for a \(k\times k\) table, but
 fixed call overhead can be important for these small arrays. The statistical
 trade-off is more consequential than this modest absolute cost: the
-adjustment helps only when its lower rejection improves an excessive
+larger cutoff helps only when its lower rejection improves an excessive
 false-positive rate without too much loss of detection or validity.
 
 \section{Application to Online Shopping Data}
@@ -498,11 +505,12 @@ the visitor groups; this does not establish that their population MI
 values are equal. The small statistic, rather than the degrees of freedom
 alone, explains the agreement between the methods here.
 
-These comparisons illustrate how the adjustment affects an observed
-analysis: it changes the p-values while preserving the estimated MI
+These comparisons illustrate how Expanded Welch changes the p-values in
+an observed analysis while preserving the estimated MI
 differences and, in this case, both conclusions. The degrees of freedom
 depend on the estimated variability of the variance contributions, so
-thousands of sessions need not make the adjustment negligible. The
+thousands of sessions need not make Expanded Welch's p-values close to
+Normal Wald's. The
 simulation studies assess false positives and detection using known
 population MI; this application contextualises the test calculations
 when the population MI values are unknown. The results describe

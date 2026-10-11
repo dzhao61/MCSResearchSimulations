@@ -36,7 +36,7 @@ change tells us how variable \(\Vhat(P)\) is. Finally, we combine the
 degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 
 \medskip
-\thesisminiheading{Moment matching for one component.}
+\thesisminiheading{Moment matching for one MI variance estimate.}
 
 Satterthwaite approximates the positive variance estimate \(\Vhat(P)\) by
 the scaled chi-squared variable
@@ -403,8 +403,8 @@ population component degree of freedom
   \label{eq:population-component-df}
 \end{equation}
 To interpret Equation~\eqref{eq:population-component-df}, divide the
-sampling variance of \(\Vhat(P)\) by the square of the population
-quantity it estimates:
+sampling variance of \(\Vhat(P)\) by \(V(P)^2\), the square of the
+population pointwise-MI variance:
 \begin{equation}
   \frac{\Var\{\Vhat(P)\}}{V(P)^2}
   \approx \frac{\tau^2(P)}{n_PV(P)^2},
@@ -463,7 +463,7 @@ Repeating the same calculation for the second table gives
 \(\widehat\nu_Q\).
 
 \medskip
-\thesisminiheading{Combining the two components.}
+\thesisminiheading{Combining the two samples' degrees of freedom.}
 
 Substituting the two variance contributions and component degrees of freedom
 into Equation~\eqref{eq:ws-general} gives
@@ -495,7 +495,7 @@ p-value at least as large as the standard normal distribution used by Wald.
 Under the implemented validity rules, every valid Expanded Welch result is
 also Wald-valid. Thus every
 Expanded Welch rejection is also a Wald rejection, including when invalid
-outputs count as non-rejections in the reported rates. The correction cannot
+outputs count as non-rejections in the reported rates. Expanded Welch cannot
 raise rejection where Wald is already too conservative.
 Section~\ref{sec:zero-component} examines a zero-component case in the
 combined degrees-of-freedom formula.
@@ -660,7 +660,7 @@ The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
 The MI difference and standard error come from the same tables. A sample
 that changes the estimated difference can also change its standard error,
-and the degrees-of-freedom adjustment does not account for how the two move
+and Expanded Welch's larger cutoff does not account for how the two move
 together.
 Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
 between each population's MI and variance estimates.

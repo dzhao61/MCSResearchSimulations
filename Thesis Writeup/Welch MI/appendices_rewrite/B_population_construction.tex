@@ -139,7 +139,7 @@ Repeated settings use one set of repetitions in every relevant display.
 
 All samples retain their declared table dimensions, including empty rows
 and columns. Use natural logarithms, \(0\log0=0\), and no smoothing.
-The correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
+The bias correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
 negative corrected estimates. In the equal-sample studies, the two
 corrections cancel in their difference. In the allocation check,
 Equation~\eqref{eq:bias-corrected-difference} subtracts
@@ -225,8 +225,8 @@ order. Compare the observed value with
 \end{aligned}
  \label{eq:variance-stability-predictions}
 \end{equation}
-The first calculation uses the known population probabilities; the second
-uses the empirical probabilities in each repetition. Repeat both for
+The population prediction uses the known probabilities; the mean plug-in
+prediction uses the empirical probabilities in each repetition. Repeat both for
 \(Q\). For each population, use the same repetitions with finite
 \(\widehat V_s\) and \(\widehat\tau_s^2\), including finite zeros
 and outputs whose test is invalid. Divide each prediction by the observed
@@ -241,7 +241,7 @@ by the sign of \(\Deltahat\). The estimate has the opposite sign when
 \(\Deltahat\Delta<0\); it has the correct sign when
 \(\Deltahat\Delta>0\). Report the number of rejections and the
 number with opposite signs for each method. The fraction with opposite
-signs divides the latter count by the rejection count and is undefined
+signs divides the opposite-sign count by the rejection count and is undefined
 if there are no rejections. These counts supplement the detection rate,
 which includes every valid rejection regardless of direction.
 

@@ -7,7 +7,7 @@ Normal Wald and Expanded Welch use the same estimated MI difference and
 standard error. Expanded Welch can only make a valid two-sided p-value
 larger, reducing rejection for the same sampled tables. When
 Wald's false-positive rate exceeds 5\%, reducing it towards 5\% can
-help. When Wald already rejects too rarely, the same adjustment moves
+help. When Wald already rejects too rarely, Expanded Welch's larger cutoff moves
 the rate further from the target and can reduce detection. A comparison
 of the two methods therefore needs both measures: false positives show
 whether the reduction improves calibration, and detection shows its
@@ -42,7 +42,7 @@ error describes the sampling uncertainty assigned by the method, and
 the p-value supplies the test decision. Reporting these quantities
 together makes the comparison more informative than reporting a
 p-value alone. If Expanded Welch is used, its estimated degrees of
-freedom explain the additional cutoff adjustment. A small p-value is
+freedom determine how much its rejection cutoff exceeds Wald's. A small p-value is
 evidence against equal MI within the test's approximation; a large
 p-value does not establish that the population MI values are equal.
 
@@ -83,13 +83,13 @@ row and column margins within a population.
 Equal sample sizes simplify the main studies by making the two leading
 bias corrections cancel in \(\Deltahat\). The remaining difference
 bias in the experiment consequently comes from estimation errors not
-removed by that common correction. With unequal sample sizes, the
+removed by the leading MI bias correction. With unequal sample sizes, the
 corrections no longer cancel, and the two contributions to the standard
 error and degrees of freedom can become less balanced. The derivation
 allows unequal sample sizes. The supporting fixed-total check assesses
 both allocation directions in two \(4\times4\) different-skew pairs.
 There, imbalance changes bias, uncertainty and detection, while the
-Expanded Welch adjustment lowers already-conservative null rates.
+larger Expanded Welch cutoff lowers already-conservative null rates.
 This extends the comparison beyond equal samples, but a wider allocation
 study would be needed for other table sizes and population structures.
 
@@ -106,10 +106,10 @@ MI values do not allow a direct measurement of false positives or detection.
 
 Exact independence needs a different mathematical approximation because
 the first-order MI variance vanishes there. The association-strength
-study also shows that being positive is not enough to make that
+study also shows that positive population MI is not enough to make that
 approximation accurate at a particular sample size: small positive MI
 can remain close to the problematic region. This explains why improving
-the first-order cutoff and improving the approximation near independence
+the rejection cutoff and improving MI's sampling approximation near independence
 are separate tasks.
 Section~\ref{sec:independence-boundary} derives the second-order
 approximation needed there.

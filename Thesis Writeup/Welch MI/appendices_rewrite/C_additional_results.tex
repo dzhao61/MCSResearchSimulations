@@ -2,7 +2,7 @@
 \label{app:additional-results}
 
 This appendix gives the complete simulation results and supporting checks
-for Chapter~\ref{chap:results}, followed by the multiple-testing adjustment
+for Chapter~\ref{chap:results}, followed by Holm's multiple-testing adjustment
 for the online-shopping application. Each simulation setting uses 20,000
 sampled table pairs and the two-sided 5\% threshold.
 
@@ -60,10 +60,11 @@ diagnostics and valid test outputs in these settings.
 \end{table}
 
 At the smallest MI targets, population first-order variance accounts
-for only a small fraction of the observed spread at either sample size.
-Meanwhile, the plug-in variance estimate exceeds that spread. Using
-estimated rather than population inputs therefore changes the error
-as well as its size. Both comparisons become much closer to one as
+for only a small fraction of the observed sampling variance at either sample size.
+Meanwhile, the mean squared standard error exceeds that variance. The
+population first-order approximation therefore underestimates sampling
+variation, whereas the plug-in estimate overestimates it. Both variance
+ratios become much closer to one as
 association strengthens, especially at \(n=1{,}000\). This supports
 reading the low rejection rates together with estimation error, rather
 than attributing them solely to the Student \(t\) distribution.
@@ -73,9 +74,10 @@ comparison to \(n=50{,}000\) at common MI 0.02. All outputs are valid.
 At \(4\times4\) the difference bias has Monte Carlo standard error
 approximately 0.000010 nats; at \(16\times16\) it is approximately
 0.000012. The biases are small, the estimated/observed variance ratios
-are near one, and the large degrees of freedom bring the two reference
-distributions close together. The remaining population/observed
-discrepancy at \(16\times16\) is larger than that at \(4\times4\).
+are near one, and the large degrees of freedom bring the Student \(t\)
+distribution close to the standard normal distribution. The population
+first-order variance still differs more from observed sampling variance
+at \(16\times16\) than at \(4\times4\).
 
 \begin{table}[H]
 \centering
@@ -88,9 +90,10 @@ discrepancy at \(16\times16\) is larger than that at \(4\times4\).
 \medskip
 \thesisminiheading{Variability of the estimated MI variance.}
 
-Table~\ref{tab:variance-stability} checks the additional calculation
-that supplies Expanded Welch's degrees of freedom. Observed variability
-is the sample variance of \(\Vhat(P)\) across repetitions, with the
+Table~\ref{tab:variance-stability} checks the predicted sampling variability
+of the MI variance estimates used to choose Expanded Welch's degrees of
+freedom. Observed variability is the sample variance of \(\Vhat(P)\)
+across repetitions, with the
 corresponding calculation for \(Q\). Pop./obs. divides
 \(\tau^2(P)/n_P\) by this observed value; plug-in/obs. instead uses
 the average \(\widehat\tau^2(P)/n_P\). The predictions are defined
@@ -363,8 +366,8 @@ observed SD rises from approximately 0.00433 to 0.00468 nats, making
 the same population difference harder to detect under the transfer.
 Changing association arrangement thus changes precision even when
 table size, margins and MI targets match. The agreement concerns the
-sparse estimation failure and the small effect of the cutoff adjustment,
-rather than identical performance across constructions.
+sparse MI estimation failure and Expanded Welch's small reduction in
+rejection, rather than identical performance across constructions.
 
 \section{Unequal sample sizes at a fixed total}
 \label{sec:allocation-check}
@@ -398,8 +401,8 @@ With equal MI, Wald rejects at 0.0394 for balanced samples and at 0.0463
 and 0.0454 for the two unequal allocations. Expanded Welch lowers these
 rates to 0.0331, 0.0306 and 0.0252, respectively. The imbalance therefore
 does not create excessive Wald rejection in these settings, and the
-adjustment makes already-low rates lower. The null median degrees of
-freedom fall from 35.70 under balance to 14.42 and 10.97, increasing the
+larger Expanded Welch cutoff makes already-low rates lower. The null median
+degrees of freedom fall from 35.70 under balance to 14.42 and 10.97, increasing the
 cutoff from the Student \(t\) distribution.
 
 For the 0.01-nat difference, giving \(Q\) only 400 observations lowers
@@ -410,8 +413,8 @@ Reversing the allocation also changes the remaining difference bias:
 \(-0.00143\) when \(Q\) has fewer. The null biases have the same
 signs, with Monte Carlo standard error about 0.00010 in either case.
 Mean squared standard error exceeds observed variance in each comparison.
-Allocation therefore changes the shared estimates as well as the cutoff
-adjustment.
+Allocation therefore changes the estimated MI difference and standard error
+as well as Expanded Welch's rejection cutoff.
 
 \section{Holm adjustment for the application}
 \label{sec:application-holm}
@@ -456,8 +459,8 @@ Online Shoppers: weekend & 0.9554 & 1 & 0.9601 & 1\\
 \end{tabularx}
 \end{table}
 
-Holm's adjustment is applied separately to each method's six p-values
-\citep{holm1979}. Order the raw p-values from smallest to largest and
+Holm's multiple-testing adjustment is applied separately to each method's
+six p-values \citep{holm1979}. Order the raw p-values from smallest to largest and
 multiply them by 6, 5, 4, 3, 2 and 1, respectively. Moving through that
 order, replace any value smaller than the preceding adjusted value by
 that preceding value, and cap the results at one. Month has the

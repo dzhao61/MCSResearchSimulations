@@ -5,6 +5,16 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Explicit naming pass (11 October 2026):** Replace vague stand-ins with the
+quantity or method actually meant. In particular, distinguish Expanded
+Welch's rejection cutoff and estimated degrees of freedom from MI bias
+correction and Holm's multiple-testing adjustment. Name ratio numerators
+and denominators, predictions and population constructions when the reader
+would otherwise need to reconstruct the reference. Retain clear local
+pronouns; this is not a ban on every use of "adjustment" or "calculation".
+The pass covers the abstract, all eight main chapters and three appendices,
+without changing equations, data, methods or working drafts.
+
 **Examiner-facing signposting (11 October 2026):** Make the evidence relevant
 to the marking guide easy to locate through natural academic headings and
 explicit links between questions, findings and recommendations. Do not turn
@@ -427,6 +437,15 @@ making the reader reconstruct it from a description of the reasoning process.
 Delete framing or restatement that adds neither explanation nor evidence.
 Keep useful intermediate derivation steps; do not add sentences to complete
 a paragraph template or increase its length.
+
+Name a quantity or method directly instead of using a vague stand-in when
+its identity matters. Write "Expanded Welch's larger rejection cutoff",
+"estimated degrees of freedom", "MI bias correction" or "Holm's
+multiple-testing adjustment" as appropriate, rather than asking the reader
+to remember what "the adjustment" means. Likewise, identify both terms in
+a ratio and the relevant population construction. Keep an ordinary pronoun
+or short reference when its antecedent is clear and nearby; avoid needless
+repetition of full names.
 
 Omit incidental editorial and logistical commentary: notes about how the
 document is presented, obvious workflow properties, and assurances about

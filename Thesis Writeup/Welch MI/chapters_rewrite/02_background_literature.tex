@@ -66,7 +66,7 @@ Because \(P\) is the joint distribution of \((X,Y)\), we also write
   I(X;Y)=H(X)+H(Y)-H(X,Y).
   \label{eq:mi-entropy-form}
 \end{equation}
-The quantity is nonnegative and equals zero exactly when
+MI is nonnegative and equals zero exactly when
 \(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells
 \citep{bossomaier2016}.
 
@@ -110,8 +110,8 @@ Under multinomial sampling, the cell counts vary between samples but must
 sum to \(n\). An extra observation in one cell therefore leaves fewer
 observations for the others. For a fixed set of categories, the plug-in
 estimate approaches population MI as the sample grows, but its small-sample
-behaviour depends on the complete probability table. In particular, rare
-cells can change this behaviour even when the categories and sample size are
+bias and variability depend on the complete probability table. In particular,
+rare cells can change both even when the categories and sample size are
 unchanged
 \citep{paninski2003}.
 
@@ -503,8 +503,8 @@ sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
 to the numerator and specifies the full Normal Wald test.
 With smaller samples, the MI difference may not follow the normal
 approximation closely, and the estimated standard error can vary between
-samples. The Wald test still uses a normal distribution; it makes no separate
-small-sample adjustment for that standard-error variability.
+samples. The Wald test still uses the same standard normal distribution
+cutoff, regardless of how much the estimated standard error varies.
 
 \medskip
 \thesisminiheading{The Welch--Satterthwaite principle.}
@@ -528,8 +528,8 @@ The denominator of the statistic contains one estimated variance contribution
 from each sample. Under normal sampling, their component degrees of freedom
 are \(n_P-1\) and \(n_Q-1\). If \(s_P^2/n_P\) dominates, the formula makes the
 combined \(\nu\) close to \(n_P-1\); when both contributions matter, both
-component values affect \(\nu\). Satterthwaite obtains this form by matching
-the mean and variance of their sum to a scaled chi-squared variable
+samples' degrees of freedom affect \(\nu\). Satterthwaite obtains this form
+by matching the mean and variance of their sum to a scaled chi-squared variable
 \citep{satterthwaite1946}.
 
 Welch compares the statistic with a Student \(t\) distribution using the calculated
@@ -560,7 +560,8 @@ uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
 by examining how a regression variance estimate varies between samples.
-Expanded Welch applies this approach to the estimated MI variance.
+Expanded Welch uses the variability of the estimated MI variance to choose
+degrees of freedom in the same way.
 These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
@@ -616,8 +617,8 @@ more than substituting a different numerator. MI combines the row,
 column and joint entropies of the same observations. Their estimation
 errors are connected, because one cell count contributes to all three.
 The MI variance formulas in Section~\ref{sec:first-order-mi-background}
-account for that connection. The additional calculation in Expanded
-Welch follows it through to the estimated variance: a cell change alters
+account for that connection. Expanded Welch also tracks how the estimated
+MI variance changes: a cell change alters
 both the weights and the pointwise-MI values whose weighted variance is
 being estimated. Thus Hutcheson supplies a close comparison framework,
 while the cell and margin derivatives supply the MI-specific inputs.
@@ -669,18 +670,18 @@ Existing work provides the leading bias and sampling variance of MI
 \citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
 Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
 \citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
-regression variance estimate to choose degrees of freedom. Applying the
-latter approach to MI requires calculating how its estimated variance
-changes with the observed table.
+regression variance estimate to choose degrees of freedom. Choosing
+MI-specific degrees of freedom in this way requires calculating how the
+estimated MI variance changes with the observed table.
 
 These results address two successive sources of uncertainty. The MI
 sampling variance describes how much the estimated association changes
 between samples. The variability of the estimated MI variance describes
 how consistently those samples estimate that uncertainty. This thesis
-derives the second quantity and uses it within the established
-Welch--Satterthwaite framework. The resulting test retains the same MI
+derives the variability of the estimated MI variance and uses it within
+the established Welch--Satterthwaite framework. The resulting test retains the same MI
 difference and standard error as Normal Wald, allowing the experiment
-to isolate the consequences of its additional cutoff calculation.
+to isolate the consequences of its larger rejection cutoff.
 
 A new observation changes the empirical cell probabilities, row and column
 totals, and pointwise MI values. The remaining calculation is how these
@@ -692,8 +693,8 @@ That evaluation also needs to examine the shared estimates themselves.
 retain substantial bias after a leading correction. A larger rejection
 cutoff does not remove such bias, nor does it replace a poor first-order
 variance approximation. The experiment therefore measures these errors
-alongside rejection, to distinguish a useful cutoff adjustment from a
-reduction in rejection that leaves the underlying estimation problem
-unchanged.
+alongside rejection, because a lower rejection rate can leave the
+underlying estimation problem unchanged.
 Chapter~\ref{chap:baselines} defines this shared statistic before
-Chapter~\ref{chap:expanded} derives the additional variance calculation.
+Chapter~\ref{chap:expanded} derives the sampling variability of the estimated
+MI variance used to choose Expanded Welch's degrees of freedom.

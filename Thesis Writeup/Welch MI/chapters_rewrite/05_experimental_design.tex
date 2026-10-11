@@ -1,19 +1,22 @@
 \chapter{Experimental Design}
 \label{chap:design}
 
-The experiment evaluates when Expanded Welch provides a useful adjustment
-to Normal Wald. It first measures false positives when the two populations
-have equal MI, then examines the estimation errors behind those results,
-and finally measures detection when MI differs. This sequence connects the
-test's behaviour to the quantities used in its calculation. Each comparison
-starts from fixed joint probability tables with known MI values, so the
+The experiment evaluates whether Expanded Welch's larger rejection cutoff
+improves performance compared with Normal Wald. It first measures false
+positives when the two populations have equal MI, then examines the
+estimation errors behind those results,
+and finally measures detection when MI differs. Bias and variance diagnostics
+link rejection rates to errors in the estimated MI difference and standard
+error. Each comparison starts from fixed joint probability tables with
+known MI values, so the
 true difference is available when assessing the sampled estimates.
 
 \section{Questions and controlled comparisons}
 
 Three questions organise the study: how sample size and population structure
-affect false positives, how association strength affects the adjustment, and
-what the adjustment means for detection. Table~\ref{tab:design-families}
+affect false positives, how association strength changes Expanded Welch's
+estimated degrees of freedom, and how its larger rejection cutoff affects
+detection of a true MI difference. Table~\ref{tab:design-families}
 summarises the comparisons. Holding the other stated factors fixed makes
 each change easier to interpret. Specifying the questions, populations,
 methods and performance measures follows the simulation-design guidance of
@@ -157,8 +160,8 @@ false-positive rate from a failure to calculate the test.
 
 The common target of 0.02 nats keeps association positive and comparable
 across these settings, while allowing all four sizes and three margin
-regimes to use the same target. It fixes the quantity being tested, not
-the difficulty of estimating it: tables with equal MI can have different
+regimes to use the same target. Fixing population MI does not fix the
+difficulty of estimating it: tables with equal MI can have different
 cell probabilities and different MI sampling variances. Keeping each
 population pair fixed throughout the sample-size sweep separates
 improvement from more observations from a change in the population.
@@ -179,9 +182,9 @@ of freedom connect the observed rejection rates to the cutoff from the
 Student \(t\) distribution. All targets are positive, so this study
 approaches independence without evaluating its exact boundary.
 
-Holding table size and margins fixed makes this a direct check of the
-method's association-strength dependence. The small positive targets
-examine where the first-order MI variance becomes small; the larger
+Holding table size and margins fixed shows how rejection rates and
+estimated degrees of freedom change with population MI. The small positive
+targets examine where the first-order MI variance becomes small; the larger
 targets show whether the same tests behave differently away from that
 region. Two sample sizes show whether an association-strength pattern
 persists when more data are available.
@@ -292,8 +295,9 @@ The known populations also let us measure estimation error. Difference
 bias is the mean corrected estimate minus the true difference. The sample
 variance across repetitions measures its observed spread, and the mean
 squared standard error measures the uncertainty assigned by the tests.
-Their ratio indicates whether the estimated uncertainty is too large or
-too small on average. Comparing the observed variance with
+Dividing the mean squared standard error by the observed variance indicates
+whether the estimated uncertainty is too large or too small on average.
+Comparing the observed variance with
 \(V(P)/n_P+V(Q)/n_Q\) separately checks the first-order approximation
 with its population inputs.
 
