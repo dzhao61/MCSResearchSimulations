@@ -1,6 +1,8 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
+\section{Contributions and main findings}
+
 This thesis derives an Expanded Welch--Satterthwaite test for comparing
 MI between independent categorical populations. Its mathematical
 contribution is the observation-level sensitivity of the estimated MI
@@ -34,6 +36,8 @@ the simpler baseline, although sparse estimation can make neither test
 reliable. The main practical requirement is accurate estimation of the
 MI difference and its uncertainty, which a larger cutoff cannot supply.
 
+\section{Limitations}
+
 The recommendation is limited to independent categorical samples with
 fixed categories. The controlled populations and small allocation check
 do not cover every association pattern or sample-size imbalance.
@@ -41,9 +45,15 @@ The first-order derivation requires positive cell probabilities and
 positive first-order MI variance; exact independence needs a different
 approximation.
 
-\begin{samepage}
+\section{Future work}
+
 Future work should first address bias in sparse MI differences and the
 dependence between the difference and its estimated standard error.
+The \(16\times16\) different-skew jackknife check provides a starting
+point: at \(n=1{,}000\), it improves the estimated direction while the
+test remains conservative.
+Further comparisons should assess changes to the MI difference and its
+standard error separately before combining them.
 The falling detection curve gives a concrete target: in these sparse
 settings, an improved comparison should avoid moving the estimated
 difference towards zero when the population difference grows.
@@ -60,5 +70,3 @@ problem revealed by the association-strength diagnostics. Broader unequal-sample
 comparisons, other association
 patterns and applications to additional datasets would extend the practical reach
 of these conclusions.
-\par
-\end{samepage}

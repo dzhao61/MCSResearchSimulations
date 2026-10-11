@@ -1,5 +1,54 @@
 # Thesis completion check
 
+## Examiner-facing signposting: 11 October 2026
+
+The marking guide is checked against the active manuscript. The Conclusion
+now has explicit sections for contributions/main findings, limitations and
+future work. Its next-step recommendation starts from the 16 x 16
+different-skew jackknife check and assesses estimator and standard-error
+changes separately. The remaining evidence already has natural academic
+headings; no rubric checklist or duplicated discussion is added to the thesis.
+
+The rubric-to-evidence map is retained here for internal review:
+
+- Aims and purpose: Chapter 1 states the computing and information-dynamics
+  motivation, equal-MI problem, research questions, contributions and scope.
+- Literature engagement: Chapter 2 reviews and compares relevant approaches;
+  Section 2.5 explains the remaining MI-specific task and contribution.
+- Methodology and justification: Chapters 3-4 define and derive the tests;
+  Chapter 5 connects controlled studies to research questions, defines
+  performance measures and specifies sampling. Appendix B gives complete
+  reproduction details.
+- Findings and evaluation: Chapter 6 interprets each main comparison beside
+  its evidence, including false positives, detection, validity, bias,
+  estimated direction and runtime. Appendix C supplies complete results.
+- Contribution, reflection and practice: Sections 1.3 and 8.1 identify the
+  contributions; Chapters 6-7 discuss practical implications and the limits
+  of a cutoff adjustment. Section 6.5 gives the public-data application and
+  distinguishes association from causation. Section 8.2 summarises limits.
+- Constructive future directions: Section 8.3 prioritises estimation in
+  sparse tables, comparisons near independence and broader validation, each
+  linked to a finding or scope limit.
+- Presentation and publication potential: clear signposting helps readers
+  locate the evidence, but publication quality and innovation remain
+  substantive examiner judgments, not claims established by headings.
+
+The guide's project-provider consultation and any institution-specific
+ethics requirements need factual confirmation from the author where
+applicable. They are not replaced by invented process or approval claims.
+The study uses simulated samples and publicly released categorical data;
+data sources, selection, independence assumptions and exploratory
+multiple-testing adjustment are stated in the manuscript.
+
+All 217 workspace tests pass. The PDF remains 100 pages, including 57
+main-text pages and a two-page Conclusion. The build has no warnings,
+unresolved references or overfull/underfull boxes. The updated conclusion
+and contents are rendered and visually checked. The extracted source
+reproduces identical PDF text with a clean build; source archive contents,
+named PDF and delivery checksums match. Methods, sampled records and older
+working drafts are unchanged. No full evidence audit is rerun for this
+heading and recommendation pass.
+
 ## Targeted consistency and standalone adjustment: 11 October 2026
 
 The five approved review findings are addressed. Section 6.5 points to

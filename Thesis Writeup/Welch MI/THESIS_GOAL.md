@@ -5,6 +5,16 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Examiner-facing signposting (11 October 2026):** Make the evidence relevant
+to the marking guide easy to locate through natural academic headings and
+explicit links between questions, findings and recommendations. Do not turn
+the manuscript into a rubric checklist, duplicate evidence or add claims
+about consultation or ethical approval that the manuscript cannot establish.
+The Conclusion now separates contributions/main findings, limitations and
+future work, with the bounded jackknife check motivating a concrete next step.
+Keep the rubric-to-evidence map in internal project records, not the thesis.
+This is a presentation pass, not a new experiment or working-draft rebuild.
+
 **Targeted consistency pass (11 October 2026):** The user approved the
 holistic review's remaining edits. Keep the interpretation focused on
 accuracy of the MI difference and its uncertainty, identify the normal
@@ -200,7 +210,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,358
+unverified word limit is imposed. The current main text has 17,412
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
 (printed pages 1-57). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.
