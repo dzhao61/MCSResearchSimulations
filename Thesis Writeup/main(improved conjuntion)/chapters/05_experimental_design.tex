@@ -1,0 +1,295 @@
+\chapter{Experimental Design}
+\label{chap:design}
+
+The derivation in Chapter~\ref{chap:expanded} establishes a plausible
+finite-sample reference but not an exact distributional theorem. Its value
+must therefore be assessed through repeated sampling. This chapter describes
+one controlled experiment designed to answer a direct question: when two
+different categorical populations have exactly equal positive MI, how often
+does each analytic method incorrectly reject equality?
+
+\section{Validation principle}
+
+For each scenario, \(P\) and \(Q\) are fixed \(r\times c\) population
+probability tables satisfying
+\begin{equation}
+  I(P)=I(Q).
+  \label{eq:design-equal-mi}
+\end{equation}
+Independent count tables are repeatedly drawn as
+\begin{equation}
+  N^{P}\sim\operatorname{Multinomial}(n_P,P),
+  \qquad
+  N^{Q}\sim\operatorname{Multinomial}(n_Q,Q).
+  \label{eq:design-multinomial}
+\end{equation}
+Normal Wald, simple Welch, and expanded Welch analyse the same sampled table
+pair in every replicate. This pairing removes Monte Carlo variation from
+between-method differences and isolates the effect of the reference
+distribution.
+
+The primary significance level is \(\alpha=0.05\). A calibrated method should
+reject Equation~\eqref{eq:design-equal-mi} in approximately 5\% of repeated
+samples. Additional checks use \(\alpha=0.10\), \(\alpha=0.01\), and a full
+rejection-calibration curve from 0 to 0.10.
+
+\section{Constructing distinct populations with equal MI}
+
+The weak null permits \(P\ne Q\). Each scenario therefore requires two
+different joint distributions with numerically equal MI. The construction
+separates marginal shape from association strength.
+
+\subsection{Random margins}
+
+For a variable with \(m\) categories, a symmetric Dirichlet distribution
+generates a positive probability vector
+\begin{equation}
+  (u_1,\ldots,u_m)
+  \sim\operatorname{Dirichlet}(a,\ldots,a).
+  \label{eq:dirichlet-margin}
+\end{equation}
+The concentration \(a\) controls how similar the category probabilities are.
+Large values produce margins close to uniform. Values below one commonly
+produce several rare categories. The implementation rejects margins with a
+probability below \(10^{-4}\) or above 0.98 to avoid numerical degeneracy while
+retaining substantial skewness.
+
+The row and column margins for \(P\) and \(Q\) are generated independently.
+The two populations can therefore have different marginal distributions even
+when their MI values are equal.
+
+\subsection{Random association pattern}
+
+Margins alone define the independent table. To introduce association, the
+generator draws a matrix \(A=(A_{ij})\) of independent standard-normal values,
+removes its row and column means, and standardises its root-mean-square
+magnitude. This produces a non-additive interaction pattern that cannot be
+absorbed into the margins.
+
+For association strength \(\lambda\), define a positive log-linear kernel
+\begin{equation}
+  K_{ij}(\lambda)=\exp(\lambda A_{ij}).
+\end{equation}
+Iterative proportional fitting finds positive scaling vectors \(u\) and \(v\)
+such that
+\begin{equation}
+  p_{ij}(\lambda)=u_iK_{ij}(\lambda)v_j
+  \label{eq:loglinear-table}
+\end{equation}
+has the required row and column margins. A one-dimensional root finder then
+selects \(\lambda\) so that
+\begin{equation}
+  I\{P(\lambda)\}=I_{\mathrm{target}}.
+\end{equation}
+The same procedure is run independently for \(Q\). Its margins, interaction
+pattern, and fitted association strength differ from those of \(P\), but its
+target MI is identical.
+
+A generated pair is retained only when all cells have positive population
+probability, both first-order MI variances are positive, and
+\begin{equation}
+  \lVert P-Q\rVert_1
+  =\sum_{i,j}|p_{ij}-q_{ij}|
+  \ge 0.05.
+  \label{eq:l1-population-separation}
+\end{equation}
+The largest absolute difference between \(I(P)\) and \(I(Q)\) among the 60
+accepted pairs was \(8.5\times10^{-14}\) nats. Numerical mismatch in the null
+was therefore negligible relative to sampling variation.
+
+\section{Table shapes and regimes}
+
+Every regime uses six table shapes:
+\begin{equation}
+  2\times2,\quad 2\times5,\quad 3\times3,\quad
+  3\times5,\quad 5\times5,\quad 8\times8.
+  \label{eq:design-shapes}
+\end{equation}
+Each regime has two variants. The complete design contains
+\begin{equation}
+  6\text{ shapes}\times5\text{ regimes}\times2\text{ variants}
+  =60
+\end{equation}
+fixed equal-MI population pairs. Both sample sizes lie between 50 and 1,000.
+The two target values, 0.10 and 0.15 nats, keep the primary experiment away
+from the nonregular independence boundary.
+
+Table~\ref{tab:regime-designs} gives the exact construction rules. The
+concentrations \((a_P,a_Q)\) apply to both row and column margins in the
+corresponding populations. The ratio is \(n_Q:n_P\).
+
+\begin{table}[htbp]
+\centering
+\caption{Exact equal-MI regime specifications.}
+\label{tab:regime-designs}
+\small
+\begin{tabularx}{\textwidth}{@{}XcccX@{}}
+\toprule
+Regime and variant & MI & \((a_P,a_Q)\) & Ratio & Sampling rule \\
+\midrule
+Well sampled 1 & 0.10 & \((50,50)\) & \(1:1\) & 15 observations per cell; \(n_P\ge200\) \\
+Well sampled 2 & 0.15 & \((50,50)\) & \(1:1\) & 15 observations per cell; \(n_P\ge200\) \\
+Moderate 1 & 0.10 & \((8,4)\) & \(1:1\) & 8 observations per cell; \(n_P\ge100\) \\
+Moderate 2 & 0.15 & \((8,2)\) & \(2:1\) & 6 observations per cell; \(n_P\ge100\) \\
+Highly skewed and sparse 1 & 0.10 & \((2,2)\) & \(1:1\) & Both minima in \([1,5)\) \\
+Highly skewed and sparse 2 & 0.15 & \((10,2)\) & \(2:1\) & Both minima in \([1,5)\) \\
+Ultra-skewed and sparse 1 & 0.10 & \((0.8,0.8)\) & \(1:1\) & Both minima in \([0.05,1)\) \\
+Ultra-skewed and sparse 2 & 0.15 & \((10,0.8)\) & \(10:1\) & Both minima in \([0.05,1)\) \\
+Widespread sparsity 1 & 0.10 & \((0.35,0.35)\) & \(1:1\) & 25--50\% of cells below 1 and at least 50\% below 5 \\
+Widespread sparsity 2 & 0.15 & \((1,0.35)\) & \(2:1\) & Same cell-wide sparsity constraints \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For the well-sampled and moderate regimes, sample size is fixed from the shape
+and design constants:
+\begin{equation}
+  n_P=\max(n_{\min},drc),
+  \qquad
+  n_Q=\rho n_P,
+  \label{eq:fixed-density-n}
+\end{equation}
+where \(d\) is the planned average number of observations per cell and
+\(\rho=n_Q/n_P\). This rule is chosen before the population tables are drawn.
+
+For the three sparse regimes, sample sizes are selected after the population
+tables are constructed. The selection uses true joint expected counts
+\begin{equation}
+  E^{P}_{ij}=n_Pp_{ij},
+  \qquad
+  E^{Q}_{ij}=n_Qq_{ij}
+  \label{eq:true-expected-counts}
+\end{equation}
+to meet the stated rare-cell or cell-wide sparsity constraint. The resulting
+sample sizes and smallest expected counts are summarised in
+Table~\ref{tab:realized-designs}.
+
+\begin{table}[htbp]
+\centering
+\caption{Realised sample-size and expected-count ranges across the six shapes.}
+\label{tab:realized-designs}
+\small
+\begin{tabularx}{\textwidth}{@{}Xccc@{}}
+\toprule
+Regime and variant & \(n_P\) & \(n_Q\) & Smallest expected count \\
+\midrule
+Well sampled 1 & 200--960 & 200--960 & 2.140--18.228 \\
+Well sampled 2 & 200--960 & 200--960 & 1.385--15.015 \\
+Moderate 1 & 100--512 & 100--512 & 0.790--6.927 \\
+Moderate 2 & 100--384 & 200--768 & 0.057--1.178 \\
+Highly skewed and sparse 1 & 52--975 & 52--975 & 1.025--4.072 \\
+Highly skewed and sparse 2 & 54--460 & 108--920 & 1.096--4.201 \\
+Ultra-skewed and sparse 1 & 64--604 & 64--604 & 0.052--0.413 \\
+Ultra-skewed and sparse 2 & 51--75 & 510--750 & 0.057--0.632 \\
+Widespread sparsity 1 & 50--435 & 50--435 & below 0.001--0.042 \\
+Widespread sparsity 2 & 50--414 & 100--828 & below 0.001--0.312 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Widespread sparsity is a boundary check rather than a recommended operating
+regime. Its purpose is to reveal what happens when many observed cells, and
+occasionally complete empirical margins, can be empty.
+
+\section{Replication and evaluation metrics}
+
+Each fixed population pair receives 10,000 independently sampled table pairs:
+\begin{equation}
+  60\times10{,}000=600{,}000
+\end{equation}
+null replicates, containing 1.2 million individual count tables. The
+population-generation seed is 2,026,080,501 and the sampling seed is
+2,026,080,502. Scenario-specific seeds are derived deterministically from
+these values.
+
+At a true rejection probability of 0.05, 10,000 replicates give Monte Carlo
+standard error
+\begin{equation}
+  \sqrt{\frac{0.05(1-0.05)}{10{,}000}}
+  \approx0.00218
+\end{equation}
+for one scenario. Wilson intervals are reported for scenario-level rejection
+rates.
+
+The experiment uses the following metrics.
+
+\begin{description}[style=nextline,leftmargin=34mm,labelwidth=32mm]
+  \item[False-positive rate.]
+  The fraction of valid null replicates with p-value no larger than the nominal
+  significance level.
+
+  \item[Mean absolute calibration error.]
+  For a regime with scenario FPRs \(\widehat f_s\),
+  \begin{equation}
+    \operatorname{MAE}(\alpha)
+    =\frac{1}{S}\sum_{s=1}^{S}|\widehat f_s-\alpha|.
+  \end{equation}
+  This metric prevents liberal and conservative scenario errors from
+  cancelling.
+
+  \item[Rejection-calibration curve.]
+  The empirical rejection rate is evaluated at nominal levels from 0 to 0.10
+  in increments of 0.001. A calibrated test follows the diagonal.
+
+  \item[Coverage.]
+  The fraction of valid null replicates whose method-specific 95\% confidence
+  interval contains the true difference, zero.
+
+  \item[Valid rate.]
+  The fraction of replicates producing a finite statistic and p-value and,
+  where required, positive finite effective degrees of freedom.
+
+  \item[Power.]
+  The fraction of valid alternative replicates that correctly reject equal MI
+  at \(\alpha=0.05\).
+\end{description}
+
+Regime summaries weight every fixed population pair equally. Scenario-level
+results remain available so that an average improvement cannot conceal a
+specific failure.
+
+\section{Power design}
+
+The power experiment uses five \(3\times3\) alternatives. Population \(P\)
+has uniform row and column margins and \(I(P)=0.05\) nats. Population \(Q\)
+has margins \((0.9,0.05,0.05)\) and a larger MI. Both use the same ordinal
+interaction pattern, which keeps the comparison focused on MI difference and
+sample size. Table~\ref{tab:power-design} gives the exact settings; each
+receives 10,000 replicates.
+
+\begin{table}[htbp]
+\centering
+\caption{Alternative-hypothesis settings for the power experiment.}
+\label{tab:power-design}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+\(I(P)\) & \(I(Q)\) & \(n_P\) & \(n_Q\) & Minimum expected counts \((P,Q)\) \\
+\midrule
+0.05 & 0.07 & 300 & 300 & \((18.217,1.543)\) \\
+0.05 & 0.10 & 150 & 150 & \((9.108,0.926)\) \\
+0.05 & 0.10 & 300 & 300 & \((18.217,1.853)\) \\
+0.05 & 0.10 & 600 & 600 & \((36.433,3.705)\) \\
+0.05 & 0.15 & 300 & 300 & \((18.217,1.143)\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Runtime design}
+
+Runtime is measured after count-table construction. One fixed table pair is
+used for each of four shapes: \(2\times2\), \(3\times3\), \(5\times5\), and
+\(8\times8\). Each complete method call is warmed up and then timed 200 times.
+The median is reported. All methods use the same vectorised implementation
+path, so the comparison measures the additional reference calculation rather
+than differences between software packages.
+
+\section{Reproducibility controls}
+
+The full experiment records the fixed population tables, sample sizes,
+scenario seeds, simulation seeds, method outputs, software versions, and SHA-256
+hash of the experiment script. Population construction and evaluation use
+separate deterministic random-number streams. No empirical result from a
+replicate is used to alter its generating population or select its method.
+
+The experiment used Python 3.13.5, NumPy 2.4.4, SciPy 1.17.1, and pandas
+3.0.3. Appendix~\ref{app:reproducibility} gives the commands and output map.

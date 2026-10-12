@@ -1,0 +1,192 @@
+\chapter{The Two-Sample MI Test and Wald Baseline}
+\label{chap:baselines}
+
+Normal Wald and Expanded Welch share an estimated MI difference and standard
+error. This chapter defines their statistic and the Normal Wald p-value.
+
+\section{Problem setup and bias-corrected estimator}
+
+Let
+\begin{equation}
+  N^P=(N^P_{ij}),
+  \qquad
+  N^Q=(N^Q_{ij})
+\end{equation}
+be independent \(r\times c\) count tables with totals \(n_P\) and \(n_Q\).
+The rows and columns represent the same categorical variables \(X\) and
+\(Y\) in both populations, with the same category definitions.
+The empirical probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N^P_{ij}}{n_P},
+  \qquad
+  \widehat q_{ij}=\frac{N^Q_{ij}}{n_Q}.
+\end{equation}
+
+The population parameter is the signed difference
+\begin{equation}
+  \Delta=I(P)-I(Q).
+  \label{eq:delta-population}
+\end{equation}
+The principal test is two-sided:
+\begin{equation}
+  H_0:\Delta=0
+  \quad\text{against}\quad
+  H_1:\Delta\ne0.
+  \label{eq:two-sample-null}
+\end{equation}
+
+The large-sample argument uses the following assumptions.
+
+\begin{samepage}
+\begin{assumption}[Sampling]
+Observations are independent and identically distributed within each
+population, and the two population samples are independent.
+\end{assumption}
+\end{samepage}
+
+\begin{assumption}[Aligned fixed alphabets]
+The row and column categories are fixed in advance and aligned between the two
+tables.
+\end{assumption}
+
+\begin{assumption}[Positive cell probabilities]
+Every cell in the population table has a probability greater than zero. A
+sample can still contain no observations in a cell, especially when that cell
+is rare. Such samples remain in the study; we record how often cells have
+zero observed counts to show how sparse the samples are.
+\end{assumption}
+
+\begin{assumption}[Positive MI]
+Both populations have positive MI: \(I(P)>0\) and \(I(Q)>0\). With the positive
+cell probabilities in Assumption~3, this is equivalent to requiring positive
+first-order variances \(V(P)>0\) and \(V(Q)>0\). It excludes exact
+independence, where the first-order approximation breaks down.
+\end{assumption}
+
+\begin{assumption}[Logarithm units]
+All logarithms in this thesis are natural, so MI differences and standard
+errors are reported in nats. Changing the logarithm base scales both by the
+same positive constant and leaves the standardised statistic unchanged.
+This is a choice of units, not a condition for the test to be valid.
+\end{assumption}
+
+\medskip
+\thesisminiheading{Bias-corrected estimator.}
+
+For the first table, define empirical pointwise MI by
+\begin{equation}
+  \widehat\pmi_P(i,j)
+  =\log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right)
+  \qquad\text{when }\widehat p_{ij}>0.
+  \label{eq:empirical-pmi}
+\end{equation}
+The plug-in MI estimate is
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}\widehat\pmi_P(i,j).
+  \label{eq:plugin-mi}
+\end{equation}
+The same calculation gives \(\Ihat(Q)\).
+
+The leading fixed-support MI bias appears in
+Equation~\eqref{eq:mi-leading-bias} \citep{moddemeijer1989}. Subtracting it
+from each plug-in estimate gives the estimated effect:
+\begin{equation}
+  \Deltahat
+  =\left\{\Ihat(P)-\frac{(r-1)(c-1)}{2n_P}\right\}
+  -\left\{\Ihat(Q)-\frac{(r-1)(c-1)}{2n_Q}\right\}.
+  \label{eq:bias-corrected-difference}
+\end{equation}
+The two terms in braces are the bias-corrected MI estimates for the separate
+populations.
+The correction uses the fixed numbers of row and column categories, even
+when some are unobserved in a sample. Corrected estimates can be negative;
+those values are retained when calculating the difference.
+When \(n_P=n_Q\), the two corrections cancel in the difference;
+otherwise, their difference removes the leading unequal-sample bias described
+in Section~\ref{sec:background-mi-bias}.
+
+\section{Shared standard error and test statistic}
+
+Section~\ref{sec:first-order-mi-background} showed that the first-order
+sampling variance of \(\Ihat(P)\) is \(V(P)/n_P\), where \(V(P)\) is the
+population variance of pointwise MI \citep{moddemeijer1989,brillinger2004}.
+Subtracting the fixed leading bias term
+in Equation~\eqref{eq:bias-corrected-difference} does not change this
+variance.
+
+The observed table estimates \(V(P)\) by
+\begin{equation}
+  \Vhat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
+  \label{eq:estimated-mi-variance}
+\end{equation}
+Define \(\Vhat(Q)\) analogously.
+
+Because the two samples are independent, their estimated variance
+contributions add:
+\begin{equation}
+  \SEhat^2
+  =\frac{\Vhat(P)}{n_P}
+  +\frac{\Vhat(Q)}{n_Q}.
+  \label{eq:shared-se}
+\end{equation}
+The common standardised statistic is
+\begin{equation}
+  T=\frac{\Deltahat}{\SEhat}.
+  \label{eq:shared-t}
+\end{equation}
+The sign of \(T\) indicates whether \(P\) or \(Q\) has the larger
+corrected MI estimate, while its magnitude measures the difference
+relative to its estimated standard error. Under \(H_0\), we compare \(T\) with a reference distribution
+centred at zero.
+Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
+by Normal Wald and Expanded Welch. Their difference lies in the reference
+distribution, not the effect estimate or plug-in standard error.
+
+\section{Normal Wald test and motivation for Expanded Welch}
+
+When both sample sizes grow while the table dimensions and positive
+population probabilities stay fixed, the statistic approaches a standard
+normal distribution under equal population MI
+\citep{wald1943,vanderVaart1998}:
+\begin{equation}
+  T\xrightarrow{d}N(0,1)
+  \qquad\text{under }H_0.
+\end{equation}
+The two-sided Normal Wald p-value is
+\begin{equation}
+  p_{\mathrm{Wald}}
+  =2\{1-\Phi(|T|)\},
+  \label{eq:wald-pvalue}
+\end{equation}
+where \(\Phi\) is the standard normal distribution function.
+
+\medskip
+\thesisminiheading{Why use a Student \(t\) distribution?}
+
+Wald uses the standard normal distribution at every sample size, even
+though its standard error is estimated from the observed tables. Expanded
+Welch uses the variability of that variance estimate to choose a Student
+\(t\) distribution instead.
+Hutcheson's entropy test and ordinary Welch's test
+set each variance component's degrees of freedom from its sample size:
+\(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment
+measures how cell probabilities and margins make the estimated MI variance
+change between samples.
+
+To choose the degrees of freedom, we need the average value of each estimated
+MI variance and how much that estimate varies across samples
+\citep{satterthwaite1946}. For \(P\), to first order,
+\begin{equation}
+  \E\{\Vhat(P)\}\approx V(P).
+\end{equation}
+Chapter~\ref{chap:expanded} derives
+\(\Var\{\Vhat(P)\}\) by tracking how the calculated MI variance changes
+when one observation changes the joint table.

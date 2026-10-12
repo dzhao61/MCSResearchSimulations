@@ -1,0 +1,317 @@
+\chapter{Experimental Design}
+\label{chap:design}
+
+The experiment evaluates whether Expanded Welch's larger rejection cutoff
+improves performance compared with Normal Wald. It first measures false
+positives when the two populations have equal MI, then examines the
+estimation errors behind those results,
+and finally estimates power when MI differs. Bias and variance diagnostics
+link rejection rates to errors in the estimated MI difference and standard
+error. Each comparison starts from fixed joint probability tables with
+known MI values, so the
+true difference is available when assessing the sampled estimates.
+
+\section{Questions and controlled comparisons}
+
+Three questions organise the study: how sample size and population structure
+affect false positives, how common population MI changes Expanded Welch's
+estimated degrees of freedom, and how its larger rejection cutoff affects
+power to detect a true MI difference. Table~\ref{tab:design-families}
+summarises the comparisons. Specifying the questions, populations,
+methods and performance measures follows the simulation-design guidance of
+\citet{morris2019}.
+
+The square table sizes are \(2\times2,4\times4,8\times8\) and
+\(16\times16\), containing 4, 16, 64 and 256 cells. Each doubling of
+the number of categories multiplies the number of cells by four, so at a
+fixed sample size the observations are distributed over more
+possible cells.
+
+Three margin regimes compare uniform category frequencies, the same
+uneven frequencies in both populations, and different uneven frequencies.
+Under equal MI, the uniform and same-skew regimes provide identical-table
+controls, whereas the different-skew regime tests comparisons between distinct
+population tables with equal MI.
+
+\begin{table}[H]
+\centering
+\caption{The three controlled studies and supporting checks.}
+\label{tab:design-families}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Study & Factor varied & Main purpose\\
+\midrule
+Equal MI & Sample size, table size and margins & False positives and usable results.\\
+Population MI & Common positive MI & Degrees of freedom and near-independence behaviour.\\
+Power & True MI difference & Power alongside null calibration.\\
+Construction check & Copying or four-cell transfer & Sensitivity to a different association pattern.\\
+Sample allocation & Relative sample sizes at fixed total & False positives and power with unequal samples.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Constructing joint distributions with known MI}
+
+The construction changes association while preserving the category
+frequencies. For one population, draw \(X\) with category probabilities
+\(a=(a_1,\ldots,a_k)\). With probability \(\lambda\), set \(Y=X\);
+otherwise draw \(Y\) independently with the same probabilities \(a\).
+Copying makes matching categories more likely than under independence.
+Both branches give \(Y\) the same marginal probabilities, so changing
+\(\lambda\) does not change the row or column totals.
+
+An observation in a diagonal cell can arrive through either branch,
+whereas an off-diagonal observation can arrive only through the
+independent branch.
+Combining these probabilities gives
+\begin{equation}
+ p_{ij}(\lambda)=(1-\lambda)a_i a_j
+                  +\lambda a_i\mathbf{1}_{\{i=j\}},
+ \qquad 0\leq\lambda<1,
+ \label{eq:copying-construction}
+\end{equation}
+where the indicator is one when the two categories match and zero otherwise.
+At \(\lambda=0\), the variables are independent and MI is zero.
+Increasing \(\lambda\) increases MI, so the target MI determines the required
+copying probability. Appendix~\ref{app:construction} gives the numerical
+search and shows why the margins remain fixed.
+
+\begin{samepage}
+\medskip
+\thesisminiheading{Constructing a \(2\times2\) joint distribution with positive MI.}
+
+For \(P\), take \(a=(0.7,0.3)\) and a copying probability of
+approximately 0.20347. Cell \((1,1)\) requires \(X=1\), which has
+probability 0.7. Given \(X=1\), copying always gives \(Y=1\), whereas
+an independent draw gives \(Y=1\) with probability 0.7. Thus
+\begin{align*}
+ p_{11}&\simeq0.7\{0.20347+(1-0.20347)(0.7)\}=0.53273,\\
+ p_{12}&\simeq0.7(1-0.20347)(0.3)=0.16727.
+\end{align*}
+\end{samepage}
+The second equation has no copying term because copying cannot produce
+\(X=1,Y=2\). The remaining cells follow the same rule.
+For \(Q\), use \(a=(0.8,0.2)\) and a copying probability of approximately
+0.26091. These choices give \(I(P)=0.02\) and \(I(Q)=0.03\) nats:
+\begin{equation}
+ P\simeq\begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
+ \qquad
+ Q\simeq\begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
+ \label{eq:design-example-pair}
+\end{equation}
+Both joint distributions have positive MI, and the true difference used
+to assess power has magnitude 0.01 nats.
+
+\medskip
+\thesisminiheading{Table sizes and margin regimes.}
+
+Equation~\eqref{eq:copying-construction} applies to all four table sizes.
+For uneven margins, the first category has probability \(\rho\), and the
+remaining mass is shared equally:
+\begin{equation}
+ m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
+                   \frac{1-\rho}{k-1}\right).
+ \label{eq:skew-margin}
+\end{equation}
+Each population uses the same vector for its row and column margins.
+Table~\ref{tab:margin-profiles} specifies the vectors for \(P\) and \(Q\).
+The copying probabilities for \(P\) and \(Q\) are chosen separately to
+achieve the targets \(I(P)\) and \(I(Q)\). Equal MI therefore gives identical
+tables in the uniform and
+same-skew regimes, but different tables in the different-skew regime.
+
+\begin{table}[htbp]
+\centering
+\caption{Row and column margins for each population.}
+\label{tab:margin-profiles}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Regime & \(P\): rows and columns & \(Q\): rows and columns\\
+\midrule
+Uniform & \((1/k,\ldots,1/k)\) & \((1/k,\ldots,1/k)\)\\
+Same skew & \(m_k(0.8)\) & \(m_k(0.8)\)\\
+Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Increasing table size under the uneven-margin rule spreads the remaining
+mass over more categories, changing both the number of cells and their
+probabilities. This comparison shows what happens under a common margin
+rule as the table grows. Uniform versus same skew instead compares even
+and uneven category frequencies at a fixed size; different skew allows the
+two populations' frequencies to differ as well.
+
+\section{The three studies and supporting checks}
+
+\subsection{Sample size, table size and margins}
+
+The first study fixes \(I(P)=I(Q)=0.02\) nats and crosses all four sizes
+with all three margin regimes. For each of the twelve fixed population
+pairs, sample size varies over
+\begin{equation}
+ n_P=n_Q\in\{10,20,50,100,250,500,1000,2500,10000,50000\}.
+ \label{eq:null-sample-grid}
+\end{equation}
+These 120 settings show whether the false-positive rate approaches 5\%
+as more observations become available, and whether table size or margins
+change that progression. Valid-result rates distinguish a genuinely low
+false-positive rate from a failure to calculate the test.
+
+The common target of 0.02 nats gives positive MI in all four table sizes
+and three margin regimes. Fixing population MI does not fix the
+difficulty of estimating it: tables with equal MI can have different
+cell probabilities and different MI sampling variances. Keeping each
+population pair fixed throughout the sample-size sweep separates
+improvement from more observations from a change in the population.
+The sweep includes small samples, intermediate samples and large-sample
+checks so that both calculation failures and convergence are visible.
+
+\subsection{Population MI and degrees of freedom}
+
+The second study keeps \(4\times4\) tables and different-skew margins,
+and changes the common positive MI:
+\begin{equation}
+ I(P)=I(Q)\in\{0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\}.
+ \label{eq:association-grid}
+\end{equation}
+The sweep is repeated at \(n=100\) and 1,000. Small positive MI targets
+approach independence, where the first-order MI variance becomes small,
+while larger targets show how the tests behave away from that region. Tracking
+the estimated degrees of freedom connects changes in rejection to the
+cutoff from the Student \(t\) distribution. The two sample sizes show
+whether these patterns persist with more observations. All targets are
+positive, so the sweep approaches rather than reaches exact independence.
+
+\subsection{Power to detect MI differences}
+
+The third study fixes \(I(P)=0.02\) and sets \(I(Q)=0.02+|\Delta|\),
+using
+\begin{equation}
+ |\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2\}
+ \quad\text{nats}.
+ \label{eq:detection-grid}
+\end{equation}
+At \(n=1{,}000\) and 10,000, compare all four sizes under different skew,
+then all three margin regimes at \(4\times4\).
+The signed thesis parameter is \(\Delta=I(P)-I(Q)\), which is negative
+when \(Q\) has the larger MI; figures use its known nonnegative magnitude.
+
+Keeping \(P\)'s MI fixed gives each curve a common starting population
+as \(Q\)'s MI increases. Small differences show where the methods may
+disagree; larger differences show whether power eventually becomes high.
+Each curve includes the corresponding equal-MI setting from the null
+study, so power can be read alongside the false-positive rate at the
+same sample size.
+
+\subsection{A supporting change in construction}
+
+An eight-setting check asks whether representative findings persist when
+association is concentrated in four cells. Start from the independence
+table, add the same amount to cells \((1,1)\) and \((2,2)\), and subtract
+it from \((1,2)\) and \((2,1)\). Each affected row and column gains and
+loses the same amount. This transfer follows the sparse construction of
+\citet[Section~3(b)]{berrett2021}.
+
+Use \(4\times4\) and \(16\times16\) different-skew tables at
+\(n=1{,}000\) and 10,000,
+with MI pairs \((0.02,0.02)\) and \((0.02,0.03)\). Match the targets
+and margins to the corresponding copying populations. In a binary table
+the two constructions are equivalent; in a larger table copying changes
+all diagonal and off-diagonal cells, whereas the transfer changes only four.
+The smaller table checks a representative comparison; the larger table
+examines whether the sparse-table bias and reversed estimated ordering
+persist under a different arrangement of association. Compare rejection,
+validity and estimation diagnostics at every matched setting, including
+estimated direction under the alternative.
+
+\subsection{A supporting unequal-sample comparison}
+
+A second supporting check changes sample allocation while keeping the
+total number of observations fixed at 2,000. It uses the copying
+\(4\times4\) different-skew populations with MI pairs
+\((0.02,0.02)\) and \((0.02,0.03)\) nats. For each pair, compare
+\((n_P,n_Q)=(1000,1000),(400,1600)\) and \((1600,400)\).
+Reversing the allocation leaves the populations unchanged: \(Q\) retains
+its more uneven margins and has higher MI in the alternative.
+This asks whether the same data budget gives different false-positive
+rates and power when one population has fewer observations.
+
+Unequal sample sizes change both the bias corrections in
+Equation~\eqref{eq:bias-corrected-difference} and the weights in the
+standard error and degrees of freedom. The check applies the same
+estimators and validity rules to every allocation. Its two balanced
+comparisons are already part of the main studies, so the unequal
+allocations add four settings.
+
+\medskip
+\thesisminiheading{A supporting bias-correction check.}
+
+A jackknife check changes the MI bias correction while keeping the
+original standard errors and standard normal distribution cutoff,
+using the same samples from four existing \(16\times16\) different-skew
+copying settings. Appendix Section~\ref{sec:jackknife-difference-check}
+specifies the correction and reports all four comparisons.
+
+The complete design contains 70 population pairs and 240 distinct settings.
+Shared settings, such as the zero-difference points in the power study,
+use the same simulation results in each comparison. At 20,000 repetitions
+per setting, the study samples 4,800,000 table pairs.
+
+\section{Sampling and performance measures}
+
+For each setting, draw 20,000 independent multinomial count-table pairs
+from its fixed \(P\) and \(Q\). The samples from the two populations are
+independent, and both methods are applied to the same pair. The MI estimator,
+bias correction and standard
+error are those in Chapter~\ref{chap:baselines}; the Expanded Welch
+calculation is given in Chapter~\ref{chap:expanded}.
+
+All settings use a two-sided 5\% test. The primary rejection rate is
+\begin{equation}
+ \frac{\#\{\text{valid p-values no larger than }0.05\}}{20{,}000}.
+ \label{eq:unconditional-rate}
+\end{equation}
+At equal MI this estimates the false-positive rate; when MI differs it
+estimates power. Invalid calculations contribute no rejection but are not
+evidence for equal MI, so the valid-result frequency is reported
+alongside rejection. Rates restricted to method-valid or common-valid
+samples and their denominators are specified in
+Appendix~\ref{app:construction}.
+
+Wilson 95\% intervals quantify simulation uncertainty for individual rates
+\citep{wilson1927}. Intervals for the difference between methods use paired
+rejection indicators because the tests receive the same data.
+For 20,000 repetitions and a rate near 0.05, the Monte Carlo standard error
+is approximately 0.00154, so departures of only a few thousandths need to
+be read alongside the intervals. Section~\ref{sec:simulation-uncertainty}
+gives the calculations.
+
+\medskip
+\thesisminiheading{Diagnostics of the shared estimates.}
+
+The known populations also let us measure estimation error. Difference
+bias is the mean corrected estimate minus the true difference. The sample
+variance across repetitions measures its observed spread, whereas the mean
+squared standard error measures the uncertainty assigned by the tests.
+Dividing the mean squared standard error by the observed variance indicates
+whether the estimated uncertainty is too large or too small on average.
+Comparing the observed variance with
+\(V(P)/n_P+V(Q)/n_Q\) separately checks the first-order approximation
+with its population inputs.
+
+Degrees-of-freedom summaries use the median and 5th--95th percentile range
+among valid Expanded Welch outputs. This range describes differences
+between sampled results, not uncertainty in the estimated median.
+Empty-cell, row and column counts describe sparse sampling.
+The diagnostics retain finite estimates even if the associated test is
+invalid; Appendix~\ref{app:construction} specifies the subsets used in
+each comparison.
+
+Finally, a small timing comparison measures the computational cost on
+pre-generated \(2\times2\) through \(16\times16\) table pairs at
+\(n=1{,}000\) under different skew. Sampling and population construction
+are excluded from the timings. Both methods scan the cells, so their
+operation counts grow linearly with the number of cells. The timing
+procedure and measurement environment are given in Appendix
+Section~\ref{sec:timing-procedure}.

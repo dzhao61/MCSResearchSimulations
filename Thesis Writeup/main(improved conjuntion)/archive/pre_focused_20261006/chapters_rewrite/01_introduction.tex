@@ -1,0 +1,111 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+Suppose two independent groups are observed on the same categorical variables
+\(X\) and \(Y\). Mutual information (MI) describes the strength of association
+between those variables in each group. If the estimated MI differs, the
+difference alone does not tell us whether the population MI values differ:
+both estimates vary when new observations are drawn. The question in this thesis is whether
+the two \emph{population} MI values can plausibly be equal.
+
+This is not the usual test of whether \(X\) and \(Y\) are independent within
+one group. The null hypothesis here permits dependence in both groups and
+permits their complete joint distributions to differ. It specifies only
+\begin{equation}
+  H_0:I(P)=I(Q),
+  \qquad H_1:I(P)\ne I(Q),
+  \label{eq:introduction-null}
+\end{equation}
+where \(P\) and \(Q\) are the two joint distributions. The samples from
+\(P\) and \(Q\) are independent of each other; that sampling assumption does
+not imply independence of \(X\) and \(Y\) within either population.
+
+\section{Why the comparison is difficult}
+
+MI uses the probabilities in every cell of a table and the totals of its rows
+and columns. In a small sample, some cells can be empty even when their
+population probabilities are positive. The observed tables determine both
+the estimated MI difference and its standard error, so sparse data can affect
+both. The Normal Wald test compares their ratio with a standard normal
+distribution, but in
+small samples it may reject equal MI more or less often than the intended 5\%.
+
+Expanded Welch offers a possible adjustment. It uses the same estimated
+difference and standard error as Wald, but compares their ratio with a
+Student \(t\) distribution.
+Choosing that Student \(t\) distribution requires a calculation specific to
+MI. Its degrees of freedom depend on how much
+the estimated MI variance changes from sample to sample. To calculate that
+change, we must account for the fact that changing one cell also changes its
+row and column totals and the MI values calculated from them. This thesis
+derives that calculation and tests whether the adjustment helps.
+
+Expanded Welch can reduce false positives
+where Wald rejects too often, but it can also reduce detection where Wald
+already rejects too rarely. In sparse samples, it may fail to return a usable
+p-value when Wald succeeds. The experiment therefore examines false
+positives, detection and the frequency of usable results together.
+
+\section{Research questions}
+
+The thesis asks two main questions. First, how can changes in the estimated
+MI variance be used to choose the degrees of freedom for a test using a
+Student \(t\) distribution?
+
+Second, does the resulting Expanded Welch test offer a useful improvement
+over Normal Wald?
+The experiment checks how false positives, detection and validity change with
+table size, uneven cell
+probabilities, the amount and location of association, unequal sample sizes
+and larger samples. It also measures the extra computation required.
+
+\section{Contributions to the field}
+
+\begin{enumerate}
+  \item \begin{samepage}\textbf{Mathematical contribution.} The thesis derives how changing
+  one observation affects the estimated MI variance. The calculation includes
+  the resulting changes in the row and column totals and in pointwise MI.
+  \par
+  \end{samepage}
+
+  \item \begin{samepage}\textbf{Methodological contribution.} Expanded Welch uses this
+  calculation to choose the degrees of freedom for a two-sample test using a
+  Student \(t\) distribution.
+  \par
+  \end{samepage}
+
+  \item \begin{samepage}\textbf{Empirical contribution.} A reproducible experiment measures
+  false positives, detection, usable results and runtime on fixed populations
+  with known MI. It covers \(2\times2\) through \(8\times8\) square tables,
+  rectangular tables, unequal samples and very sparse settings.
+  \par
+  \end{samepage}
+
+  \item \textbf{Practical contribution.} Expanded Welch can help when Wald
+  rejects equal MI too often. It can also make an already-low rejection rate
+  lower and return fewer usable results in sparse samples. Changing the
+  reference distribution alone cannot correct errors in the shared MI
+  difference or standard error.
+\end{enumerate}
+
+\section{Scope and organisation}
+
+The analysis concerns independent samples recorded in count tables with the
+same row and column categories. The main derivation assumes every population
+cell has positive probability and that its leading large-sample MI variance
+is greater than zero. Exact independence is considered separately because
+that variance becomes zero.
+Within this setting, the experiment compares Normal Wald with Expanded Welch
+using a two-sided 5\%
+test. It does not establish performance for paired data, continuous MI
+estimators or a number of categories that grows with sample size.
+
+Chapter~\ref{chap:background} supplies the statistical background.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
+statistic and derive the correction. Chapter~\ref{chap:design} explains how
+the populations and samples are generated and how the results are measured.
+Chapter~\ref{chap:results} presents and interprets the main comparisons
+in sequence. Chapter~\ref{chap:discussion} draws out their broader
+implications and limits, and Chapter~\ref{chap:conclusion} states the
+contribution and recommendation. The appendices give the detailed algebra,
+population settings, simulation diagnostics and supporting figures.

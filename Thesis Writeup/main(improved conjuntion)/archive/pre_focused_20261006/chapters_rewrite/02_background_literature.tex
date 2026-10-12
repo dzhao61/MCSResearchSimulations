@@ -1,0 +1,586 @@
+\chapter{Background and Literature Review}
+\label{chap:background}
+
+Testing whether two populations have equal MI requires an estimate from each
+sample and a measure of its sampling error. This chapter develops those
+inputs and reviews methods for comparing them.
+
+\section{Information-theoretic foundations}
+
+\subsection{Entropy and information content}
+
+For a discrete random variable \(X\) with probability mass function
+\(p_X(x)\), the information content of outcome \(x\) is
+\(-\log p_X(x)\).
+Rare outcomes have larger information content because they are less expected.
+Using natural logarithms gives information in nats. The Shannon entropy is the
+expected information content,
+\begin{equation}
+  H(X)=-\sum_x p_X(x)\log p_X(x).
+  \label{eq:entropy}
+\end{equation}
+Entropy summarises the uncertainty of one random variable before its value is
+observed \citep{shannon1948}.
+
+For a pair \((X,Y)\), the joint entropy \(H(X,Y)\) is defined from the joint
+probabilities in the same way. The conditional entropy
+\(
+H(X\mid Y)=H(X,Y)-H(Y)
+\)
+measures the uncertainty remaining in \(X\) after observing \(Y\).
+
+\subsection{Pointwise and average mutual information}
+
+Let \(P=(p_{ij})\) be the joint distribution of categorical variables
+\(X\in\{1,\ldots,r\}\) and \(Y\in\{1,\ldots,c\}\). Write
+\begin{equation}
+  p_{i+}=\sum_{j=1}^{c}p_{ij},
+  \qquad
+  p_{+j}=\sum_{i=1}^{r}p_{ij}
+\end{equation}
+for the row and column margins. The pointwise mutual information associated
+with cell \((i,j)\) is
+\begin{equation}
+  \pmi_P(i,j)
+  =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
+  \label{eq:background-pmi}
+\end{equation}
+The denominator is the cell probability under independence with the same
+margins. A positive value means that the cell occurs more often than
+independence predicts; a negative value means that it occurs less often.
+
+Mutual information is the probability-weighted average of these pointwise
+values \citep{shannon1948,bossomaier2016}:
+\begin{equation}
+  I(P)
+  =\sum_{i=1}^{r}\sum_{j=1}^{c}p_{ij}\pmi_P(i,j).
+  \label{eq:background-mi}
+\end{equation}
+Here the summations are nested: for each row \(i\), the inner sum runs over
+all columns \(j\). Equivalently, the expression sums once over every cell in
+the table and may be written with the shorthand \(\sum_{i,j}\).
+
+Because \(P\) is the joint distribution of \((X,Y)\), we also write
+\(I(P)\) as \(I(X;Y)\). Its entropy form is
+\begin{equation}
+  I(X;Y)=H(X)+H(Y)-H(X,Y).
+  \label{eq:mi-entropy-form}
+\end{equation}
+The quantity is nonnegative and equals zero exactly when
+\(p_{ij}=p_{i+}p_{+j}\) for every cell, including zero-probability cells
+\citep{bossomaier2016}.
+
+Although MI measures the overall departure from independence, it does not
+specify the shape of association. Two populations can have the same MI while assigning
+probability to different cells, having different margins, or exhibiting
+different association patterns. Equality of MI is therefore weaker than
+equality of distributions. Our null requires only this one number to agree,
+not that the two tables match cell by cell.
+
+The logarithm base determines the reporting unit. This thesis uses natural
+logarithms, so MI is measured in nats; dividing by \(\log 2\) converts to bits.
+This conversion rescales MI and its standard error together but leaves the
+degrees of freedom unchanged, so the test result is identical in either unit.
+
+\section{Estimating discrete mutual information}
+\label{sec:background-mi-bias}
+
+Suppose a sample of size \(n\) produces counts \(N_{ij}\). The empirical cell
+probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N_{ij}}{n}.
+\end{equation}
+Substitution into Equation~\eqref{eq:background-mi} gives the plug-in estimator
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right).
+  \label{eq:plugin-mi-background}
+\end{equation}
+The zero-cell convention follows from
+\(\lim_{x\downarrow0}x\log x=0\). Empty cells contribute no direct term, but
+they still affect the empirical margins and the finite-sample behaviour of the
+estimator.
+
+Under multinomial sampling, the cell counts vary between samples but must
+sum to \(n\). An extra observation in one cell therefore leaves fewer
+observations for the others. For a fixed set of categories, the plug-in
+estimate approaches population MI as the sample grows, but its small-sample
+behaviour depends on the complete probability table. In particular, rare
+cells can change this behaviour even when the categories and sample size are
+unchanged
+\citep{paninski2003}.
+
+For a fixed positive \(r\times c\) support, the plug-in estimator has a
+positive leading bias as the sample size grows:
+\begin{equation}
+  \Bias\{\Ihat(P)\}
+  =\frac{(r-1)(c-1)}{2n}+O(n^{-2}).
+  \label{eq:mi-leading-bias}
+\end{equation}
+The leading term grows with table size and shrinks as the sample grows. It
+does not describe every small or sparse sample. The result is closely related
+to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
+term appears in \citet{moddemeijer1989}. Sparse sampling can produce further
+error beyond this leading approximation \citep{paninski2003}.
+
+Bias matters directly when comparing two populations. If
+\(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
+\begin{equation}
+  \frac{(r-1)(c-1)}{2}
+  \left(\frac{1}{n_P}-\frac{1}{n_Q}\right).
+  \label{eq:two-sample-mi-bias}
+\end{equation}
+For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
+\eqref{eq:two-sample-mi-bias} gives \(0.005\) nats despite equal population MIs. Chapter
+\ref{chap:baselines} corrects this sample-size effect by subtracting
+\((r-1)(c-1)/(2n)\) from each estimate.
+
+\section{Sampling variance of plug-in MI}
+\label{sec:first-order-mi-background}
+
+Comparing two MI estimates requires knowing how much each varies across
+repeated samples. We derive the large-sample approximation
+\begin{equation}
+  \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
+  \label{eq:first-order-mi-var-background}
+\end{equation}
+Here \(V(P)\), defined below, measures how much the contribution of one
+observation varies across the population. The derivation assumes that the
+population cell probabilities are positive, so the logarithms and their
+derivatives are well defined. This first-order variance is established for
+histogram and discrete MI \citep{moddemeijer1989,brillinger2004}.
+
+The argument proceeds in three steps. First, sampling changes the empirical
+cell probabilities. Second, a first-order Taylor expansion translates those
+probability errors into an MI error. Third, that error can be written as a
+sample average, whose variance is straightforward to calculate.
+
+\medskip
+\thesisminiheading{Step 1: From probability errors to MI error.}
+
+Using the entropy identity in Equation~\eqref{eq:mi-entropy-form}, MI can be
+written directly in terms of the joint and marginal probabilities:
+\begin{equation}
+  I(P)
+  =
+  \sum_{i,j}p_{ij}\log p_{ij}
+  -\sum_i p_{i+}\log p_{i+}
+  -\sum_j p_{+j}\log p_{+j}.
+  \label{eq:mi-probability-sums}
+\end{equation}
+Each sum contains the same function, \(f(u)=u\log u\). Expanding this
+function lets us translate probability errors into changes in MI. The
+derivative needed for its first-order Taylor
+expansion follows directly from the product rule:
+\begin{equation}
+  f'(u)
+  =\frac{d}{du}\{u\log u\}
+  =\log u+u\frac{1}{u}
+  =\log u+1.
+  \label{eq:ulog-derivative-background}
+\end{equation}
+The general first-order Taylor formula is
+\begin{equation}
+  f(x)\approx f(a)+f'(a)(x-a),
+  \label{eq:general-first-order-taylor-background}
+\end{equation}
+where \(a\) is the value around which the function is expanded and \(x-a\)
+is the distance from that value. Here the new value is the estimated
+probability \(x=\widehat u\), the expansion point is the population probability
+\(a=u\), and \(f(t)=t\log t\). Therefore, \(x-a=\widehat u-u\), which is the
+sampling error in the estimated probability. Substituting these quantities
+into the general formula gives
+\begin{equation}
+  \widehat u\log\widehat u
+  \approx
+  \underbrace{u\log u}_{\text{population value}}
+  +
+  \underbrace{(\log u+1)(\widehat u-u)}_{\text{first-order change}}.
+  \label{eq:first-order-taylor-background}
+\end{equation}
+Subtracting the population value from both sides makes the change explicit:
+\begin{equation}
+  \widehat u\log\widehat u-u\log u
+  \approx
+  (\log u+1)(\widehat u-u).
+  \label{eq:ulog-change-background}
+\end{equation}
+
+Applying this expansion to the three sums in
+Equation~\eqref{eq:mi-probability-sums} gives
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \sum_{i,j}(\log p_{ij}+1)(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &\quad
+  -\sum_i(\log p_{i+}+1)(\widehat p_{i+}-p_{i+})
+  \notag\\
+  &\quad
+  -\sum_j(\log p_{+j}+1)(\widehat p_{+j}-p_{+j}).
+  \label{eq:mi-first-order-three-sums}
+\end{align}
+The margin errors are sums of the corresponding cell errors:
+\begin{equation}
+  \widehat p_{i+}-p_{i+}
+  =\sum_j(\widehat p_{ij}-p_{ij}),
+  \qquad
+  \widehat p_{+j}-p_{+j}
+  =\sum_i(\widehat p_{ij}-p_{ij}).
+  \label{eq:margin-errors-from-cells}
+\end{equation}
+For example, the row-margin sum can now be written as
+\begin{align}
+  \sum_i(\log p_{i+}+1)(\widehat p_{i+}-p_{i+})
+  &=\sum_i\left[
+    (\log p_{i+}+1)
+    \left\{\sum_j(\widehat p_{ij}-p_{ij})\right\}
+    \right]
+  \notag\\
+  &=\sum_{i,j}(\log p_{i+}+1)(\widehat p_{ij}-p_{ij}).
+\end{align}
+The inner sum over \(j\) is the probability error for a fixed row \(i\). It
+is multiplied by that row's coefficient \(\log p_{i+}+1\); the outer sum then
+adds these products over all rows. The column-margin sum can be rearranged in
+the same way.
+
+After this rearrangement, the same cell error \(\widehat p_{ij}-p_{ij}\)
+appears in the joint term, its
+row-margin term and its column-margin term. Its combined coefficient is
+\begin{align}
+  &(\log p_{ij}+1)
+  -(\log p_{i+}+1)
+  -(\log p_{+j}+1)
+  \notag\\
+  &\qquad
+  =\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)-1
+  \notag\\
+  &\qquad
+  =\pmi_P(i,j)-1.
+  \label{eq:mi-error-cell-coefficient}
+\end{align}
+Therefore,
+\begin{equation}
+  \Ihat(P)-I(P)
+  \approx
+  \sum_{i,j}\{\pmi_P(i,j)-1\}(\widehat p_{ij}-p_{ij}).
+  \label{eq:mi-error-before-constant-cancellation}
+\end{equation}
+The empirical and population cell probabilities both sum to one, so
+\begin{equation}
+  \sum_{i,j}(\widehat p_{ij}-p_{ij})
+  =\sum_{i,j}\widehat p_{ij}-\sum_{i,j}p_{ij}
+  =1-1=0.
+  \label{eq:cell-errors-sum-zero}
+\end{equation}
+The constant \(-1\) in Equation~\eqref{eq:mi-error-cell-coefficient} therefore
+contributes zero. Explicitly,
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \sum_{i,j}\{\pmi_P(i,j)-1\}(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &=\sum_{i,j}\pmi_P(i,j)(\widehat p_{ij}-p_{ij})
+    -\sum_{i,j}(\widehat p_{ij}-p_{ij})
+  \notag\\
+  &=\sum_{i,j}
+  \pmi_P(i,j)(\widehat p_{ij}-p_{ij}).
+  \label{eq:mi-error-from-cell-errors}
+\end{align}
+The complicated changes in the joint table and its two margins have therefore
+reduced to a weighted sum of cell-probability errors. The weight for a cell is
+its population pointwise MI.
+
+\medskip
+\thesisminiheading{Step 2: From cell errors to observation-level errors.}
+
+Let \(Z_a=(X_a,Y_a)\) be observation \(a\). An empirical cell probability is
+the proportion of observations in that cell, so
+\begin{equation}
+  \widehat p_{ij}-p_{ij}
+  =
+  \frac{1}{n}\sum_{a=1}^{n}
+  \left\{\mathbf 1(Z_a=(i,j))-p_{ij}\right\}.
+  \label{eq:cell-error-as-average}
+\end{equation}
+Substituting this expression into Equation~\eqref{eq:mi-error-from-cell-errors}
+first gives
+\begin{equation}
+  \Ihat(P)-I(P)
+  \approx
+  \sum_{i,j}\pmi_P(i,j)
+  \left[
+    \frac{1}{n}\sum_{a=1}^{n}
+    \{\mathbf 1(Z_a=(i,j))-p_{ij}\}
+  \right].
+  \label{eq:mi-error-double-sum-background}
+\end{equation}
+The finite sums can be exchanged, so the contribution from observation \(a\)
+is gathered inside one pair of brackets:
+\begin{align}
+  \Ihat(P)-I(P)
+  &\approx
+  \frac{1}{n}\sum_{a=1}^{n}
+  \left[
+    \sum_{i,j}\pmi_P(i,j)\mathbf 1(Z_a=(i,j))
+    -\sum_{i,j}p_{ij}\pmi_P(i,j)
+  \right]
+  \notag\\
+  &=\frac{1}{n}\sum_{a=1}^{n}
+  \left\{\pmi_P(Z_a)-I(P)\right\}.
+  \label{eq:mi-error-as-average-background}
+\end{align}
+The first sum inside the brackets selects the single cell containing
+\(Z_a\), giving \(\pmi_P(Z_a)\). The second is the probability-weighted
+average of all pointwise-MI values, which is \(I(P)\).
+
+To first order, Equation~\eqref{eq:mi-error-as-average-background} expresses
+the MI error as an average of \(n\) observation-level contributions.
+The contribution of an observation in cell \((i,j)\) is simply that cell's
+pointwise MI minus the population average, \(\pmi_P(i,j)-I(P)\). Its mean is
+zero because
+\begin{align}
+  \E_P\{\pmi_P(X,Y)-I(P)\}
+  &=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}
+  \notag\\
+  &=\underbrace{\sum_{i,j}p_{ij}\pmi_P(i,j)}_{I(P)}
+    -I(P)\underbrace{\sum_{i,j}p_{ij}}_{1}
+  =0.
+  \label{eq:mi-if-mean-zero-background}
+\end{align}
+The centred function \(\pmi_P(i,j)-I(P)\) is called the influence function
+of MI\@. Equation~\eqref{eq:mi-error-as-average-background} uses it to
+approximate the sampling error \citep{hampel1974,vanderVaart1998,kandasamy2015}.
+
+\medskip
+\thesisminiheading{Step 3: Calculate the sampling variance.}
+
+Define the population variance of these centred contributions by
+\begin{equation}
+  V(P)
+  =\Var_P\{\pmi_P(X,Y)-I(P)\}
+  =\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
+  \label{eq:mi-variance-background}
+\end{equation}
+Under independent sampling, the \(n\) terms in
+Equation~\eqref{eq:mi-error-as-average-background} are independent and each
+has variance \(V(P)\). The covariance between any two different observations
+is therefore zero. Hence
+\begin{align}
+  \Var\{\Ihat(P)\}
+  &\approx
+  \Var\left\{
+    \frac{1}{n}\sum_{a=1}^{n}
+    \{\pmi_P(Z_a)-I(P)\}
+  \right\}
+  \notag\\
+  &=\frac{1}{n^2}
+    \sum_{a=1}^{n}\Var\{\pmi_P(Z_a)-I(P)\}
+  \notag\\
+  &=\frac{1}{n^2}\sum_{a=1}^{n}V(P)
+  =\frac{nV(P)}{n^2}
+  =\frac{V(P)}{n}.
+  \label{eq:mi-variance-derived-background}
+\end{align}
+Averaging \(n\) independent contributions therefore divides their variance
+by \(n\). For dependent observations, covariance terms must also be included
+in Equation~\eqref{eq:mi-variance-derived-background}, as studied by
+\citet{moddemeijer1999}. The present experiment uses independent observations.
+
+When \(V(P)>0\), the central limit theorem also gives
+\begin{equation}
+  \frac{\Ihat(P)-I(P)}{\sqrt{V(P)/n}}
+  \xrightarrow{d}N(0,1).
+  \label{eq:mi-clt-background}
+\end{equation}
+This gives a large-sample normal approximation for a fixed table with
+positive population cell probabilities. The \(1/n\) leading bias from
+Section~\ref{sec:background-mi-bias} decreases faster than the
+\(1/\sqrt n\) sampling error, so it does not change this limiting
+distribution.
+
+\medskip
+\thesisminiheading{The independence boundary.}
+\nopagebreak[4]
+
+At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
+\(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
+first-order average in Equation~\eqref{eq:mi-error-as-average-background}
+vanishes.
+A finite sample can still have positive MI. Its leading variation comes from
+the squared cell-probability errors in a second-order Taylor expansion, which
+produces the usual chi-squared limiting distribution
+\citep{brillinger2004,marinescu2025}. Testing independence therefore uses a
+chi-squared distribution rather than the normal approximation for comparing
+positive MI values.
+
+\section{Approaches to Testing MI Differences}
+\label{sec:welch-background}
+
+This section reviews methods for estimating uncertainty in MI and testing
+differences between two MI values. The question in this thesis is whether two
+populations have the same MI, \(I(P)=I(Q)\). Their cell probabilities may
+differ even when their MI values are equal.
+
+\thesisminiheading{Normal Wald inference.}
+
+A Wald test estimates a parameter difference, divides it by an estimated
+standard error, and compares the result with a standard normal distribution
+\citep{wald1943,vanderVaart1998}.
+For two independent MI estimates, the two first-order variance contributions
+add:
+\begin{equation}
+  \Var\{\Ihat(P)-\Ihat(Q)\}
+  \approx \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
+  \label{eq:background-two-sample-variance}
+\end{equation}
+Each term is the sampling variance of one MI estimate. Independence of the
+two samples makes their covariance zero. Replacing the population variances
+by estimates gives the standardisation
+\begin{equation}
+  \frac{\Ihat(P)-\Ihat(Q)}
+       {\sqrt{\Vhat(P)/n_P+\Vhat(Q)/n_Q}}
+  \xrightarrow{d}N(0,1)
+  \qquad\text{under }I(P)=I(Q).
+  \label{eq:background-wald-standardisation}
+\end{equation}
+Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
+\(V(P)\) and \(V(Q)\). This limit assumes the regular positive-support
+conditions of Section~\ref{sec:first-order-mi-background} and increasing
+sample sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
+to the numerator and specifies the full Normal Wald test.
+With smaller samples, the MI difference may not follow the normal
+approximation closely, and the estimated standard error can vary between
+samples. The Wald test still uses a normal distribution; it makes no separate
+small-sample adjustment for that standard-error variability.
+
+\medskip
+\thesisminiheading{The Welch--Satterthwaite principle.}
+
+Welch's test compares two means when their population variances may differ
+\citep{welch1947}. For two independent samples with means
+\(\bar X_P,\bar X_Q\) and variances \(s_P^2,s_Q^2\), the statistic for
+testing equal population means and its effective degrees of freedom are
+\begin{align}
+  T_{\mathrm{Welch}}
+  &=\frac{\bar X_P-\bar X_Q}
+          {\sqrt{s_P^2/n_P+s_Q^2/n_Q}},\\
+  \nu
+  &=\frac{\left(s_P^2/n_P+s_Q^2/n_Q\right)^2}
+          {\dfrac{(s_P^2/n_P)^2}{n_P-1}
+           +\dfrac{(s_Q^2/n_Q)^2}{n_Q-1}}.
+  \label{eq:background-ordinary-welch}
+\end{align}
+
+The denominator of the statistic contains one estimated variance contribution
+from each sample. Under normal sampling, their component degrees of freedom
+are \(n_P-1\) and \(n_Q-1\). If \(s_P^2/n_P\) dominates, the formula makes the
+combined \(\nu\) close to \(n_P-1\); when both contributions matter, both
+component values affect \(\nu\). Satterthwaite obtains this form by matching
+the mean and variance of their sum to a scaled chi-squared variable
+\citep{satterthwaite1946}.
+
+Welch compares the statistic with a Student \(t\) distribution using the calculated
+\(\nu\). At the same significance level, this requires a larger absolute
+statistic to reject the null than a standard normal distribution does.
+The difference between the rejection thresholds from the Student \(t\)
+and standard normal distributions becomes
+smaller as \(\nu\) increases.
+For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
+\(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
+calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
+the probability tables. Chapter~\ref{chap:expanded} derives these
+MI-specific inputs to the same moment-matching structure.
+
+The same principle has been used in regression to account for
+uncertainty in estimated variances
+\citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
+For example, \citet{panwall2002} calculate approximate degrees of freedom
+by examining how a regression variance estimate varies between samples.
+Expanded Welch applies this approach to the estimated MI variance.
+These regression precedents address variance estimates that are too small
+or confidence intervals that cover too rarely
+\citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
+distribution can widen the intervals and reduce excessive rejection in such
+settings. The MI comparison in Section~\ref{sec:mechanism-results} has the
+opposite problem: the average squared plug-in standard error exceeds the
+measured variance of the estimated difference. The larger cutoff leaves
+that variance error unchanged and makes rejection less likely still.
+
+\medskip
+\thesisminiheading{Prior MI inference and related comparisons.}
+
+\citet{roulston1999} derives entropy and MI error estimates
+using error propagation and examines them numerically. These calculations
+describe the uncertainty of an individual estimate, a necessary input to a
+comparison of two estimates.
+A Bayesian approach describes uncertainty about population MI given an
+observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
+unknown cell probabilities to calculate the variance and shape of the
+resulting MI distribution. Our repeated-sampling comparison instead asks
+how often each test rejects when new samples are drawn from fixed
+populations.
+
+Hutcheson's test is a direct information-theoretic Welch predecessor. It
+compares two Shannon diversity estimates with an estimated variance and a
+Student \(t\) distribution, using
+\begin{equation}
+  \nu_H=
+  \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
+       {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
+  \label{eq:hutcheson-df}
+\end{equation}
+as its effective degrees of freedom \citep{hutcheson1970}. Here each of
+\(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
+corresponding entropy estimator \(\widehat H\), and each variance component
+is assigned its sample size, not \(n_i-1\).
+Hutcheson's rule assigns degrees of freedom from sample sizes. Expanded
+Welch instead calculates how the estimated MI variance changes with the
+table, including the effects of a cell change on its row and column totals.
+
+In a segregation application, \citet{mora2009} develop inference for an MI index and discuss
+pairwise comparisons across groups and periods; the later peer-reviewed account
+places that MI index within the wider segregation literature \citep{mora2011}.
+By contrast, \citet{guha2014} test whether two continuous distributions are identical
+using MI between pooled observations and their sample labels.
+For discrete data, \citet{drake2014} develop an MI-based \(k\)-sample test
+for equality of distributions. These tests compare complete distributions,
+not the MI of two variables within each population.
+
+\medskip
+\thesisminiheading{Resampling alternatives.}
+
+A bootstrap would draw many new samples from the observed tables to estimate
+how much the test statistic varies. This requires repeating the calculation
+many times \citep{efron1979}. A simple permutation test instead combines the
+two samples and shuffles their group labels. That shuffle is justified when
+the populations have the same complete distribution, \(P=Q\). Our hypothesis
+requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
+equal. Shuffling labels could therefore test a stronger claim than this thesis
+asks about \citep{chung2013}. Specialised permutation methods allow distinct
+populations in some parameter comparisons \citep{janssen1997,chung2013};
+their validity for equal MI would need to be established.
+
+\section{Previous work and this thesis's contribution}
+
+Existing work provides the leading bias and sampling variance of MI
+\citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
+Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
+\citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
+regression variance estimate to choose degrees of freedom. Applying the
+latter approach to MI requires calculating how its estimated variance
+changes with the observed table.
+
+A new observation changes the empirical cell probabilities, row and column
+totals, and pointwise MI values. The remaining calculation is how these
+changes affect the estimated MI variance. This thesis uses that calculation
+to choose the degrees of freedom for a Student \(t\) distribution, then
+evaluates whether it improves false positives and detection.
+Both tests start with the same estimated MI difference and standard error.
+Chapter~\ref{chap:baselines} defines this shared statistic before
+Chapter~\ref{chap:expanded} derives the additional variance calculation.

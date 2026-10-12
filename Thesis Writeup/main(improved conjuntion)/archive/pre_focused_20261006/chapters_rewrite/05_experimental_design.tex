@@ -1,0 +1,225 @@
+\chapter{Experimental Design}
+\label{chap:design}
+
+The simulation study evaluates whether Expanded Welch improves on Normal
+Wald when comparing the MI of two populations. It measures false positives
+when the population MI values are equal, detection when they differ, and how
+often each method returns a valid p-value.
+Each experimental setting starts with two joint probability tables,
+\(P\) and \(Q\), whose margins and MI values are chosen before sampling.
+Independent samples are then drawn from each population, and both tests are
+applied to the resulting count tables. Because the population MI values are
+known, we can assess the tests against the true difference rather than the
+differences that arise by chance in individual samples.
+
+\section{Constructing fixed joint distributions}
+
+To vary association without changing category frequencies, we construct
+each table with prescribed row and column margins and a known MI\@. A binary
+example shows how the margins can remain fixed while \(X\) and \(Y\)
+become dependent.
+
+\medskip
+\thesisminiheading{Constructing a non-independent \(2\times2\) joint distribution.}
+
+To obtain one observation from \(P\), first draw \(X\) with category
+probabilities \((0.7,0.3)\). With probability approximately 20.35\%, set
+\(Y=X\); otherwise, draw \(Y\) independently with the same category
+probabilities. Copying \(X\) makes matching categories more likely than
+under independence. Both ways of choosing \(Y\) give it margins
+\((0.7,0.3)\), so their mixture keeps the row and column margins fixed.
+
+\begin{samepage}
+For example, cell \((1,1)\) requires \(X=1\), which has probability 0.7.
+Given \(X=1\), copying always gives \(Y=1\), while an independent draw
+gives \(Y=1\) with probability 0.7. Combining the two possibilities gives
+\begin{equation*}
+ p_{11}\simeq0.7\{0.20347+(1-0.20347)(0.7)\}
+ \simeq0.53273.
+\end{equation*}
+This is the first entry of \(P\) below; the other entries follow by
+considering their corresponding category pairs.
+\par
+\end{samepage}
+
+Construct \(Q\) in the same way, using category probabilities
+\((0.8,0.2)\) and a copying probability of approximately 26.09\%.
+The two copying probabilities are chosen to give \(I(P)=0.02\) and
+\(I(Q)=0.03\) nats.
+
+\begin{samepage}
+The resulting joint probability tables are
+\begin{equation}
+ P\simeq
+ \begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
+ \qquad
+ Q\simeq
+ \begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
+ \label{eq:design-example-pair}
+\end{equation}
+Their absolute MI difference, 0.01 nats, is the horizontal-axis value
+used in the results figures.
+\par
+\end{samepage}
+
+\medskip
+\thesisminiheading{Probability transfers in larger tables.}
+
+For larger tables, begin with independence by multiplying the prescribed
+row and column probabilities. The main construction adds the same amount
+to cells \((1,1)\) and \((2,2)\), and removes that amount from cells
+\((1,2)\) and \((2,1)\). Each affected row and column gains and loses the
+same amount, so its total is unchanged; all other cells stay unchanged.
+This four-cell transfer follows the sparse alternative of
+\citet[Section~3(b)]{berrett2021}. For the \(2\times2\) example, this
+transfer produces exactly the same table as the copying mechanism above.
+
+For each population, the amount transferred is chosen to reach its target
+MI while keeping every cell probability positive. Before sampling, both
+tables are checked for positive cells, correct margins and target MI\@.
+Appendix~\ref{app:construction} gives the equivalent matrix construction,
+its feasible range and the numerical search used to select the amount.
+
+The wider study uses three margin profiles.
+For a dimension of size \(k\), the skewed margin used in the design is
+\begin{equation}
+ m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
+                   \frac{1-\rho}{k-1}\right).
+ \label{eq:skew-margin}
+\end{equation}
+The three principal profiles are specified separately for the two
+populations in Table~\ref{tab:margin-profiles}. For a rectangular
+\(r\times c\) table, the formula is applied with \(k=r\) to row margins and
+\(k=c\) to column margins.
+The margin profiles also determine whether equal MI gives identical tables.
+At a zero MI difference, the same-margin profiles
+produce \(P=Q\) under this construction; the different-skew profile has
+\(I(P)=I(Q)\) but \(P\ne Q\).
+
+\begin{table}[htbp]
+\centering
+\caption{Row and column margins used for each population in the principal
+design. ``Uniform'' means the vector with every entry equal to \(1/k\).}
+\label{tab:margin-profiles}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Profile & \(P\): rows and columns & \(Q\): rows and columns\\
+\midrule
+Uniform & uniform & uniform\\
+Same skew & \(m_k(0.8)\) & \(m_k(0.8)\)\\
+Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the usual effect direction, \(I(P)=I_0\) and
+\(I(Q)=I_0+|\Delta|\). The reverse-direction imbalance experiment assigns
+the higher target to \(P\).
+The statistical convention remains \(\Delta=I(P)-I(Q)\), which is negative in
+the usual direction. Figures use the nonnegative magnitude \(|\Delta|\).
+
+The changed-cell experiments ask whether results depend on where association
+sits in the table. The ``rare block'' moves the four changed cells from the
+upper-left corner to rows and columns with smaller probabilities in skewed
+populations. The ``spread'' pattern changes cells throughout the table while
+keeping the row and column totals fixed. Each population retains its
+specified margins and target MI. Comparing the patterns at these matched
+values tests how the placement of association affects performance.
+
+A separate comparison changes the construction rule. The log-linear method
+also spreads association through the table but produces different cell
+probabilities from the four-cell transfer at matched margins and MI\@.
+Appendix~\ref{app:construction} gives the construction formulas.
+
+\section{Sampling, tests and measured outcomes}
+
+The study uses at least 10 observations per population.
+For each unique configuration, 20,000 independent pairs of multinomial count
+tables are drawn from its fixed \(P\) and \(Q\). Normal Wald and Expanded
+Welch are applied to the \emph{same} count-table pair. Differences in their
+test outcomes therefore arise from the methods rather than different draws.
+
+Rejection is measured at the same two-sided nominal threshold,
+\(\alpha=0.05\), throughout the statistical study. For each method, the
+primary plotted rejection rate is
+\begin{equation}
+ \frac{\#\{\text{sample pairs giving a valid p-value no larger than }0.05\}}
+      {20{,}000}.
+ \label{eq:unconditional-rate}
+\end{equation}
+At \(|\Delta|=0\) this estimates the false-positive rate. At
+\(|\Delta|>0\) it estimates the probability of detecting the specified
+difference at the fixed nominal threshold, often called power. Closer to
+0.05 means better calibration under the null.
+Under an alternative, higher detection is useful only alongside acceptable
+null calibration and a usable test result.
+
+An invalid calculation contributes no rejection to Equation
+\eqref{eq:unconditional-rate}, but it does not count as evidence for the null.
+The valid-result rate shows how often each test returns a usable
+p-value. Reporting it alongside rejection distinguishes a low rejection
+rate from a failure to calculate the test.
+
+The reported 95\% intervals quantify the simulation uncertainty in those
+rates at each
+fixed population pair. Intervals for the difference between methods account
+for applying both tests to the same sampled tables. Section~\ref{sec:simulation-uncertainty}
+gives the interval calculations and rates restricted to valid results.
+
+The ``minimum expected count'' diagnostic is
+\(\min_{ij}n_Pp_{ij}\) for \(P\), or \(\min_{ij}n_Qq_{ij}\) for \(Q\).
+The design imposes no minimum expected-count requirement, so empty observed
+cells and rows remain possible.
+To make low validity visible, a hollow marker warns that fewer
+than 90\% of outputs of that method were valid; 90\% is a display convention,
+not a validated safety threshold.
+
+\section{Experiment families and computation}
+
+Table~\ref{tab:design-families} records the question answered by each family.
+The common population construction above applies unless the named factor
+changes. Exact parameter sets are in Appendix~\ref{app:construction}.
+
+The principal grid crosses square shapes \(2\times2,3\times3,5\times5,8\times8\)
+with the three margin profiles in Table~\ref{tab:margin-profiles}. It fixes
+\(I(P)=0.02\) nats and uses
+\(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02\}\) nats and equal
+sample sizes \(n_P=n_Q\in\{10,20,50,100,250,500,1000\}\).
+The other families change one or more stated factors from this principal
+grid.
+
+The design has 534 distinct population pairs \((P,Q)\). A pair combined
+with sample sizes \((n_P,n_Q)\) defines a statistical configuration.
+Reusing pairs at different sample sizes gives 2,760 unique configurations,
+each sampled 20,000 times, for 55,200,000 table pairs.
+
+\begin{table}[H]
+\centering
+\caption{The fixed experiment families. All statistical points use 20,000
+paired replicates and the 5\% threshold.}
+\label{tab:design-families}
+\begin{tabularx}{\textwidth}{@{}lrX@{}}
+\toprule
+Family & Configurations & Factor examined\\
+\midrule
+Main & 504 & Square table size, three margin profiles and equal sample size.\\
+Baseline & 648 & Starting positive MI of 0.0001, 0.001 or 0.02 nats.\\
+Changed cells & 144 & First, rare or spread association patterns.\\
+Imbalance & 1,056 & Sample allocation and which population has higher MI.\\
+Larger effects & 162 & MI differences up to 0.2 nats where feasible.\\
+Rectangular & 108 & \(2\times3\) and \(3\times5\) tables.\\
+Construction & 432 & Additive versus ordinal log-linear population tables.\\
+Extreme skew & 180 & Dominant margins up to 0.9995.\\
+Rare-cell stress & 80 & First- versus rare-block changes.\\
+Independence & 108 & Exact \(I(P)=0\) boundary.\\
+Convergence & 108 & Fixed equal-MI populations with sample sizes up to 50,000.\\
+Runtime & 60 & Full-call timing regimes, separate from simulation.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The runtime experiment times full method calls on pre-generated tables,
+excluding population construction and sampling. It varies table shape,
+profile, sample size and null or alternative status. Each regime uses 200
+table pairs, 20 warm-up calls and five timed passes. Median call times and
+interquartile ranges are reported in Chapter~\ref{chap:results}.

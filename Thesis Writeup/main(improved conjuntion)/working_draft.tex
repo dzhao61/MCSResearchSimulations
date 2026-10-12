@@ -1,0 +1,71 @@
+\documentclass[12pt,a4paper,oneside,openany]{book}
+
+\input{preamble}
+\input{metadata}
+\hypersetup{
+  draft,
+  pdftitle={Working Draft: Comparing Mutual Information in Finite Samples}
+}
+
+\begin{document}
+\frontmatter
+\begin{titlepage}
+  \centering
+  \vspace*{18mm}
+  {\Large\bfseries \thesistitle\par}
+  \vspace{18mm}
+  {\Large\bfseries Working Draft\par}
+  \vspace{18mm}
+  {\large \thesisauthor\par}
+  \vfill
+  {\large Supervisor: \thesissupervisor\par}
+  \vspace{15mm}
+  {\large \thesisschool\par}
+  {\large \thesisuniversity\par}
+  \vspace{15mm}
+  {\large \thesisdate\par}
+\end{titlepage}
+\setcounter{page}{1}
+\tableofcontents
+
+\mainmatter
+% Input keeps this draft's auxiliary files separate from the full thesis build.
+\input{chapters_rewrite/01_introduction}
+\input{chapters_rewrite/02_background_literature}
+\input{chapters_rewrite/03_problem_baselines}
+\input{chapters_rewrite/04_expanded_welch}
+
+% The remaining chapters show their titles only.
+\chapter{Experimental Design}
+\label{chap:design}
+
+\chapter{Experimental Results}
+\label{chap:results}
+% Retain the full-thesis section number referenced by Chapter 2.
+\setcounter{section}{6}
+\refstepcounter{section}
+\label{sec:mechanism-results}
+
+\chapter{Discussion}
+\label{chap:discussion}
+
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+% Keep references in Chapters 1--4 resolved without printing appendix pages.
+\appendix
+\refstepcounter{chapter}
+\label{app:derivation-details}
+\refstepcounter{chapter}
+\label{app:construction}
+\refstepcounter{chapter}
+\label{app:evidence-index}
+\refstepcounter{chapter}
+\label{app:independence-boundary}
+\refstepcounter{chapter}
+\label{app:reproducibility}
+
+\backmatter
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}
