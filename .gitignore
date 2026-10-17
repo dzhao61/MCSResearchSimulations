@@ -18,3 +18,7 @@ WelchSatterthwaiteMI/results/large_table_construction_check/pilot/
 
 # Keep the generated experiment supplement local; it exceeds GitHub's file limit.
 /Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip
+
+# Preserve pre-correction raw evidence locally without adding duplicate checkpoints.
+/WelchSatterthwaiteMI/results/archive_before_numerical_fix_20261017/
+/PracticalMIExploration/results_before_numerical_fix_20261017/

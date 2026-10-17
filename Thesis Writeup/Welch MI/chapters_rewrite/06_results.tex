@@ -41,9 +41,9 @@ where Wald is excessive and moving an already-low rate further below 0.05.
 
 At the smallest sample size, part of that reduction involves lost
 validity. For \(4\times4\) tables at \(n=10\), Wald rejects at 0.1332
-and Expanded Welch at 0.0493, but their valid-result frequencies are
-0.9910 and 0.7776. Restricting both tests to the 15,552 common-valid
-pairs gives rejection rates 0.1053 and 0.0633. The Student \(t\)
+and Expanded Welch at 0.0465, but their valid-result frequencies are
+0.9910 and 0.7588. Restricting both tests to the 15,175 common-valid
+pairs gives rejection rates 0.1029 and 0.0612. The Student \(t\)
 distribution still reduces rejection on those same pairs, but the
 unconditional rate near 0.05 also reflects failed calculations.
 Validity and calibration therefore answer different questions.
@@ -88,12 +88,12 @@ uneven margins alone.
 
 Excessive false positives also occur when the population tables are
 identical. With uniform margins, Wald rejects at 0.0737 for
-\(8\times8\) tables at \(n=100\), and at 0.0858 for \(16\times16\)
+\(8\times8\) tables at \(n=100\), and at 0.0859 for \(16\times16\)
 tables at \(n=250\). All calculations are valid. Because the two samples
 then have the same distribution and size, their MI estimation biases
-cancel in the difference. Instead, the mean squared standard error is
-approximately 0.84 and 0.77 times the observed variance in these two
-settings. The tests therefore assign too little uncertainty on average,
+cancel in the difference. In these settings, the mean squared standard error
+is approximately 0.84 and 0.77 times the observed variance, respectively.
+The tests therefore assign too little uncertainty on average,
 which can increase false positives even without a biased MI difference.
 
 Different population margins introduce a further problem: bias in the
@@ -139,15 +139,13 @@ copying setting, an average of 147 of \(P\)'s 256 cells and 183 of
 
 For the copying \(16\times16\), \(n=1{,}000\) pair, estimated uncertainty
 is also inaccurate: mean squared standard error is about 1.94 times the
-observed variance. Excessive false
-positives nevertheless remain, because a large standard error does not
-restore a difference estimate centred away from zero. At \(n=10{,}000\)
+observed variance. Excessive false positives nevertheless remain:
+overestimating the variance does not remove the positive bias in the
+estimated MI difference. At \(n=10{,}000\)
 the bias is much smaller and the variance ratio is 1.07, accompanying
 the improved null rate. The population first-order variance is about
 0.60 times the observed variance at \(n=1{,}000\), compared with 0.84
 at 10,000, showing that the approximation itself also needs attention.
-These diagnostics describe distinct errors; they do not divide the
-rejection rate into additive contributions.
 
 The four-cell construction gives a similar failure at the matched
 \(16\times16\), \(n=1{,}000\) null setting. Its difference bias is
@@ -275,8 +273,8 @@ setting is fully valid.
 \label{fig:focused-detection-sizes}
 \end{figure}
 
-For the smaller tables, increasing the true difference generally
-increases power, and larger samples make a clear improvement.
+For the smaller tables, increasing the magnitude of the true MI difference
+generally increases power, and larger samples make a clear improvement.
 In \(4\times4\) tables, Wald and Expanded Welch have estimated power
 of 0.1132 and 0.1013 for a 0.01-nat difference at \(n=1{,}000\),
 compared with 0.7962 and 0.7940 at \(n=10{,}000\). Expanded Welch's larger
@@ -287,8 +285,8 @@ The null points remain essential: these curves compare tests at the
 same nominal threshold, not at equal achieved false-positive rates.
 
 The \(16\times16\), \(n=1{,}000\) curve instead falls initially as
-the true difference grows. Wald rejects at 0.2522 under equal MI,
-0.1005 at a difference of 0.01, and 0.0363 at 0.02. The positive bias
+the magnitude of the true difference grows. Wald rejects at 0.2522 under
+equal MI, 0.1005 at a difference of 0.01, and 0.0363 at 0.02. The positive bias
 identified earlier opposes the negative true difference. The mean
 estimated difference is approximately 0.02960 at the null. Under the
 next two alternatives, the true difference and estimated difference
@@ -306,8 +304,8 @@ so the centre of the estimated difference moves towards zero
 rather than away from it. Dividing by the estimated standard error
 can then give smaller absolute statistics, despite the larger population
 difference. Unequal estimation bias therefore makes rejection fall as
-the true difference grows over this range. The full-range comparison
-shows rejection rising again at larger differences.
+the magnitude of the true difference grows over this range. The full-range
+comparison shows rejection rising again at larger differences.
 
 The bias can also reverse the estimated direction of the difference.
 Although \(Q\) has the larger population MI at \(|\Delta|=0.01\),
@@ -329,14 +327,15 @@ Under the matched four-cell construction at \(n=1{,}000\),
 also indicate the opposite ordering. Concentrating association in four
 cells therefore does not remove the direction error at this sample size.
 At \(n=10{,}000\), every rejection under either construction has the
-correct estimated direction, as shown in Appendix
+correct estimated direction, as shown in
 Table~\ref{tab:large-construction-check}.
 
 The jackknife check asks whether changing the MI bias correction can
 improve the estimated ordering without changing the rejection cutoff.
 Replacing Wald's analytic MI bias correction with a jackknife correction
-reduces wrong-direction rejections from 2,009 to 5 for the 0.01-nat
-alternative at \(n=1{,}000\). The check retains the existing standard
+reduces wrong-direction rejections from 2,009 of 2,010 to 5 of 549 for the
+0.01-nat alternative at \(n=1{,}000\). Correct-direction rejections
+increase from 1 to 544. The check retains the existing standard
 error and standard normal distribution cutoff, and its null rejection rate
 of 0.0085 remains below the 0.05 target.
 Appendix~\ref{sec:jackknife-difference-check} reports this four-setting check.
@@ -391,7 +390,7 @@ For the 0.01-nat difference, giving \(Q\) only 400 observations reduces power to
 balanced rates of 0.1132 and 0.1013.
 All calculations are valid. The lower degrees of freedom under imbalance
 increase Expanded Welch's rejection cutoff, moving already-conservative
-false-positive rates further below 5\%. Appendix
+false-positive rates further below 5\%.
 Table~\ref{tab:allocation-check} reports both allocation directions.
 
 \section{Computational cost}
@@ -402,7 +401,7 @@ sampling and population construction.
 Appendix~\ref{sec:timing-procedure} gives the measurement procedure and
 computing environment.
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
 \caption{Time per test call in microseconds: median [interquartile range].}
 \label{tab:focused-runtime}
@@ -410,18 +409,18 @@ computing environment.
 \toprule
 Size & Normal Wald & Expanded Welch\\
 \midrule
-\(2\times2\) & 84.23 [81.67, 85.42] & 146.92 [143.12, 149.92]\\
-\(4\times4\) & 84.67 [80.83, 86.01] & 148.46 [144.67, 150.75]\\
-\(8\times8\) & 86.04 [84.17, 87.17] & 151.25 [146.78, 153.80]\\
-\(16\times16\) & 91.67 [88.10, 92.87] & 158.98 [154.53, 162.00]\\
+\(2\times2\) & 101.83 [99.25, 104.87] & 186.58 [182.46, 191.67]\\
+\(4\times4\) & 107.85 [101.92, 113.51] & 197.13 [188.83, 205.25]\\
+\(8\times8\) & 103.46 [101.12, 107.30] & 191.81 [187.00, 197.26]\\
+\(16\times16\) & 112.42 [108.33, 116.43] & 202.29 [198.07, 208.00]\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Expanded Welch costs approximately 1.7--1.8 times as much in these timings.
+Expanded Welch costs approximately 1.8--1.9 times as much in these timings.
 Both methods require \(O(k^2)\) work for a \(k\times k\) table, but
 fixed call overhead can be important for these small arrays. Median
-times remain below 100 microseconds for Wald and 160 microseconds for
+times remain below 115 microseconds for Wald and 205 microseconds for
 Expanded Welch across the four table sizes.
 
 \section{Application to online shopping data}
@@ -500,7 +499,7 @@ application was selected from an initial exploration
 of six comparisons across three public datasets. Accounting for all six
 comparisons with Holm's multiple-testing adjustment \citep{holm1979}
 gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
-Welch, so the conclusion remains unchanged. Appendix
+Welch, so the conclusion remains unchanged.
 Table~\ref{tab:application-holm} lists all six comparisons and their raw
 and adjusted p-values.
 

@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 import matplotlib
@@ -16,6 +15,7 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import FixedFormatter, FixedLocator, LogFormatterMathtext
 
 from focused_study_core import ROOT
+from audit_focused_study import audit
 from report_formatting import decimal_text
 
 WIDTH = 148/25.4
@@ -242,8 +242,8 @@ def main():
     parser.add_argument("--results", type=Path, default=ROOT / "results/focused_study")
     parser.add_argument("--figures", type=Path, default=ROOT.parent / "Thesis Writeup/Welch MI/figures_rewrite")
     args = parser.parse_args()
-    if not json.loads((args.results / "verification.json").read_text())["all_pass"]:
-        raise RuntimeError("Results have not passed their audit.")
+    # A past success flag cannot authenticate CSVs that have since changed.
+    audit(args.results)
     configs = pd.read_csv(args.results / "configuration_manifest.csv")
     displays = pd.read_csv(args.results / "display_manifest.csv", keep_default_na=False)
     rates = pd.read_csv(args.results / "method_results.csv")

@@ -4,7 +4,7 @@
     "alpha": 0.05,
     "chunk_size": 1000,
     "count": 20000,
-    "design_digest": "834e5013aaa6db9405b6cc360a81cff74c634e28790dcb6158abaaf58dc6b951",
+    "design_digest": "56b2b2d5ef23405b120fe25757f6103b29a1dad694241d74b1c34c8e0e5aa902",
     "machine": "arm64",
     "master_seed": 20261006,
     "numpy": "2.4.4",
@@ -13,12 +13,12 @@
     "python": "3.13.5",
     "schema": 1,
     "scipy": "1.17.1",
-    "source": "d30ef44891c632a96be95d64b748b93339c746990df458ef07dac1fb66a18662"
+    "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
   },
   "chunk_size": 1000,
   "count": 20000,
-  "design_digest": "6e46d6a0ff30d796e97cfd28403b1eb37c54895abe0e46a09dd5a162295bf617",
-  "extension_source": "2555f5657c090f9a0595629a0fca706067b71f65637ac8eb12c32010eecb9706",
+  "design_digest": "af93486a0d5e5b9f9ee66eba9d8df2c14cb3ced326ef033fb561db39bee81326",
+  "extension_source": "b7ce7285d4536b682492740d73fa6949c1d9e37281b6c0ab4b2f0633a549129e",
   "imported_balanced_ids": [
     "setting_179b0e11ab74dfb7",
     "setting_3015072b24080ed1"
@@ -31,5 +31,5 @@
   "python": "3.13.5",
   "schema": 1,
   "scipy": "1.17.1",
-  "source": "d30ef44891c632a96be95d64b748b93339c746990df458ef07dac1fb66a18662"
+  "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
 }

@@ -57,9 +57,9 @@
     "strength_p": 0.007243207541521059,
     "strength_q": 0.005955319210926562,
     "variance_p": 0.07339895831903383,
-    "variance_q": 0.08284477090460178,
-    "variance_sensitivity_variance_p": 1.048071545139833,
-    "variance_sensitivity_variance_q": 1.3799037204339932
+    "variance_q": 0.08284477090460185,
+    "variance_sensitivity_variance_p": 1.0480715451398328,
+    "variance_sensitivity_variance_q": 1.3799037204339966
   },
   {
     "achieved_mi_p": 0.01999999999999998,
@@ -119,8 +119,8 @@
     "strength_p": 0.007243207541521059,
     "strength_q": 0.007696840661116387,
     "variance_p": 0.07339895831903383,
-    "variance_q": 0.12206660551718727,
-    "variance_sensitivity_variance_p": 1.048071545139833,
-    "variance_sensitivity_variance_q": 1.7304577087596869
+    "variance_q": 0.12206660551718732,
+    "variance_sensitivity_variance_p": 1.0480715451398328,
+    "variance_sensitivity_variance_q": 1.7304577087596902
   }
 ]

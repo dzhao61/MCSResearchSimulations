@@ -2,6 +2,19 @@
 
 ## Current Thesis Experiment
 
+`run_focused_study.py` constructs and samples the 232-setting focused study;
+`focused_study_core.py` defines its populations, deterministic streams and
+summaries. The allocation and large-table construction checks add four new
+settings each, giving 240 settings and 4.8 million distinct sampled pairs.
+`audit_focused_study.py` authenticates the planned design and saved evidence;
+`report_focused_study.py` reruns that audit before exporting figures.
+The bounded jackknife check reuses four existing settings.
+See [the supplement instructions](../EXPERIMENT_SUPPLEMENT_README.md) for
+tests, audits, reruns and all five report generators. The full-data practical
+application is reproduced by `PracticalMIExploration/run_exploration.py full`.
+
+## Historical Broad Thesis Experiment
+
 `run_thesis_redesign.py` implements the frozen
 `THESIS_REDESIGN_PROTOCOL.json`; `thesis_redesign_core.py` contains the
 population construction and simulation, and `report_thesis_redesign.py`

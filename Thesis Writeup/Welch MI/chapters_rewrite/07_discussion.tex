@@ -24,7 +24,8 @@ gives the estimated size and direction of the change, whereas the standard error
 gives the sampling uncertainty assigned by the method. The sparse-table
 results show why the direction matters: unequal estimation biases can
 shift or reverse the estimated difference, as
-Equation~\eqref{eq:focused-null-bias-shift} illustrates. If Expanded
+Equations~\eqref{eq:focused-null-bias-shift} and
+\eqref{eq:focused-detection-bias-shift} illustrate. If Expanded
 Welch is used, report its estimated degrees of freedom as well, since
 they determine the rejection cutoff for that comparison.
 
@@ -78,9 +79,9 @@ study would be needed for other table sizes and population structures.
 The sampling assumptions also limit transfer to other applications.
 Paired observations would require a covariance term in the variance of
 the difference, whereas the present samples are independent. Continuous
-MI estimators have different estimation errors from fixed categorical
-tables. Similarly, increasing the number of categories with sample size
-changes the fixed-alphabet setting of the derivation. The empirical
+MI estimators have different estimation errors from the categorical MI
+estimator used here. Similarly, increasing the number of categories with
+sample size changes the fixed-alphabet setting of the derivation. The empirical
 recommendation concerns the independent categorical comparisons studied
 here, at a two-sided 5\% threshold. The online-shopping application
 illustrates interpretation on observed data, but its unknown population

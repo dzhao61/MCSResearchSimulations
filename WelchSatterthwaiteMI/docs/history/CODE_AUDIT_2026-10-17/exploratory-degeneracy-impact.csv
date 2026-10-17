@@ -1,0 +1,8 @@
+record,sample_pairs,exact_zero_marked_valid,affected_rejections
+adult_education_n50,5000,1,0
+shoppers_weekend_n100,5000,102,1
+shoppers_weekend_n1000,5000,1,0
+shoppers_weekend_n200,5000,43,0
+shoppers_weekend_n50,5000,100,2
+shoppers_weekend_n500,5000,10,0
+students_studytime_n50,5000,3,0

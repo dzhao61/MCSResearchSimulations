@@ -32,10 +32,10 @@
     "row_margin_error_q": 1.1102230246251565e-16,
     "strength_p": 0.12886296376645445,
     "strength_q": 0.13748353795813242,
-    "variance_p": 0.04746802811398013,
-    "variance_q": 0.051813007715504,
-    "variance_sensitivity_variance_p": 0.2946243819810004,
-    "variance_sensitivity_variance_q": 0.39459625583346136
+    "variance_p": 0.04746802811398014,
+    "variance_q": 0.05181300771550405,
+    "variance_sensitivity_variance_p": 0.2946243819810005,
+    "variance_sensitivity_variance_q": 0.3945962558334616
   },
   {
     "achieved_mi_p": 0.01999999999999997,
@@ -70,9 +70,9 @@
     "row_margin_error_q": 2.220446049250313e-16,
     "strength_p": 0.12886296376645445,
     "strength_q": 0.17318638705834108,
-    "variance_p": 0.04746802811398013,
+    "variance_p": 0.04746802811398014,
     "variance_q": 0.07985821591272496,
-    "variance_sensitivity_variance_p": 0.2946243819810004,
+    "variance_sensitivity_variance_p": 0.2946243819810005,
     "variance_sensitivity_variance_q": 0.6350700855955276
   }
 ]

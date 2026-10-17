@@ -7,8 +7,10 @@ from scipy.special import xlogy
 
 
 def _as_table_batch(tables: np.ndarray) -> np.ndarray:
+    if np.iscomplexobj(tables):
+        raise ValueError("Tables must be finite and nonnegative.")
     values = np.asarray(tables, dtype=float)
-    if values.ndim < 2 or np.any(values < 0):
+    if values.ndim < 2 or np.any(~np.isfinite(values)) or np.any(values < 0):
         raise ValueError("Tables must be nonnegative with at least two dimensions.")
     totals = values.sum(axis=(-2, -1))
     if np.any(totals <= 0):
@@ -75,23 +77,57 @@ def jackknife_mi(tables: np.ndarray) -> np.ndarray | float:
     return float(result) if result.ndim == 0 else result
 
 
-def influence_variance(tables: np.ndarray) -> np.ndarray | float:
-    """Estimate Var[log(p_ij/(p_i p_j))] under each empirical table."""
+def _constant_score_tables(counts: np.ndarray, score: np.ndarray) -> np.ndarray:
+    """Identify exactly constant occupied-cell scores, without a variance floor."""
+    flat = counts.reshape(-1, counts.shape[-2], counts.shape[-1])
+    occupied = flat > 0
+    flat_score = score.reshape(flat.shape)
+    low = np.min(np.where(occupied, flat_score, np.inf), axis=(-2, -1))
+    high = np.max(np.where(occupied, flat_score, -np.inf), axis=(-2, -1))
+    # Only near-constant scores need an exact integer cross-product check.
+    candidates = high - low <= 32 * np.finfo(float).eps * np.maximum(1, np.abs(high))
+    constant = np.zeros(len(flat), dtype=bool)
+    for index in np.flatnonzero(candidates):
+        table = flat[index]
+        if np.all(table == np.floor(table)):
+            # Products contain three counts. Use Python integers above the
+            # int64-safe total, rather than overflow or a floating tolerance.
+            dtype = np.int64 if table.sum() <= 2**21 - 1 else object
+            integers = (table.astype(dtype) if dtype is np.int64
+                        else np.frompyfunc(int, 1, 1)(table))
+            row = integers.sum(axis=-1)
+            column = integers.sum(axis=-2)
+            a, b = np.argwhere(occupied[index])[0]
+            constant[index] = np.all(
+                (integers * row[a] * column[b]
+                 == integers[a, b] * row[:, None] * column[None, :])
+                | ~occupied[index]
+            )
+        else:
+            constant[index] = high[index] == low[index]
+    return constant.reshape(counts.shape[:-2])
+
+
+def _centered_mi_score(tables: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Return empirical weights and stably centred pointwise MI values."""
     counts = _as_table_batch(tables)
     totals = counts.sum(axis=(-2, -1), keepdims=True)
     p = counts / totals
-    row = p.sum(axis=-1, keepdims=True)
-    col = p.sum(axis=-2, keepdims=True)
+    row = counts.sum(axis=-1, keepdims=True)
+    column = counts.sum(axis=-2, keepdims=True)
+    ratio = np.divide(counts * totals, row * column,
+                      out=np.ones_like(counts), where=counts > 0)
+    score = np.log(ratio)
+    constant = _constant_score_tables(counts, score)
+    anchor = np.min(np.where(counts > 0, score, np.inf), axis=(-2, -1), keepdims=True)
+    shifted = score - anchor
+    centered = shifted - np.sum(p * shifted, axis=(-2, -1), keepdims=True)
+    centered = np.where(constant[..., None, None], 0.0, centered)
+    return p, centered
 
-    log_p = np.zeros_like(p)
-    log_row = np.zeros_like(row)
-    log_col = np.zeros_like(col)
-    np.log(p, out=log_p, where=p > 0)
-    np.log(row, out=log_row, where=row > 0)
-    np.log(col, out=log_col, where=col > 0)
 
-    score = log_p - log_row - log_col
-    mean = np.sum(p * score, axis=(-2, -1))
-    second_moment = np.sum(p * score * score, axis=(-2, -1))
-    result = np.maximum(second_moment - mean * mean, 0.0)
+def influence_variance(tables: np.ndarray) -> np.ndarray | float:
+    """Estimate Var[log(p_ij/(p_i p_j))] under each empirical table."""
+    probability, centered = _centered_mi_score(tables)
+    result = np.sum(probability * centered**2, axis=(-2, -1))
     return float(result) if result.ndim == 0 else result

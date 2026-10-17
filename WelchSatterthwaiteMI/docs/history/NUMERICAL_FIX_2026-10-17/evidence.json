@@ -1,0 +1,17 @@
+{
+  "all_input_mi_and_support_records_identical": true,
+  "all_population_arrays_identical": true,
+  "all_wald_validity_and_decisions_unchanged": true,
+  "changed_expanded_settings": 28,
+  "exact_zero_marked_valid_after_fix": 0,
+  "full_data_application_and_Holm_decisions_unchanged": true,
+  "independent_small_sample_pairs": 1320000,
+  "new_valid_outputs": 0,
+  "removed_rejections": 859,
+  "removed_valid_outputs": 12318,
+  "sampled_table_pairs": 4800000,
+  "settings": 240,
+  "transpose_rejection_disagreements_after_fix": 0,
+  "transpose_validity_disagreements_after_fix": 0,
+  "validity_markers_changed": 1
+}

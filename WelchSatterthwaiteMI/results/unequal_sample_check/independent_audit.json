@@ -12,6 +12,15 @@
     "bias and variance masks",
     "degrees-of-freedom validity mask and percentiles"
   ],
+  "input_sha256": {
+    "configuration_manifest.csv": "856abf9d4b838655300598476c02d3d8b4b7c3bb6626c330cab6e2c4c95765f3",
+    "diagnostics.csv": "594f91c7e963fa93a28cab157fcac37ba747ade548d2d6bd77c9282dbbee1459",
+    "method_results.csv": "1d541eee62818251d81627161e2f791fc3e1db458fed6f6eb313baaa521cbd11",
+    "paired_results.csv": "8b2eef24e8ba158b5de1fbc1e6978d335cd0061bbe9015cbc899052a437156db",
+    "population_definitions.json": "e9d12a79b2cfba2eaee01fcb784f13c9139715161c6e9cd6dff2035d47c3670a",
+    "populations.npz": "c72b081070da54e73cf245e8ff19b93b3def6d3dbaa69b5a33f040f2a3296e7f",
+    "study_identity.json": "8800203cb54498f1f30d4118420abb168bc6e35d2f673d9baeaf8d10b5b63791"
+  },
   "population_pairs": 2,
   "regenerated_input_pairs": 102,
   "settings": 6,

@@ -5,7 +5,7 @@
     "alpha": 0.05,
     "chunk_size": 1000,
     "count": 20000,
-    "design_digest": "834e5013aaa6db9405b6cc360a81cff74c634e28790dcb6158abaaf58dc6b951",
+    "design_digest": "56b2b2d5ef23405b120fe25757f6103b29a1dad694241d74b1c34c8e0e5aa902",
     "machine": "arm64",
     "master_seed": 20261006,
     "numpy": "2.4.4",
@@ -14,11 +14,11 @@
     "python": "3.13.5",
     "schema": 1,
     "scipy": "1.17.1",
-    "source": "d30ef44891c632a96be95d64b748b93339c746990df458ef07dac1fb66a18662"
+    "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
   },
   "count": 20000,
-  "design_digest": "5848bdc2a2db924aad212a479ae851ebcbe747ef9355910a3da5c025d93f0b39",
-  "extension_source": "f2d8e6cecf60a93ecc20e77defbf9b23cbe4581e61bb62c0af28cf786d5d08db",
+  "design_digest": "e8b0b38da0bbd53ef07351e974d13fdbf728e27ff5fa351d48e4c72d06c93b34",
+  "extension_source": "b6ff834477cc368476b784e9a568905d7b10e1c85fb72a2a34e71015710d3db6",
   "machine": "arm64",
   "master_seed": 20261006,
   "numpy": "2.4.4",
@@ -27,5 +27,5 @@
   "python": "3.13.5",
   "schema": 1,
   "scipy": "1.17.1",
-  "source": "d30ef44891c632a96be95d64b748b93339c746990df458ef07dac1fb66a18662"
+  "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
 }

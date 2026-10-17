@@ -89,19 +89,19 @@ Run the bundled thesis tests from the directory containing
 
 ```bash
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
-  .venv/bin/python -m unittest \
-  WelchSatterthwaiteMI.tests.test_thesis_redesign \
-  WelchSatterthwaiteMI.tests.test_thesis_derivation_audit \
-  WelchSatterthwaiteMI.tests.test_thesis_mechanism_check \
-  WelchSatterthwaiteMI.tests.test_welch
+  .venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
+.venv/bin/python -m unittest discover -s DifferentialMI/tests -p 'test_*.py'
+.venv/bin/python -m unittest discover -s PracticalMIExploration -p 'test_*.py'
+.venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py
+.venv/bin/python PracticalMIExploration/run_exploration.py verify-full
 ```
 
-Regenerate the saved-run report and atlas without resampling:
+Regenerate the focused figures and tables without resampling:
 
 ```bash
 MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
-  .venv/bin/python WelchSatterthwaiteMI/experiments/run_thesis_redesign.py \
-  --report-only --output-dir WelchSatterthwaiteMI/results/thesis_redesign
+  .venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_study.py \
+  --figures /path/to/thesis-source/figures_rewrite
 ```
 
 The full repository's [`experiments/README.md`](experiments/README.md)

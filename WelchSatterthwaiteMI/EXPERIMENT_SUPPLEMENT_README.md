@@ -2,10 +2,14 @@
 
 This supplement reproduces the focused study in the current Master of
 Computer Science thesis: 240 settings, 70 population pairs and 20,000 paired
-samples per setting. It contains the unchanged Normal Wald and Expanded
+samples per setting. It contains the Normal Wald and Expanded
 Welch implementations, all population definitions, per-repetition scalar
 records, summaries, figure-generation scripts and independent audits.
 The earlier broad-study archive is not part of this supplement.
+The 17 October numerical correction enforces the existing zero-component
+validity rule with exact count-table checks and centred variance algebra.
+The original populations and random streams are unchanged; current records
+were regenerated under the corrected source fingerprint.
 The original study has 232 settings; the unequal-sample check adds four and
 reuses two balanced settings, without changing the original records.
 The large-table construction check adds another four settings and two
@@ -62,10 +66,12 @@ Run the bundled tests and independent audit from the extracted archive root:
 ```bash
 .venv/bin/python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
 .venv/bin/python -m unittest discover -s DifferentialMI/tests -p 'test_*.py'
+.venv/bin/python -m unittest discover -s PracticalMIExploration -p 'test_*.py'
 .venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_unequal_sample_check.py audit
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py audit
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py audit
+.venv/bin/python PracticalMIExploration/run_exploration.py verify-full
 ```
 
 The independent audit validates raw checksums and counts, regenerates sampled
@@ -74,6 +80,24 @@ rejection rates, intervals and estimation diagnostics. The two older helper
 modules are included because the focused code imports their four-cell
 constructor and interval functions; they are not instructions to run the old
 experiment.
+The base audit also compares every configuration, display assignment,
+population array and checkpoint identity with the planned design. The base
+reporter performs a fresh audit rather than trusting an old success flag.
+
+`PracticalMIExploration/` supplies the protocol, runner, tests, attributed
+raw UCI archives and `thesis_application/` evidence for all six full-data
+comparisons and their Holm correction. Reproduce only this manuscript
+application, without any exploratory subset simulations, using:
+
+```bash
+.venv/bin/python PracticalMIExploration/run_exploration.py full --output application-reproduction
+.venv/bin/python PracticalMIExploration/run_exploration.py verify-full --output application-reproduction
+```
+
+The archived raw files are checked against the hashes in the supplied
+application identity. Dataset citations, download URLs and preparation
+rules are in `PracticalMIExploration/PROTOCOL.md`. Tests inspecting thesis
+text skip when its separately supplied source is absent.
 
 The allocation audit checks its exact scope, copied populations and checkpoint
 provenance before applying the same independent formula and raw-record audit.

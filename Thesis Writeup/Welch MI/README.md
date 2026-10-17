@@ -2,6 +2,16 @@
 
 ## Current Version
 
+The 17 October numerical-code correction enforces the existing zero-component
+validity rule using exact count-table degeneracy checks and centred variance
+calculations. All 240 settings were regenerated from the same populations and
+random streams. Only 28 small-sample null settings change Expanded Welch
+validity or rejection counts; Wald decisions and the principal larger-sample
+findings are unchanged. The main figures, null table, small-sample example and
+timings reflect the corrected code. The supplement now includes the six
+full-data application comparisons and raw archives. Historical drafts and the
+pre-correction evidence remain preserved. All 236 workspace tests pass.
+
 The approved sentence-cohesion revision became the main thesis on
 17 October 2026. Use `main.tex` and `main.pdf` in this folder. The complete
 previous main version is preserved unchanged in
@@ -24,7 +34,7 @@ of the fixed-alphabet correction without changing the estimator. Supporting
 quadratic calculations and reproducible derivative-check details stay in
 Appendix A. A shared half-up formatter makes displayed rates consistent.
 The active PDF has 102 pages, including the same 57 main-text pages. All
-224 workspace tests pass. No new experiment is added, and all historical
+224 workspace tests passed at that stage. No new experiment was added, and all historical
 working drafts and archived thesis versions remain unchanged.
 
 ## Active manuscript
@@ -203,6 +213,7 @@ unaltered plotted values:
 ```bash
 python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
 python -m unittest discover -s DifferentialMI/tests -p 'test_*.py'
+python -m unittest discover -s PracticalMIExploration -p 'test_*.py'
 ```
 
 The named thesis PDF, self-contained source ZIP, full experimental

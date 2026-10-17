@@ -1,6 +1,6 @@
 # Practical MI exploration
 
-This folder is separate from the thesis and its packaged experiments.
+This folder contains the practical-data comparisons used by the thesis.
 PROTOCOL.md fixes the six comparisons and their interpretation. The raw/
 archives are public CC BY 4.0 UCI datasets, cited there and in the generated
 report. The initial exploration did not edit the thesis, any working draft or
@@ -11,10 +11,20 @@ self-contained Section 6.5. Subset analyses remain outside the manuscript.
 From the workspace root:
 
 ```bash
+env MPLCONFIGDIR=/private/tmp/practical-mi-mpl .venv/bin/python PracticalMIExploration/run_exploration.py full --output application-reproduction
+env MPLCONFIGDIR=/private/tmp/practical-mi-mpl .venv/bin/python PracticalMIExploration/run_exploration.py verify-full
 env MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/practical-mi-mpl .venv/bin/python -m unittest discover -s PracticalMIExploration -p 'test_*.py'
 env MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/practical-mi-mpl .venv/bin/python PracticalMIExploration/run_exploration.py run
 env MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/practical-mi-mpl .venv/bin/python PracticalMIExploration/run_exploration.py verify
 ```
+
+The supplement includes all three attributed raw archives, the runner,
+protocol, count tables, six full-data results and Holm-adjusted p-values
+under `thesis_application/`. The `full` and `verify-full` modes reproduce
+and verify these results without running the 150,000 exploratory subsets.
+Tests that inspect manuscript text require the separately supplied thesis
+source and are skipped when it is absent. Other application tests run in
+the standalone supplement.
 
 The runner refuses to overwrite existing results. Use --output with a new
 directory to rerun. Default repetitions are 5000 for each permitted subset

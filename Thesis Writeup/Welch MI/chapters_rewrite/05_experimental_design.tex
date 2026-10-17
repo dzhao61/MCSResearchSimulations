@@ -163,8 +163,8 @@ The common target of 0.02 nats gives positive MI in all four table sizes
 and three margin regimes. Fixing population MI does not fix the
 difficulty of estimating it: tables with equal MI can have different
 cell probabilities and different MI sampling variances. Keeping each
-population pair fixed throughout the sample-size sweep separates
-improvement from more observations from a change in the population.
+population pair fixed throughout the sweep isolates the effect of sample
+size on test performance.
 The sweep includes small samples, intermediate samples and large-sample
 checks so that both calculation failures and convergence are visible.
 
@@ -198,8 +198,9 @@ then all three margin regimes at \(4\times4\).
 The signed parameter is \(\Delta=I(P)-I(Q)\), which is negative
 when \(Q\) has the larger MI; figures use its known nonnegative magnitude.
 
-Keeping \(P\)'s MI fixed gives each curve a common starting population
-as \(Q\)'s MI increases. Small differences show where the methods may
+Within each curve, the entire population table \(P\) stays fixed, while
+\(Q\)'s copying probability increases to give the specified MI differences.
+Small differences show where the methods may
 disagree; larger differences show whether power eventually becomes high.
 Each curve includes the corresponding equal-MI setting from the null
 study, so power can be read alongside the false-positive rate at the

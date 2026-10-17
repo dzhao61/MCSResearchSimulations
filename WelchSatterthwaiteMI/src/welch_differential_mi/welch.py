@@ -8,7 +8,7 @@ from time import perf_counter
 import numpy as np
 from scipy.stats import norm, t
 
-from differential_mi.statistics import influence_variance, plugin_mi
+from differential_mi.statistics import _centered_mi_score, influence_variance, plugin_mi
 
 @dataclass(frozen=True)
 class WelchResult:
@@ -114,48 +114,34 @@ def _variance_influence_component_df(
     """Estimate component df from the MI-variance influence function."""
     counts = np.asarray(table, dtype=float)
     totals = counts.sum(axis=(-2, -1), keepdims=True)
-    probability = counts / totals
+    probability, centered = _centered_mi_score(counts)
     row = probability.sum(axis=-1, keepdims=True)
     column = probability.sum(axis=-2, keepdims=True)
-
-    log_probability = np.zeros_like(probability)
-    log_row = np.zeros_like(row)
-    log_column = np.zeros_like(column)
-    np.log(probability, out=log_probability, where=probability > 0)
-    np.log(row, out=log_row, where=row > 0)
-    np.log(column, out=log_column, where=column > 0)
-    score = log_probability - log_row - log_column
-
-    mean = np.sum(probability * score, axis=(-2, -1))
-    centered = score - mean[..., None, None]
     variance = np.asarray(influence_variance_value, dtype=float)
-    second_moment = variance + mean**2
 
     row_probability = row[..., 0]
     column_probability = column[..., 0, :]
     row_score_mean = np.divide(
-        np.sum(probability * score, axis=-1),
+        np.sum(probability * centered, axis=-1),
         row_probability,
         out=np.zeros_like(row_probability),
         where=row_probability > 0,
     )
     column_score_mean = np.divide(
-        np.sum(probability * score, axis=-2),
+        np.sum(probability * centered, axis=-2),
         column_probability,
         out=np.zeros_like(column_probability),
         where=column_probability > 0,
     )
     variance_influence = (
-        score**2
-        - second_moment[..., None, None]
+        centered**2
+        - variance[..., None, None]
         + 2.0
         * (
-            score
+            centered
             - row_score_mean[..., :, None]
             - column_score_mean[..., None, :]
-            + mean[..., None, None]
         )
-        - 2.0 * mean[..., None, None] * centered
     )
     influence_mean = np.sum(
         probability * variance_influence,
@@ -173,7 +159,7 @@ def _variance_influence_component_df(
         numerator,
         influence_variance,
         out=np.full_like(variance, np.nan, dtype=float),
-        where=np.isfinite(influence_variance) & (influence_variance > 0),
+        where=np.isfinite(influence_variance) & (influence_variance > 0) & (variance > 0),
     )
     return component_df, influence_variance
 

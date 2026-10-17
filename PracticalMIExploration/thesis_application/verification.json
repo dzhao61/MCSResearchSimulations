@@ -1,0 +1,12 @@
+{
+  "all_pass": true,
+  "full_comparisons": 6,
+  "checks": [
+    "raw archive and source hashes",
+    "category alphabets and exclusions",
+    "count tables",
+    "independent full-data formulas",
+    "six-comparison Holm correction"
+  ],
+  "results_sha256": "5b8c145ad17fe0457bc5083e283feaa2527ea142644a95eab35f52c9e853af45"
+}

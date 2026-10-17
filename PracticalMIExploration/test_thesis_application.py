@@ -19,6 +19,7 @@ def displayed_p_value(value):
     return "1" if value == 1 else f"{value:.4f}"
 
 
+@unittest.skipUnless(THESIS.exists(), "Thesis source is supplied separately from the experiment supplement.")
 class ShoppersApplicationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -26,7 +27,10 @@ class ShoppersApplicationTests(unittest.TestCase):
             item["id"]: item
             for item in study.comparisons(study.load_datasets(study.HERE / "raw"))
         }
-        cls.saved = pd.read_csv(study.HERE / "results" / "full_data_results.csv").set_index("id")
+        saved = study.HERE / "results" / "full_data_results.csv"
+        if not saved.exists():
+            saved = study.HERE / "thesis_application" / "full_data_results.csv"
+        cls.saved = pd.read_csv(saved).set_index("id")
         cls.chapter = (THESIS / "chapters_rewrite" / "06_results.tex").read_text()
         cls.application = cls.chapter.split(r"\label{sec:shoppers-application}", 1)[1]
         cls.appendix = (THESIS / "appendices_rewrite" / "C_additional_results.tex").read_text()

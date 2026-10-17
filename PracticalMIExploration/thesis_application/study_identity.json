@@ -1,0 +1,31 @@
+{
+  "scope": "six full-data comparisons; no subset simulations",
+  "alpha": 0.05,
+  "sources": {
+    "Adult": {
+      "archive": "adult.zip",
+      "url": "https://archive.ics.uci.edu/static/public/2/adult.zip",
+      "citation": "Becker and Kohavi (1996), doi:10.24432/C5XW20",
+      "page": "https://archive.ics.uci.edu/dataset/2/adult",
+      "sha256": "7537312dd56c2b98035880805ce99e68183a30ee468aa5329d6df0fbb3cc21bb"
+    },
+    "Online Shoppers": {
+      "archive": "online_shoppers.zip",
+      "url": "https://archive.ics.uci.edu/static/public/468/online%2Bshoppers%2Bpurchasing%2Bintention%2Bdataset.zip",
+      "citation": "Sakar and Kastro (2018), doi:10.24432/C5F88Q",
+      "page": "https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset",
+      "sha256": "2972e6184d3ad7beaaa831d9fc2b059dc3ee29df69d1ec593c466a5cd8485d14"
+    },
+    "Student Performance": {
+      "archive": "student_performance.zip",
+      "url": "https://archive.ics.uci.edu/static/public/320/student%2Bperformance.zip",
+      "citation": "Cortez (2008), doi:10.24432/C5TG7T",
+      "page": "https://archive.ics.uci.edu/dataset/320/student+performance",
+      "sha256": "82ae9d66437b9808df42e8c89d2bb179c46e9cfbcf06f38abc1d20b3b747e177"
+    }
+  },
+  "protocol_sha256": "5ef4b7ce07a643685dcb7e65fcbeb21ac7a0dbeb2a10328e7a76337d2f12aefe",
+  "runner_sha256": "d58aa42cd0259721cd226d384133c4c976df2b45d089d900b41d269f5deebffb",
+  "method_sha256": "98db24cfa927978494f701f8d9b22fa0be66260af12d90dd024d18b4403b192f",
+  "statistics_sha256": "51a239e9695ce53cf8b0a7aee99bdca71af276a12780b9b2d11834af647bd610"
+}

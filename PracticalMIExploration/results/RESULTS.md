@@ -37,7 +37,7 @@ invalid calculations remain in the denominator and are reported separately.
 
 | Comparison | n each | Rejection % Wald / Expanded | Valid % Wald / Expanded | Wald-only decisions with both valid | Wald reject / Expanded invalid | Median Expanded df |
 | --- | --- | --- | --- | --- | --- | --- |
-| adult_education | 50 | 14.02 / 10.42 | 100.00 / 99.72 | 166 | 14 | 15.83 |
+| adult_education | 50 | 14.02 / 10.42 | 100.00 / 99.70 | 166 | 14 | 15.83 |
 | adult_education | 100 | 17.84 / 14.40 | 100.00 / 100.00 | 172 | 0 | 21.07 |
 | adult_education | 200 | 25.72 / 22.96 | 100.00 / 100.00 | 138 | 0 | 32.01 |
 | adult_education | 500 | 50.34 / 48.70 | 100.00 / 100.00 | 82 | 0 | 66.79 |
@@ -56,12 +56,12 @@ invalid calculations remain in the denominator and are reported separately.
 | shoppers_month | 200 | 5.86 / 3.58 | 100.00 / 100.00 | 114 | 0 | 11.68 |
 | shoppers_month | 500 | 16.86 / 13.22 | 100.00 / 100.00 | 182 | 0 | 18.74 |
 | shoppers_month | 1000 | 42.28 / 37.18 | 100.00 / 100.00 | 255 | 0 | 29.86 |
-| shoppers_weekend | 50 | 3.88 / 1.02 | 100.00 / 99.94 | 143 | 0 | 0.88 |
-| shoppers_weekend | 100 | 1.18 / 0.46 | 100.00 / 100.00 | 36 | 0 | 0.87 |
-| shoppers_weekend | 200 | 0.12 / 0.08 | 100.00 / 100.00 | 2 | 0 | 0.94 |
-| shoppers_weekend | 500 | 0.08 / 0.00 | 100.00 / 100.00 | 4 | 0 | 1.33 |
-| shoppers_weekend | 1000 | 0.02 / 0.00 | 100.00 / 100.00 | 1 | 0 | 2.03 |
-| students_studytime | 50 | 2.04 / 0.48 | 100.00 / 98.36 | 63 | 15 | 3.00 |
+| shoppers_weekend | 50 | 3.88 / 0.98 | 100.00 / 97.94 | 140 | 5 | 0.88 |
+| shoppers_weekend | 100 | 1.18 / 0.44 | 100.00 / 97.96 | 36 | 1 | 0.88 |
+| shoppers_weekend | 200 | 0.12 / 0.08 | 100.00 / 99.14 | 2 | 0 | 0.94 |
+| shoppers_weekend | 500 | 0.08 / 0.00 | 100.00 / 99.80 | 4 | 0 | 1.33 |
+| shoppers_weekend | 1000 | 0.02 / 0.00 | 100.00 / 99.98 | 1 | 0 | 2.03 |
+| students_studytime | 50 | 2.04 / 0.48 | 100.00 / 98.30 | 63 | 15 | 3.00 |
 | students_studytime | 100 | 2.74 / 0.56 | 100.00 / 100.00 | 109 | 0 | 3.83 |
 | students_studytime | 200 | 2.34 / 0.52 | 100.00 / 100.00 | 91 | 0 | 5.60 |
 | students_maternal_education | 50 | 1.38 / 0.18 | 100.00 / 98.46 | 51 | 9 | 3.14 |

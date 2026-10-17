@@ -10,8 +10,19 @@
     "Wilson intervals",
     "paired indicator contrasts and intervals",
     "bias and variance masks",
-    "degrees-of-freedom validity mask and percentiles"
+    "degrees-of-freedom validity mask and percentiles",
+    "exact design, display mapping, population arrays and checkpoint identities"
   ],
+  "input_sha256": {
+    "configuration_manifest.csv": "2789cf8f7c4b3a13d7cec597c78dd786636a99ada73a0ae8db72fe1eb1e62d2f",
+    "diagnostics.csv": "85aa99ca287ee11afb0e5e74a77757916bb58fd5a14087b2556819ac641ed677",
+    "display_manifest.csv": "901eefec82535b3188eab2b25775d2c2bf1198c203170e5c6f99bed2d246f2c3",
+    "method_results.csv": "0e64b481715b56f367d2c84e30f2f394709ec02974b968f13ba1efa83921673c",
+    "paired_results.csv": "25164fe070501e2f9f3ec11a08f15d5379bead3d5025ccc0d0133051f6a0c7ff",
+    "population_definitions.json": "2f73a436657fd74405ee157571131a1562b649028718f5abc1f8c9f3998e2c74",
+    "populations.npz": "e553ef8bd4c8c42d43f0cbfa9dd71843d50564318600d222189cc8ca127ee545",
+    "study_identity.json": "c8f4a808d82de30565584651df1dae25f0c64c18f4b41312deeb7addc3c7c1b4"
+  },
   "population_pairs": 68,
   "regenerated_input_pairs": 3944,
   "settings": 232,

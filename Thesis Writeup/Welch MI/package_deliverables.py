@@ -76,6 +76,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "report_large_table_construction_check.py"]
     tests = [
         "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
+        "test_numerical_degeneracy.py", "test_focused_audit_guards.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
         "test_unequal_sample_check.py",
         "test_focused_mechanisms.py",
@@ -100,6 +101,14 @@ def supplement_files() -> list[tuple[Path, Path]]:
             files.append((source, source.relative_to(WORKSPACE)))
     for source in clean_files(differential / "tests", suffixes={".py"}):
         files.append((source, source.relative_to(WORKSPACE)))
+    practical = WORKSPACE / "PracticalMIExploration"
+    for name in ("run_exploration.py", "test_exploration.py", "test_thesis_application.py",
+                 "README.md", "PROTOCOL.md"):
+        source = practical / name
+        files.append((source, source.relative_to(WORKSPACE)))
+    for directory in (practical / "raw", practical / "thesis_application"):
+        for source in clean_files(directory):
+            files.append((source, source.relative_to(WORKSPACE)))
     return files
 
 

@@ -11,8 +11,11 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm, t
 
-from focused_study_core import ROOT, evaluate_tables, seed_for, source_fingerprint
-from run_focused_study import atomic_json, load_records
+from focused_study_core import (
+    ALPHA, CHUNK_SIZE, MASTER_SEED, REPLICATES, ROOT, SCHEMA_VERSION,
+    build_design, digest, evaluate_tables, seed_for, source_fingerprint,
+)
+from run_focused_study import atomic_json, file_hash, load_records
 
 
 def close(a, b):
@@ -29,10 +32,41 @@ def independent_interval(successes, total):
     return center-half, center+half
 
 
+def authenticate_base_design(output: Path, identity: dict) -> None:
+    """Authenticate experimental labels, populations and checkpoint provenance."""
+    configs, displays, populations, arrays = build_design()
+    expected = {"schema": SCHEMA_VERSION, "master_seed": MASTER_SEED,
+                "source": source_fingerprint(), "phase": "full", "count": REPLICATES,
+                "chunk_size": CHUNK_SIZE, "design_digest": digest([configs, populations]),
+                "alpha": ALPHA}
+    if any(identity.get(key) != value for key, value in expected.items()):
+        raise AssertionError("Focused-study identity differs from the planned design.")
+    for filename, rows in (("configuration_manifest.csv", configs),
+                           ("display_manifest.csv", displays)):
+        saved = pd.read_csv(output / filename, keep_default_na=False, float_precision="round_trip")
+        pd.testing.assert_frame_equal(saved, pd.DataFrame(rows), check_dtype=False, check_exact=True)
+    if json.loads((output / "population_definitions.json").read_text()) != populations:
+        raise AssertionError("Population definitions differ from the planned design.")
+    with np.load(output / "populations.npz", allow_pickle=False) as stored:
+        expected_keys = {f"{key}_{side}" for key in arrays for side in "pq"}
+        if set(stored.files) != expected_keys:
+            raise AssertionError("Population array identifiers differ from the design.")
+        for key, pair in arrays.items():
+            for side, probability in zip("pq", pair, strict=True):
+                np.testing.assert_array_equal(stored[f"{key}_{side}"], probability)
+    for config in configs:
+        metadata = json.loads((output / "records" / config["configuration_id"] / "identity.json").read_text())
+        if metadata != {"configuration": config, "count": REPLICATES, "phase": "full",
+                        "fingerprint": digest(identity), "chunk_size": CHUNK_SIZE}:
+            raise AssertionError("Checkpoint identity differs from its setting or run.")
+
+
 def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 68):
     identity = json.loads((output / "study_identity.json").read_text())
     if identity["phase"] != "full" or identity["count"] != 20000 or identity["source"] != source_fingerprint():
         raise AssertionError("Unexpected run identity or scientific source changed.")
+    if expected_settings == 232 and expected_pairs == 68:
+        authenticate_base_design(output, identity)
     configs = pd.read_csv(output / "configuration_manifest.csv")
     populations = {p["pair_id"]: p for p in json.loads((output / "population_definitions.json").read_text())}
     methods = pd.read_csv(output / "method_results.csv").set_index(["configuration_id", "method", "denominator"])
@@ -77,6 +111,10 @@ def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 6
                 close(calculated[field], records[field][:17])
             statistic = records["delta_corrected"]/np.where(records["standard_error"] > 0, records["standard_error"], np.nan)
             close(statistic, records["statistic"])
+            close(records["squared_standard_error"], records["standard_error"]**2)
+            close(records["squared_standard_error"],
+                  records["influence_variance_p"]/config["n_p"]
+                  + records["influence_variance_q"]/config["n_q"])
             with np.errstate(divide="ignore", invalid="ignore"):
                 df_p = 2*config["n_p"]*records["influence_variance_p"]**2/records["variance_influence_variance_p"]
                 df_q = 2*config["n_q"]*records["influence_variance_q"]**2/records["variance_influence_variance_q"]
@@ -104,6 +142,8 @@ def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 6
                     close(row.rejections, successes)
                     close(row.valid_replicates, np.count_nonzero(valid & mask))
                     close(row.rejection_rate, successes/count if count else np.nan)
+                    close(row.valid_rate, np.count_nonzero(valid & mask)/count if count else np.nan)
+                    close(row.rejection_mcse, np.sqrt(row.rejection_rate*(1-row.rejection_rate)/count) if count else np.nan)
                     close([row.rejection_low, row.rejection_high], independent_interval(successes, count))
                     close([row.valid_low, row.valid_high], independent_interval(np.count_nonzero(valid & mask), count))
             for denominator, mask in (("all", np.ones(20000, bool)), ("common_valid", common)):
@@ -128,6 +168,7 @@ def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 6
             close(row.observed_variance, np.var(d[finite], ddof=1))
             close(row.bias_mcse, np.std(d[finite], ddof=1)/np.sqrt(finite.sum()))
             close(row.mean_estimated_variance, records["squared_standard_error"][matched].mean())
+            close(row.matched_observed_variance, np.var(d[matched], ddof=1))
             close(row.estimated_observed_ratio, records["squared_standard_error"][matched].mean()/np.var(d[matched], ddof=1))
             first = populations[config["pair_id"]]["variance_p"]/config["n_p"] + populations[config["pair_id"]]["variance_q"]/config["n_q"]
             close(row.first_order_variance, first)
@@ -137,13 +178,21 @@ def audit(output: Path, *, expected_settings: int = 232, expected_pairs: int = 6
             close(row.degrees_of_freedom_count, good.sum())
             for side in "pq":
                 close(row[f"bias_{side}"], np.mean(records[f"corrected_mi_{side}"])-populations[config["pair_id"]][f"mi_{side}"])
+                for item in ("cells", "rows", "columns"):
+                    close(row[f"mean_empty_{item}_{side}"], np.mean(records[f"empty_{item}_{side}"]))
     result = {"all_pass": True, "settings": expected_settings, "population_pairs": expected_pairs,
               "table_pairs": expected_settings*20000, "regenerated_input_pairs": expected_settings*17,
               "checks": ["population positivity, total, margins, MI, variance and sensitivity", "all raw checksums and counts",
                          "regenerated count inputs match saved outputs", "independent statistic and df algebra",
                          "normal and Student t distribution p-values", "rejection and validity denominators",
                          "Wilson intervals", "paired indicator contrasts and intervals", "bias and variance masks",
-                         "degrees-of-freedom validity mask and percentiles"]}
+                         "degrees-of-freedom validity mask and percentiles"],
+              "input_sha256": {name: file_hash(output / name) for name in (
+                  "study_identity.json", "configuration_manifest.csv", "population_definitions.json",
+                  "populations.npz", "method_results.csv", "paired_results.csv", "diagnostics.csv")}}
+    if expected_settings == 232 and expected_pairs == 68:
+        result["checks"].append("exact design, display mapping, population arrays and checkpoint identities")
+        result["input_sha256"]["display_manifest.csv"] = file_hash(output / "display_manifest.csv")
     atomic_json(output / "independent_audit.json", result)
     print(json.dumps(result, indent=2))
 

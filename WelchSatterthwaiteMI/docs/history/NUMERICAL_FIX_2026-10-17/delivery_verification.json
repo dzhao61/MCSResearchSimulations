@@ -1,0 +1,14 @@
+{
+  "workspace_tests": 236,
+  "packaged_tests_discovered": 150,
+  "packaged_tests_executed_pass": 140,
+  "expected_missing_manuscript_skips": 10,
+  "clean_source_pdf_text_identical": true,
+  "pages": 102,
+  "all_source_and_supplement_members_match_current_files": true,
+  "only_changed_numerical_table_fragment": [
+    "focused_null_table.tex"
+  ],
+  "historical_preservation_hashes_pass": 376,
+  "full_data_application_reproduction_pass": true
+}

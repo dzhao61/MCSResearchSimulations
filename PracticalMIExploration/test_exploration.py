@@ -1,6 +1,8 @@
 """Checks for the standalone practical-data exploration."""
 
 import unittest
+import tempfile
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -9,6 +11,18 @@ import run_exploration as study
 
 
 class ExplorationTests(unittest.TestCase):
+    def test_full_data_only_export_reproduces_and_rejects_mutations(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            study.full_application(output)
+            study.full_application(output, verify_only=True)
+            self.assertFalse((output / "records").exists())
+            values = pd.read_csv(output / "full_data_results.csv")
+            values.loc[0, "wald_holm_p"] = .12345
+            values.to_csv(output / "full_data_results.csv", index=False)
+            with self.assertRaises(AssertionError):
+                study.full_application(output, verify_only=True)
+
     def test_exact_six_comparison_scope(self):
         self.assertEqual(len(study.SPECIFICATIONS), 6)
         self.assertEqual(len({row[0] for row in study.SPECIFICATIONS}), 6)

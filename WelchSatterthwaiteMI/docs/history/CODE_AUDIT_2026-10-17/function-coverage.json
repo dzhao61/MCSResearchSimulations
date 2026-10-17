@@ -1,0 +1,776 @@
+[
+  {
+    "path": "DifferentialMI/src/differential_mi/statistics.py",
+    "coverage": "all functions",
+    "sha256": "c245bd4d13ba7a9f6075b329e24eb08e75eee16fc88d1f5c2d977f4119d6f4e5",
+    "file_lines": 97,
+    "functions": [
+      {
+        "name": "_as_table_batch",
+        "line": 9,
+        "last_line": 16
+      },
+      {
+        "name": "plugin_mi",
+        "line": 19,
+        "last_line": 31
+      },
+      {
+        "name": "analytic_bias_corrected_mi",
+        "line": 34,
+        "last_line": 40
+      },
+      {
+        "name": "_jackknife_entropy",
+        "line": 43,
+        "last_line": 60
+      },
+      {
+        "name": "jackknife_mi",
+        "line": 63,
+        "last_line": 75
+      },
+      {
+        "name": "influence_variance",
+        "line": 78,
+        "last_line": 97
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/src/welch_differential_mi/welch.py",
+    "coverage": "all functions",
+    "sha256": "cbf59cb5da2ea3f78b15b2a6247ee12f2c7865de5dacbe5d64e9b9a8812c54a9",
+    "file_lines": 372,
+    "functions": [
+      {
+        "name": "to_dict",
+        "line": 40,
+        "last_line": 41
+      },
+      {
+        "name": "_validate_pair",
+        "line": 44,
+        "last_line": 71
+      },
+      {
+        "name": "_welch_df",
+        "line": 74,
+        "last_line": 85
+      },
+      {
+        "name": "_combine_df",
+        "line": 88,
+        "last_line": 107
+      },
+      {
+        "name": "_variance_influence_component_df",
+        "line": 110,
+        "last_line": 178
+      },
+      {
+        "name": "differential_mi_pvalues",
+        "line": 181,
+        "last_line": 331
+      },
+      {
+        "name": "welch_satterthwaite_test",
+        "line": 334,
+        "last_line": 372
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/focused_study_core.py",
+    "coverage": "all functions",
+    "sha256": "0c424a9c81f102480c64c97fba0503b134ae0f969e924d93be7d2c3bad2f9efe",
+    "file_lines": 254,
+    "functions": [
+      {
+        "name": "digest",
+        "line": 36,
+        "last_line": 37
+      },
+      {
+        "name": "seed_for",
+        "line": 40,
+        "last_line": 41
+      },
+      {
+        "name": "construct_copying",
+        "line": 44,
+        "last_line": 59
+      },
+      {
+        "name": "build_design",
+        "line": 62,
+        "last_line": 118
+      },
+      {
+        "name": "add",
+        "line": 68,
+        "last_line": 100
+      },
+      {
+        "name": "evaluate_tables",
+        "line": 121,
+        "last_line": 155
+      },
+      {
+        "name": "simulate_chunk",
+        "line": 158,
+        "last_line": 172
+      },
+      {
+        "name": "rate_summary",
+        "line": 175,
+        "last_line": 186
+      },
+      {
+        "name": "paired_summary",
+        "line": 189,
+        "last_line": 196
+      },
+      {
+        "name": "summarize",
+        "line": 199,
+        "last_line": 246
+      },
+      {
+        "name": "source_fingerprint",
+        "line": 249,
+        "last_line": 254
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/run_focused_study.py",
+    "coverage": "all functions",
+    "sha256": "297c29087fc4714440657e7efe9f20678d901befcf436f6eeda1b3bfe401f68b",
+    "file_lines": 226,
+    "functions": [
+      {
+        "name": "atomic_json",
+        "line": 27,
+        "last_line": 30
+      },
+      {
+        "name": "file_hash",
+        "line": 33,
+        "last_line": 38
+      },
+      {
+        "name": "run_configuration",
+        "line": 41,
+        "last_line": 74
+      },
+      {
+        "name": "load_records",
+        "line": 77,
+        "last_line": 94
+      },
+      {
+        "name": "audit_records",
+        "line": 97,
+        "last_line": 122
+      },
+      {
+        "name": "aggregate",
+        "line": 125,
+        "last_line": 142
+      },
+      {
+        "name": "timing",
+        "line": 145,
+        "last_line": 171
+      },
+      {
+        "name": "main",
+        "line": 174,
+        "last_line": 222
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/audit_focused_study.py",
+    "coverage": "all functions",
+    "sha256": "51a45998daf1de6dfe82df7254bccfb27d1e86775b4b3116b37f3227535d82f3",
+    "file_lines": 154,
+    "functions": [
+      {
+        "name": "close",
+        "line": 18,
+        "last_line": 19
+      },
+      {
+        "name": "independent_interval",
+        "line": 22,
+        "last_line": 29
+      },
+      {
+        "name": "audit",
+        "line": 32,
+        "last_line": 148
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/run_unequal_sample_check.py",
+    "coverage": "all functions",
+    "sha256": "0a5093c09df68f947d46c8027fb27fc16577e78860eb40b1974143086acc32a9",
+    "file_lines": 184,
+    "functions": [
+      {
+        "name": "build_allocation_design",
+        "line": 32,
+        "last_line": 49
+      },
+      {
+        "name": "extension_fingerprint",
+        "line": 52,
+        "last_line": 55
+      },
+      {
+        "name": "checked_base_identity",
+        "line": 58,
+        "last_line": 65
+      },
+      {
+        "name": "import_balanced",
+        "line": 68,
+        "last_line": 87
+      },
+      {
+        "name": "audit_check",
+        "line": 90,
+        "last_line": 118
+      },
+      {
+        "name": "main",
+        "line": 121,
+        "last_line": 180
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_unequal_sample_check.py",
+    "coverage": "all functions",
+    "sha256": "64e2dcf7fa0c8f842d0cca11915d2917d43b22b105dfa6d4a23f1947e4ec5a4a",
+    "file_lines": 89,
+    "functions": [
+      {
+        "name": "comparison_rows",
+        "line": 18,
+        "last_line": 36
+      },
+      {
+        "name": "rate_text",
+        "line": 39,
+        "last_line": 40
+      },
+      {
+        "name": "table_text",
+        "line": 43,
+        "last_line": 73
+      },
+      {
+        "name": "main",
+        "line": 76,
+        "last_line": 85
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py",
+    "coverage": "all functions",
+    "sha256": "569d68a2af7f457378879a83de4421bf2625adeb9517e509a9038a01f32f4b65",
+    "file_lines": 171,
+    "functions": [
+      {
+        "name": "build_construction_design",
+        "line": 34,
+        "last_line": 74
+      },
+      {
+        "name": "extension_fingerprint",
+        "line": 77,
+        "last_line": 81
+      },
+      {
+        "name": "audit_check",
+        "line": 84,
+        "last_line": 110
+      },
+      {
+        "name": "main",
+        "line": 113,
+        "last_line": 167
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py",
+    "coverage": "all functions",
+    "sha256": "5e55eaa30103278bedfa9cc1f2266d396deb2a70576cf5cfe2b32e9acf355fc2",
+    "file_lines": 125,
+    "functions": [
+      {
+        "name": "comparison_rows",
+        "line": 24,
+        "last_line": 62
+      },
+      {
+        "name": "table_text",
+        "line": 65,
+        "last_line": 102
+      },
+      {
+        "name": "main",
+        "line": 105,
+        "last_line": 121
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py",
+    "coverage": "all functions",
+    "sha256": "955eae9d4d589139635f3ff385f734052d469641ff080d8aaaa2445ea3b9e537",
+    "file_lines": 378,
+    "functions": [
+      {
+        "name": "select_settings",
+        "line": 31,
+        "last_line": 45
+      },
+      {
+        "name": "original_counts",
+        "line": 48,
+        "last_line": 53
+      },
+      {
+        "name": "literal_mi",
+        "line": 56,
+        "last_line": 62
+      },
+      {
+        "name": "literal_jackknife",
+        "line": 65,
+        "last_line": 76
+      },
+      {
+        "name": "fixed_se_test",
+        "line": 79,
+        "last_line": 87
+      },
+      {
+        "name": "mean_interval",
+        "line": 90,
+        "last_line": 96
+      },
+      {
+        "name": "rate_interval",
+        "line": 99,
+        "last_line": 103
+      },
+      {
+        "name": "variance_ratio_interval",
+        "line": 106,
+        "last_line": 121
+      },
+      {
+        "name": "estimator_summary",
+        "line": 124,
+        "last_line": 162
+      },
+      {
+        "name": "paired_summary",
+        "line": 165,
+        "last_line": 178
+      },
+      {
+        "name": "protocol_for",
+        "line": 181,
+        "last_line": 213
+      },
+      {
+        "name": "run_setting",
+        "line": 216,
+        "last_line": 263
+      },
+      {
+        "name": "flat_row",
+        "line": 266,
+        "last_line": 273
+      },
+      {
+        "name": "report_text",
+        "line": 276,
+        "last_line": 302
+      },
+      {
+        "name": "main",
+        "line": 305,
+        "last_line": 374
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_focused_jackknife_check.py",
+    "coverage": "all functions",
+    "sha256": "fac18add0baa757419979e2a1751a2b6b163b81332007972e7e3e476f6790b5c",
+    "file_lines": 81,
+    "functions": [
+      {
+        "name": "checked_evidence",
+        "line": 20,
+        "last_line": 49
+      },
+      {
+        "name": "table_text",
+        "line": 52,
+        "last_line": 65
+      },
+      {
+        "name": "main",
+        "line": 68,
+        "last_line": 77
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_focused_mechanisms.py",
+    "coverage": "all functions",
+    "sha256": "0c92e3e9158a81167398ea79e43d767a844a636ec688c8cfb2b0edbabb5eccbe",
+    "file_lines": 212,
+    "functions": [
+      {
+        "name": "direction_summary",
+        "line": 29,
+        "last_line": 45
+      },
+      {
+        "name": "population_moments",
+        "line": 48,
+        "last_line": 64
+      },
+      {
+        "name": "stability_summary",
+        "line": 67,
+        "last_line": 86
+      },
+      {
+        "name": "bootstrap_intervals",
+        "line": 89,
+        "last_line": 111
+      },
+      {
+        "name": "select",
+        "line": 114,
+        "last_line": 121
+      },
+      {
+        "name": "build_evidence",
+        "line": 124,
+        "last_line": 166
+      },
+      {
+        "name": "stability_table",
+        "line": 169,
+        "last_line": 180
+      },
+      {
+        "name": "direction_table",
+        "line": 183,
+        "last_line": 194
+      },
+      {
+        "name": "main",
+        "line": 197,
+        "last_line": 208
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_focused_study.py",
+    "coverage": "all functions",
+    "sha256": "60eaf85f10c5fdc7638434332223b2abefc2d3f1b1e4b908a49ca5750c8a3f2b",
+    "file_lines": 277,
+    "functions": [
+      {
+        "name": "configure_style",
+        "line": 27,
+        "last_line": 33
+      },
+      {
+        "name": "save",
+        "line": 36,
+        "last_line": 39
+      },
+      {
+        "name": "legend",
+        "line": 42,
+        "last_line": 46
+      },
+      {
+        "name": "draw_rate",
+        "line": 49,
+        "last_line": 63
+      },
+      {
+        "name": "log_sample_axis",
+        "line": 66,
+        "last_line": 70
+      },
+      {
+        "name": "null_figure",
+        "line": 73,
+        "last_line": 102
+      },
+      {
+        "name": "association_figure",
+        "line": 105,
+        "last_line": 127
+      },
+      {
+        "name": "detection_sizes",
+        "line": 130,
+        "last_line": 157
+      },
+      {
+        "name": "detection_margins",
+        "line": 160,
+        "last_line": 175
+      },
+      {
+        "name": "write_null_table",
+        "line": 178,
+        "last_line": 192
+      },
+      {
+        "name": "write_diagnostic_table",
+        "line": 195,
+        "last_line": 205
+      },
+      {
+        "name": "write_supporting_tables",
+        "line": 208,
+        "last_line": 237
+      },
+      {
+        "name": "main",
+        "line": 240,
+        "last_line": 273
+      },
+      {
+        "name": "study",
+        "line": 253,
+        "last_line": 258
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/report_formatting.py",
+    "coverage": "all functions",
+    "sha256": "cfbf6bcd780f1a1ae1f176a22c3c2290b8ca113ad6c83bb1600460f9f369898a",
+    "file_lines": 18,
+    "functions": [
+      {
+        "name": "decimal_text",
+        "line": 6,
+        "last_line": 12
+      },
+      {
+        "name": "rate_interval_text",
+        "line": 15,
+        "last_line": 18
+      }
+    ]
+  },
+  {
+    "path": "PracticalMIExploration/run_exploration.py",
+    "coverage": "all functions",
+    "sha256": "a21bf6f004293ae7c72f073db387b62b1f06d90ddd55ac9cad222865d02125a4",
+    "file_lines": 541,
+    "functions": [
+      {
+        "name": "sha256",
+        "line": 73,
+        "last_line": 74
+      },
+      {
+        "name": "read_csv_bytes",
+        "line": 77,
+        "last_line": 78
+      },
+      {
+        "name": "load_datasets",
+        "line": 81,
+        "last_line": 109
+      },
+      {
+        "name": "count_table",
+        "line": 112,
+        "last_line": 119
+      },
+      {
+        "name": "comparisons",
+        "line": 122,
+        "last_line": 144
+      },
+      {
+        "name": "method_values",
+        "line": 147,
+        "last_line": 149
+      },
+      {
+        "name": "independent_component",
+        "line": 152,
+        "last_line": 179
+      },
+      {
+        "name": "independent_values",
+        "line": 182,
+        "last_line": 203
+      },
+      {
+        "name": "holm",
+        "line": 206,
+        "last_line": 213
+      },
+      {
+        "name": "wilson",
+        "line": 216,
+        "last_line": 224
+      },
+      {
+        "name": "rng_for",
+        "line": 227,
+        "last_line": 230
+      },
+      {
+        "name": "full_result",
+        "line": 233,
+        "last_line": 266
+      },
+      {
+        "name": "subsample_result",
+        "line": 269,
+        "last_line": 300
+      },
+      {
+        "name": "serializable",
+        "line": 303,
+        "last_line": 314
+      },
+      {
+        "name": "plot_results",
+        "line": 317,
+        "last_line": 359
+      },
+      {
+        "name": "report_text",
+        "line": 362,
+        "last_line": 412
+      },
+      {
+        "name": "run",
+        "line": 415,
+        "last_line": 465
+      },
+      {
+        "name": "verify",
+        "line": 468,
+        "last_line": 529
+      }
+    ]
+  },
+  {
+    "path": "Thesis Writeup/Welch MI/package_deliverables.py",
+    "coverage": "all functions",
+    "sha256": "5b35501474f4371faa3119613d76dd126dcfc3839fa9d70e51981c8dc3db81b0",
+    "file_lines": 126,
+    "functions": [
+      {
+        "name": "clean_files",
+        "line": 16,
+        "last_line": 21
+      },
+      {
+        "name": "write_zip",
+        "line": 24,
+        "last_line": 27
+      },
+      {
+        "name": "source_files",
+        "line": 30,
+        "last_line": 56
+      },
+      {
+        "name": "supplement_files",
+        "line": 59,
+        "last_line": 103
+      },
+      {
+        "name": "sha256",
+        "line": 106,
+        "last_line": 107
+      },
+      {
+        "name": "main",
+        "line": 110,
+        "last_line": 122
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/thesis_redesign_core.py",
+    "coverage": "current-pipeline helpers only",
+    "sha256": "3b34654218b19f98b342922b011c502a87299d0e990fdd42758e12e0ee969294",
+    "file_lines": 798,
+    "functions": [
+      {
+        "name": "margin",
+        "line": 60,
+        "last_line": 69
+      },
+      {
+        "name": "change_matrix",
+        "line": 95,
+        "last_line": 114
+      },
+      {
+        "name": "mutual_information",
+        "line": 117,
+        "last_line": 123
+      },
+      {
+        "name": "construct_additive",
+        "line": 138,
+        "last_line": 178
+      },
+      {
+        "name": "validate_table",
+        "line": 208,
+        "last_line": 243
+      }
+    ]
+  },
+  {
+    "path": "WelchSatterthwaiteMI/experiments/run_detection_breakdown_sweep.py",
+    "coverage": "current-pipeline helpers only",
+    "sha256": "37a7f736ac5fcb47bf59b0046d597ef530ba83fdb83dcc00593ca7460922afbc",
+    "file_lines": 1534,
+    "functions": [
+      {
+        "name": "wilson_interval",
+        "line": 603,
+        "last_line": 615
+      },
+      {
+        "name": "paired_difference_interval",
+        "line": 629,
+        "last_line": 643
+      }
+    ]
+  }
+]

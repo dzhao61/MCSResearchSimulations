@@ -16,21 +16,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 1.8523570977017615e-05,
+      "observed_variance_of_variance": 1.852357097701763e-05,
       "population_prediction": 8.614986514487465e-07,
-      "mean_plugin_prediction": 3.611368587107352e-05,
-      "population_observed_ratio": 0.046508238207288256,
+      "mean_plugin_prediction": 3.611368587107355e-05,
+      "population_observed_ratio": 0.04650823820728822,
       "plugin_observed_ratio": 1.9496071203484546,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.04522600974924369,
-          0.047830427408386555
+          0.04522600974924368,
+          0.04783042740838653
         ],
         "plugin_ratio_interval": [
-          1.9034166306510936,
-          1.9975282439241637
+          1.9034166306510942,
+          1.9975282439241642
         ]
       },
       "bootstrap_seed": 9202120392455525003
@@ -48,20 +48,20 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 1.7799794665301837e-05,
+      "observed_variance_of_variance": 1.7799794665301827e-05,
       "population_prediction": 9.046130441239479e-07,
-      "mean_plugin_prediction": 3.726273138859091e-05,
-      "population_observed_ratio": 0.05082154379496085,
+      "mean_plugin_prediction": 3.726273138859089e-05,
+      "population_observed_ratio": 0.050821543794960886,
       "plugin_observed_ratio": 2.0934360249238884,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.049284431527572246,
-          0.052310645156193374
+          0.04928443152757226,
+          0.052310645156193394
         ],
         "plugin_ratio_interval": [
-          2.043280561315011,
+          2.0432805613150107,
           2.144473586287376
         ]
       },
@@ -80,21 +80,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.00031717939735468725,
+      "observed_variance_of_variance": 0.0003171793973546872,
       "population_prediction": 0.0002946243819810005,
       "mean_plugin_prediction": 0.00032940651997576353,
-      "population_observed_ratio": 0.9288887753687718,
-      "plugin_observed_ratio": 1.0385495486877518,
+      "population_observed_ratio": 0.9288887753687719,
+      "plugin_observed_ratio": 1.038549548687752,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
           0.9096941867879988,
-          0.9487245188680813
+          0.9487245188680815
         ],
         "plugin_ratio_interval": [
           1.0167327670169788,
-          1.060021095863708
+          1.0600210958637077
         ]
       },
       "bootstrap_seed": 16550883598711426830
@@ -112,11 +112,11 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.0004004218300768244,
+      "observed_variance_of_variance": 0.00040042183007682426,
       "population_prediction": 0.0003945962558334616,
-      "mean_plugin_prediction": 0.0004390901193821158,
-      "population_observed_ratio": 0.9854514069768745,
-      "plugin_observed_ratio": 1.0965688841137171,
+      "mean_plugin_prediction": 0.0004390901193821157,
+      "population_observed_ratio": 0.9854514069768749,
+      "plugin_observed_ratio": 1.0965688841137173,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
@@ -126,7 +126,7 @@
         ],
         "plugin_ratio_interval": [
           1.0756223872915545,
-          1.1192682447573488
+          1.1192682447573483
         ]
       },
       "bootstrap_seed": 14354551218115258380
@@ -144,21 +144,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.000796250830502069,
+      "observed_variance_of_variance": 0.0007962508305020687,
       "population_prediction": 0.00081434692433894,
-      "mean_plugin_prediction": 0.0008186668099921383,
-      "population_observed_ratio": 1.0227266247564988,
-      "plugin_observed_ratio": 1.028151907202326,
+      "mean_plugin_prediction": 0.000818666809992138,
+      "population_observed_ratio": 1.0227266247564992,
+      "plugin_observed_ratio": 1.0281519072023262,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          1.0031786766291053,
-          1.042593484098744
+          1.0031786766291055,
+          1.0425934840987445
         ],
         "plugin_ratio_interval": [
           1.009784251591152,
-          1.0477039025724795
+          1.0477039025724793
         ]
       },
       "bootstrap_seed": 2470448137149828689
@@ -176,17 +176,17 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.0011079023350520406,
+      "observed_variance_of_variance": 0.0011079023350520404,
       "population_prediction": 0.0011241814563069973,
-      "mean_plugin_prediction": 0.0011177990607252849,
-      "population_observed_ratio": 1.0146936428779998,
+      "mean_plugin_prediction": 0.0011177990607252847,
+      "population_observed_ratio": 1.014693642878,
       "plugin_observed_ratio": 1.008932850270398,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.994446606067159,
-          1.0332628775033204
+          0.9944466060671591,
+          1.0332628775033206
         ],
         "plugin_ratio_interval": [
           0.989369360272602,
@@ -208,21 +208,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 2.96632157791363e-05,
+      "observed_variance_of_variance": 2.9663215779136316e-05,
       "population_prediction": 2.946243819810005e-05,
       "mean_plugin_prediction": 2.9781409529752946e-05,
-      "population_observed_ratio": 0.9932314290355037,
-      "plugin_observed_ratio": 1.0039845224973813,
+      "population_observed_ratio": 0.9932314290355031,
+      "plugin_observed_ratio": 1.0039845224973807,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.974119255093827,
-          1.0135742550165436
+          0.9741192550938267,
+          1.0135742550165432
         ],
         "plugin_ratio_interval": [
-          0.9847191796740407,
-          1.024329454175061
+          0.98471917967404,
+          1.0243294541750607
         ]
       },
       "bootstrap_seed": 6407541827717779678
@@ -240,21 +240,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 3.92016804039545e-05,
+      "observed_variance_of_variance": 3.9201680403954525e-05,
       "population_prediction": 3.9459625583346155e-05,
       "mean_plugin_prediction": 3.988416376039878e-05,
-      "population_observed_ratio": 1.006579952102401,
-      "plugin_observed_ratio": 1.0174095434025179,
+      "population_observed_ratio": 1.0065799521024004,
+      "plugin_observed_ratio": 1.0174095434025172,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.9869088044077088,
-          1.0270835489393746
+          0.9869088044077082,
+          1.0270835489393741
         ],
         "plugin_ratio_interval": [
-          0.9973949189066973,
-          1.037978801054329
+          0.9973949189066967,
+          1.0379788010543285
         ]
       },
       "bootstrap_seed": 8675681851447057285
@@ -272,21 +272,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.0008489913540446395,
+      "observed_variance_of_variance": 0.0008489913540446392,
       "population_prediction": 0.000652191525489637,
-      "mean_plugin_prediction": 0.0014395163993136165,
-      "population_observed_ratio": 0.7681957211726154,
-      "plugin_observed_ratio": 1.695560729159001,
+      "mean_plugin_prediction": 0.0014395163993136157,
+      "population_observed_ratio": 0.7681957211726156,
+      "plugin_observed_ratio": 1.6955607291590005,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.7520213006414812,
-          0.7841722181885158
+          0.7520213006414813,
+          0.7841722181885159
         ],
         "plugin_ratio_interval": [
-          1.660500407002886,
-          1.7295166629644387
+          1.6605004070028857,
+          1.7295166629644385
         ]
       },
       "bootstrap_seed": 8488895914675203882
@@ -304,21 +304,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 0.0012650897671645294,
+      "observed_variance_of_variance": 0.0012650897671645292,
       "population_prediction": 0.0009111315818937646,
-      "mean_plugin_prediction": 0.0023076424009977857,
-      "population_observed_ratio": 0.7202110123267392,
-      "plugin_observed_ratio": 1.8240938002130473,
+      "mean_plugin_prediction": 0.002307642400997785,
+      "population_observed_ratio": 0.7202110123267395,
+      "plugin_observed_ratio": 1.824093800213047,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.7055815149980483,
-          0.7346891476160852
+          0.7055815149980484,
+          0.7346891476160854
         ],
         "plugin_ratio_interval": [
-          1.7876979219253442,
-          1.8599831043054407
+          1.787697921925343,
+          1.8599831043054404
         ]
       },
       "bootstrap_seed": 15151842584004502559
@@ -336,21 +336,21 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 6.655796325278355e-05,
+      "observed_variance_of_variance": 6.655796325278356e-05,
       "population_prediction": 6.52191525489637e-05,
       "mean_plugin_prediction": 7.2807952007948e-05,
-      "population_observed_ratio": 0.9798850409719552,
-      "plugin_observed_ratio": 1.0939029448877113,
+      "population_observed_ratio": 0.9798850409719551,
+      "plugin_observed_ratio": 1.0939029448877111,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.9607169369202734,
-          0.9998059830260325
+          0.9607169369202732,
+          0.9998059830260322
         ],
         "plugin_ratio_interval": [
-          1.0727006499355474,
-          1.1159572323289864
+          1.0727006499355471,
+          1.115957232328986
         ]
       },
       "bootstrap_seed": 12616486031658614100
@@ -368,16 +368,16 @@
       },
       "repetitions": 20000,
       "included_count": 20000,
-      "observed_variance_of_variance": 9.036565983542823e-05,
+      "observed_variance_of_variance": 9.03656598354282e-05,
       "population_prediction": 9.111315818937647e-05,
-      "mean_plugin_prediction": 9.99568034628907e-05,
-      "population_observed_ratio": 1.008271929351366,
-      "plugin_observed_ratio": 1.106137039722054,
+      "mean_plugin_prediction": 9.995680346289069e-05,
+      "population_observed_ratio": 1.0082719293513662,
+      "plugin_observed_ratio": 1.1061370397220542,
       "monte_carlo_check": {
         "repetitions": 1000,
         "finite_repetitions": 1000,
         "population_ratio_interval": [
-          0.9885998593512516,
+          0.988599859351252,
           1.0291636165921532
         ],
         "plugin_ratio_interval": [

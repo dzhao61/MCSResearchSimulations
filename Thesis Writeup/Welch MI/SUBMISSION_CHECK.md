@@ -1,5 +1,33 @@
 # Thesis completion check
 
+## Numerical correction and evidence refresh: 17 October 2026
+
+The code-audit findings are corrected. Centred empirical variance and
+sensitivity calculations plus exact integer degeneracy checks enforce the
+existing Expanded Welch zero-component rule. All 240 settings are
+regenerated from unchanged populations and random streams. Normal Wald
+decisions are unchanged; 28 small-sample null settings lose 12,318 invalidly
+accepted Expanded Welch outputs, including 859 rejections. The main
+larger-sample results, power decisions and full-data application retain their
+interpretations. The 4 by 4 n=10 example, null plots/table and timings are
+updated. Earlier dated entries below describe their historical versions.
+
+All 236 workspace tests pass. Independent checks on 1.32 million small-sample
+pairs find neither incorrectly accepted exact-zero components nor decisions
+that change under transposition. The core, extensions, jackknife and practical
+audits pass. The strengthened base audit authenticates manifests, population
+arrays and checkpoint identities, and reporting requires fresh verification.
+The practical application now has a full-data-only reproduction target and
+is included with raw archives in the supplement. Conflicting README commands
+are corrected. Pre-correction code/results are archived; historical working
+drafts and archived thesis versions are not edited or rebuilt.
+
+The current 102-page main build is warning-free, and the affected result,
+figure and table pages are visually checked. Source and experiment delivery
+archives are rebuilt and tested separately from the development workspace.
+The detailed comparison is in
+`WelchSatterthwaiteMI/docs/history/NUMERICAL_FIX_2026-10-17.md`.
+
 ## Three final presentation fixes: 17 October 2026
 
 Equation (1.1) now ends with a full stop. Section 3.3 keeps Expanded Welch

@@ -85,7 +85,7 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
   }.
   \label{eq:component-df-moments}
 \end{equation}
-\begin{samepage}
+\begin{samepage}%
 The numerator depends on the mean of the estimated MI variance; the
 denominator measures how much that estimate fluctuates between samples.
 To first order, \(\E\{\Vhat(P)\}\approx V(P)\), so the remaining task is
@@ -149,7 +149,7 @@ Along the perturbation path, pointwise MI is
   -\log p_{i+}(\varepsilon)
   -\log p_{+j}(\varepsilon).
 \end{equation}
-\begin{samepage}
+\begin{samepage}%
 For each logarithm, the derivative is the probability derivative divided by
 the probability. Substituting the joint and marginal derivatives gives
 \begin{align}
@@ -315,7 +315,7 @@ Equation~\eqref{eq:m2-weight-term} with the derivative of \(-I(P)^2\):
  &\quad=\pmi_P(x,y)^2-2I(P)\pmi_P(x,y)+I(P)^2-V(P)\\*
  &\quad=\{\pmi_P(x,y)-I(P)\}^2-V(P).
 \end{align*}
-\begin{samepage}
+\begin{samepage}%
 The second line uses
 \(\E_P\{\pmi_P(X,Y)^2\}=V(P)+I(P)^2\); the last line completes the
 square. Adding twice the expression in Equation~\eqref{eq:m2-score-term}
@@ -499,7 +499,7 @@ also Wald-valid, so every Expanded Welch rejection is also a Wald
 rejection, including when invalid
 outputs count as non-rejections in the reported rates. Expanded Welch cannot
 raise rejection where Wald is already too conservative.
-Section~\ref{sec:zero-component} examines a zero-component case in the
+Appendix~\ref{sec:zero-component} examines a zero-component case in the
 combined degrees-of-freedom formula.
 
 \section{Worked example and implementation}
@@ -636,7 +636,7 @@ that path, it gives
 Substituting these local approximations into
 the component degrees-of-freedom formula gives
 \begin{equation}
- \nu_P=\frac{2n_PV(P)^2}{\tau^2(P)}
+ \nu_P\approx\frac{2n_PV(P)^2}{\tau^2(P)}
  \approx\frac{n_PV(P)}{2}
  \approx n_PI(P).
  \label{eq:near-independent-df}

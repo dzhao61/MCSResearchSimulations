@@ -169,8 +169,7 @@ observing the data. This is the Nemenman--Shafee--Bialek (NSB) estimator.
 More recently, \citet{piga2024} estimate the strength of a Dirichlet prior
 from the observed counts. This strength controls how much the probability
 estimates are drawn towards a uniform distribution, including for
-unobserved categories. These approaches estimate entropy and related
-quantities by accounting for uncertainty about the underlying distribution.
+unobserved categories.
 
 Entropy estimators can also be combined to estimate MI through
 \(I(X;Y)=H(X)+H(Y)-H(X,Y)\), as in
@@ -179,9 +178,7 @@ alongside estimators that model the joint probabilities directly. Combining
 three separately constructed Bayesian entropy estimates need not correspond
 to one joint probability model and can produce negative MI estimates.
 Nevertheless, these combined estimators generally outperform the authors'
-fully Bayesian MI estimator in their tested examples. The comparison
-shows that Bayesian MI estimation still depends on how the probabilities
-are modelled.
+fully Bayesian MI estimator in their tested examples.
 
 The sampling pattern can also suggest a more targeted estimator.
 \citet{hernandez2019} consider a well-sampled, low-entropy variable paired
@@ -194,6 +191,7 @@ two distinct populations are subtracted. The two-sample problem therefore
 requires both a small bias in the estimated difference and a standard error
 that describes its sampling variation.
 
+\allowdisplaybreaks[0]
 \section{Sampling variance of plug-in MI}
 \label{sec:first-order-mi-background}
 
@@ -474,6 +472,7 @@ chi-squared distribution rather than the normal approximation for comparing
 positive MI values.
 
 \section{Approaches to testing MI differences}
+\allowdisplaybreaks
 \label{sec:welch-background}
 
 This section reviews methods for estimating uncertainty in MI and testing
@@ -546,10 +545,12 @@ The difference between the rejection thresholds from the Student \(t\)
 and standard normal distributions becomes
 smaller as \(\nu\) increases.
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
-\(\Vhat(Q)/n_Q\). Their component degrees of freedom need their own
-calculation because \(\Vhat(P)\) and \(\Vhat(Q)\) are nonlinear functions of
-the probability tables. Chapter~\ref{chap:expanded} derives these
-MI-specific inputs to the same moment-matching structure.
+\(\Vhat(Q)/n_Q\). The ordinary \(n_P-1\) and \(n_Q-1\) values follow
+from the scaled chi-squared distribution of a sample variance under normal
+sampling; they do not automatically apply to an estimated MI variance.
+Chapter~\ref{chap:expanded} therefore derives the component degrees of
+freedom from the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\),
+using the same moment-matching principle.
 
 This distinction matters because the size of a variance estimate and its
 stability answer different questions. The estimate \(\Vhat(P)/n_P\)
@@ -645,8 +646,9 @@ A bootstrap approximates sampling variation by repeatedly drawing samples
 with replacement from the observed data \citep{efron1979}. For this
 comparison, samples would be drawn separately from the two observed tables,
 using their original sample sizes, and the MI difference recalculated for
-each pair. This preserves differences between the observed populations and
-provides an estimated distribution of the MI difference. The bootstrap
+each pair. Resampling from separate empirical probability tables allows
+their cell probabilities to differ and provides an estimated sampling
+distribution of the MI difference. The bootstrap
 variation around the observed estimate could then be used to construct
 an uncertainty interval for the population difference and assess whether
 that interval includes zero.
@@ -658,11 +660,12 @@ intervals based on resampling can be too narrow when information estimates
 remain biased.
 
 A simple permutation test instead combines the two samples and shuffles
-their group labels. That shuffle is justified when
+their group labels. This gives an exact test when
 the populations have the same complete distribution, \(P=Q\). Our hypothesis
 requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
-equal. Shuffling labels could therefore test a stronger claim than this thesis
-asks about \citep{chung2013}. Specialised permutation methods allow distinct
+equal. Equal MI alone does not guarantee that this label-permutation test
+has the stated false-positive rate \citep{chung2013}.
+Specialised permutation methods allow distinct
 populations in some parameter comparisons \citep{janssen1997,chung2013};
 their validity for equal MI would need to be established.
 
@@ -693,6 +696,3 @@ error alongside false-positive rates and power.
 retain substantial bias after a leading correction. Such bias or an
 inaccurate first-order variance approximation can undermine both tests,
 even when Expanded Welch lowers rejection.
-Chapter~\ref{chap:baselines} defines this shared statistic before
-Chapter~\ref{chap:expanded} derives the sampling variability of the estimated
-MI variance used to choose Expanded Welch's degrees of freedom.

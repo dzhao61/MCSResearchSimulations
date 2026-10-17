@@ -412,6 +412,44 @@ def report_text(full: pd.DataFrame, subsets: pd.DataFrame, repetitions: int) -> 
     return "\n".join(lines) + "\n"
 
 
+def full_application(output: Path, *, verify_only: bool = False) -> None:
+    """Reproduce the six full-data comparisons without exploratory subsets."""
+    items = comparisons(load_datasets(HERE / "raw"))
+    expected = pd.DataFrame([full_result(item) for item in items])
+    expected["wald_holm_p"] = holm(expected.normal_p_value.tolist())
+    expected["expanded_holm_p"] = holm(expected.expanded_welch_p_value.tolist())
+    counts = serializable(items)
+    identity = {
+        "scope": "six full-data comparisons; no subset simulations",
+        "alpha": ALPHA,
+        "sources": {name: {**info, "sha256": sha256(HERE / "raw" / info["archive"])}
+                    for name, info in SOURCES.items()},
+        "protocol_sha256": sha256(HERE / "PROTOCOL.md"),
+        "runner_sha256": sha256(Path(__file__)),
+        "method_sha256": sha256(WORKSPACE / "WelchSatterthwaiteMI/src/welch_differential_mi/welch.py"),
+        "statistics_sha256": sha256(WORKSPACE / "DifferentialMI/src/differential_mi/statistics.py"),
+    }
+    if not verify_only:
+        if output.exists() and any(output.iterdir()):
+            raise FileExistsError("Use a new output directory; existing results are not overwritten.")
+        output.mkdir(parents=True, exist_ok=True)
+        expected.to_csv(output / "full_data_results.csv", index=False)
+        (output / "count_tables.json").write_text(json.dumps(counts, indent=2, allow_nan=False) + "\n")
+        (output / "study_identity.json").write_text(json.dumps(identity, indent=2) + "\n")
+    if json.loads((output / "study_identity.json").read_text()) != identity:
+        raise AssertionError("Application source, protocol or raw archive changed.")
+    if json.loads((output / "count_tables.json").read_text()) != counts:
+        raise AssertionError("Saved application counts differ from the raw-data construction.")
+    actual = pd.read_csv(output / "full_data_results.csv", float_precision="round_trip")
+    pd.testing.assert_frame_equal(actual, expected, check_dtype=False, rtol=1e-12, atol=1e-14)
+    summary = {"all_pass": True, "full_comparisons": 6,
+               "checks": ["raw archive and source hashes", "category alphabets and exclusions",
+                          "count tables", "independent full-data formulas", "six-comparison Holm correction"],
+               "results_sha256": sha256(output / "full_data_results.csv")}
+    (output / "verification.json").write_text(json.dumps(summary, indent=2) + "\n")
+    print(json.dumps(summary, indent=2))
+
+
 def run(output: Path, repetitions: int) -> None:
     if repetitions < 2:
         raise ValueError("At least two repetitions are required.")
@@ -531,11 +569,15 @@ def verify(output: Path) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("mode", choices=["run", "verify"])
-    parser.add_argument("--output", type=Path, default=HERE / "results")
+    parser.add_argument("mode", choices=["run", "verify", "full", "verify-full"])
+    parser.add_argument("--output", type=Path)
     parser.add_argument("--repetitions", type=int, default=5000)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = HERE / ("thesis_application" if args.mode in ("full", "verify-full") else "results")
     if args.mode == "run":
         run(args.output, args.repetitions)
+    elif args.mode in ("full", "verify-full"):
+        full_application(args.output, verify_only=args.mode == "verify-full")
     else:
         verify(args.output)

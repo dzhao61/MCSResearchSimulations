@@ -1,0 +1,575 @@
+[
+  {
+    "id": "adult_education",
+    "dataset": "Adult",
+    "predictor": "education",
+    "outcome": "income_above_50k",
+    "group_variable": "sex",
+    "group_p": "Female",
+    "group_q": "Male",
+    "levels": [
+      "Preschool",
+      "1st-4th",
+      "5th-6th",
+      "7th-8th",
+      "9th",
+      "10th",
+      "11th",
+      "12th",
+      "HS-grad",
+      "Some-college",
+      "Assoc-voc",
+      "Assoc-acdm",
+      "Bachelors",
+      "Masters",
+      "Prof-school",
+      "Doctorate"
+    ],
+    "table_p": [
+      [
+        24,
+        0
+      ],
+      [
+        61,
+        0
+      ],
+      [
+        123,
+        4
+      ],
+      [
+        238,
+        1
+      ],
+      [
+        215,
+        5
+      ],
+      [
+        453,
+        4
+      ],
+      [
+        639,
+        11
+      ],
+      [
+        207,
+        4
+      ],
+      [
+        4767,
+        330
+      ],
+      [
+        3885,
+        293
+      ],
+      [
+        641,
+        93
+      ],
+      [
+        541,
+        86
+      ],
+      [
+        1956,
+        521
+      ],
+      [
+        555,
+        290
+      ],
+      [
+        69,
+        63
+      ],
+      [
+        49,
+        64
+      ]
+    ],
+    "table_q": [
+      [
+        58,
+        1
+      ],
+      [
+        178,
+        8
+      ],
+      [
+        359,
+        23
+      ],
+      [
+        655,
+        61
+      ],
+      [
+        500,
+        36
+      ],
+      [
+        849,
+        83
+      ],
+      [
+        1081,
+        81
+      ],
+      [
+        402,
+        44
+      ],
+      [
+        8514,
+        2173
+      ],
+      [
+        4930,
+        1770
+      ],
+      [
+        898,
+        429
+      ],
+      [
+        647,
+        327
+      ],
+      [
+        2756,
+        2792
+      ],
+      [
+        643,
+        1169
+      ],
+      [
+        148,
+        554
+      ],
+      [
+        114,
+        367
+      ]
+    ],
+    "source_rows": 48842,
+    "excluded_group_rows": 0,
+    "excluded_missing_predictor": 0,
+    "identical_source_rows": 52
+  },
+  {
+    "id": "adult_occupation",
+    "dataset": "Adult",
+    "predictor": "occupation",
+    "outcome": "income_above_50k",
+    "group_variable": "sex",
+    "group_p": "Female",
+    "group_q": "Male",
+    "levels": [
+      "Tech-support",
+      "Craft-repair",
+      "Other-service",
+      "Sales",
+      "Exec-managerial",
+      "Prof-specialty",
+      "Handlers-cleaners",
+      "Machine-op-inspct",
+      "Adm-clerical",
+      "Farming-fishing",
+      "Transport-moving",
+      "Priv-house-serv",
+      "Protective-serv",
+      "Armed-Forces"
+    ],
+    "table_p": [
+      [
+        495,
+        67
+      ],
+      [
+        290,
+        33
+      ],
+      [
+        2620,
+        78
+      ],
+      [
+        1813,
+        134
+      ],
+      [
+        1327,
+        421
+      ],
+      [
+        1660,
+        582
+      ],
+      [
+        246,
+        8
+      ],
+      [
+        776,
+        28
+      ],
+      [
+        3460,
+        309
+      ],
+      [
+        92,
+        3
+      ],
+      [
+        114,
+        13
+      ],
+      [
+        225,
+        3
+      ],
+      [
+        107,
+        15
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "table_q": [
+      [
+        531,
+        353
+      ],
+      [
+        4439,
+        1350
+      ],
+      [
+        2099,
+        126
+      ],
+      [
+        2216,
+        1341
+      ],
+      [
+        1851,
+        2487
+      ],
+      [
+        1728,
+        2202
+      ],
+      [
+        1688,
+        130
+      ],
+      [
+        1874,
+        344
+      ],
+      [
+        1383,
+        459
+      ],
+      [
+        1225,
+        170
+      ],
+      [
+        1760,
+        468
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        568,
+        293
+      ],
+      [
+        10,
+        5
+      ]
+    ],
+    "source_rows": 48842,
+    "excluded_group_rows": 0,
+    "excluded_missing_predictor": 2809,
+    "identical_source_rows": 52
+  },
+  {
+    "id": "shoppers_month",
+    "dataset": "Online Shoppers",
+    "predictor": "Month",
+    "outcome": "Revenue",
+    "group_variable": "VisitorType",
+    "group_p": "New_Visitor",
+    "group_q": "Returning_Visitor",
+    "levels": [
+      "Aug",
+      "Dec",
+      "Feb",
+      "Jul",
+      "June",
+      "Mar",
+      "May",
+      "Nov",
+      "Oct",
+      "Sep"
+    ],
+    "table_p": [
+      [
+        51,
+        21
+      ],
+      [
+        260,
+        75
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        43,
+        11
+      ],
+      [
+        23,
+        7
+      ],
+      [
+        196,
+        36
+      ],
+      [
+        231,
+        88
+      ],
+      [
+        291,
+        128
+      ],
+      [
+        96,
+        28
+      ],
+      [
+        80,
+        28
+      ]
+    ],
+    "table_q": [
+      [
+        306,
+        55
+      ],
+      [
+        1202,
+        128
+      ],
+      [
+        180,
+        3
+      ],
+      [
+        323,
+        55
+      ],
+      [
+        235,
+        22
+      ],
+      [
+        1519,
+        156
+      ],
+      [
+        2768,
+        277
+      ],
+      [
+        1928,
+        629
+      ],
+      [
+        338,
+        87
+      ],
+      [
+        282,
+        58
+      ]
+    ],
+    "source_rows": 12330,
+    "excluded_group_rows": 85,
+    "excluded_missing_predictor": 0,
+    "identical_source_rows": 125
+  },
+  {
+    "id": "shoppers_weekend",
+    "dataset": "Online Shoppers",
+    "predictor": "Weekend",
+    "outcome": "Revenue",
+    "group_variable": "VisitorType",
+    "group_p": "New_Visitor",
+    "group_q": "Returning_Visitor",
+    "levels": [
+      false,
+      true
+    ],
+    "table_p": [
+      [
+        898,
+        317
+      ],
+      [
+        374,
+        105
+      ]
+    ],
+    "table_q": [
+      [
+        7092,
+        1077
+      ],
+      [
+        1989,
+        393
+      ]
+    ],
+    "source_rows": 12330,
+    "excluded_group_rows": 85,
+    "excluded_missing_predictor": 0,
+    "identical_source_rows": 125
+  },
+  {
+    "id": "students_studytime",
+    "dataset": "Student Performance",
+    "predictor": "studytime",
+    "outcome": "grade_at_least_10",
+    "group_variable": "school",
+    "group_p": "GP",
+    "group_q": "MS",
+    "levels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "table_p": [
+      [
+        19,
+        100
+      ],
+      [
+        10,
+        196
+      ],
+      [
+        3,
+        68
+      ],
+      [
+        0,
+        27
+      ]
+    ],
+    "table_q": [
+      [
+        31,
+        62
+      ],
+      [
+        31,
+        68
+      ],
+      [
+        4,
+        22
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "source_rows": 649,
+    "excluded_group_rows": 0,
+    "excluded_missing_predictor": 0,
+    "identical_source_rows": 0
+  },
+  {
+    "id": "students_maternal_education",
+    "dataset": "Student Performance",
+    "predictor": "Medu",
+    "outcome": "grade_at_least_10",
+    "group_variable": "school",
+    "group_p": "GP",
+    "group_q": "MS",
+    "levels": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "table_p": [
+      [
+        0,
+        3
+      ],
+      [
+        7,
+        52
+      ],
+      [
+        9,
+        115
+      ],
+      [
+        11,
+        91
+      ],
+      [
+        5,
+        130
+      ]
+    ],
+    "table_q": [
+      [
+        0,
+        3
+      ],
+      [
+        30,
+        54
+      ],
+      [
+        18,
+        44
+      ],
+      [
+        11,
+        26
+      ],
+      [
+        9,
+        31
+      ]
+    ],
+    "source_rows": 649,
+    "excluded_group_rows": 0,
+    "excluded_missing_predictor": 0,
+    "identical_source_rows": 0
+  }
+]
