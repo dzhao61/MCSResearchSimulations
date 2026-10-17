@@ -9,3 +9,7 @@
 *.out
 *.synctex.gz
 *.toc
+
+# Keep the large experiment supplement local.
+deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip
+.DS_Store

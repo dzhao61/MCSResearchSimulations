@@ -42,10 +42,9 @@ test to reject equal MI too often or too rarely.
 Both the MI difference and its standard error are estimated from count
 tables, whose cells record how often each pair of categories occurs.
 MI depends on the cell probabilities and their row and column totals.
-When samples are small,
-rare combinations of categories may occur only a few times or not at all.
-The resulting probability estimates can distort both the MI difference
-and its estimated uncertainty.
+When samples are small and rare combinations of categories occur only a
+few times or not at all, the resulting probability estimates can distort
+both the MI difference and its estimated uncertainty.
 
 The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
 Wald's estimated MI difference and standard error but uses a Student
@@ -76,8 +75,8 @@ The thesis addresses two research questions:
   usable results and computation?
 \end{enumerate}
 
-An analytical derivation addresses the first question. The second is
-examined through controlled simulations with known population MI, varying
+An analytical derivation addresses the first question, while controlled
+simulations with known population MI address the second by varying
 sample size, table size, category frequencies and population MI.
 Estimation diagnostics explain how bias and uncertainty affect the test
 results.
@@ -86,8 +85,8 @@ results.
 
 \begin{enumerate}
   \item \begin{samepage}\textbf{Mathematical contribution.} The thesis derives how changing
-  one observation affects the estimated MI variance. The calculation includes
-  the resulting changes in the row and column totals and in pointwise MI.
+  one observation affects the estimated MI variance, including the resulting
+  changes in the row and column totals and in pointwise MI.
   \par
   \end{samepage}
 
@@ -109,11 +108,12 @@ results.
 
   \item \textbf{Practical contribution.} The evaluation identifies
   where Expanded Welch's larger cutoff helps and where estimation errors
-  leave both tests unreliable. Near independence, both tests can reject
-  equal MI too rarely. In sparse populations with different category
-  frequencies, unequal MI bias can instead produce excessive false
-  positives and reversed estimated ordering among rejections. These
-  sparse-table findings persist under both tested population constructions.
+  leave both tests unreliable. Both tests can reject equal MI too rarely
+  near independence or too often when their standard errors underestimate
+  sampling variation. In sparse populations with different category
+  frequencies, unequal MI bias can also produce excessive false positives
+  and reverse the estimated ordering among rejections. These bias and
+  ordering failures persist under both tested population constructions.
 \end{enumerate}
 
 \section{Scope and organisation}

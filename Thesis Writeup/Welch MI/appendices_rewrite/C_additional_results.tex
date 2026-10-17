@@ -36,10 +36,10 @@ The smaller tables again give low false-positive rates at intermediate
 sample sizes. At \(n=100\), Wald rejects at 0.0128 under uniform
 margins and 0.0114 under same skew, with still lower Expanded Welch
 rates. In \(8\times8\) tables at \(n=100\), uniform margins give rates
-0.0736 and 0.0651 for Wald and Expanded Welch, respectively; same-skew
+0.0737 and 0.0651 for Wald and Expanded Welch, respectively; same-skew
 margins give 0.0189 and 0.0121. The effect of the margin regime therefore changes with
 table size. By \(n=50{,}000\), all four comparisons have rates
-between 0.0489 and 0.0503 and full validity.
+between 0.0490 and 0.0503 and full validity.
 
 \section{Supporting estimation diagnostics}
 
@@ -148,8 +148,8 @@ the average leave-one-out estimate and the full-sample estimate gives
  \sum_{a=1}^{n_P}\widehat I^{(-a)}(P).
  \label{eq:jackknife-mi-check}
 \end{align}
-Observations in the same cell give identical leave-one-out tables. The
-average can therefore be calculated once per occupied cell, weighting its
+Because observations in the same cell give identical leave-one-out tables,
+the average can be calculated once per occupied cell, weighting its
 leave-one-out MI by \(N^P_{ij}/n_P\). A cell reduced to zero contributes
 zero to the MI sum. Apply the same calculation to \(Q\), retaining
 all row and column categories and any negative corrected estimates.
@@ -209,17 +209,17 @@ The jackknife difference also gives a more accurate estimated ordering at
 the sparse alternative. Opposite-direction rejections fall from 2,009 to
 5, while correct-direction rejections rise from 1 to 544. The total
 rejection rate falls because the original rejections almost all indicate
-the wrong ordering. Null rejection, however, falls to 0.845\%, with a
-Wilson 95\% Monte Carlo interval of 0.727--0.982\%. The mean squared
+the wrong ordering. Null rejection, however, falls to 0.0085, with a
+Wilson 95\% Monte Carlo interval of [0.0073, 0.0098]. The mean squared
 standard error still exceeds the observed variance of the jackknife
 difference: their ratio is 1.76 under the null and 1.65 under the
 alternative. Better estimation of the difference therefore leaves a
 separate problem in estimating its uncertainty.
 
-At \(n=10{,}000\), the jackknife null rejection rate is 5.070\%,
-with a Wilson interval of 4.774--5.383\%. The estimated/observed variance
+At \(n=10{,}000\), the jackknife null rejection rate is 0.0507,
+with a Wilson interval of [0.0477, 0.0538]. The estimated/observed variance
 ratios for the analytic and jackknife differences are both close to one.
-Alternative rejection falls from 69.920\% to 66.190\%,
+Alternative rejection falls from 0.6992 to 0.6619,
 with every rejection indicating the correct direction for both
 corrections. The jackknife difference has less bias but slightly greater
 observed variability and root mean squared error at this sample size.
@@ -300,7 +300,7 @@ Table~\ref{tab:construction-check} compares the copying and four-cell
 populations at matched \(4\times4\) different-skew margins and MI
 targets. All outputs and diagnostics are finite and valid. The sampled
 populations differ between constructions, so the cross-construction
-comparison uses independent repetitions. Within each construction,
+comparison uses independent repetitions, whereas within each construction
 Wald and Expanded Welch receive the same table pairs.
 
 \begin{table}[H]

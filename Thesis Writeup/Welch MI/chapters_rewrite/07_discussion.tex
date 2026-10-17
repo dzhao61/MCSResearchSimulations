@@ -3,17 +3,24 @@
 
 \section{Implications for using Expanded Welch}
 
-Normal Wald remains the simpler baseline; the results do not support
-Expanded Welch as a general replacement. Expanded Welch is useful where
-its larger cutoff brings excessive false positives closer to 5\% at
-an acceptable cost in power. Where Wald already rejects too rarely,
-the same change makes rejection more conservative. The comparison
-should also report valid-result frequency, because failed calculations
-can lower the rejection rate without providing a test decision.
+Expanded Welch improves false-positive control in several small-sample
+settings. For uniform \(4\times4\) populations at \(n=20\), it lowers
+the false-positive rate from 0.0813 to 0.0470, with every calculation valid.
+For \(8\times8\) different-skew populations at \(n=100\), it lowers the
+rate from 0.0706 to 0.0518, again with full validity.
+
+The power comparison uses larger samples, at \(n=1{,}000\) and 10,000,
+so it does not establish the power cost in those smaller-sample settings.
+Across the power comparisons, Expanded Welch rejects less often and offers
+no general advantage over Normal Wald. It also lowers false-positive rates
+that are already conservative and does not correct the unequal biases in
+the MI difference. Normal Wald therefore remains the simpler
+baseline. Valid-result frequency remains important, because a lower
+rejection rate can otherwise reflect failed calculations.
 
 For an observed feature--label comparison, report the estimated MI
 difference, its standard error and the p-value together. The difference
-gives the estimated size and direction of the change; the standard error
+gives the estimated size and direction of the change, whereas the standard error
 gives the sampling uncertainty assigned by the method. The sparse-table
 results show why the direction matters: unequal estimation biases can
 shift or reverse the estimated difference, as
@@ -25,8 +32,8 @@ Before applying either test, assess its performance on populations that
 match the application's category definitions, sample sizes and margin
 patterns. Include plausible population MI values and distinct equal-MI
 tables, then compare false positives, power and usable-result frequency.
-This assessment is particularly important for sparse data, since neither
-method is reliable in every studied setting. Choose the method using
+Because neither method is reliable in every studied setting, this
+assessment is particularly important for sparse data. Choose the method using
 that evidence before examining the application's observed p-values.
 
 \begin{samepage}
@@ -40,8 +47,8 @@ untested populations.
 \end{samepage}
 
 The primary populations use a copying mixture with identical row and
-column margins within each population. This gives a clear way to vary
-association without changing category frequencies. The four-cell check
+column margins within each population, allowing association to vary
+without changing category frequencies. The four-cell check
 supports the representative \(4\times4\) method comparison and
 reproduces the main \(16\times16\) estimation failures at its matched
 settings, although power changes numerically with the construction.
@@ -55,10 +62,10 @@ equal MI can differ. A broader assessment would vary association
 locations, population MI values and margins, including unequal
 row and column margins within a population.
 
-Equal sample sizes simplify the main studies by making the two leading
-bias corrections cancel in \(\Deltahat\). The remaining difference
-bias in the experiment consequently comes from estimation errors not
-removed by the leading MI bias correction. With unequal sample sizes, the
+Because equal sample sizes make the two leading bias corrections cancel
+in \(\Deltahat\), the remaining difference bias in the main studies
+is exactly the bias of the raw plug-in MI difference. This conclusion
+concerns the fixed-alphabet correction used here. With unequal sample sizes, the
 corrections no longer cancel, and the two contributions to the standard
 error and degrees of freedom can become less balanced. The derivation
 allows unequal sample sizes. The supporting fixed-total check assesses
@@ -86,5 +93,5 @@ approximation accurate at a particular sample size: small positive MI
 can remain close to the problematic region. This explains why improving
 the rejection cutoff and improving MI's sampling approximation near independence
 are separate tasks.
-Section~\ref{sec:independence-boundary} derives the second-order
+Appendix~\ref{sec:independence-boundary} derives the second-order
 approximation needed there.

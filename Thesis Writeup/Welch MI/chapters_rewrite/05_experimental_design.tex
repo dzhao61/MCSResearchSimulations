@@ -23,27 +23,28 @@ methods and performance measures follows the simulation-design guidance of
 
 The square table sizes are \(2\times2,4\times4,8\times8\) and
 \(16\times16\), containing 4, 16, 64 and 256 cells. Each doubling of
-the number of categories multiplies the number of cells by four. At a
-fixed sample size, observations are therefore distributed over more
+the number of categories multiplies the number of cells by four, so at a
+fixed sample size the observations are distributed over more
 possible cells.
 
 Three margin regimes compare uniform category frequencies, the same
 uneven frequencies in both populations, and different uneven frequencies.
 Under equal MI, the uniform and same-skew regimes provide identical-table
-controls. The different-skew regime tests comparisons between distinct
+controls, whereas the different-skew regime tests comparisons between distinct
 population tables with equal MI.
 
 \begin{table}[H]
 \centering
-\caption{The three controlled studies and supporting checks.}
+\caption{Overview of the three main studies and two supporting checks.}
 \label{tab:design-families}
 \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-Study & Factor varied & Main purpose\\
+Comparison & Factor varied & Main purpose\\
 \midrule
 Equal MI & Sample size, table size and margins & False positives and usable results.\\
 Population MI & Common positive MI & Degrees of freedom and near-independence behaviour.\\
 Power & True MI difference & Power alongside null calibration.\\
+\midrule
 Construction check & Copying or four-cell transfer & Sensitivity to a different association pattern.\\
 Sample allocation & Relative sample sizes at fixed total & False positives and power with unequal samples.\\
 \bottomrule
@@ -60,8 +61,9 @@ Copying makes matching categories more likely than under independence.
 Both branches give \(Y\) the same marginal probabilities, so changing
 \(\lambda\) does not change the row or column totals.
 
-For a diagonal cell, an observation can arrive through either branch. For
-an off-diagonal cell, it must arrive through the independent branch.
+An observation in a diagonal cell can arrive through either branch,
+whereas an off-diagonal observation can arrive only through the
+independent branch.
 Combining these probabilities gives
 \begin{equation}
  p_{ij}(\lambda)=(1-\lambda)a_i a_j
@@ -71,7 +73,7 @@ Combining these probabilities gives
 \end{equation}
 where the indicator is one when the two categories match and zero otherwise.
 At \(\lambda=0\), the variables are independent and MI is zero.
-Increasing \(\lambda\) increases MI; the target MI determines the required
+Increasing \(\lambda\) increases MI, so the target MI determines the required
 copying probability. Appendix~\ref{app:construction} gives the numerical
 search and shows why the margins remain fixed.
 
@@ -135,7 +137,7 @@ Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
 \end{table}
 
 Increasing table size under the uneven-margin rule spreads the remaining
-mass over more categories. It changes both the number of cells and their
+mass over more categories, changing both the number of cells and their
 probabilities. This comparison shows what happens under a common margin
 rule as the table grows. Uniform versus same skew instead compares even
 and uneven category frequencies at a fixed size; different skew allows the
@@ -175,8 +177,8 @@ and changes the common positive MI:
  \label{eq:association-grid}
 \end{equation}
 The sweep is repeated at \(n=100\) and 1,000. Small positive MI targets
-approach independence, where the first-order MI variance becomes small;
-larger targets show how the tests behave away from that region. Tracking
+approach independence, where the first-order MI variance becomes small,
+while larger targets show how the tests behave away from that region. Tracking
 the estimated degrees of freedom connects changes in rejection to the
 cutoff from the Student \(t\) distribution. The two sample sizes show
 whether these patterns persist with more observations. All targets are
@@ -193,7 +195,7 @@ using
 \end{equation}
 At \(n=1{,}000\) and 10,000, compare all four sizes under different skew,
 then all three margin regimes at \(4\times4\).
-The signed thesis parameter is \(\Delta=I(P)-I(Q)\), which is negative
+The signed parameter is \(\Delta=I(P)-I(Q)\), which is negative
 when \(Q\) has the larger MI; figures use its known nonnegative magnitude.
 
 Keeping \(P\)'s MI fixed gives each curve a common starting population
@@ -247,9 +249,9 @@ allocations add four settings.
 \thesisminiheading{A supporting bias-correction check.}
 
 A jackknife check changes the MI bias correction while keeping the
-original standard errors and standard normal distribution cutoff. It
-uses the same samples from four existing \(16\times16\) different-skew
-copying settings. Appendix Section~\ref{sec:jackknife-difference-check}
+original standard errors and standard normal distribution cutoff,
+using the same samples from four existing \(16\times16\) different-skew
+copying settings. Appendix~\ref{sec:jackknife-difference-check}
 specifies the correction and reports all four comparisons.
 
 The complete design contains 70 population pairs and 240 distinct settings.
@@ -273,7 +275,7 @@ All settings use a two-sided 5\% test. The primary rejection rate is
 \end{equation}
 At equal MI this estimates the false-positive rate; when MI differs it
 estimates power. Invalid calculations contribute no rejection but are not
-evidence for equal MI. The valid-result frequency is therefore reported
+evidence for equal MI, so the valid-result frequency is reported
 alongside rejection. Rates restricted to method-valid or common-valid
 samples and their denominators are specified in
 Appendix~\ref{app:construction}.
@@ -282,8 +284,8 @@ Wilson 95\% intervals quantify simulation uncertainty for individual rates
 \citep{wilson1927}. Intervals for the difference between methods use paired
 rejection indicators because the tests receive the same data.
 For 20,000 repetitions and a rate near 0.05, the Monte Carlo standard error
-is approximately 0.00154. Thus departures of only a few thousandths need to
-be read alongside the intervals. Section~\ref{sec:simulation-uncertainty}
+is approximately 0.00154, so departures of only a few thousandths need to
+be read alongside the intervals. Appendix~\ref{sec:simulation-uncertainty}
 gives the calculations.
 
 \medskip
@@ -291,7 +293,7 @@ gives the calculations.
 
 The known populations also let us measure estimation error. Difference
 bias is the mean corrected estimate minus the true difference. The sample
-variance across repetitions measures its observed spread, and the mean
+variance across repetitions measures its observed spread, whereas the mean
 squared standard error measures the uncertainty assigned by the tests.
 Dividing the mean squared standard error by the observed variance indicates
 whether the estimated uncertainty is too large or too small on average.
@@ -312,5 +314,5 @@ pre-generated \(2\times2\) through \(16\times16\) table pairs at
 \(n=1{,}000\) under different skew. Sampling and population construction
 are excluded from the timings. Both methods scan the cells, so their
 operation counts grow linearly with the number of cells. The timing
-procedure and measurement environment are given in Appendix
-Section~\ref{sec:timing-procedure}.
+procedure and measurement environment are given in
+Appendix~\ref{sec:timing-procedure}.

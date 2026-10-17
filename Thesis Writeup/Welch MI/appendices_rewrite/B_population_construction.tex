@@ -179,16 +179,16 @@ The study applies no minimum expected-count filter.
 \section{Bias, variance and degrees-of-freedom diagnostics}
 
 Let \(\widehat\Delta_s\) be the corrected difference in repetition
-\(s\). Its bias estimate is the average finite difference minus the
-known \(\Delta\). Its observed sampling variance is
+\(s\). Its bias estimate is the mean of the finite-valued MI difference
+estimates minus the known \(\Delta\). Its observed sampling variance is
 \begin{equation}
  \frac{1}{M-1}\sum_{s=1}^M
  \left(\widehat\Delta_s-\frac{1}{M}\sum_{u=1}^M\widehat\Delta_u\right)^2,
  \label{eq:observed-sampling-variance}
 \end{equation}
-where \(M\) counts the finite differences used. Centre at their sample
+where \(M\) counts those finite-valued estimates. Centre at their sample
 mean, rather than the true difference, so this measures variance
-separately from bias. Include finite differences even when the test
+separately from bias. Include finite-valued MI differences even when the test
 output is invalid. For \(P\) and \(Q\), the individual corrected MI biases
 are the mean finite corrected MI estimates minus \(I(P)\) and \(I(Q)\),
 respectively.
@@ -226,7 +226,7 @@ order. Compare the observed value with
 \end{aligned}
  \label{eq:variance-stability-predictions}
 \end{equation}
-The population prediction uses the known probabilities; the mean plug-in
+The population prediction uses the known probabilities, whereas the mean plug-in
 prediction uses the empirical probabilities in each repetition. Repeat both for
 \(Q\). For each population, use the same repetitions with finite
 \(\widehat V_s\) and \(\widehat\tau_s^2\), including finite zeros

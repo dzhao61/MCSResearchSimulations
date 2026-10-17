@@ -22,12 +22,15 @@ plug-in errors near independence. This identifies where the first-order
 approximation describes the sampling variability of the MI variance
 estimate and where it needs further development.
 
-Expanded Welch lowers rejection, but its benefit depends on the errors
-already present in Wald. Near independence it makes conservative rates
-lower still. In larger different-skew tables, unequal MI bias can instead
-produce excessive false positives and reverse the estimated direction
-even among rejections. These failures occur under both tested population
-constructions. Larger samples improve the estimation diagnostics and observed
+Expanded Welch improves false-positive control in some small-sample
+settings, including uniform \(4\times4\) populations at \(n=20\), but
+the power cost in those settings remains unmeasured. Near independence it
+makes conservative rates lower still. Other sparse settings expose errors
+in the shared estimates: uncertainty can be underestimated even for
+identical populations, while unequal MI biases in different-skew tables
+can shift or reverse the estimated difference. The bias and ordering
+failures occur under both tested population constructions. Larger samples
+improve the estimation diagnostics and observed
 performance, and the tests become similar. These findings do not support
 Expanded Welch as a general replacement for Normal Wald. Normal Wald remains
 the simpler baseline, although sparse estimation can make neither test

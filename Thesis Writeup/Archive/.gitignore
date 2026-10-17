@@ -1,0 +1,3 @@
+# Preserve the local supplement without adding its large ZIP to Git.
+**/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip
+.DS_Store

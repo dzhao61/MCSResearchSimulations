@@ -2,13 +2,15 @@
 \label{chap:expanded}
 
 Expanded Welch keeps the estimated MI difference, standard error and test
-statistic from Chapter~\ref{chap:baselines}. It changes the distribution used
+statistic from Chapter~\ref{chap:baselines}, but changes the distribution used
 to judge that statistic from the standard normal distribution to a Student
 \(t\) distribution. To choose its degrees of freedom, this chapter calculates
-how much the estimated MI variance changes between samples.
+how much the estimated MI variance changes between samples. The name
+Expanded Welch refers to this expansion of the MI variance as the table
+probabilities change.
 
-\section[Choosing Degrees of Freedom for Expanded Welch]{Choosing Degrees of
-Freedom for\\Expanded Welch}
+\section[Choosing degrees of freedom for Expanded Welch]{Choosing degrees of
+freedom for\\Expanded Welch}
 
 The Welch--Satterthwaite equation combines the two estimated MI variance
 contributions
@@ -38,7 +40,7 @@ degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 \medskip
 \thesisminiheading{Moment matching for one MI variance estimate.}
 
-Satterthwaite approximates the positive variance estimate \(\Vhat(P)\) by
+Satterthwaite approximates the nonnegative variance estimate \(\Vhat(P)\) by
 the scaled chi-squared variable
 \begin{equation}
   \E\{\Vhat(P)\}
@@ -92,7 +94,7 @@ to calculate \(\Var\{\Vhat(P)\}\).
 \end{samepage}
 
 \begin{samepage}
-\section{How the MI Variance Changes with the Table}
+\section{How the MI variance changes with the table}
 
 To find how much the estimated MI variance changes between samples, we first
 ask how the population variance responds when a small amount of probability
@@ -412,8 +414,8 @@ population pointwise-MI variance:
 so the component degrees of freedom are approximately twice the reciprocal of
 this relative variance. When the estimate fluctuates little compared with
 the size of \(V(P)\), the degrees of freedom are large and the Student
-\(t\) distribution is close to the standard normal distribution. Greater
-relative fluctuation gives fewer degrees of freedom and a larger rejection
+\(t\) distribution is close to the standard normal distribution, whereas
+greater relative fluctuation gives fewer degrees of freedom and a larger rejection
 cutoff.
 Positive \(V(P)\) does not guarantee positive \(\tau^2(P)\): table changes
 can have no first-order effect on \(V(P)\). In that case, describing the
@@ -484,17 +486,17 @@ into Equation~\eqref{eq:ws-general} gives
 The expanded two-sided p-value is
 \begin{equation}
   p_{\mathrm{expanded}}
-  =2\left\{1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}(|T|)\right\},
+  =2\left\{1-F_t(|T|;\widehat\nu_{\mathrm{expanded}})\right\},
   \label{eq:expanded-p}
 \end{equation}
-where $F_{t_\nu}$ denotes the cumulative distribution function of a Student
-$t$ variable with $\nu$ degrees of freedom.
+where \(F_t(x;\nu)\) denotes the cumulative distribution function of a
+Student \(t\) distribution with \(\nu\) degrees of freedom, evaluated at \(x\).
 
 For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
 p-value at least as large as the standard normal distribution used by Wald.
 Under the implemented validity rules, every valid Expanded Welch result is
-also Wald-valid. Thus every
-Expanded Welch rejection is also a Wald rejection, including when invalid
+also Wald-valid, so every Expanded Welch rejection is also a Wald
+rejection, including when invalid
 outputs count as non-rejections in the reported rates. Expanded Welch cannot
 raise rejection where Wald is already too conservative.
 Section~\ref{sec:zero-component} examines a zero-component case in the
@@ -559,8 +561,8 @@ The first row's pointwise-MI values are 0.38526, \(-0.51083\) and
  \frac{35(0.38526)+10(-0.51083)+5(-0.64436)}{50}
  \simeq0.10308.
 \end{equation*}
-The first column has the same conditional mean because this count table is
-symmetric. Substituting these values into Equation~\eqref{eq:g-hat} gives
+Because this count table is symmetric, the first column has the same
+conditional mean. Substituting these values into Equation~\eqref{eq:g-hat} gives
 \begin{align*}
  \widehat g_P(1,1)
  &\simeq (0.38526-0.13693)^2-0.27189\\*
@@ -639,22 +641,25 @@ the component degrees-of-freedom formula gives
  \approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-For a fixed sample size, this approximation makes the degrees of freedom
-smaller as population MI approaches zero. The cutoff from the Student
-\(t\) distribution then increases, so a larger absolute statistic is
-needed to reject equal MI.
-These approximations require the fixed-margin path, fixed table size and
-positive cell probabilities. Using them for samples also requires a useful
-first-order sampling approximation. At exact independence, quadratic sampling
-variation replaces the first-order term; Section~\ref{sec:independence-boundary}
-derives that case.
+This population approximation describes the estimated degrees of freedom
+when sampling errors are small enough for the first-order calculation to
+be accurate. Smaller population MI then gives fewer degrees of freedom
+and a larger cutoff from the Student \(t\) distribution.
+
+Very close to independence, sampling noise itself creates apparent MI in
+the empirical table. The resulting variance estimates need not be close to
+their population values, so the estimated degrees of freedom need not tend
+to zero with population MI at a fixed sample size. These local expansions
+assume fixed table dimensions, positive cell probabilities and the
+fixed-margin path. Appendix~\ref{sec:independence-boundary} retains the
+quadratic sampling terms needed when population MI is very small.
 
 \begin{samepage}
 \medskip
 \thesisminiheading{Theoretical status and validity conditions.}
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
-derivatives for positive population tables. They provide first-order
+derivatives for positive population tables and provide first-order
 approximations to the sampling errors in MI and its estimated variance.
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
@@ -670,7 +675,7 @@ standard normal distribution used by Wald.
 \par\nopagebreak[4]
 
 Both tests need a finite corrected MI difference and a positive, finite
-estimated standard error. Expanded Welch also needs positive, finite component
+estimated standard error, while Expanded Welch also needs positive, finite component
 and combined degrees of freedom. A failed requirement gives an invalid
 calculation, not evidence for the null.
 Appendix~\ref{sec:validity-rules} specifies the numerical criteria;

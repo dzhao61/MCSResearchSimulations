@@ -103,12 +103,15 @@ from each plug-in estimate gives the estimated effect:
 \end{equation}
 The two terms in braces are the bias-corrected MI estimates for the separate
 populations.
-The correction uses the fixed numbers of row and column categories, even
-when some are unobserved in a sample. Corrected estimates can be negative;
+The correction uses the declared row and column categories because every
+population cell has positive probability under the model, even when some
+cells are unobserved in a sample. Corrected estimates can be negative;
 those values are retained when calculating the difference.
-When \(n_P=n_Q\), the two corrections cancel in the difference;
-otherwise, their difference removes the leading unequal-sample bias described
-in Section~\ref{sec:background-mi-bias}.
+When \(n_P=n_Q\), the two corrections cancel, so \(\Deltahat\) is exactly
+the raw plug-in MI difference. With unequal sample sizes, their difference
+removes the leading unequal-sample bias described in
+Section~\ref{sec:background-mi-bias}. A correction that estimates support
+from occupied cells would be a different estimator.
 
 \section{Shared standard error and test statistic}
 
@@ -143,8 +146,8 @@ The common standardised statistic is
   \label{eq:shared-t}
 \end{equation}
 The sign of \(T\) indicates whether \(P\) or \(Q\) has the larger
-corrected MI estimate. Its magnitude measures the difference relative to its estimated
-standard error. Under \(H_0\), we compare \(T\) with a reference distribution
+corrected MI estimate, while its magnitude measures the difference
+relative to its estimated standard error. Under \(H_0\), we compare \(T\) with a reference distribution
 centred at zero.
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
 by Normal Wald and Expanded Welch. Their difference lies in the reference

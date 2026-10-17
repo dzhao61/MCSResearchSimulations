@@ -1,5 +1,32 @@
 # Welch-MI Thesis
 
+## Current Version
+
+The approved sentence-cohesion revision became the main thesis on
+17 October 2026. Use `main.tex` and `main.pdf` in this folder. The complete
+previous main version is preserved unchanged in
+`../Archive/Welch MI (before conjunction revision 2026-10-17)/`.
+The former `main(improved conjuntion).tex` and PDF filenames are retained as
+legacy comparison entry points; `main.tex` is the standard build target.
+
+The current thesis includes the selective sentence-cohesion revision and
+Table 5.1's separation of three main studies from two supporting checks.
+This promotion changes folder organisation and build instructions, not
+the manuscript or experiments. Historical working drafts remain unchanged.
+Earlier verification records describe the versions current at their dates;
+SUBMISSION_CHECK.md records the promotion checks.
+
+The 17 October interpretation-and-consistency pass distinguishes population
+and sampled near-independence quantities, gives concrete false-positive
+improvements and their unmeasured small-sample power cost, and explains
+excessive rejection in identical-population controls. It clarifies cancellation
+of the fixed-alphabet correction without changing the estimator. Supporting
+quadratic calculations and reproducible derivative-check details stay in
+Appendix A. A shared half-up formatter makes displayed rates consistent.
+The active PDF has 102 pages, including the same 57 main-text pages. All
+224 workspace tests pass. No new experiment is added, and all historical
+working drafts and archived thesis versions remain unchanged.
+
 ## Active manuscript
 
 The focused revision uses the design in
@@ -89,8 +116,8 @@ abstract keeps one headline comparison without unexplained construction
 names. The review report remains a historical pre-edit record.
 All displayed mathematics and citations, Section 2.3, Chapters 1/3/4,
 scientific evidence, figures and older working drafts are preserved.
-The current PDF has 101 pages, including 57 main-text pages; verification is
-recorded in SUBMISSION_CHECK.md.
+That narrative pass produced 101 pages, including 57 main-text pages;
+verification is recorded in SUBMISSION_CHECK.md.
 
 Two saved-sample analyses directly check the variance-variability prediction
 at six existing null settings and the estimated direction among rejections

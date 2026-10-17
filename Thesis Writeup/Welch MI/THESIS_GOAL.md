@@ -5,6 +5,43 @@ original working target of **22 September 2026** was a project estimate, not a
 University submission deadline. Completion is now determined by the checks
 below, not that past date.
 
+**Targeted interpretation and consistency (17 October 2026):** Adopt the
+verified core critique without adding an estimator or experiment. Distinguish
+the population near-independence formula from sampled degrees of freedom;
+keep the quadratic explanation in Appendix A. Give concrete examples of
+improved false-positive control without claiming a measured power benefit
+at those smaller sample sizes. Explain excessive rejection in identical-table
+controls and identify the fixed-alphabet bias correction precisely. Retain
+accessible derivation steps, especially Section 2.3. Standardise rate rounding,
+headings, references and the verified wording issues. The active PDF has
+102 pages, with 57 main-text pages; all 224 workspace tests pass. Earlier
+counts below describe the versions current at their dates.
+
+**Active version (17 October 2026):** The approved sentence-cohesion copy is
+now the main thesis in `Thesis Writeup/Welch MI/`, using `main.tex` and
+`main.pdf`. The entire previous main folder is preserved unchanged in
+`Thesis Writeup/Archive/Welch MI (before conjunction revision 2026-10-17)/`.
+Future edits belong in the active directory, not the archive. Keep the
+connected, varied sentence style without changing sentences mechanically.
+Preserve all older working drafts; any requested rebuild must use the
+separate `Working Draft v3` target. Promotion does not request a draft rebuild.
+The dated comparison instructions and checks below are historical records.
+
+**Historical isolated sentence-cohesion revision (13 October 2026):** Work only in this
+duplicated folder, named `main(improved conjuntion)`. Preserve the original
+`Welch MI` folder and all historical working drafts. Direct writing should
+use varied sentence lengths, including longer sentences where they make a
+cause, consequence, contrast or qualification easier to follow. Do not
+lengthen sentences mechanically or stack unrelated ideas and conditions.
+Keep short sentences for definitions, key results and mathematical steps,
+and connect paragraphs through the developing argument. Preserve equations,
+citations, scientific qualifications, results and Section 2.3. Record final
+verification for this comparison separately from the baseline records below.
+The comparison builds cleanly to 101 pages, including 57 main-text pages.
+All 217 workspace tests pass. The original folder's 272 files remain
+byte-identical, and the mathematical expressions, numbers, citations and
+scientific assets in the duplicate match the baseline. See SUBMISSION_CHECK.md.
+
 **Straightforward narrative pass (11 October 2026):** The user approves the
 ten changes in NARRATIVE_REVIEW_2026-10-11.md. Finish each primary explanation
 before introducing supporting checks. Keep one clear motivation for each
@@ -285,7 +322,7 @@ not the expected length or research depth of this thesis.
 | Michael Fang | 58 pages | 75 pages |
 | Grace Yan | 65 pages | 126 pages |
 | Riley Jones | 87 pages | 104 pages |
-| Current focused Welch-MI manuscript (11 October straightforward narrative pass) | 57 pages | 101 pages |
+| Isolated Welch-MI sentence-cohesion comparison (13 October) | 57 pages | 101 pages |
 
 The exemplars' **58-87 main-text pages** and **75-126 total pages** are depth
 and presentation benchmarks, not pass/fail limits. The current main text is
@@ -298,7 +335,7 @@ Keep normal thesis typography; do not change margins, font size, spacing or
 figure placement merely to meet a page count. Do not add repetitive explanation
 or unrelated literature to reach a numerical target. Record a word count as a
 secondary diagnostic using the same counting method across revisions; no
-unverified word limit is imposed. The current main text has 17,044
+unverified word limit is imposed. The current main text has 17,038
 whitespace-separated tokens extracted with `pdftotext` from PDF pages 9-65
 (printed pages 1-57). This diagnostic includes headings, captions, mathematical
 tokens and plot labels; it is not a prose-only word count.

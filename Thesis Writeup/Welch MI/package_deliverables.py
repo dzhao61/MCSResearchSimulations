@@ -30,7 +30,8 @@ def write_zip(path: Path, files: list[tuple[Path, Path]]) -> None:
 def source_files() -> list[tuple[Path, Path]]:
     files: list[tuple[Path, Path]] = []
     root_names = [
-        "main.tex", "preamble.tex", "metadata.tex", "references.bib", "README.md",
+        "main.tex", "main(improved conjuntion).tex", "AGENTS.md",
+        "preamble.tex", "metadata.tex", "references.bib", "README.md",
         "package_deliverables.py",
         "EXEMPLAR_REVIEW_NOTES.md", "DLI_EXEMPLAR_REVIEW_NOTES.md",
         "LITERATURE_SOURCE_CHECK.md", "REVIEW_RESPONSE.md",
@@ -66,7 +67,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
         differential / "pyproject.toml",
     ]
     experiments = ["focused_study_core.py", "run_focused_study.py",
-                   "report_focused_study.py", "audit_focused_study.py",
+                   "report_focused_study.py", "report_formatting.py", "audit_focused_study.py",
                    "thesis_redesign_core.py", "run_detection_breakdown_sweep.py",
                    "run_unequal_sample_check.py", "report_unequal_sample_check.py",
                    "report_focused_mechanisms.py",
@@ -74,7 +75,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py"]
     tests = [
-        "test_focused_study.py", "test_focused_report.py",
+        "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
         "test_unequal_sample_check.py",
         "test_focused_mechanisms.py",

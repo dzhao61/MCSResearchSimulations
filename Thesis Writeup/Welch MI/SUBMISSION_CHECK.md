@@ -1,5 +1,120 @@
 # Thesis completion check
 
+## Targeted interpretation and consistency: 17 October 2026
+
+The core critique is addressed without adding an experiment or changing a
+statistical estimator. Sections 4.5 and 6.2 distinguish population first-order
+approximations from sampled degrees of freedom. Appendix A.4 retains the
+quadratic sampling contribution and derives the corresponding local
+noncentral chi-squared moments, plug-in degrees of freedom and overprediction
+ratio. The local likelihood-ratio reference is Banerjee (2005). Appendix A.6
+specifies its two numerical-check tables, perturbation size and verified
+error bound. Section 2.3 remains byte-identical.
+
+The results explain underestimated uncertainty in two identical-population
+controls, separately from unequal MI bias. Sections 7.1 and 8.1 give actual
+small-sample false-positive improvements and make clear that power was not
+measured at those sample sizes. The estimator, results and limitations
+identify cancellation of the declared-alphabet bias correction at equal
+sample sizes; this does not claim that other bias corrections cannot help.
+The abstract avoids unexplained construction names. The main mathematics,
+experimental scope, conclusions and figures are preserved.
+
+A shared decimal half-up formatter makes null, construction, allocation and
+jackknife rate displays consistent. Jackknife rejection rates and intervals
+use proportions, as in the other tables. Raw counts, probabilities, p-values,
+diagnostics and intervals are unchanged. The p-value distribution notation,
+nonnegative variance wording, section-title case, appendix references and
+verified ambiguous sentences are corrected. The practical-data test locates
+its section by its stable label rather than the heading's capitalisation.
+
+All 224 workspace tests pass: 181 Welch-project, 27 DifferentialMI and
+16 practical-data tests. The seven added tests check decimal ties, the
+quadratic moment calculation, finite-difference errors and the new examples.
+All 11135 pre-pass preservation hashes match, covering simulation and
+practical-data results, archived thesis versions and historical working
+drafts. Of the 140 original displayed mathematical blocks, 139 are unchanged;
+the remaining block uses equivalent, more readable p-value notation.
+All existing labels are retained. No simulation or historical draft is rerun.
+
+The active build has no warnings, unresolved references/citations, missing
+characters or overfull/underfull boxes. The PDF has eight front-matter,
+57 main-text, 32 appendix and five bibliography pages, for 102 overall.
+All pages are rendered for contact-sheet review, with detailed inspection
+of the revised discussion, appendix calculations and rate table. The main
+text has not gained a page. Current source/delivery files and the experiment
+supplement include the revised reporting code and tests; earlier packages
+inside the dated archives remain unchanged.
+
+## Promotion to main thesis: 17 October 2026
+
+The approved sentence-cohesion copy now occupies `Thesis Writeup/Welch MI/`.
+The standard targets are `main.tex` and `main.pdf`; packaging takes its PDF
+from `main.pdf`. The former comparison filenames remain available as legacy
+entry points. The previous main folder is moved intact to
+`Thesis Writeup/Archive/Welch MI (before conjunction revision 2026-10-17)/`.
+All 272 archived files retain their pre-move SHA-256 hashes and inventory.
+Archive instructions mark the historical version read-only, and both large
+experiment supplement ZIPs remain excluded from Git.
+
+No manuscript source, bibliography, figure, numerical table or experiment
+changes in this promotion. The current Table 5.1 includes the clearer caption,
+Comparison column heading and divider between its three main studies and
+two supporting checks. All historical working-draft artifacts remain
+unchanged; no working draft is rebuilt.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. The standard `main.tex` build completes without
+warnings, unresolved citations/references, missing characters or overfull/
+underfull boxes. Its 101-page layout text is identical to the approved
+comparison PDF, and Table 5.1 is visually checked at the canonical location.
+Delivery files are refreshed from the active source, with source-archive
+content/CRC and checksum verification. Earlier dated sections below retain
+the historical comparison and baseline checks.
+
+## Historical isolated sentence-cohesion comparison: 13 October 2026
+
+The complete thesis folder is duplicated as `main(improved conjuntion)`.
+All prose edits, revised writing instructions and builds stay in that copy.
+The original `Welch MI` folder's 272 files retain their initial SHA-256 hashes
+and inventory, including its sources, PDF, delivery files and historical
+working drafts. The historical drafts, archives and experiment supplement
+inside the duplicate also remain identical to the originals. The duplicated
+large supplement is excluded from Git by the copy's local ignore rule.
+
+The selective cohesion pass changes prose in the abstract, eight chapters
+and three appendices. It connects reasons, consequences, qualifications and
+comparisons through varied sentence structures, while retaining separate
+definitions, numerical cases and mathematical steps. It does not add
+technical previews, restore tangents or change chapter roles. During review,
+the estimated-direction and power findings are kept separate rather than
+joining them with a causal connector. No methods or experiments change.
+
+Across the 14 active chapter/front-matter/appendix TeX files, all 140 displayed
+math blocks, 711 inline mathematical expressions, 70 citation commands,
+headings, labels and numerical sequences match the original. Section 2.3,
+the main source, preamble, metadata and bibliography are byte-identical.
+All 191 copied scientific assets and archived files match the original.
+
+All 217 workspace tests pass: 174 Welch-project, 27 DifferentialMI and
+16 practical-data tests. These tests check the unchanged scientific code
+and evidence; the separate source audit checks the revised manuscript.
+The variant builds without warnings, unresolved references/citations,
+missing characters or overfull/underfull boxes. All 101 pages are rendered
+for contact-sheet review, with detailed inspection of 24 pages. The PDF
+has eight front-matter, 57 main-text, 31 appendix and five bibliography pages.
+The main-text token diagnostic is 17038 from PDF pages 9-65. Typography,
+margins, figures, captions and table dimensions are unchanged.
+
+The named TeX entry point includes `main.tex` and compiles independently
+from the extracted source archive using its literal filename. Both build
+targets produce identical 101-page layout text. The comparison source ZIP
+contains 58 members, including the named entry point and scoped AGENTS.md.
+Archive CRC, inventory and content checks pass. The named comparison PDF
+and delivery PDF are refreshed, the supplement remains unchanged, and
+delivery checksums are verified. No historical working draft is rebuilt.
+Earlier records below describe the copied baseline and its previous passes.
+
 ## Straightforward narrative: 11 October 2026
 
 All ten recommendations in NARRATIVE_REVIEW_2026-10-11.md are implemented.

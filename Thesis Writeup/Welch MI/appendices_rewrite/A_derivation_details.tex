@@ -13,7 +13,7 @@ population table unchanged:
   \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
 \end{equation}
 This weighted cancellation also holds after exact plug-in substitution.
-The first derivative is linear in the direction of change. Therefore, the
+Because the first derivative is linear in the direction of change, the
 weighted average of the one-cell derivatives is the derivative in the
 weighted-average direction:
 \begin{align}
@@ -219,14 +219,14 @@ Thus the leading change is
   +o(\varepsilon^2).
  \label{eq:appendix-mi-second-order}
 \end{equation}
-The first sum measures squared cell changes. The last two remove the
+The first sum measures squared cell changes, whereas the last two remove the
 contributions due to changed margins, leaving the change in association.
 The remainder is negligible relative to \(\varepsilon^2\) as
 \(\varepsilon\) approaches zero.
 
 For a multinomial sample, take \(\varepsilon h=\widehat P-P\).
-Cell-probability errors typically have size proportional to \(n^{-1/2}\).
-Squaring them makes \(\Ihat(P)\) proportional to \(n^{-1}\) under
+Since cell-probability errors typically have size proportional to \(n^{-1/2}\),
+squaring them makes \(\Ihat(P)\) proportional to \(n^{-1}\) under
 independence. Under fixed table dimensions and positive cell probabilities,
 the likelihood-ratio result is
 \begin{equation}
@@ -238,6 +238,81 @@ or \(G\), test of independence. Its chi-squared distribution comes from
 quadratic cell errors, whereas Normal Wald and Expanded Welch use the
 first-order MI error. The two-sample first-order approximation therefore
 does not apply unchanged at exact independence.
+
+\medskip
+\thesisminiheading{Sampling variation at small positive MI.}
+
+The quadratic approximation also explains why estimated degrees of freedom
+remain several units when population MI is almost zero. Keep \(r\) and
+\(c\) fixed and let a positive population table approach independence with
+cell departures proportional to \(n^{-1/2}\). The normal sampling errors
+and the population departure then contribute on the same scale. The
+likelihood-ratio statistic has the local approximation
+\begin{equation}
+ G=2n\Ihat(P)\ \dot\sim\ \chi^2_d(\kappa),
+ \qquad d=(r-1)(c-1),\qquad \kappa\simeq2nI(P),
+ \label{eq:local-noncentral-mi}
+\end{equation}
+where \(\dot\sim\) denotes an approximate distribution. The noncentral
+chi-squared distribution describes a sum of squared normal errors with a
+nonzero mean departure; \(\kappa\) measures that departure. At independence,
+\(\kappa=0\), recovering Equation~\eqref{eq:independence-chi-squared}.
+The local likelihood-ratio argument requires strictly positive limiting
+cell probabilities \citep{banerjee2005}.
+
+For a sampled table close to independence, the expansions in
+Appendix~\ref{sec:fixed-margin-local-derivation}, applied around its own
+independent margins, give
+\begin{equation}
+ \Vhat(P)\approx2\Ihat(P)=\frac{G}{n},
+ \qquad \widehat\tau^2(P)\approx4\Vhat(P)=\frac{4G}{n}.
+ \label{eq:small-mi-plugin-moments}
+\end{equation}
+Substitution into the implemented component formula gives
+\begin{equation}
+ \widehat\nu_P
+ \approx\frac{2n(G/n)^2}{4G/n}=\frac{G}{2}.
+ \label{eq:small-mi-plugin-df}
+\end{equation}
+Thus sampling noise contributes to the estimated degrees of freedom even
+when the population value \(nI(P)\) is very small.
+
+The same approximation separates that plug-in calculation from matching
+the actual sampling moments. Since \(\E(G)=d+\kappa\) and
+\(\Var(G)=2(d+2\kappa)\),
+\begin{equation}
+ \E\{\Vhat(P)\}\approx\frac{d+\kappa}{n},
+ \qquad
+ \Var\{\Vhat(P)\}\approx\frac{2(d+2\kappa)}{n^2}.
+\end{equation}
+Keeping both terms in the moment-matching equation gives
+\begin{equation}
+ \nu_P^{\mathrm{mom}}
+ \approx
+ \frac{2\{(d+\kappa)/n\}^2}{2(d+2\kappa)/n^2}
+ =\frac{(d+\kappa)^2}{d+2\kappa}.
+ \label{eq:small-mi-moment-df}
+\end{equation}
+When \(\kappa\) is much larger than \(d\), this reduces to
+\(\kappa/2\simeq nI(P)\), as in
+Equation~\eqref{eq:near-independent-df}. When \(\kappa\) is small,
+however, the matched degrees of freedom approach \(d\), while the mean
+plug-in degrees of freedom approach \(d/2\).
+
+For the \(4\times4\), \(n=1{,}000\), \(I(P)=0.0001\) setting,
+\(d=9\) and \(\kappa\simeq0.2\). The local calculation gives a mean
+estimated component degree of freedom of approximately 4.6, rather than
+the population first-order value 0.1. It also predicts that the average
+plug-in estimate of \(\Var\{\Vhat(P)\}\) divided by its actual sampling
+variance is approximately
+\begin{equation}
+ \frac{4(d+\kappa)/n^2}{2(d+2\kappa)/n^2}
+ =\frac{2(d+\kappa)}{d+2\kappa}\simeq1.96.
+\end{equation}
+This explains the scale of the estimated degrees of freedom and the
+roughly twofold plug-in overprediction in Table~\ref{tab:variance-stability}.
+The population formula alone omits the quadratic sampling contribution
+responsible for both effects.
 
 \section{Combined degrees of freedom with a zero variance estimate}
 \label{sec:zero-component}
@@ -267,8 +342,17 @@ positive, finite degrees of freedom, so it records this case as invalid.
 \label{sec:derivative-checks}
 
 The analytic derivatives in Equations~\eqref{eq:mi-derivative} and
-\eqref{eq:g-final} were also checked by centred finite differences along
-the one-cell perturbation paths in Chapter~\ref{chap:expanded}. Small
-positive and negative steps were chosen to keep every cell positive; the
-change in MI or variance divided by the distance between the two steps
-agreed with its analytic derivative.
+\eqref{eq:g-final} were checked by centred finite differences along the
+one-cell perturbation paths in Chapter~\ref{chap:expanded}. Two positive
+tables,
+\begin{equation*}
+ \begin{pmatrix}0.36&0.14\\0.09&0.41\end{pmatrix},
+ \qquad
+ \begin{pmatrix}0.28&0.09&0.07\\0.08&0.17&0.06\\0.04&0.10&0.11\end{pmatrix},
+\end{equation*}
+were checked at every cell with step size \(\varepsilon=10^{-6}\).
+For each path, the difference
+between the values at \(+\varepsilon\) and \(-\varepsilon\) was divided
+by \(2\varepsilon\); all perturbed probabilities remained positive.
+The maximum absolute error was below \(2\times10^{-10}\) for both
+derivatives.

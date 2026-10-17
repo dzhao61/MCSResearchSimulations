@@ -48,7 +48,7 @@ mutual information (also called local MI) associated with cell \((i,j)\) is
 \end{equation}
 The denominator is the cell probability under independence with the same
 margins. A positive value means that the cell occurs more often than
-independence predicts; a negative value means that it occurs less often.
+independence predicts, whereas a negative value means that it occurs less often.
 
 Mutual information is the probability-weighted average of these pointwise
 values \citep{shannon1948,bossomaier2016}:
@@ -106,9 +106,10 @@ Equation~\eqref{eq:background-mi}:
   \label{eq:plugin-mi-background}
 \end{equation}
 The zero-cell convention follows from
-\(\lim_{x\downarrow0}x\log x=0\). Empty cells contribute no direct term, but
-they still affect the empirical margins and the finite-sample behaviour of the
-estimator.
+\(\lim_{x\downarrow0}x\log x=0\), so empty cells contribute no term to
+the sum. When a positive-probability cell is unobserved, the empirical
+table assigns it zero probability, contributing to sparse-sample estimation
+error.
 
 Under multinomial sampling, the cell counts vary between samples but must
 sum to \(n\). An extra observation in one cell therefore leaves fewer
@@ -119,15 +120,15 @@ rare cells can change both even when the categories and sample size are
 unchanged
 \citep{paninski2003}.
 
-For a fixed positive \(r\times c\) support, the plug-in estimator has a
-positive leading bias as the sample size grows:
+For a fixed positive \(r\times c\) support, the large-sample expansion of
+the plug-in estimator's bias has a positive leading term:
 \begin{equation}
   \Bias\{\Ihat(P)\}
   =\frac{(r-1)(c-1)}{2n}+O(n^{-2}).
   \label{eq:mi-leading-bias}
 \end{equation}
-The leading term grows with table size and shrinks as the sample grows. It
-does not describe every small or sparse sample. The result is closely related
+The leading term grows with table size and shrinks as the sample grows,
+although it does not describe every small or sparse sample. The result is closely related
 to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
 term appears in \citet{moddemeijer1989}. Sparse sampling can produce further
 error beyond this leading approximation \citep{paninski2003}.
@@ -140,7 +141,7 @@ Bias matters directly when comparing MI estimates from two populations. If
   \label{eq:two-sample-mi-bias}
 \end{equation}
 For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
-\eqref{eq:two-sample-mi-bias} gives \(0.005\) nats despite equal population MIs. Chapter
+\eqref{eq:two-sample-mi-bias} gives \(0.005\) nats despite equal population MI values. Chapter
 \ref{chap:baselines} corrects this sample-size effect by subtracting
 \((r-1)(c-1)/(2n)\) from each estimate.
 
@@ -472,13 +473,13 @@ produces the usual chi-squared limiting distribution
 chi-squared distribution rather than the normal approximation for comparing
 positive MI values.
 
-\section{Approaches to Testing MI Differences}
+\section{Approaches to testing MI differences}
 \label{sec:welch-background}
 
 This section reviews methods for estimating uncertainty in MI and testing
 differences between two MI values. The question in this thesis is whether two
-populations have the same MI, \(I(P)=I(Q)\). Their cell probabilities may
-differ even when their MI values are equal.
+populations have the same MI, \(I(P)=I(Q)\), even when their cell
+probabilities differ.
 
 \thesisminiheading{The Normal Wald test.}
 
@@ -492,8 +493,8 @@ first-order variance contributions add:
   \approx \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
   \label{eq:background-two-sample-variance}
 \end{equation}
-Each term is the sampling variance of one MI estimate. Independence of the
-two samples makes their covariance zero. Replacing the population variances
+Each term is the sampling variance of one MI estimate, and independence of
+the two samples makes their covariance zero. Replacing the population variances
 by estimates gives the standardisation
 \begin{equation}
   \frac{\Ihat(P)-\Ihat(Q)}
@@ -565,8 +566,8 @@ The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
-by examining how a regression variance estimate varies between samples.
-Expanded Welch uses the variability of the estimated MI variance to choose
+by examining how a regression variance estimate varies between samples,
+and Expanded Welch uses the variability of the estimated MI variance to choose
 degrees of freedom in the same way.
 These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
@@ -648,10 +649,10 @@ an uncertainty interval for the population difference and assess whether
 that interval includes zero.
 
 Resampling can help estimate uncertainty or bias, but sparse tables remain
-a difficulty. A cell with no observations has zero probability in an
-ordinary empirical bootstrap, so it cannot appear in any resample. The
-resampling distribution can therefore miss error arising from unobserved
-categories, a concern in sparse information estimation
+a difficulty. Because a cell with no observations has zero probability
+in an ordinary empirical bootstrap, it cannot appear in any resample.
+The resampling distribution can therefore miss error arising from
+unobserved categories, a concern in sparse information estimation
 \citep{paninski2003}.
 
 A simple permutation test instead combines the two samples and shuffles
@@ -675,8 +676,8 @@ with the observed table, including changes to the cell probabilities,
 row and column totals, and pointwise MI values.
 
 These results address two successive sources of uncertainty. The MI
-sampling variance describes how much the MI estimate varies
-between samples. The variability of the estimated MI variance describes
+sampling variance describes how much the MI estimate varies between
+samples, whereas the variability of the estimated MI variance describes
 how consistently those samples estimate that uncertainty. This thesis
 derives the observation-level sensitivity needed to calculate the second
 quantity and uses it to choose degrees of freedom within the established
