@@ -1,5 +1,24 @@
 # Thesis completion check
 
+## Targeted citation precision: 17 October 2026
+
+Section 2.4 now identifies Mora and Ruiz-Castillo (2009) as a direct
+precedent for Normal Wald, based on their positive-MI normal approximation
+and comparisons between populations and time periods. The bibliography
+uses the paper's printed series name, Economic Series (48). The empirical
+bootstrap's inability to sample an unobserved cell is explained separately
+from Paninski's broader warning about biased estimates and narrow resampling
+intervals. Chapters 3 and 6 add Miller (1955) beside Moddemeijer (1989) for
+the leading bias correction. Shannon and the other checked citations remain
+unchanged. This targeted pass is not a full claim-by-claim bibliography audit.
+
+All 224 workspace tests pass. The main build has no warnings or unresolved
+citations/references. The PDF remains 102 pages; only PDF pages 23, 24, 26,
+59 and 100 change, and those pages are visually checked. Section 2.3,
+mathematical content, results, figures, archived versions and historical
+working drafts remain unchanged. The main delivery PDF and source package
+are refreshed; the experiment supplement is unchanged.
+
 ## Targeted interpretation and consistency: 17 October 2026
 
 The core critique is addressed without adding an experiment or changing a

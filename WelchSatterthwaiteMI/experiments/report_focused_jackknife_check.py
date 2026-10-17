@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from focused_study_core import ALPHA, REPLICATES, ROOT
+from report_formatting import decimal_text
 from run_focused_jackknife_check import (
     DEFAULT_OUTPUT, SETTINGS, fixed_se_test, protocol_for, select_settings,
 )
@@ -50,7 +51,7 @@ def checked_evidence(results: Path) -> dict:
 
 def table_text(evidence: dict) -> str:
     lines = [r"\begin{tabular}{@{}rrlrrrr@{}}", r"\toprule",
-             r"\(n\) & \(\Delta\) & Correction & Bias & Obs. SD & Est./obs. & \shortstack{Rejection\\(\%)}\\",
+             r"\(n\) & \(\Delta\) & Correction & Bias & Obs. SD & Est./obs. & \shortstack{Rejection\\rate}\\",
              r"\midrule"]
     rows = evidence["estimators"]
     for n, mi_q in SETTINGS:
@@ -58,7 +59,7 @@ def table_text(evidence: dict) -> str:
             row, = [r for r in rows if r["n"] == n and r["mi_q"] == mi_q and r["method"] == method]
             lines.append(f"{n:,} & {row['true_delta']:.2f} & {label} & "
                          f"{row['bias']['mean']:+.5f} & {row['observed_sd']:.5f} & "
-                         f"{row['se_variance_ratio']:.2f} & {100*row['rejection']['rate']:.3f}"+r"\\")
+                         f"{row['se_variance_ratio']:.2f} & {decimal_text(row['rejection']['rate'])}"+r"\\")
         lines.append(r"\bottomrule" if (n, mi_q) == SETTINGS[-1] else r"\midrule")
     lines.append(r"\end{tabular}")
     return "\n".join(lines)+"\n"

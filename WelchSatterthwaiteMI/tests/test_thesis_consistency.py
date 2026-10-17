@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,9 +12,42 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 THESIS = ROOT.parent / "Thesis Writeup/Welch MI"
+sys.path.insert(0, str(ROOT / "experiments"))
+from report_formatting import decimal_text
 
 
 class ThesisConsistencyTests(unittest.TestCase):
+    def test_new_identical_population_diagnostics_match_saved_results(self):
+        output = ROOT / "results/focused_study"
+        configs = pd.read_csv(output / "configuration_manifest.csv")
+        diagnostics = pd.read_csv(output / "diagnostics.csv").merge(configs, on="configuration_id")
+        for k, n, ratio in ((8, 100, .84), (16, 250, .77)):
+            row, = diagnostics[
+                diagnostics.k.eq(k) & diagnostics.n_p.eq(n)
+                & diagnostics.profile.eq("uniform") & diagnostics.mi_p.eq(.02)
+                & diagnostics.mi_q.eq(.02) & diagnostics.construction.eq("copying")
+            ].to_dict("records")
+            self.assertEqual(round(row["estimated_observed_ratio"], 2), ratio)
+            self.assertLess(abs(row["difference_bias"]), 2*row["bias_mcse"])
+            self.assertEqual(row["matched_variance_count"], 20000)
+
+    def test_concrete_false_positive_improvements_have_full_validity(self):
+        output = ROOT / "results/focused_study"
+        configs = pd.read_csv(output / "configuration_manifest.csv")
+        rates = pd.read_csv(output / "method_results.csv")
+        rates = rates[rates.denominator.eq("all")].merge(configs, on="configuration_id")
+        for k, profile, n, expected in (
+            (4, "uniform", 20, {"normal_wald": "0.0813", "expanded_welch": "0.0470"}),
+            (8, "different_skew", 100, {"normal_wald": "0.0706", "expanded_welch": "0.0518"}),
+        ):
+            selected = rates[rates.k.eq(k) & rates.n_p.eq(n) & rates.profile.eq(profile)
+                             & rates.mi_p.eq(.02) & rates.mi_q.eq(.02)
+                             & rates.construction.eq("copying")]
+            self.assertEqual(len(selected), 2)
+            for row in selected.itertuples():
+                self.assertEqual(decimal_text(row.rejection_rate), expected[row.method])
+                self.assertEqual(row.valid_replicates, 20000)
+
     def test_prose_matches_source_derived_rounding(self):
         output = ROOT / "results/focused_study"
         configs = pd.read_csv(output / "configuration_manifest.csv")
@@ -27,7 +61,7 @@ class ThesisConsistencyTests(unittest.TestCase):
         row = selected.iloc[0]
         self.assertEqual(row.rejections, 1473)
         self.assertEqual(row.replicates_x, row.replicates_y)
-        rate = f"{row.rejections / row.replicates_x:.4f}"
+        rate = decimal_text(row.rejections / row.replicates_x)
         appendix = (THESIS / "appendices_rewrite/C_additional_results.tex").read_text()
         self.assertIn(f"give rates\n{rate} and 0.0651", appendix)
 

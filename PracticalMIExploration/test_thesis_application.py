@@ -28,7 +28,7 @@ class ShoppersApplicationTests(unittest.TestCase):
         }
         cls.saved = pd.read_csv(study.HERE / "results" / "full_data_results.csv").set_index("id")
         cls.chapter = (THESIS / "chapters_rewrite" / "06_results.tex").read_text()
-        cls.application = cls.chapter.split("\\section{Application to Online Shopping Data}", 1)[1]
+        cls.application = cls.chapter.split(r"\label{sec:shoppers-application}", 1)[1]
         cls.appendix = (THESIS / "appendices_rewrite" / "C_additional_results.tex").read_text()
 
     def test_source_count_tables_and_reported_group_sizes(self):

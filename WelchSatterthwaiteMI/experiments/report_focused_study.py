@@ -16,6 +16,7 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import FixedFormatter, FixedLocator, LogFormatterMathtext
 
 from focused_study_core import ROOT
+from report_formatting import decimal_text
 
 WIDTH = 148/25.4
 METHODS = {"normal_wald": ("Normal Wald", "#194f78", "o", "-"),
@@ -185,7 +186,7 @@ def write_null_table(frame, output):
             for n in (10, 20, 50, 100, 250, 500, 1000, 2500, 10000, 50000):
                 row = pivot.loc[(k, profile, n)]
                 lines.append(f"\\({k}\\times{k}\\) & {PROFILE_NAMES[profile]} & {n:,} & " +
-                             " & ".join(f"{row[(metric, method)]:.4f}" for metric in ("rejection_rate", "valid_rate") for method in METHODS) + r"\\")
+                             " & ".join(decimal_text(row[(metric, method)]) for metric in ("rejection_rate", "valid_rate") for method in METHODS) + r"\\")
         lines.append(r"\midrule")
     lines.extend([r"\bottomrule", r"\end{longtable}"])
     (output / "focused_null_table.tex").write_text("\n".join(lines)+"\n")
@@ -231,7 +232,7 @@ def write_supporting_tables(diagnostics, rates, output):
     for (construction, n, difference), row in pivot.iterrows():
         setting = selected[(selected.construction==construction)&(selected.n_p==n)&(selected.difference==difference)].iloc[0]
         bias = diag.loc[setting.configuration_id, "difference_bias"]
-        lines.append(f"{'Copying' if construction=='copying' else 'Four-cell'} & {n:,} & {abs(difference):g} & {row.normal_wald:.4f} & {row.expanded_welch:.4f} & {bias:.5f}" + r"\\")
+        lines.append(f"{'Copying' if construction=='copying' else 'Four-cell'} & {n:,} & {abs(difference):g} & {decimal_text(row.normal_wald)} & {decimal_text(row.expanded_welch)} & {bias:.5f}" + r"\\")
     lines.extend([r"\bottomrule\end{tabular}"])
     (output / "focused_construction_table.tex").write_text("\n".join(lines)+"\n")
 

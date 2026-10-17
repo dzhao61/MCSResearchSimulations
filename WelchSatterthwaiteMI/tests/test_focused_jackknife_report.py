@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 THESIS = ROOT.parent/"Thesis Writeup/Welch MI"
 sys.path.insert(0, str(ROOT/"experiments"))
 import report_focused_jackknife_check as report
+from report_formatting import decimal_text
 from run_focused_jackknife_check import DEFAULT_OUTPUT
 
 
@@ -22,7 +23,7 @@ class JackknifeReportTests(unittest.TestCase):
     def test_table_contains_all_eight_rows_and_exact_rate_rounding(self):
         text = report.table_text(self.evidence)
         for row in self.evidence["estimators"]:
-            expected = f"{100*row['rejection']['count']/row['repetitions']:.3f}"
+            expected = decimal_text(row['rejection']['count']/row['repetitions'])
             self.assertIn(expected+r"\\", text)
         self.assertEqual(text.count(" & Analytic & "), 4)
         self.assertEqual(text.count(" & Jackknife & "), 4)
@@ -67,7 +68,7 @@ class JackknifeReportTests(unittest.TestCase):
             self.skipTest("Thesis source is a separate delivered archive.")
         source = (THESIS/"appendices_rewrite/C_additional_results.tex").read_text()
         section = source.split(r"\label{sec:jackknife-difference-check}", 1)[1].split(
-            r"\section{Detection over the full difference range}", 1)[0]
+            r"\section{Power over the full MI-difference range}", 1)[0]
         rows = self.evidence["estimators"]
         for row in rows:
             if row["n"] == 1000 and row["method"] == "jackknife_fixed_se_normal":
@@ -75,8 +76,8 @@ class JackknifeReportTests(unittest.TestCase):
                     self.assertIn(f"{row[f'bias_{side}']['mean']:.5f}", section)
             if row["method"] == "jackknife_fixed_se_normal" and row["true_delta"] == 0:
                 rate = row["rejection"]
-                self.assertIn(f"{100*rate['rate']:.3f}"+r"\%", section)
-                self.assertIn(f"{100*rate['low']:.3f}--{100*rate['high']:.3f}"+r"\%", section)
+                self.assertIn(decimal_text(rate['rate']), section)
+                self.assertIn(f"[{decimal_text(rate['low'])}, {decimal_text(rate['high'])}]", section)
             if row["n"] == 1000:
                 self.assertIn(f"{row['rmse']:.5f}", section)
         self.assertIn("biases largely cancel", section)

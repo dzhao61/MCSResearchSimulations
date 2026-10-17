@@ -626,9 +626,12 @@ both the weights and the pointwise-MI values whose weighted variance is
 being estimated. Thus Hutcheson supplies a close comparison framework,
 while the cell and margin derivatives supply the MI-specific inputs.
 
-In a segregation application, \citet{mora2009} develop methods for comparing
-an MI index across groups and periods; the later peer-reviewed account
-places that MI index within the wider segregation literature \citep{mora2011}.
+In a segregation application, \citet{mora2009} derive a normal approximation
+for comparing positive population MI between populations and time periods,
+providing a direct precedent for the Normal Wald baseline. Their later
+peer-reviewed account places the MI index within the segregation literature
+\citep{mora2011}.
+
 By contrast, \citet{guha2014} test whether two continuous distributions are identical
 using MI between pooled observations and their sample labels.
 For discrete data, \citet{drake2014} develop an MI-based \(k\)-sample test
@@ -648,12 +651,11 @@ variation around the observed estimate could then be used to construct
 an uncertainty interval for the population difference and assess whether
 that interval includes zero.
 
-Resampling can help estimate uncertainty or bias, but sparse tables remain
-a difficulty. Because a cell with no observations has zero probability
-in an ordinary empirical bootstrap, it cannot appear in any resample.
-The resampling distribution can therefore miss error arising from
-unobserved categories, a concern in sparse information estimation
-\citep{paninski2003}.
+An ordinary empirical bootstrap cannot sample an unobserved cell, because it
+assigns that cell zero probability. It can therefore miss error arising from
+unobserved cells. \citet{paninski2003} gives a broader warning: confidence
+intervals based on resampling can be too narrow when information estimates
+remain biased.
 
 A simple permutation test instead combines the two samples and shuffles
 their group labels. That shuffle is justified when

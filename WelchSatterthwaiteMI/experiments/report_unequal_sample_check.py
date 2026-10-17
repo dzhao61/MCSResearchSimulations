@@ -5,13 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
-from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from focused_study_core import ROOT
+from report_formatting import rate_interval_text
 from run_unequal_sample_check import ALLOCATIONS, DEFAULT_OUTPUT, MI_PAIRS, audit_check
 
 
@@ -37,8 +37,7 @@ def comparison_rows(output: Path):
 
 
 def rate_text(row):
-    rate = Decimal(str(row["rejection_rate"])).quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
-    return f"{rate} [{row['rejection_low']:.4f}, {row['rejection_high']:.4f}]"
+    return rate_interval_text(row)
 
 
 def table_text(rows):

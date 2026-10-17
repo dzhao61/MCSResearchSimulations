@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 import numpy as np
-from scipy.stats import norm, t
+from scipy.stats import ncx2, norm, t
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -88,6 +88,42 @@ def kurtosis_only_df(table: np.ndarray) -> float:
 
 
 class ThesisDerivationAudit(unittest.TestCase):
+    def test_documented_finite_difference_error_bounds(self):
+        for probability in (
+            np.array([[.36, .14], [.09, .41]]),
+            np.array([[.28, .09, .07], [.08, .17, .06], [.04, .10, .11]]),
+        ):
+            probability = probability / probability.sum()
+            rows = probability.sum(axis=1, keepdims=True)
+            columns = probability.sum(axis=0, keepdims=True)
+            pointwise = np.log(probability/(rows*columns))
+            mi, variance = mi_and_variance(probability)
+            sensitivity = (pointwise-mi)**2-variance+2*(
+                pointwise-(probability*pointwise).sum(axis=1, keepdims=True)/rows
+                -(probability*pointwise).sum(axis=0, keepdims=True)/columns+mi)
+            for cell in np.ndindex(probability.shape):
+                change = -probability.copy()
+                change[cell] += 1
+                plus = probability + 1e-6*change
+                minus = probability - 1e-6*change
+                self.assertTrue((plus > 0).all() and (minus > 0).all())
+                numerical = (np.array(mi_and_variance(plus))
+                             - np.array(mi_and_variance(minus)))/2e-6
+                expected = [pointwise[cell]-mi, sensitivity[cell]]
+                np.testing.assert_allclose(numerical, expected, atol=2e-10, rtol=0)
+
+    def test_local_quadratic_variance_moments(self):
+        for d in (1, 9, 49, 225):
+            for kappa in (0, .2, 4):
+                mean, variance = ncx2.stats(d, kappa, moments="mv")
+                n = 1000
+                matched_df = 2*(mean/n)**2/(variance/n**2)
+                self.assertAlmostEqual(matched_df, (d+kappa)**2/(d+2*kappa))
+                self.assertAlmostEqual((4*mean/n**2)/(variance/n**2),
+                                       2*(d+kappa)/(d+2*kappa))
+        self.assertAlmostEqual((9+.2)/2, 4.6)
+        self.assertAlmostEqual(2*(9+.2)/(9+.4), 1.957446808510638)
+
     def test_near_independence_limits(self) -> None:
         row = np.array([0.7, 0.2, 0.1])
         column = np.array([0.6, 0.25, 0.15])
