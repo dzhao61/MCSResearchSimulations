@@ -1,5 +1,16 @@
 # Thesis completion check
 
+## Three final presentation fixes: 17 October 2026
+
+Equation (1.1) now ends with a full stop. Section 3.3 keeps Expanded Welch
+together on the second heading line, with unchanged contents and running
+header text. The online-shopping introduction now describes information
+about whether a session ends in a purchase. Only PDF pages 9, 27 and 59
+change; all three are visually checked. The 102-page build is warning-free,
+and all 224 tests pass. All 377 preservation hashes match, covering archived
+versions, historical working drafts and the unchanged Chapter 2 source.
+The delivery PDF and source package are refreshed; experiments are unchanged.
+
 ## Targeted citation precision: 17 October 2026
 
 Section 2.4 now identifies Mora and Ruiz-Castillo (2009) as a direct
