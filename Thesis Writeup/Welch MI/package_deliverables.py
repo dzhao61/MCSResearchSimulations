@@ -1,9 +1,12 @@
-"""Build the final PDF, source archive, experiment supplement and checksums."""
+"""Build the current thesis before publishing verified delivery files."""
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import shutil
+import subprocess
+import tempfile
 import zipfile
 from pathlib import Path
 
@@ -11,9 +14,31 @@ from pathlib import Path
 THESIS = Path(__file__).resolve().parent
 WORKSPACE = THESIS.parents[1]
 DELIVERABLES = THESIS / "deliverables"
+PDF_NAME = "Daniel_Zhao_Welch_MI_Thesis.pdf"
+SOURCE_NAME = "Daniel_Zhao_Welch_MI_Thesis_Source.zip"
+SUPPLEMENT_NAME = "Daniel_Zhao_Welch_MI_Experiment_Supplement.zip"
+DELIVERY_README = """# Current Delivery Files
+
+Use these stable filenames for the latest successfully packaged thesis:
+
+- `Daniel_Zhao_Welch_MI_Thesis.pdf`: final full manuscript to send for review.
+- `Daniel_Zhao_Welch_MI_Thesis_Source.zip`: self-contained current LaTeX source.
+- `Daniel_Zhao_Welch_MI_Experiment_Supplement.zip`: current code and evidence.
+- `SHA256SUMS.txt`: checksums for those three current files.
+
+`Working Draft.pdf` and `Working Draft v2.pdf` are preserved historical
+artifacts, not the latest thesis. They are never replaced by packaging.
+
+From the parent thesis folder, run `python3 package_deliverables.py` (or
+`make`) to build the current manuscript and refresh all three files together.
+Run `python3 package_deliverables.py --check` (or `make check`) to verify
+that they still match the current source, main PDF and experimental evidence.
+"""
 
 
 def clean_files(root: Path, *, suffixes: set[str] | None = None):
+    if not root.is_dir():
+        raise FileNotFoundError(f"Required input directory is missing: {root}")
     for path in sorted(root.rglob("*")):
         if not path.is_file() or "__pycache__" in path.parts or path.suffix == ".pyc":
             continue
@@ -22,6 +47,14 @@ def clean_files(root: Path, *, suffixes: set[str] | None = None):
 
 
 def write_zip(path: Path, files: list[tuple[Path, Path]]) -> None:
+    names = [relative.as_posix() for _, relative in files]
+    if len(set(names)) != len(names):
+        raise ValueError("Duplicate paths in delivery archive.")
+    for source, relative in files:
+        if relative.is_absolute() or ".." in relative.parts:
+            raise ValueError(f"Unsafe delivery path: {relative}")
+        if not source.is_file():
+            raise FileNotFoundError(source)
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for source, relative in sorted(files, key=lambda item: item[1].as_posix()):
             archive.write(source, relative.as_posix())
@@ -29,20 +62,7 @@ def write_zip(path: Path, files: list[tuple[Path, Path]]) -> None:
 
 def source_files() -> list[tuple[Path, Path]]:
     files: list[tuple[Path, Path]] = []
-    root_names = [
-        "main.tex", "main(improved conjuntion).tex", "AGENTS.md",
-        "preamble.tex", "metadata.tex", "references.bib", "README.md",
-        "package_deliverables.py",
-        "EXEMPLAR_REVIEW_NOTES.md", "DLI_EXEMPLAR_REVIEW_NOTES.md",
-        "LITERATURE_SOURCE_CHECK.md", "REVIEW_RESPONSE.md",
-        "BIBLIOGRAPHY_REVIEW_RESPONSE.md",
-        "SCIENTIFIC_AUDIT.md", "SUBMISSION_CHECK.md", "THESIS_GOAL.md",
-        "THESIS_REWRITE_PLAN.md",
-        "FOCUSED_EXPERIMENT_PLAN.md",
-        "THESIS_DEPTH_PLAN.md",
-        "UNEQUAL_SAMPLE_CHECK_PLAN.md",
-        "LARGE_TABLE_CONSTRUCTION_CHECK_PLAN.md",
-    ]
+    root_names = ["main.tex", "preamble.tex", "metadata.tex", "references.bib", "README.md"]
     files.extend((THESIS / name, Path(name)) for name in root_names)
     for directory in ("frontmatter", "chapters_rewrite", "appendices_rewrite"):
         for source in clean_files(THESIS / directory, suffixes={".tex"}):
@@ -113,22 +133,91 @@ def supplement_files() -> list[tuple[Path, Path]]:
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def build_main() -> None:
+    latexmk = shutil.which("latexmk")
+    if latexmk is None:
+        fallback = Path("/Library/TeX/texbin/latexmk")
+        if not fallback.is_file():
+            raise FileNotFoundError("latexmk is required to build current delivery files.")
+        latexmk = str(fallback)
+    build = THESIS / "build"
+    for directory in ("", "chapters_rewrite", "appendices_rewrite"):
+        (build / directory).mkdir(parents=True, exist_ok=True)
+    subprocess.run([latexmk, "-pdf", "-interaction=nonstopmode", "-halt-on-error",
+                    "-outdir=build", "main.tex"], cwd=THESIS, check=True)
+    compiled = build / "main.pdf"
+    if not compiled.is_file() or compiled.stat().st_size == 0:
+        raise RuntimeError("The thesis build did not produce a PDF.")
+    target = THESIS / "main.pdf"
+    if not target.exists() or sha256(target) != sha256(compiled):
+        temporary = THESIS / ".main.pdf.tmp"
+        shutil.copyfile(compiled, temporary)
+        temporary.replace(target)
+
+
+def check_archive(path: Path, files: list[tuple[Path, Path]]) -> None:
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        if len(names) != len(files) or set(names) != {p.as_posix() for _, p in files}:
+            raise AssertionError(f"Delivery archive inventory is stale: {path.name}")
+        for source, relative in files:
+            with archive.open(relative.as_posix()) as handle:
+                digest = hashlib.file_digest(handle, "sha256").hexdigest()
+            if digest != sha256(source):
+                raise AssertionError(f"Delivery archive is stale: {path.name}: {relative}")
+
+
+def check_deliverables() -> None:
+    if sha256(DELIVERABLES / PDF_NAME) != sha256(THESIS / "main.pdf"):
+        raise AssertionError("Delivery PDF does not match the current main PDF.")
+    check_archive(DELIVERABLES / SOURCE_NAME, source_files())
+    check_archive(DELIVERABLES / SUPPLEMENT_NAME, supplement_files())
+    expected = "".join(f"{sha256(DELIVERABLES / name)}  {name}\n"
+                       for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME))
+    if (DELIVERABLES / "SHA256SUMS.txt").read_text() != expected:
+        raise AssertionError("Delivery checksums are stale.")
+    if (DELIVERABLES / "README.md").read_text() != DELIVERY_README:
+        raise AssertionError("Delivery instructions are stale.")
+
+
+def publish_deliverables() -> None:
+    build_main()
+    DELIVERABLES.mkdir(exist_ok=True)
+    sources, supplement = source_files(), supplement_files()
+    # Prepare and verify everything before replacing the previous delivery set.
+    with tempfile.TemporaryDirectory(prefix=".refresh-", dir=DELIVERABLES) as temporary:
+        staging = Path(temporary)
+        shutil.copyfile(THESIS / "main.pdf", staging / PDF_NAME)
+        write_zip(staging / SOURCE_NAME, sources)
+        write_zip(staging / SUPPLEMENT_NAME, supplement)
+        check_archive(staging / SOURCE_NAME, sources)
+        check_archive(staging / SUPPLEMENT_NAME, supplement)
+        (staging / "README.md").write_text(DELIVERY_README)
+        checksums = "".join(f"{sha256(staging / name)}  {name}\n"
+                            for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME))
+        (staging / "SHA256SUMS.txt").write_text(checksums)
+        for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME, "README.md", "SHA256SUMS.txt"):
+            (staging / name).replace(DELIVERABLES / name)
+    for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME):
+        print(f"{name}: {(DELIVERABLES / name).stat().st_size} bytes")
 
 
 def main() -> None:
-    DELIVERABLES.mkdir(exist_ok=True)
-    pdf = DELIVERABLES / "Daniel_Zhao_Welch_MI_Thesis.pdf"
-    source_zip = DELIVERABLES / "Daniel_Zhao_Welch_MI_Thesis_Source.zip"
-    supplement_zip = DELIVERABLES / "Daniel_Zhao_Welch_MI_Experiment_Supplement.zip"
-    shutil.copyfile(THESIS / "main.pdf", pdf)
-    write_zip(source_zip, source_files())
-    write_zip(supplement_zip, supplement_files())
-    artifacts = [pdf, source_zip, supplement_zip]
-    checksums = "".join(f"{sha256(path)}  {path.name}\n" for path in artifacts)
-    (DELIVERABLES / "SHA256SUMS.txt").write_text(checksums)
-    for artifact in artifacts:
-        print(f"{artifact.name}: {artifact.stat().st_size} bytes")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="Check existing files without rebuilding.")
+    args = parser.parse_args()
+    if args.check:
+        check_deliverables()
+        print("All delivery files match the current PDF, source and evidence.")
+    else:
+        publish_deliverables()
 
 
 if __name__ == "__main__":

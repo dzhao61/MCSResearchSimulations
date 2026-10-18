@@ -6,6 +6,18 @@ here on 17 October 2026. The previous main version is preserved in
 `../Archive/Welch MI (before conjunction revision 2026-10-17)/`; do not edit or
 rebuild that archive or any historical working draft.
 
+Current delivery files belong in `deliverables/`. After any manuscript,
+figure, bibliography, source or evidence change, run `python3
+package_deliverables.py` from this folder. It builds `main.tex`, keeps
+generated LaTeX files in `build/`, and refreshes the PDF, source archive,
+experiment supplement and checksums together. Run `python3
+package_deliverables.py --check` to check that the delivery files match
+current inputs. Do not deliver an older PDF by merely copying it.
+
+Internal plans and review records are under `notes/`. Superseded loose
+sources, plots and comparison entry points are preserved under
+`archive/cleanup_2026-10-18/`; they are not active build inputs.
+
 Use connected, varied academic prose rather than uniformly short sentences.
 Longer sentences are useful when they keep a claim with its reason,
 consequence, qualification or comparison. Keep a clear main clause and avoid

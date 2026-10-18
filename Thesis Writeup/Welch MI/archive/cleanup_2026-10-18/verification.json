@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-18",
+  "relocated_files": 124,
+  "manuscript_pages": 102,
+  "all_rendered_pages_pixel_identical": true,
+  "clean_source_build_text_identical": true,
+  "scientific_tests_pass": 236,
+  "packaging_tests_pass": 8,
+  "delivery_check_pass": true,
+  "experimental_supplement_byte_identical": true,
+  "historical_drafts_and_existing_archives_preserved": true
+}
