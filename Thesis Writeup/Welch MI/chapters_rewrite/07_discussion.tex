@@ -52,7 +52,12 @@ column margins within each population, allowing association to vary
 without changing category frequencies. The four-cell check
 supports the representative \(4\times4\) method comparison and
 reproduces the main \(16\times16\) estimation failures at its matched
-settings, although power changes numerically with the construction.
+different-skew settings, although power changes numerically with the construction.
+The same-skew checks instead give conservative sparse null rates and low
+power under both constructions. With equal MI and equal sample sizes,
+matching category frequencies gives identical population tables within
+each construction, so the expected MI estimation biases cancel. This does
+not ensure accurate estimation of uncertainty.
 Copying favours matching categories in both
 populations, whereas the four-cell transfer concentrates association
 in the same chosen block. The different-skew regime changes category
@@ -70,9 +75,12 @@ concerns the fixed-alphabet correction used here. With unequal sample sizes, the
 corrections no longer cancel, and the two contributions to the standard
 error and degrees of freedom can become less balanced. The derivation
 allows unequal sample sizes. The supporting fixed-total check assesses
-both allocation directions in two \(4\times4\) different-skew pairs.
+both allocation directions in four \(4\times4\) pairs: a null and an
+alternative under each skew regime.
 There, imbalance changes bias, uncertainty and power, while the
 larger Expanded Welch cutoff lowers already-conservative null rates.
+The same-skew null shows that unequal sample sizes can leave unequal
+residual biases even when the two population tables are identical.
 This extends the comparison beyond equal samples, but a wider allocation
 study would be needed for other table sizes and population structures.
 

@@ -8,12 +8,6 @@ For example, a categorical input feature
 populations. This thesis develops and evaluates a statistical test
 for that comparison using two independently collected samples.
 
-In practice, MI is estimated from observed data. Two samples can produce
-different MI estimates even when the population MI values are equal,
-because their observed counts vary from sample to sample. A statistical
-test must account for this sampling variation before an estimated
-difference can be interpreted as evidence of a population difference.
-
 Let \(P\) and \(Q\) be the joint probability distributions of \(X\) and
 \(Y\) in the two populations. The null and alternative hypotheses are
 \begin{equation}
@@ -21,10 +15,15 @@ Let \(P\) and \(Q\) be the joint probability distributions of \(X\) and
   \qquad H_1:I(P)\ne I(Q).
   \label{eq:introduction-null}
 \end{equation}
-Under \(H_0\), the populations have equal MI, but their joint probability
-tables may differ and \(X\) and \(Y\) may be associated in both. The test
-therefore compares population MI values rather than
-testing independence within one population.
+Under \(H_0\), the populations have equal MI. However, this does not mean
+that their joint probability tables are the same, as two populations can
+have equal MI while having different probability tables.
+
+In practice, MI is estimated from observed data. Two samples can produce
+different MI estimates even when the population MI values are equal,
+because their observed counts vary from sample to sample. A statistical
+test must account for this sampling variation before an estimated
+difference can be interpreted as evidence of a population difference.
 
 \section{Why the comparison is difficult}
 
@@ -93,41 +92,42 @@ results.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Empirical contribution.} Three controlled studies compare
-  false positives, power and the frequency of usable results across
-  four table sizes and three category-frequency regimes. Diagnostics
-  assess errors in the MI difference and its standard error, and directly
-  check the predicted variability of the MI variance estimate. Supporting
-  checks vary population construction and sample allocation, while a
-  timing comparison measures computational cost.
+  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations examine
+  how sample size, table size, category frequencies and population MI affect
+  false-positive rates, power and the frequency of usable results. Supporting
+  diagnostics assess errors in the MI difference and its standard error, and
+  directly check the predicted variability of the MI variance estimate.
+  Additional supplementary checks look at further population constructions
+  and sample allocation, while a timing comparison measures computational cost.
   \par
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies
-  where Expanded Welch's larger cutoff helps and where estimation errors
-  leave both tests unreliable. Both tests can reject equal MI too rarely
-  near independence or too often when their standard errors underestimate
-  sampling variation. In sparse populations with different category
-  frequencies, unequal MI bias can also produce excessive false positives
-  and reverse the estimated ordering among rejections. These bias and
-  ordering failures persist under both tested population constructions.
+  when Expanded Welch brings false-positive rates closer to the intended
+  5\% level than Normal Wald, and when estimation errors make both tests
+  unreliable.
 \end{enumerate}
 
 \section{Scope and organisation}
 
-The analysis concerns categorical observations recorded in count tables
-with the same fixed row and column categories. Observations are independent
-within and between the two samples. The main derivation assumes positive
-cell probabilities and positive MI in both populations. The case of zero MI,
-where \(X\) and \(Y\) are independent, is considered separately.
+The scope of this thesis is the comparison of MI between two populations
+using categorical data. Each sample is summarised in a count table, and
+both tables use the same fixed row and column categories. The two samples
+are independent, and observations within each sample are also independent.
+For the main derivation, both populations are assumed to have positive MI
+and a positive probability in every cell. The case of zero MI, where
+\(X\) and \(Y\) are independent, is considered separately.
 Normal Wald and Expanded Welch are compared using two-sided tests at the
 5\% significance level.
 
+The organisation of the thesis follows the development, evaluation and
+interpretation of the two-sample MI test.
 Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
 statistic and derive Expanded Welch. Chapter~\ref{chap:design} describes
-the experiment, and Chapter~\ref{chap:results} interprets its results and
-the online-shopping application. Chapters~\ref{chap:discussion}
+the experiment, and Chapter~\ref{chap:results} discusses the results.
+Chapter~\ref{chap:results} also illustrates both tests through a real-world
+example using an online-shopping dataset. Chapters~\ref{chap:discussion}
 and~\ref{chap:conclusion} discuss the implications, limitations and
 conclusions. The appendices provide supporting calculations, experimental
 settings and additional results.

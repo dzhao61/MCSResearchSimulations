@@ -1,0 +1,28 @@
+{
+  "all_pass": true,
+  "checks": [
+    "population positivity, total, margins, MI, variance and sensitivity",
+    "all raw checksums and counts",
+    "regenerated count inputs match saved outputs",
+    "independent statistic and df algebra",
+    "normal and Student t distribution p-values",
+    "rejection and validity denominators",
+    "Wilson intervals",
+    "paired indicator contrasts and intervals",
+    "bias and variance masks",
+    "degrees-of-freedom validity mask and percentiles"
+  ],
+  "input_sha256": {
+    "configuration_manifest.csv": "a13a38deae49c069112526af597e35c90425487ab37a358e0f4a12ee77687c34",
+    "diagnostics.csv": "1b6e8fe20e3cf003326727b9e2624634f33095aa49d26ca81ad5c8b4385a922c",
+    "method_results.csv": "417b23f7d5252dc31d372c35edf20f1dfe456a57a806aafd1df66b692f419f88",
+    "paired_results.csv": "8acc533f48528915ab150c1cc7811bfb95d67f034ca611fd2f1ed47eb10d6ece",
+    "population_definitions.json": "54fb7d543a07f8cce9ea02629ef2d0675b2748e7c26542ce6d25e05ab193ac6d",
+    "populations.npz": "bd704e11b63813788d0b5651463a6579eb752e8d8bf39ad78bedb74a402eb68b",
+    "study_identity.json": "51367586414a27879edf9a7580334ad443734b4daf5870204e2abef1a5d1982c"
+  },
+  "population_pairs": 36,
+  "regenerated_input_pairs": 1224,
+  "settings": 72,
+  "table_pairs": 1440000
+}

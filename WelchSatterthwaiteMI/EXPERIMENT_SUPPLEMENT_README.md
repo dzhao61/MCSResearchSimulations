@@ -1,7 +1,7 @@
 # Welch-MI Focused Experiment Supplement
 
 This supplement reproduces the focused study in the current Master of
-Computer Science thesis: 240 settings, 70 population pairs and 20,000 paired
+Computer Science thesis: 312 settings, 104 population pairs and 20,000 paired
 samples per setting. It contains the Normal Wald and Expanded
 Welch implementations, all population definitions, per-repetition scalar
 records, summaries, figure-generation scripts and independent audits.
@@ -14,6 +14,10 @@ The original study has 232 settings; the unequal-sample check adds four and
 reuses two balanced settings, without changing the original records.
 The large-table construction check adds another four settings and two
 population pairs, matched to existing copying comparisons.
+The 19 October same-skew extension adds 72 matched settings and 34 previously
+unused population pairs. It provides a same-skew baseline in every main study
+and supporting check without changing or resampling any original setting.
+The combined evidence has 6,240,000 distinct sampled table pairs.
 The bounded jackknife diagnostic reuses four original copying settings and
 80000 table pairs. It changes only the MI bias correction, retaining the
 original standard errors and normal distribution cutoff. It adds no
@@ -55,6 +59,15 @@ before the construction extension, not the sum of both directories' counts.
 sampled pairs are new. Its population definitions, raw chunks, summaries
 and independent audit bring the combined evidence to 4800000 distinct pairs.
 
+`WelchSatterthwaiteMI/results/same_skew_extension/` contains only the 72 new
+same-skew settings and their 1,440,000 sampled pairs. Its 36 referenced
+population pairs include two already used in the original study. The
+`combined_*` manifests and summaries select all 312 settings exactly once;
+`combined_verification.json` identifies the original directory containing each
+setting's raw records. Balanced allocation and zero-difference power results
+are reused, not counted as additional samples. The protocol and fingerprints
+authenticate the original evidence and new settings separately.
+
 `WelchSatterthwaiteMI/results/focused_jackknife_check/` contains all four
 16 x 16 different-skew copying comparisons at MI pairs (0.02,0.02) and
 (0.02,0.03), each at n=1000 and 10000. Its protocol, per-repetition outputs,
@@ -70,6 +83,7 @@ Run the bundled tests and independent audit from the extracted archive root:
 .venv/bin/python WelchSatterthwaiteMI/experiments/audit_focused_study.py
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_unequal_sample_check.py audit
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_large_table_construction_check.py audit
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_same_skew_extension.py audit
 .venv/bin/python WelchSatterthwaiteMI/experiments/run_focused_jackknife_check.py audit
 .venv/bin/python PracticalMIExploration/run_exploration.py verify-full
 ```
@@ -144,6 +158,24 @@ simulates the four new allocations:
 The same master seed, fixed chunks and configuration-derived independent
 streams apply. Population identities do not change with sample allocation.
 
+To rerun the 72-setting same-skew extension against the bundled, authenticated
+original evidence, use a separate output directory. The defaults locate the
+three original results directories relative to the project, not the shell's
+working directory:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_same_skew_extension.py preflight --output same-skew-reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_same_skew_extension.py pilot --output same-skew-reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_same_skew_extension.py full --output same-skew-reproduction
+.venv/bin/python WelchSatterthwaiteMI/experiments/run_same_skew_extension.py audit --output same-skew-reproduction
+```
+
+The extension reconstructs the complete matched design, checks that all 240
+original settings are unchanged, and samples only the missing settings. Its
+independent audit verifies every new raw chunk and summary, regenerates 17
+sampled input pairs per setting and checks the original study and supporting
+evidence before assembling deduplicated summaries.
+
 The large-table construction check uses a separate output directory and
 independent configuration-derived streams. It samples only its four new
 settings; the reporter reads the four copying comparisons from the base run:
@@ -182,10 +214,15 @@ the extracted source directory explicitly:
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_mechanisms.py --figures /path/to/thesis-source/figures_rewrite
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_large_table_construction_check.py --figures /path/to/thesis-source/figures_rewrite
 .venv/bin/python WelchSatterthwaiteMI/experiments/report_focused_jackknife_check.py --figures /path/to/thesis-source/figures_rewrite
+.venv/bin/python WelchSatterthwaiteMI/experiments/report_same_skew_extension.py --figures /path/to/thesis-source/figures_rewrite
 ```
 
-This generates five lead figures, three companions and ten table fragments
-at the manuscript's intended printed dimensions. Complete scientific
+These scripts generate the original figures and tables, the matched-skew
+population-MI figure, same-skew power companions and supporting tables at
+the manuscript's intended printed dimensions. The new reporter also stores
+all 312 settings' rates, diagnostics and alternative rejection directions in
+`focused_same_skew_evidence.json`, selecting each setting from its recorded
+origin. Complete scientific
 construction, parameter grids, validity and uncertainty rules are also in
 Appendix B of the thesis; a reader does not need this codebase to understand
 or independently recreate the study.

@@ -16,9 +16,20 @@ Two methods form the final thesis comparison:
 Historical exploratory work also considered Simple Welch and constrained
 likelihood-ratio tests; neither is part of the current thesis comparison.
 
-## Current focused study (6 October 2026)
+## Current Focused Study
 
-The thesis now uses the [focused study](results/focused_study/): 232 settings,
+The current thesis combines 312 unique settings, 104 population pairs and
+6,240,000 sampled table pairs. The 19 October [same-skew extension](results/same_skew_extension/)
+adds matched same-skew baselines to all five comparisons, retaining every
+original result. Its 72 new settings use the existing parameter grids,
+estimators, validity rules and 20,000 repetitions per setting.
+`experiments/run_same_skew_extension.py` runs and audits the additions;
+`experiments/report_same_skew_extension.py` assembles deduplicated evidence,
+compares both skew regimes and reports degrees of freedom across studies.
+
+### Original Focused Study And Supporting Checks
+
+The original [focused study](results/focused_study/) has 232 settings,
 68 population pairs and 20,000 paired repetitions per setting. Three studies
 vary sample size and population structure, common positive MI, and the true
 MI difference. The primary construction is a copying mixture; four matched
@@ -30,7 +41,8 @@ Run `experiments/run_focused_study.py` with `preflight`, `pilot`, `full`,
 raw records, regenerated count inputs, formulas and summaries.
 `experiments/report_focused_study.py` generates the new manuscript figures
 and tables. The active plan is in
-`../Thesis Writeup/Welch MI/FOCUSED_EXPERIMENT_PLAN.md`.
+`../Thesis Writeup/Welch MI/notes/FOCUSED_EXPERIMENT_PLAN.md`; the amendment is
+`../Thesis Writeup/Welch MI/notes/SAME_SKEW_EXTENSION_PLAN_2026-10-19.md`.
 
 The 10 October supporting [allocation check](results/unequal_sample_check/)
 adds four unequal-sample settings and reuses two balanced settings. It keeps
@@ -49,7 +61,8 @@ opposite-sign rejections in the original two-sided detection rates.
 
 The supporting [large-table construction check](results/large_table_construction_check/)
 adds four 16 x 16 four-cell settings matched to existing copying populations
-in margins, MI targets and sample sizes. The combined study has 240 unique
+in margins, MI targets and sample sizes. Before the same-skew extension,
+the combined study had 240 unique
 settings, 70 population pairs and 4800000 distinct sampled pairs.
 `experiments/run_large_table_construction_check.py` runs and audits the new
 settings; `experiments/report_large_table_construction_check.py` compares

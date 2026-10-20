@@ -515,10 +515,13 @@ cutoff, regardless of how much the estimated standard error varies.
 \medskip
 \thesisminiheading{The Welch--Satterthwaite principle.}
 
-Welch's test compares two means when their population variances may differ
-\citep{welch1947}. For two independent samples with means
-\(\bar X_P,\bar X_Q\) and variances \(s_P^2,s_Q^2\), the statistic for
-testing equal population means and its effective degrees of freedom are
+This thesis adapts the Welch--Satterthwaite principle from comparing population
+means to comparing population MI values. Welch's test allows the population
+variances to differ and compares the standardised difference between two
+sample means with a Student \(t\) distribution with \(\nu\) degrees of
+freedom \citep{welch1947}. For two independent samples with sample means
+\(\bar X_P,\bar X_Q\) and sample variances \(s_P^2,s_Q^2\), the statistic for
+testing equal population means and the effective degrees of freedom are
 \begin{align}
   T_{\mathrm{Welch}}
   &=\frac{\bar X_P-\bar X_Q}
@@ -538,12 +541,20 @@ samples' degrees of freedom affect \(\nu\). Satterthwaite obtains this form
 by matching the mean and variance of their sum to a scaled chi-squared variable
 \citep{satterthwaite1946}.
 
-Welch compares the statistic with a Student \(t\) distribution using the calculated
-\(\nu\). At the same significance level, this requires a larger absolute
-statistic to reject the null than a standard normal distribution does.
-The difference between the rejection thresholds from the Student \(t\)
-and standard normal distributions becomes
-smaller as \(\nu\) increases.
+\begin{figure}[H]
+  \centering
+  \includegraphics{focused_reference_distributions.pdf}
+  \caption{Standard normal distribution and Student \(t\) distributions with 3, 10 and 30 degrees of freedom.}
+  \label{fig:normal-student-t}
+\end{figure}
+
+Figure~\ref{fig:normal-student-t} shows that the Student \(t\) distribution
+has heavier tails than the standard normal distribution, especially when
+\(\nu\) is small. More probability in the tails means a larger absolute
+statistic is needed to reject the null at the same significance level.
+As \(\nu\) increases, the Student \(t\) distribution approaches the
+standard normal distribution, and their rejection cutoffs become closer.
+
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). The ordinary \(n_P-1\) and \(n_Q-1\) values follow
 from the scaled chi-squared distribution of a sample variance under normal
@@ -680,15 +691,11 @@ approach to MI requires calculating how the estimated MI variance changes
 with the observed table, including changes to the cell probabilities,
 row and column totals, and pointwise MI values.
 
-These results address two successive sources of uncertainty. The MI
-sampling variance describes how much the MI estimate varies between
-samples, whereas the variability of the estimated MI variance describes
-how consistently those samples estimate that uncertainty. This thesis
-derives the observation-level sensitivity needed to calculate the second
-quantity and uses it to choose degrees of freedom within the established
-Welch--Satterthwaite framework. The resulting Expanded Welch test retains
-Normal Wald's MI difference and standard error, so their comparison
-isolates the consequences of the larger rejection cutoff.
+This thesis derives how changes in the observed count table affect the
+estimated MI variance and uses that result to calculate MI-specific degrees
+of freedom for Expanded Welch. The resulting test retains Normal Wald's MI
+difference and standard error but compares the statistic with a Student
+\(t\) distribution rather than a standard normal distribution.
 
 The experiment measures errors in the shared MI difference and standard
 error alongside false-positive rates and power.

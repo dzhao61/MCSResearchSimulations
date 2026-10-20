@@ -1,0 +1,15 @@
+{
+  "all_pass": true,
+  "checks": [
+    "all chunks present and checksum verified",
+    "scalar field dimensions",
+    "difference and variance algebra",
+    "validity masks and reason bits",
+    "probability bounds",
+    "paired rejection subset",
+    "all diagnostic masks"
+  ],
+  "replicates_per_setting": 20000,
+  "settings": 72,
+  "table_pairs": 1440000
+}

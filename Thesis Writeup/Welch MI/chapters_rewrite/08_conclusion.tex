@@ -8,7 +8,7 @@ MI of the same pair of categorical variables across independent populations.
 Its mathematical
 contribution is the observation-level sensitivity of the estimated MI
 variance, which determines the degrees of freedom. Its empirical
-contribution is a controlled 240-setting comparison with Normal Wald
+contribution is a controlled 312-setting comparison with Normal Wald
 that identifies the estimation errors behind the observed false-positive
 rates and power. Three connected studies are supported by direct
 checks of variance-estimate variability, population construction and
@@ -29,7 +29,10 @@ makes conservative rates lower still. Other sparse settings expose errors
 in the shared estimates: uncertainty can be underestimated even for
 identical populations, while unequal MI biases in different-skew tables
 can shift or reverse the estimated difference. The bias and ordering
-failures occur under both tested population constructions. Larger samples
+failures occur under both tested population constructions with different
+skew. The matched same-skew comparisons give conservative sparse null
+rates and low power instead, showing that matching category frequencies
+does not ensure reliable tests. Larger samples
 improve the estimation diagnostics and observed
 performance, and the tests become similar. These findings do not support
 Expanded Welch as a general replacement for Normal Wald. Normal Wald remains

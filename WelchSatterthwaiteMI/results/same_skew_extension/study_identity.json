@@ -1,0 +1,45 @@
+{
+  "alpha": 0.05,
+  "chunk_size": 1000,
+  "count": 20000,
+  "design_digest": "f81c36abe042b767f2114f60c704215e72f105e9093c662cb75b135cb0eafc80",
+  "extension_source": "7b016da835800af5f2ebbf9e2cf81c82e611c83d5e51291b0d6972aff8a65639",
+  "machine": "arm64",
+  "master_seed": 20261006,
+  "numpy": "2.4.4",
+  "original_inputs": {
+    "focused_study": {
+      "configuration_manifest.csv": "2789cf8f7c4b3a13d7cec597c78dd786636a99ada73a0ae8db72fe1eb1e62d2f",
+      "diagnostics.csv": "85aa99ca287ee11afb0e5e74a77757916bb58fd5a14087b2556819ac641ed677",
+      "method_results.csv": "0e64b481715b56f367d2c84e30f2f394709ec02974b968f13ba1efa83921673c",
+      "paired_results.csv": "25164fe070501e2f9f3ec11a08f15d5379bead3d5025ccc0d0133051f6a0c7ff",
+      "population_definitions.json": "2f73a436657fd74405ee157571131a1562b649028718f5abc1f8c9f3998e2c74",
+      "populations.npz": "e553ef8bd4c8c42d43f0cbfa9dd71843d50564318600d222189cc8ca127ee545",
+      "study_identity.json": "c8f4a808d82de30565584651df1dae25f0c64c18f4b41312deeb7addc3c7c1b4"
+    },
+    "large_table_construction_check": {
+      "configuration_manifest.csv": "77f1392e9fd035f06ffcc60fd5dbef2df21e9f0512354798f33632591f85b15a",
+      "diagnostics.csv": "ac0ed0f4d12883f1f00b189266760bdf1113c0fef18c520e9a3f523c3fa5d824",
+      "method_results.csv": "318006647ae3ecc5f47863273ffaafa9b002f857c840364d6997a3b056fb1bd6",
+      "paired_results.csv": "3ef0484dbd2c576319613a194e672a31d767fc3e8c6e242860c434bed38b4a78",
+      "population_definitions.json": "891e73b1b4806342c394e0db0c5a9106ef4f61587254df03d47381cf5c958cbd",
+      "populations.npz": "5342ac9e844fa08bd7205a4a6badfd2a407b66650bee05d4cde0a7b4638cd927",
+      "study_identity.json": "9ce61b87229df20ea889f5111b548ff6dd23b744697983677b2d3683fddfaa57"
+    },
+    "unequal_sample_check": {
+      "configuration_manifest.csv": "856abf9d4b838655300598476c02d3d8b4b7c3bb6626c330cab6e2c4c95765f3",
+      "diagnostics.csv": "594f91c7e963fa93a28cab157fcac37ba747ade548d2d6bd77c9282dbbee1459",
+      "method_results.csv": "1d541eee62818251d81627161e2f791fc3e1db458fed6f6eb313baaa521cbd11",
+      "paired_results.csv": "8b2eef24e8ba158b5de1fbc1e6978d335cd0061bbe9015cbc899052a437156db",
+      "population_definitions.json": "e9d12a79b2cfba2eaee01fcb784f13c9139715161c6e9cd6dff2035d47c3670a",
+      "populations.npz": "c72b081070da54e73cf245e8ff19b93b3def6d3dbaa69b5a33f040f2a3296e7f",
+      "study_identity.json": "8800203cb54498f1f30d4118420abb168bc6e35d2f673d9baeaf8d10b5b63791"
+    }
+  },
+  "phase": "full",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "schema": 1,
+  "scipy": "1.17.1",
+  "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
+}

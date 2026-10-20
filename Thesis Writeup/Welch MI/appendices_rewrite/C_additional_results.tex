@@ -67,6 +67,44 @@ especially at \(n=1{,}000\). An overestimated standard error reduces the
 statistic's magnitude, and Expanded Welch's larger rejection cutoff makes
 rejection still less likely.
 
+Table~\ref{tab:same-association-diagnostics} gives the matched same-skew
+sweep. Both samples have the same population table at each MI target.
+The reported rates divide by all 20,000 repetitions, and every calculation
+is valid. Its degrees-of-freedom progression is similar to that under
+different skew, while its null MI difference has no systematic bias.
+The conservative near-independence rates therefore persist without unequal
+population estimation biases.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Same-skew population-MI sweep and estimation diagnostics.}
+\label{tab:same-association-diagnostics}
+\input{figures_rewrite/focused_same_association_table}
+\end{table}
+
+Degrees of freedom also change with sample size and table size outside
+the population-MI sweep. Table~\ref{tab:df-structure} gives selected
+equal-MI copying comparisons, including both skew regimes. Cutoff is
+the 97.5th percentile of the Student \(t\) distribution at the median
+degrees of freedom; each simulated test uses its own estimated degrees of
+freedom instead. The percentile range describes variation across valid
+outputs, and every output in these selected settings is valid.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Degrees of freedom across sample sizes, table sizes and margins.}
+\label{tab:df-structure}
+\input{figures_rewrite/focused_df_structure_table}
+\end{table}
+
+For \(16\times16\) tables at \(n=1{,}000\), the median degrees of
+freedom are 78.89 under same skew and 88.50 under different skew. The
+corresponding cutoffs are both close to 1.99, yet the null rejection rates
+are very different. Degrees of freedom describe the reference distribution;
+they do not measure the bias or accuracy of the shared MI statistic.
+
 Table~\ref{tab:large-sample-diagnostics} continues the main diagnostic
 comparison to \(n=50{,}000\) at common MI 0.02. All outputs are valid.
 At \(4\times4\) the difference bias has Monte Carlo standard error
@@ -265,6 +303,47 @@ a smaller difference between methods says little about their relative
 performance for weaker effects; the enlarged main figures show those
 effects more clearly.
 
+Figures~\ref{fig:same-detection-sizes} and
+\ref{fig:same-detection-full} extend the matched same-skew comparison
+to every table size. The MI-difference grid and sample sizes match those
+under different skew. All calculations are valid; circles indicate
+\(n=1{,}000\) and triangles \(n=10{,}000\), as in the main size
+comparison. Bands give Wilson 95\% intervals.
+
+\begin{figure}[H]
+\centering
+\includegraphics{focused_same_detection_sizes.pdf}
+\caption{Rejection rates over small MI differences under same-skew margins.}
+\label{fig:same-detection-sizes}
+\end{figure}
+
+The same-skew \(16\times16\) comparison has low rather than excessive
+null rejection at \(n=1{,}000\), and no comparable initial fall as
+the MI difference grows. At 0.01 nats, its difference bias is 0.00092
+nats and Wald rejects 370 times, including 14 wrong-direction rejections.
+Expanded Welch rejects 339 times, including 12 wrong-direction rejections.
+Most rejections therefore have the correct direction, unlike the matched
+different-skew comparison, although power remains low. Matching margins
+does not make the alternative populations identical or force their MI
+biases to cancel.
+
+\begin{figure}[H]
+\centering
+\includegraphics{focused_same_detection_sizes_full.pdf}
+\caption{Full-range rejection rates under same-skew margins.}
+\label{fig:same-detection-full}
+\end{figure}
+
+At \(n=1{,}000\), the same-skew \(16\times16\) Wald rate reaches
+0.4454 at a 0.05-nat difference and one at 0.2 nats. At
+\(n=10{,}000\), all four sizes reject every simulated 0.05-nat
+difference under both methods. Estimated degrees of freedom also grow
+along the larger-table power curve: at \(n=1{,}000\), the same-skew
+median rises from 78.89 at the null to 207.47 at 0.2 nats. This brings
+the Student \(t\) distribution closer to the standard normal distribution,
+while the increasing MI difference and changing estimation errors also
+affect power.
+
 \medskip
 \thesisminiheading{Estimated direction among rejections.}
 
@@ -368,6 +447,42 @@ the same population difference harder to detect under the transfer.
 Changing association arrangement thus changes precision even when
 table size, margins and MI targets match.
 
+\medskip
+\thesisminiheading{Matched same-skew comparisons.}
+
+Table~\ref{tab:same-construction-check} repeats the construction check
+with \(m_k(0.8)\) margins in both populations. Every output is valid.
+Bias is the mean error in the estimated MI difference, and DF is the
+median estimated combined degrees of freedom. Both constructions use
+the same MI targets, sample sizes and margins, but independent samples.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Same-skew comparisons under copying and four-cell constructions.}
+\label{tab:same-construction-check}
+\input{figures_rewrite/focused_same_construction_table}
+\end{table}
+
+At \(16\times16\) and \(n=1{,}000\), the same-skew Wald null
+rates are 0.0065 under copying and 0.0107 under the four-cell transfer,
+rather than the excessive different-skew rates. The null difference
+biases are close to zero because the population tables and sample sizes
+match within each construction. At the alternative, the four-cell
+construction gives Wald power 0.0292, compared with 0.0185 under copying;
+both remain low. The median degrees of freedom are 92.27 and 84.00,
+respectively, but mean squared standard error still exceeds observed
+variance, with ratios 1.56 and 1.82. Changing the construction therefore
+affects estimation as well as the Student \(t\) reference distribution.
+
+At \(n=10{,}000\), same-skew null rates are closer to 0.05 under
+both constructions. At the \(16\times16\) alternative, Wald power
+is 0.6146 under copying and 0.5464 under the four-cell transfer. The
+median degrees of freedom are now above 300 in both cases, and Expanded
+Welch changes those rates only slightly. Its larger rejection cutoff
+does not explain the substantial power difference between constructions.
+
 \section{Unequal sample sizes at a fixed total}
 \label{sec:allocation-check}
 
@@ -414,6 +529,39 @@ signs, with Monte Carlo standard error about 0.00010 in either case.
 Mean squared standard error exceeds observed variance in each comparison.
 Allocation therefore changes the estimated MI difference and standard error
 as well as Expanded Welch's rejection cutoff.
+
+Table~\ref{tab:same-allocation-check} repeats the allocations under same
+skew, retaining full validity. Both populations use
+\((0.8,0.2/3,0.2/3,0.2/3)\) margins. They are identical under the null,
+but differ in MI under the alternative. Bias is the mean estimation error
+in nats; Est./obs. is the variance ratio and DF the median degrees of
+freedom. The balanced rows reuse the main-study samples.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Same-skew allocation comparisons at a fixed total of 2,000 observations.}
+\label{tab:same-allocation-check}
+\input{figures_rewrite/focused_same_allocation_table}
+\end{table}
+
+With identical null populations, unequal allocation still produces
+residual biases of opposite signs: approximately 0.00128 nats when
+\(P\) has 400 observations and \(-0.00148\) when \(Q\) has 400.
+The leading analytic corrections have already been applied, so these
+values show the remaining sample-size dependence of the MI bias.
+Median degrees of freedom fall from 33.45 under balance to approximately
+11.3 under either imbalance, and Expanded Welch reduces the null rates
+from 0.0458 and 0.0423 to 0.0265 and 0.0234.
+
+Under the alternative, allocating more observations to \(Q\) gives Wald
+power 0.1300, compared with 0.1152 under balance; allocating fewer to
+\(Q\) gives 0.0506. Expanded Welch instead gives 0.0946, 0.1033 and
+0.0340 for those allocations. Its median degrees of freedom drop from
+40.22 under balance to about 13--14 under imbalance. The allocation
+therefore changes bias, sampling variation and the reference distribution
+together; a fixed total sample size does not imply equal power.
 
 \section{Holm adjustment for the application}
 \label{sec:application-holm}

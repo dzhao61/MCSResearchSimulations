@@ -15,6 +15,8 @@ WelchSatterthwaiteMI/results/unequal_sample_check/records/
 WelchSatterthwaiteMI/results/unequal_sample_check/pilot/
 WelchSatterthwaiteMI/results/large_table_construction_check/records/
 WelchSatterthwaiteMI/results/large_table_construction_check/pilot/
+WelchSatterthwaiteMI/results/same_skew_extension/records/
+WelchSatterthwaiteMI/results/same_skew_extension/pilot/
 
 # Keep the generated experiment supplement local; it exceeds GitHub's file limit.
 /Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip

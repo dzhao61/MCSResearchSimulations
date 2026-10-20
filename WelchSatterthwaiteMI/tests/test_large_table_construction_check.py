@@ -173,8 +173,8 @@ class LargeConstructionTests(unittest.TestCase):
         source = ROOT.parent / "Thesis Writeup/Welch MI"
         if source.exists():
             design = (source / "chapters_rewrite/05_experimental_design.tex").read_text()
-            self.assertIn("70 population pairs and 240 distinct settings", design)
-            self.assertIn("4,800,000 table pairs", design)
+            self.assertIn("104 population pairs and 312 distinct settings", design)
+            self.assertIn("6,240,000 table pairs", design)
             result = (source / "chapters_rewrite/06_results.tex").read_text()
             for value in ("0.03145", "0.3095", "0.2977", "2,493 of 2,494", "2,350 of 2,351"):
                 self.assertIn(value, result)

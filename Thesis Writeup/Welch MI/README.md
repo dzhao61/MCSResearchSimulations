@@ -18,13 +18,14 @@ not the latest thesis, and are never overwritten.
 `main.tex` and `main.pdf` are the canonical manuscript. Its active inputs are
 `frontmatter/`, `chapters_rewrite/`, `appendices_rewrite/`,
 `figures_rewrite/`, `preamble.tex`, `metadata.tex` and `references.bib`.
-The scientific study has 240 settings, 70 population pairs and 4.8 million
+The scientific study has 312 settings, 104 population pairs and 6.24 million
 sampled table pairs, plus the saved-sample diagnostics and practical example.
 
 Internal plans, goals, reviews and verification records are grouped under
 [notes/](notes/). These are workspace records, not part of the source ZIP.
 Start with [the thesis goals](notes/THESIS_GOAL.md),
 [the experimental plan](notes/FOCUSED_EXPERIMENT_PLAN.md),
+[the matched same-skew extension](notes/SAME_SKEW_EXTENSION_PLAN_2026-10-19.md),
 [the scientific audit](notes/SCIENTIFIC_AUDIT.md) or
 [the submission checks](notes/SUBMISSION_CHECK.md).
 
