@@ -39,6 +39,12 @@ Set `MPLCONFIGDIR` to a writable directory in restricted environments.
 
 ## Inspect and verify the results
 
+`WelchSatterthwaiteMI/supplementary_displays/` retains the complete
+120-setting equal-MI table as CSV and LaTeX, plus the full-range margin
+and same-skew power plots omitted from the shortened Appendix C. Its
+README defines the columns and settings. These are existing results;
+the manuscript reduction changes no simulations or numerical evidence.
+
 `WelchSatterthwaiteMI/results/focused_study/` contains the population arrays
 and definitions, configuration and display manifests, method and paired
 results, diagnostics, timing measurements and verification records.

@@ -118,11 +118,19 @@ def supplement_files() -> list[tuple[Path, Path]]:
         project / "results/large_table_construction_check",
         project / "results/focused_jackknife_check",
         project / "results/same_skew_extension",
+        project / "supplementary_displays",
     ):
         for source in clean_files(directory):
             if "pilot" in source.relative_to(directory).parts:
                 continue
             files.append((source, source.relative_to(WORKSPACE)))
+    for name in (
+        "focused_null_table.tex",
+        "focused_detection_margins_full.pdf",
+        "focused_same_detection_sizes_full.pdf",
+    ):
+        files.append((THESIS / "figures_rewrite" / name,
+                      Path("WelchSatterthwaiteMI/supplementary_displays") / name))
     for source in clean_files(differential / "tests", suffixes={".py"}):
         files.append((source, source.relative_to(WORKSPACE)))
     practical = WORKSPACE / "PracticalMIExploration"
