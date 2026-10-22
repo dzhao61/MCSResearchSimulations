@@ -94,6 +94,11 @@ def select_case(configs,k,profile,n,mi=.02,construction='copying',iq=None,nq=Non
     return subset.iloc[0].configuration_id
 
 
+def estimated_df_ratio(data):
+    # Do not silently plot a conditional mean as an unconditional sampling mean.
+    return (data.df_mean/data.nu_mom).where(data.df_valid_count.eq(data['count']))
+
+
 def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     output=Path(output); figures=Path(figures); figures.mkdir(parents=True,exist_ok=True)
     configs=pd.read_csv(output/'configurations.csv')
@@ -104,6 +109,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     rates=pd.read_csv(output/'rates.csv')
     raw=rates[rates.denominator.eq('all')].set_index(['configuration_id','method'])
     diagnostics=pd.read_csv(output/'diagnostics.csv').set_index('configuration_id')
+    dependence_path=output/'calibration_sensitivity/dependence_diagnostics.csv'
+    dependence=pd.read_csv(dependence_path).set_index('configuration_id')
     cal=pd.read_csv(output/'calibrated_rates.csv').set_index(['configuration_id','method'])
     refs=json.loads((output/'references.json').read_text())
     if 'plugin_variance_ratio_mcse' not in moments:
@@ -145,15 +152,22 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
                     ax.fill_between(data.n,np.maximum(data[field]-1.96*error,1e-12),data[field]+1.96*error,color=colour,alpha=.10)
                     if row == 1:
                         ax.plot(data.n,data.plugin_variance_ratio,ls='--',color=colour,lw=1.1)
+                    if row == 2:
+                        ax.plot(data.n,estimated_df_ratio(data),ls='--',color=colour,lw=1.1)
                     ax.set_xscale('log'); ax.set_yscale('log'); ax.axhline(1,color='black',lw=.6)
             axes[0,col].set_title(side.upper())
             axes[2,col].set_xlabel('Sample size per population')
-        for row,label in enumerate(('Mean / population V','Predicted / observed variance','First-order / moment df')):
+            bounds=np.concatenate([subset.df_ratio-1.96*subset.df_ratio_mcse,
+                                   subset.df_ratio+1.96*subset.df_ratio_mcse,
+                                   estimated_df_ratio(subset)])
+            bounds=bounds[np.isfinite(bounds)&(bounds>0)]
+            axes[2,col].set_ylim(bounds.min()*.85,bounds.max()*1.18)
+        for row,label in enumerate(('Mean / population V','Predicted / observed variance','df / moment target')):
             axes[row,0].set_ylabel(label)
         handles,labels=axes[0,0].get_legend_handles_labels()
         fig.legend(handles,labels,loc='lower center',bbox_to_anchor=(.5,.035),ncol=4)
         fig.legend([Line2D([0],[0],color='black'),Line2D([0],[0],color='black',ls='--')],
-                   ['Population prediction (middle row)','Mean plug-in prediction (middle row)'],loc='lower center',ncol=2,fontsize=8)
+                   ['Population prediction (middle/bottom)','Mean sample prediction/df (middle/bottom)'],loc='lower center',ncol=2,fontsize=8)
         fig.tight_layout(rect=(0,.09,1,1)); save(fig,'moments_'+profile,figures)
 
     association_ids=set(displays[displays.study.eq('association')].configuration_id)
@@ -271,9 +285,9 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]
-        rows.append([label,f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{d.delta_se_correlation:.3f}',
+        rows.append([label,f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{dependence.loc[key,"centered_magnitude_spearman"]:.3f}',
                      f'{d.delta_skewness:.3f}',f'{d.df_median:.2f}',f'{d.reference_df:.2f}'])
-    table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Var. ratio','Corr.','Skew','Median df','Ref. df'],rows)
+    table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Var. ratio','Rank corr.','Skew','Median df','Ref. df'],rows)
     rows=[]
     for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
         rows.append([f'{row.focus}: {row.standardised_difference:g}',f'{row.difference_nats:.5f}']+
@@ -332,6 +346,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     study.atomic_json(output/'report_provenance.json',{
         'source_sha256':study.sha(Path(__file__)),
         'inputs':{name:study.sha(output/name) for name in ['protocol.json','configurations.csv','references.json','rates.csv','moments.csv','calibration_bootstrap.csv','audit.json']},
+        'dependence_input_sha256':study.sha(dependence_path),
         'null_display_settings':len(null_ids),'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])})
     print(json.dumps(evidence,indent=2),flush=True)
 

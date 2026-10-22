@@ -16,8 +16,10 @@ moment reference condition on its independently fitted degrees of freedom.
 The mean approximation and sampling-variance approximation have different
 errors. Figure~\ref{fig:redesign-moments} separates them for different-skew
 populations at common MI 0.02 nats. A ratio of one indicates agreement.
-Solid curves use the population quantities; dashed curves in the middle
-row use the mean plug-in sampling-variance prediction. Shading gives
+Solid curves use the population quantities. Dashed curves use the mean
+plug-in sampling-variance prediction in the middle row and the mean
+estimated component degrees of freedom in the bottom row. The latter
+are shown only when all component estimates are positive and finite. Shading gives
 approximate 95\% Monte Carlo intervals for the population-prediction
 ratios. The component mean remains inflated after the prediction of its
 sampling variance has become reasonably accurate. At \(n=1{,}000\), the population
@@ -66,6 +68,18 @@ observed sampling variance of \(\Vhat\). Mean df averages the positive
 finite component estimates; all 100,000 estimates are included in each
 shown row. Moment df uses the actual sampling moments, while FO df uses
 the population first-order formula.
+
+The estimated component degrees of freedom can fall further below the
+sampling-moment target than the population first-order values suggest.
+At A, the mean for the \(P\) component is about 6.52 against a moment
+target of 14.81, or
+44\% of the target. In the \(16\times16\), \(n=1{,}000\) same- and
+different-skew cases, the corresponding ratios range from 55\% to 60\%.
+All 100,000 component estimates are included in these comparisons.
+At C, the ratios are about 99\%. The bottom-row dashed curves expose
+this sample-estimation error alongside the population approximation
+error; the moment target itself does not guarantee an exact Student
+\(t\) distribution for the test statistic.
 
 \subsection{Behaviour near independence}
 
@@ -175,9 +189,9 @@ Table~\ref{tab:redesign-case-diagnostics} gives the numerical diagnostics
 and degrees-of-freedom comparisons in the appendix.
 
 The \(16\times16\), different-skew case at \(n=1{,}000\) remains a
-clear failure for all four rules. The difference bias is 0.02985 nats,
-about 2.058 observed SDs. Rejection ranges from 0.24836 to 0.26011.
-The reference rate is 0.25348 despite its independently fitted moments.
+clear failure for all four rules. The difference bias is about 0.030 nats,
+or 2.06 observed SDs. Rejection ranges from 24.8\% to 26.0\%.
+The reference rate is 25.3\% despite its independently fitted moments.
 Under the equal-MI null, the estimated difference is centred at
 \begin{equation}
  \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
@@ -187,7 +201,7 @@ This shift is large relative to the observed SD of approximately 0.01450
 nats. It moves most rejections into the positive tail even though the
 population difference is zero.
 With same skew, difference bias is negligible and the variance ratio is
-1.929; all four rates instead lie between 0.00525 and 0.00604.
+1.93; all four rates instead lie between 0.53\% and 0.60\%.
 The matched populations separate the large difference bias from
 conservative behaviour that occurs when the biases cancel. At
 \(n=10{,}000\), both skew regimes give much smaller estimation errors
@@ -200,12 +214,12 @@ and rates closer to 5\%.
 Figure~\ref{fig:redesign-power} compares the three settings in
 Table~\ref{tab:redesign-focus-settings}, with MI differences measured
 in null standard deviations. Expanded Welch has lower nominal
-power than the sample-size comparator at A and B. At two null SDs, the
-A difference is 0.30993 nats: Expanded Welch rejects 0.35889 of pairs,
-compared with 0.38875 for the sample-size comparator and 0.41017 for Wald.
-At B, two null SDs is 0.13028 nats, with rates 0.06046, 0.06546 and
-0.06773, respectively. These comparisons include the different null
-rejection rates shown at zero.
+power than the sample-size comparator at A and B. At A, two null SDs
+correspond to about 0.310 nats: Expanded Welch rejects 35.9\% of pairs,
+compared with 38.9\% for the sample-size rule and 41.0\% for Wald.
+These comparisons include the different null rejection rates shown
+at zero. Appendix~\ref{sec:calibration-sensitivity-results} gives the
+numerical rates and paired contrasts.
 
 \begin{figure}[!htbp]
 \centering
@@ -215,17 +229,17 @@ rejection rates shown at zero.
 \end{figure}
 
 B also shows a falling-then-rising rejection curve. Expanded Welch's
-rate falls from 0.05523 under the null to 0.01993 at one null SD, before
-rising to 0.33075 at four SDs. The true signed difference becomes
+rate falls from 5.52\% under the null to 1.99\% at one null SD, before
+rising to 33.1\% at four SDs. The true signed difference becomes
 negative as \(I(Q)\) increases, initially opposing the positive bias
 observed under the null. The larger rejection cutoff does not remove
 this distortion of the shared statistic. Direction counts and the
 broader large-table curves provide supporting evidence in the appendix.
 
 At C, nominal power differences are small. At two null SDs, or
-0.00635 nats, Wald gives 0.45206 and Expanded Welch gives 0.44902.
-The paired loss is 0.304 percentage points, with 95\% interval
-0.270--0.338. Table~\ref{tab:redesign-power-contrasts} reports paired
+about 0.00635 nats, Wald gives 45.2\% and Expanded Welch gives 44.9\%.
+The paired loss is 0.30 percentage points, with 95\% interval
+0.27--0.34. Table~\ref{tab:redesign-power-contrasts} reports paired
 comparisons at two null SDs for all three focus settings. These intervals
 use the same sampled pairs, so they measure the difference directly.
 The calibrated comparison assesses how that difference changes after
@@ -233,57 +247,60 @@ matching null rejection.
 
 \subsection{Power after empirical null calibration}
 
-Figure~\ref{fig:redesign-calibrated-power} and
-Table~\ref{tab:redesign-calibrated-power} use independent null fitting
-to compare rules at approximately 5\% rejection. Null evaluation rates
-range from 0.04926 to 0.04994 at A, 0.04961 to 0.04977 at B, and
-0.04976 to 0.04981 at C. Wald and the fixed reference have identical
-decisions after calibration.
+Calibrating at common MI 0.02 gives approximately 5\% rejection on
+independent samples from that null population. The achieved rates range
+from 4.93\% to 4.99\% across A--C and the four rules. Wald and the
+fixed moment reference have identical calibrated decisions because
+both order samples by \(|T|\). Figure~\ref{fig:redesign-calibrated-power}
+uses these lower-null cutoffs throughout each alternative curve.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{focused_redesign_power_calibrated.pdf}
-\caption{Focused power after independent null calibration; bands show bootstrap uncertainty.}
+\caption{Power after calibration at common MI 0.02; bands show bootstrap uncertainty.}
 \label{fig:redesign-calibrated-power}
 \end{figure}
 
-\begin{table}[!htbp]
-\centering
-\small
-\caption{Calibrated rejection rates and actual MI differences.}
-\label{tab:redesign-calibrated-power}
-\input{figures_rewrite/focused_redesign_calibrated_power}
-\end{table}
-
-Expanded Welch has higher calibrated power at A. At two null SDs its
-rate is 0.36145, compared with 0.32565 for Wald; the paired gain is
-3.580 percentage points, with bootstrap 95\% interval 3.295--3.787.
-The sample-size comparator remains close to calibrated Wald. These
-results show that the sample-dependent MI degrees of freedom can improve
-the ordering of evidence along this population path, beyond reducing
-the nominal false-positive rate.
-
-B also gives higher calibrated power for Expanded Welch, although its
-rejection curve remains distorted. At two SDs, rates are 0.05536 for
-Expanded Welch and 0.04424 for Wald, a gain of 1.112 percentage points
-with interval 1.028--1.194. The initial decline remains after calibration:
-matching the null rate does not correct the bias-related power failure.
-
-At C, the calibrated differences are practically small. At two SDs the
-rates are 0.45655 and 0.45611, a gain of 0.044 percentage points with
-interval 0.013--0.071. The selected one-, three- and four-SD comparisons
-also have intervals wholly within the stated one-percentage-point
-tolerance. These are pointwise comparisons for the specified populations.
-They do not imply a power advantage across untested association patterns.
+Expanded Welch gains power under this calibration, but the gain depends
+on the null population used to fit the cutoff. Table~\ref{tab:redesign-calibration-sensitivity}
+holds each alternative fixed and compares lower- and upper-null
+calibration. At A and two null SDs, the gain over Wald changes from
+3.58 percentage points to a loss of 0.76 points. At B and four SDs,
+a 3.92-point gain becomes a 0.39-point loss. A at four SDs retains a
+small positive estimate whose interval includes zero, while B at two
+SDs retains a much smaller gain. At C, both calibrations give differences
+well within the one-percentage-point tolerance.
 
 \begin{table}[!htbp]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
-\caption{Expanded Welch minus each comparator at two null SDs, in percentage points.}
-\label{tab:redesign-power-contrasts}
-\input{figures_rewrite/focused_redesign_power_contrasts}
+\caption{Expanded Welch minus Wald power under two null calibrations.}
+\label{tab:redesign-calibration-sensitivity}
+\input{figures_rewrite/focused_redesign_calibration_sensitivity}
 \end{table}
+
+The table gives gains in percentage points with paired 95\% bootstrap
+intervals including cutoff-fitting uncertainty. The lower null has
+common MI 0.02; the upper null has the MI in the second column.
+At A and two SDs, applying the lower-null calibration to upper-null
+samples gives 11.2\% rejection for Wald and 13.7\% for Expanded Welch.
+Using the upper-null cutoffs instead gives about 4.8--4.9\% there,
+but only 1.63\% for Wald and 0.79\% for Expanded Welch at the lower
+null. Thus the original gain compares rules matched at the lower null,
+with different rejection rates at another equal-MI population.
+The two checks do not establish control over every population satisfying
+equal MI. Appendix~\ref{sec:calibration-sensitivity-results} reports
+all cross-null rates and the full calibrated-power tables.
+
+B's initial fall in rejection remains after calibration at common MI
+0.02. Increasing \(I(Q)\) initially moves the negative true
+difference against its positive estimation bias, reducing \(|T|\) and
+rejection before the curve rises. This behaviour occurs for all the
+compared rules: matching one null rate changes the cutoff but leaves
+the biased estimated difference. The calibration sensitivity and the
+falling-then-rising curve therefore limit the interpretation of its
+apparent power gain.
 
 \section{Association pattern and sample allocation}
 
@@ -401,5 +418,8 @@ approximately 0.0007 nats. Their difference,
 estimates only 2.18 degrees of freedom, both p-values remain close to one.
 Neither test provides evidence that weekend--purchase MI differs between
 the visitor groups, but this does not establish that their population MI
-values are equal. The small statistic, rather than the degrees of freedom
-alone, explains the agreement between the methods here.
+values are equal. The small statistic explains the agreement between the methods here.
+Small estimated degrees of freedom are consistent with the weak
+associations examined near independence in the simulations, even with
+large samples. The population tables are unknown here, so their
+sampling-moment target cannot be checked directly.

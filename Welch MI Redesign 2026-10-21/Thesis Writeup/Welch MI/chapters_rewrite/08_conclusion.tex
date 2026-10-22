@@ -15,18 +15,23 @@ The first research question concerns the approximations used to choose
 those degrees of freedom. The sampling-variance prediction can be accurate
 while the mean estimate remains inflated. Replacing that mean by the
 population variance coefficient then lowers the first-order degrees of
-freedom relative to the target calculated from the sampling moments. Near independence,
-the quadratic sampling contribution explains the scale of the observed
-component estimates and their departure from the first-order values.
+freedom relative to the target calculated from the sampling moments.
+The mean estimated component degrees of freedom can fall further below
+that target, with the size of the discrepancy depending on the population
+and sample size. Near independence, the quadratic sampling contribution
+explains the scale of the observed component estimates and their departure
+from the first-order values.
 
 For the second research question, Expanded Welch improves false-positive
 rates relative to Wald and the sample-size comparator in selected
-small-sample populations, with a nominal power cost. At matched null
-rejection rates, it has higher power along the selected uniform
-\(4\times4\), \(n=20\), and different-skew \(8\times8\), \(n=100\),
-paths. Its calibrated differences from Wald are practically small in
-the different-skew \(4\times4\), \(n=10{,}000\), comparison. The sample-dependent degrees of freedom can therefore improve power
-at comparable false-positive rates along these population paths.
+small-sample populations, with a nominal power cost. Its power advantage
+after calibration at common MI 0.02 is sensitive to the fitting
+population: moving calibration to the upper equal-MI population reverses
+the advantage in some fixed-alternative comparisons. These gains
+therefore describe power at a specified calibration population rather
+than a stable ranking across the equal-MI null. The larger-sample
+\(4\times4\) comparison has practically small differences under both
+calibrations.
 
 The method does not resolve errors in the shared statistic. In sparse
 different-skew tables, MI bias can shift or reverse the estimated
@@ -61,4 +66,5 @@ more accurate comparison of MI differences. Any likelihood-ratio or
 resampling procedure must preserve the equal-MI null even when the
 complete population tables differ. Reversed power paths, additional
 association constructions and broader allocation comparisons would
-establish how far the observed calibrated-power advantage extends.
+assess whether power rankings are stable across a wider range of
+equal-MI populations.

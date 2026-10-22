@@ -119,6 +119,10 @@ Focused power & Settings A--C in Table~\ref{tab:redesign-focus-settings};
 \(I(P)=0.02\), \(I(Q)=0.02+h\sigma_0\),
 \(h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}\).
 The fitted null SDs defining these populations are given below.\\
+Calibration sensitivity & Settings A--C at \(h\in\{2,4\}\);
+upper null \(I(P)=I(Q)=0.02+h\sigma_0\), retaining each setting's
+margins, sample sizes and copying construction. Both calibrations are
+applied to the fixed alternatives in the focused-power row.\\
 Four-cell check & \(k\in\{4,16\}\), same skew and different skew;
 \((I(P),I(Q))\in\{(0.02,0.02),(0.02,0.03)\}\);
 \(n\in\{1000,10000\}\); construction in
@@ -244,7 +248,20 @@ positive finite combined values. Finite zero variance estimates remain
 in the moment calculations even when component degrees of freedom are undefined. Percentile ranges describe the spread of those outputs,
 not confidence intervals for their median. These summaries expose
 estimation problems but do not isolate the causal contribution of
-each problem to rejection.
+each problem to rejection. The figures show a mean-estimate-to-moment-target
+ratio only where all component degrees of freedom are defined. Conditional
+means elsewhere retain their inclusion counts in the numerical summaries.
+
+The dependence diagnostic uses Spearman's rank correlation between
+\(|\widehat\Delta_s-\overline{\Deltahat}|\) and \(\widehat{\mathrm{SE}}_s\),
+where the mean is taken over repetitions with both quantities finite.
+No validity restriction removes finite pairs; included and excluded
+counts accompany the summaries. Centring removes the mean shift so
+the diagnostic measures whether larger deviations accompany larger
+estimated standard errors. With identical populations and equal sample
+sizes, exchanging the two samples reverses the signed difference but
+leaves the standard error unchanged. A zero signed correlation can
+therefore occur by symmetry even when their magnitudes are dependent.
 
 \medskip
 \thesisminiheading{Variability of the estimated MI variance.}
@@ -517,3 +534,32 @@ The fixed reference and Normal Wald
 remain identical after this calibration, so refitting their moment degrees
 of freedom cannot change the calibrated decisions. The population tables
 and effect sizes in nats stay fixed throughout the bootstrap.
+
+
+\subsection{Sensitivity to the calibration population}
+\label{sec:calibration-sensitivity-design}
+
+For each focus setting and \(h=2,4\), retain the alternative
+\((I(P),I(Q))=(0.02,0.02+h\sigma_0)\). The lower fitting null is
+\((0.02,0.02)\); construct the upper null by setting both MI values to
+\(0.02+h\sigma_0\). For each population, solve for its copying
+probability using its original margin vector, retaining the dimensions
+and sample sizes in Table~\ref{tab:redesign-focus-settings}.
+
+Generate 100,000 new fitting pairs and 100,000 independent validation
+pairs for each of these six upper nulls. Compare lower- and upper-null calibration
+on the same original alternative pairs, then apply both sets of cutoffs
+to the original lower-null and new upper-null validation pairs. Invalid
+outputs remain non-rejections in every comparison. Validation concerns
+these two null populations.
+
+For uncertainty in power and its contrasts, use 1,000 joint bootstrap
+repetitions. In each repetition, resample the lower fitting pairs once
+per focus setting and share that resample across its two alternatives.
+Independently resample each upper fitting batch and refit all cutoffs.
+For a fixed alternative, resample the joint eight decisions: four rules
+under each calibration. This retains pairing between rules and between
+calibrations when estimating gains and changes in gains. Use percentile
+95\% intervals, keeping population tables and effect sizes fixed.
+Cross-null rate intervals use the Wilson calculation conditional on
+the fitted cutoffs; they quantify validation sampling uncertainty only.

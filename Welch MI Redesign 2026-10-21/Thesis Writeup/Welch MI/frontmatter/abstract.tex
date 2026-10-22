@@ -15,16 +15,18 @@ MI variance changes between samples. The thesis derives a first-order
 approximation to that variability by accounting for changes in cell
 probabilities, their margins and the resulting MI values.
 
-Simulations first check the moment approximations used in the derivation.
-They then compare false-positive rates and power with Normal Wald and
-a sample-size degrees-of-freedom rule. Independently fitted cutoffs allow
-a further power comparison at approximately equal false-positive rates.
-An online-shopping dataset illustrates interpretation on observed data.
+Simulations check the moment approximations and compare false-positive
+rates and power with Normal Wald and a sample-size degrees-of-freedom
+rule. The mean and sampling-variance approximations have different errors,
+and estimated degrees of freedom can remain well below the target based
+on the actual sampling moments. An online-shopping dataset illustrates
+interpretation on observed data.
 
-The mean and sampling variance approximations can have substantially
-different errors. Expanded Welch improves calibration in selected
-small-sample populations and can improve power at matched false-positive
-rates. However, changing the cutoff does not correct sparse MI bias or
-inaccurate uncertainty estimates. The results identify where MI-specific
-degrees of freedom are useful and the estimation problems that limit
-their application.
+Expanded Welch brings false-positive rates closer to the intended level
+in selected small-sample populations, at a cost in nominal power. Its
+power advantage after empirical calibration depends on which equal-MI
+population supplies the cutoff and reverses in some comparisons when
+that population changes. A larger cutoff also leaves sparse-table bias
+and inaccurate standard errors unresolved. The results support selected
+calibration improvements while identifying estimation errors that limit
+reliable inference.

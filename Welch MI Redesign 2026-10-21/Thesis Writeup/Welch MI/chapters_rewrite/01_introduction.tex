@@ -57,9 +57,9 @@ cutoff than Normal Wald, so it rejects less often. This can reduce false
 positives, but it can also reduce statistical power: the probability of
 rejecting equal MI when the population MI values genuinely differ.
 The evaluation measures the resulting false-positive rates and nominal
-power, then compares power after matching null rejection rates through
-independent simulation. This asks whether the sample-dependent degrees
-of freedom change discrimination as well as the overall rejection rate.
+power, then compares power after matching rejection at specified equal-MI
+populations through independent simulation. Changing the calibration
+population checks whether the resulting power comparison is stable.
 The frequency of usable p-values is reported alongside these rates.
 
 \section{Research questions}
@@ -102,8 +102,9 @@ false-positive rates.
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies
-  when Expanded Welch brings false-positive rates closer to the intended
-  5\% level than Normal Wald, and when estimation errors make both tests
+  selected populations where Expanded Welch brings false-positive rates
+  closer to 5\% than Normal Wald, the dependence of calibrated power on
+  the fitting population, and estimation errors that make both tests
   unreliable.
 \end{enumerate}
 
@@ -121,14 +122,10 @@ degrees-of-freedom rule using two-sided tests at the 5\% significance level.
 An independently fitted reference helps examine the role of the degrees
 of freedom.
 
-The organisation of the thesis follows the development, evaluation and
-interpretation of the two-sample MI test.
 Chapter~\ref{chap:background} reviews the background and literature.
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
-statistic and derive Expanded Welch. Chapter~\ref{chap:design} describes
-the experiment, and Chapter~\ref{chap:results} discusses the results.
-Chapter~\ref{chap:results} also illustrates both tests through a real-world
-example using an online-shopping dataset. Chapters~\ref{chap:discussion}
-and~\ref{chap:conclusion} discuss the implications, limitations and
-conclusions. The appendices provide supporting calculations, experimental
-settings and additional results.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the statistic
+and derive Expanded Welch. Chapters~\ref{chap:design} and~\ref{chap:results}
+present the experiment, results and online-shopping application.
+Chapters~\ref{chap:discussion} and~\ref{chap:conclusion} discuss the
+implications and limitations. The appendices give supporting calculations,
+experimental settings and additional results.

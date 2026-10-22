@@ -2,6 +2,8 @@
 
 The current study is described in `WelchSatterthwaiteMI/README.md`. It contains 366 evaluation and 186 independent fitting settings at 100,000 pairs each. Start with `experiments/redesign_study.py` and `experiments/redesign_report.py`; current evidence is `results/approximation_redesign`. The core and sampling estimators are unchanged, while the experiment adds sample-size and moment-reference arms, component diagnostics and independently calibrated power.
 
+The 22 October sensitivity extension adds six upper-null fitting and six validation batches (1.2 million pairs). `experiments/calibration_sensitivity.py` samples and audits them; `experiments/report_calibration_sensitivity.py` compares both calibrations on the original paired alternatives, bootstraps fitting/evaluation uncertainty and supplies magnitude-dependence diagnostics. Run this reporter before `redesign_report.py`. The current README gives the complete command order. Extension evidence is nested under `results/approximation_redesign/calibration_sensitivity/` and is included here; pilot records are excluded. Its independent audit adds 96 reconstructed pairs to the base audit's 4,416. Historical signed correlations remain in the base diagnostics.
+
 Reproduction commands and validity/calibration rules are given in the current README. The versioned thesis source is supplied separately. For the complete test
 suite, extract it into `Thesis Writeup/Welch MI/` beside the experiment
 folders; the manuscript-consistency tests use its generated tables and

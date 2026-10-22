@@ -59,7 +59,7 @@ observed range is 5.55--8.45 at \(n=100\), 7.50--9.39 at
 \(n=1{,}000\), and 7.60--10.19 at \(n=10{,}000\).
 Figure~\ref{fig:redesign-mean-bias} displays the changes with population
 MI and margins, with 95\% Monte Carlo intervals. The coefficient near
-nine explains the persistent upward shift in the component mean for
+nine describes the persistent upward shift in the component mean for
 these \(4\times4\) populations. Its variation with the population table
 and sample size determines where a fixed \(d/n\) correction would
 leave residual error.
@@ -101,10 +101,15 @@ in Table~\ref{tab:redesign-case-diagnostics}.
 
 In Table~\ref{tab:redesign-case-diagnostics}, bias/SD divides difference
 bias by its observed sampling SD; variance ratio divides mean squared
-standard error by observed difference variance. Corr. is the correlation
-between the difference and its standard error, and skew describes the
-difference estimates. These diagnostics describe the shared statistic
-without identifying separate causal contributions.
+standard error by observed difference variance. Rank corr. is Spearman's
+correlation between the absolute centred difference and its standard
+error, as defined in Appendix~\ref{sec:estimation-diagnostics}; all
+100,000 pairs are included in each row. Skew describes the difference
+estimates. A near-zero signed correlation would not establish independence:
+for example, the same-skew \(2\times2\), \(n=100\) null has signed
+correlation about \(-0.001\) but magnitude rank correlation 0.547.
+These diagnostics describe the shared statistic without identifying
+separate causal contributions.
 
 At A, difference bias is negligible, but
 the estimated variance is only
@@ -152,6 +157,69 @@ around the rejection curves gives pointwise 95\% Wilson intervals.
 \caption{False-positive rates under same-skew margins.}
 \label{fig:redesign-null-same}
 \end{figure}
+
+\section{Calibrated power and sensitivity checks}
+\label{sec:calibration-sensitivity-results}
+
+Table~\ref{tab:redesign-calibrated-power} gives selected points from
+the full power curves calibrated at common MI 0.02. The null rows use
+independent evaluation pairs. Wald and the fixed moment reference have
+identical decisions after calibration. Table~\ref{tab:redesign-power-contrasts}
+gives the paired differences at two null SDs; its calibrated intervals
+include fitting uncertainty through the original curve bootstrap.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Power after calibration at common MI 0.02.}
+\label{tab:redesign-calibrated-power}
+\input{figures_rewrite/focused_redesign_calibrated_power}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Expanded Welch minus each comparator at two null SDs, in percentage points.}
+\label{tab:redesign-power-contrasts}
+\input{figures_rewrite/focused_redesign_power_contrasts}
+\end{table}
+
+Table~\ref{tab:redesign-sensitivity-power-full} holds the alternatives
+fixed and repeats calibration at the upper equal-MI population. The
+lower null is common MI 0.02, while the upper null sets both MI values
+to the alternative's larger value. The sensitivity construction and
+joint bootstrap are specified in
+Appendix~\ref{sec:calibration-sensitivity-design}. Chapter~\ref{chap:results}
+reports the Wald contrasts with intervals in
+Table~\ref{tab:redesign-calibration-sensitivity}; the full numerical
+summaries also retain intervals for rates, paired contrasts with each
+comparator, and changes in those contrasts between calibrations.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Power for fixed alternatives under lower- and upper-null calibration.}
+\label{tab:redesign-sensitivity-power-full}
+\input{figures_rewrite/focused_redesign_sensitivity_power_full}
+\end{table}
+
+Table~\ref{tab:redesign-sensitivity-cross-null} applies each cutoff
+to both null validation populations. Each row uses 100,000 pairs and
+includes invalid outputs as non-rejections. Rates fitted and evaluated
+at the same upper null range from 4.84\% to 5.04\%, whereas transferring
+cutoffs between null populations can change rejection substantially.
+These are population-specific checks. Conditional Wilson intervals
+and validity counts are retained with the numerical evidence.
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Independent null validation under both fitted calibrations.}
+\label{tab:redesign-sensitivity-cross-null}
+\input{figures_rewrite/focused_redesign_sensitivity_cross_null}
+\end{table}
 
 \section{Broader power and estimated direction}
 

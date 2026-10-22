@@ -6,6 +6,8 @@ Current delivery files are in `deliverables/`: Working Draft v3.pdf, Working Dra
 
 Chapters 5/6 present the 366-setting experiment, independent moment fitting, approximation checks and nominal/calibrated power. The full-deliverable revision adds explicit target definitions, derivation steps for moment combination and uncertainty, interval-bearing tables, readable validity panels and quantitative supporting interpretations. Introduction, abstract, discussion, conclusion and experimental appendices have been reconciled with that evidence. Chapter 2 (including Section 2.3), Chapter 3, Chapter 4 and the core Appendix A derivations are preserved.
 
+The 22 October revision adds a six-case calibration-population sensitivity check, makes mean estimated component df relative to sampling-moment targets visible, and replaces the printed signed correlation with centered-magnitude rank correlation. Calibrated-power claims now state their dependence on the fitting null. Chapter 6 contains a compact sensitivity table; Appendix C retains the detailed rates and cross-null validation. The pre-revision source and PDF are saved in `archive/before_calibration_sensitivity_2026-10-22.zip`.
+
 The experiment code and evidence sit under the sibling WelchSatterthwaiteMI folder. All source imports and packaging resolve inside this independent copy.
 
 ## Build an extracted source archive

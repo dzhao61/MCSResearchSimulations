@@ -12,7 +12,9 @@ the mean estimates are about 17--19\% too large. The moment-matching
 formula squares the mean. Replacing that inflated sampling mean by the
 smaller population value therefore lowers the population first-order
 degrees of freedom, even when the sampling-variance approximation is
-reasonably accurate.
+reasonably accurate. Mean estimated component degrees of freedom are
+lower still at A, about 44\% of the moment target, compared with about
+99\% at C.
 
 Near independence, the population first-order variance is small and
 quadratic sampling terms remain substantial. The calculation in
@@ -38,25 +40,33 @@ failed calculations. Across the broad grid, Expanded Welch also reduces
 rates that are already below 5\%. The larger cutoff is useful when
 it corrects excessive rejection and costly when it deepens conservatism.
 
-Nominal power includes these differences in false-positive rates. In the
-uniform \(4\times4\) setting, Expanded Welch has lower nominal power
-than either main comparator. After independently adjusting the null
-rates to approximately 5\%, its power at two null SDs is 3.58 percentage
-points higher than Wald's and 3.63 points higher than the sample-size
-rule's. The sample-dependent degrees of freedom therefore change which
-samples count as stronger evidence along this population path. A fixed
-Student \(t\) reference orders the samples by \(|T|\), as Wald does,
-so their decisions coincide after this calibration.
+The useful null behaviour does not establish that the estimated degrees
+of freedom accurately match denominator moments. At A, the standard
+error understates the observed variation of the MI difference, while
+the low estimated degrees of freedom increase the rejection cutoff.
+These effects can compensate in the null rejection rate. At B, the
+variance ratio exceeds one and the difference is biased, so the same
+explanation cannot be carried over unchanged. Separating these
+contributions would require changing the individual estimates while
+holding the others fixed.
 
-The different-skew \(8\times8\) comparison also gives higher calibrated
-power for Expanded Welch, while retaining an initial decline in rejection
-as the true difference increases. Under the null, the estimated difference
-has positive bias. Increasing \(I(Q)\) makes the true signed difference
-negative and initially moves the estimate towards zero. Adjusting the
-cutoff leaves this distortion of the estimated difference. The power
-gain and the falling-then-rising curve must therefore be interpreted
-together. In the larger-sample \(4\times4\) setting, the calibrated
-power differences are within the stated one-percentage-point tolerance.
+Calibrated power also depends on the equal-MI population used to fit
+the cutoff. At common MI 0.02, Expanded Welch gains power over Wald
+at A and B. Moving calibration to the upper equal-MI population while
+holding the alternative fixed reverses the gain at A and two null SDs,
+and at B and four SDs. Cross-null evaluation shows why matching the
+lower null is insufficient: the calibrated rules can still have different
+false-positive rates at the upper null. The sample-dependent degrees
+of freedom change the ordering of samples, but the observed power gain
+is conditional on the calibration population. At C, the differences
+remain practically small under both calibrations.
+
+B retains its initial decline in rejection as the true MI difference
+increases. Its positive null bias initially offsets the negative change
+in the true difference, moving the estimated difference towards zero.
+Adjusting the cutoff leaves that distortion in all the compared rules.
+Neither a calibrated gain nor a lower nominal rejection rate resolves
+the bias in the shared statistic.
 
 \section{Estimation errors that a cutoff cannot correct}
 
@@ -90,21 +100,19 @@ the populations chosen for that assessment.
 
 \section{Limits of the evidence}
 
-The focused power settings were selected using earlier false-positive
-results. Independent evaluation samples avoid reusing those observations,
-but the resulting power claims still concern selected cases. Each curve
-keeps \(I(P)=0.02\) and increases \(I(Q)\) along the copying family.
-Other directions of change and other association patterns could give
-different comparisons. The allocation check is likewise restricted to
-the specified \(4\times4\) populations and three allocations.
+The power settings were selected using earlier false-positive results
+and evaluated on independent samples. Each curve keeps \(I(P)=0.02\)
+and increases \(I(Q)\) along the copying family; other directions and
+association patterns remain untested. The two calibration checks do not
+bound rejection across the entire equal-MI null. The allocation check
+is restricted to the specified \(4\times4\) populations and three
+allocations.
 
 Both constructions use equal row and column margins within each table
-and align the association locations between populations. Changing from
-copying to a four-cell transfer tests one change in association pattern.
-It leaves untested unequal row and column margins and other locations
-of dependence. The confidence intervals quantify simulation uncertainty
-for the specified populations, with pointwise coverage; they do not
-measure variation over untested populations.
+and align association locations between populations. Unequal margins
+within a table and other locations of dependence remain untested.
+The pointwise confidence intervals quantify simulation uncertainty for
+the specified populations.
 
 The fixed reference and empirical calibration require known simulation
 populations. Replacing sample-dependent degrees of freedom by a fixed
@@ -118,6 +126,4 @@ categories, positive population cell probabilities and positive
 first-order MI variance. Paired samples would require a covariance term
 in the difference variance. Growing alphabets and continuous estimators
 have different approximation errors. Exact independence needs the
-second-order argument in Appendix~\ref{sec:independence-boundary}, and
-the positive-MI sweep shows why proximity to that boundary matters at
-finite sample sizes.
+second-order argument in Appendix~\ref{sec:independence-boundary}.

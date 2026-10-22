@@ -8,6 +8,8 @@ The weak null is H0:I(P)=I(Q), allowing distinct joint probability tables. The r
 
 There are 366 distinct evaluation settings and 186 null fitting settings, each with 100,000 independent table pairs. Total: 55.2 million pairs. All 312 previous settings are rerun, the complete MI sweep adds 30, and focused SD-scaled alternatives add 24. The technical pilot uses separate streams and 200 pairs per batch.
 
+The 22 October calibration sensitivity extension adds six upper equal-MI populations: A/B/C at two and four original null SDs. Each has 100,000 fresh fitting and 100,000 independent validation pairs, adding 1.2 million pairs (56.4 million including the base redesign). Both MI values equal the fixed alternative's larger MI; margins, dimensions, sample sizes and construction are unchanged. Both calibrations use the same saved alternative pairs, and both are validated at both null populations. This measures population-specific calibration, not size control over the composite null.
+
 The 174-setting core checks the mean and sampling variance of Vhat separately, the implied population and plug-in degrees of freedom, and Appendix A.4 predictions. Focus settings A/B/C are 4x4 uniform n20, 8x8 different skew n100 and 4x4 different skew n10000. Null reference degrees of freedom stay fixed across each alternative curve. Independent empirical calibration fits variable-df p thresholds and a common absolute-T threshold for Wald/reference. A 1,000-repetition paired bootstrap includes calibration uncertainty.
 
 Finite zero Vhat values belong in moment calculations. Positive-finite df summaries state inclusion counts. Rejection rates retain all-attempt, method-valid and four-method common-valid denominators. The reference contrast does not isolate estimation error; bias/correlation/shape diagnostics do not establish separate causal effects.
@@ -20,8 +22,12 @@ Install `requirements-thesis.txt` in a Python environment. From the directory co
 python WelchSatterthwaiteMI/experiments/redesign_study.py preflight
 python WelchSatterthwaiteMI/experiments/redesign_study.py pilot --output WelchSatterthwaiteMI/results/redesign_technical_check --workers 4
 python WelchSatterthwaiteMI/experiments/redesign_study.py all --workers 4
+python WelchSatterthwaiteMI/experiments/calibration_sensitivity.py pilot --workers 4
+python WelchSatterthwaiteMI/experiments/calibration_sensitivity.py all --workers 4
+python WelchSatterthwaiteMI/experiments/report_calibration_sensitivity.py --bootstrap 1000 --workers 3
 python WelchSatterthwaiteMI/experiments/redesign_report.py --bootstrap 1000 --workers 3
 python WelchSatterthwaiteMI/experiments/redesign_study.py audit
+python WelchSatterthwaiteMI/experiments/calibration_sensitivity.py audit
 python -m unittest discover -s WelchSatterthwaiteMI/tests -p 'test_*.py'
 ```
 
@@ -31,6 +37,8 @@ manuscript-consistency tests read that source and its generated tables.
 The statistical audit can run from the experiment supplement alone.
 
 All statistical imports resolve to the local copied source directories. Fitting and evaluation outputs, chunk checksums, source identities, populations, summaries, bootstrap intervals and independent audit are in `results/approximation_redesign/`. A run refuses incompatible checkpoints. `redesign_report.py --bootstrap 0` reuses the saved calibration bootstrap while regenerating displays. The manifest study name `null` is literal text and must not be interpreted as a missing value by CSV readers.
+
+The extension is isolated under `results/approximation_redesign/calibration_sensitivity/`; its sampler has a separate immutable fingerprint and never modifies the base sampling kernel or records. Its audit reconstructs 96 pairs independently and checks every new chunk. `power.csv` contains all method rates, paired contrasts and changes in gains, with 1,000-repetition joint bootstrap intervals including fitting uncertainty. The lower fitting resample is shared across each focus setting's alternatives. `cross_null_rates.csv` retains conditional Wilson intervals and validity counts; `dependence_diagnostics.csv` records centered-magnitude Spearman correlations and inclusion counts, leaving original signed diagnostics intact. The base reporter reads this new diagnostic before printing the updated appendix table. Reuse saved sensitivity bootstraps with `report_calibration_sensitivity.py --bootstrap 0`.
 
 The copied thesis builds from `Thesis Writeup/Welch MI/Working Draft v3.tex`. Run its copied `package_deliverables.py`, then `--check`. The copied `main.pdf` and historical working drafts remain snapshot artifacts.
 

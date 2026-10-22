@@ -96,9 +96,11 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py",
                    "redesign_study.py", "redesign_report.py",
+                   "calibration_sensitivity.py", "report_calibration_sensitivity.py",
                    "same_skew_extension_core.py", "run_same_skew_extension.py",
                    "report_same_skew_extension.py"]
     tests = [
+        "test_calibration_sensitivity.py",
         "test_approximation_redesign.py", "test_thesis_consistency.py", "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
         "test_numerical_degeneracy.py", "test_focused_audit_guards.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
