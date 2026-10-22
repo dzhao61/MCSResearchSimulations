@@ -1,0 +1,345 @@
+"""Tables, plots and paired calibration uncertainty for the copied thesis."""
+from __future__ import annotations
+import argparse
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import json
+import re
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+import redesign_study as study
+
+LABELS={'wald':'Normal Wald','size':'Sample-size df','expanded':'Expanded Welch','reference':'Moment reference'}
+COLOURS={'wald':'#28679b','size':'#b46c14','expanded':'#a53648','reference':'#34866f'}
+STYLES={'wald':'-','size':'--','expanded':'-','reference':':'}
+FIGURES=study.ROOT.parent/'Thesis Writeup/Welch MI/figures_rewrite'
+
+
+def bootstrap_focus(task):
+    output,label,focus,configurations,references,repetitions=task
+    by_id={c['configuration_id']:c for c in configurations}
+    selected=focus[focus.focus.eq(label)].sort_values('standardised_difference')
+    null_key=selected.iloc[0].configuration_id
+    ref=references[null_key]
+    fit=study.load_records(output,'fit',null_key)
+    fit_methods,_=study.method_values(fit,by_id[null_key],ref['nu_ref'])
+    prepared=[]
+    for row in selected.itertuples():
+        r=study.load_records(output,'evaluation',row.configuration_id)
+        methods,_=study.method_values(r,by_id[row.configuration_id],ref['nu_ref'])
+        prepared.append((row.configuration_id,r,methods))
+    rng=np.random.default_rng(study.seed_for('calibration-bootstrap',label,0,'paired'))
+    draws=np.zeros((repetitions,len(prepared),4))
+    n=len(fit['statistic']); k=int(study.ALPHA*n)
+    fit_p={m:np.where(v,p,1.) for m,(p,v) in fit_methods.items()}
+    absolute=np.where(fit['base_valid'],abs(fit['statistic']),-np.inf)
+    codes=np.arange(16)
+    membership=((codes[:,None] & (1<<np.arange(4)))>0).astype(float)
+    for b in range(repetitions):
+        indices=rng.integers(0,n,n)
+        critical=np.partition(absolute[indices],n-k-1)[n-k-1]
+        cuts={m:np.partition(fit_p[m][indices],k)[k] for m in ('size','expanded')}
+        for j,(_,r,methods) in enumerate(prepared):
+            code=np.zeros(len(r['statistic']),np.uint8)
+            for bit,m in enumerate(study.METHODS):
+                p,valid=methods[m]
+                yes=valid & ((abs(r['statistic'])>critical) if m in ('wald','reference') else (p<cuts[m]))
+                code |= yes.astype(np.uint8)<<bit
+            counts=np.bincount(code,minlength=16)
+            # Multinomial resampling of joint decisions preserves all paired contrasts.
+            resampled=rng.multinomial(len(code),counts/len(code))
+            draws[b,j]=resampled@membership/len(code)
+    rows=[]
+    for j,(key,_,_) in enumerate(prepared):
+        for bit,m in enumerate(study.METHODS):
+            low,high=np.quantile(draws[:,j,bit],[.025,.975])
+            rows.append(dict(configuration_id=key,focus=label,method=m,low=low,high=high,
+                             mcse=float(np.std(draws[:,j,bit],ddof=1)),bootstrap_repetitions=repetitions))
+        for bit,m in enumerate(study.METHODS):
+            if m=='expanded': continue
+            difference=draws[:,j,2]-draws[:,j,bit]
+            low,high=np.quantile(difference,[.025,.975])
+            rows.append(dict(configuration_id=key,focus=label,method='expanded_minus_'+m,
+                             low=low,high=high,mcse=float(np.std(difference,ddof=1)),
+                             bootstrap_repetitions=repetitions))
+    return rows
+
+
+def save(fig,name,figures):
+    fig.savefig(figures/('focused_redesign_'+name+'.pdf'),bbox_inches='tight')
+    plt.close(fig)
+
+
+def table(path,columns,rows):
+    alignment='l'+'r'*(len(columns)-1)
+    lines=[r'\begin{tabular}{@{}'+alignment+r'@{}}',r'\toprule',' & '.join(columns)+r'\\',r'\midrule']
+    lines += [' & '.join(map(str,row))+r'\\' for row in rows]
+    lines += [r'\bottomrule',r'\end{tabular}']
+    text='\n'.join(lines)+'\n'
+    text=re.sub(r'(?<![\d.])-0(\.0+)(?![\d.])',r'0\1',text)
+    path.write_text(text)
+
+
+def select_case(configs,k,profile,n,mi=.02,construction='copying',iq=None,nq=None):
+    iq=mi if iq is None else iq; nq=n if nq is None else nq
+    subset=configs[configs.k.eq(k)&configs.profile.eq(profile)&configs.n_p.eq(n)&configs.n_q.eq(nq)
+                   &np.isclose(configs.mi_p,mi,atol=1e-12,rtol=0)&np.isclose(configs.mi_q,iq,atol=1e-12,rtol=0)
+                   &configs.construction.eq(construction)]
+    if len(subset)!=1: raise AssertionError('Case selection not unique')
+    return subset.iloc[0].configuration_id
+
+
+def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
+    output=Path(output); figures=Path(figures); figures.mkdir(parents=True,exist_ok=True)
+    configs=pd.read_csv(output/'configurations.csv')
+    # "null" is a study name, not a missing-value marker.
+    displays=pd.read_csv(output/'displays.csv',keep_default_na=False)
+    focus=pd.read_csv(output/'focus.csv')
+    moments=pd.read_csv(output/'moments.csv')
+    rates=pd.read_csv(output/'rates.csv')
+    raw=rates[rates.denominator.eq('all')].set_index(['configuration_id','method'])
+    diagnostics=pd.read_csv(output/'diagnostics.csv').set_index('configuration_id')
+    cal=pd.read_csv(output/'calibrated_rates.csv').set_index(['configuration_id','method'])
+    refs=json.loads((output/'references.json').read_text())
+    if 'plugin_variance_ratio_mcse' not in moments:
+        uncertainty={}
+        for key in configs.configuration_id:
+            records=study.load_records(output,'evaluation',key)
+            for side in 'pq':
+                x=records['influence_variance_'+side]
+                tx=records['variance_influence_variance_'+side]
+                n=int(configs.loc[configs.configuration_id.eq(key),'n_'+side].iloc[0])
+                mask=np.isfinite(x)&np.isfinite(tx)
+                x=x[mask]; y=tx[mask]/n
+                mean=x.mean(); variance=np.var(x,ddof=1); prediction=y.mean()
+                influence=(y-prediction)/variance-prediction/variance**2*((x-mean)**2-variance)
+                uncertainty[key,side]=study.mcse(influence)
+        moments['plugin_variance_ratio_mcse']=[uncertainty[r.configuration_id,r.side] for r in moments.itertuples()]
+        moments.to_csv(output/'moments.csv',index=False)
+    plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,
+                         'axes.labelsize':10,'legend.fontsize':9,'pdf.fonttype':42})
+    if bootstrap:
+        rows=[]
+        with ProcessPoolExecutor(max_workers=workers) as pool:
+            tasks=[(str(output),label,focus,configs.to_dict('records'),refs,bootstrap) for label in study.FOCUS]
+            for f in as_completed([pool.submit(bootstrap_focus,t) for t in tasks]):
+                rows.extend(f.result()); print('Completed focused calibration bootstrap',flush=True)
+        pd.DataFrame(rows).to_csv(output/'calibration_bootstrap.csv',index=False)
+    boot=pd.read_csv(output/'calibration_bootstrap.csv').set_index(['configuration_id','method'])
+
+    for profile in study.PROFILES:
+        ids=set(displays[displays.study.eq('null')].configuration_id)
+        fig,axes=plt.subplots(3,2,figsize=(7.1,7.7),sharex=True)
+        for col,side in enumerate('pq'):
+            subset=moments[moments.configuration_id.isin(ids)&moments.profile.eq(profile)&moments.side.eq(side)]
+            for k,colour in zip((2,4,8,16),('#376c9b','#bd7627','#30836e','#a74356')):
+                data=subset[subset.k.eq(k)].sort_values('n')
+                for row,field in enumerate(('mean_ratio','variance_ratio','df_ratio')):
+                    ax=axes[row,col]; ax.plot(data.n,data[field],marker='.',color=colour,label=f'{k} x {k}')
+                    error=data[field+'_mcse']
+                    ax.fill_between(data.n,np.maximum(data[field]-1.96*error,1e-12),data[field]+1.96*error,color=colour,alpha=.10)
+                    if row == 1:
+                        ax.plot(data.n,data.plugin_variance_ratio,ls='--',color=colour,lw=1.1)
+                    ax.set_xscale('log'); ax.set_yscale('log'); ax.axhline(1,color='black',lw=.6)
+            axes[0,col].set_title(side.upper())
+            axes[2,col].set_xlabel('Sample size per population')
+        for row,label in enumerate(('Mean / population V','Predicted / observed variance','First-order / moment df')):
+            axes[row,0].set_ylabel(label)
+        handles,labels=axes[0,0].get_legend_handles_labels()
+        fig.legend(handles,labels,loc='lower center',bbox_to_anchor=(.5,.035),ncol=4)
+        fig.legend([Line2D([0],[0],color='black'),Line2D([0],[0],color='black',ls='--')],
+                   ['Population prediction (middle row)','Mean plug-in prediction (middle row)'],loc='lower center',ncol=2,fontsize=8)
+        fig.tight_layout(rect=(0,.09,1,1)); save(fig,'moments_'+profile,figures)
+
+    association_ids=set(displays[displays.study.eq('association')].configuration_id)
+    for profile in study.PROFILES:
+        for n in (100,1000,10000):
+            fig,axes=plt.subplots(3,2,figsize=(7.1,7.5),sharex=True)
+            for col,side in enumerate('pq'):
+                data=moments[moments.configuration_id.isin(association_ids)&moments.profile.eq(profile)&moments.n.eq(n)&moments.side.eq(side)].sort_values('mi')
+                for row,actual,pred,scale in [(0,'mean','a4_scaled_mean',n),(1,'variance','a4_scaled_variance',n*n)]:
+                    axes[row,col].plot(data.mi,data[actual]*scale,'o-',color='#28679b',label='Observed')
+                    axes[row,col].plot(data.mi,data[pred],'--',color='#b46c14',label='A.4')
+                    if col == 0:
+                        axes[row,col].legend(loc='upper left',fontsize=9,frameon=False)
+                ax=axes[2,col]
+                ax.fill_between(data.mi,data.df_p05,data.df_p95,color='#a53648',alpha=.12)
+                ax.plot(data.mi,data.df_mean,'o-',color='#a53648',label='Mean estimated df')
+                ax.plot(data.mi,data.df_median,':',color='#a53648',label='Median estimated df')
+                ax.plot(data.mi,data.a4_df_mean,'--',color='#a53648',label='A.4 mean df')
+                ax.plot(data.mi,data.nu_mom,'o-',color='#34866f',label='Moment df')
+                ax.plot(data.mi,data.a4_df_mom,'--',color='#34866f',label='A.4 moment df')
+                ax.plot(data.mi,data.nu_fo,':',color='black',label='First-order df')
+                for row in range(3):
+                    axes[row,col].set_xscale('log'); axes[row,col].set_yscale('log')
+                axes[0,col].set_title(side.upper()); axes[2,col].set_xlabel('Population MI (nats)')
+            for row,label in enumerate(('n times mean V estimate','n squared times variance','Component degrees of freedom')):
+                axes[row,0].set_ylabel(label)
+            handles,labels=axes[2,0].get_legend_handles_labels()
+            fig.legend(handles,labels,loc='lower center',ncol=3,fontsize=8)
+            fig.tight_layout(rect=(0,.09,1,1)); save(fig,f'a4_{profile}_{n}',figures)
+
+    fig,axes=plt.subplots(1,3,figsize=(7.1,3.2),sharey=True)
+    for ax,profile in zip(axes,study.PROFILES):
+        for n,colour in zip((100,1000,10000),('#28679b','#b46c14','#34866f')):
+            for side,style in [('p','-'),('q','--')]:
+                data=moments[moments.configuration_id.isin(association_ids)&moments.profile.eq(profile)&moments.n.eq(n)&moments.side.eq(side)].sort_values('mi')
+                ax.plot(data.mi,data.scaled_mean_error,style,color=colour,label=f'n={n}, {side.upper()}')
+                error=1.96*data.scaled_mean_error_mcse
+                ax.fill_between(data.mi,data.scaled_mean_error-error,data.scaled_mean_error+error,color=colour,alpha=.08)
+        ax.axhline(9,color='black',lw=.7); ax.set_xscale('log'); ax.set_title(profile.replace('_',' ')); ax.set_xlabel('MI (nats)')
+    axes[0].set_ylabel('n times mean error in V estimate')
+    fig.legend(*axes[0].get_legend_handles_labels(),loc='lower center',ncol=3,fontsize=8)
+    fig.tight_layout(rect=(0,.16,1,1)); save(fig,'mean_bias',figures)
+
+    null_ids=set(displays[displays.study.eq('null')].configuration_id)
+    for profile in study.PROFILES:
+        fig=plt.figure(figsize=(7.1,6.2))
+        grid=fig.add_gridspec(2,2,hspace=.50,wspace=.28,left=.11,right=.98,top=.94,bottom=.16)
+        first=None
+        for position,k in enumerate((2,4,8,16)):
+            pair=grid[position//2,position%2].subgridspec(2,1,height_ratios=[4,1],hspace=.10)
+            ax=fig.add_subplot(pair[0]); validity_ax=fig.add_subplot(pair[1],sharex=ax)
+            if first is None: first=ax
+            data=configs[configs.configuration_id.isin(null_ids)&configs.profile.eq(profile)&configs.k.eq(k)].sort_values('n_p')
+            for m in study.METHODS:
+                y=[raw.loc[(key,m),'rate'] for key in data.configuration_id]
+                lo=[raw.loc[(key,m),'low'] for key in data.configuration_id]
+                hi=[raw.loc[(key,m),'high'] for key in data.configuration_id]
+                ax.plot(data.n_p,y,color=COLOURS[m],ls=STYLES[m],label=LABELS[m],lw=1.3)
+                ax.fill_between(data.n_p,lo,hi,color=COLOURS[m],alpha=.10)
+            for m in ('wald','expanded'):
+                validity=[raw.loc[(key,m),'valid_count']/100000 for key in data.configuration_id]
+                validity_ax.plot(data.n_p,validity,color=COLOURS[m],lw=1.2)
+            validity_ax.set_ylim(-.05,1.07);validity_ax.set_yticks([0,1]);validity_ax.tick_params(labelsize=8)
+            validity_ax.set_ylabel('Valid',fontsize=9);validity_ax.set_xlabel('Sample size per population',fontsize=9)
+            ax.tick_params(labelbottom=False)
+            ax.axhline(.05,color='black',lw=.6); ax.set_xscale('log'); ax.set_title(f'{k} x {k}')
+            ax.set_ylabel('False-positive rate')
+        fig.legend(*first.get_legend_handles_labels(),loc='lower center',ncol=2)
+        save(fig,'null_'+profile,figures)
+
+    for calibrated in (False,True):
+        fig,axes=plt.subplots(1,3,figsize=(7.1,3.1),sharey=True)
+        source=cal if calibrated else raw
+        for ax,label in zip(axes,study.FOCUS):
+            selected=focus[focus.focus.eq(label)].sort_values('standardised_difference')
+            for m in study.METHODS:
+                if calibrated and m=='reference': continue
+                y=[source.loc[(key,m),'rate'] for key in selected.configuration_id]
+                ax.plot(selected.standardised_difference,y,color=COLOURS[m],ls=STYLES[m],label=LABELS[m])
+                if calibrated:
+                    low=[boot.loc[(key,m),'low'] for key in selected.configuration_id]
+                    high=[boot.loc[(key,m),'high'] for key in selected.configuration_id]
+                    ax.fill_between(selected.standardised_difference,low,high,color=COLOURS[m],alpha=.12)
+            ax.axhline(.05,color='black',lw=.5); ax.set_title(label); ax.set_ylim(0,1)
+            ax.set_xlabel('MI difference / null SD')
+        axes[0].set_ylabel('Calibrated rejection rate' if calibrated else 'Nominal rejection rate')
+        fig.legend(*axes[0].get_legend_handles_labels(),loc='lower center',ncol=2 if not calibrated else 3)
+        fig.tight_layout(rect=(0,.14,1,1)); save(fig,'power_calibrated' if calibrated else 'power',figures)
+
+    for profile in ('same_skew','different_skew'):
+        fig,axes=plt.subplots(2,2,figsize=(7.1,5.3),sharex=True)
+        ids=set(displays[displays.study.eq('detection')].configuration_id)
+        for ax,k in zip(axes.flat,(2,4,8,16)):
+            for n,style in [(1000,'-'),(10000,'--')]:
+                data=configs[configs.configuration_id.isin(ids)&configs.profile.eq(profile)&configs.k.eq(k)&configs.n_p.eq(n)].sort_values('mi_q')
+                for m in ('wald','expanded'):
+                    ax.plot(data.mi_q-data.mi_p,[raw.loc[(key,m),'rate'] for key in data.configuration_id],color=COLOURS[m],ls=style,label=f'{LABELS[m]}, n={n}')
+            ax.set_title(f'{k} x {k}'); ax.set_xlabel('MI difference (nats)'); ax.set_ylabel('Rejection rate'); ax.set_ylim(0,1)
+        fig.legend(*axes[0,0].get_legend_handles_labels(),loc='lower center',ncol=2,fontsize=8)
+        fig.tight_layout(rect=(0,.1,1,1)); save(fig,'broad_power_'+profile,figures)
+
+    cases=[(label,select_case(configs,*spec)) for label,spec in study.FOCUS.items()]
+    cases += [(f'16, {"same" if profile=="same_skew" else "different"}, {n:,}',select_case(configs,16,profile,n))
+              for profile in ('same_skew','different_skew') for n in (1000,10000)]
+    lines=[r'\begin{tabular}{@{}lrr@{}}',r'\toprule']
+    for panel,methods_panel in enumerate((('wald','size'),('expanded','reference'))):
+        if panel: lines.extend([r'\addlinespace[5pt]',r'\midrule'])
+        lines.append('Setting & '+' & '.join(LABELS[m] for m in methods_panel)+r'\\')
+        lines.append(r'\midrule')
+        for label,key in cases:
+            cells=[f'{raw.loc[(key,m),"rate"]:.4f} [{raw.loc[(key,m),"low"]:.4f}, {raw.loc[(key,m),"high"]:.4f}]' for m in methods_panel]
+            lines.append(label+' & '+' & '.join(cells)+r'\\')
+    lines.extend([r'\bottomrule',r'\end{tabular}'])
+    (figures/'focused_redesign_cases_rates.tex').write_text('\n'.join(lines)+'\n')
+    rows=[]
+    for label,key in cases:
+        d=diagnostics.loc[key]
+        rows.append([label,f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{d.delta_se_correlation:.3f}',
+                     f'{d.delta_skewness:.3f}',f'{d.df_median:.2f}',f'{d.reference_df:.2f}'])
+    table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Var. ratio','Corr.','Skew','Median df','Ref. df'],rows)
+    rows=[]
+    for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
+        rows.append([f'{row.focus}: {row.standardised_difference:g}',f'{row.difference_nats:.5f}']+
+                    [f'{cal.loc[(row.configuration_id,m),"rate"]:.4f}' for m in ('wald','size','expanded')])
+    table(figures/'focused_redesign_calibrated_power.tex',['Setting: SD','Nats','Wald/ref.','Size df','Expanded'],rows)
+    paired=pd.read_csv(output/'paired.csv')
+    paired=paired[paired.denominator.eq('all')].set_index(['configuration_id','comparator'])
+    rows=[]
+    for row in focus[focus.standardised_difference.eq(2)].sort_values('focus').itertuples():
+        for other in ('wald','size'):
+            nominal=paired.loc[(row.configuration_id,other)]
+            calibrated=cal.loc[(row.configuration_id,'expanded'),'rate']-cal.loc[(row.configuration_id,other),'rate']
+            ci=boot.loc[(row.configuration_id,'expanded_minus_'+other)]
+            label=f'{row.focus}, {"Wald" if other=="wald" else "size df"}'
+            rows.append([label,f'{100*nominal.difference:+.3f}',f'[{100*nominal.low:+.3f}, {100*nominal.high:+.3f}]',
+                         f'{100*calibrated:+.3f}',f'[{100*ci.low:+.3f}, {100*ci.high:+.3f}]'])
+    table(figures/'focused_redesign_power_contrasts.tex',['Setting, comparator','Nominal','95\\% interval','Calibrated','95\\% interval'],rows)
+    rows=[]
+    for label,key in cases[:3]:
+        r=refs[key]
+        rows.append([label,f'{r["nu_ref"]:.2f}',f'{r["nu_ref_mcse"]:.2f}',f'{r["null_sd"]:.6f}',f'{r["null_sd_mcse"]:.6f}'])
+    table(figures/'focused_redesign_reference_fitting.tex',['Setting','Reference df','MCSE','Null SD (nats)','MCSE (nats)'],rows)
+    rows=[]
+    for label,key in cases:
+        r=refs[key]
+        for side in 'pq':
+            measured=moments[moments.configuration_id.eq(key)&moments.side.eq(side)].iloc[0]
+            rows.append([label+', '+side.upper(),f'{measured.df_mean:.2f}',f'{measured.df_median:.2f}',
+                         f'[{measured.df_p05:.2f}, {measured.df_p95:.2f}]',f'{measured.nu_mom:.2f}',f'{int(measured.df_valid_count):,}'])
+    table(figures/'focused_redesign_component_spread.tex',['Setting, pop.','Mean df','Median df','5th--95th','Moment df','Included'],rows)
+    for study_name in ('allocation','construction'):
+        ids=set(displays[displays.study.eq(study_name)].configuration_id)
+        selected=configs[configs.configuration_id.isin(ids)].sort_values(['k','profile','construction','mi_q','n_p'])
+        if study_name=='construction': selected=selected[selected.mi_p.eq(selected.mi_q)]
+        rows=[]
+        for c in selected.itertuples():
+            profile='Same' if c.profile=='same_skew' else 'Different'
+            label=(f'{profile}, {c.n_p}/{c.n_q}, {abs(c.delta):.2f}' if study_name=='allocation' else
+                   f'{c.k}, {profile}, {"copy" if c.construction=="copying" else "four"}, {c.n_p}')
+            rows.append([label]+[f'{raw.loc[(c.configuration_id,m),"rate"]:.4f}' for m in study.METHODS])
+        table(figures/f'focused_redesign_{study_name}.tex',['Setting','Wald','Size df','Expanded','Reference'],rows)
+    # A compact selection makes component-level numerical comparisons inspectable.
+    selected=[]
+    for mi in (.0001,.02,.05):
+        key=select_case(configs,4,'different_skew',1000,mi=mi)
+        selected.extend(moments[moments.configuration_id.eq(key)].to_dict('records'))
+    rows=[[f'{r["mi"]:g}, {r["side"].upper()}',f'{r["mean_ratio"]:.3f}',f'{r["variance_ratio"]:.3f}',
+           f'{r["plugin_variance_ratio"]:.3f}',f'{r["df_mean"]:.2f}',f'{r["nu_mom"]:.2f}',f'{r["nu_fo"]:.2f}'] for r in selected]
+    table(figures/'focused_redesign_components.tex',['MI, pop.','Mean ratio','Pop. var.','Plug-in var.','Mean df','Moment df','FO df'],rows)
+    evidence={'settings':len(configs),'fitting_settings':len(refs),'evaluation_pairs':len(configs)*100000,
+              'fitting_pairs':len(refs)*100000,'focus_cases':dict(cases),
+              'focus_null_sd':{label:refs[key]['null_sd'] for label,key in json.loads((output/'focus_nulls.json').read_text()).items()},
+              'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])}
+    study.atomic_json(figures/'focused_redesign_evidence.json',evidence)
+    study.atomic_json(output/'report_summary.json',evidence)
+    study.atomic_json(output/'report_provenance.json',{
+        'source_sha256':study.sha(Path(__file__)),
+        'inputs':{name:study.sha(output/name) for name in ['protocol.json','configurations.csv','references.json','rates.csv','moments.csv','calibration_bootstrap.csv','audit.json']},
+        'null_display_settings':len(null_ids),'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])})
+    print(json.dumps(evidence,indent=2),flush=True)
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--output',type=Path,default=study.OUTPUT)
+    p.add_argument('--figures',type=Path,default=FIGURES)
+    p.add_argument('--bootstrap',type=int,default=1000)
+    p.add_argument('--workers',type=int,default=3)
+    a=p.parse_args(); report(a.output,a.figures,a.bootstrap,a.workers)

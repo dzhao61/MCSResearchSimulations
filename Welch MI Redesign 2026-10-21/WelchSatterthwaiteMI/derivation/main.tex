@@ -1,0 +1,1915 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt]{article}
+\usepackage{xcolor}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{titlesec}
+
+\definecolor{MethodBlue}{HTML}{173A5E}
+\definecolor{LinkBlue}{HTML}{1E5A8A}
+
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{0.35em}
+\setlength{\emergencystretch}{3em}
+\setlength{\headheight}{14pt}
+\raggedbottom
+
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries\color{MethodBlue}}
+  {}{0pt}{}
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries\color{MethodBlue}}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{1.4em}
+\titlespacing*{\subsection}{0pt}{2.2em}{0.8em}
+
+\let\originalsection\section
+\renewcommand{\section}{\clearpage\originalsection}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Expanded Welch--Satterthwaite MI}
+\fancyhead[R]{\small Full derivation}
+\fancyfoot[C]{\thepage}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \hypersetup{pageanchor=false}
+  \begin{titlepage}
+  \centering
+  \vspace*{0.17\textheight}
+  {\color{MethodBlue}\Huge\bfseries\@title\par}
+  \vspace{2.5em}
+  {\Large\normalfont\@author\par}
+  \vspace{1.25em}
+  {\large\normalfont\@date\par}
+  \vfill
+  \rule{0.72\textwidth}{0.6pt}
+  \par\vspace{1em}
+  \large Textbook-style mathematical derivation
+  \end{titlepage}
+  \hypersetup{pageanchor=true}
+}
+\makeatother
+
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Full Derivation of the Expanded Welch-Satterthwaite Mutual Information Test},
+  pdfauthor={Daniel Zhao},
+  colorlinks=true,
+  linkcolor={MethodBlue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={LinkBlue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Full Derivation of the Expanded Welch-Satterthwaite Mutual
+Information Test}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Two Independent Discrete Populations}
+\author{Daniel Zhao}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{Purpose}\label{purpose}
+
+This chapter derives a deterministic test for comparing the mutual
+information of two independent discrete populations. The null hypothesis
+is
+
+\begin{equation}
+H_0:I(P)=I(Q).
+\end{equation}
+
+The construction follows the broad logic of Welch's test:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  estimate the difference between two population quantities;
+\item
+  divide that difference by its estimated standard error;
+\item
+  account for uncertainty in the estimated standard error by using a
+  Student distribution with Satterthwaite effective degrees of freedom.
+\end{enumerate}
+
+The important difference is that mutual information is a nonlinear
+functional of a complete joint probability table. Its variance estimator
+is therefore not an ordinary sample variance. The expanded method
+derives the first-order sampling uncertainty of that complete variance
+functional and uses it to calculate MI-specific component degrees of
+freedom.
+
+The derivation below is written for natural logarithms, so MI is
+measured in nats.
+
+\section{1. Statistical Setting}\label{statistical-setting}
+
+Let
+
+\begin{equation}
+Z_1^{(P)},\ldots,Z_{n_P}^{(P)}\overset{\mathrm{iid}}{\sim}P,
+\qquad
+Z_1^{(Q)},\ldots,Z_{n_Q}^{(Q)}\overset{\mathrm{iid}}{\sim}Q,
+\end{equation}
+
+where every observation is a pair
+
+\begin{equation}
+Z=(X,Y)\in\{1,\ldots,r\}\times\{1,\ldots,c\}.
+\end{equation}
+
+The two samples are independent. Write the population cell probabilities
+as
+
+\begin{equation}
+p_{ij}=\Pr_P(X=i,Y=j),
+\qquad
+q_{ij}=\Pr_Q(X=i,Y=j).
+\end{equation}
+
+For population \(P\), define the marginal probabilities
+
+\begin{equation}
+p_{i+}=\sum_{j=1}^{c}p_{ij},
+\qquad
+p_{+j}=\sum_{i=1}^{r}p_{ij}.
+\end{equation}
+
+The corresponding definitions apply to \(Q\).
+
+The regular derivation assumes a fixed finite alphabet and positive
+population support:
+
+\begin{equation}
+p_{ij}>0,
+\qquad
+q_{ij}>0
+\end{equation}
+
+for all modelled cells. This makes the logarithms and derivatives below
+well-defined. Section 16 explains what changes when observed cells are
+empty or the population is at independence.
+
+\section{2. Mutual Information as a
+Functional}\label{mutual-information-as-a-functional}
+
+For a distribution \(P\), define the local-information score of cell
+\((i,j)\) by
+
+\begin{equation}
+\ell_P(i,j)
+=\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right).
+\end{equation}
+
+The population mutual information is
+
+\begin{equation}
+\begin{aligned}
+I(P)
+&=\sum_{i=1}^{r}\sum_{j=1}^{c}
+p_{ij}\log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)\\
+&=\operatorname E_P\{\ell_P(X,Y)\}.
+\end{aligned}
+\end{equation}
+
+For notational convenience, write
+
+\begin{equation}
+\mu_P=I(P).
+\end{equation}
+
+The subscript on \(\ell_P\) matters. The score is not a fixed value
+attached to a cell independently of the distribution. If \(P\) changes,
+the joint probability, both relevant marginal probabilities, and
+therefore the score all change.
+
+\section{3. Plug-In Estimation}\label{plug-in-estimation}
+
+Let \(N_{ij}^{(P)}\) be the observed count in cell \((i,j)\) of the
+first table. Then
+
+\begin{equation}
+n_P=\sum_{i=1}^{r}\sum_{j=1}^{c}N_{ij}^{(P)},
+\qquad
+\widehat p_{ij}=\frac{N_{ij}^{(P)}}{n_P}.
+\end{equation}
+
+The empirical marginals are
+
+\begin{equation}
+\widehat p_{i+}=\sum_{j=1}^{c}\widehat p_{ij},
+\qquad
+\widehat p_{+j}=\sum_{i=1}^{r}\widehat p_{ij}.
+\end{equation}
+
+The plug-in local-information score and plug-in MI are
+
+\begin{equation}
+\widehat\ell_{ij}
+=\log\left(
+\frac{\widehat p_{ij}}
+{\widehat p_{i+}\widehat p_{+j}}
+\right)
+\end{equation}
+
+and
+
+\begin{equation}
+\widehat I(P)
+=\sum_{i=1}^{r}\sum_{j=1}^{c}
+\widehat p_{ij}\widehat\ell_{ij}.
+\end{equation}
+
+Equivalently, if \(\widehat P\) is the empirical distribution, then
+
+\begin{equation}
+\widehat I(P)=I(\widehat P).
+\end{equation}
+
+The same calculations produce \(\widehat I(Q)\) from the second table.
+
+\section{4. Leading Bias Correction}\label{leading-bias-correction}
+
+\subsection{4.1 Bias of plug-in entropy}\label{bias-of-plug-in-entropy}
+
+For a discrete variable with \(k\) positive-probability categories, the
+leading bias of the plug-in entropy estimator is
+
+\begin{equation}
+\operatorname E(\widehat H)-H
+=-\frac{k-1}{2n}+O(n^{-2}).
+\end{equation}
+
+Mutual information can be written as
+
+\begin{equation}
+I(X;Y)=H(X)+H(Y)-H(X,Y).
+\end{equation}
+
+Under full support, \(X\) has \(r\) categories, \(Y\) has \(c\)
+categories, and the joint variable \((X,Y)\) has \(rc\) categories.
+Applying the entropy bias formula to these three terms gives
+
+\begin{equation}
+\begin{aligned}
+\operatorname{Bias}(\widehat I)
+&\approx
+-\frac{r-1}{2n}
+-\frac{c-1}{2n}
+-\left(-\frac{rc-1}{2n}\right)\\
+&=\frac{rc-r-c+1}{2n}\\
+&=\frac{(r-1)(c-1)}{2n}.
+\end{aligned}
+\end{equation}
+
+Define
+
+\begin{equation}
+d=(r-1)(c-1).
+\end{equation}
+
+\subsection{4.2 Bias-corrected MI
+difference}\label{bias-corrected-mi-difference}
+
+The leading-bias-corrected estimators are
+
+\begin{equation}
+\widehat I_{\mathrm{BC}}(P)
+=\widehat I(P)-\frac{d}{2n_P}
+\end{equation}
+
+and
+
+\begin{equation}
+\widehat I_{\mathrm{BC}}(Q)
+=\widehat I(Q)-\frac{d}{2n_Q}.
+\end{equation}
+
+The estimated population difference is
+
+\begin{equation}
+\widehat\Delta_{\mathrm{BC}}
+=\widehat I_{\mathrm{BC}}(P)
+-\widehat I_{\mathrm{BC}}(Q).
+\end{equation}
+
+Expanding this expression gives
+
+\begin{equation}
+\widehat\Delta_{\mathrm{BC}}
+=\widehat I(P)-\widehat I(Q)
+-\frac{d}{2n_P}+\frac{d}{2n_Q}.
+\end{equation}
+
+For fixed table dimensions and fixed sample sizes, the correction terms
+are constants. They change the estimated difference but do not add
+sampling variance and do not change the influence function derived next.
+
+\section{5. Deriving the Influence Function of
+MI}\label{deriving-the-influence-function-of-mi}
+
+\subsection{5.1 Contaminate one cell}\label{contaminate-one-cell}
+
+Fix a cell \(z=(x,y)\). Define a path of distributions
+
+\begin{equation}
+P_\varepsilon
+=(1-\varepsilon)P+\varepsilon\delta_z,
+\end{equation}
+
+where \(\delta_z\) places probability one on cell \(z\). At
+\(\varepsilon=0\) the distribution is \(P\). Increasing \(\varepsilon\)
+moves a small amount of probability toward cell \((x,y)\) while
+preserving total probability one.
+
+For an arbitrary cell \((i,j)\),
+
+\begin{equation}
+p_{ij}(\varepsilon)
+=(1-\varepsilon)p_{ij}
++\varepsilon\mathbf 1\{i=x,j=y\}.
+\end{equation}
+
+Therefore,
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}
+=\mathbf 1\{i=x,j=y\}-p_{ij}.
+\end{equation}
+
+Summing over columns gives
+
+\begin{equation}
+p_{i+}(\varepsilon)
+=(1-\varepsilon)p_{i+}
++\varepsilon\mathbf 1\{i=x\},
+\end{equation}
+
+so
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}p_{i+}(\varepsilon)
+\right|_{\varepsilon=0}
+=\mathbf 1\{i=x\}-p_{i+}.
+\end{equation}
+
+Likewise,
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}p_{+j}(\varepsilon)
+\right|_{\varepsilon=0}
+=\mathbf 1\{j=y\}-p_{+j}.
+\end{equation}
+
+\subsection{5.2 Differentiate the local-information
+score}\label{differentiate-the-local-information-score}
+
+Under \(P_\varepsilon\), the score of cell \((i,j)\) is
+
+\begin{equation}
+\ell_{P_\varepsilon}(i,j)
+=\log p_{ij}(\varepsilon)
+-\log p_{i+}(\varepsilon)
+-\log p_{+j}(\varepsilon).
+\end{equation}
+
+Use
+
+\begin{equation}
+\frac{\mathrm d}{\mathrm d\varepsilon}\log u(\varepsilon)
+=\frac{u'(\varepsilon)}{u(\varepsilon)}.
+\end{equation}
+
+The derivative of the joint-probability term at zero is
+
+\begin{equation}
+\begin{aligned}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}\log p_{ij}(\varepsilon)
+\right|_{\varepsilon=0}
+&=\frac{\mathbf 1\{i=x,j=y\}-p_{ij}}{p_{ij}}\\
+&=\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}-1.
+\end{aligned}
+\end{equation}
+
+Similarly,
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}\log p_{i+}(\varepsilon)
+\right|_{\varepsilon=0}
+=\frac{\mathbf 1\{i=x\}}{p_{i+}}-1
+\end{equation}
+
+and
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}\log p_{+j}(\varepsilon)
+\right|_{\varepsilon=0}
+=\frac{\mathbf 1\{j=y\}}{p_{+j}}-1.
+\end{equation}
+
+Subtracting the two marginal derivatives from the joint derivative gives
+
+\begin{equation}
+\boxed{
+\dot\ell_P(i,j;z)
+=
+\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+-\frac{\mathbf 1\{i=x\}}{p_{i+}}
+-\frac{\mathbf 1\{j=y\}}{p_{+j}}
++1,
+}
+\end{equation}
+
+where
+
+\begin{equation}
+\dot\ell_P(i,j;z)
+=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\ell_{P_\varepsilon}(i,j)
+\right|_{\varepsilon=0}.
+\end{equation}
+
+\subsection{5.3 A derivative rule for distribution-dependent
+expectations}\label{a-derivative-rule-for-distribution-dependent-expectations}
+
+Suppose
+
+\begin{equation}
+F(P_\varepsilon)
+=\sum_{i,j}p_{ij}(\varepsilon)h_{P_\varepsilon}(i,j),
+\end{equation}
+
+where both the probabilities and the values \(h_{P_\varepsilon}\) depend
+on \(\varepsilon\). The product rule gives
+
+\begin{equation}
+\begin{aligned}
+\left.\frac{\mathrm d}{\mathrm d\varepsilon}F(P_\varepsilon)
+\right|_{\varepsilon=0}
+={}&\sum_{i,j}
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]h_P(i,j)\\
+&+\sum_{i,j}p_{ij}\dot h_P(i,j;z).
+\end{aligned}
+\end{equation}
+
+The first sum is
+
+\begin{equation}
+h_P(x,y)-\operatorname E_P\{h_P(X,Y)\}.
+\end{equation}
+
+Therefore,
+
+\begin{equation}
+\boxed{
+\operatorname{IF}_{F,P}(z)
+=h_P(z)-\operatorname E_P(h_P)
++\operatorname E_P\{\dot h_P(Z;z)\}.
+}
+\end{equation}
+
+The last term is essential whenever the quantity being averaged changes
+with the underlying distribution.
+
+\subsection{5.4 Apply the rule to MI}\label{apply-the-rule-to-mi}
+
+For MI, take
+
+\begin{equation}
+h_P(i,j)=\ell_P(i,j).
+\end{equation}
+
+We first evaluate the expectation of the score derivative:
+
+\begin{equation}
+\begin{aligned}
+\operatorname E_P\{\dot\ell_P(Z;z)\}
+={}&\sum_{i,j}p_{ij}
+\left[
+\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+-\frac{\mathbf 1\{i=x\}}{p_{i+}}
+-\frac{\mathbf 1\{j=y\}}{p_{+j}}
++1
+\right]\\
+={}&1
+-\frac{\sum_j p_{xj}}{p_{x+}}
+-\frac{\sum_i p_{iy}}{p_{+y}}
++\sum_{i,j}p_{ij}\\
+={}&1-1-1+1\\
+={}&0.
+\end{aligned}
+\end{equation}
+
+The derivative rule therefore yields
+
+\begin{equation}
+\begin{aligned}
+\operatorname{IF}_{I,P}(x,y)
+&=\ell_P(x,y)-\operatorname E_P(\ell_P)+0\\
+&=\ell_P(x,y)-\mu_P.
+\end{aligned}
+\end{equation}
+
+Define
+
+\begin{equation}
+\boxed{
+\psi_P(x,y)=\ell_P(x,y)-\mu_P.
+}
+\end{equation}
+
+This is the influence function of mutual information.
+
+\subsection{5.5 First-order sampling variance of plug-in
+MI}\label{first-order-sampling-variance-of-plug-in-mi}
+
+The empirical distribution satisfies a first-order functional expansion:
+
+\begin{equation}
+I(\widehat P)-I(P)
+=\frac{1}{n_P}\sum_{k=1}^{n_P}\psi_P(Z_k^{(P)})
++o_p(n_P^{-1/2}).
+\end{equation}
+
+Because
+
+\begin{equation}
+\operatorname E_P\{\psi_P(Z)\}=0,
+\end{equation}
+
+the central limit theorem gives
+
+\begin{equation}
+\sqrt{n_P}\left\{\widehat I(P)-I(P)\right\}
+\overset{d}{\longrightarrow}
+N\{0,V(P)\},
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{aligned}
+V(P)
+&=\operatorname{Var}_P\{\psi_P(Z)\}\\
+&=\operatorname E_P\left[\{\ell_P(Z)-\mu_P\}^2\right].
+\end{aligned}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+\operatorname{Var}\{\widehat I(P)\}
+\approx\frac{V(P)}{n_P}.
+\end{equation}
+
+The bias correction in Section 4 is a fixed constant at a given sample
+size, so it has the same first-order variance:
+
+\begin{equation}
+\operatorname{Var}\{\widehat I_{\mathrm{BC}}(P)\}
+\approx\frac{V(P)}{n_P}.
+\end{equation}
+
+\section{6. The Two-Sample Standardized
+Statistic}\label{the-two-sample-standardized-statistic}
+
+Define the corresponding influence variance \(V(Q)\) for the second
+population. Independence of the two samples implies
+
+\begin{equation}
+\operatorname{Var}(\widehat\Delta_{\mathrm{BC}})
+\approx
+\frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
+\end{equation}
+
+To estimate \(V(P)\), define
+
+\begin{equation}
+m_{2,P}=\operatorname E_P\{\ell_P(Z)^2\}.
+\end{equation}
+
+Since \(\mu_P=\operatorname E_P(\ell_P)\),
+
+\begin{equation}
+V(P)=m_{2,P}-\mu_P^2.
+\end{equation}
+
+Its plug-in estimate is
+
+\begin{equation}
+\begin{aligned}
+\widehat V_P
+&=\sum_{i,j}\widehat p_{ij}
+\left(\widehat\ell_{ij}-\widehat I(P)\right)^2\\
+&=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij}^2
+-\widehat I(P)^2.
+\end{aligned}
+\end{equation}
+
+Define \(\widehat V_Q\) analogously. The two estimated contributions to
+the variance of the difference are
+
+\begin{equation}
+a=\frac{\widehat V_P}{n_P},
+\qquad
+b=\frac{\widehat V_Q}{n_Q}.
+\end{equation}
+
+The estimated standard error is
+
+\begin{equation}
+\widehat{\operatorname{SE}}
+=\sqrt{a+b}
+=\sqrt{
+\frac{\widehat V_P}{n_P}
++\frac{\widehat V_Q}{n_Q}
+}.
+\end{equation}
+
+The standardized statistic is
+
+\begin{equation}
+\boxed{
+T
+=\frac{\widehat\Delta_{\mathrm{BC}}}
+{\sqrt{\widehat V_P/n_P+\widehat V_Q/n_Q}}.
+}
+\end{equation}
+
+If \(V(P)\) and \(V(Q)\) were known, a standard normal reference would
+follow from the two independent asymptotic expansions. In practice, both
+variances are estimated. Expanded Welch-Satterthwaite estimates the
+uncertainty in those variance estimates rather than treating the
+denominator as known.
+
+\section{7. Deriving the Influence Function of the MI
+Variance}\label{deriving-the-influence-function-of-the-mi-variance}
+
+\subsection{7.1 The target variance
+functional}\label{the-target-variance-functional}
+
+Recall that
+
+\begin{equation}
+V(P)=m_{2,P}-\mu_P^2,
+\end{equation}
+
+where
+
+\begin{equation}
+m_{2,P}=\operatorname E_P\{\ell_P(Z)^2\},
+\qquad
+\mu_P=\operatorname E_P\{\ell_P(Z)\}.
+\end{equation}
+
+The goal is to differentiate \(V(P_\varepsilon)\) along the same
+contamination path used in Section 5. Define
+
+\begin{equation}
+g_P(x,y)
+=\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}V(P_\varepsilon)
+\right|_{\varepsilon=0}.
+\end{equation}
+
+This \(g_P\) is the influence function of the complete MI variance
+functional.
+
+\subsection{7.2 Differentiate the second
+moment}\label{differentiate-the-second-moment}
+
+Under \(P_\varepsilon\),
+
+\begin{equation}
+m_2(P_\varepsilon)
+=\sum_{i,j}p_{ij}(\varepsilon)
+\ell_{P_\varepsilon}(i,j)^2.
+\end{equation}
+
+Differentiate using the product rule:
+
+\begin{equation}
+\begin{aligned}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}m_2(P_\varepsilon)
+\right|_{\varepsilon=0}
+={}&\sum_{i,j}
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)^2\\
+&+\sum_{i,j}p_{ij}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\ell_{P_\varepsilon}(i,j)^2
+\right|_{\varepsilon=0}.
+\end{aligned}
+\end{equation}
+
+For the first sum,
+
+\begin{equation}
+\sum_{i,j}
+\left[\mathbf 1\{i=x,j=y\}-p_{ij}\right]\ell_P(i,j)^2
+=\ell_P(x,y)^2-m_{2,P}.
+\end{equation}
+
+For the second sum, the chain rule gives
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\ell_{P_\varepsilon}(i,j)^2
+\right|_{\varepsilon=0}
+=2\ell_P(i,j)\dot\ell_P(i,j;z).
+\end{equation}
+
+Therefore,
+
+\begin{equation}
+\operatorname{IF}_{m_2,P}(x,y)
+=\ell_P(x,y)^2-m_{2,P}
++2\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z).
+\end{equation}
+
+\subsection{7.3 Evaluate the score-derivative
+sum}\label{evaluate-the-score-derivative-sum}
+
+Substitute the expression for \(\dot\ell_P\):
+
+\begin{equation}
+\begin{aligned}
+&\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z)\\
+={}&\sum_{i,j}p_{ij}\ell_P(i,j)
+\left[
+\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+-\frac{\mathbf 1\{i=x\}}{p_{i+}}
+-\frac{\mathbf 1\{j=y\}}{p_{+j}}
++1
+\right].
+\end{aligned}
+\end{equation}
+
+Evaluate the four terms separately.
+
+The cell term is
+
+\begin{equation}
+\sum_{i,j}p_{ij}\ell_P(i,j)
+\frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+=\ell_P(x,y).
+\end{equation}
+
+The row term is
+
+\begin{equation}
+\begin{aligned}
+\sum_{i,j}p_{ij}\ell_P(i,j)
+\frac{\mathbf 1\{i=x\}}{p_{i+}}
+&=\frac{1}{p_{x+}}\sum_j p_{xj}\ell_P(x,j)\\
+&=\operatorname E_P\{\ell_P(X,Y)\mid X=x\}.
+\end{aligned}
+\end{equation}
+
+Define
+
+\begin{equation}
+R_P(x)
+=\operatorname E_P\{\ell_P(X,Y)\mid X=x\}.
+\end{equation}
+
+The column term is
+
+\begin{equation}
+\begin{aligned}
+\sum_{i,j}p_{ij}\ell_P(i,j)
+\frac{\mathbf 1\{j=y\}}{p_{+j}}
+&=\frac{1}{p_{+y}}\sum_i p_{iy}\ell_P(i,y)\\
+&=\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
+\end{aligned}
+\end{equation}
+
+Define
+
+\begin{equation}
+C_P(y)
+=\operatorname E_P\{\ell_P(X,Y)\mid Y=y\}.
+\end{equation}
+
+Finally, the constant term is
+
+\begin{equation}
+\sum_{i,j}p_{ij}\ell_P(i,j)=\mu_P.
+\end{equation}
+
+Remembering the minus signs on the row and column terms,
+
+\begin{equation}
+\boxed{
+\sum_{i,j}p_{ij}\ell_P(i,j)\dot\ell_P(i,j;z)
+=\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P.
+}
+\end{equation}
+
+It follows that
+
+\begin{equation}
+\boxed{
+\begin{aligned}
+\operatorname{IF}_{m_2,P}(x,y)
+={}&\ell_P(x,y)^2-m_{2,P}\\
+&+2\{\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P\}.
+\end{aligned}
+}
+\end{equation}
+
+\subsection{7.4 Differentiate the squared
+mean}\label{differentiate-the-squared-mean}
+
+From Section 5,
+
+\begin{equation}
+\operatorname{IF}_{\mu,P}(x,y)
+=\ell_P(x,y)-\mu_P.
+\end{equation}
+
+The ordinary chain rule for \(u^2\) gives
+
+\begin{equation}
+\left.
+\frac{\mathrm d}{\mathrm d\varepsilon}
+\mu(P_\varepsilon)^2
+\right|_{\varepsilon=0}
+=2\mu_P\operatorname{IF}_{\mu,P}(x,y).
+\end{equation}
+
+Therefore,
+
+\begin{equation}
+\boxed{
+\operatorname{IF}_{\mu^2,P}(x,y)
+=2\mu_P\{\ell_P(x,y)-\mu_P\}.
+}
+\end{equation}
+
+\subsection{7.5 Combine the derivatives}\label{combine-the-derivatives}
+
+Because
+
+\begin{equation}
+V(P)=m_{2,P}-\mu_P^2,
+\end{equation}
+
+linearity of differentiation gives
+
+\begin{equation}
+g_P(x,y)
+=\operatorname{IF}_{m_2,P}(x,y)
+-\operatorname{IF}_{\mu^2,P}(x,y).
+\end{equation}
+
+Substituting the two expressions above yields
+
+\begin{equation}
+\boxed{
+\begin{aligned}
+g_P(x,y)={}&
+\ell_P(x,y)^2-m_{2,P}\\
+&+2\{\ell_P(x,y)-R_P(x)-C_P(y)+\mu_P\}\\
+&-2\mu_P\{\ell_P(x,y)-\mu_P\}.
+\end{aligned}
+}
+\end{equation}
+
+This is the complete variance-influence formula used by the expanded
+method. No local score is treated as fixed: the middle line accounts for
+changes to the joint cell, its row marginal, its column marginal, and
+the overall MI.
+
+\subsection{7.6 Verify that the influence function has mean
+zero}\label{verify-that-the-influence-function-has-mean-zero}
+
+An influence function should be centred under its defining distribution.
+We can verify this directly.
+
+For the first line,
+
+\begin{equation}
+\operatorname E_P\{\ell_P(Z)^2-m_{2,P}\}=m_{2,P}-m_{2,P}=0.
+\end{equation}
+
+For the middle line, the law of iterated expectations gives
+
+\begin{equation}
+\operatorname E_P\{R_P(X)\}
+=\operatorname E_P[\operatorname E_P\{\ell_P(Z)\mid X\}]
+=\mu_P
+\end{equation}
+
+and
+
+\begin{equation}
+\operatorname E_P\{C_P(Y)\}=\mu_P.
+\end{equation}
+
+Hence,
+
+\begin{equation}
+\begin{aligned}
+\operatorname E_P\{\ell_P(Z)-R_P(X)-C_P(Y)+\mu_P\}
+&=\mu_P-\mu_P-\mu_P+\mu_P\\
+&=0.
+\end{aligned}
+\end{equation}
+
+For the final line,
+
+\begin{equation}
+\operatorname E_P[-2\mu_P\{\ell_P(Z)-\mu_P\}]
+=-2\mu_P(\mu_P-\mu_P)
+=0.
+\end{equation}
+
+Combining the three results,
+
+\begin{equation}
+\boxed{
+\operatorname E_P\{g_P(X,Y)\}=0.
+}
+\end{equation}
+
+\section{8. Sampling Uncertainty of the Estimated MI
+Variance}\label{sampling-uncertainty-of-the-estimated-mi-variance}
+
+The plug-in variance estimator can be written as the empirical
+functional
+
+\begin{equation}
+\widehat V_P=V(\widehat P).
+\end{equation}
+
+Because \(g_P\) is the influence function of \(V\), its first-order
+expansion is
+
+\begin{equation}
+V(\widehat P)-V(P)
+=\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
++o_p(n_P^{-1/2}).
+\end{equation}
+
+Define
+
+\begin{equation}
+\boxed{
+\tau_P^2
+=\operatorname{Var}_P\{g_P(X,Y)\}.
+}
+\end{equation}
+
+Since \(\operatorname E_P(g_P)=0\), this can also be written as
+
+\begin{equation}
+\tau_P^2
+=\operatorname E_P\{g_P(X,Y)^2\}.
+\end{equation}
+
+Taking the variance of the leading term in the expansion gives
+
+\begin{equation}
+\begin{aligned}
+\operatorname{Var}\{\widehat V_P\}
+&\approx
+\operatorname{Var}\left\{
+\frac{1}{n_P}\sum_{k=1}^{n_P}g_P(Z_k^{(P)})
+\right\}\\
+&=\frac{1}{n_P^2}
+\sum_{k=1}^{n_P}\operatorname{Var}_P\{g_P(Z_k^{(P)})\}\\
+&=\frac{1}{n_P^2}(n_P\tau_P^2)\\
+&=\boxed{\frac{\tau_P^2}{n_P}}.
+\end{aligned}
+\end{equation}
+
+The covariance terms vanish because observations within the sample are
+independent.
+
+This result answers the key question: \(\tau_P^2/n_P\) is the
+first-order sampling variance of the estimated MI influence variance
+\(\widehat V_P\).
+
+\section{9. Estimate the Variance-Influence
+Quantities}\label{estimate-the-variance-influence-quantities}
+
+All population quantities are replaced by their empirical versions. For
+the first table, calculate
+
+\begin{equation}
+\widehat\mu_P
+=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij},
+\end{equation}
+
+\begin{equation}
+\widehat m_{2,P}
+=\sum_{i,j}\widehat p_{ij}\widehat\ell_{ij}^2,
+\end{equation}
+
+and
+
+\begin{equation}
+\widehat V_P
+=\widehat m_{2,P}-\widehat\mu_P^2.
+\end{equation}
+
+For each nonempty row and column, calculate
+
+\begin{equation}
+\widehat R_P(i)
+=\frac{\sum_j\widehat p_{ij}\widehat\ell_{ij}}
+{\widehat p_{i+}}
+\end{equation}
+
+and
+
+\begin{equation}
+\widehat C_P(j)
+=\frac{\sum_i\widehat p_{ij}\widehat\ell_{ij}}
+{\widehat p_{+j}}.
+\end{equation}
+
+For every cell, evaluate
+
+\begin{equation}
+\begin{aligned}
+\widehat g_P(i,j)={}&
+\widehat\ell_{ij}^2-\widehat m_{2,P}\\
+&+2\{\widehat\ell_{ij}-\widehat R_P(i)
+-\widehat C_P(j)+\widehat\mu_P\}\\
+&-2\widehat\mu_P
+\{\widehat\ell_{ij}-\widehat\mu_P\}.
+\end{aligned}
+\end{equation}
+
+In exact arithmetic the weighted mean of \(\widehat g_P\) is zero. The
+implementation nevertheless centres it explicitly for numerical
+stability:
+
+\begin{equation}
+\overline g_P
+=\sum_{i,j}\widehat p_{ij}\widehat g_P(i,j).
+\end{equation}
+
+Then
+
+\begin{equation}
+\boxed{
+\widehat\tau_P^2
+=\sum_{i,j}\widehat p_{ij}
+\{\widehat g_P(i,j)-\overline g_P\}^2.
+}
+\end{equation}
+
+Repeat the complete calculation for table \(Q\) to obtain
+\(\widehat V_Q\) and \(\widehat\tau_Q^2\).
+
+\section{10. Satterthwaite Moment Matching for One Variance
+Component}\label{satterthwaite-moment-matching-for-one-variance-component}
+
+\subsection{10.1 The scaled chi-squared
+approximation}\label{the-scaled-chi-squared-approximation}
+
+A chi-squared random variable \(U\sim\chi^2_\nu\) has
+
+\begin{equation}
+\operatorname E(U)=\nu,
+\qquad
+\operatorname{Var}(U)=2\nu.
+\end{equation}
+
+Therefore,
+
+\begin{equation}
+Y=m\frac{U}{\nu}
+\end{equation}
+
+has
+
+\begin{equation}
+\operatorname E(Y)
+=\frac{m}{\nu}\operatorname E(U)
+=m
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{aligned}
+\operatorname{Var}(Y)
+&=\frac{m^2}{\nu^2}\operatorname{Var}(U)\\
+&=\frac{m^2}{\nu^2}(2\nu)\\
+&=\frac{2m^2}{\nu}.
+\end{aligned}
+\end{equation}
+
+Solving the last equation for \(\nu\) gives the general Satterthwaite
+moment-matching rule
+
+\begin{equation}
+\boxed{
+\nu=\frac{2m^2}{\operatorname{Var}(Y)}.
+}
+\end{equation}
+
+\subsection{\texorpdfstring{10.2 Apply the rule to
+\(\widehat V_P\)}{10.2 Apply the rule to \textbackslash widehat V\_P}}\label{apply-the-rule-to-widehat-v_p}
+
+Approximate the positive variance estimator by
+
+\begin{equation}
+\widehat V_P
+\mathrel{\dot\sim}
+V(P)\frac{\chi^2_{\nu_{V,P}}}{\nu_{V,P}}.
+\end{equation}
+
+The scaled chi-squared approximation has
+
+\begin{equation}
+\operatorname E(\widehat V_P)\approx V(P)
+\end{equation}
+
+and
+
+\begin{equation}
+\operatorname{Var}(\widehat V_P)
+\approx\frac{2V(P)^2}{\nu_{V,P}}.
+\end{equation}
+
+Section 8 independently derived
+
+\begin{equation}
+\operatorname{Var}(\widehat V_P)
+\approx\frac{\tau_P^2}{n_P}.
+\end{equation}
+
+Equating the two approximations gives
+
+\begin{equation}
+\frac{2V(P)^2}{\nu_{V,P}}
+=\frac{\tau_P^2}{n_P}.
+\end{equation}
+
+Multiply both sides by \(n_P\nu_{V,P}\):
+
+\begin{equation}
+2n_PV(P)^2
+=\nu_{V,P}\tau_P^2.
+\end{equation}
+
+Divide by \(\tau_P^2\):
+
+\begin{equation}
+\boxed{
+\nu_{V,P}
+=\frac{2n_PV(P)^2}{\tau_P^2}.
+}
+\end{equation}
+
+The empirical component degrees of freedom are therefore
+
+\begin{equation}
+\boxed{
+\widehat\nu_{V,P}
+=\frac{2n_P\widehat V_P^2}{\widehat\tau_P^2}.
+}
+\end{equation}
+
+Likewise,
+
+\begin{equation}
+\boxed{
+\widehat\nu_{V,Q}
+=\frac{2n_Q\widehat V_Q^2}{\widehat\tau_Q^2}.
+}
+\end{equation}
+
+\subsection{10.3 Why dividing by sample size does not change component
+degrees of
+freedom}\label{why-dividing-by-sample-size-does-not-change-component-degrees-of-freedom}
+
+The denominator of \(T\) uses
+
+\begin{equation}
+A=\frac{\widehat V_P}{n_P},
+\end{equation}
+
+not \(\widehat V_P\) itself. From the scaled chi-squared approximation,
+
+\begin{equation}
+A
+\mathrel{\dot\sim}
+\frac{V(P)}{n_P}
+\frac{\chi^2_{\nu_{V,P}}}{\nu_{V,P}}.
+\end{equation}
+
+Only the scale has changed. The chi-squared degrees of freedom remain
+\(\nu_{V,P}\). The same argument applies to
+
+\begin{equation}
+B=\frac{\widehat V_Q}{n_Q}.
+\end{equation}
+
+\section{11. Combine the Two Variance
+Components}\label{combine-the-two-variance-components}
+
+The estimated squared standard error is
+
+\begin{equation}
+S^2=A+B
+=\frac{\widehat V_P}{n_P}
++\frac{\widehat V_Q}{n_Q}.
+\end{equation}
+
+Let the approximate means of the two components be
+
+\begin{equation}
+a_0=\frac{V(P)}{n_P},
+\qquad
+b_0=\frac{V(Q)}{n_Q}.
+\end{equation}
+
+Under the component approximations,
+
+\begin{equation}
+\operatorname{Var}(A)
+\approx\frac{2a_0^2}{\nu_{V,P}}
+\end{equation}
+
+and
+
+\begin{equation}
+\operatorname{Var}(B)
+\approx\frac{2b_0^2}{\nu_{V,Q}}.
+\end{equation}
+
+Because the \(P\) and \(Q\) samples are independent, \(A\) and \(B\) are
+independent. Thus,
+
+\begin{equation}
+\begin{aligned}
+\operatorname{Var}(S^2)
+&=\operatorname{Var}(A+B)\\
+&=\operatorname{Var}(A)+\operatorname{Var}(B)\\
+&\approx
+\frac{2a_0^2}{\nu_{V,P}}
++\frac{2b_0^2}{\nu_{V,Q}}.
+\end{aligned}
+\end{equation}
+
+Now approximate the sum by one scaled chi-squared variable:
+
+\begin{equation}
+S^2
+\mathrel{\dot\sim}
+(a_0+b_0)\frac{\chi^2_{\nu}}{\nu}.
+\end{equation}
+
+This approximation has variance
+
+\begin{equation}
+\operatorname{Var}(S^2)
+\approx\frac{2(a_0+b_0)^2}{\nu}.
+\end{equation}
+
+Match the two variance expressions:
+
+\begin{equation}
+\frac{2(a_0+b_0)^2}{\nu}
+=
+\frac{2a_0^2}{\nu_{V,P}}
++\frac{2b_0^2}{\nu_{V,Q}}.
+\end{equation}
+
+Cancel the factor of two:
+
+\begin{equation}
+\frac{(a_0+b_0)^2}{\nu}
+=
+\frac{a_0^2}{\nu_{V,P}}
++\frac{b_0^2}{\nu_{V,Q}}.
+\end{equation}
+
+Solve for \(\nu\):
+
+\begin{equation}
+\nu
+=\frac{(a_0+b_0)^2}
+{a_0^2/\nu_{V,P}+b_0^2/\nu_{V,Q}}.
+\end{equation}
+
+Finally, replace the population components and component degrees of
+freedom by their estimates:
+
+\begin{equation}
+a=\frac{\widehat V_P}{n_P},
+\qquad
+b=\frac{\widehat V_Q}{n_Q}.
+\end{equation}
+
+The expanded Welch-Satterthwaite degrees of freedom are
+
+\begin{equation}
+\boxed{
+\widehat\nu_{\mathrm{expanded}}
+=\frac{(a+b)^2}
+{a^2/\widehat\nu_{V,P}
++b^2/\widehat\nu_{V,Q}}.
+}
+\end{equation}
+
+\section{12. The Final Reference Distribution and
+P-Value}\label{the-final-reference-distribution-and-p-value}
+
+The expanded method compares the observed statistic
+
+\begin{equation}
+T
+=\frac{\widehat\Delta_{\mathrm{BC}}}{\sqrt{a+b}}
+\end{equation}
+
+with a Student distribution having \(\widehat\nu_{\mathrm{expanded}}\)
+degrees of freedom. The two-sided p-value is
+
+\begin{equation}
+\boxed{
+p_{\mathrm{expanded}}
+=2\left[1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}
+(|T|)\right],
+}
+\end{equation}
+
+where \(F_{t_\nu}\) is the cumulative distribution function of a Student
+random variable with \(\nu\) degrees of freedom.
+
+At significance level \(\alpha\), reject \(H_0:I(P)=I(Q)\) when
+
+\begin{equation}
+p_{\mathrm{expanded}}<\alpha.
+\end{equation}
+
+Equivalently, reject when
+
+\begin{equation}
+|T|>
+t_{1-\alpha/2,\widehat\nu_{\mathrm{expanded}}}.
+\end{equation}
+
+\section{13. Complete Calculation from Two Count
+Tables}\label{complete-calculation-from-two-count-tables}
+
+For clarity, the entire procedure is collected here without omitting any
+intermediate quantity.
+
+\subsection{Step 1: Convert counts to
+probabilities}\label{step-1-convert-counts-to-probabilities}
+
+For each group \(G\in\{P,Q\}\),
+
+\begin{equation}
+\widehat p^{(G)}_{ij}=\frac{N^{(G)}_{ij}}{n_G}.
+\end{equation}
+
+\subsection{Step 2: Calculate row and column
+marginals}\label{step-2-calculate-row-and-column-marginals}
+
+\begin{equation}
+\widehat p^{(G)}_{i+}=\sum_j\widehat p^{(G)}_{ij},
+\qquad
+\widehat p^{(G)}_{+j}=\sum_i\widehat p^{(G)}_{ij}.
+\end{equation}
+
+\subsection{Step 3: Calculate local-information
+scores}\label{step-3-calculate-local-information-scores}
+
+\begin{equation}
+\widehat\ell^{(G)}_{ij}
+=\log\left(
+\frac{\widehat p^{(G)}_{ij}}
+{\widehat p^{(G)}_{i+}\widehat p^{(G)}_{+j}}
+\right).
+\end{equation}
+
+\subsection{Step 4: Calculate plug-in
+MI}\label{step-4-calculate-plug-in-mi}
+
+\begin{equation}
+\widehat I(G)
+=\sum_{i,j}\widehat p^{(G)}_{ij}
+\widehat\ell^{(G)}_{ij}.
+\end{equation}
+
+\subsection{Step 5: Correct the leading
+bias}\label{step-5-correct-the-leading-bias}
+
+\begin{equation}
+\widehat I_{\mathrm{BC}}(G)
+=\widehat I(G)-\frac{(r-1)(c-1)}{2n_G}.
+\end{equation}
+
+\subsection{Step 6: Form the estimated
+difference}\label{step-6-form-the-estimated-difference}
+
+\begin{equation}
+\widehat\Delta_{\mathrm{BC}}
+=\widehat I_{\mathrm{BC}}(P)
+-\widehat I_{\mathrm{BC}}(Q).
+\end{equation}
+
+\subsection{Step 7: Calculate the first two score
+moments}\label{step-7-calculate-the-first-two-score-moments}
+
+For each group,
+
+\begin{equation}
+\widehat\mu_G
+=\sum_{i,j}\widehat p^{(G)}_{ij}
+\widehat\ell^{(G)}_{ij},
+\end{equation}
+
+\begin{equation}
+\widehat m_{2,G}
+=\sum_{i,j}\widehat p^{(G)}_{ij}
+\left(\widehat\ell^{(G)}_{ij}\right)^2,
+\end{equation}
+
+and
+
+\begin{equation}
+\widehat V_G
+=\widehat m_{2,G}-\widehat\mu_G^2.
+\end{equation}
+
+\subsection{Step 8: Calculate conditional score
+means}\label{step-8-calculate-conditional-score-means}
+
+\begin{equation}
+\widehat R_G(i)
+=\frac{\sum_j\widehat p^{(G)}_{ij}
+\widehat\ell^{(G)}_{ij}}
+{\widehat p^{(G)}_{i+}},
+\end{equation}
+
+\begin{equation}
+\widehat C_G(j)
+=\frac{\sum_i\widehat p^{(G)}_{ij}
+\widehat\ell^{(G)}_{ij}}
+{\widehat p^{(G)}_{+j}}.
+\end{equation}
+
+\subsection{Step 9: Calculate the variance influence in each
+cell}\label{step-9-calculate-the-variance-influence-in-each-cell}
+
+\begin{equation}
+\begin{aligned}
+\widehat g_G(i,j)={}&
+\left(\widehat\ell^{(G)}_{ij}\right)^2
+-\widehat m_{2,G}\\
+&+2\left\{
+\widehat\ell^{(G)}_{ij}
+-\widehat R_G(i)-\widehat C_G(j)+\widehat\mu_G
+\right\}\\
+&-2\widehat\mu_G
+\left\{\widehat\ell^{(G)}_{ij}-\widehat\mu_G\right\}.
+\end{aligned}
+\end{equation}
+
+\subsection{Step 10: Calculate variance-influence
+variability}\label{step-10-calculate-variance-influence-variability}
+
+\begin{equation}
+\overline g_G
+=\sum_{i,j}\widehat p^{(G)}_{ij}\widehat g_G(i,j),
+\end{equation}
+
+\begin{equation}
+\widehat\tau_G^2
+=\sum_{i,j}\widehat p^{(G)}_{ij}
+\left\{\widehat g_G(i,j)-\overline g_G\right\}^2.
+\end{equation}
+
+\subsection{Step 11: Calculate component degrees of
+freedom}\label{step-11-calculate-component-degrees-of-freedom}
+
+\begin{equation}
+\widehat\nu_{V,G}
+=\frac{2n_G\widehat V_G^2}{\widehat\tau_G^2}.
+\end{equation}
+
+\subsection{Step 12: Calculate the two standard-error
+components}\label{step-12-calculate-the-two-standard-error-components}
+
+\begin{equation}
+a=\frac{\widehat V_P}{n_P},
+\qquad
+b=\frac{\widehat V_Q}{n_Q}.
+\end{equation}
+
+\subsection{Step 13: Calculate the standard error and
+statistic}\label{step-13-calculate-the-standard-error-and-statistic}
+
+\begin{equation}
+\widehat{\operatorname{SE}}=\sqrt{a+b},
+\end{equation}
+
+\begin{equation}
+T=\frac{\widehat\Delta_{\mathrm{BC}}}
+{\widehat{\operatorname{SE}}}.
+\end{equation}
+
+\subsection{Step 14: Combine the component degrees of
+freedom}\label{step-14-combine-the-component-degrees-of-freedom}
+
+\begin{equation}
+\widehat\nu_{\mathrm{expanded}}
+=\frac{(a+b)^2}
+{a^2/\widehat\nu_{V,P}
++b^2/\widehat\nu_{V,Q}}.
+\end{equation}
+
+\subsection{Step 15: Calculate the two-sided
+p-value}\label{step-15-calculate-the-two-sided-p-value}
+
+\begin{equation}
+p_{\mathrm{expanded}}
+=2\left[1-F_{t_{\widehat\nu_{\mathrm{expanded}}}}(|T|)\right].
+\end{equation}
+
+\section{14. Interpretation of the Effective Degrees of
+Freedom}\label{interpretation-of-the-effective-degrees-of-freedom}
+
+The component formula is
+
+\begin{equation}
+\widehat\nu_{V,P}
+=\frac{2n_P\widehat V_P^2}{\widehat\tau_P^2}.
+\end{equation}
+
+Its numerator contains sample size and the squared magnitude of the MI
+variance. Its denominator measures how strongly that estimated variance
+changes when probability mass moves among cells.
+
+If the cell sensitivities \(\widehat g_P(i,j)\) are similar, then
+\(\widehat\tau_P^2\) is small. The estimated variance is relatively
+stable, the component degrees of freedom are large, and the Student
+reference is close to a normal reference.
+
+If a small number of cells have unusually large sensitivities, then
+\(\widehat\tau_P^2\) is large. The estimated variance is less stable,
+the component degrees of freedom are smaller, and the Student reference
+develops heavier tails. For a fixed observed \(|T|\), heavier tails
+produce a larger, more cautious p-value.
+
+This mechanism is table-dependent. Unlike the simple assignment
+\(\nu_{V,P}=n_P-1\), it can respond to skewness, sparse empirical
+support, and unequal influence among cells.
+
+\section{15. Relationship to Ordinary
+Welch-Satterthwaite}\label{relationship-to-ordinary-welch-satterthwaite}
+
+An ordinary Welch test uses sample variances whose exact scaled
+chi-squared distributions are available under normal sampling. A
+conventional component with sample size \(n_P\) is assigned \(n_P-1\)
+degrees of freedom, leading to
+
+\begin{equation}
+\widehat\nu_{\mathrm{simple}}
+=\frac{(a+b)^2}
+{a^2/(n_P-1)+b^2/(n_Q-1)}.
+\end{equation}
+
+Expanded Welch keeps the same Satterthwaite combination but replaces the
+ordinary component degrees of freedom with quantities derived from the
+MI variance functional:
+
+\begin{equation}
+n_P-1
+\quad\longrightarrow\quad
+\widehat\nu_{V,P}
+=\frac{2n_P\widehat V_P^2}{\widehat\tau_P^2},
+\end{equation}
+
+and similarly for \(Q\).
+
+Thus, the expansion is not a different standard error and not a second
+bias correction. It is an MI-specific calculation of how uncertain each
+estimated variance component is.
+
+\section{16. Regularity Conditions and Limits of the
+Derivation}\label{regularity-conditions-and-limits-of-the-derivation}
+
+\subsection{16.1 Fixed finite alphabet}\label{fixed-finite-alphabet}
+
+The asymptotic expansions assume that \(r\) and \(c\) remain fixed as
+the sample sizes increase. The derivation does not establish validity
+when the alphabet grows with sample size.
+
+\subsection{16.2 Positive population
+support}\label{positive-population-support}
+
+The derivatives of \(\log p_{ij}\) require positive population
+probabilities. The mathematical derivation therefore applies to cells in
+the fixed positive support of the population. Structural-zero models
+require a separate support definition and a corresponding bias
+dimension.
+
+In computation, an observed zero-count cell contributes zero to
+probability-weighted sums under the convention \(0\log 0=0\). This keeps
+the plug-in calculation finite, but it does not remove the underlying
+smoothness assumption. Very sparse tables remain a finite-sample stress
+regime rather than a setting in which the approximation becomes exact.
+
+\subsection{16.3 Nondegenerate first-order MI
+variance}\label{nondegenerate-first-order-mi-variance}
+
+At exact independence,
+
+\begin{equation}
+p_{ij}=p_{i+}p_{+j},
+\end{equation}
+
+so
+
+\begin{equation}
+\ell_P(i,j)=0,
+\qquad
+\psi_P(i,j)=0,
+\qquad
+V(P)=0.
+\end{equation}
+
+The first-order normal approximation then degenerates. The statistic in
+this chapter requires a positive combined first-order variance and is
+intended for regular differential-MI comparisons away from this
+degeneracy. A test whose null is independence requires second-order
+theory and is not supplied by this derivation.
+
+\subsection{16.4 Independent samples}\label{independent-samples}
+
+The variance addition and the Satterthwaite combination use independence
+of the \(P\) and \(Q\) samples. Paired, clustered, repeated-measures, or
+otherwise dependent samples require covariance terms and a different
+derivation.
+
+\subsection{16.5 Fixed table dimensions in the bias
+correction}\label{fixed-table-dimensions-in-the-bias-correction}
+
+The implemented leading correction uses
+
+\begin{equation}
+d=(r-1)(c-1)
+\end{equation}
+
+from the configured table dimensions. If categories are selected or
+removed after observing the data, the nominal bias calculation and the
+sampling analysis can change.
+
+\subsection{16.6 The Student reference is an
+approximation}\label{the-student-reference-is-an-approximation}
+
+The derivation establishes first-order moments for the variance
+estimator and uses Satterthwaite moment matching. It does not prove that
+\(\widehat V_P\) is exactly scaled chi-squared. It also does not make
+the MI numerator exactly independent of its estimated denominator.
+
+Consequently,
+
+\begin{equation}
+T\not\equiv t_{\widehat\nu_{\mathrm{expanded}}}
+\end{equation}
+
+as an exact finite-sample identity. The Student distribution is a
+calibrated working reference motivated by the derived variance
+uncertainty. Its finite-sample accuracy must be established empirically.
+
+\subsection{16.7 Numerical validity
+conditions}\label{numerical-validity-conditions}
+
+The calculation requires finite positive values for
+
+\begin{equation}
+\widehat V_P+\widehat V_Q,
+\qquad
+\widehat\tau_P^2,
+\qquad
+\widehat\tau_Q^2,
+\end{equation}
+
+and for the resulting component and combined degrees of freedom. If
+these conditions fail, the implementation reports the expanded result as
+invalid rather than manufacturing a p-value.
+
+\section{17. Computational Complexity}\label{computational-complexity}
+
+Each quantity is obtained by a fixed number of operations over an
+\(r\times c\) table:
+
+\begin{itemize}
+\tightlist
+\item
+  cell probabilities and local scores require \(O(rc)\) work;
+\item
+  row and column reductions require \(O(rc)\) work;
+\item
+  \(\widehat V\), \(\widehat g\), and \(\widehat\tau^2\) require
+  \(O(rc)\) work;
+\item
+  combining the two components requires constant work.
+\end{itemize}
+
+Therefore, the complete two-table method has
+
+\begin{equation}
+\boxed{
+\text{time complexity }O(rc),
+\qquad
+\text{memory complexity }O(rc).
+}
+\end{equation}
+
+No permutations, bootstrap samples, or Monte Carlo tables are required.
+
+\section{18. Correspondence with the
+Implementation}\label{correspondence-with-the-implementation}
+
+The implementation is in
+\href{../src/welch_differential_mi/welch.py}{\texttt{src/welch\_differential\_mi/welch.py}}.
+Its main quantities correspond to the derivation as follows.
+
+{\def\LTcaptype{} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mathematical quantity
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Implementation name
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\widehat I\) & \texttt{plugin\_mi(...)} \\
+\(d\) & \texttt{mi\_df} \\
+\(\widehat\Delta_{\mathrm{BC}}\) & \texttt{delta} \\
+\(\widehat V_P,\widehat V_Q\) & \texttt{variance\_p},
+\texttt{variance\_q} \\
+\(a,b\) & \texttt{component\_p}, \texttt{component\_q} \\
+\(T\) & \texttt{statistic} \\
+\(\widehat R(i)\) & \texttt{row\_score\_mean} \\
+\(\widehat C(j)\) & \texttt{column\_score\_mean} \\
+\(\widehat g(i,j)\) & \texttt{variance\_influence} \\
+\(\widehat\tau^2\) & \texttt{influence\_variance} inside
+\texttt{\_variance\_influence\_component\_df} \\
+\(\widehat\nu_{V,P},\widehat\nu_{V,Q}\) & \texttt{expanded\_df\_p},
+\texttt{expanded\_df\_q} \\
+\(\widehat\nu_{\mathrm{expanded}}\) & \texttt{expanded\_df} \\
+\(p_{\mathrm{expanded}}\) & \texttt{expanded\_p} \\
+\end{longtable}
+}
+
+\section{19. Derivation in One Chain}\label{derivation-in-one-chain}
+
+The complete mathematical chain is
+
+\begin{equation}
+P
+\longrightarrow
+\ell_P
+\longrightarrow
+I(P)=\mu_P
+\longrightarrow
+\psi_P=\ell_P-\mu_P
+\longrightarrow
+V(P)=\operatorname{Var}_P(\psi_P)
+\end{equation}
+
+followed by
+
+\begin{equation}
+V(P)
+\longrightarrow
+g_P=\operatorname{IF}_{V,P}
+\longrightarrow
+\tau_P^2=\operatorname{Var}_P(g_P)
+\longrightarrow
+\nu_{V,P}=\frac{2n_PV(P)^2}{\tau_P^2}.
+\end{equation}
+
+After repeating the chain for \(Q\),
+
+\begin{equation}
+(\nu_{V,P},\nu_{V,Q})
+\longrightarrow
+\nu_{\mathrm{expanded}}
+\longrightarrow
+t_{\nu_{\mathrm{expanded}}}
+\longrightarrow
+p_{\mathrm{expanded}}.
+\end{equation}
+
+The method therefore uses one influence function to estimate the
+sampling variance of MI and a second influence function to estimate the
+sampling uncertainty of that variance. Satterthwaite moment matching
+converts the second uncertainty calculation into the effective degrees
+of freedom used to interpret the standardized MI difference.
+
+\section{References}\label{references}
+
+\begin{itemize}
+\tightlist
+\item
+  Hutcheson, K. (1970). \emph{A Test for Comparing Diversities Based on
+  the Shannon Formula}. Journal of Theoretical Biology, 29, 151-154.
+  \url{https://doi.org/10.1016/0022-5193(70)90124-4}
+\item
+  Satterthwaite, F. E. (1946). \emph{An Approximate Distribution of
+  Estimates of Variance Components}. Biometrics Bulletin, 2, 110-114.
+  \url{https://doi.org/10.2307/3002019}
+\item
+  Welch, B. L. (1947). \emph{The Generalization of Student's Problem
+  When Several Different Population Variances Are Involved}. Biometrika,
+  34, 28-35. \url{https://doi.org/10.1093/biomet/34.1-2.28}
+\end{itemize}
+
+\end{document}

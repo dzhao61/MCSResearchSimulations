@@ -1,0 +1,23 @@
+# This independent copy keeps reproducible experiment results locally.
+# Version the code, input datasets, manuscript figures, final PDF and source ZIP.
+
+# Isolated package extractions, PDF renders, test output and build products.
+/tmp/
+/Thesis Writeup/Welch MI/build_v3/
+
+# Copied historical archives are preserved on disk; the originals remain in
+# the parent workspace and its existing version-control history.
+/Thesis Writeup/Welch MI/archive/
+
+# These multi-gigabyte delivery archives exceed GitHub's regular-file limit.
+/Thesis Writeup/Welch MI/deliverables/*Experiment*Supplement.zip
+
+# Generated experiment outputs can be restored from the evidence supplement or
+# regenerated with the recorded streams. These rules apply only inside this copy.
+**/results/
+/WelchSatterthwaiteMI/results/archive_before_numerical_fix_20261017/
+/PracticalMIExploration/results_before_numerical_fix_20261017/
+/PracticalMIExploration/initial_run/
+/PracticalMIExploration/thesis_application/
+/WelchSatterthwaiteMI/docs/experiments/figures/
+/WelchSatterthwaiteMI/supplementary_displays/

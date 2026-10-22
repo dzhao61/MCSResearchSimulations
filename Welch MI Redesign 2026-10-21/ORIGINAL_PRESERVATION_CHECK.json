@@ -1,0 +1,14 @@
+{
+  "checked_files": 30042,
+  "originals_unchanged": true,
+  "changed_files": [],
+  "protected_copied_sources_and_pdfs_unchanged": [
+    "chapters_rewrite/02_background_literature.tex",
+    "chapters_rewrite/03_problem_baselines.tex",
+    "chapters_rewrite/04_expanded_welch.tex",
+    "appendices_rewrite/A_derivation_details.tex",
+    "main.pdf",
+    "working_draft.pdf",
+    "working_draft.tex"
+  ]
+}

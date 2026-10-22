@@ -1,0 +1,266 @@
+{
+  "oracle_comparisons": 1296,
+  "max_absolute_errors": {
+    "delta": 2.1094237467877974e-15,
+    "variance": 2.275957200481571e-15,
+    "tau": 2.886579864025407e-15,
+    "normal_p": 1.1468603844377867e-13,
+    "expanded_p": 1.1479706074624119e-13
+  },
+  "literal_jackknife_cases": 100,
+  "batch_invariance_settings": 232,
+  "tiny_component_expanded_valid": [
+    {
+      "directory": "focused_study",
+      "id": "setting_0215023cb5e24db0",
+      "k": 4,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 6,
+      "expanded_rejections": 3
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_0ef6fbe72b8d204b",
+      "k": 4,
+      "n_p": 50,
+      "n_q": 50,
+      "count": 1,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_184004595359ce8c",
+      "k": 2,
+      "n_p": 50,
+      "n_q": 50,
+      "count": 219,
+      "expanded_rejections": 2
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_1ac4e5bd0d53462e",
+      "k": 2,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 763,
+      "expanded_rejections": 11
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_249242ae198552d9",
+      "k": 4,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 27,
+      "expanded_rejections": 1
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_26c221867ecd16eb",
+      "k": 2,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 1141,
+      "expanded_rejections": 25
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_30d2a733a1787f72",
+      "k": 2,
+      "n_p": 50,
+      "n_q": 50,
+      "count": 176,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_4259754fa1f8db07",
+      "k": 16,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 513,
+      "expanded_rejections": 138
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_4fc6f7939b73a903",
+      "k": 2,
+      "n_p": 250,
+      "n_q": 250,
+      "count": 1,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_5a3a8d9f314e9e48",
+      "k": 2,
+      "n_p": 100,
+      "n_q": 100,
+      "count": 42,
+      "expanded_rejections": 1
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_60025b0a1ff44f83",
+      "k": 2,
+      "n_p": 50,
+      "n_q": 50,
+      "count": 290,
+      "expanded_rejections": 2
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_60b2f5431f709b2a",
+      "k": 2,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 918,
+      "expanded_rejections": 22
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_62a893cc55e8b425",
+      "k": 8,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 700,
+      "expanded_rejections": 162
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_67c73ec6a7d0d26a",
+      "k": 16,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 592,
+      "expanded_rejections": 74
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_7057d5df404b73a6",
+      "k": 16,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 16,
+      "expanded_rejections": 9
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_79c46c68c54aeec3",
+      "k": 2,
+      "n_p": 100,
+      "n_q": 100,
+      "count": 53,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_82e958ed131c89fd",
+      "k": 2,
+      "n_p": 250,
+      "n_q": 250,
+      "count": 1,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_83387816ccc75ce4",
+      "k": 2,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 3505,
+      "expanded_rejections": 141
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_84993a3f872bee66",
+      "k": 2,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 265,
+      "expanded_rejections": 5
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_8fbb79c01f49da0f",
+      "k": 16,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 38,
+      "expanded_rejections": 9
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_9231fea419be787c",
+      "k": 4,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 377,
+      "expanded_rejections": 56
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_a62926c44d7dee39",
+      "k": 4,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 473,
+      "expanded_rejections": 46
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_adfca03ba32e4120",
+      "k": 8,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 14,
+      "expanded_rejections": 6
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_b2eedef3b397540b",
+      "k": 8,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 26,
+      "expanded_rejections": 4
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_b74f171c8bdd260d",
+      "k": 2,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 1185,
+      "expanded_rejections": 23
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_c02707e3ba1ff711",
+      "k": 8,
+      "n_p": 10,
+      "n_q": 10,
+      "count": 904,
+      "expanded_rejections": 117
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_df73d3a917db0225",
+      "k": 2,
+      "n_p": 100,
+      "n_q": 100,
+      "count": 58,
+      "expanded_rejections": 0
+    },
+    {
+      "directory": "focused_study",
+      "id": "setting_ee7d4e251ececde0",
+      "k": 4,
+      "n_p": 20,
+      "n_q": 20,
+      "count": 14,
+      "expanded_rejections": 2
+    }
+  ]
+}

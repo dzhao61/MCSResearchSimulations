@@ -1,0 +1,885 @@
+{
+  "estimators": [
+    {
+      "bias": {
+        "high": 0.029797528333804744,
+        "low": 0.02939600529879846,
+        "mcse": 0.00010242934566486891,
+        "mean": 0.029596766816301603
+      },
+      "bias_p": {
+        "high": -0.00780519417899207,
+        "low": -0.008078804095321232,
+        "mcse": 6.97984480431534e-05,
+        "mean": -0.00794199913715665
+      },
+      "bias_q": {
+        "high": -0.03739261930073057,
+        "low": -0.03768491260618595,
+        "mcse": 7.456461873861704e-05,
+        "mean": -0.03753876595345826
+      },
+      "configuration_id": "setting_9bdd689bf556c0d0",
+      "correct_direction": null,
+      "mean_difference": 0.029596766816301603,
+      "mean_squared_se": 0.0004074659724333721,
+      "method": "analytic_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.02,
+      "n": 1000,
+      "negative_mi_p": {
+        "count": 2119,
+        "high": 0.11029137976116857,
+        "low": 0.1017599638546475,
+        "rate": 0.10595
+      },
+      "negative_mi_q": {
+        "count": 18938,
+        "high": 0.9499227178146419,
+        "low": 0.9437056403584116,
+        "rate": 0.9469
+      },
+      "observed_sd": 0.01448569698242594,
+      "opposite_direction": null,
+      "opposite_fraction_among_rejections": null,
+      "rejection": {
+        "count": 5044,
+        "high": 0.25826583671271175,
+        "low": 0.24622933635669367,
+        "rate": 0.2522
+      },
+      "repetitions": 20000,
+      "rmse": 0.032951381325740235,
+      "se_variance_ratio": 1.9418360262029621,
+      "se_variance_ratio_interval": [
+        1.9047788426503698,
+        1.9785866786026776
+      ],
+      "true_delta": 0.0,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -0.0009447910922687614,
+        "low": -0.0013663075216128245,
+        "mcse": 0.00010752970136328142,
+        "mean": -0.001155549306940793
+      },
+      "bias_p": {
+        "high": 0.034557552041796356,
+        "low": 0.03423152873973836,
+        "mcse": 8.316920970867381e-05,
+        "mean": 0.03439454039076736
+      },
+      "bias_q": {
+        "high": 0.03568268269053849,
+        "low": 0.03541749670487781,
+        "mcse": 6.76494861379287e-05,
+        "mean": 0.03555008969770815
+      },
+      "configuration_id": "setting_9bdd689bf556c0d0",
+      "correct_direction": null,
+      "mean_difference": -0.001155549306940793,
+      "mean_squared_se": 0.0004074659724333721,
+      "method": "jackknife_fixed_se_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.02,
+      "n": 1000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.015206996202588129,
+      "opposite_direction": null,
+      "opposite_fraction_among_rejections": null,
+      "rejection": {
+        "count": 169,
+        "high": 0.009816363599973111,
+        "low": 0.007272427046783346,
+        "rate": 0.00845
+      },
+      "repetitions": 20000,
+      "rmse": 0.015250457864261843,
+      "se_variance_ratio": 1.7619941881622283,
+      "se_variance_ratio_interval": [
+        1.727406171198519,
+        1.796348386708007
+      ],
+      "true_delta": 0.0,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": 0.030826999291472913,
+        "low": 0.030393395013599698,
+        "mcse": 0.00011061333619214576,
+        "mean": 0.030610197152536305
+      },
+      "bias_p": {
+        "high": -0.007687677785927837,
+        "low": -0.007962377845218572,
+        "mcse": 7.007654573743247e-05,
+        "mean": -0.007825027815573204
+      },
+      "bias_q": {
+        "high": -0.03826792724448511,
+        "low": -0.03860252269173391,
+        "mcse": 8.535598144101994e-05,
+        "mean": -0.03843522496810951
+      },
+      "configuration_id": "setting_ac0ed83bd006d9f6",
+      "correct_direction": {
+        "count": 1,
+        "high": 0.0002831905702260402,
+        "low": 8.826282272974824e-06,
+        "rate": 5e-05
+      },
+      "mean_difference": 0.020610197152536307,
+      "mean_squared_se": 0.0004431220011055333,
+      "method": "analytic_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.03,
+      "n": 1000,
+      "negative_mi_p": {
+        "count": 2069,
+        "high": 0.10774714443140862,
+        "low": 0.09930515936468795,
+        "rate": 0.10345
+      },
+      "negative_mi_q": {
+        "count": 15235,
+        "high": 0.7676035098227927,
+        "low": 0.7557959593018366,
+        "rate": 0.76175
+      },
+      "observed_sd": 0.015643088022226727,
+      "opposite_direction": {
+        "count": 2009,
+        "high": 0.10469304848467846,
+        "low": 0.09636040752775475,
+        "rate": 0.10045
+      },
+      "opposite_fraction_among_rejections": 0.9995024875621891,
+      "rejection": {
+        "count": 2010,
+        "high": 0.1047439593593407,
+        "low": 0.09640947744948691,
+        "rate": 0.1005
+      },
+      "repetitions": 20000,
+      "rmse": 0.03437554562880612,
+      "se_variance_ratio": 1.8108327288249795,
+      "se_variance_ratio_interval": [
+        1.7782627137843539,
+        1.8454021928813917
+      ],
+      "true_delta": -0.01,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -1.3771259884261722e-05,
+        "low": -0.000467688027998226,
+        "mcse": 0.00011579509390662354,
+        "mean": -0.00024072964394124385
+      },
+      "bias_p": {
+        "high": 0.034686376511016144,
+        "low": 0.034360245621654247,
+        "mcse": 8.319665544946338e-05,
+        "mean": 0.034523311066335195
+      },
+      "bias_q": {
+        "high": 0.03492190979722581,
+        "low": 0.03460617162332708,
+        "mcse": 8.054545252518652e-05,
+        "mean": 0.034764040710276445
+      },
+      "configuration_id": "setting_ac0ed83bd006d9f6",
+      "correct_direction": {
+        "count": 544,
+        "high": 0.029546797404035676,
+        "low": 0.02503479189061685,
+        "rate": 0.0272
+      },
+      "mean_difference": -0.010240729643941245,
+      "mean_squared_se": 0.0004431220011055333,
+      "method": "jackknife_fixed_se_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.03,
+      "n": 1000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.016375899225901314,
+      "opposite_direction": {
+        "count": 5,
+        "high": 0.0005851504035326238,
+        "low": 0.00010678963454394949,
+        "rate": 0.00025
+      },
+      "opposite_fraction_among_rejections": 0.009107468123861567,
+      "rejection": {
+        "count": 549,
+        "high": 0.02980678393810939,
+        "low": 0.025274709338515087,
+        "rate": 0.02745
+      },
+      "repetitions": 20000,
+      "rmse": 0.016377259163687145,
+      "se_variance_ratio": 1.6523916784920776,
+      "se_variance_ratio_interval": [
+        1.6196191360893388,
+        1.6850523060894596
+      ],
+      "true_delta": -0.01,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -0.000826759457172496,
+        "low": -0.0009340779081568326,
+        "mcse": 2.737715586335119e-05,
+        "mean": -0.0008804186826646643
+      },
+      "bias_p": {
+        "high": 0.0008239420390675243,
+        "low": 0.0007486465538971684,
+        "mcse": 1.9208031931213234e-05,
+        "mean": 0.0007862942964823464
+      },
+      "bias_q": {
+        "high": 0.0017053447580264462,
+        "low": 0.0016280812002675744,
+        "mcse": 1.9710091265018345e-05,
+        "mean": 0.0016667129791470103
+      },
+      "configuration_id": "setting_f5f1e38301329d37",
+      "correct_direction": null,
+      "mean_difference": -0.0008804186826646643,
+      "mean_squared_se": 1.6078805822777657e-05,
+      "method": "analytic_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.02,
+      "n": 10000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.0038717145121153354,
+      "opposite_direction": null,
+      "opposite_fraction_among_rejections": null,
+      "rejection": {
+        "count": 925,
+        "high": 0.04924891987127887,
+        "low": 0.04342535284963607,
+        "rate": 0.04625
+      },
+      "repetitions": 20000,
+      "rmse": 0.003970461032606453,
+      "se_variance_ratio": 1.0726230804894468,
+      "se_variance_ratio_interval": [
+        1.0514659101398525,
+        1.0943122342671079
+      ],
+      "true_delta": 0.0,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -0.00039502643378415273,
+        "low": -0.0005061289439174634,
+        "mcse": 2.834247707482416e-05,
+        "mean": -0.00045057768885080807
+      },
+      "bias_p": {
+        "high": -0.000980329432467612,
+        "low": -0.0010559221347097398,
+        "mcse": 1.92838526127877e-05,
+        "mean": -0.0010181257835886759
+      },
+      "bias_q": {
+        "high": -0.0005264420942146701,
+        "low": -0.0006086540952610652,
+        "mcse": 2.0972449246529383e-05,
+        "mean": -0.0005675480947378677
+      },
+      "configuration_id": "setting_f5f1e38301329d37",
+      "correct_direction": null,
+      "mean_difference": -0.00045057768885080807,
+      "mean_squared_se": 1.6078805822777657e-05,
+      "method": "jackknife_fixed_se_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.02,
+      "n": 10000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.0040082315470464855,
+      "opposite_direction": null,
+      "opposite_fraction_among_rejections": null,
+      "rejection": {
+        "count": 1014,
+        "high": 0.0538276705998262,
+        "low": 0.04774489300018943,
+        "rate": 0.0507
+      },
+      "repetitions": 20000,
+      "rmse": 0.004033377876225095,
+      "se_variance_ratio": 1.0008020510453761,
+      "se_variance_ratio_interval": [
+        0.9810966410068098,
+        1.021202785628838
+      ],
+      "true_delta": 0.0,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -0.0008820092055514162,
+        "low": -0.0010020786929151712,
+        "mcse": 3.0629971266264025e-05,
+        "mean": -0.0009420439492332937
+      },
+      "bias_p": {
+        "high": 0.000757823803358041,
+        "low": 0.0006831362040726316,
+        "mcse": 1.9052959001379972e-05,
+        "mean": 0.0007204800037153363
+      },
+      "bias_q": {
+        "high": 0.0017094714204650477,
+        "low": 0.0016155764854322203,
+        "mcse": 2.3952789549190652e-05,
+        "mean": 0.001662523952948634
+      },
+      "configuration_id": "setting_3daac21fe02ce348",
+      "correct_direction": {
+        "count": 13984,
+        "high": 0.7055170877737915,
+        "low": 0.6928064050614564,
+        "rate": 0.6992
+      },
+      "mean_difference": -0.010942043949233295,
+      "mean_squared_se": 1.9762444578167583e-05,
+      "method": "analytic_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.03,
+      "n": 10000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.004331732077984879,
+      "opposite_direction": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "opposite_fraction_among_rejections": 0.0,
+      "rejection": {
+        "count": 13984,
+        "high": 0.7055170877737915,
+        "low": 0.6928064050614564,
+        "rate": 0.6992
+      },
+      "repetitions": 20000,
+      "rmse": 0.004432878455652769,
+      "se_variance_ratio": 1.053216102940316,
+      "se_variance_ratio_interval": [
+        1.0343389450903382,
+        1.0762940557308829
+      ],
+      "true_delta": -0.01,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    },
+    {
+      "bias": {
+        "high": -0.0005056899091030951,
+        "low": -0.0006294942409456394,
+        "mcse": 3.1582737714934743e-05,
+        "mean": -0.0005675920750243673
+      },
+      "bias_p": {
+        "high": -0.0010489152276093093,
+        "low": -0.0011239967227952145,
+        "mcse": 1.915344264946555e-05,
+        "mean": -0.0010864559752022619
+      },
+      "bias_q": {
+        "high": -0.00046978733196588414,
+        "low": -0.0005679404683899015,
+        "mcse": 2.503906541429013e-05,
+        "mean": -0.0005188639001778928
+      },
+      "configuration_id": "setting_3daac21fe02ce348",
+      "correct_direction": {
+        "count": 13238,
+        "high": 0.6684245486483029,
+        "low": 0.6553132700767306,
+        "rate": 0.6619
+      },
+      "mean_difference": -0.010567592075024368,
+      "mean_squared_se": 1.9762444578167583e-05,
+      "method": "jackknife_fixed_se_normal",
+      "mi_p": 0.02,
+      "mi_q": 0.03,
+      "n": 10000,
+      "negative_mi_p": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "negative_mi_q": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "observed_sd": 0.004466473601333297,
+      "opposite_direction": {
+        "count": 0,
+        "high": 0.00019203605610462553,
+        "low": 0.0,
+        "rate": 0.0
+      },
+      "opposite_fraction_among_rejections": 0.0,
+      "rejection": {
+        "count": 13238,
+        "high": 0.6684245486483029,
+        "low": 0.6553132700767306,
+        "rate": 0.6619
+      },
+      "repetitions": 20000,
+      "rmse": 0.004502282723876426,
+      "se_variance_ratio": 0.9906291928384658,
+      "se_variance_ratio_interval": [
+        0.9728690213953638,
+        1.012354455231825
+      ],
+      "true_delta": -0.01,
+      "valid_count": 20000,
+      "valid_rate": 1.0
+    }
+  ],
+  "paired": [
+    {
+      "bias_change_jackknife_minus_analytic": {
+        "high": -0.030637591281002678,
+        "low": -0.03086704096548211,
+        "mcse": 5.853308277536525e-05,
+        "mean": -0.030752316123242394
+      },
+      "configuration_id": "setting_9bdd689bf556c0d0",
+      "n": 1000,
+      "rejection_change_jackknife_minus_analytic": {
+        "estimate": -0.24375,
+        "high": -0.23763075436566264,
+        "low": -0.24986924563433735,
+        "mcse": 0.0031220640991517076,
+        "only_analytic": 4981,
+        "only_jackknife": 106
+      },
+      "squared_error_change_jackknife_minus_analytic": {
+        "high": -0.0008404826694709899,
+        "low": -0.0008659514629384427,
+        "mcse": 6.4971411906767265e-06,
+        "mean": -0.0008532170662047163
+      },
+      "true_delta": 0.0
+    },
+    {
+      "bias_change_jackknife_minus_analytic": {
+        "high": -0.03073748351546299,
+        "low": -0.03096437007749211,
+        "mcse": 5.787922500742946e-05,
+        "mean": -0.03085092679647755
+      },
+      "configuration_id": "setting_ac0ed83bd006d9f6",
+      "n": 1000,
+      "rejection_change_jackknife_minus_analytic": {
+        "estimate": -0.07305,
+        "high": -0.06820876432158642,
+        "low": -0.07789123567841359,
+        "mcse": 0.0024700182032722402,
+        "only_analytic": 2004,
+        "only_jackknife": 543
+      },
+      "squared_error_change_jackknife_minus_analytic": {
+        "high": -0.0008996460596893088,
+        "low": -0.0009272809794378054,
+        "mcse": 7.049724425636927e-06,
+        "mean": -0.0009134635195635571
+      },
+      "true_delta": -0.01
+    },
+    {
+      "bias_change_jackknife_minus_analytic": {
+        "high": 0.00043748800252335873,
+        "low": 0.0004221939851043537,
+        "mcse": 3.901535055868646e-06,
+        "mean": 0.0004298409938138562
+      },
+      "configuration_id": "setting_f5f1e38301329d37",
+      "n": 10000,
+      "rejection_change_jackknife_minus_analytic": {
+        "estimate": 0.00445,
+        "high": 0.0061378171619398255,
+        "low": 0.0027621828380601744,
+        "mcse": 0.0008611312050713396,
+        "only_analytic": 104,
+        "only_jackknife": 193
+      },
+      "squared_error_change_jackknife_minus_analytic": {
+        "high": 5.798981335034556e-07,
+        "low": 4.272544284480545e-07,
+        "mcse": 3.893972067739825e-08,
+        "mean": 5.03576280975755e-07
+      },
+      "true_delta": 0.0
+    },
+    {
+      "bias_change_jackknife_minus_analytic": {
+        "high": 0.00038224549504409884,
+        "low": 0.00036665825337375434,
+        "mcse": 3.976337160802158e-06,
+        "mean": 0.0003744518742089266
+      },
+      "configuration_id": "setting_3daac21fe02ce348",
+      "n": 10000,
+      "rejection_change_jackknife_minus_analytic": {
+        "estimate": -0.0373,
+        "high": -0.03433362561606777,
+        "low": -0.04026637438393223,
+        "mcse": 0.0015134563183327675,
+        "only_analytic": 845,
+        "only_jackknife": 99
+      },
+      "squared_error_change_jackknife_minus_analytic": {
+        "high": 7.025997945060706e-07,
+        "low": 5.376768517452092e-07,
+        "mcse": 4.207217927572993e-08,
+        "mean": 6.201383231256399e-07
+      },
+      "true_delta": -0.01
+    }
+  ],
+  "protocol": {
+    "alpha": 0.05,
+    "correction": "Delete-one jackknife of raw plug-in MI replaces the analytic correction.",
+    "diagnostic_source_hash": "955eae9d4d589139635f3ff385f734052d469641ff080d8aaaa2445ea3b9e537",
+    "input_hashes": {
+      "configuration_manifest.csv": "2789cf8f7c4b3a13d7cec597c78dd786636a99ada73a0ae8db72fe1eb1e62d2f",
+      "populations.npz": "e553ef8bd4c8c42d43f0cbfa9dd71843d50564318600d222189cc8ca127ee545",
+      "study_identity.json": "c8f4a808d82de30565584651df1dae25f0c64c18f4b41312deeb7addc3c7c1b4"
+    },
+    "interpretation": "Estimator diagnostic, not an automatically validated new test.",
+    "methods": [
+      "analytic_normal",
+      "jackknife_fixed_se_normal"
+    ],
+    "monte_carlo": {
+      "bootstrap_repetitions": 1000,
+      "mean_intervals": "normal 95%",
+      "rate_intervals": "Wilson 95%",
+      "rejection_contrasts": "paired normal 95%",
+      "variance_ratio_intervals": "paired saved-output percentile bootstrap 95%"
+    },
+    "original_identity": {
+      "alpha": 0.05,
+      "chunk_size": 1000,
+      "count": 20000,
+      "design_digest": "56b2b2d5ef23405b120fe25757f6103b29a1dad694241d74b1c34c8e0e5aa902",
+      "machine": "arm64",
+      "master_seed": 20261006,
+      "numpy": "2.4.4",
+      "phase": "full",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+      "python": "3.13.5",
+      "schema": 1,
+      "scipy": "1.17.1",
+      "source": "21faa6382ee02d887e29d4324379bed622293f294359ee7977dc891f9c45a982"
+    },
+    "original_loader_hash": "297c29087fc4714440657e7efe9f20678d901befcf436f6eeda1b3bfe401f68b",
+    "original_record_hashes": {
+      "records/setting_3daac21fe02ce348/chunk_000.json": "a8383f7bccf9ebf45d7a864a70f20403ba69d78515f808270bda572d0186ce38",
+      "records/setting_3daac21fe02ce348/chunk_000.npz": "75c7de52fddb7cf3498aa89a7fda127e8ca1a78793f944ab224e7c4cb96c0365",
+      "records/setting_3daac21fe02ce348/chunk_001.json": "f03a257d9cc999a6f506d2647295177e85e16364423e701c789fae5b1ccd25f2",
+      "records/setting_3daac21fe02ce348/chunk_001.npz": "388f4f36ef367ef095bbb5069694fd417a4f69a8291f0e79b4200941953b4be7",
+      "records/setting_3daac21fe02ce348/chunk_002.json": "0df729b5b7d280ed196c6f72255abf39acdac22d9fc7f7e09d72a8d47220c545",
+      "records/setting_3daac21fe02ce348/chunk_002.npz": "71e49240d2d045353c98fd33b758fb414d39598d6d772f1faaab78636f0772c8",
+      "records/setting_3daac21fe02ce348/chunk_003.json": "83bb2edfd8caea06545cdb0d0a14c56157795c950d11f48ed986ec4a2a0d6be5",
+      "records/setting_3daac21fe02ce348/chunk_003.npz": "bdf150d1b7155f50c0a7bdf8695c558609a3f835ec92cc8b702d7f55c837fa85",
+      "records/setting_3daac21fe02ce348/chunk_004.json": "610d6f166daf4792ba3b96897a5cc4f963d6c349ace0c881388d756e60074043",
+      "records/setting_3daac21fe02ce348/chunk_004.npz": "da8d640df9f98cb06ab3af127ce8dbe041198b4842c08b4904a93031e518f087",
+      "records/setting_3daac21fe02ce348/chunk_005.json": "2f0852c8f03fb10d12d893c87b87c7e46af24ac4305197d5eca1230d7819269e",
+      "records/setting_3daac21fe02ce348/chunk_005.npz": "f5d019ccffd63a79ae408a1bac091d8bdc4d07aea6eb3ae2befff2872903958e",
+      "records/setting_3daac21fe02ce348/chunk_006.json": "87ad69ecc7463782560c1b8ae5722225bf80e3e651cc65895fafaf2cdc7fd2a7",
+      "records/setting_3daac21fe02ce348/chunk_006.npz": "162f3a6f3e062c64ef95d853be0daa3025d5b7aaf03323d2fd7a3820d5c688fb",
+      "records/setting_3daac21fe02ce348/chunk_007.json": "9dd5d97b2539523685a51e4cc2f5bf95e92307fdc8c70b7ef44b6d1151232be6",
+      "records/setting_3daac21fe02ce348/chunk_007.npz": "9a6d387af951d0cc31471a3089d504531d5fadba7790e51adeafe899e7017540",
+      "records/setting_3daac21fe02ce348/chunk_008.json": "b9281729a5d85400112d7b97c6b31e277f4e58ceccee0c38338d8a83b482b0cf",
+      "records/setting_3daac21fe02ce348/chunk_008.npz": "23cd25d5d742a2bb6550c9129aae154bf6ef1afbc431e724d7ac4710acf87511",
+      "records/setting_3daac21fe02ce348/chunk_009.json": "730426459b45707b3b466ff8b176a458f0c4b9622103d15f880779374d9d3c09",
+      "records/setting_3daac21fe02ce348/chunk_009.npz": "616a9303fa48a5097339202cb519a8cdf8cea438a1a8a9edb4c6fc925baaa8d0",
+      "records/setting_3daac21fe02ce348/chunk_010.json": "5b883b2a7a71ff4b3344e4c367505f4c3dde7e9991c93c848ec547476b06a2d4",
+      "records/setting_3daac21fe02ce348/chunk_010.npz": "1ac0ed401e00512f12ecf1902ed89e879ac1ecb55fb321cc2e94bdd77993ca33",
+      "records/setting_3daac21fe02ce348/chunk_011.json": "9cda1079d92faabea123b0845918395402b31d7f32bc50bcff36f02ac5d6a998",
+      "records/setting_3daac21fe02ce348/chunk_011.npz": "71d93b130380d5eff6bf12031534cded52efa1688ebf94b089cd004bfa725640",
+      "records/setting_3daac21fe02ce348/chunk_012.json": "bb2e2121b7646cf4a9ccd27abf362e7de69f2b3f275d760b3d1ede988ca9fd8f",
+      "records/setting_3daac21fe02ce348/chunk_012.npz": "f9dcc102d2667bd898d46c3558d17f5b03cc124cae66062914a9f6390b968cea",
+      "records/setting_3daac21fe02ce348/chunk_013.json": "bea9a3e870e415cadbb0697bdfc862a3f5a9d9f41d2267c4dc6906dcfb6f6ad3",
+      "records/setting_3daac21fe02ce348/chunk_013.npz": "76e65bae2a4292030de7cdba82f9e2c9e630657b22e7ac26bf0cc031452e55a5",
+      "records/setting_3daac21fe02ce348/chunk_014.json": "4477b3c0b721c67f3369810e7a7d8962b3cf610c90a265a414441a8baa0a41e9",
+      "records/setting_3daac21fe02ce348/chunk_014.npz": "ee994c5b470955de350f5f006890b5475c108958219df21c2979126f13821fd7",
+      "records/setting_3daac21fe02ce348/chunk_015.json": "eaf47def12f13e8931265576fc8cc1bcb5ab47ac3eeeb79ffe4c670944feff99",
+      "records/setting_3daac21fe02ce348/chunk_015.npz": "0c36c500654067905207dba5864575f270a1895229079b9b2f7165810852d658",
+      "records/setting_3daac21fe02ce348/chunk_016.json": "ea8e41c6140f3b64a0f1774c8f012f22d95cf0a8525827debc53b8ef680e7f2a",
+      "records/setting_3daac21fe02ce348/chunk_016.npz": "a044219aea7d3744f33fce48a1d8ba3775114409933b48d7e86fd1eddc8edc84",
+      "records/setting_3daac21fe02ce348/chunk_017.json": "b247e9f63c60482a03afabca632b53d3cf06807dfb09fde5b9a97c71a4d843dc",
+      "records/setting_3daac21fe02ce348/chunk_017.npz": "6e83a040cb16ff472af8e60e3c66e7f8c6f7f050ff9c28c984b4251c16d269b1",
+      "records/setting_3daac21fe02ce348/chunk_018.json": "19f5b0aae38984c60f79b6d9f50d9936dba33a84b65394dd3653a139536e59bf",
+      "records/setting_3daac21fe02ce348/chunk_018.npz": "59b233e216419659c3c5eca1242ea77c9030327ee5e0482056b6a9af6eec54ec",
+      "records/setting_3daac21fe02ce348/chunk_019.json": "6275edabc7f7ec486bd6c10691006ca41bdc014fa4406846811b6ad33d7f5544",
+      "records/setting_3daac21fe02ce348/chunk_019.npz": "e8da5a9d80234cbec15b1c3411e3871c8bd2ed2f7d4a8fe92b00123974ac80a6",
+      "records/setting_3daac21fe02ce348/identity.json": "5c8059ff57ec4afc822396b832fbcdc7aa8fb3959fd6a4ffefcb52b60d630ad4",
+      "records/setting_9bdd689bf556c0d0/chunk_000.json": "2c3835805f8421efd9b9fb3d0c19f5a9579674e75ebb695017b0a5b1c68ade32",
+      "records/setting_9bdd689bf556c0d0/chunk_000.npz": "eabd08fd810add78a9b0646529aa6b1155a33a67d8f98d5aed452d97c4e4abb6",
+      "records/setting_9bdd689bf556c0d0/chunk_001.json": "982178776ed06b3871cf6cb4c6c529e416e2672bfa0a61a1d778ae90af06dcd6",
+      "records/setting_9bdd689bf556c0d0/chunk_001.npz": "af210ac500f599121eed09af12b23c6a5bf390e81981cb0f947bc98350152ba9",
+      "records/setting_9bdd689bf556c0d0/chunk_002.json": "8237a1b84dcb259ec7ff545c0e0c6181b5a48f22afff4de99f8c3bfba0e49032",
+      "records/setting_9bdd689bf556c0d0/chunk_002.npz": "4c399204bd7df2834a93fcc751051d8f168a0b8ca5ee3d476bef2469c505f019",
+      "records/setting_9bdd689bf556c0d0/chunk_003.json": "8fa53d5598b11c09895c0cd3fbce1986e16e9a473c276e1533c7b2ec9741e572",
+      "records/setting_9bdd689bf556c0d0/chunk_003.npz": "dc1650977157ad43e28e4f6b54f5e53ca6962121ba82ceea5cf992b37838e7a8",
+      "records/setting_9bdd689bf556c0d0/chunk_004.json": "cff2ae9016aa1e057993000f9565d0309eede2e37362a0c39b09f39cbec0ed44",
+      "records/setting_9bdd689bf556c0d0/chunk_004.npz": "4cffc0ce45396c390f9c1c2c5e5f37eb9e637c3847ccfce967b91e667de6eb90",
+      "records/setting_9bdd689bf556c0d0/chunk_005.json": "b2029056312f1da5ef5b18895e04e4cc83c4292c4f85905a0de539ea35411645",
+      "records/setting_9bdd689bf556c0d0/chunk_005.npz": "c3b7e55c91e4cff73fddf06a8e190814aadf8260afe155834cc436893602ea6a",
+      "records/setting_9bdd689bf556c0d0/chunk_006.json": "f327bc2f5793a9ff5f2cd063746a25badf2767e2c6743a8606e6a49954576aad",
+      "records/setting_9bdd689bf556c0d0/chunk_006.npz": "eda88a4149f38b434faec939d44b0734a4fdcbc4741194582cbb5d502bf3504a",
+      "records/setting_9bdd689bf556c0d0/chunk_007.json": "d598ba2675ece030e0cb4eea3ebced0375c69a66f1c5387e3a63dce1aba3e9ce",
+      "records/setting_9bdd689bf556c0d0/chunk_007.npz": "6f4ea206e4a4ff14280bbf56391549dddd64b6f2f84406f79b589fd05246b10d",
+      "records/setting_9bdd689bf556c0d0/chunk_008.json": "20a0ca7c577c24d4a0b18757a58f956297bd0326b20171827cc1a35835949a73",
+      "records/setting_9bdd689bf556c0d0/chunk_008.npz": "f90b24c4e0ed821c47f79378061659aefdfd4318e1c6aed60f2f74353aa03ae0",
+      "records/setting_9bdd689bf556c0d0/chunk_009.json": "55683fdb2e7f0b077814719aeb50a8975ac0fbea5b4a3fe96e57f724f08170e4",
+      "records/setting_9bdd689bf556c0d0/chunk_009.npz": "3f4b104054a6b50b959860e6541ddc420089175e98dffda9970853adbb6b6ce1",
+      "records/setting_9bdd689bf556c0d0/chunk_010.json": "c9e0d2888332b03de37e2e85c795b698c3e424a2807b7e3912a931ae5ffe0813",
+      "records/setting_9bdd689bf556c0d0/chunk_010.npz": "5aadb19b3b9077a64955085de886649221616a99ecfdc1446037d1726a8c6a57",
+      "records/setting_9bdd689bf556c0d0/chunk_011.json": "cabeddf1e4d382b74ac1d3c776a7c9cc9da2f985f7f3cde7533aeded642fc9c6",
+      "records/setting_9bdd689bf556c0d0/chunk_011.npz": "b6696856e828aa4e02cfa824f5b069382222e39dbaa9e190efcda636bff5bada",
+      "records/setting_9bdd689bf556c0d0/chunk_012.json": "1affac905da2c4d985efe1fea185b4e6d4d7d9a4543f7831bb9b793ed1078e42",
+      "records/setting_9bdd689bf556c0d0/chunk_012.npz": "dc3b1a36461442ae2cb11b0ba96ae7279f019ff87c5efbe26573ba6c8aa5ab65",
+      "records/setting_9bdd689bf556c0d0/chunk_013.json": "25bd8273db9d703d0e8dd504db3bee8198db0c8b03a4a7bdcb6e3cb5cd9ddc1d",
+      "records/setting_9bdd689bf556c0d0/chunk_013.npz": "ed5944818e77ef52902454d162fadbd3e8d1d36d0d8f485841f14d05656fca61",
+      "records/setting_9bdd689bf556c0d0/chunk_014.json": "5532491349d4bc5b492fae5db64793cfd943c1563912f624f70c002fd34aa1ee",
+      "records/setting_9bdd689bf556c0d0/chunk_014.npz": "eb1d7e03f636450a3214937df90f0136233bb370e53e8c04ae4b468c2697b97c",
+      "records/setting_9bdd689bf556c0d0/chunk_015.json": "aba23c099c9e451bbcb36e9b2c400a82f3a68a8e7956ba9a2cf7a0e5d85c3ced",
+      "records/setting_9bdd689bf556c0d0/chunk_015.npz": "f0b7c16fff5af22fa30ad87562893f069c4f67f9593fb4fa1b94088855da7077",
+      "records/setting_9bdd689bf556c0d0/chunk_016.json": "a4297f71f7b01102cc77dc5326c8b34e096db0b01655e3583d3ce185a70a66b0",
+      "records/setting_9bdd689bf556c0d0/chunk_016.npz": "d09839ccaaa69fc3ee70d43e28b0922e4534479fa7394e6c946da59034cf7f36",
+      "records/setting_9bdd689bf556c0d0/chunk_017.json": "f68279f57b5c69b23a1b9ccedb083af65b72d8ef84274ebeac34ba0fad422504",
+      "records/setting_9bdd689bf556c0d0/chunk_017.npz": "9bdaa7f567aa91c14113d401e928edcde48175990bb666fc460c18562f4a07f9",
+      "records/setting_9bdd689bf556c0d0/chunk_018.json": "d537280b0611b12ecbfe83801d88f50bef078262bd477f1f80a98a518e814757",
+      "records/setting_9bdd689bf556c0d0/chunk_018.npz": "40819d48ac2153bcb56326501f7e70928b79735f8ab77807a774d7558a496e69",
+      "records/setting_9bdd689bf556c0d0/chunk_019.json": "13a4dd60336f3416372423c73dd0c922bf80c658295b909cca284d9a7e0e3630",
+      "records/setting_9bdd689bf556c0d0/chunk_019.npz": "8ef2f8b150c0af02da1bd7f9800f8aa799051de55b7eaa607f29cf3459456203",
+      "records/setting_9bdd689bf556c0d0/identity.json": "08aca77c320ecc4ebbd49514f58cb6557ffa9f896dd0092ec1e76fdc8986983a",
+      "records/setting_ac0ed83bd006d9f6/chunk_000.json": "2b6178e48c23a2a10599fb9be9ed4406de3615b08ba30b14422fa5bc0e4d94d7",
+      "records/setting_ac0ed83bd006d9f6/chunk_000.npz": "df943c0558ba12c846d01e42730d23b764f998e686b557f0bc45e25725971a33",
+      "records/setting_ac0ed83bd006d9f6/chunk_001.json": "005489e3735f0724aeba4c40f69eb4d5f5006aa6ad0cf8284cb98bd7682ceb2a",
+      "records/setting_ac0ed83bd006d9f6/chunk_001.npz": "9444ca0327f217ddb237674557492b1b39f7513dee650f0c8b378f95c11dd773",
+      "records/setting_ac0ed83bd006d9f6/chunk_002.json": "3cccb94b984fab4d07c3bf13bd0c97c6063eb7c2bcec346ef1db00b7401be4b9",
+      "records/setting_ac0ed83bd006d9f6/chunk_002.npz": "e45cae15f4441471274a2587773d435195b009fb8d432ee63ac65fd19c3dbc4d",
+      "records/setting_ac0ed83bd006d9f6/chunk_003.json": "dc443c0b737a56a6182952a34d47c6567e5ae3cee51dcf7e1e1742689e01c577",
+      "records/setting_ac0ed83bd006d9f6/chunk_003.npz": "4f068c09601400425c5b25b23e95a4a87bca1744c1d402c466900a60b7550bab",
+      "records/setting_ac0ed83bd006d9f6/chunk_004.json": "2313aafc0ae72919dfd4e2a9a09dfb2827390aeec6977706bb0636fb8a8a90a3",
+      "records/setting_ac0ed83bd006d9f6/chunk_004.npz": "a9ae260a3d5de0372797b7f0750d30c6ac871076f07bbc9c3d000e5839389140",
+      "records/setting_ac0ed83bd006d9f6/chunk_005.json": "801162948ab6bf748cda5ecb478ea83e326c19de1a82f901fc13b4fcd6b3c53a",
+      "records/setting_ac0ed83bd006d9f6/chunk_005.npz": "d68628364bfbf1a46d05153924a95bac07e0b53d1fd9300fb8c436538c39a543",
+      "records/setting_ac0ed83bd006d9f6/chunk_006.json": "2af9fe2e2bf9e3b62657204c0cdd503bbea460d59ddc99a3148868889f84ed2a",
+      "records/setting_ac0ed83bd006d9f6/chunk_006.npz": "4d019c0ac6c063a89fac672e090fc2707e24b83e842cc1660603df778f8621ff",
+      "records/setting_ac0ed83bd006d9f6/chunk_007.json": "5734d8ca4c025295ebf56b31d210843de9d09250e3a8e8bf2ddbd5b23083d335",
+      "records/setting_ac0ed83bd006d9f6/chunk_007.npz": "b338d34c56216086fbd5981571fff711cc2f2be867cbe86902aa4d5c88f04909",
+      "records/setting_ac0ed83bd006d9f6/chunk_008.json": "407213e7774f2be592e059b5845ba36c0f2c2480801a96eaa2e34c47a2f75e27",
+      "records/setting_ac0ed83bd006d9f6/chunk_008.npz": "8de3791732f1175908f6cb9cbb47ea592673ccf610b9863bb76edc0ef416e079",
+      "records/setting_ac0ed83bd006d9f6/chunk_009.json": "3c539bf718d0403539bc962c842bef2c86bdbe1ce6850b8880e76cc4c4112649",
+      "records/setting_ac0ed83bd006d9f6/chunk_009.npz": "b7dfe559c41d648345aee0f78c57c3439b15071fa1cc1f6a07ac2ad8039fa61e",
+      "records/setting_ac0ed83bd006d9f6/chunk_010.json": "6dfc426fc874e5d3dfc363a0596591e327bb7d17bea236ed49cf8fccd75e2e36",
+      "records/setting_ac0ed83bd006d9f6/chunk_010.npz": "bbbdd667f1bb40984e7953124237f1753edd706e720d24dcac285a06a9651d19",
+      "records/setting_ac0ed83bd006d9f6/chunk_011.json": "42c94437d06fe8e0df2756c3bd4d34fc60f707cfe385fa5cf18023dda5d45532",
+      "records/setting_ac0ed83bd006d9f6/chunk_011.npz": "9695c4700f3b2b1d9da72f73f8b523b197b61f31ee358d558abc09c0cd4c219f",
+      "records/setting_ac0ed83bd006d9f6/chunk_012.json": "9f00aca10175feb534d5208c6407c420e6b13b1ca05019329543fd2010df5412",
+      "records/setting_ac0ed83bd006d9f6/chunk_012.npz": "c4f2dc9692daa9625edc50faac0d6bedcc800c9dc769191d9911e3b66afff73f",
+      "records/setting_ac0ed83bd006d9f6/chunk_013.json": "9c736c4f4a6dff48e40446eb8ec2179d450e5a49362f748f6fc1a77a519aa92c",
+      "records/setting_ac0ed83bd006d9f6/chunk_013.npz": "69cdc0b3700c257cba2e79f40946aea6d60ef2d1af6893565d6a04fd5f1abf58",
+      "records/setting_ac0ed83bd006d9f6/chunk_014.json": "5975ce689776def963622163c859a9dce450ba504e96ce8e3010af60a1ce33af",
+      "records/setting_ac0ed83bd006d9f6/chunk_014.npz": "424e4fc94d5a3025a966d3fe9edbcd27e6a05732c907beb3d94a608cc1026b60",
+      "records/setting_ac0ed83bd006d9f6/chunk_015.json": "011578a2aee5992f4f718c86cb0a5b860a3cbded534d16bde50aec0713e29c55",
+      "records/setting_ac0ed83bd006d9f6/chunk_015.npz": "613cc136ee4924951e48f219878ae247e783fd8680d8255a90f5382da912a4f9",
+      "records/setting_ac0ed83bd006d9f6/chunk_016.json": "a312513b64e908507bd0cc1a87aefc9e3a579da62f6ca8e1db9bf793f0b3c5fa",
+      "records/setting_ac0ed83bd006d9f6/chunk_016.npz": "d70336f8b1f7d54bfd48fc3d4aeccfb18f29382636b678b3bebb4a10b2601e2a",
+      "records/setting_ac0ed83bd006d9f6/chunk_017.json": "48b333721d808cac9fb88b6c2c7e44ca25a0de6e5cc31f5e102df76e45d79b40",
+      "records/setting_ac0ed83bd006d9f6/chunk_017.npz": "05b5b1c4e726a4fea66a53340234b2cdf01e045eb604bd6234b40022c253c389",
+      "records/setting_ac0ed83bd006d9f6/chunk_018.json": "dec5e5718fa25a73b7924fa4f0b008b9f75f06fea8da4f1ec412242365bd8fd4",
+      "records/setting_ac0ed83bd006d9f6/chunk_018.npz": "b51a6dde824cb686789cf43921ef1d5b9f7725c02fb015d283a0e55d9cc50d98",
+      "records/setting_ac0ed83bd006d9f6/chunk_019.json": "7ecc5ec67e2a0426dc5ebc5fb8147b7651f1c54cc03e1a2f3b57d14efa9d3554",
+      "records/setting_ac0ed83bd006d9f6/chunk_019.npz": "622fb19979302ed1dff99f93649484aceed008cbb9d27a4fe47be868fd977acd",
+      "records/setting_ac0ed83bd006d9f6/identity.json": "514aa0e9dd1ecc30447cb47bd2cb515c923c779d7540d20e9c049eeaa1f9bc33",
+      "records/setting_f5f1e38301329d37/chunk_000.json": "e6759bc28ea5ac9fa5da03b912da6913693b2e8e16084f82cf85e84cdd1bd4bf",
+      "records/setting_f5f1e38301329d37/chunk_000.npz": "4f13bcedcfd7a7bf42c03c0fa8ad8584ee85de1950f0b72e1ed81ce13bb367a5",
+      "records/setting_f5f1e38301329d37/chunk_001.json": "f28d22b981b6363393f61725105254ba5944d32c4f15fb22f32cdcc0e6d01ae0",
+      "records/setting_f5f1e38301329d37/chunk_001.npz": "5f432eff3894295fe4cbf04c1452b607d4409644ed7580424ba5cab19f584b08",
+      "records/setting_f5f1e38301329d37/chunk_002.json": "2921ea7cd6800859fafd4f360ecbbb062e0114b1087c4c3cd06dbdf7b35c0095",
+      "records/setting_f5f1e38301329d37/chunk_002.npz": "4460e06f6ac35e36537815f217fbb77993cb84a02fbf0b80750e12a6e515a7e3",
+      "records/setting_f5f1e38301329d37/chunk_003.json": "1ec55db31c97d81a1c631327054ed6f3fc68ae550ae80e7d1bca4a3a8582d204",
+      "records/setting_f5f1e38301329d37/chunk_003.npz": "95bcb0ec94627f85f54478c1be51bcba295306db1114ae941f4155596a752953",
+      "records/setting_f5f1e38301329d37/chunk_004.json": "cf7f480909eae09668aba8bb02fbf57377c1e139689101d9fa6e144bcf1f6eff",
+      "records/setting_f5f1e38301329d37/chunk_004.npz": "c409a9abe58216f95c7ba8e60c37e0810cc90d035bef9608cd961a7c934f8ddc",
+      "records/setting_f5f1e38301329d37/chunk_005.json": "bd70efad4f7d20cc419b88c11dbc834817a3affda990d2e688964ef0365614c0",
+      "records/setting_f5f1e38301329d37/chunk_005.npz": "9fae6c073df9518d0e215511d616c21c359e458fd5418ec14afa130c7e52837d",
+      "records/setting_f5f1e38301329d37/chunk_006.json": "505423de8bd1ba57090fb3f83a17df65c5575fdd1d38d611894b640e2ff48df9",
+      "records/setting_f5f1e38301329d37/chunk_006.npz": "f2066bfc7acd1173f12f7916a669aa06e4940bc107664a0f9f5faa5425d85168",
+      "records/setting_f5f1e38301329d37/chunk_007.json": "45d41d1f4aea5fc1d18fc9395fcc8c163f41a4beefd7a8110eeee1d89537086d",
+      "records/setting_f5f1e38301329d37/chunk_007.npz": "64c1e227a558e2155833b42ee719a2035f2a434b9464d0e2d50c9e74e9bb99aa",
+      "records/setting_f5f1e38301329d37/chunk_008.json": "0b5c5b2c7618e47a5e81b0b53b946a875a34f2a7b2a472c8b9f73e20600f9fd3",
+      "records/setting_f5f1e38301329d37/chunk_008.npz": "ac994db13452bb669ff4a911f28cf596ebf9e2edb541216b8b3a887ba9c8e653",
+      "records/setting_f5f1e38301329d37/chunk_009.json": "b2fe77dc4a8c3437a2d6805358673c1574a46f92692c0a740735ebee83751334",
+      "records/setting_f5f1e38301329d37/chunk_009.npz": "bd369e72baa5ba0c75abfcde6183fb2244e946619050da485d7d44f7721c62fe",
+      "records/setting_f5f1e38301329d37/chunk_010.json": "fd97b6c63d5645bbf99d534c7407a9cddd52b1f34f69d156ac7d1b27ce732b96",
+      "records/setting_f5f1e38301329d37/chunk_010.npz": "1b5cc305d12d56d581689d3e836140d698ce948cb6f59f30ac4ffc7f031c2359",
+      "records/setting_f5f1e38301329d37/chunk_011.json": "fb5565621b4c2ff1764855f360a7f08ee2df796b2807bccea2dad5c7ba129ca2",
+      "records/setting_f5f1e38301329d37/chunk_011.npz": "cec7000333eb11fdcb101e3135c995316734fa52611ad233ea3b28d86aad35c7",
+      "records/setting_f5f1e38301329d37/chunk_012.json": "334a679b19c7698449c8203f75aaed5a71ab4e1d892d09f49864b9c4bab9fa4c",
+      "records/setting_f5f1e38301329d37/chunk_012.npz": "62cc2fa45a90203f012086e0d2cb3db27fca18e125db103edba9d780d0fd4258",
+      "records/setting_f5f1e38301329d37/chunk_013.json": "46285a1f7663a6078d6c6c1ea76bdc505dbc12f6d75f45a159257e1a4dc22f03",
+      "records/setting_f5f1e38301329d37/chunk_013.npz": "bd8422a6a60ee45f083fd27f3673326f75e6d6f8e5aae1603db2e736ea36e1d8",
+      "records/setting_f5f1e38301329d37/chunk_014.json": "93ec79a8694d101d44f8701f3070800ecb3fb03e038608ce20c97b3934c629a8",
+      "records/setting_f5f1e38301329d37/chunk_014.npz": "37a57bd728df16f6cea5d27ddd1ccc23a9eb810b4e6ba646bd8b3af2218f9448",
+      "records/setting_f5f1e38301329d37/chunk_015.json": "91bb9db0d0c75718f0c9fadfac648c9c0f1e273b78556bf4d63fbbb0be8f6d42",
+      "records/setting_f5f1e38301329d37/chunk_015.npz": "6c6c2c949cd17d066c606e97cb9346b29681295d7ae8c2c322d1285cde78ec54",
+      "records/setting_f5f1e38301329d37/chunk_016.json": "2c9066ce5b86b3056bca8879455dd75a20876234a39b55ae9072f5886329caa7",
+      "records/setting_f5f1e38301329d37/chunk_016.npz": "09bb2a825594f6fa6d0590f2015eda71458b55fed2ac1b44e9fbfc58b83736ce",
+      "records/setting_f5f1e38301329d37/chunk_017.json": "84e939501aa69db2434b9d85cb16fbefab18f1411091e23bd1cac6a027e89790",
+      "records/setting_f5f1e38301329d37/chunk_017.npz": "e50ae0e40e5b19acaed1a27b1f51c38bf0a7a4b2b439dc72b06b906c12aa9fef",
+      "records/setting_f5f1e38301329d37/chunk_018.json": "17d69530254f62f41eb09463287ee34a5488671a2494ec114bca2925c896b788",
+      "records/setting_f5f1e38301329d37/chunk_018.npz": "9350f0b167caf9fd2eafb5a2a3e0dd58c7c16119e33b96dab5fcf340ef9c4684",
+      "records/setting_f5f1e38301329d37/chunk_019.json": "59981c25f2d582255f0eef0020cd7833261e56849eae0166ff8aa8e74bbaf470",
+      "records/setting_f5f1e38301329d37/chunk_019.npz": "f494dacc1860dae0a213475360ecd092389c878539979bc6a7500c807de85ecf",
+      "records/setting_f5f1e38301329d37/identity.json": "328c9f0b2e84e100ce421c5d8b54d0af07f8f833e7340750aa121cac5042699e"
+    },
+    "question": "Does jackknife centering reduce unequal bias and wrong-direction rejections?",
+    "replicates_per_setting": 20000,
+    "rules": [
+      "No clipping negative MI",
+      "Report all four settings regardless of outcome",
+      "No new populations or estimator grid",
+      "Original records remain unchanged"
+    ],
+    "scope": [
+      {
+        "configuration_id": "setting_9bdd689bf556c0d0",
+        "construction": "copying",
+        "delta": 0.0,
+        "k": 16,
+        "mi_p": 0.02,
+        "mi_q": 0.02,
+        "n_p": 1000,
+        "n_q": 1000,
+        "pair_id": "pair_d6251d28a25ccf8c",
+        "profile": "different_skew",
+        "replicates": 20000
+      },
+      {
+        "configuration_id": "setting_ac0ed83bd006d9f6",
+        "construction": "copying",
+        "delta": -0.01,
+        "k": 16,
+        "mi_p": 0.02,
+        "mi_q": 0.03,
+        "n_p": 1000,
+        "n_q": 1000,
+        "pair_id": "pair_7fe6c06ee9d019f1",
+        "profile": "different_skew",
+        "replicates": 20000
+      },
+      {
+        "configuration_id": "setting_f5f1e38301329d37",
+        "construction": "copying",
+        "delta": 0.0,
+        "k": 16,
+        "mi_p": 0.02,
+        "mi_q": 0.02,
+        "n_p": 10000,
+        "n_q": 10000,
+        "pair_id": "pair_d6251d28a25ccf8c",
+        "profile": "different_skew",
+        "replicates": 20000
+      },
+      {
+        "configuration_id": "setting_3daac21fe02ce348",
+        "construction": "copying",
+        "delta": -0.01,
+        "k": 16,
+        "mi_p": 0.02,
+        "mi_q": 0.03,
+        "n_p": 10000,
+        "n_q": 10000,
+        "pair_id": "pair_7fe6c06ee9d019f1",
+        "profile": "different_skew",
+        "replicates": 20000
+      }
+    ],
+    "uncertainty": "Original per-sample delta-method standard errors and normal cutoffs are fixed."
+  }
+}

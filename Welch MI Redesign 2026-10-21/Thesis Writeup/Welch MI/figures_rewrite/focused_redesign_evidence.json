@@ -1,0 +1,21 @@
+{
+  "bootstrap_repetitions": 1000,
+  "evaluation_pairs": 36600000,
+  "fitting_pairs": 18600000,
+  "fitting_settings": 186,
+  "focus_cases": {
+    "16, different, 1,000": "setting_9bdd689bf556c0d0",
+    "16, different, 10,000": "setting_f5f1e38301329d37",
+    "16, same, 1,000": "setting_1363c7043554941c",
+    "16, same, 10,000": "setting_7102f6256f3a6d45",
+    "A": "setting_c1d939c2103eb6d7",
+    "B": "setting_b36e8b3dac5f1e18",
+    "C": "setting_0388abaea109584f"
+  },
+  "focus_null_sd": {
+    "A": 0.1549668055701263,
+    "B": 0.06513777649911635,
+    "C": 0.0031749531454648636
+  },
+  "settings": 366
+}

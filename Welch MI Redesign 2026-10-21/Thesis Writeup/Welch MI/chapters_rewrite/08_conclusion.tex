@@ -1,0 +1,68 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+\section{Contributions and main findings}
+
+This thesis derives an Expanded Welch--Satterthwaite test for comparing
+categorical MI across independent populations. Its mathematical
+contribution is the observation-level sensitivity of the estimated MI
+variance, accounting for changes in cell probabilities, margins and
+pointwise MI. The variance of this sensitivity gives a first-order
+sampling-variance approximation, which is used with moment matching to
+choose MI-specific degrees of freedom for a Student \(t\) distribution.
+
+The experiment evaluates the mean and sampling variance approximations
+separately before comparing the completed rejection rules. It contains
+366 evaluation settings, with independent moment fitting at 186 null
+settings and 100,000 repetitions per batch. The first research question
+is answered by the different errors in the two moment approximations:
+the sampling-variance prediction can be accurate while the mean estimate
+remains inflated, substantially lowering the population first-order
+degrees of freedom relative to the moment target. Near independence,
+the quadratic sampling contribution explains the scale of the observed
+component estimates and their departure from the first-order values.
+
+For the second research question, Expanded Welch improves false-positive
+rates relative to Wald and the sample-size comparator in selected
+small-sample populations, with a nominal power cost. At matched null
+rejection rates, it has higher power along the selected uniform
+\(4\times4\), \(n=20\), and different-skew \(8\times8\), \(n=100\),
+paths. Its calibrated differences from Wald are practically small in
+the different-skew \(4\times4\), \(n=10{,}000\), comparison. These
+results identify a benefit of sample-dependent MI degrees of freedom
+beyond an overall reduction in rejection.
+
+The method does not resolve errors in the shared statistic. In sparse
+different-skew tables, MI bias can shift or reverse the estimated
+difference and cause rejection to fall initially as the true difference
+increases. Same-skew populations can instead remain conservative when
+the expected difference bias cancels. The matched construction and
+allocation checks show why population structure and sample allocation
+matter alongside the cutoff. Expanded Welch therefore offers useful
+behaviour for some categorical comparisons, while accurate estimation
+of the MI difference and its uncertainty remains necessary for reliable
+inference.
+
+\section{Limitations and future work}
+
+The findings concern fixed categorical populations, the tested association
+constructions and the specified alternative paths. They support further
+investigation of the MI-specific rule rather than its use as a general
+replacement for Normal Wald. The independently fitted references and
+calibration thresholds assess mechanisms under known populations; they
+do not supply an immediately available procedure for arbitrary observed
+tables.
+
+A first extension is to derive the second-order mean contribution to the
+variance estimator and evaluate a corresponding degrees-of-freedom
+correction. A second is to improve sparse MI bias and standard-error
+estimation, assessing their effects separately through null rejection,
+power curves and estimated direction. The supporting jackknife check
+provides a starting point for the bias problem.
+
+Near independence, the quadratic sampling approximation may support a
+more accurate comparison of MI differences. Any likelihood-ratio or
+resampling procedure must preserve the equal-MI null even when the
+complete population tables differ. Reversed power paths, additional
+association constructions and broader allocation comparisons would
+establish how far the observed calibrated-power advantage extends.

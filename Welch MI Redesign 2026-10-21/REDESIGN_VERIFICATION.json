@@ -1,0 +1,30 @@
+{
+  "completed": "2026-10-22",
+  "evaluation_settings": 366,
+  "fitting_settings": 186,
+  "pairs_per_setting": 100000,
+  "total_pairs": 55200000,
+  "calibration_bootstrap_repetitions": 1000,
+  "local_tests": {
+    "experiment": 216,
+    "estimator": 27,
+    "application": 17,
+    "packaging": 8,
+    "total": 268
+  },
+  "isolated_bundled_tests": 178,
+  "independently_reconstructed_pairs": 4416,
+  "original_files_verified_unchanged": 30042,
+  "pdf_pages": 109,
+  "latex_warnings": [],
+  "isolated_source_build_text_identical": true,
+  "delivery_check_passed": true,
+  "pdf_sha256": "bc6e56e3c9bdc8e2b7bedd8125ebdfb07d343926dd0f9cfca5de74c261c5508a",
+  "isolated_bundled_test_breakdown": {
+    "experiment": 134,
+    "estimator": 27,
+    "application": 17,
+    "total": 178
+  },
+  "full_deliverable_quality_review": "Thesis Writeup/Welch MI/notes/DELIVERABLE_REVIEW_2026-10-22.md"
+}
