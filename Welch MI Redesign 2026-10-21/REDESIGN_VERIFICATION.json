@@ -15,16 +15,21 @@
   "isolated_bundled_tests": 178,
   "independently_reconstructed_pairs": 4416,
   "original_files_verified_unchanged": 30042,
-  "pdf_pages": 109,
+  "pdf_pages": 104,
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "bc6e56e3c9bdc8e2b7bedd8125ebdfb07d343926dd0f9cfca5de74c261c5508a",
+  "pdf_sha256": "425930ae79ec9728902fbc86629959f0aff1105e1d88fc9769358cc897a500b7",
   "isolated_bundled_test_breakdown": {
     "experiment": 134,
     "estimator": 27,
     "application": 17,
     "total": 178
   },
-  "full_deliverable_quality_review": "Thesis Writeup/Welch MI/notes/DELIVERABLE_REVIEW_2026-10-22.md"
+  "full_deliverable_quality_review": "Thesis Writeup/Welch MI/notes/DELIVERABLE_REVIEW_2026-10-22.md",
+  "readability_review": "Thesis Writeup/Welch MI/notes/READABILITY_REVISION_2026-10-22.md",
+  "main_comparison_chapters_pages": {
+    "before": 28,
+    "after": 22
+  }
 }

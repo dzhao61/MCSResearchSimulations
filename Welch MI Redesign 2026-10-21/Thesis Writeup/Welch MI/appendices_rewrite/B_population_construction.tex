@@ -130,6 +130,17 @@ The total sample size is 2,000 in every comparison.\\
 \bottomrule
 \end{longtable}
 
+For the focused power comparison, let
+\(\sigma_0=\operatorname{SD}_0(\Deltahat)\) be the SD estimated from the
+independent null fitting batch, centring at its sampling mean. The grid is
+\begin{equation}
+ I(P)=0.02,\qquad I(Q)=0.02+h\sigma_0,\qquad
+ h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}.
+ \label{eq:redesign-power-grid}
+\end{equation}
+The true signed difference is \(\Delta=-h\sigma_0\). Population tables
+and differences in nats are fixed after this construction.
+
 The fixed null-SD constants used to construct the focused alternatives are
 \begin{align*}
  \sigma_{0,A}&=0.154966805570126\text{ nats},\\
@@ -303,6 +314,82 @@ indicators. All intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
 
 
+\section{Moment targets and the fixed reference}
+\label{sec:moment-reference-details}
+
+The first comparison in Chapter~\ref{chap:design} measures the mean and
+sampling variance of \(\Vhat(P)\) separately. Expectations and variances
+refer to repeated samples from the same fixed population at the same
+sample size. Substituting the predictions in
+Equation~\eqref{eq:redesign-moment-approximations} into the moment-matching
+formula gives
+\begin{equation}
+ \nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)}.
+ \label{eq:redesign-first-order-df}
+\end{equation}
+The subscript FO identifies the population first-order formula from
+Chapter~\ref{chap:expanded}. The sampling-moment target instead uses
+the actual mean and variance of the estimator:
+\begin{equation}
+ \nu_{P,\mathrm{mom}}
+ =\frac{2\{\E\Vhat(P)\}^2}{\Var\{\Vhat(P)\}}.
+ \label{eq:redesign-moment-df}
+\end{equation}
+The assumptions in Chapter~\ref{chap:expanded} ensure positive population
+variance quantities for the tested populations. The two degrees-of-freedom
+values can nevertheless differ at finite sample sizes. Dividing their
+definitions before applying either approximation gives the exact identity
+\begin{equation}
+ \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
+ =\left\{\frac{V(P)}{\E\Vhat(P)}\right\}^{2}
+   \frac{\Var\{\Vhat(P)\}}{\tau^2(P)/n_P}.
+ \label{eq:redesign-df-decomposition}
+\end{equation}
+The first factor measures the contribution of the mean approximation;
+the second measures the contribution of the sampling-variance
+approximation. A mean estimate above \(V(P)\) lowers the first-order
+degrees of freedom relative to the moment target when the variance
+prediction is otherwise accurate. The same calculations are made
+separately for \(Q\).
+
+The fixed diagnostic rule uses a moment-matched reference, estimated from
+independent simulations of the corresponding equal-MI populations:
+\begin{equation}
+ \nu_{\mathrm{ref}}=
+ \frac{2\{\E(\SEhat^2)\}^{2}}{\Var(\SEhat^2)}.
+ \label{eq:redesign-combined-reference}
+\end{equation}
+Independence of the population samples gives
+\begin{align}
+ \E(\SEhat^2)&=\frac{\E\Vhat(P)}{n_P}+\frac{\E\Vhat(Q)}{n_Q},\\
+ \Var(\SEhat^2)&=\frac{\Var\{\Vhat(P)\}}{n_P^2}
+                  +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}.
+ \label{eq:redesign-reference-variance}
+\end{align}
+Substitution of the component moment targets into the combination formula
+at these expected variance contributions gives exactly
+Equation~\eqref{eq:redesign-combined-reference}. Thus the combination
+identity introduces no further approximation at the level of moments.
+The next section gives the cancellation explicitly. Independent fitting samples estimate these moments by their
+sample means and sample variances. The Student \(t\) distribution remains
+an approximation to the shared statistic's distribution.
+
+The sample-size and fixed-reference rules use the two-sided p-value
+formula in Equation~\eqref{eq:expanded-p}, substituting their estimated
+or fitted degrees of freedom. A valid p-value at most 0.05 produces a
+nominal rejection.
+
+The moment reference requires known simulation populations and is held
+fixed within an evaluation setting and across the alternatives belonging
+to the same null. For an alternative, the fitting populations have equal
+MI of 0.02 nats and the same table size, margins, construction and sample
+allocation as that alternative. Expanded Welch versus this reference measures the
+change in rejection when the sample-dependent degrees of freedom are
+replaced by that fixed value. The reference can still reject incorrectly
+when the shared difference is biased, its standard error has the wrong
+scale, or their joint distribution is poorly described by the Student
+\(t\) distribution.
+
 \section{Combining component moment targets}
 \label{sec:combined-moment-identity}
 
@@ -424,7 +511,9 @@ these thresholds in each of 1,000 bootstrap repetitions. Apply a common
 resampled fitting batch across all points of a curve. At each evaluation
 point, resample the joint four-method decision outcomes, preserving their
 pairing. Use the 2.5th and 97.5th percentiles for pointwise intervals of
-rates and paired rate differences. The fixed reference and Normal Wald
+rates and paired rate differences. Compare the paired intervals with the
+practical tolerance of minus one to plus one percentage point.
+The fixed reference and Normal Wald
 remain identical after this calibration, so refitting their moment degrees
 of freedom cannot change the calibrated decisions. The population tables
 and effect sizes in nats stay fixed throughout the bootstrap.

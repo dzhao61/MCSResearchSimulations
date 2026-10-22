@@ -21,3 +21,8 @@ The statistical simulation inputs, sampled pairs and estimation methods are unch
 Final verification is complete. All 268 local tests pass: 216 experiment, 27 estimator, 17 application and 8 packaging tests. The extracted supplement and separately extracted thesis source pass all 178 bundled tests: 134 experiment, 27 estimator and 17 application tests. The application test now accepts the count tables in the delivered thesis_application directory when the historical exploratory results directory is absent; the two count-table files were verified identical.
 
 The 109-page final PDF was rendered and inspected. The source archive builds in isolation without LaTeX warnings, and its extracted text is identical to the reviewed delivery PDF. The final archive consistency check passes. The independent experiment audit retains 4,416 reconstructed pairs, and the preservation check confirms all 30,042 original files and protected copied sources remain unchanged. Current numerical verification and the delivery PDF checksum are recorded in REDESIGN_VERIFICATION.json at the redesign workspace root.
+
+
+## Subsequent readability revision
+
+The user requested a simpler experimental narrative after reviewing the full deliverable. READABILITY_REVISION_2026-10-22.md records the prior-session writing guidance, applied changes and final verification. The current PDF is 104 pages, with Chapters 5–7 reduced from 28 to 22 pages; the core theory and all experimental calculations remain unchanged. The 268 local tests, 178 bundled tests, isolated source build, PDF review and delivery consistency check pass.

@@ -1,3 +1,3 @@
-bc6e56e3c9bdc8e2b7bedd8125ebdfb07d343926dd0f9cfca5de74c261c5508a  Working Draft v3.pdf
-786784750b5eb2c9ad82f56753b6dcb3d655cf6c7bfccbfb5d0fd833feac52bc  Working Draft v3 Source.zip
+425930ae79ec9728902fbc86629959f0aff1105e1d88fc9769358cc897a500b7  Working Draft v3.pdf
+19419aead5fd332393b96a9da27e9118ff29f6847d4295acc0759db0850d664d  Working Draft v3 Source.zip
 0bd12bba7b8e2909e8ada1aee8bdf5b63d02c0b47aa3063837294605aac7d36a  Working Draft v3 Experiment Supplement.zip

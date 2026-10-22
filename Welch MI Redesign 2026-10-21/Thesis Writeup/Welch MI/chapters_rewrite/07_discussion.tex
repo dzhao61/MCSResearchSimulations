@@ -3,149 +3,121 @@
 
 \section{Accuracy of the variance approximation}
 
-The variance-sensitivity derivation describes how the estimated MI
-variance changes between samples. Its accuracy and the accuracy of the
-mean approximation contribute differently to the degrees of freedom.
-At \(4\times4\), MI 0.02 and \(n=1{,}000\), the population
-sampling-variance predictions are within about 3--4\% of the observed
-values, while the mean estimates exceed the population values by about
-17--19\%. Equation~\eqref{eq:redesign-df-decomposition} shows how squaring
-the mean-ratio contribution accounts for most of the resulting difference
-between the first-order and moment degrees of freedom. The derivation
-can therefore describe the variability of the variance estimator
-reasonably well before its two moment approximations jointly give
-accurate degrees of freedom.
+The experiment shows why the two moment approximations need separate
+checks. The predicted sampling variance of \(\Vhat\) can be close to
+its observed value while the mean estimate remains above the population
+variance coefficient. In the \(4\times4\) different-skew example at
+\(n=1{,}000\), the variance predictions are within about 3--4\%, but
+the mean estimates are about 17--19\% too large. The moment-matching
+formula squares the mean. Replacing that inflated sampling mean by the
+smaller population value therefore lowers the population first-order
+degrees of freedom, even when the sampling-variance approximation is
+reasonably accurate.
 
-The distinction matters most near independence, where the population
-first-order MI variance is small. The quadratic sampling contribution
-then remains substantial relative to that population value. In
-Appendix~\ref{sec:independence-boundary},
-\(\Vhat\approx G/n\) and \(\widehat\nu\approx G/2\), with
-\(G\) approximately following a noncentral chi-squared distribution.
-At independence, the approximating chi-squared distribution has mean
-\(d\). The local calculation therefore predicts mean plug-in degrees
-of freedom near \(d/2\), while the variance-estimator moment target is
-near \(d\). This explains why substituting empirical probabilities
-into the first-order formula need not recover the sampling-moment target,
-even when the local approximation describes the observed component means.
+Near independence, the population first-order variance is small and
+quadratic sampling terms remain substantial. The calculation in
+Appendix~\ref{sec:independence-boundary} accounts for their contribution
+to the observed component means and degrees of freedom. This explains
+why increasing sample size and moving away from independence can change
+which approximation is responsible for the error. It also shows why
+accurate population formulas do not by themselves ensure that substituting
+sample probabilities gives accurate degrees of freedom.
 
-Away from independence, the scaled mean errors suggest a second-order
-correction whose coefficient depends on the population table. A correction
-near \(d/n\) describes much of the mean shift in the tested
-\(4\times4\) populations, but the observed variation with MI and margins
-requires a coefficient derived for the actual table. Such a correction
-would address the numerator of the moment-matching expression. Its
-estimated coefficient and its effect on the completed rejection rule
-would still need evaluation.
+A second-order mean correction could address part of this discrepancy.
+The observed variation across MI and margins means that its coefficient
+should be derived for the population table. A fixed coefficient based
+only on table size would leave errors in some settings, and any estimated
+correction would require evaluation of the resulting test.
 
-\section{Calibration and power of the MI-specific rule}
+\section{False-positive rates and power}
 
-Expanded Welch improves null rejection in the two selected small-sample
-populations. For uniform \(4\times4\) tables at \(n=20\), it gives
-0.04897, compared with 0.08352 for Wald and 0.07394 for the sample-size
-comparator. For \(8\times8\) different-skew tables at \(n=100\), it
-gives 0.05523, compared with 0.07466 and 0.07246. Every rule is valid in
-all repetitions at these settings, so the reductions do not reflect
-failed calculations. In the wider grid, however, Expanded Welch also
-lowers already-conservative rates. The MI-specific cutoff improves
-calibration in some populations without improving it uniformly.
+Expanded Welch brings false-positive rates closer to 5\% in the two
+selected small-sample populations. Every rule returns a valid result
+there, so the lower rejection rates reflect the cutoffs rather than
+failed calculations. Across the broad grid, Expanded Welch also reduces
+rates that are already below 5\%. The larger cutoff is useful when
+it corrects excessive rejection and costly when it deepens conservatism.
 
-The paired nominal-power comparison measures the cost of those cutoffs.
-At two null SDs in the uniform \(4\times4\) setting, Expanded Welch
-loses 2.986 percentage points relative to the sample-size comparator.
-After matching null rejection empirically, it instead gains 3.629 points.
-The two comparisons answer different questions: nominal power includes
-the methods' different false-positive rates, while calibrated power
-compares discrimination at approximately the same false-positive rate.
-The latter gain indicates that the sample-dependent degrees of freedom
-change the ordering of evidence usefully along this population path.
-A fixed Student \(t\) reference cannot produce that gain after calibration,
-because it has the same ordering by \(|T|\) as Wald.
+Nominal power includes these differences in false-positive rates. In the
+uniform \(4\times4\) setting, Expanded Welch has lower nominal power
+than either main comparator. After independently adjusting the null
+rates to approximately 5\%, its power at two null SDs is 3.58 percentage
+points higher than Wald's and 3.63 points higher than the sample-size
+rule's. The sample-dependent degrees of freedom therefore change which
+samples count as stronger evidence along this population path. A fixed
+Student \(t\) reference orders the samples by \(|T|\), as Wald does,
+so their decisions coincide after this calibration.
 
-The different-skew \(8\times8\) path also gives higher calibrated power
-for Expanded Welch, but its rejection curve initially falls as the true
-MI difference increases. At the null, the estimated difference has a
-positive bias; increasing \(I(Q)\) makes the true signed difference
-negative and initially moves the estimate towards zero. Empirical null
-calibration changes the rejection threshold and leaves this movement
-in the shared statistic. The calibrated-power advantage and the initial
-decline are therefore both features of the tested comparison. At the
-larger-sample \(4\times4\) setting, the nominal loss is small and the
-calibrated differences lie well within the stated practical tolerance.
+The different-skew \(8\times8\) comparison also gives higher calibrated
+power for Expanded Welch, while retaining an initial decline in rejection
+as the true difference increases. Under the null, the estimated difference
+has positive bias. Increasing \(I(Q)\) makes the true signed difference
+negative and initially moves the estimate towards zero. Adjusting the
+cutoff leaves this distortion of the estimated difference. The power
+gain and the falling-then-rising curve must therefore be interpreted
+together. In the larger-sample \(4\times4\) setting, the calibrated
+power differences are within the stated one-percentage-point tolerance.
 
-\section{Bias, uncertainty and use on observed data}
+\section{Estimation errors that a cutoff cannot correct}
 
-The sparse \(16\times16\) different-skew comparison demonstrates the
-limit of changing the cutoff. At \(n=1{,}000\), all four rules reject
-far above 5\%. At the 0.01-nat alternative, almost every rejection has
-the wrong estimated ordering. The positive difference bias is larger
-than the true negative difference, as shown in
-Equation~\eqref{eq:redesign-alternative-bias-shift}. The four-cell
-construction reproduces the failure, so it is not restricted to the
-copying association pattern. The fixed moment reference also over-rejects:
-fitting denominator moments accurately does not repair a shifted numerator.
+The sparse \(16\times16\) different-skew comparison remains unreliable
+under all four rules. Its positive difference bias is larger than the
+true negative difference at the 0.01-nat alternative, so almost every
+rejection gives the wrong estimated ordering. The calculation in
+Equation~\eqref{eq:redesign-alternative-bias-shift} explains the sign
+reversal. The four-cell construction reproduces the failure, and the
+fixed moment reference also rejects too often. Fitting denominator
+moments cannot remove bias from the numerator.
 
-The matched same-skew populations expose a separate uncertainty problem.
-Their expected null difference bias cancels at equal sample sizes,
-but the mean squared standard error is almost twice the observed
-difference variance in the sparse copying setting. Rejection is strongly
-conservative. With unequal sample sizes, even identical population tables
-retain residual difference biases because each MI estimate has a different
-sampling distribution. The allocation results consequently depend on
-which population receives fewer observations, as well as on the
-sample-dependent cutoff.
+The same-skew null illustrates a separate error. Identical population
+tables at equal sample sizes cancel the expected difference bias, but
+the estimated difference variance is almost twice its observed value
+in the sparse copying case. All four rules are conservative. Unequal
+sample sizes can also leave unequal residual biases in otherwise
+identical populations. The allocation check shows how changed bias,
+variance contributions and degrees of freedom affect the result when
+one population receives fewer observations.
 
-For an observed categorical comparison, report the MI difference, its
-standard error and the p-value together. If Expanded Welch is used,
-report its estimated degrees of freedom as well. The difference supplies
-estimated size and direction, while the standard error and reference
-distribution determine the uncertainty assigned to it. A small estimated
-degree of freedom alone does not identify reliable calibration: it can
-occur near independence where Wald already rejects too rarely.
-
-Before choosing either rejection rule for an application, evaluate it on
-plausible populations with the application's category definitions, sample
-sizes and margin patterns. Include distinct equal-MI tables and relevant
-alternatives, and assess false positives, power, estimated direction and
-validity. This comparison should guide the choice before interpreting
-the observed application's p-values. The online-shopping analysis
-illustrates the interpretation of the estimates and cutoffs, while its
-unknown population MI values preclude measuring calibration directly.
+For an observed application, the MI difference gives estimated size and
+direction, while the standard error describes estimated sampling
+variation. Report these with the p-value and, for Expanded Welch, the
+estimated degrees of freedom. The online-shopping example illustrates
+that interpretation, but its unknown population MI values prevent a
+direct check of false-positive rates. Simulations from plausible
+application populations can examine sensitivity to rare cells, unequal
+sample sizes and distinct equal-MI tables. Their conclusions depend on
+the populations chosen for that assessment.
 
 \section{Limits of the evidence}
 
-The focus settings were selected using earlier calibration results.
-The new samples estimate their performance independently, but selection
-still limits the scope of the resulting power claims. Each focused curve
+The focused power settings were selected using earlier false-positive
+results. Independent evaluation samples avoid reusing those observations,
+but the resulting power claims still concern selected cases. Each curve
 keeps \(I(P)=0.02\) and increases \(I(Q)\) along the copying family.
-The study does not establish the same calibrated-power advantage for
-reversed changes, different association locations or arbitrary equal-MI
-population pairs. The broad grid supplies evidence about other sample
-sizes, table sizes and margin regimes, rather than a universal guarantee.
+Other directions of change and other association patterns could give
+different comparisons. The allocation check is likewise restricted to
+the specified \(4\times4\) populations and three allocations.
 
-The primary populations have identical row and column margins within
-each table. The four-cell comparison changes where dependence is
-concentrated while retaining MI and margins, but both constructions align
-the association locations between populations. Broader evidence would
-require unequal row and column margins, other association patterns and
-additional allocations. Monte Carlo intervals concern the specified
-populations; they do not measure performance variation over these
-untested populations.
+Both constructions use equal row and column margins within each table
+and align the association locations between populations. Changing from
+copying to a four-cell transfer tests one change in association pattern.
+It leaves untested unequal row and column margins and other locations
+of dependence. The confidence intervals quantify simulation uncertainty
+for the specified populations, with pointwise coverage; they do not
+measure variation over untested populations.
 
-The moment reference and empirical calibration require known populations.
-They are simulation benchmarks. Replacing Expanded Welch's sample-dependent
-degrees of freedom by a fixed value changes both their magnitude and
-their dependence on the statistic. The contrast does not isolate estimation
-error. Likewise, correlations and distribution-shape summaries describe
-the joint sampling behaviour without identifying separate causal effects.
-The calibrated-power bootstrap includes fitting and evaluation uncertainty
-for the fixed constructed alternatives, and its intervals are pointwise.
+The fixed reference and empirical calibration require known simulation
+populations. Replacing sample-dependent degrees of freedom by a fixed
+value changes both their magnitude and their dependence on the statistic,
+so that comparison does not isolate estimation error. The calibrated
+power intervals include fitting and evaluation uncertainty for the fixed
+constructed alternatives.
 
-The mathematical setting assumes independent categorical observations,
-fixed categories, positive population cell probabilities and positive
-first-order MI variance. Paired samples require a covariance contribution
-to the difference variance. Growing alphabets and continuous MI estimators
-have different approximation errors. Exact independence requires the
+The derivation assumes independent categorical observations, fixed
+categories, positive population cell probabilities and positive
+first-order MI variance. Paired samples would require a covariance term
+in the difference variance. Growing alphabets and continuous estimators
+have different approximation errors. Exact independence needs the
 second-order argument in Appendix~\ref{sec:independence-boundary}, and
-the positive-MI sweep shows that proximity to that boundary also matters
-at finite sample sizes.
+the positive-MI sweep shows why proximity to that boundary matters at
+finite sample sizes.

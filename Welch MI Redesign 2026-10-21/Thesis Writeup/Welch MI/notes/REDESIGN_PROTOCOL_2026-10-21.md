@@ -35,3 +35,8 @@ Three historical manuscript tests were updated to validate fresh table values an
 ## Final verification
 
 After the full deliverable quality pass, 268 local tests pass (216 experiment, 27 estimator, 17 application, 8 packaging). The extracted delivered supplement and separately extracted thesis source pass 178 bundled tests (134 experiment, 27 estimator, 17 application). The complete fresh experiment audit remains valid: its statistical source, inputs and sampled records are unchanged by the reporting and manuscript work. The isolated source archive builds without warnings, with extracted text identical to the reviewed 109-page PDF. The delivery consistency check passes. REDESIGN_VERIFICATION.json at the copy root records these outcomes. DELIVERABLE_REVIEW_2026-10-22.md records the scientific exposition, uncertainty reporting, figure and discussion improvements made in the quality pass.
+
+
+## Subsequent readability revision
+
+The user requested a simpler experimental narrative after reviewing the full deliverable. READABILITY_REVISION_2026-10-22.md records the prior-session writing guidance, applied changes and final verification. The current PDF is 104 pages, with Chapters 5–7 reduced from 28 to 22 pages; the core theory and all experimental calculations remain unchanged. The 268 local tests, 178 bundled tests, isolated source build, PDF review and delivery consistency check pass.

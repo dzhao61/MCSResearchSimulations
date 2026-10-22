@@ -1,142 +1,15 @@
 \chapter{Experimental Design}
 \label{chap:design}
 
-The experiment evaluates the moment approximations used to derive Expanded
-Welch and the false-positive rates and power of the resulting test. It
-first measures how the estimated MI variance behaves across repeated
-samples from known populations. It then compares four rejection rules
-using the same bias-corrected MI difference and standard error. This
-separates errors in the derived moments from the performance of a
-Student \(t\) distribution applied to the shared statistic. The design follows the aims, data-generating mechanisms,
-targets, methods and performance measures framework of \citet{morris2019}.
-
-\section{Research questions and statistical targets}
-
-For a fixed population \(P\) and sample size \(n_P\), expectations and
-variances below refer to repeated independent multinomial samples. The
-estimator \(\Vhat(P)\) estimates the pointwise-MI variance \(V(P)\);
-\(\Vhat(P)/n_P\) is the estimated contribution to the variance of the
-MI difference. The sampling variance of \(\Vhat(P)\) is a different
-quantity: it describes how that estimated contribution fluctuates across
-samples.
-
-The first-order calculation uses
-\begin{equation}
- \E\{\Vhat(P)\}\approx V(P),\qquad
- \Var\{\Vhat(P)\}\approx\frac{\tau^2(P)}{n_P},
- \label{eq:redesign-moment-approximations}
-\end{equation}
-where \(\tau^2(P)\) is the population variance of the variance influence
-function derived in Chapter~\ref{chap:expanded}. Substitution into the
-moment-matching formula gives the population first-order value
-\begin{equation}
- \nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)}.
- \label{eq:redesign-first-order-df}
-\end{equation}
-The sampling-moment target instead uses the actual mean and variance of
-the estimator:
-\begin{equation}
- \nu_{P,\mathrm{mom}}
- =\frac{2\{\E\Vhat(P)\}^2}{\Var\{\Vhat(P)\}}.
- \label{eq:redesign-moment-df}
-\end{equation}
-The assumptions in Chapter~\ref{chap:expanded} ensure positive population
-variance quantities for the tested populations. The two degrees-of-freedom
-values can nevertheless differ at finite sample sizes. Dividing their
-definitions before applying either approximation gives the exact identity
-\begin{equation}
- \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
- =\left\{\frac{V(P)}{\E\Vhat(P)}\right\}^{2}
-   \frac{\Var\{\Vhat(P)\}}{\tau^2(P)/n_P}.
- \label{eq:redesign-df-decomposition}
-\end{equation}
-The first factor measures the contribution of the mean approximation;
-the second measures the contribution of the sampling-variance
-approximation. A mean estimate above \(V(P)\) lowers the first-order
-degrees of freedom relative to the moment target when the variance
-prediction is otherwise accurate. The same calculations are made
-separately for \(Q\).
-
-For each population, the experiment estimates the two moments directly
-and compares the population predictions in
-Equation~\eqref{eq:redesign-moment-approximations} with them. It also checks
-the mean plug-in prediction \(\E(\widehat\tau^2)/n_P\), because the
-implemented test estimates \(\tau^2(P)\) from each sample. Component
-means, medians and percentile ranges of \(\widehat\nu_P\) describe the
-additional effect of substituting empirical probabilities into the
-first-order formula.
-
-The second question concerns false-positive rates and power relative to
-Normal Wald and a sample-size comparator. Even accurate denominator
-moments do not determine the joint distribution of the MI difference and
-its standard error. The moment checks and rejection comparisons therefore
-answer distinct parts of the evaluation.
-
-\section{Four rejection rules with a shared statistic}
-
-Every rule uses the bias-corrected difference in
-Equation~\eqref{eq:bias-corrected-difference} and the standard error in
-Equation~\eqref{eq:shared-se}. Normal Wald compares their ratio \(T\)
-with the standard normal distribution. Expanded Welch uses its existing
-estimated degrees of freedom from Chapter~\ref{chap:expanded}.
-
-The sample-size comparator uses Hutcheson's assignment of sample size to
-each component
-\citep{hutcheson1970}, applied to the shared MI variance contributions.
-It replaces the component degrees of freedom by \(n_P\) and \(n_Q\), giving
-\begin{equation}
- \widehat\nu_{\mathrm{size}}=
- \frac{\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\}^{2}}
- {\{\Vhat(P)/n_P\}^{2}/n_P+\{\Vhat(Q)/n_Q\}^{2}/n_Q}.
- \label{eq:redesign-size-df}
-\end{equation}
-This is a comparator for the degrees-of-freedom assignment: the numerator
-and standard error remain the MI quantities from Chapter~\ref{chap:baselines}.
-The component assignment is \(n_i\), whereas ordinary Welch's comparison
-of sample means uses \(n_i-1\) \citep{welch1947}. The experiment asks
-whether calculating the MI variance sensitivity provides a benefit over
-the sample-size assignment.
-
-A fourth rule uses a fixed moment-matched reference, estimated from
-independent simulations of the corresponding equal-MI populations:
-\begin{equation}
- \nu_{\mathrm{ref}}=
- \frac{2\{\E(\SEhat^2)\}^{2}}{\Var(\SEhat^2)}.
- \label{eq:redesign-combined-reference}
-\end{equation}
-Independence of the population samples gives
-\begin{align}
- \E(\SEhat^2)&=\frac{\E\Vhat(P)}{n_P}+\frac{\E\Vhat(Q)}{n_Q},\\
- \Var(\SEhat^2)&=\frac{\Var\{\Vhat(P)\}}{n_P^2}
-                  +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}.
- \label{eq:redesign-reference-variance}
-\end{align}
-Substitution of the component moment targets into the combination formula
-at these expected variance contributions gives exactly
-Equation~\eqref{eq:redesign-combined-reference}. Thus the combination
-identity introduces no further approximation at the level of moments.
-Appendix~\ref{sec:combined-moment-identity} gives the cancellation
-explicitly. Independent fitting samples estimate these moments by their
-sample means and sample variances. The Student \(t\) distribution remains
-an approximation to the shared statistic's distribution.
-
-For each finite degrees-of-freedom rule, the nominal two-sided p-value is
-\begin{equation}
- p=2\{1-F_\nu(|T|)\},
- \label{eq:redesign-t-pvalue}
-\end{equation}
-where \(F_\nu\) is the distribution function of the Student \(t\)
-distribution and \(\nu\) is the rule's sample-dependent or fitted value.
-A valid p-value at most 0.05 produces a rejection.
-
-The moment reference requires known simulation populations and is held
-fixed within an evaluation setting and across the alternatives belonging
-to the same null. Expanded Welch versus this reference measures the
-change in rejection when the sample-dependent degrees of freedom are
-replaced by that fixed value. The reference can still reject incorrectly
-when the shared difference is biased, its standard error has the wrong
-scale, or their joint distribution is poorly described by the Student
-\(t\) distribution.
+The simulations draw count tables from populations with known MI. This
+allows us to measure errors in the estimated MI difference and its
+standard error, and to count false positives when the population MI
+values are equal. The evaluation follows three questions: are the
+variance approximations used by Expanded Welch accurate, does its
+cutoff improve false-positive rates, and what happens to power when
+false-positive rates are comparable? The design follows the simulation
+framework of \citet{morris2019}, specifying the populations, quantities
+being estimated, methods and performance measures.
 
 \section{Constructing joint distributions with known MI}
 
@@ -236,71 +109,110 @@ different tables with equal MI because the category frequencies differ
 between populations. Comparing the regimes therefore tests false-positive
 behaviour under both identical and distinct population tables.
 
-Same skew provides a matched baseline for different skew in all three
-studies and both supporting checks. With equal MI and equal sample sizes,
+With equal MI and equal sample sizes,
 the same-skew samples have identical distributions, so their expected MI
 estimation biases cancel in the difference. Different-skew populations can
 retain unequal biases despite having equal MI. Under an MI difference or
 unequal sample sizes, matching margins alone does not ensure that biases
-cancel. The two regimes therefore distinguish failures that also occur
-with matching category frequencies from those observed when the frequencies
-differ.
+cancel.
 
 Increasing table size under the uneven-margin rule spreads the remaining
 mass over more categories, changing both the number of cells and their
-probabilities. This comparison shows what happens under a common margin
-rule as the table grows. Uniform versus same skew instead compares even
+probabilities. Uniform versus same skew instead compares even
 and uneven category frequencies at a fixed size; different skew allows the
 two populations' frequencies to differ as well.
 
 
-\section{Settings and controlled comparisons}
 
-The equal-MI comparisons include identical joint tables under uniform
-and same-skew margins, and distinct joint tables under different-skew
-margins. This distinction is necessary because the null concerns equal
-MI rather than equal cell probabilities. The experiment uses six
-comparisons, with overlapping settings sampled only once:
-\begin{table}[!htbp]
-\centering
-\caption{Experimental comparisons and their statistical purposes.}
-\label{tab:redesign-overview}
-\begin{tabularx}{\textwidth}{@{}l r >{\raggedright\arraybackslash}X@{}}
-\toprule Comparison & Settings & Main purpose\\\midrule
-Broad equal MI & 120 & Approximation error, false positives and validity.\\
-Population-MI sweep & 63 & Behaviour near independence and across MI.\\
-Focused power & 27 & Nominal and null-calibrated power at A--C.\\
-Broader power & 162 & Table-size, margin and direction comparisons.\\
-Construction & 32 & Matched copying and four-cell populations.\\
-Allocation & 12 & Fixed total sample size with both allocation directions.\\
-\bottomrule
-\end{tabularx}
-\end{table}
+\section{Checking the variance approximations}
 
-The broad equal-MI study crosses four table sizes, three margin regimes
-and ten sample sizes at common MI 0.02 nats. Its 120 settings assess
-false-positive rates and approximation accuracy across population
-structure and sampling density. The MI sweep uses \(4\times4\) tables,
-all three margin regimes, seven positive MI targets and sample sizes
-100, 1,000 and 10,000. After removing shared settings, these two studies
-contain 174 distinct settings. Across all six comparisons there are 366
-distinct evaluation settings and 186 distinct equal-MI fitting settings.
-Appendix~\ref{app:construction} lists the complete grids.
+Expanded Welch chooses its degrees of freedom from the mean and sampling
+variance of the estimated MI variance. For a fixed population \(P\),
+\(\Vhat(P)\) estimates the pointwise-MI variance \(V(P)\), and
+\(\Vhat(P)/n_P\) estimates that population's contribution to the variance
+of the MI difference. Repeated samples also change \(\Vhat(P)\) itself.
+Chapter~\ref{chap:expanded} approximates its two sampling moments by
+\begin{equation}
+ \E\{\Vhat(P)\}\approx V(P),\qquad
+ \Var\{\Vhat(P)\}\approx\frac{\tau^2(P)}{n_P}.
+ \label{eq:redesign-moment-approximations}
+\end{equation}
+Here \(\tau^2(P)\) is the variance of the observation-level sensitivity
+derived in that chapter. The experiment compares each prediction with
+the corresponding mean or variance measured across repeated samples.
+It also checks the average sample-based prediction
+\(\widehat\tau^2(P)/n_P\), because Expanded Welch estimates the sensitivity
+from the observed count table.
 
-The MI sweep compares population and plug-in predictions for the
-sampling variance of \(\Vhat\), and checks the near-independence formulas
-in Appendix~\ref{sec:independence-boundary}. Those formulas predict means
-for each population separately. Observed means are therefore compared
-with predicted means; medians describe the additional effect of skewed
-sampling distributions. Increasing \(n\) while retaining the same
-population distinguishes sampling effects from changes in population MI.
-A large noncentrality parameter alone is not taken as a failure condition.
+These checks use common MI 0.02 nats across the four table sizes, three
+margin regimes and sample sizes from 10 to 50,000. A separate
+\(4\times4\) sweep varies the common positive MI from 0.0001 to 0.05
+nats at \(n=100\), 1,000 and 10,000. Small positive MI approaches the
+independence boundary, where the first-order variance becomes small and
+quadratic sampling terms can matter. The complete grids appear in
+Appendix~\ref{app:construction}.
 
-The scaled mean error \(n\{\E\Vhat-V\}\) is also compared with
-\(d=(k-1)^2\). The near-independence prediction suggests a contribution
-close to \(d/n\), whereas away from independence the second-order
-coefficient can depend on the population table. The experiment measures
-that dependence without assuming a universal correction.
+To assess what moment errors do to the degrees of freedom, the experiment
+also evaluates the moment-matching formula using the measured mean and
+variance of \(\Vhat\). This gives a sampling-moment target for comparison
+with the population first-order formula and the estimated component
+degrees of freedom. Means are compared with predicted means; medians and
+percentile ranges describe the spread of estimates. The definitions and
+algebra relating these quantities are in
+Appendix~\ref{sec:moment-reference-details}. The near-independence
+predictions are derived in Appendix~\ref{sec:independence-boundary}.
+
+\section{False positives when MI is equal}
+
+The main comparison uses Normal Wald, Expanded Welch and a sample-size
+degrees-of-freedom rule. All three use the bias-corrected MI difference
+and standard error from Chapter~\ref{chap:baselines}. Normal Wald uses
+the standard normal distribution, while Expanded Welch uses the Student
+\(t\) distribution with its MI-specific estimated degrees of freedom.
+The sample-size rule asks whether the variance-sensitivity calculation
+improves on assigning each component its sample size, as in
+\citet{hutcheson1970}. It uses
+\begin{equation}
+ \widehat\nu_{\mathrm{size}}=
+ \frac{\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\}^{2}}
+ {\{\Vhat(P)/n_P\}^{2}/n_P+\{\Vhat(Q)/n_Q\}^{2}/n_Q}.
+ \label{eq:redesign-size-df}
+\end{equation}
+The component assignment is \(n_P\) and \(n_Q\); ordinary Welch's test
+of sample means instead uses \(n_P-1\) and \(n_Q-1\)
+\citep{welch1947}. The MI difference and its standard error remain the
+same in all three rules.
+
+Each rule uses a two-sided 5\% nominal test. The broad null comparison
+fixes \(I(P)=I(Q)=0.02\) nats and crosses the four table sizes, three
+margin regimes and ten sample sizes, giving 120 settings. A rate above
+5\% means too many false positives, while a rate below 5\% means
+conservative rejection. Valid-result frequencies are reported alongside
+these rates because an unusable calculation produces no rejection.
+
+A further diagnostic uses a fixed Student \(t\) reference whose degrees
+of freedom are fitted from independent null simulations. Comparing it
+with Expanded Welch shows what happens when the sample-dependent degrees
+of freedom are replaced by one value. The fixed reference appears in
+the plots and tables alongside the three main rules. Its construction
+and fitting procedure are given in
+Appendix~\ref{sec:moment-reference-details}.
+
+\section{Power when MI differs}
+
+A lower false-positive rate can accompany lower power. The power
+comparison therefore first applies each rule's nominal 5\% cutoff, then
+compares the rules after adjusting their cutoffs to give approximately
+5\% rejection under equal MI. This calibrated power comparison asks
+which rule detects more true differences at comparable false-positive rates.
+
+The focused comparison uses the three populations in
+Table~\ref{tab:redesign-focus-settings}. Settings A and B were selected
+from earlier simulations because Expanded Welch brought false-positive
+rates closer to 5\%; their power is evaluated using new independent
+samples. Setting C provides a larger-sample comparison. The broad null
+study supplies the wider evidence against which these selected cases
+are interpreted.
 
 \begin{table}[!htbp]
 \centering
@@ -315,112 +227,64 @@ C & Different skew & 10,000 & \(4\times4\)\\
 \end{tabular}
 \end{table}
 
-Settings A and B were selected from earlier simulations because Expanded
-Welch brought their false-positive rates closer to 5\%. Independent
-simulations estimate their performance separately from those earlier
-samples. Setting C provides a larger-sample comparison. The broad study
-supplies the wider evidence needed to interpret these selected cases.
-Four matched failure settings retain \(16\times16\) populations at
-\(n=1{,}000\) and 10,000 under both skew regimes.
+For each setting, an independent null simulation estimates the sampling
+SD of the corrected MI difference. The power curve keeps \(I(P)=0.02\)
+nats and increases \(I(Q)\) by zero to four of these null SDs, in steps
+of half an SD. Scaling the differences this way makes the three curves
+comparable relative to their sampling variation. The true signed
+difference \(\Delta=I(P)-I(Q)\) is negative at every nonzero step.
+Appendix~\ref{app:construction} gives the fixed SD values and resulting
+population construction.
 
-For each focus null, estimate
-\(\sigma_0=\operatorname{SD}_0(\Deltahat)\) from an independent fitting
-batch, centring at its sampling mean. Construct alternatives with
-\begin{equation}
- I(P)=0.02,\qquad I(Q)=0.02+h\sigma_0,\qquad
- h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}.
- \label{eq:redesign-power-grid}
-\end{equation}
-The signed difference is \(\Delta=-h\sigma_0\). Report each difference
-in nats as well as null standard deviations, and hold the fitted
-population tables fixed during evaluation.
+Cutoffs for the calibrated comparison are fitted using an independent
+batch of equal-MI samples. The same fitted cutoff is then applied
+throughout each alternative curve. Separate null evaluation samples
+check the achieved false-positive rate. Normal Wald and the fixed
+moment reference give identical calibrated decisions because both order
+the samples by \(|T|\). Expanded Welch and the sample-size rule can
+order them differently because their degrees of freedom depend on the
+sample. The fitted cutoffs evaluate the rules under known populations;
+they are not an additional procedure for analysing arbitrary observed
+tables.
 
-The broader power study retains the existing differences from 0 to 0.2
-nats at \(n=1{,}000\) and 10,000. It includes matched same-skew and
-different-skew comparisons at every size, with uniform \(4\times4\)
-populations as an additional comparison. The four-cell check matches
-MI, margins and sample sizes to the copying construction. The allocation
-check holds the total sample size at 2,000 and compares
-\((1000,1000)\), \((400,1600)\) and \((1600,400)\) for null and
-0.01-nat alternatives under both skew regimes. It assesses the whole
-procedure under imbalance, including bias and estimated variance weights.
+The broader power comparison uses MI differences from 0 to 0.2 nats at
+\(n=1{,}000\) and 10,000. Two further checks change the population
+construction or the sample allocation. The construction check replaces
+copying by a probability transfer within four cells, preserving the
+margins and target MI. The allocation check keeps each population pair
+and 2,000 observations fixed, comparing \((1000,1000)\), \((400,1600)\)
+and \((1600,400)\). Their exact settings are in
+Appendix~\ref{app:construction}, with results in
+Appendix~\ref{app:additional-results}. A separate earlier jackknife
+investigation checks whether changing the MI bias correction helps the
+sparse-table failures; its 20,000-pair design is retained in
+Appendix~\ref{sec:jackknife-difference-check}.
 
-A separate, earlier bias-correction investigation is retained in
-Appendix~\ref{sec:jackknife-difference-check}. It compares an analytic
-correction with a delete-one jackknife on 20,000 pairs per setting and
-does not add an arm to the four-rule experiment.
+\section{Sampling and confidence intervals}
 
-\section{Independent fitting, evaluation and calibration}
+The experiment contains 366 distinct evaluation settings. Each uses
+100,000 independently sampled pairs of multinomial count tables: one
+from \(P\) and another independently from \(Q\). All four rules receive
+the same pair. A further 100,000 pairs at each of 186 distinct equal-MI
+settings fit the moment references and calibration cutoffs. Separate
+random streams supply fitting and evaluation samples. Settings shared
+between comparisons are sampled once, giving 55.2 million pairs overall.
 
-Every distinct evaluation setting uses 100,000 independently sampled
-pairs of count tables. Population samples within a pair are independent;
-repetitions are also independent. A separate batch of 100,000 pairs is drawn at each of the 186
-null settings to fit the component moments and fixed reference. All four
-rules receive the same evaluation pairs. Repeated settings share one
-evaluation batch across displays. Separate random streams supply the two populations, each setting, and
-the fitting and evaluation batches.
+The primary rejection rate divides valid rejections by all 100,000
+attempted pairs. Invalid outputs are recorded separately. The bias of
+the corrected MI difference is its mean estimate minus the true
+difference. Standard-error accuracy is measured by dividing the mean
+squared standard error by the observed variance of the difference:
+a ratio of one indicates agreement. Under alternatives, the experiment
+also records whether rejections estimate the correct direction of the
+MI difference. Appendix~\ref{sec:estimation-diagnostics} specifies the
+calculations and inclusion rules for all summaries.
 
-For each alternative, the reference is fitted under its corresponding
-null with the same table size, margins, construction and sample allocation.
-The baseline MI in both populations is 0.02 nats. Thus changes in power
-are assessed against a fixed null reference rather than one refitted at
-each alternative.
-
-For the focused power comparison, the fitting batch also supplies
-empirical null calibration thresholds. Each sample-dependent rule rejects
-when its p-value lies strictly below its fitted fifth-percentile
-threshold. Ties at the boundary are excluded, giving a fitting rejection
-rate no greater than 5\%. Normal Wald and the fixed reference use the
-same empirical cutoff for \(|T|\), since both order the samples by that
-quantity. Their calibrated decisions consequently coincide. These
-thresholds and the reference degrees of freedom remain fixed throughout
-each alternative curve. The independent null evaluation batch measures
-the achieved false-positive rate.
-
-Nominal power uses each rule's stated 5\% cutoff. Calibrated power
-compares the rules after their null rejection rates have been matched
-empirically. The latter measures discrimination after adjustment for
-null calibration; the fitted thresholds use known populations and are
-not proposed as an additional data-analysis method.
-
-\section{Performance measures and simulation uncertainty}
-
-Primary rejection rates divide valid rejections by every attempted pair.
-Invalid outputs are recorded separately and produce no rejection. Method-valid
-and common-valid rates retain their stated denominators. Moment calculations
-include finite zero variance estimates and finite estimates from invalid
-tests. Component degrees-of-freedom summaries use positive finite values
-and report their included counts. If exclusions occur, those conditional
-summaries do not estimate an unconditional mean.
-
-For each population, report \(\E\Vhat/V\), predicted over observed
-sampling variance, first-order over moment degrees of freedom, and the
-mean, median and fifth--95th percentile range of estimated component
-degrees of freedom. These percentile ranges describe sampling spread.
-They are distinct from confidence intervals for a summary.
-
-For the shared difference, report bias divided by observed SD and mean
-squared standard error divided by observed sampling variance. Correlations,
-skewness and the two rejection tails provide additional diagnostics at
-the focus and failure cases. Under alternatives, classify rejections by
-whether \(\Deltahat\Delta\) is positive or negative, retaining both in
-the two-sided rejection rate.
-
-Wilson 95\% intervals describe uncertainty in rejection rates
-\citep{wilson1927}. Paired differences subtract the comparator's rejection
-indicator from Expanded Welch's indicator on each sampled pair. Their
-Monte Carlo standard errors use the observed variance of these paired
-differences. At a true rate of 5\%, 100,000 repetitions give an approximate
-Monte Carlo standard error of 0.069 percentage points. Nominal reference
-intervals condition on the fitted degrees of freedom; its fitting
-uncertainty is reported separately.
-
-Moment-ratio uncertainty uses the delta method applied to the joint
-sample moments, as derived in Appendix~\ref{sec:moment-uncertainty}. Focused calibrated-power intervals use 1,000 bootstrap
-repetitions of the fitting and evaluation outputs, preserving paired
-method outcomes and the fitting batch shared across each curve. The
-population tables and differences in nats remain fixed. A power difference
-within one percentage point is the stated practical tolerance, assessed
-with pointwise uncertainty intervals rather than a nonsignificant test
-alone. Intervals quantify simulation uncertainty for the specified
-populations; they do not provide simultaneous coverage over the design.
+Wilson 95\% confidence intervals describe uncertainty in rejection rates
+\citep{wilson1927}. Intervals for differences between methods account
+for their use of the same sampled pairs. Calibrated-power intervals also
+include uncertainty from fitting the cutoffs. A difference within one
+percentage point is the stated practical tolerance for the focused
+power comparison. The intervals are pointwise: each concerns one rate
+or comparison at a specified population setting. Appendix~\ref{sec:simulation-uncertainty} gives the
+calculations, including moment uncertainty and the calibration bootstrap.

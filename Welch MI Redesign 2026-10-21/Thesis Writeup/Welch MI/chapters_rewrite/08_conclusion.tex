@@ -11,14 +11,11 @@ pointwise MI. The variance of this sensitivity gives a first-order
 sampling-variance approximation, which is used with moment matching to
 choose MI-specific degrees of freedom for a Student \(t\) distribution.
 
-The experiment evaluates the mean and sampling variance approximations
-separately before comparing the completed rejection rules. It contains
-366 evaluation settings, with independent moment fitting at 186 null
-settings and 100,000 repetitions per batch. The first research question
-is answered by the different errors in the two moment approximations:
-the sampling-variance prediction can be accurate while the mean estimate
-remains inflated, substantially lowering the population first-order
-degrees of freedom relative to the moment target. Near independence,
+The first research question concerns the approximations used to choose
+those degrees of freedom. The sampling-variance prediction can be accurate
+while the mean estimate remains inflated. Replacing that mean by the
+population variance coefficient then lowers the first-order degrees of
+freedom relative to the target calculated from the sampling moments. Near independence,
 the quadratic sampling contribution explains the scale of the observed
 component estimates and their departure from the first-order values.
 
@@ -28,9 +25,8 @@ small-sample populations, with a nominal power cost. At matched null
 rejection rates, it has higher power along the selected uniform
 \(4\times4\), \(n=20\), and different-skew \(8\times8\), \(n=100\),
 paths. Its calibrated differences from Wald are practically small in
-the different-skew \(4\times4\), \(n=10{,}000\), comparison. These
-results identify a benefit of sample-dependent MI degrees of freedom
-beyond an overall reduction in rejection.
+the different-skew \(4\times4\), \(n=10{,}000\), comparison. The sample-dependent degrees of freedom can therefore improve power
+at comparable false-positive rates along these population paths.
 
 The method does not resolve errors in the shared statistic. In sparse
 different-skew tables, MI bias can shift or reverse the estimated

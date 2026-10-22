@@ -73,13 +73,10 @@ The thesis addresses two research questions:
  with Normal Wald and a sample-size degrees-of-freedom comparator?
 \end{enumerate}
 
-The analytical derivation gives the variance sensitivity and component
-degrees of freedom. Controlled simulations check its moment approximations
-separately, before comparing the completed rejection rules. Independent
-moment fitting provides a fixed simulation reference. Power is measured
-both at nominal cutoffs and after independent null calibration, so the
-comparison distinguishes a change in false positives from a change in
-power at matched null rejection.
+The simulations first check the variance approximations, then compare
+false positives and power. Power is measured both at the stated 5\%
+cutoffs and after independent adjustment to approximately equal
+false-positive rates.
 
 \section{Contributions to the field}
 
@@ -96,14 +93,11 @@ power at matched null rejection.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations examine
-  how sample size, table size, category frequencies and population MI affect
-  false-positive rates, power and the frequency of usable results. Supporting
-  diagnostics assess errors in the MI difference and its standard error, and
-  test the predicted mean and sampling variance of the variance estimator
-  and the resulting component degrees of freedom.
-  Additional supplementary checks look at further population constructions
-  and sample allocation, while a timing comparison measures computational cost.
+  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations check
+  the variance approximations and compare false-positive rates, power and
+  usable results as sample size, table size, category frequencies and MI
+  change. Further comparisons examine association pattern and sample
+  allocation, and a timing comparison measures computational cost.
   \par
   \end{samepage}
 
@@ -122,9 +116,10 @@ are independent, and observations within each sample are also independent.
 For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where
 \(X\) and \(Y\) are independent, is considered separately.
-The simulations compare Normal Wald, Expanded Welch, a sample-size
-degrees-of-freedom rule and an independently fitted moment reference, using
-two-sided tests at the 5\% significance level.
+The main simulations compare Normal Wald, Expanded Welch and a sample-size
+degrees-of-freedom rule using two-sided tests at the 5\% significance level.
+An independently fitted reference helps examine the role of the degrees
+of freedom.
 
 The organisation of the thesis follows the development, evaluation and
 interpretation of the two-sample MI test.
