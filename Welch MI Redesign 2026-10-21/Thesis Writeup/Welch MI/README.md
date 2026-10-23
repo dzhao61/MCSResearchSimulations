@@ -10,6 +10,8 @@ The 22 October revision adds a six-case calibration-population sensitivity check
 
 The experiment code and evidence sit under the sibling WelchSatterthwaiteMI folder. All source imports and packaging resolve inside this independent copy.
 
+The appendix reduction on 23 October shortens the manuscript from 108 to 95 pages. Appendix C retains the diagnostics, calibration sensitivity, rejection directions and Holm adjustment needed by the main argument. The complete previous 19-page Appendix C, its source, plots and tables are preserved under `WelchSatterthwaiteMI/supplementary_displays/full_additional_results/` in the experiment supplement. Appendices A and B remain unchanged.
+
 ## Build an extracted source archive
 
 The source archive builds independently with TeX Live and latexmk. From its root, create `build_v3/chapters_rewrite` and `build_v3/appendices_rewrite`, then run:

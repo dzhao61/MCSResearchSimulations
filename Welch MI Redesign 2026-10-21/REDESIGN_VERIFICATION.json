@@ -6,25 +6,25 @@
   "total_pairs": 56400000,
   "calibration_bootstrap_repetitions": 1000,
   "local_tests": {
-    "experiment": 221,
+    "experiment": 223,
     "estimator": 27,
     "application": 17,
     "packaging": 8,
-    "total": 273
+    "total": 275
   },
-  "isolated_bundled_tests": 183,
+  "isolated_bundled_tests": 185,
   "independently_reconstructed_pairs": 4512,
   "original_files_verified_unchanged": 30042,
-  "pdf_pages": 108,
+  "pdf_pages": 95,
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "c401338a40dd524df9f2c870db603ac90a34f0eff4dd7881e1d87019c459a404",
+  "pdf_sha256": "86affff8b073949e19706a2081c442ce6a9176c8798e21c6bed56e30bdfa799b",
   "isolated_bundled_test_breakdown": {
-    "experiment": 139,
+    "experiment": 141,
     "estimator": 27,
     "application": 17,
-    "total": 183
+    "total": 185
   },
   "full_deliverable_quality_review": "Thesis Writeup/Welch MI/notes/DELIVERABLE_REVIEW_2026-10-22.md",
   "readability_review": "Thesis Writeup/Welch MI/notes/READABILITY_REVISION_2026-10-22.md",
@@ -32,7 +32,8 @@
     "before_readability": 28,
     "after_readability": 22,
     "before_sensitivity": 22,
-    "after_sensitivity": 22
+    "after_sensitivity": 22,
+    "after_appendix_reduction": 22
   },
   "base_total_pairs": 55200000,
   "main_text_pages": 57,
@@ -46,5 +47,49 @@
     "audit_passed": true
   },
   "calibration_sensitivity_review": "Thesis Writeup/Welch MI/notes/CALIBRATION_SENSITIVITY_REVIEW_2026-10-23.md",
-  "final_changed_pages_rendered_and_inspected": true
+  "final_changed_pages_rendered_and_inspected": true,
+  "targeted_edit_brief_revision": {
+    "review": "Thesis Writeup/Welch MI/notes/TARGETED_EDIT_BRIEF_REVIEW_2026-10-23.md",
+    "adopted_edits": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      8,
+      9
+    ],
+    "edit_4": "Presentation-only shortening; retained the two-calibration comparison",
+    "edit_7": "Retained qualitative RQ1 abstract sentence",
+    "new_study_pairs": 0,
+    "before_pdf_pages": 108,
+    "after_pdf_pages": 108,
+    "chapters_5_to_8_pages_before": 24,
+    "chapters_5_to_8_pages_after": 24,
+    "grid_toward": 29,
+    "grid_away": 52,
+    "grid_within": 39,
+    "grid_away_wald_below": 48,
+    "maximum_comparable_pilot_rate_difference_pp": 0.149,
+    "figure_assets_unchanged": true,
+    "protected_theory_and_appendix_b_unchanged": true
+  },
+  "appendix_reduction": {
+    "before_pdf_pages": 108,
+    "after_pdf_pages": 95,
+    "pages_removed": 13,
+    "appendix_a_pages": 7,
+    "appendix_b_pages": 12,
+    "appendix_c_pages_before": 19,
+    "appendix_c_pages_after": 6,
+    "combined_appendix_pages_before": 38,
+    "combined_appendix_pages_after": 25,
+    "entire_sections_moved_to_supplement": 6,
+    "full_supplement_pages": 19,
+    "full_supplement_sha256": "2e473a73c45c2f72f0667285f60950a16fe7adabd3610632dc9437312b7422a6",
+    "full_supplement_text_and_all_19_rendered_pages_identical": true,
+    "protected_chapters_2_to_4_and_appendices_a_b_unchanged": true,
+    "study_data_unchanged": true,
+    "review": "Thesis Writeup/Welch MI/notes/APPENDIX_REDUCTION_2026-10-23.md"
+  }
 }

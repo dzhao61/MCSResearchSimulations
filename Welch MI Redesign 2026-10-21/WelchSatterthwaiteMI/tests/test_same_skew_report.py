@@ -117,7 +117,9 @@ class SameSkewReportTests(unittest.TestCase):
             self.assertTrue(selected.profile.eq("different_skew").any())
         for name in ("focused_redesign_moments_same_skew", "focused_redesign_null_same_skew",
                      "focused_redesign_broad_power_same_skew", "focused_redesign_allocation"):
-            self.assertIn(name, (THESIS / "appendices_rewrite/C_additional_results.tex").read_text())
+            supplement=ROOT/"supplementary_displays/full_additional_results"
+            self.assertIn(name,(supplement/"C_additional_results.tex").read_text())
+            self.assertTrue(any((supplement/"figures_rewrite").glob(name+'.*')))
 
 
 

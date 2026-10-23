@@ -4,6 +4,7 @@ import sys
 import numpy as np
 import pandas as pd
 import unittest
+from scipy.stats import norm,t
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'experiments'))
 import calibration_sensitivity as sensitivity
 import report_calibration_sensitivity as report
@@ -12,6 +13,35 @@ import redesign_study as study
 
 
 class CalibrationSensitivityTests(unittest.TestCase):
+    def test_grid_tolerance_boundary_and_overshooting_the_target(self):
+        rows=[]
+        for i,(wald,expanded) in enumerate([(100,70),(60,45),(60,36),(40,30),(60,43),(60,37)]):
+            for method,rejected in [('wald',wald),('expanded',expanded)]:
+                rows.append(dict(configuration_id=str(i),method=method,denominator='all',
+                                 count=1000,rejected=rejected,rate=rejected/1000))
+        grid,summary=redesign_report.calibration_grid(pd.DataFrame(rows),{str(i) for i in range(6)})
+        self.assertEqual(grid.classification.tolist(),['toward','toward','away','away','within','within'])
+        self.assertEqual((summary['toward'],summary['away'],summary['within']),(2,2,2))
+        self.assertEqual(summary['away_wald_below'],1)
+
+    def test_nominal_upper_summary_uses_uncalibrated_reference_distributions(self):
+        path=sensitivity.OUTPUT/'nominal_upper_rates.csv'
+        if not path.exists(): self.skipTest('Nominal upper-null report not present')
+        summary=pd.read_csv(path).set_index(['configuration_id','method'])
+        self.assertEqual(len(summary),18)
+        for c in sensitivity.design()[0]:
+            key=c['configuration_id'];r=study.load_records(sensitivity.OUTPUT,'evaluation',key)
+            a=r['influence_variance_p']/c['n_p'];b=r['influence_variance_q']/c['n_q']
+            df=(a+b)**2/(a*a/c['n_p']+b*b/c['n_q'])
+            pvalues={'wald':2*norm.sf(abs(r['statistic'])),
+                     'size':2*t.sf(abs(r['statistic']),df),
+                     'expanded':2*t.sf(abs(r['statistic']),r['expanded_welch_degrees_of_freedom'])}
+            for m,p in pvalues.items():
+                valid=r['expanded_valid'] if m=='expanded' else r['base_valid']
+                expected=int((valid & (p<=.05)).sum())
+                self.assertEqual(summary.loc[(key,m),'rejected'],expected)
+                self.assertEqual(summary.loc[(key,m),'count'],100000)
+
     def test_reported_power_matches_independent_decision_api(self):
         import json
         cases,_=sensitivity.design()

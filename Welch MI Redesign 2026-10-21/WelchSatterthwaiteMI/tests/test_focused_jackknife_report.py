@@ -47,26 +47,22 @@ class JackknifeReportTests(unittest.TestCase):
                 self.assertEqual(row["rejection"]["count"],
                                  row["correct_direction"]["count"]+row["opposite_direction"]["count"])
 
-    def test_main_text_only_points_to_bounded_appendix_check(self):
+    def test_jackknife_is_preserved_as_a_supplementary_investigation(self):
         if not (THESIS/"main.tex").exists():
             self.skipTest("Thesis source is a separate delivered archive.")
         for chapter in ("05_experimental_design", "06_results"):
-            self.assertIn(r"\ref{sec:jackknife-difference-check}",
-                          (THESIS/f"chapters_rewrite/{chapter}.tex").read_text())
+            self.assertNotIn("jackknife",(THESIS/f"chapters_rewrite/{chapter}.tex").read_text().lower())
         for chapter in ("03_problem_baselines", "04_expanded_welch"):
             self.assertNotIn("jackknife", (THESIS/f"chapters_rewrite/{chapter}.tex").read_text().lower())
-        results = (THESIS/"chapters_rewrite/06_results.tex").read_text()
-        paragraph = next(part for part in results.split("\n\n")
-                         if r"\ref{sec:jackknife-difference-check}" in part)
-        paragraph = " ".join(paragraph.split())
-        self.assertIn("Wald's analytic MI bias correction", paragraph)
-        self.assertIn("existing standard error", paragraph)
-        self.assertIn("standard normal distribution cutoff", paragraph)
+        source=(ROOT/"supplementary_displays/full_additional_results/C_additional_results.tex").read_text()
+        self.assertIn(r"\label{eq:jackknife-fixed-se-check}",source)
+        self.assertIn("The variance estimates in the denominator are unchanged.",source)
+        self.assertIn("standard normal",source)
 
-    def test_appendix_prose_matches_record_based_biases_and_intervals(self):
+    def test_supplement_prose_matches_record_based_biases_and_intervals(self):
         if not (THESIS/"main.tex").exists():
             self.skipTest("Thesis source is a separate delivered archive.")
-        source = (THESIS/"appendices_rewrite/C_additional_results.tex").read_text()
+        source = (ROOT/"supplementary_displays/full_additional_results/C_additional_results.tex").read_text()
         section = source.split(r"\label{sec:jackknife-difference-check}", 1)[1].split(
             r"\section{Power over the full MI-difference range}", 1)[0]
         rows = self.evidence["estimators"]

@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from decimal import Decimal
 import json
 import re
 from pathlib import Path
@@ -13,11 +14,45 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 import redesign_study as study
+from report_formatting import decimal_text
 
 LABELS={'wald':'Normal Wald','size':'Sample-size df','expanded':'Expanded Welch','reference':'Moment reference'}
 COLOURS={'wald':'#28679b','size':'#b46c14','expanded':'#a53648','reference':'#34866f'}
 STYLES={'wald':'-','size':'--','expanded':'-','reference':':'}
 FIGURES=study.ROOT.parent/'Thesis Writeup/Welch MI/figures_rewrite'
+
+
+def percentage_text(value):
+    return decimal_text(Decimal(str(value))*100,places=2)+r'\%'
+
+
+def significant_text(value,figures=3):
+    x=Decimal(str(value))
+    if x.is_zero(): return '0'
+    return decimal_text(x,places=max(0,figures-1-x.adjusted()))
+
+
+def calibration_grid(rates,null_ids,tolerance=.003):
+    selected=rates[rates.denominator.eq('all')&rates.configuration_id.isin(null_ids)]
+    rates_wide=selected.pivot(index='configuration_id',columns='method',values='rate')
+    counts=selected.pivot(index='configuration_id',columns='method',values='count')
+    rejected=selected.pivot(index='configuration_id',columns='method',values='rejected')
+    if not (counts.wald.eq(counts.expanded).all() and counts.wald.nunique()==1):
+        raise AssertionError('Grid comparison requires matched denominators')
+    # Integer rejection counts retain exact equality at the tolerance boundary.
+    target=study.ALPHA*counts.wald
+    improvement=(rejected.wald-target).abs()-(rejected.expanded-target).abs()
+    boundary=tolerance*counts.wald
+    category=np.where(improvement>boundary,'toward',np.where(improvement < -boundary,'away','within'))
+    grid=rates_wide[['wald','expanded']].copy()
+    grid['improvement']=improvement/counts.wald
+    grid['classification']=category
+    summary=dict(settings=len(grid),tolerance_percentage_points=100*tolerance,
+                 toward=int((category=='toward').sum()),away=int((category=='away').sum()),
+                 within=int((category=='within').sum()),
+                 toward_wald_above=int(((category=='toward')&grid.wald.gt(study.ALPHA)).sum()),
+                 away_wald_below=int(((category=='away')&grid.wald.lt(study.ALPHA)).sum()))
+    return grid.reset_index(),summary
 
 
 def bootstrap_focus(task):
@@ -107,6 +142,27 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     focus=pd.read_csv(output/'focus.csv')
     moments=pd.read_csv(output/'moments.csv')
     rates=pd.read_csv(output/'rates.csv')
+    null_ids=set(displays[displays.study.eq('null')].configuration_id)
+    grid,grid_summary=calibration_grid(rates,null_ids)
+    if grid_summary['settings']!=120:
+        raise AssertionError('Broad null grid changed')
+    if grid_summary['toward_wald_above']!=grid_summary['toward']:
+        raise AssertionError('Review manuscript statement about improvements above 5%')
+    grid.to_csv(output/'calibration_grid_summary.csv',index=False)
+    study.atomic_json(output/'calibration_grid_summary.json',grid_summary)
+    upper_nominal_path=output/'calibration_sensitivity/nominal_upper_rates.csv'
+    upper_nominal=pd.read_csv(upper_nominal_path).set_index(['focus','effect','method'])
+    commands={'RedesignToward':str(grid_summary['toward']),
+              'RedesignAway':str(grid_summary['away']),
+              'RedesignAwayBelow':str(grid_summary['away_wald_below']),
+              'RedesignWithin':str(grid_summary['within']),
+              'RedesignGridTolerance':decimal_text(grid_summary['tolerance_percentage_points'],1)}
+    for focus_label,effect in [('A',2.),('B',4.)]:
+        commands['RedesignUpper'+focus_label+'MI']=decimal_text(upper_nominal.loc[(focus_label,effect,'wald'),'common_mi'],2)
+        for method in ('wald','expanded'):
+            commands['RedesignUpper'+focus_label+method.title()+'Rate']=percentage_text(upper_nominal.loc[(focus_label,effect,method),'rate'])
+    (figures/'focused_redesign_reporting_values.tex').write_text(''.join(
+        '\\newcommand{\\'+key+'}{'+value+'}\n' for key,value in commands.items()))
     raw=rates[rates.denominator.eq('all')].set_index(['configuration_id','method'])
     diagnostics=pd.read_csv(output/'diagnostics.csv').set_index('configuration_id')
     dependence_path=output/'calibration_sensitivity/dependence_diagnostics.csv'
@@ -278,7 +334,9 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         lines.append('Setting & '+' & '.join(LABELS[m] for m in methods_panel)+r'\\')
         lines.append(r'\midrule')
         for label,key in cases:
-            cells=[f'{raw.loc[(key,m),"rate"]:.4f} [{raw.loc[(key,m),"low"]:.4f}, {raw.loc[(key,m),"high"]:.4f}]' for m in methods_panel]
+            cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
+                   decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
+                   decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in methods_panel]
             lines.append(label+' & '+' & '.join(cells)+r'\\')
     lines.extend([r'\bottomrule',r'\end{tabular}'])
     (figures/'focused_redesign_cases_rates.tex').write_text('\n'.join(lines)+'\n')
@@ -290,8 +348,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Var. ratio','Rank corr.','Skew','Median df','Ref. df'],rows)
     rows=[]
     for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
-        rows.append([f'{row.focus}: {row.standardised_difference:g}',f'{row.difference_nats:.5f}']+
-                    [f'{cal.loc[(row.configuration_id,m),"rate"]:.4f}' for m in ('wald','size','expanded')])
+        rows.append([f'{row.focus}: {row.standardised_difference:g}',significant_text(row.difference_nats)]+
+                    [percentage_text(cal.loc[(row.configuration_id,m),'rate']) for m in ('wald','size','expanded')])
     table(figures/'focused_redesign_calibrated_power.tex',['Setting: SD','Nats','Wald/ref.','Size df','Expanded'],rows)
     paired=pd.read_csv(output/'paired.csv')
     paired=paired[paired.denominator.eq('all')].set_index(['configuration_id','comparator'])
@@ -347,6 +405,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         'source_sha256':study.sha(Path(__file__)),
         'inputs':{name:study.sha(output/name) for name in ['protocol.json','configurations.csv','references.json','rates.csv','moments.csv','calibration_bootstrap.csv','audit.json']},
         'dependence_input_sha256':study.sha(dependence_path),
+        'upper_nominal_input_sha256':study.sha(upper_nominal_path),
+        'grid_summary':grid_summary,
         'null_display_settings':len(null_ids),'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])})
     print(json.dumps(evidence,indent=2),flush=True)
 

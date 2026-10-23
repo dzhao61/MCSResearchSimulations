@@ -9,7 +9,7 @@ import pandas as pd
 from scipy.stats import spearmanr
 import redesign_study as study
 import calibration_sensitivity as sensitivity
-from redesign_report import FIGURES, table, select_case
+from redesign_report import FIGURES, table, select_case, percentage_text
 
 
 def prepared(records, config, reference):
@@ -113,6 +113,21 @@ def cross_null_rates(base,output,cases):
     return pd.DataFrame(rows)
 
 
+def nominal_upper_rates(output,cases,references):
+    rows=[]
+    for config in cases:
+        records=study.load_records(output,'evaluation',config['configuration_id'])
+        methods,decisions=study.decisions(records,config,references[config['configuration_id']])
+        for method in ('wald','size','expanded'):
+            n=len(decisions[method]); k=int(decisions[method].sum())
+            low,high=study.wilson(k,n)
+            rows.append(dict(configuration_id=config['configuration_id'],focus=config['focus'],
+                             effect=config['effect'],common_mi=config['mi_p'],method=method,
+                             count=n,valid_count=int(methods[method][1].sum()),rejected=k,
+                             rate=k/n,low=low,high=high))
+    return pd.DataFrame(rows)
+
+
 def dependence(base,output):
     configs=pd.read_csv(base/'configurations.csv')
     cases=[(label,select_case(configs,*spec)) for label,spec in study.FOCUS.items()]
@@ -148,7 +163,7 @@ def write_tables(output,figures):
         for effect in (2.,4.):
             for location in ('lower','upper'):
                 rows.append([f'{label}: {effect:g}, {location}']+
-                            [f'{values.loc[(label,effect,location,m),"estimate"]:.4f}' for m in ('wald','size','expanded')])
+                            [percentage_text(values.loc[(label,effect,location,m),'estimate']) for m in ('wald','size','expanded')])
     table(figures/'focused_redesign_sensitivity_power_full.tex',['Setting: SD, null','Wald/ref.','Size df','Expanded'],rows)
     cross=pd.read_csv(output/'cross_null_rates.csv').set_index(['focus','effect','calibration','null_location','method'])
     rows=[]
@@ -157,7 +172,7 @@ def write_tables(output,figures):
             for calibration in ('lower','upper'):
                 for location in ('lower','upper'):
                     rows.append([f'{label}: {effect:g}',calibration,location]+
-                                [f'{cross.loc[(label,effect,calibration,location,m),"rate"]:.4f}' for m in ('wald','size','expanded')])
+                                [percentage_text(cross.loc[(label,effect,calibration,location,m),'rate']) for m in ('wald','size','expanded')])
     table(figures/'focused_redesign_sensitivity_cross_null.tex',
           ['Setting: SD','Fitting null','Evaluation null','Wald/ref.','Size df','Expanded'],rows)
 
@@ -178,12 +193,13 @@ def main():
                 rows.extend(future.result()); print('Completed sensitivity bootstrap focus',flush=True)
         pd.DataFrame(rows).sort_values(['focus','effect','calibration','quantity']).to_csv(args.output/'power.csv',index=False)
     cases,_=sensitivity.design(args.base)
+    nominal_upper_rates(args.output,cases,json.loads((args.output/'references.json').read_text())).to_csv(args.output/'nominal_upper_rates.csv',index=False)
     cross_null_rates(args.base,args.output,cases).to_csv(args.output/'cross_null_rates.csv',index=False)
     dependence(args.base,args.output)
     write_tables(args.output,args.figures)
     study.atomic_json(args.output/'report_provenance.json',dict(
         report_sha256=study.sha(Path(__file__)),base_report_sha256=study.sha(Path(__file__).with_name('redesign_report.py')),
-        inputs={name:study.sha(args.output/name) for name in ['protocol.json','references.json','audit.json','power.csv','cross_null_rates.csv','dependence_diagnostics.csv']},
+        inputs={name:study.sha(args.output/name) for name in ['protocol.json','references.json','audit.json','power.csv','cross_null_rates.csv','dependence_diagnostics.csv','nominal_upper_rates.csv']},
         uncertainty='Joint fitting-sample and paired evaluation bootstrap for power; conditional Wilson intervals for cross-null rates',
         bootstrap_repetitions=int(pd.read_csv(args.output/'power.csv').bootstrap_repetitions.iloc[0])))
 

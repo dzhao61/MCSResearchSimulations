@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 import tempfile
 import unittest
+from decimal import Decimal,ROUND_HALF_UP
 
 import numpy as np
 import pandas as pd
@@ -109,7 +110,9 @@ class RedesignTests(unittest.TestCase):
             for method in study.METHODS:
                 row=rates.loc[(key,method)]
                 interval=binomtest(int(row.rejected),int(row['count'])).proportion_ci(method='wilson')
-                self.assertIn(f'{row.rate:.4f} [{interval.low:.4f}, {interval.high:.4f}]',text)
+                values=[(Decimal(str(x))*100).quantize(Decimal('.01'),rounding=ROUND_HALF_UP)
+                        for x in (row.rate,interval.low,interval.high)]
+                self.assertIn(f'{values[0]:.2f}\\% [{values[1]:.2f}, {values[2]:.2f}]',text)
 
     def test_deliverable_power_contrasts_preserve_pairing_and_percentage_units(self):
         figures=study.ROOT.parent/'Thesis Writeup/Welch MI/figures_rewrite'

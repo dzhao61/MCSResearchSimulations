@@ -1,5 +1,6 @@
 \chapter{Results}
 \label{chap:results}
+\input{figures_rewrite/focused_redesign_reporting_values}
 
 This chapter first asks whether the mean and sampling-variance predictions
 used by Expanded Welch agree with repeated sampling. It then examines
@@ -39,8 +40,9 @@ At \(n=50{,}000\), the sampling-variance ratios across the same broad grid
 lie between 0.974 and 1.009. Mean ratios range from 1.000 to 1.091, so
 small residual mean errors can still affect the degrees of freedom.
 Increasing sample size therefore improves both approximations, while
-residual mean error can still lower the degrees of freedom. Appendix~\ref{app:additional-results}
-provides the uniform and same-skew versions of the figure.
+residual mean error can still lower the degrees of freedom. The
+experimental supplement provides the companion uniform and same-skew
+plots.
 
 The mean error also explains the difference between the two
 degrees-of-freedom calculations. At \(4\times4\), \(n=1{,}000\) and MI 0.02, the
@@ -116,9 +118,9 @@ predictions remain about 7--8\% above the observed values. Thus the
 accuracy of the population variance-sensitivity formula does not eliminate
 the error from estimating that sensitivity in each sample.
 
-The mean error also varies with the population table. The complete
-comparison of its size across MI and margins appears in
-Figure~\ref{fig:redesign-mean-bias} in the appendix.
+The mean error also varies with the population table.
+Appendix~\ref{sec:component-diagnostics} reports its range across MI and
+margins.
 
 \section{False positives when MI is equal}
 
@@ -153,8 +155,12 @@ are 0.958 for Normal Wald, the sample-size comparator and the fixed
 reference, and 0.631 for Expanded Welch. Their conditional rates and
 included counts are reported separately in the supplement.
 
-Expanded Welch's small-sample improvements do not extend to uniformly
-better calibration across the grid. In different-skew large tables,
+Across the 120 settings, Expanded Welch moves rejection closer to 5\%
+in \RedesignToward{} settings and farther away in \RedesignAway{}, using
+changes in distance greater than \RedesignGridTolerance{} percentage points.
+All \RedesignToward{} improvements occur with Wald above 5\%;
+\RedesignAwayBelow{} of the \RedesignAway{} deteriorations occur with Wald
+below 5\%. The remaining \RedesignWithin{} settings fall within this tolerance. In different-skew large tables,
 all rules can reject too often; with identical populations, lowering
 an already-conservative rate moves it further from 5\%.
 
@@ -168,6 +174,12 @@ with 8.35\% for Wald and 7.39\% for the sample-size rule. In the
 \(8\times8\) different-skew setting B, Expanded Welch gives 5.52\%,
 compared with 7.47\% for Wald. Its rate remains above 5\%, although
 closer than either main comparator.
+
+Both rules over-reject at stronger common MI: in A at
+\RedesignUpperAMI{} nats, Wald rejects \RedesignUpperAWaldRate{} and
+Expanded Welch rejects \RedesignUpperAExpandedRate{} of pairs.
+In B at \RedesignUpperBMI{} nats, the rates are
+\RedesignUpperBWaldRate{} and \RedesignUpperBExpandedRate{}, respectively.
 
 \begin{table}[!htbp]
 \centering
@@ -233,8 +245,8 @@ rate falls from 5.52\% under the null to 1.99\% at one null SD, before
 rising to 33.1\% at four SDs. The true signed difference becomes
 negative as \(I(Q)\) increases, initially opposing the positive bias
 observed under the null. The larger rejection cutoff does not remove
-this distortion of the shared statistic. Direction counts and the
-broader large-table curves provide supporting evidence in the appendix.
+this distortion of the shared statistic. Appendix~\ref{app:additional-results}
+reports the rejection directions in the sparse-table comparisons.
 
 At C, nominal power differences are small. At two null SDs, or
 about 0.00635 nats, Wald gives 45.2\% and Expanded Welch gives 44.9\%.
@@ -251,18 +263,12 @@ Calibrating at common MI 0.02 gives approximately 5\% rejection on
 independent samples from that null population. The achieved rates range
 from 4.93\% to 4.99\% across A--C and the four rules. Wald and the
 fixed moment reference have identical calibrated decisions because
-both order samples by \(|T|\). Figure~\ref{fig:redesign-calibrated-power}
-uses these lower-null cutoffs throughout each alternative curve.
+both order samples by \(|T|\). Appendix Figure~\ref{fig:redesign-calibrated-power}
+shows the full curves under this lower-null calibration.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\textwidth]{focused_redesign_power_calibrated.pdf}
-\caption{Power after calibration at common MI 0.02; bands show bootstrap uncertainty.}
-\label{fig:redesign-calibrated-power}
-\end{figure}
 
-Expanded Welch gains power under this calibration, but the gain depends
-on the null population used to fit the cutoff. Table~\ref{tab:redesign-calibration-sensitivity}
+
+The power gain depends on which null population supplies the cutoff. Table~\ref{tab:redesign-calibration-sensitivity}
 holds each alternative fixed and compares lower- and upper-null
 calibration. At A and two null SDs, the gain over Wald changes from
 3.58 percentage points to a loss of 0.76 points. At B and four SDs,
@@ -280,18 +286,11 @@ well within the one-percentage-point tolerance.
 \input{figures_rewrite/focused_redesign_calibration_sensitivity}
 \end{table}
 
-The table gives gains in percentage points with paired 95\% bootstrap
-intervals including cutoff-fitting uncertainty. The lower null has
-common MI 0.02; the upper null has the MI in the second column.
-At A and two SDs, applying the lower-null calibration to upper-null
-samples gives 11.2\% rejection for Wald and 13.7\% for Expanded Welch.
-Using the upper-null cutoffs instead gives about 4.8--4.9\% there,
-but only 1.63\% for Wald and 0.79\% for Expanded Welch at the lower
-null. Thus the original gain compares rules matched at the lower null,
-with different rejection rates at another equal-MI population.
-The two checks do not establish control over every population satisfying
-equal MI. Appendix~\ref{sec:calibration-sensitivity-results} reports
-all cross-null rates and the full calibrated-power tables.
+Brackets give paired 95\% bootstrap intervals including uncertainty from
+fitting the cutoffs. The lower null has common MI 0.02; the upper null
+has the MI in the second column. Appendix~\ref{sec:calibration-sensitivity-results}
+reports the cross-null rates and full power tables. The two checks do
+not establish control over every population satisfying equal MI.
 
 B's initial fall in rejection remains after calibration at common MI
 0.02. Increasing \(I(Q)\) initially moves the negative true
@@ -309,7 +308,6 @@ failure. At \(16\times16\), \(n=1{,}000\) and different skew, the
 null difference bias is 0.03155 nats, compared with 0.02985 under copying.
 All four rules reject far too often. With same-skew populations, expected
 difference bias cancels and rejection remains conservative.
-Table~\ref{tab:redesign-construction} gives the matched comparisons.
 
 Sample allocation affects both the standard error and the cutoff. In
 the different-skew \(4\times4\) comparison, assigning only 400 of the
@@ -319,15 +317,8 @@ from 10.26\% under equal allocation to 3.42\%. Its median degrees of
 freedom also fall, increasing the rejection cutoff. Reversing which
 population has fewer observations changes the result because the two
 populations have different variances and residual biases.
-Appendix~\ref{sec:allocation-check} reports both allocation directions.
-
-The earlier check in Appendix~\ref{sec:jackknife-difference-check}
-replaces Wald's analytic MI bias correction with a delete-one jackknife,
-retaining the existing standard error and standard normal distribution
-cutoff. Its 20,000-pair samples provide a separate investigation of
-bias correction, rather than an additional rejection
-rule. It improves the estimated ordering in the sparse different-skew
-alternative while leaving conservative null rejection.
+The experimental supplement reports the complete construction and
+allocation comparisons.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}

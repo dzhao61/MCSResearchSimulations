@@ -4,10 +4,10 @@
 The simulations draw count tables from populations with known MI. This
 allows us to measure errors in the estimated MI difference and its
 standard error, and to count false positives when the population MI
-values are equal. The evaluation follows three questions: are the
-variance approximations used by Expanded Welch accurate, does its
-cutoff improve false-positive rates, and what happens to power when
-false-positive rates are comparable? The design follows the simulation
+values are equal. The evaluation addresses the two research questions in
+Section~\ref{sec:research-questions}: whether the variance approximations
+used by Expanded Welch are accurate, and how its false-positive rates
+and power compare with those of the other rules. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
 being estimated, methods and performance measures.
 
@@ -258,12 +258,8 @@ construction or the sample allocation. The construction check replaces
 copying by a probability transfer within four cells, preserving the
 margins and target MI. The allocation check keeps each population pair
 and 2,000 observations fixed, comparing \((1000,1000)\), \((400,1600)\)
-and \((1600,400)\). Their exact settings are in
-Appendix~\ref{app:construction}, with results in
-Appendix~\ref{app:additional-results}. A separate earlier jackknife
-investigation checks whether changing the MI bias correction helps the
-sparse-table failures; its 20,000-pair design is retained in
-Appendix~\ref{sec:jackknife-difference-check}.
+and \((1600,400)\). Appendix~\ref{app:construction} gives their exact
+settings; the experimental supplement retains the full results.
 
 \section{Sampling and confidence intervals}
 

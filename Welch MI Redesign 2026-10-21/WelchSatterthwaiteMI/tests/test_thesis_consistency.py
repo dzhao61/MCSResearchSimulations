@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import sys
 import unittest
+from decimal import Decimal
 from pathlib import Path
 
 import numpy as np
@@ -65,7 +66,7 @@ class ThesisConsistencyTests(unittest.TestCase):
             for method in ("wald","size","expanded","reference"):
                 row=rates.loc[(key,method)]
                 self.assertEqual(row["count"],100000)
-                self.assertIn(f"{row.rate:.4f}",table)
+                self.assertIn(decimal_text(Decimal(str(row.rate))*100,2)+r'\%',table)
         source=(THESIS/"chapters_rewrite/06_results.tex").read_text()
         self.assertIn("100,000",source)
 
