@@ -26,11 +26,11 @@ Use these stable filenames for the latest successfully packaged thesis:
 - `Daniel_Zhao_Welch_MI_Experiment_Supplement.zip`: current code and evidence.
 - `SHA256SUMS.txt`: checksums for those three current files.
 
-`Working Draft.pdf` and `Working Draft v2.pdf` are preserved historical
-artifacts, not the latest thesis. They are never replaced by packaging.
+Historical working drafts are preserved in `archive/` and as existing
+snapshot PDFs. Packaging builds `main.tex` and never rebuilds those drafts.
 
-From the parent thesis folder, run `python3 package_deliverables.py` (or
-`make`) to build the current manuscript and refresh all three files together.
+From the thesis folder, run `python3 package_deliverables.py` (or
+`make`) to build the main manuscript and refresh all three files together.
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.
 """
@@ -57,7 +57,8 @@ def write_zip(path: Path, files: list[tuple[Path, Path]]) -> None:
             raise FileNotFoundError(source)
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for source, relative in sorted(files, key=lambda item: item[1].as_posix()):
-            archive.write(source, relative.as_posix())
+            archive.write(source, relative.as_posix(),
+                          compress_type=zipfile.ZIP_STORED if source.suffix in {".npz", ".zip", ".gz"} else zipfile.ZIP_DEFLATED)
 
 
 def source_files() -> list[tuple[Path, Path]]:
@@ -94,10 +95,13 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "run_focused_jackknife_check.py", "report_focused_jackknife_check.py",
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py",
+                   "redesign_study.py", "redesign_report.py",
+                   "calibration_sensitivity.py", "report_calibration_sensitivity.py",
                    "same_skew_extension_core.py", "run_same_skew_extension.py",
                    "report_same_skew_extension.py"]
     tests = [
-        "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
+        "test_calibration_sensitivity.py",
+        "test_approximation_redesign.py", "test_thesis_consistency.py", "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
         "test_numerical_degeneracy.py", "test_focused_audit_guards.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
         "test_unequal_sample_check.py",
@@ -113,6 +117,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
     for directory in (
         project / "src",
         differential / "src",
+        project / "results/approximation_redesign",
         project / "results/focused_study",
         project / "results/unequal_sample_check",
         project / "results/large_table_construction_check",

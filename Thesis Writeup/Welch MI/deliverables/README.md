@@ -7,10 +7,10 @@ Use these stable filenames for the latest successfully packaged thesis:
 - `Daniel_Zhao_Welch_MI_Experiment_Supplement.zip`: current code and evidence.
 - `SHA256SUMS.txt`: checksums for those three current files.
 
-`Working Draft.pdf` and `Working Draft v2.pdf` are preserved historical
-artifacts, not the latest thesis. They are never replaced by packaging.
+Historical working drafts are preserved in `archive/` and as existing
+snapshot PDFs. Packaging builds `main.tex` and never rebuilds those drafts.
 
-From the parent thesis folder, run `python3 package_deliverables.py` (or
-`make`) to build the current manuscript and refresh all three files together.
+From the thesis folder, run `python3 package_deliverables.py` (or
+`make`) to build the main manuscript and refresh all three files together.
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.

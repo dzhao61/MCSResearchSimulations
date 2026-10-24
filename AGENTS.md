@@ -1,3 +1,17 @@
+# Active Welch MI project
+
+The redesign was promoted to the main workspace on 24 October 2026.
+Use `Thesis Writeup/Welch MI/main.tex`, `main.pdf` and the named
+Daniel_Zhao_Welch_MI delivery files, with the root `WelchSatterthwaiteMI`, `DifferentialMI`
+and `PracticalMIExploration` folders. The previous baseline is archived
+under `Archive/Welch MI baseline 2026-10-24/`; preserve its contents.
+The old `Welch MI Redesign 2026-10-21/` project paths are compatibility
+symlinks to these main folders. Use canonical root paths for future work.
+The reviewed thesis is now a main deliverable. Previous main files and
+Working Draft v3 are preserved under the thesis folder's
+`archive/before_main_deliverable_2026-10-24/`. The working-draft naming rule
+below applies only to explicitly requested working drafts, not main builds.
+
 # Research Writing Preference
 
 For the Welch MI thesis and related research writing, use Section 2.3 of

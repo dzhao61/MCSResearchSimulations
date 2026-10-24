@@ -1,476 +1,148 @@
 \chapter{Additional Results}
 \label{app:additional-results}
 
-This appendix gives additional simulation results and supporting checks
-for Chapter~\ref{chap:results}, followed by Holm's multiple-testing adjustment
-for the online-shopping application. Each simulation setting uses 20,000
-sampled table pairs and a two-sided 5\% test. Rejection rates divide valid
-rejections by all repetitions; brackets around rejection rates and error
-bands give pointwise Wilson 95\% intervals. All test results and diagnostics outside the
-equal-MI study are finite and valid.
+This appendix reports the component diagnostics, calibration sensitivity,
+rejection directions and multiple-testing adjustment used in the main
+argument. Each simulation setting uses 100,000 evaluation pairs. The
+experimental supplement retains the full companion plots and supporting
+comparisons.
 
-\section{Additional equal-MI comparisons}
+\section{Component diagnostics and reference fitting}
+\label{sec:component-diagnostics}
 
-Figure~\ref{fig:focused-null-remaining} supplies the four size--margin
-curves not displayed in the main null figures: uniform and same-skew
-\(2\times2\) and \(8\times8\) populations. Both population MI values
-are 0.02 nats, with margins from Table~\ref{tab:margin-profiles}.
-The lower strips show validity.
+The mean error of the variance estimator varies with population MI and
+margins. For the \(4\times4\) sweep, the scaled error
+\(n\{\E\Vhat-V\}\) ranges from 5.55 to 8.45 at \(n=100\),
+7.50 to 9.39 at \(n=1{,}000\), and 7.60 to 10.19 at
+\(n=10{,}000\). The coefficient suggested near independence is
+\((k-1)^2=9\). Variation in the observed scaled error leaves residual
+mean error under a fixed \(9/n\) correction.
 
-\begin{figure}[H]
-\centering
-\includegraphics{focused_null_remaining.pdf}
-\caption{Additional equal-MI comparisons under uniform and same-skew margins.}
-\label{fig:focused-null-remaining}
-\end{figure}
+Table~\ref{tab:redesign-component-spread} gives the means, medians and
+fifth--95th percentile ranges of component degrees of freedom. The
+moment target uses the evaluation sampling moments. All 100,000
+component estimates are positive and finite in each row; percentile
+ranges describe sampling spread.
 
-The \(2\times2\) comparisons give low false-positive rates at
-intermediate sample sizes. At \(8\times8\) and \(n=100\), rejection
-is excessive under uniform margins but conservative under same skew.
-By \(n=50{,}000\), all four comparisons have rates between 0.0490
-and 0.0503 and full validity.
-
-\section{Supporting estimation diagnostics}
-
-In the diagnostic and supporting-check tables below, Bias is the mean
-error in the corrected MI difference; observed SD is its standard
-deviation across samples, both in nats. Est./obs. divides the mean squared
-standard error by the observed sampling variance; Pop./obs. uses the
-population first-order variance in the numerator. DF is the median
-combined degrees of freedom, with the 5th--95th percentile range where
-shown. W/E denotes Normal Wald and Expanded Welch. The variance-estimate
-ratios in Table~\ref{tab:variance-stability} are defined separately below.
-
-Table~\ref{tab:association-diagnostics} gives the diagnostics behind
-the population-MI comparison in Figure~\ref{fig:focused-association}.
-Here the population first-order variance is \(V(P)/n+V(Q)/n\).
-
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \small
-\caption{Diagnostics for \(4\times4\) different-skew populations with equal MI.}
-\label{tab:association-diagnostics}
-\input{figures_rewrite/focused_association_table}
+\setlength{\tabcolsep}{3pt}
+\caption{Sampling spread of component degrees of freedom.}
+\label{tab:redesign-component-spread}
+\input{figures_rewrite/focused_redesign_component_spread}
 \end{table}
 
-At the smallest MI targets, the population first-order variance
-underestimates observed sampling variance, while the mean squared standard
-error overestimates it. Both ratios move closer to one as MI increases,
-especially at \(n=1{,}000\).
+Table~\ref{tab:redesign-case-diagnostics} describes the shared difference
+and standard error. Bias/SD divides difference bias by its observed SD;
+variance ratio divides the mean squared standard error by the observed
+difference variance. Rank corr. is Spearman's correlation between the
+absolute centred difference and its standard error, and skew describes
+the difference estimates. All 100,000 pairs are included in each row.
+A near-zero signed correlation can follow from symmetry despite
+magnitude dependence: the same-skew \(2\times2\), \(n=100\) null has
+signed correlation about \(-0.001\) and magnitude rank correlation 0.547.
 
-Table~\ref{tab:same-association-diagnostics} gives the same-skew comparison.
-The population tables and sample sizes match at each MI target, so the
-expected MI biases cancel. Both tests nevertheless remain conservative
-near independence.
-
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \small
-\caption{Same-skew population-MI sweep and estimation diagnostics.}
-\label{tab:same-association-diagnostics}
-\input{figures_rewrite/focused_same_association_table}
+\setlength{\tabcolsep}{3pt}
+\caption{Shared-estimator diagnostics and combined degrees of freedom.}
+\label{tab:redesign-case-diagnostics}
+\input{figures_rewrite/focused_redesign_cases_diagnostics}
 \end{table}
-
-Table~\ref{tab:df-structure} compares degrees of freedom across sample
-sizes and table sizes under both skew regimes. Cutoff is
-the 97.5th percentile of the Student \(t\) distribution at the median
-degrees of freedom; each simulated test uses its own estimated degrees of
-freedom.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Degrees of freedom across sample sizes, table sizes and margins.}
-\label{tab:df-structure}
-\input{figures_rewrite/focused_df_structure_table}
-\end{table}
-
-For \(16\times16\) tables at \(n=1{,}000\), the median degrees of
-freedom are 78.89 under same skew and 88.50 under different skew. The
-corresponding cutoffs are both close to 1.99, despite the very different
-null rejection rates reported in Chapter~\ref{chap:results}.
-
-Table~\ref{tab:large-sample-diagnostics} extends the diagnostic comparison
-to \(n=50{,}000\) at common MI 0.02.
-At \(4\times4\) the difference bias has Monte Carlo standard error
-approximately 0.000010 nats; at \(16\times16\) it is approximately
-0.000012. Biases are small and estimated/observed variance ratios are near
-one, although the population first-order variance is less accurate at
-\(16\times16\) than at \(4\times4\).
-
-\begin{table}[H]
-\centering
-\small
-\caption{Different-skew null diagnostics at \(n=50{,}000\).}
-\label{tab:large-sample-diagnostics}
-\input{figures_rewrite/focused_large_sample_table}
-\end{table}
-
-\medskip
-\thesisminiheading{Variability of the estimated MI variance.}
-
-Table~\ref{tab:variance-stability} compares predicted and observed sampling
-variability of \(\Vhat(P)\) and \(\Vhat(Q)\), used to choose Expanded
-Welch's degrees of freedom. Observed variability is the sample variance
-across repetitions. For \(P\), Pop./obs. divides \(\tau^2(P)/n_P\)
-by this observed value; plug-in/obs. uses the average
-\(\widehat\tau^2(P)/n_P\), with corresponding definitions for \(Q\).
-The predictions are defined in
-Equation~\eqref{eq:variance-stability-predictions}. All six settings use
-different-skew copying populations and include every repetition.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Predicted and observed variability of the estimated MI variance.}
-\label{tab:variance-stability}
-\input{figures_rewrite/focused_stability_table}
-\end{table}
-
-At \(4\times4\), common MI 0.02 and \(n=10{,}000\), both
-predictions are close to observed variability. At common MI 0.05 and
-\(n=1{,}000\), the ratios are also close to one. Near independence
-at common MI 0.0001, however, the population first-order prediction
-accounts for about 5\% of observed variability, while the plug-in
-prediction is approximately twice that variability.
-
-At \(16\times16\) and \(n=1{,}000\), the population predictions account for approximately
-72--77\% of observed variability, while the plug-in predictions are
-1.70--1.82 times that variability. At \(n=10{,}000\), the population
-ratios are close to one, but the plug-in predictions remain about 10\%
-too large. The population approximation and substitution of empirical
-probabilities therefore introduce distinct errors.
-
-\section{A jackknife check of MI difference bias}
-\label{sec:jackknife-difference-check}
-
-This check asks whether changing the bias correction improves the sparse
-MI differences that give wrong-direction rejections in the main results.
-The delete-one jackknife uses the change in an estimate after removing
-one observation to estimate its leading finite-sample bias
-\citep[Section~3]{paninski2003}.
 
 \begin{samepage}
-For the sample from \(P\), let
-\(\widehat I^{(-a)}(P)\) be the raw plug-in MI after removing observation
-\(a\). Each such estimate uses the remaining \(n_P-1\) observations and
-recalculates both margins. Subtracting \(n_P-1\) times the change between
-the average leave-one-out estimate and the full-sample estimate gives
-\begin{align}
- \widehat I_{\mathrm J}(P)
- &=\Ihat(P)-(n_P-1)
- \left\{\frac{1}{n_P}\sum_{a=1}^{n_P}\widehat I^{(-a)}(P)-\Ihat(P)\right\}
- \notag\\
- &=n_P\Ihat(P)-\frac{n_P-1}{n_P}
- \sum_{a=1}^{n_P}\widehat I^{(-a)}(P).
- \label{eq:jackknife-mi-check}
-\end{align}
+The fixed references and null SDs in
+Table~\ref{tab:redesign-reference-fitting} use independent 100,000-pair
+fitting batches. Their Monte Carlo standard errors follow
+Appendix~\ref{sec:moment-uncertainty}. The fitted SDs define the fixed
+alternative populations, so power intervals condition on those tables.
+\par
 \end{samepage}
-Because observations in the same cell give identical leave-one-out tables,
-the average can be calculated once per occupied cell, weighting its
-leave-one-out MI by \(N^P_{ij}/n_P\). A cell reduced to zero contributes
-zero to the MI sum. Apply the same calculation to \(Q\), retaining
-all row and column categories and any negative corrected estimates.
 
-The jackknife replaces the analytic correction in
-Equation~\eqref{eq:bias-corrected-difference}. The estimated difference
-and statistic become
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Independent moment references and fitted null standard deviations.}
+\label{tab:redesign-reference-fitting}
+\input{figures_rewrite/focused_redesign_reference_fitting}
+\end{table}
+
+\section{Calibrated power and sensitivity checks}
+\label{sec:calibration-sensitivity-results}
+
+Figure~\ref{fig:redesign-calibrated-power} shows the full power curves
+under calibration at common MI 0.02. Wald and the fixed moment reference
+have identical calibrated decisions. Table~\ref{tab:redesign-power-contrasts}
+gives nominal and calibrated paired contrasts at two null SDs, including
+cutoff-fitting uncertainty for the calibrated intervals.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_power_calibrated.pdf}
+\caption{Power after calibration at common MI 0.02; bands show bootstrap uncertainty.}
+\label{fig:redesign-calibrated-power}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Expanded Welch minus each comparator at two null SDs, in percentage points.}
+\label{tab:redesign-power-contrasts}
+\input{figures_rewrite/focused_redesign_power_contrasts}
+\end{table}
+
+Table~\ref{tab:redesign-sensitivity-power-full} compares both calibrations
+on the same fixed alternatives. The lower null has common MI 0.02;
+the upper null sets both MI values to the alternative's larger value.
+Appendix~\ref{sec:calibration-sensitivity-design} specifies the construction
+and joint bootstrap. Table~\ref{tab:redesign-calibration-sensitivity}
+in Chapter~\ref{chap:results} gives the Wald contrasts with intervals.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Power for fixed alternatives under lower- and upper-null calibration.}
+\label{tab:redesign-sensitivity-power-full}
+\input{figures_rewrite/focused_redesign_sensitivity_power_full}
+\end{table}
+
+Table~\ref{tab:redesign-sensitivity-cross-null} applies each fitted cutoff
+to both null validation populations. Each row includes all 100,000
+pairs, with invalid outputs contributing no rejection. The two null
+populations check sensitivity to calibration; they do not establish
+control across the complete equal-MI null.
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Independent null validation under both fitted calibrations.}
+\label{tab:redesign-sensitivity-cross-null}
+\input{figures_rewrite/focused_redesign_sensitivity_cross_null}
+\end{table}
+
+\section{Sparse-table bias and estimated direction}
+
+For \(16\times16\) different-skew populations at \(n=1{,}000\), the
+true difference is \(I(P)-I(Q)=-0.01\) nats. In this setting, 10,183 of
+10,184 Wald rejections and 9,591 of 9,592 Expanded Welch rejections have
+the wrong estimated ordering. The fixed
+reference gives 9,829 wrong-direction cases among 9,830 rejections.
+Under same skew, the corresponding Wald and Expanded Welch counts are
+59 of 1,809 and 52 of 1,646. At \(n=10{,}000\), none of the four rules
+has a wrong-direction rejection at this alternative under either skew
+regime. Under different skew, the difference bias at \(n=1{,}000\)
+is 0.03071 nats. Thus
 \begin{equation}
- \widehat\Delta_{\mathrm J}
- =\widehat I_{\mathrm J}(P)-\widehat I_{\mathrm J}(Q),
- \qquad
- T_{\mathrm J}
- =\frac{\widehat\Delta_{\mathrm J}}
- {\sqrt{\Vhat(P)/n_P+\Vhat(Q)/n_Q}}.
- \label{eq:jackknife-fixed-se-check}
+ \E(\Deltahat)\approx-0.01+0.03071=0.02071\text{ nats}.
+ \label{eq:redesign-alternative-bias-shift}
 \end{equation}
-The variance estimates in the denominator are unchanged. Compare
-\(|T_{\mathrm J}|\) with the 97.5th percentile of the standard normal
-distribution, approximately 1.96, giving the same two-sided 5\% cutoff
-as Wald. This separates changing the MI estimate from changing its
-estimated uncertainty.
-
-The four settings use \(16\times16\) copying populations with margins
-\(m_{16}(0.7)\) for \(P\) and \(m_{16}(0.8)\) for \(Q\), as defined
-in Equation~\eqref{eq:skew-margin}. They fix \(I(P)=0.02\) and use
-\(I(Q)=0.02\) or 0.03 nats at \(n_P=n_Q=1{,}000\) and 10,000.
-Both corrections are applied to the same table pairs in each setting.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Analytic and jackknife MI differences with the same standard error.}
-\label{tab:jackknife-difference-check}
-\input{figures_rewrite/focused_jackknife_table}
-\end{table}
-
-Table~\ref{tab:jackknife-difference-check} shows a much smaller difference
-bias at \(n=1{,}000\). Under equal MI, it falls from 0.02960 to
-\(-0.00116\) nats; under the alternative, from 0.03061 to
-\(-0.00024\) nats. The individual jackknife estimates remain upward
-biased. Their null biases are 0.03439 nats for \(P\) and 0.03555 for
-\(Q\). Under the alternative, the jackknife MI biases are 0.03452 for
-\(P\) and 0.03476 nats for \(Q\).
-These similar biases largely cancel in the difference. The observed
-standard deviation increases slightly, but the root mean squared error
-falls from 0.03295 to 0.01525 nats under the null and from 0.03438 to
-0.01638 under the alternative.
-
-The jackknife difference also gives a more accurate estimated ordering at
-the sparse alternative. Opposite-direction rejections fall from 2,009 to
-5, while correct-direction rejections rise from 1 to 544. The total
-rejection rate falls because the original rejections almost all indicate
-the wrong ordering. Null rejection, however, falls to 0.0085, with a
-Wilson 95\% Monte Carlo interval of [0.0073, 0.0098]. The mean squared
-standard error still exceeds the observed variance of the jackknife
-difference: their ratio is 1.76 under the null and 1.65 under the
-alternative. Better estimation of the difference therefore leaves a
-separate problem in estimating its uncertainty.
-
-At \(n=10{,}000\), the jackknife null rejection rate is 0.0507,
-with a Wilson interval of [0.0477, 0.0538]. The estimated/observed variance
-ratios for the analytic and jackknife differences are both close to one.
-Alternative rejection falls from 0.6992 to 0.6619,
-with every rejection indicating the correct direction for both
-corrections. The jackknife difference has less bias but slightly greater
-observed variability and root mean squared error at this sample size.
-
-\section{Additional power comparisons}
-
-Figure~\ref{fig:focused-detection-full} extends the different-skew
-table-size comparison through MI differences of 0.2 nats, retaining the
-zero-difference points. The targets are \(I(P)=0.02\) and
-\(I(Q)=0.02+|\Delta|\).
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_detection_sizes_full.pdf}
-\caption{Full-range rejection rates under different-skew margins.}
-\label{fig:focused-detection-full}
-\end{figure}
-
-At \(n=1{,}000\), power for a 0.05-nat difference falls with table
-size: Wald rates are 0.9642, 0.9079, 0.7699 and 0.0471 from
-\(2\times2\) through \(16\times16\). The last curve first falls
-from its high null rate, then rises to 0.6297 at 0.1 nats and 0.9997
-at 0.2. Unequal bias opposes the small negative true differences there,
-as discussed in the main results. At \(n=10{,}000\), both methods
-detect every simulated 0.05-nat difference at all four sizes.
-
-Figure~\ref{fig:same-detection-sizes} gives the same-skew comparison
-over small MI differences at every table size. Circles indicate
-\(n=1{,}000\) and triangles \(n=10{,}000\), as in the main size
-comparison.
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_same_detection_sizes.pdf}
-\caption{Rejection rates over small MI differences under same-skew margins.}
-\label{fig:same-detection-sizes}
-\end{figure}
-
-The same-skew \(16\times16\) comparison has low rather than excessive
-null rejection at \(n=1{,}000\), and no comparable initial fall as
-the MI difference grows. At 0.01 nats, its difference bias is 0.00092
-nats and Wald rejects 370 times, including 14 wrong-direction rejections.
-Expanded Welch rejects 339 times, including 12 wrong-direction rejections.
-Most rejections have the correct direction, although power remains low.
-The alternative populations have different MI, so their biases need not
-cancel despite matching margins.
-
-\medskip
-\thesisminiheading{Estimated direction among rejections.}
-
-Table~\ref{tab:rejection-direction} examines the \(16\times16\)
-different-skew copying populations at two small MI differences.
-\(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), so the true signed
-difference is negative. The table counts rejections with
-\(\Deltahat>0\), which incorrectly indicate larger MI for \(P\),
-alongside the total number of rejections.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Estimated direction among two-sided rejections.}
-\label{tab:rejection-direction}
-\input{figures_rewrite/focused_direction_table}
-\end{table}
-
-At \(n=1{,}000\) and a 0.01-nat difference, only one rejection
-for each method has the correct estimated direction. At 0.02 nats,
-713 of 725 Wald rejections and 669 of 680 Expanded Welch rejections
-still have the opposite sign. The larger cutoff reduces rejection
-without changing any estimated difference. At \(n=10{,}000\), all
-rejections in these comparisons have the correct negative sign,
-accompanying the much smaller bias and improved power.
-
-\section{Four-cell construction check}
-
-\thesisminiheading{Representative \(4\times4\) comparison.}
-
-Table~\ref{tab:construction-check} compares the copying and four-cell
-populations at matched \(4\times4\) different-skew margins and MI
-targets. Constructions use independent repetitions; within each
-construction, both tests receive the same table pairs.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Rejection and difference bias under two population constructions.}
-\label{tab:construction-check}
-\input{figures_rewrite/focused_construction_table}
-\end{table}
-
-The same qualitative method comparison persists: at \(n=1{,}000\),
-Expanded Welch lowers an already-low null rate and reduces power;
-at 10,000 its effect is smaller. The construction still changes the
-estimated power. For the 0.01-nat difference at \(n=10{,}000\),
-Wald's estimated power is 0.7962 under copying and 0.7865 under the four-cell
-transfer. The difference, 0.0098, has approximate independent-stream
-95\% interval [0.0018, 0.0177].
-
-\medskip
-\thesisminiheading{Sparse \(16\times16\) comparison.}
-
-Table~\ref{tab:large-construction-check} tests the larger-table failure
-under the same two constructions. Both use different-skew margins
-\(m_{16}(0.7)\) for \(P\) and \(m_{16}(0.8)\) for \(Q\), with
-the MI targets and sample sizes matched. MCSE denotes the Monte Carlo
-standard error of the difference bias. Opposite W/E reports the percentage of Wald and Expanded Welch
-rejections whose estimated difference has the opposite sign to the
-population difference. It applies only to the nonzero alternative.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Matched \(16\times16\) comparisons under two constructions.}
-\label{tab:large-construction-check}
-\setlength{\tabcolsep}{4.5pt}
-\input{figures_rewrite/focused_large_construction_table}
-\end{table}
-
-At \(n=1{,}000\), the four-cell null has difference bias
-0.03145 nats and false-positive rates 0.3095 for Wald and 0.2977 for
-Expanded Welch. Both rates exceed those under copying, where the
-corresponding bias is 0.02960 nats. For the 0.01-nat alternative,
-the four-cell bias of 0.03136 moves the mean estimated difference to
-approximately \(-0.01+0.03136=0.02136\) nats. This is positive
-although \(Q\) has larger population MI. Opposite-sign counts are
-2,493 of 2,494 Wald rejections and 2,350 of 2,351 Expanded Welch
-rejections; only one rejection for each method has the correct sign.
-The sparse-table bias and reversed estimated ordering therefore persist
-under both tested constructions.
-
-At \(n=10{,}000\), the four-cell null rates are 0.0499 and 0.0491,
-with much smaller difference bias. Every rejection at the alternative
-has the correct estimated direction under either construction.
-Power nevertheless differs: Wald gives 0.6992 under copying and
-0.6323 under the four-cell transfer. The MI difference biases under
-copying and the four-cell transfer are similar, but the
-observed SD rises from approximately 0.00433 to 0.00468 nats, making
-the same population difference harder to detect under the transfer.
-
-\medskip
-\thesisminiheading{Matched same-skew comparisons.}
-
-Table~\ref{tab:same-construction-check} repeats the construction check
-with \(m_k(0.8)\) margins in both populations, keeping MI targets and
-sample sizes matched between constructions.
-
-\begin{table}[H]
-\centering
-\small
-\setlength{\tabcolsep}{4pt}
-\caption{Same-skew comparisons under copying and four-cell constructions.}
-\label{tab:same-construction-check}
-\input{figures_rewrite/focused_same_construction_table}
-\end{table}
-
-At \(16\times16\) and \(n=1{,}000\), the same-skew Wald null
-rates are 0.0065 under copying and 0.0107 under the four-cell transfer,
-rather than the excessive different-skew rates. The null difference
-biases are close to zero because the population tables and sample sizes
-match within each construction. At the alternative, the four-cell
-construction gives Wald power 0.0292, compared with 0.0185 under copying;
-both remain low. The median degrees of freedom are 92.27 and 84.00,
-respectively, but mean squared standard error still exceeds observed
-variance, with ratios 1.56 and 1.82.
-
-At \(n=10{,}000\), same-skew null rates are closer to 0.05 under
-both constructions. At the \(16\times16\) alternative, Wald power
-is 0.6146 under copying and 0.5464 under the four-cell transfer. The
-median degrees of freedom are now above 300 in both cases, and Expanded
-Welch changes those rates only slightly. Its larger rejection cutoff
-does not explain the substantial power difference between constructions.
-
-\section{Unequal sample sizes at a fixed total}
-\label{sec:allocation-check}
-
-Table~\ref{tab:allocation-check} compares three allocations of 2,000
-observations between the same copying \(4\times4\) populations.
-The row and column margins are \((0.7,0.1,0.1,0.1)\) in \(P\) and
-\((0.8,0.2/3,0.2/3,0.2/3)\) in \(Q\). Both MI values are 0.02 nats
-under the null; under the alternative, \(I(Q)=0.03\) and
-\(\Delta=-0.01\) nats. Balanced results are reused from the main study.
-Different allocations use independent repetitions, whereas
-the two methods receive the same samples within each allocation.
-
-Valid W/E gives the valid-result percentages for the two methods.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Rejection and estimation diagnostics at fixed total sample size.}
-\label{tab:allocation-check}
-\input{figures_rewrite/focused_allocation_table}
-\end{table}
-
-With equal MI, Wald rejects at 0.0394 for balanced samples, 0.0463 at
-\((n_P,n_Q)=(400,1600)\), and 0.0454 at \((1600,400)\). Expanded Welch lowers these
-rates to 0.0331, 0.0306 and 0.0252, respectively. The imbalance therefore
-does not create excessive Wald rejection in these settings, and the
-larger Expanded Welch cutoff makes already-low rates lower. The null median
-degrees of freedom fall from 35.70 under balance to 14.42 and 10.97, increasing the
-cutoff from the Student \(t\) distribution.
-
-For the 0.01-nat difference, giving \(Q\) only 400 observations lowers
-power for both methods. The observed SD rises from 0.01167 nats
-under balance to 0.01610; with \(P\) limited to 400, it is 0.01431.
-Reversing the allocation also changes the remaining difference bias:
-\(+0.00073\) nats when \(P\) has fewer observations and
-\(-0.00143\) when \(Q\) has fewer. The null biases have the same
-signs, with Monte Carlo standard error about 0.00010 in either case.
-Mean squared standard error exceeds observed variance in each comparison.
-
-Table~\ref{tab:same-allocation-check} repeats the allocations under same
-skew. Both populations use
-\((0.8,0.2/3,0.2/3,0.2/3)\) margins. They are identical under the null,
-but differ in MI under the alternative. The balanced rows reuse the
-main-study samples.
-
-\begin{table}[H]
-\centering
-\small
-\setlength{\tabcolsep}{4pt}
-\caption{Same-skew allocation comparisons at a fixed total of 2,000 observations.}
-\label{tab:same-allocation-check}
-\input{figures_rewrite/focused_same_allocation_table}
-\end{table}
-
-With identical null populations, unequal allocation still produces
-residual biases of opposite signs: approximately 0.00128 nats when
-\(P\) has 400 observations and \(-0.00148\) when \(Q\) has 400.
-The leading analytic corrections have already been applied, so these
-values show the remaining sample-size dependence of the MI bias.
-Median degrees of freedom fall from 33.45 under balance to approximately
-11.3 under either imbalance, and Expanded Welch reduces the null rates
-from 0.0458 and 0.0423 to 0.0265 and 0.0234.
-
-Under the alternative, allocating more observations to \(Q\) gives Wald
-power 0.1300, compared with 0.1152 under balance; allocating fewer to
-\(Q\) gives 0.0506. Expanded Welch instead gives 0.0946, 0.1033 and
-0.0340 for those allocations. Its median degrees of freedom drop from
-40.22 under balance to about 13--14 under imbalance.
+The positive centre explains why almost every rejection indicates the
+wrong ordering. Two-sided power retains every rejection; these counts
+show why its interpretation also requires the estimated direction.
 
 \section{Holm adjustment for the application}
 \label{sec:application-holm}
@@ -509,11 +181,7 @@ Online Shoppers: weekend & 0.9554 & 1 & 0.9601 & 1\\
 \end{tabularx}
 \end{table}
 
-Holm's multiple-testing adjustment is applied separately to each method's
-six p-values \citep{holm1979}. Order the raw p-values from smallest to largest and
-multiply them by 6, 5, 4, 3, 2 and 1, respectively. Moving through that
-order, replace any value smaller than the preceding adjusted value by
-that preceding value, and cap the results at one. The month--purchase comparison has the
-third-smallest raw p-value for both methods, and the earlier adjusted
-values are smaller, so its adjusted p-value is four times its raw value.
-Both adjusted month p-values remain below 0.05.
+Apply Holm's adjustment separately to each method's six p-values
+\citep{holm1979}. Order the raw p-values and multiply them by 6, 5, 4,
+3, 2 and 1. Moving through that order, replace any value below the
+preceding adjusted value by that value, and cap the results at one.

@@ -1,0 +1,17 @@
+# Keep the complete baseline locally while excluding reproducible output.
+**/__pycache__/
+*.py[cod]
+.DS_Store
+**/results/
+**/results_before_numerical_fix_20261017/
+**/initial_run/
+**/thesis_application/
+**/docs/experiments/figures/
+**/supplementary_displays/
+**/build/
+**/build_v3/
+**/archive/
+**/*Experiment*Supplement.zip
+
+# Preserve the local external checkout without introducing another Git submodule.
+/DifferentialMI/external/AIMS_manuscripts/

@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import sys
 import unittest
+from decimal import Decimal
 from pathlib import Path
 
 import numpy as np
@@ -48,33 +49,38 @@ class ThesisConsistencyTests(unittest.TestCase):
                 self.assertEqual(decimal_text(row.rejection_rate), expected[row.method])
                 self.assertEqual(row.valid_replicates, 20000)
 
-    def test_prose_matches_source_derived_rounding(self):
-        output = ROOT / "results/focused_study"
-        configs = pd.read_csv(output / "configuration_manifest.csv")
-        rates = pd.read_csv(output / "method_results.csv")
-        rates = rates[rates.denominator.eq("all")].merge(configs, on="configuration_id")
-        selected = rates[(rates.k == 8) & rates.profile.eq("uniform")
-                         & rates.n_p.eq(100) & rates.mi_p.eq(.02)
-                         & rates.mi_q.eq(.02) & rates.method.eq("normal_wald")
-                         & rates.construction.eq("copying")]
-        self.assertEqual(len(selected), 1)
-        row = selected.iloc[0]
-        self.assertEqual(row.rejections, 1473)
-        self.assertEqual(row.replicates_x, row.replicates_y)
-        rate = decimal_text(row.rejections / row.replicates_x)
-        appendix = (THESIS / "appendices_rewrite/C_additional_results.tex").read_text()
-        self.assertIn(f"give rates\n{rate} and 0.0651", appendix)
+    def test_redesign_tables_match_fresh_source_evidence(self):
+        output = ROOT / "results/approximation_redesign"
+        configurations = pd.read_csv(output / "configurations.csv")
+        rates = pd.read_csv(output / "rates.csv")
+        rates = rates[rates.denominator.eq("all")].set_index(["configuration_id", "method"])
+        table = (THESIS / "figures_rewrite/focused_redesign_cases_rates.tex").read_text()
+        for k, profile, n in [(4,"uniform",20),(8,"different_skew",100),(4,"different_skew",10000),
+                              (16,"same_skew",1000),(16,"different_skew",1000)]:
+            selected = configurations[configurations.k.eq(k) & configurations.profile.eq(profile)
+                & configurations.n_p.eq(n) & configurations.n_q.eq(n)
+                & configurations.mi_p.eq(.02) & configurations.mi_q.eq(.02)
+                & configurations.construction.eq("copying")]
+            self.assertEqual(len(selected),1)
+            key=selected.iloc[0].configuration_id
+            for method in ("wald","size","expanded","reference"):
+                row=rates.loc[(key,method)]
+                self.assertEqual(row["count"],100000)
+                self.assertIn(decimal_text(Decimal(str(row.rate))*100,2)+r'\%',table)
+        source=(THESIS/"chapters_rewrite/06_results.tex").read_text()
+        self.assertIn("100,000",source)
 
-        diagnostics = pd.read_csv(output / "diagnostics.csv").merge(configs, on="configuration_id")
-        selected = diagnostics[(diagnostics.k == 16)
-                               & diagnostics.profile.eq("different_skew")
-                               & diagnostics.n_p.eq(1000) & diagnostics.mi_p.eq(.02)
-                               & diagnostics.mi_q.eq(.02)
-                               & diagnostics.construction.eq("copying")]
-        self.assertEqual(len(selected), 1)
-        sd = f"{np.sqrt(selected.iloc[0].observed_variance):.5f}"
-        results = (THESIS / "chapters_rewrite/06_results.tex").read_text()
-        self.assertIn(f"observed SD of approximately {sd}", results)
+    def test_redesign_display_coverage_and_calibrated_fixed_rule_equivalence(self):
+        output=ROOT/"results/approximation_redesign"
+        displays=pd.read_csv(output/"displays.csv",keep_default_na=False)
+        self.assertEqual(sum(displays.study.eq("null")),120)
+        self.assertEqual(sum(displays.study.eq("association")),63)
+        cal=pd.read_csv(output/"calibrated_rates.csv").pivot(index="configuration_id",columns="method",values="rejected")
+        np.testing.assert_array_equal(cal["wald"],cal["reference"])
+        focus=pd.read_csv(output/"focus.csv")
+        self.assertEqual(len(focus),27)
+        intervals=pd.read_csv(output/"calibration_bootstrap.csv")
+        self.assertTrue(intervals.bootstrap_repetitions.eq(1000).all())
 
     def test_active_citations_have_unique_bibliography_entries(self):
         bibliography = (THESIS / "references.bib").read_text()

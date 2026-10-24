@@ -1,3 +1,11 @@
+# Compatibility paths after promotion
+
+The redesign became the main version on 24 October 2026. Project folders
+under this directory are now symlinks to the canonical folders at the
+parent workspace root. Use those canonical paths and their active
+instructions for future edits, builds and experiments. The former baseline
+is preserved under `../Archive/Welch MI baseline 2026-10-24/`.
+
 # Research Writing Preference
 
 For the Welch MI thesis and related research writing, use Section 2.3 of

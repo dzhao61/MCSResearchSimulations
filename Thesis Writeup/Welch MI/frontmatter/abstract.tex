@@ -2,27 +2,32 @@
 \addcontentsline{toc}{chapter}{Abstract}
 
 Mutual information (MI) measures how much observing one variable reduces
-uncertainty about another. This thesis considers how to test whether MI
-between two categorical variables differs across independent populations.
-The Normal Wald test provides one approach, but its normal approximation
-can give unreliable results when samples are small or many combinations
-of categories are rarely observed.
+uncertainty about another. This thesis considers whether MI between two
+categorical variables differs across independent populations. A Normal
+Wald test provides one approach, but small or sparse samples can distort
+the estimated difference and its standard error, producing unreliable
+false-positive rates and power.
 
-This thesis develops an Expanded Welch--Satterthwaite test that uses the
-same estimated MI difference and standard error as Normal Wald, but
-compares the resulting statistic with a Student \(t\) distribution.
-Choosing the degrees of freedom requires an estimate of how much the MI
-variance estimate changes between samples. The thesis derives a first-order
-approximation to this variability from the effect of changes in the
-observed category counts.
+This thesis develops an Expanded Welch--Satterthwaite test that retains
+Wald's estimated difference and standard error and uses a Student \(t\)
+distribution. Its degrees of freedom depend on how much the estimated
+MI variance changes between samples. The thesis derives a first-order
+approximation to that variability by accounting for changes in cell
+probabilities, their margins and the resulting MI values.
 
-Simulations compare the tests across sample sizes, table sizes and category
-frequencies. They examine how often each test reports a difference when
-population MI is equal, and how often it detects a true difference.
-An online-shopping dataset illustrates their use.
+Simulations check the moment approximations and compare false-positive
+rates and power with Normal Wald and a sample-size degrees-of-freedom
+rule. The mean and sampling-variance approximations have different errors,
+and estimated degrees of freedom can remain well below the target based
+on the actual sampling moments. An online-shopping dataset illustrates
+interpretation on observed data.
 
-Expanded Welch reduces excessive false positives in some small-sample
-settings, but also rejects less often where Wald already rejects too
-rarely. It does not correct bias in the estimated MI difference or errors
-in the estimated standard error. The findings therefore do not support
-Expanded Welch as a general replacement for Normal Wald.
+Expanded Welch brings false-positive rates closer to the intended level
+in selected small-sample populations at common MI 0.02 nats, at a cost
+in nominal power. Its
+power advantage after empirical calibration depends on which equal-MI
+population supplies the cutoff and reverses in some comparisons when
+that population changes. A larger cutoff also leaves sparse-table bias
+and inaccurate standard errors unresolved. The results support selected
+calibration improvements while identifying estimation errors that limit
+reliable inference.

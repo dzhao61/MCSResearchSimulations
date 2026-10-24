@@ -1,510 +1,328 @@
-\chapter{Experimental Results and Discussion}
+\chapter{Results}
 \label{chap:results}
+\input{figures_rewrite/focused_redesign_reporting_values}
 
-The results first show how sample size, table size and category frequencies
-affect false-positive rates relative to the intended 5\% level. They then
-examine how the MI value, equal in both populations, affects Expanded
-Welch's estimated degrees of freedom, followed by power when population MI
-differs. Each simulation rate uses 20,000 sampled table pairs. Both tests
-return valid p-values in every repetition of the population-MI sweep,
-power study, construction check and sample-allocation check. The null study
-includes small-sample settings where some calculations fail.
+This chapter first asks whether the mean and sampling-variance predictions
+used by Expanded Welch agree with repeated sampling. It then examines
+false positives and power. Each evaluation setting uses 100,000 sampled
+pairs. The nominal rates divide valid rejections by all attempts, and
+the plots show validity separately. Brackets around rates and shading
+in rejection plots give pointwise 95\% intervals. Intervals for the fixed
+moment reference condition on its independently fitted degrees of freedom.
 
-Blue solid curves show Normal Wald and magenta
-dashed curves show Expanded Welch. Error bars or bands give pointwise
-Wilson 95\% intervals, and the dotted line marks 0.05. Hollow markers
-indicate valid-result frequency below 90\%. The parameter settings are
-those in Chapter~\ref{chap:design}; additional comparisons are in
-Appendix~\ref{app:additional-results}.
-The chapter ends with a self-contained application to online shopping data.
+\section{Accuracy of the variance approximations}
 
-\section{False positives across sample size and population structure}
+\subsection{Mean and sampling variance}
 
-\subsection{Increasing table size}
+The mean approximation and sampling-variance approximation have different
+errors. Figure~\ref{fig:redesign-moments} separates them for different-skew
+populations at common MI 0.02 nats. A ratio of one indicates agreement.
+Solid curves use the population quantities. Dashed curves use the mean
+plug-in sampling-variance prediction in the middle row and the mean
+estimated component degrees of freedom in the bottom row. The latter
+are shown only when all component estimates are positive and finite. Shading gives
+approximate 95\% Monte Carlo intervals for the population-prediction
+ratios. The component mean remains inflated after the prediction of its
+sampling variance has become reasonably accurate. At \(n=1{,}000\), the population
+sampling-variance prediction divided by the observed value ranges from
+0.710 to 0.996 across all sizes and margins, while the mean estimate
+divided by \(V\) ranges from 1.023 to 4.571. The latter discrepancy is
+particularly large for the larger tables.
 
-Figure~\ref{fig:focused-null-sizes} holds both population MI values at
-0.02 nats and compares the four table sizes under different skew.
-The dominant marginal probabilities are 0.7 for \(P\) and 0.8 for \(Q\),
-with the remaining mass shared equally across their other categories.
-Each panel varies only sample size, from 10 to 50,000 per population.
-The lower strip shows how often each method returns a valid p-value.
-
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics{focused_null_sizes.pdf}
-\caption{False positives and validity under different-skew margins.}
-\label{fig:focused-null-sizes}
+\includegraphics[width=\textwidth,height=.78\textheight,keepaspectratio]{focused_redesign_moments_different_skew.pdf}
+\caption{Component approximation ratios under different-skew margins.}
+\label{fig:redesign-moments}
 \end{figure}
 
-The false-positive pattern changes substantially with table size. In
-\(2\times2\) tables both methods reject too rarely over much of the
-sample-size range. In \(4\times4\) tables Wald is above 0.05 at
-\(n=10\) and 20, but both methods fall below the target at larger
-intermediate sample sizes. In the \(8\times8\) comparison, the transition
-occurs at larger sample sizes. Expanded Welch lowers rejection throughout, helping
-where Wald is excessive and moving an already-low rate further below 0.05.
+At \(n=50{,}000\), the sampling-variance ratios across the same broad grid
+lie between 0.974 and 1.009. Mean ratios range from 1.000 to 1.091, so
+small residual mean errors can still affect the degrees of freedom.
+Increasing sample size therefore improves both approximations, while
+residual mean error can still lower the degrees of freedom. The
+experimental supplement provides the companion uniform and same-skew
+plots.
 
-At the smallest sample size, part of that reduction comes from failed
-calculations. For \(4\times4\) tables at \(n=10\), Wald rejects at 0.1332
-and Expanded Welch at 0.0465, but their valid-result frequencies are
-0.9910 and 0.7588. Among the 15,175 table pairs for which both tests return
-valid p-values, the rejection rates are 0.1029 and 0.0612. Expanded
-Welch's larger cutoff still lowers rejection on this subset, but its rate
-across all 20,000 pairs is near 0.05 partly because failed calculations
-count as non-rejections.
-
-The \(16\times16\) table shows that a test can return valid p-values
-and still reject equal MI too often. At \(n=1{,}000\), every calculation
-is valid, yet Wald
-rejects at 0.2522 and Expanded Welch at 0.2402. The paired reduction
-is 0.0120, with approximate 95\% interval [0.0105, 0.0135],
-so Expanded Welch's larger cutoff lowers rejection but leaves a large
-excess of false positives. At \(n=10{,}000\) the rates are 0.0463 and 0.0453;
-both remain near 5\% at 50,000. More observations substantially
-improve false-positive control in this setting.
-
-\subsection{Changing the margin regime}
-
-Figure~\ref{fig:focused-null-margins} compares all three margin regimes
-at \(4\times4\) and \(16\times16\), retaining MI of 0.02 nats in
-both populations and the same sample-size sweep. Uniform and same-skew populations have identical
-joint distributions within each pair, whereas different-skew populations have
-different tables but equal MI. Comparing the columns shows how uneven
-category frequencies and different population margins change rejection rates.
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_null_margins.pdf}
-\caption{False positives and validity across three margin regimes.}
-\label{fig:focused-null-margins}
-\end{figure}
-
-At \(4\times4\), all three regimes give low rejection at intermediate
-sample sizes and rates much nearer 0.05 by \(n=10{,}000\).
-At \(n=1{,}000\), for example, Wald rates range from 0.0383 to
-0.0394, while Expanded Welch ranges from 0.0319 to 0.0331.
-Changing the margins has a relatively small effect on these particular
-rates. The larger table behaves
-differently: at \(n=1{,}000\), Wald rejects at 0.0339 under uniform
-margins, 0.0065 under same skew, and 0.2522 under different skew.
-Expanded Welch gives 0.0331, 0.0059 and 0.2402, respectively.
-The different-skew excess is therefore not a general consequence of
-uneven margins alone.
-
-Excessive false positives also occur when the population tables are
-identical. With uniform margins, Wald rejects at 0.0737 for
-\(8\times8\) tables at \(n=100\), and at 0.0859 for \(16\times16\)
-tables at \(n=250\). All calculations are valid. Because the two samples
-then have the same distribution and size, their expected MI estimation
-biases cancel in the difference. In these settings, the mean squared standard error
-is approximately 0.84 and 0.77 times the observed variance, respectively.
-The tests therefore assign too little uncertainty on average,
-which can increase false positives even without a biased MI difference.
-
-Different population margins can introduce a further problem: bias in the
-estimated MI difference itself.
-Table~\ref{tab:focused-diagnostics} reports four
-different-skew null settings. Observed SD is the sample standard deviation
-of the corrected MI difference. Estimated SD is the square root of the
-mean squared standard error. The
-variance ratio divides the mean squared standard error by the observed
-sampling variance. All four settings have full validity and finite diagnostics.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Bias and uncertainty of the estimated MI difference.}
-\label{tab:focused-diagnostics}
-\input{figures_rewrite/focused_diagnostic_table}
-\end{table}
-
-The \(16\times16\), \(n=1{,}000\) difference has bias 0.02960 nats,
-more than twice its observed SD of approximately 0.01449. To see where
-this shift comes from, recall that bias is the mean estimate across
-samples minus the population value. The bias of a difference is exactly
-bias of \(P\)'s MI estimate minus the bias of \(Q\)'s MI estimate. Here the
-individual corrected MI biases are approximately \(-0.00794\) for \(P\)
-and \(-0.03754\) for \(Q\). Since the true difference is zero, the
-estimated difference is centred at
-\begin{equation}
- \mathbb{E}(\Deltahat)
- \simeq 0+(-0.00794)-(-0.03754)=0.02960
- \quad\text{nats}.
- \label{eq:focused-null-bias-shift}
-\end{equation}
-Both corrected estimates are too low on average, but \(Q\)'s is lower
-by more, so subtracting it creates a positive difference even
-though the population MI values match. The fixed-alphabet bias correction
-cancels because the table and sample sizes match, so the raw plug-in
-difference has exactly the same bias. The sparse-sample bias in the two MI
-estimates is not captured by their common leading correction
-\citep{paninski2003}. In this
-copying setting, an average of 147 of \(P\)'s 256 cells and 183 of
-\(Q\)'s cells are empty.
-
-For the copying \(16\times16\), \(n=1{,}000\) pair, estimated uncertainty
-is also inaccurate: mean squared standard error is about 1.94 times the
-observed variance. Excessive false positives nevertheless remain:
-overestimating the variance does not remove the positive bias in the
-estimated MI difference. At \(n=10{,}000\)
-the bias is much smaller and the variance ratio is 1.07, accompanying
-the improved null rate. The population first-order variance is about
-0.60 times the observed variance at \(n=1{,}000\), compared with 0.84
-at 10,000, showing that the approximation itself also needs attention.
-
-Expanded Welch's estimated degrees of freedom also change with sample size
-and table size. Under same skew at \(4\times4\), the median
-rises from 33.45 at \(n=1{,}000\) to 279.00 at 10,000, bringing the
-Student \(t\) distribution closer to the standard normal distribution.
-At \(16\times16\) and \(n=1{,}000\), its same-skew median is
-78.89, but Expanded Welch still rejects at only 0.0059. The mean squared
-standard error used by both tests is then 1.93 times the observed variance
-of the MI difference. Thus the estimated uncertainty can remain inaccurate
-even when Expanded Welch's Student \(t\) distribution is close to the
-standard normal distribution. Table~\ref{tab:df-structure} compares both
-skew regimes.
-
-\section{Population MI and degrees of freedom}
-\label{sec:mechanism-results}
-
-Figure~\ref{fig:focused-association} uses \(4\times4\) tables under
-same skew and different skew. Within each regime, the MI value varies
-from 0.0001 to 0.05 nats while remaining equal in both populations, and
-the category frequencies stay fixed.
-The two columns use \(n=100\) and 1,000. Upper panels show false
-positives; lower panels show the median estimated combined degrees of
-freedom, with the 5th--95th percentile range shaded. Circles indicate same
-skew and triangles different skew.
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_association_skew_comparison.pdf}
-\caption{Population MI, false positives and degrees of freedom under both skew regimes.}
-\label{fig:focused-association}
-\end{figure}
-
-Both tests reject too rarely near independence under either regime, and
-Expanded Welch rejects still less. Under different skew at MI
-0.0001 and \(n=1{,}000\), Wald's rate
-is 0.0101 and Expanded Welch's is 0.0044. At MI 0.05, Wald rejects
-at 0.0472 and Expanded Welch at 0.0438. Larger population MI brings the
-rates closer to
-0.05 in this comparison, especially at the larger sample size. The
-\(n=100\) rates remain low even at the largest MI target, so a larger
-MI value does not substitute for enough observations.
-
-The matched same-skew results show that these low rejection rates also occur
-when category frequencies match. At MI 0.0001 and
-\(n=1{,}000\), its Wald and Expanded Welch rates are 0.0130 and
-0.0042; at MI 0.05, they are 0.0463 and 0.0429. Since the two population
-tables and sample sizes match under the null, their expected MI biases
-cancel, but both tests still reject too rarely near independence.
-
-Expanded Welch's estimated degrees of freedom increase with population MI
-in both regimes. Under different skew at
-\(n=1{,}000\), their median rises from 8.62 at MI 0.0001 to 78.24
-at MI 0.05; at \(n=100\), it rises from 4.23 to 13.80. Under same
-skew at \(n=1{,}000\), the median likewise rises from 8.23 to 74.42.
-The relationship between population MI and estimated degrees of freedom
-therefore persists when category frequencies match.
-Tables~\ref{tab:association-diagnostics} and
-\ref{tab:same-association-diagnostics} give the corresponding diagnostics.
-
-The median degrees of freedom illustrate the change in cutoff. For a
-two-sided 5\% test, the cutoffs from the Student \(t\) distribution
-are approximately 2.277 at 8.62 degrees of freedom and 1.991 at 78.24,
-compared with Normal Wald's 1.960. Thus \(|T|=2.1\) would reject under
-Wald but not under Expanded Welch with 8.62 degrees of freedom; at
-78.24 both would reject. These examples use the reported medians,
-whereas each sampled table pair uses its own estimated degrees of freedom.
-
-At the smallest MI target, the median estimated degrees of freedom remain
-several units. The population approximation in
-Section~\ref{sec:near-independence-mechanism} instead approaches zero as
-the population table approaches independence. The estimates use sampled
-tables, where random count variation creates apparent MI even when
-population MI is almost zero. Appendix~\ref{sec:independence-boundary}
-gives the corresponding quadratic calculation.
-
-\medskip
-\thesisminiheading{Accuracy of the standard error.}
-
-The standard error used by both tests overestimates the variation of the
-estimated MI difference near independence. For different-skew
-\(4\times4\) populations at MI 0.0001 and \(n=1{,}000\), the mean
-squared standard error is 1.74 times the observed variance of the estimated
-MI difference. In contrast, the first-order variance calculated from the
-true probabilities, \(V(P)/n_P+V(Q)/n_Q\), is only 0.04 times that
-observed variance. Both comparisons concern the sampling variance of the
-MI difference: the first uses sample estimates of the cell probabilities,
-while the second uses the known population probabilities.
-
-Near independence, the true first-order variance is small because the
-population cell probabilities are close to the products of their
-margins. A finite sample can still show apparent association: observed
-cell proportions generally differ from the products of their observed
-margins. The plug-in variance estimate treats those departures as features
-of an estimated population table and can therefore assign a substantially
-larger first-order variance. Meanwhile, the linear approximation at the
-true table omits the quadratic sampling terms that matter near
-independence. \citet{brillinger2004} distinguishes these first-order and
-independence calculations; Appendix~\ref{sec:independence-boundary}
-shows why the quadratic terms remain when the first-order term vanishes.
-
-At MI 0.05 in the same different-skew \(4\times4\), \(n=1{,}000\)
-comparison, mean squared standard error is approximately 1.00 times
-the observed variance, and the population first-order variance is 0.95
-times the observed variance. Detailed values are in
-Table~\ref{tab:association-diagnostics}.
-
-\medskip
-\thesisminiheading{Variability of the MI variance estimate.}
-
-Expanded Welch also needs to estimate how much \(\Vhat(P)\) itself
-changes between samples, because this variability determines its component
-degrees of freedom. Table~\ref{tab:variance-stability} compares the
-observed variance of \(\Vhat(P)\) with the population prediction
-\(\tau^2(P)/n_P\) and the average plug-in prediction
-\(\widehat\tau^2(P)/n_P\), and repeats the comparison for \(Q\).
-Here the quantity varying between repetitions is the estimated MI variance,
-rather than the estimated MI difference examined above.
-
-For different-skew \(4\times4\) populations with MI 0.02 and
-\(n=10{,}000\), both predictions are within 2\% of the observed
-variability of the MI variance estimate. At MI 0.0001 and
-\(n=1{,}000\), the population prediction accounts for only about 5\%
-of that variability, while the average plug-in prediction is 1.95 times
-the observed value for \(P\) and 2.09 times for \(Q\). Thus the
-sampling-variability approximation used to calculate degrees of freedom
-is accurate in the first of these settings but has substantial errors
-near independence.
-
-\section{Power to detect MI differences}
-
-\subsection{Power across table sizes}
-
-Figure~\ref{fig:focused-detection-sizes} fixes \(I(P)=0.02\) nats,
-sets \(I(Q)=0.02+|\Delta|\), and uses different-skew margins. Each
-panel compares \(n=1{,}000\) and 10,000 at one table size. The figure
-enlarges differences up to 0.02 nats; the full grid through 0.2 is in
-Figure~\ref{fig:focused-detection-full}. Since
-\(\Delta=I(P)-I(Q)\), the true difference is negative when \(Q\)
-has the larger MI, while the figures plot its nonnegative magnitude
-\(|\Delta|\).
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_detection_sizes.pdf}
-\caption{Rejection rates over small MI differences under different-skew margins.}
-\label{fig:focused-detection-sizes}
-\end{figure}
-
-For the smaller tables, increasing the magnitude of the true MI difference
-generally increases power, and larger samples make a clear improvement.
-In \(4\times4\) tables, Wald and Expanded Welch have estimated power
-of 0.1132 and 0.1013 for a 0.01-nat difference at \(n=1{,}000\),
-compared with 0.7962 and 0.7940 at \(n=10{,}000\). Expanded Welch's larger
-cutoff costs some power at the smaller sample size and very little at
-the larger one, because higher estimated degrees of freedom
-bring Expanded Welch's cutoff closer to Wald's.
-Both tests use a nominal 5\% significance level, but their actual
-false-positive rates differ, as the zero-difference points show.
-
-The \(16\times16\), \(n=1{,}000\) curve instead falls initially as
-the magnitude of the true difference grows. Wald rejects at 0.2522 under
-equal MI, 0.1005 at a difference of 0.01, and 0.0363 at 0.02. The positive bias
-identified earlier opposes the negative true difference. The mean
-estimated difference is approximately 0.02960 at the null.
-
-\begin{samepage}
-Under the next two alternatives, the true difference and estimated difference
-bias combine as follows:
-\begin{align}
- \mathbb{E}(\Deltahat)&\simeq-0.01+0.03061=0.02061,\\*
- \mathbb{E}(\Deltahat)&\simeq-0.02+0.03164=0.01164.
- \label{eq:focused-detection-bias-shift}
-\end{align}
-\end{samepage}
-The bias in the estimated MI difference changes slightly across these
-alternatives, but remains
-positive and larger than the magnitude of the true difference. As the
-true difference becomes more negative, it offsets more of that bias,
-so the centre of the estimated difference moves towards zero
-rather than away from it. Dividing by the estimated standard error
-can then give smaller absolute statistics, despite the larger population
-difference. Unequal estimation bias therefore makes rejection fall as
-the magnitude of the true difference grows over this range. The full-range
-comparison shows rejection rising again at larger differences.
-
-The bias can also reverse the estimated direction of the difference.
-Although \(Q\) has the larger population MI at \(|\Delta|=0.01\),
-2,009 of the 2,010 Wald rejections and 1,905 of the 1,906 Expanded
-Welch rejections have a positive estimated difference, indicating larger
-MI for \(P\). The rejection curves count all two-sided rejections;
-they do not show whether the estimated ordering is correct.
-Table~\ref{tab:rejection-direction} separates these outcomes.
-
-At \(n=10{,}000\), the \(16\times16\) bias is much smaller, and
-power increases across the small differences. For a 0.01-nat difference,
-Wald's estimated power is 0.6992 and Expanded Welch's is 0.6968; by 0.02
-the rates are 0.9932 and 0.9931. Every rejection in these two larger-sample
-comparisons has the correct negative estimated direction. The larger
-sample improves both the null behaviour and power.
-
-The matched same-skew curves give a different sparse-table pattern
-(Figure~\ref{fig:same-detection-sizes}). In \(16\times16\) tables at
-\(n=1{,}000\), Wald rejects at 0.0065 under equal MI, 0.0185 at
-a 0.01-nat difference and 0.0630 at 0.02. The sharp initial fall under
-different skew is absent. At 0.01 nats, the same-skew difference bias is
-0.00092 nats, much smaller than the different-skew bias of 0.03061;
-356 of its 370 Wald rejections have the correct estimated direction.
-Matching margins therefore changes the sparse power curve substantially,
-although low power and some wrong-direction rejections remain.
-
-Both tests still assign too much uncertainty to the same-skew difference
-in this sparse setting. At the 0.01-nat alternative and \(n=1{,}000\),
-the mean squared standard error is 1.82 times the observed variance.
-Expanded Welch's further reduction in power, from Wald's 0.0185 to
-0.0170, comes from using the Student \(t\) distribution; its median
-estimated degrees of freedom are 84.00.
-
-At \(n=10{,}000\) for the same alternative, the variance ratio is
-1.01 and power rises to 0.6146 for Wald and 0.6113 for Expanded Welch.
-The larger sample improves the variance estimate used by both methods.
-Expanded Welch's median degrees of freedom also rise to 307.66, bringing
-its Student \(t\) distribution closer to the standard normal distribution
-and reducing the difference between the methods' rejection rates.
-
-\subsection{Power across margin regimes}
-
-Figure~\ref{fig:focused-detection-margins} fixes the table size at
-\(4\times4\), sets \(I(P)=0.02\) and \(I(Q)=0.02+|\Delta|\), and
-compares the three margin regimes at \(n=1{,}000\) and 10,000. This
-isolates the effect of the margin regime on power at a fixed table size.
-
-\begin{figure}[H]
-\centering
-\includegraphics{focused_detection_margins.pdf}
-\caption{Rejection rates over small MI differences in \(4\times4\) tables.}
-\label{fig:focused-detection-margins}
-\end{figure}
-
-Uniform margins give somewhat higher power in these settings.
-At \(n=10{,}000\) and a 0.01-nat difference, Wald's estimated power is 0.8635
-under uniform margins, 0.7790 under same skew, and 0.7962 under
-different skew. Expanded Welch gives 0.8619, 0.7768 and 0.7940.
-The margin-related change is larger than the difference between tests
-at this sample size.
-
-The observed precision helps explain the ordering of power. For this
-0.01-nat difference at \(n=10{,}000\), the sample SD of the estimated
-difference is approximately 0.00327 nats under uniform margins, 0.00364
-under same skew and 0.00361 under different skew. The biases are small
-in all three settings, and the square roots of the mean squared standard
-errors are close to these observed SDs. The same population difference
-is therefore easier to distinguish from sampling variation when the
-copying populations have uniform margins. Equal MI targets do not imply
-equal precision:
-the cell probabilities also determine the variance in
-Equation~\eqref{eq:background-two-sample-variance}.
-
-At \(n=1{,}000\), Expanded Welch's larger cutoff produces a
-more visible reduction in power, while all three null points are
-already below 0.05. By a difference of 0.2 nats, both methods reject
-every simulated pair in all three regimes at both sample sizes.
-
-\medskip
-\thesisminiheading{Supporting checks.}
-
-Changing the population construction preserves the main comparison between
-the tests at the matched \(4\times4\) settings. Under both skew
-regimes, Expanded Welch lowers an already-low false-positive rate at
-\(n=1{,}000\), while the power difference between the methods is small
-at \(n=10{,}000\). Tables~\ref{tab:construction-check} and
-\ref{tab:same-construction-check} compare copying and the four-cell
-transfer under different skew and same skew, respectively.
-
-The four-cell construction also reproduces the sparse \(16\times16\)
-different-skew bias. At \(n=1{,}000\) under equal MI, its difference
-bias is 0.03145 nats and the false-positive rates are 0.3095 for Wald and
-0.2977 for Expanded Welch. At \(n=10{,}000\), its bias is much smaller
-and the rates are 0.0499 and 0.0491. In contrast, the matched same-skew
-populations give low false-positive rates under both constructions at
-\(n=1{,}000\). These comparisons distinguish the different-skew bias
-failure from the low rejection observed when the category frequencies match.
-
-At the \(16\times16\) different-skew 0.01-nat alternative and
-\(n=1{,}000\), the four-cell construction gives 2,493 of 2,494 Wald
-rejections and 2,350 of 2,351 Expanded Welch rejections with the wrong
-estimated ordering. Thus the direction error also persists when dependence
-is concentrated in four cells. At \(n=10{,}000\), every rejection
-under either construction has the correct estimated direction.
-Table~\ref{tab:large-construction-check} gives the matched comparisons.
-
-The unequal-sample check keeps the \(4\times4\) different-skew
-populations fixed and changes the allocation of 2,000 observations.
-For the 0.01-nat difference, giving \(Q\) only 400 observations reduces power to
-0.0540 for Wald and 0.0340 for Expanded Welch, compared with their
-balanced rates of 0.1132 and 0.1013.
-The lower degrees of freedom under imbalance
-increase Expanded Welch's rejection cutoff, moving already-conservative
-false-positive rates further below 5\%.
-Table~\ref{tab:allocation-check} reports both allocation directions.
-
-With same-skew margins, the null populations are identical, but unequal
-allocation still leaves residual difference bias. At \((400,1600)\)
-and \((1600,400)\), the biases are approximately 0.00128 and
-\(-0.00148\) nats. Expanded Welch's median degrees of freedom fall
-from 33.45 under balance to approximately 11.3 under either imbalance,
-and its larger cutoff further lowers the false-positive rates.
-
-At the same-skew 0.01-nat alternative, allocating more observations to
-\(Q\) gives higher power than allocating fewer to \(Q\). Wald's
-rates are 0.1300 when \(Q\) receives 1,600 observations and 0.0506
-when it receives only 400; Expanded Welch gives 0.0946 and 0.0340.
-Table~\ref{tab:same-allocation-check} reports these allocations and
-their estimation diagnostics. Matching category frequencies therefore
-does not remove the effects of unequal sample sizes on bias and power.
-
-The jackknife check asks whether changing the MI bias correction can
-improve the estimated ordering without changing the rejection cutoff.
-Replacing Wald's analytic MI bias correction with a jackknife correction
-reduces wrong-direction rejections from 2,009 of 2,010 to 5 of 549 for the
-\(16\times16\) different-skew 0.01-nat alternative at \(n=1{,}000\).
-Correct-direction rejections increase from 1 to 544. The check retains the
-existing standard error and standard normal distribution cutoff, and its
-null rejection rate of 0.0085 remains below the 0.05 target.
-Appendix~\ref{sec:jackknife-difference-check} reports this four-setting check.
-
-\section{Computational cost}
-
-Table~\ref{tab:focused-runtime} compares time per test call on
-different-skew null table pairs at \(n=1{,}000\). The timings exclude
-sampling and population construction.
-Appendix~\ref{sec:timing-procedure} gives the measurement procedure and
-computing environment.
+The mean error also explains the difference between the two
+degrees-of-freedom calculations. At \(4\times4\), \(n=1{,}000\) and MI 0.02, the
+sampling-variance ratios are 0.970 for \(P\) and 0.967 for \(Q\).
+Their mean ratios are 1.190 and 1.174. Consequently, the population
+first-order degrees of freedom, 15.30 and 13.61, fall below the moment
+targets, 21.03 and 18.14. The moment-matching formula squares the mean, so underestimating that
+mean lowers the population first-order degrees of freedom even when the
+variance prediction is close. Appendix~\ref{sec:moment-reference-details}
+gives the algebra; Table~\ref{tab:variance-stability} gives the component
+values.
 
 \begin{table}[!htbp]
 \centering
-\caption{Time per test call in microseconds: median [interquartile range].}
-\label{tab:focused-runtime}
-\begin{tabular}{@{}lrr@{}}
-\toprule
-Size & Normal Wald & Expanded Welch\\
-\midrule
-\(2\times2\) & 101.83 [99.25, 104.87] & 186.58 [182.46, 191.67]\\
-\(4\times4\) & 107.85 [101.92, 113.51] & 197.13 [188.83, 205.25]\\
-\(8\times8\) & 103.46 [101.12, 107.30] & 191.81 [187.00, 197.26]\\
-\(16\times16\) & 112.42 [108.33, 116.43] & 202.29 [198.07, 208.00]\\
-\bottomrule
-\end{tabular}
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Component moment and degrees-of-freedom comparisons at \(4\times4\), \(n=1{,}000\), different skew.}
+\label{tab:variance-stability}
+\input{figures_rewrite/focused_redesign_components}
 \end{table}
 
-Expanded Welch costs approximately 1.8--1.9 times as much in these timings.
-Both methods require \(O(k^2)\) work for a \(k\times k\) table, but
-fixed call overhead can be important for these small arrays. Median
-times remain below 115 microseconds for Wald and 205 microseconds for
-Expanded Welch across the four table sizes.
+In the table, mean ratio is \(\E\Vhat/V\); the next two columns divide
+the population and mean plug-in sampling-variance predictions by the
+observed sampling variance of \(\Vhat\). Mean df averages the positive
+finite component estimates; all 100,000 estimates are included in each
+shown row. Moment df uses the actual sampling moments, while FO df uses
+the population first-order formula.
+
+The estimated component degrees of freedom can fall further below the
+sampling-moment target than the population first-order values suggest.
+At setting A (uniform \(4\times4\), \(n_P=n_Q=20\)), the mean for the
+\(P\) component is about 6.52 against a moment target of 14.81, or
+44\% of the target. In the \(16\times16\), \(n=1{,}000\) same- and
+different-skew cases, the corresponding ratios range from 55\% to 60\%.
+All 100,000 component estimates are included in these comparisons.
+At C (different-skew \(4\times4\), \(n_P=n_Q=10{,}000\)), the ratios
+are about 99\%. The bottom-row dashed curves expose this
+sample-estimation error alongside the population approximation error;
+the moment target itself does not guarantee an exact Student \(t\)
+distribution for the test statistic.
+
+\subsection{Behaviour near independence}
+
+Near independence, quadratic sampling terms contribute substantially to
+\(\Vhat\). For \(4\times4\) different-skew populations at common MI
+0.0001 and \(n=1{,}000\), the local calculation in
+Appendix~\ref{sec:independence-boundary} predicts \(n\E\Vhat=9.2\)
+for each population. The observed value for \(P\) is 9.158. Its mean
+estimated component degrees of freedom are 4.86, close to the local
+prediction 4.6, while the sampling-moment target is about nine. These
+comparisons explain why the estimated degrees of freedom can remain
+below the moment target even when the local calculation describes their
+mean accurately.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth,height=.78\textheight,keepaspectratio]{focused_redesign_a4_different_skew_1000.pdf}
+\caption{Observed component moments and Appendix A.4 predictions across MI.}
+\label{fig:redesign-a4}
+\end{figure}
+
+Figure~\ref{fig:redesign-a4} shows how that agreement changes across MI.
+The shaded band gives the fifth--95th percentile range of estimated
+component degrees of freedom, with their mean and median shown separately.
+The first-order prediction for the sampling variance is only about
+5\% of the observed value at the smallest MI target. Meanwhile, the
+mean plug-in prediction is 1.97 times the observed value for \(P\) and
+2.14 times for \(Q\). The local calculation explains the scale of these
+errors: the quadratic sampling contribution remains substantial even
+though the population first-order degrees of freedom are below 0.1.
+At MI 0.02, the population sampling-variance approximation is much more
+accurate, while the mean error still lowers the first-order degrees of
+freedom relative to the moment target. The mean plug-in variance
+predictions remain about 7--8\% above the observed values. Thus the
+accuracy of the population variance-sensitivity formula does not eliminate
+the error from estimating that sensitivity in each sample.
+
+The mean error also varies with the population table.
+Appendix~\ref{sec:component-diagnostics} reports its range across MI and
+margins.
+
+\section{False positives when MI is equal}
+
+Figures~\ref{fig:redesign-null-uniform} and
+\ref{fig:redesign-null-different} compare Normal Wald, the sample-size rule and Expanded Welch at common
+MI 0.02 nats, with the fixed moment reference as a diagnostic. Expanded Welch reduces false positives in some small-sample
+settings and lowers already-conservative rates in others. The sample-size
+comparator often remains close to Normal Wald once sample sizes are
+moderate. The moment reference also varies in its calibration, showing
+that accurate denominator moments alone do not provide a correctly
+calibrated Student \(t\) reference for every population.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_null_uniform.pdf}
+\caption{False-positive rates under uniform margins.}
+\label{fig:redesign-null-uniform}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_null_different_skew.pdf}
+\caption{False-positive rates under different-skew margins.}
+\label{fig:redesign-null-different}
+\end{figure}
+
+The lower panels show the fraction of valid outputs for Normal Wald
+and Expanded Welch. The sample-size and fixed-reference rules share
+Wald's validity in these settings. Validity is lowest in the
+smallest samples: across the 120 settings, the minimum valid fractions
+are 0.958 for Normal Wald, the sample-size comparator and the fixed
+reference, and 0.631 for Expanded Welch. Their conditional rates and
+included counts are reported separately in the supplement.
+
+Across the 120 settings, Expanded Welch moves rejection closer to 5\%
+in \RedesignToward{} settings and farther away in \RedesignAway{}, using
+changes in distance greater than \RedesignGridTolerance{} percentage points.
+All \RedesignToward{} improvements occur with Wald above 5\%;
+\RedesignAwayBelow{} of the \RedesignAway{} deteriorations occur with Wald
+below 5\%. The remaining \RedesignWithin{} settings fall within this tolerance. In different-skew large tables,
+all rules can reject too often; with identical populations, lowering
+an already-conservative rate moves it further from 5\%.
+
+\subsection{Small-sample improvements and sparse-table failures}
+
+Table~\ref{tab:redesign-case-rates} compares the selected small-sample
+settings with the larger-sample and sparse-table cases. All four rules
+are valid on every sampled pair in these seven settings. In the uniform
+\(4\times4\) setting A, Expanded Welch gives 4.90\% rejection, compared
+with 8.35\% for Wald and 7.39\% for the sample-size rule. In the
+\(8\times8\) different-skew setting B, Expanded Welch gives 5.52\%,
+compared with 7.47\% for Wald. Its rate remains above 5\%, although
+closer than either main comparator.
+
+Both rules over-reject at stronger common MI: in A at
+\RedesignUpperAMI{} nats, Wald rejects \RedesignUpperAWaldRate{} and
+Expanded Welch rejects \RedesignUpperAExpandedRate{} of pairs.
+In B at \RedesignUpperBMI{} nats, the rates are
+\RedesignUpperBWaldRate{} and \RedesignUpperBExpandedRate{}, respectively.
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Null rejection rates with pointwise 95\% intervals.}
+\label{tab:redesign-case-rates}
+\input{figures_rewrite/focused_redesign_cases_rates}
+\end{table}
+
+The estimation errors differ between A and B. At A, difference bias is
+negligible, but the mean estimated difference variance is only 0.827 of
+its observed value, so Wald's standard error understates sampling
+variation. At B, the difference bias is positive and the variance is
+overestimated. Expanded Welch lowers false positives in both cases,
+although the shared estimates have different errors. At the larger-sample
+setting C, bias is negligible and the variance ratio is 1.010.
+Table~\ref{tab:redesign-case-diagnostics} gives the numerical diagnostics
+and degrees-of-freedom comparisons in the appendix.
+
+The \(16\times16\), different-skew case at \(n=1{,}000\) remains a
+clear failure for all four rules. The difference bias is about 0.030 nats,
+or 2.06 observed SDs. Rejection ranges from 24.8\% to 26.0\%.
+The reference rate is 25.3\% despite its independently fitted moments.
+Under the equal-MI null, the estimated difference is centred at
+\begin{equation}
+ \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
+ \label{eq:redesign-null-bias-shift}
+\end{equation}
+This shift is large relative to the observed SD of approximately 0.01450
+nats. It moves most rejections into the positive tail even though the
+population difference is zero.
+With same skew, difference bias is negligible and the variance ratio is
+1.93; all four rates instead lie between 0.53\% and 0.60\%.
+The matched populations separate the large difference bias from
+conservative behaviour that occurs when the biases cancel. At
+\(n=10{,}000\), both skew regimes give much smaller estimation errors
+and rates closer to 5\%.
+
+\section{Power at the selected settings}
+
+\subsection{Nominal power}
+
+Figure~\ref{fig:redesign-power} compares the three settings in
+Table~\ref{tab:redesign-focus-settings}, with MI differences measured
+in null standard deviations. Expanded Welch has lower nominal
+power than the sample-size comparator at A and B. At A, two null SDs
+correspond to about 0.310 nats: Expanded Welch rejects 35.9\% of pairs,
+compared with 38.9\% for the sample-size rule and 41.0\% for Wald.
+These comparisons include the different null rejection rates shown
+at zero. Appendix~\ref{sec:calibration-sensitivity-results} gives the
+numerical rates and paired contrasts.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_power.pdf}
+\caption{Nominal power across differences measured in fitted null standard deviations.}
+\label{fig:redesign-power}
+\end{figure}
+
+B also shows a falling-then-rising rejection curve. Expanded Welch's
+rate falls from 5.52\% under the null to 1.99\% at one null SD, before
+rising to 33.1\% at four SDs. The true signed difference becomes
+negative as \(I(Q)\) increases, initially opposing the positive bias
+observed under the null. The larger rejection cutoff does not remove
+this distortion of the shared statistic. Appendix~\ref{app:additional-results}
+reports the rejection directions in the sparse-table comparisons.
+
+At C, nominal power differences are small. At two null SDs, or
+about 0.00635 nats, Wald gives 45.2\% and Expanded Welch gives 44.9\%.
+The paired loss is 0.30 percentage points, with 95\% interval
+0.27--0.34. Table~\ref{tab:redesign-power-contrasts} reports paired
+comparisons at two null SDs for all three focus settings. These intervals
+use the same sampled pairs, so they measure the difference directly.
+The calibrated comparison assesses how that difference changes after
+matching null rejection.
+
+\subsection{Power after empirical null calibration}
+
+The lower null sets both population MI values to 0.02 nats. After
+calibration, rejection rates on independent null samples range from
+4.93\% to 4.99\% across A--C and the four rules. Wald and the fixed
+moment reference have identical calibrated decisions because
+both order samples by \(|T|\). Appendix Figure~\ref{fig:redesign-calibrated-power}
+shows the full curves under this lower-null calibration.
+
+
+
+The power gain depends on which null population supplies the cutoff.
+The upper null sets both MI values to the fixed alternative's larger MI.
+Table~\ref{tab:redesign-calibration-sensitivity} holds each alternative
+fixed and compares lower- and upper-null calibration. At A and two null
+SDs, the gain over Wald changes from
+3.58 percentage points to a loss of 0.76 points. At B and four SDs,
+a 3.92-point gain becomes a 0.39-point loss. A at four SDs retains a
+small positive estimate whose interval includes zero, while B at two
+SDs retains a much smaller gain. At C, both calibrations give differences
+well within the one-percentage-point tolerance.
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Expanded Welch minus Wald power under two null calibrations.}
+\label{tab:redesign-calibration-sensitivity}
+\input{figures_rewrite/focused_redesign_calibration_sensitivity}
+\end{table}
+
+Brackets give paired 95\% bootstrap intervals including uncertainty from
+fitting the cutoffs. The second column gives the common MI of the upper
+null. \mbox{Appendix~\ref{sec:calibration-sensitivity-results}}
+reports the cross-null rates and full power tables. The two checks do
+not establish control over every population satisfying equal MI.
+
+B's initial fall in rejection remains after calibration at common MI
+0.02. Increasing \(I(Q)\) initially moves the negative true
+difference against its positive estimation bias, reducing \(|T|\) and
+rejection before the curve rises. This behaviour occurs for all the
+compared rules: matching one null rate changes the cutoff but leaves
+the biased estimated difference. The calibration sensitivity and the
+falling-then-rising curve therefore limit the interpretation of its
+apparent power gain.
+
+\section{Association pattern and sample allocation}
+
+Concentrating dependence in four cells reproduces the main sparse-table
+failure. At \(16\times16\), \(n=1{,}000\) and different skew, the
+null difference bias is 0.03155 nats, compared with 0.02985 under copying.
+All four rules reject far too often. With same-skew populations, expected
+difference bias cancels and rejection remains conservative.
+
+Sample allocation affects both the standard error and the cutoff. In
+the different-skew \(4\times4\) comparison, assigning only 400 of the
+2,000 observations to \(Q\) increases the observed SD from 0.01173 to
+0.01611 nats. At the 0.01-nat alternative, Expanded Welch's power falls
+from 10.26\% under equal allocation to 3.42\%. Its median degrees of
+freedom also fall, increasing the rejection cutoff. Reversing which
+population has fewer observations changes the result because the two
+populations have different variances and residual biases.
+The experimental supplement reports the complete construction and
+allocation comparisons.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}
@@ -515,7 +333,8 @@ comparison of month--purchase MI between new and returning visitors
 A larger MI means that the month provides more information about whether
 a session ends in a purchase. A second comparison uses the weekend
 indicator instead of month to examine whether its MI with purchasing
-differs between the same visitor groups.
+differs between the same visitor groups. This application was selected
+from an initial exploration of six comparisons across three public datasets.
 
 The dataset contains 12,330 sessions, with each session belonging to a
 different user according to the source documentation \citep{sakar2018}.
@@ -578,10 +397,8 @@ The corrected difference is \(-0.013563\) nats, with a standard error of
 \end{equation}
 With 26.79 estimated degrees of freedom, the Student \(t\) distribution gives
 a larger p-value than the standard normal distribution, but both tests
-reject equal month--purchase MI for new and returning visitors. This
-application was selected from an initial exploration
-of six comparisons across three public datasets. Accounting for all six
-comparisons with Holm's multiple-testing adjustment \citep{holm1979}
+reject equal month--purchase MI for new and returning visitors. Accounting
+for all six comparisons with Holm's multiple-testing adjustment \citep{holm1979}
 gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
 Welch, so the conclusion remains unchanged.
 Table~\ref{tab:application-holm} lists all six comparisons and their raw
@@ -595,11 +412,8 @@ approximately 0.0007 nats. Their difference,
 estimates only 2.18 degrees of freedom, both p-values remain close to one.
 Neither test provides evidence that weekend--purchase MI differs between
 the visitor groups, but this does not establish that their population MI
-values are equal. The small statistic, rather than the degrees of freedom
-alone, explains the agreement between the methods here.
-
-Both methods reach the same decisions in this application, although
-Expanded Welch returns larger p-values. Its degrees of freedom depend on
-how much the estimated MI variances fluctuate relative to their mean
-values, so large session counts alone need not make its p-values close
-to Normal Wald's.
+values are equal. The small statistic explains the agreement between the methods here.
+Small estimated degrees of freedom are consistent with the weak
+associations examined near independence in the simulations, even with
+large samples. The population tables are unknown here, so their
+sampling-moment target cannot be checked directly.

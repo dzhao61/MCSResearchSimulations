@@ -103,16 +103,24 @@ class SameSkewReportTests(unittest.TestCase):
             self.assertEqual(np.count_nonzero(mask & (records["delta_corrected"] > 0)), opposite)
             self.assertEqual(r[name+"_direction"]["opposite_sign"], opposite)
 
-    def test_manuscript_reports_the_extended_grids_and_counts(self):
-        design = (THESIS / "chapters_rewrite/05_experimental_design.tex").read_text()
-        grids = (THESIS / "appendices_rewrite/B_population_construction.tex").read_text()
-        self.assertIn("104 population pairs and 312 distinct settings", design)
-        self.assertIn("6,240,000 table pairs", design)
-        self.assertIn("all three studies and both", design)
-        self.assertIn("All four sizes with same skew and different skew", grids)
-        for name in ("focused_same_association_table", "focused_same_construction_table",
-                     "focused_same_allocation_table", "focused_df_structure_table"):
-            self.assertIn(name, (THESIS / "appendices_rewrite/C_additional_results.tex").read_text())
+    def test_redesign_preserves_matched_same_skew_coverage(self):
+        fresh = ROOT / "results/approximation_redesign"
+        configs = pd.read_csv(fresh / "configurations.csv")
+        display = pd.read_csv(fresh / "displays.csv", keep_default_na=False)
+        self.assertEqual(len(configs), 366)
+        self.assertTrue(configs.replicates.eq(100000).all())
+        for study, count in (("null", 120), ("association", 63), ("construction", 32), ("allocation", 12)):
+            ids = set(display[display.study.eq(study)].configuration_id)
+            self.assertEqual(len(ids), count)
+            selected = configs[configs.configuration_id.isin(ids)]
+            self.assertTrue(selected.profile.eq("same_skew").any())
+            self.assertTrue(selected.profile.eq("different_skew").any())
+        for name in ("focused_redesign_moments_same_skew", "focused_redesign_null_same_skew",
+                     "focused_redesign_broad_power_same_skew", "focused_redesign_allocation"):
+            supplement=ROOT/"supplementary_displays/full_additional_results"
+            self.assertIn(name,(supplement/"C_additional_results.tex").read_text())
+            self.assertTrue(any((supplement/"figures_rewrite").glob(name+'.*')))
+
 
 
 if __name__ == "__main__":

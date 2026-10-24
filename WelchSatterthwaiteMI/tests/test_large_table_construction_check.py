@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "experiments"))
@@ -172,12 +173,20 @@ class LargeConstructionTests(unittest.TestCase):
             self.assertAlmostEqual(d["difference_bias"], d["bias_p"]-d["bias_q"], places=12)
         source = ROOT.parent / "Thesis Writeup/Welch MI"
         if source.exists():
-            design = (source / "chapters_rewrite/05_experimental_design.tex").read_text()
-            self.assertIn("104 population pairs and 312 distinct settings", design)
-            self.assertIn("6,240,000 table pairs", design)
-            result = (source / "chapters_rewrite/06_results.tex").read_text()
-            for value in ("0.03145", "0.3095", "0.2977", "2,493 of 2,494", "2,350 of 2,351"):
-                self.assertIn(value, result)
+            fresh = ROOT / "results/approximation_redesign"
+            configs = pd.read_csv(fresh / "configurations.csv")
+            rates = pd.read_csv(fresh / "rates.csv")
+            rates = rates[rates.denominator.eq("all")].set_index(["configuration_id", "method"])
+            table = (source / "figures_rewrite/focused_redesign_construction.tex").read_text()
+            display = pd.read_csv(fresh / "displays.csv", keep_default_na=False)
+            ids = set(display[display.study.eq("construction")].configuration_id)
+            null = configs[configs.configuration_id.isin(ids) & configs.mi_p.eq(configs.mi_q)]
+            self.assertEqual(len(null), 16)
+            for row in null.itertuples():
+                for method in ("wald", "size", "expanded", "reference"):
+                    result = rates.loc[(row.configuration_id, method)]
+                    self.assertEqual(result["count"], 100000)
+                    self.assertIn(f"{result.rate:.4f}", table)
 
     def test_generated_table_contains_all_comparisons_and_precise_rounding(self):
         rows = comparison_rows(DEFAULT_BASE, DEFAULT_OUTPUT)

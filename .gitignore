@@ -24,3 +24,16 @@ WelchSatterthwaiteMI/results/same_skew_extension/pilot/
 # Preserve pre-correction raw evidence locally without adding duplicate checkpoints.
 /WelchSatterthwaiteMI/results/archive_before_numerical_fix_20261017/
 /PracticalMIExploration/results_before_numerical_fix_20261017/
+
+# The promoted Welch MI project retains reproducible evidence locally.
+/WelchSatterthwaiteMI/results/
+/DifferentialMI/results/
+/PracticalMIExploration/results/
+/PracticalMIExploration/initial_run/
+/PracticalMIExploration/thesis_application/
+/WelchSatterthwaiteMI/docs/experiments/figures/
+/WelchSatterthwaiteMI/supplementary_displays/
+/Thesis Writeup/Welch MI/build/
+/Thesis Writeup/Welch MI/build_v3/
+/Thesis Writeup/Welch MI/archive/
+/Thesis Writeup/Welch MI/deliverables/*Experiment*Supplement.zip

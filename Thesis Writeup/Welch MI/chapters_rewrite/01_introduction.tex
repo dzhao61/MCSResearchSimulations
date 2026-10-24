@@ -56,26 +56,28 @@ The Student \(t\) distribution gives Expanded Welch a larger rejection
 cutoff than Normal Wald, so it rejects less often. This can reduce false
 positives, but it can also reduce statistical power: the probability of
 rejecting equal MI when the population MI values genuinely differ.
-The evaluation therefore examines both outcomes, together
-with how often each method returns a usable p-value, to determine whether
-the larger cutoff offers a useful improvement.
+The evaluation measures the resulting false-positive rates and nominal
+power, then compares power after matching rejection at specified equal-MI
+populations through independent simulation. Changing the calibration
+population checks whether the resulting power comparison is stable.
+The frequency of usable p-values is reported alongside these rates.
 
 \section{Research questions}
+\label{sec:research-questions}
 
 The thesis addresses two research questions:
 \begin{enumerate}
-  \item How can the sampling variability of the estimated MI variance
-  determine MI-specific degrees of freedom for Expanded Welch?
-  \item Under what conditions does Expanded Welch improve false-positive
-  rates relative to Normal Wald, and what are the costs in power,
-  usable results and computation?
+ \item How accurately do the derived approximations predict the mean and
+ sampling variance of the estimated MI variance, and what degrees of
+ freedom do they imply near and away from independence?
+ \item How do Expanded Welch's false-positive rates and power compare
+ with Normal Wald and a sample-size degrees-of-freedom comparator?
 \end{enumerate}
 
-An analytical derivation addresses the first question, while controlled
-simulations with known population MI address the second by varying
-sample size, table size, category frequencies and population MI.
-Estimation diagnostics explain how bias and uncertainty affect the test
-results.
+The simulations first check the variance approximations, then compare
+false positives and power. Power is measured both at the stated 5\%
+cutoffs and after independent adjustment to approximately equal
+false-positive rates.
 
 \section{Contributions to the field}
 
@@ -92,19 +94,18 @@ results.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations examine
-  how sample size, table size, category frequencies and population MI affect
-  false-positive rates, power and the frequency of usable results. Supporting
-  diagnostics assess errors in the MI difference and its standard error, and
-  directly check the predicted variability of the MI variance estimate.
-  Additional supplementary checks look at further population constructions
-  and sample allocation, while a timing comparison measures computational cost.
+  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations check
+  the variance approximations and compare false-positive rates, power and
+  usable results as sample size, table size, category frequencies and MI
+  change. Further comparisons examine association pattern and sample
+  allocation.
   \par
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies
-  when Expanded Welch brings false-positive rates closer to the intended
-  5\% level than Normal Wald, and when estimation errors make both tests
+  selected populations at common MI 0.02 nats where Expanded Welch brings
+  false-positive rates closer to 5\% than Normal Wald, the dependence of calibrated power on
+  the fitting population, and estimation errors that make both tests
   unreliable.
 \end{enumerate}
 
@@ -117,17 +118,15 @@ are independent, and observations within each sample are also independent.
 For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where
 \(X\) and \(Y\) are independent, is considered separately.
-Normal Wald and Expanded Welch are compared using two-sided tests at the
-5\% significance level.
+The main simulations compare Normal Wald, Expanded Welch and a sample-size
+degrees-of-freedom rule using two-sided tests at the 5\% significance level.
+An independently fitted reference helps examine the role of the degrees
+of freedom.
 
-The organisation of the thesis follows the development, evaluation and
-interpretation of the two-sample MI test.
 Chapter~\ref{chap:background} reviews the background and literature.
-Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the shared
-statistic and derive Expanded Welch. Chapter~\ref{chap:design} describes
-the experiment, and Chapter~\ref{chap:results} discusses the results.
-Chapter~\ref{chap:results} also illustrates both tests through a real-world
-example using an online-shopping dataset. Chapters~\ref{chap:discussion}
-and~\ref{chap:conclusion} discuss the implications, limitations and
-conclusions. The appendices provide supporting calculations, experimental
-settings and additional results.
+Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the statistic
+and derive Expanded Welch. Chapters~\ref{chap:design} and~\ref{chap:results}
+present the experiment, results and online-shopping application.
+Chapters~\ref{chap:discussion} and~\ref{chap:conclusion} discuss the
+implications and limitations. The appendices give supporting calculations,
+experimental settings and additional results.

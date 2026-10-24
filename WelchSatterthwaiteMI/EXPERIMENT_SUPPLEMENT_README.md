@@ -1,3 +1,20 @@
+# Welch MI thesis experiment supplement
+
+The shortened 95-page thesis retains the supporting results needed for its main conclusions. `WelchSatterthwaiteMI/supplementary_displays/full_additional_results/` preserves the complete previous 19-page Appendix C as a readable PDF, its source, and all local plots and tables. It includes the companion approximation plots, broader power curves, complete construction/allocation results, jackknife investigation and timing study. Original numbering is retained in that supplementary PDF. The main study, estimates and simulations are unchanged.
+
+The current study is described in `WelchSatterthwaiteMI/README.md`. It contains 366 evaluation and 186 independent fitting settings at 100,000 pairs each. Start with `experiments/redesign_study.py` and `experiments/redesign_report.py`; current evidence is `results/approximation_redesign`. The core and sampling estimators are unchanged, while the experiment adds sample-size and moment-reference arms, component diagnostics and independently calibrated power.
+
+The 22 October sensitivity extension adds six upper-null fitting and six validation batches (1.2 million pairs). `experiments/calibration_sensitivity.py` samples and audits them; `experiments/report_calibration_sensitivity.py` compares both calibrations on the original paired alternatives, bootstraps fitting/evaluation uncertainty and supplies magnitude-dependence diagnostics. Run this reporter before `redesign_report.py`. The current README gives the complete command order. Extension evidence is nested under `results/approximation_redesign/calibration_sensitivity/` and is included here; pilot records are excluded. Its independent audit adds 96 reconstructed pairs to the base audit's 4,416. Historical signed correlations remain in the base diagnostics.
+
+Reproduction commands and validity/calibration rules are given in the current README. The versioned thesis source is supplied separately. For the complete test
+suite, extract it into `Thesis Writeup/Welch MI/` beside the experiment
+folders; the manuscript-consistency tests use its generated tables and
+source. The statistical audit itself requires only this supplement. The 20,000-pair jackknife check and application results retain their original provenance. Older evidence and source modules below are included to reproduce those checks and verify the preserved historical comparisons.
+
+The full fresh run passes chunk hash/dimension checks and independent count/probability-formula reconstruction for 4,416 pairs. Eight dedicated integrity/statistical tests cover scope, null matching, exact n_i comparator, zero moments, ties, stream independence, batching and corruption detection. Additional manuscript consistency tests check generated tables and calibrated fixed-rule equivalence.
+
+# Historical supplement documentation
+
 # Welch-MI Focused Experiment Supplement
 
 This supplement reproduces the focused study in the current Master of

@@ -30,6 +30,9 @@ class DeliveryTests(unittest.TestCase):
         self.evidence = self.root / "evidence.txt"
         self.evidence.write_text("current evidence")
         (self.thesis / "main.pdf").write_bytes(b"old compiled PDF")
+        self.historical_main = self.thesis / "archive/previous-main.pdf"
+        self.historical_main.parent.mkdir()
+        self.historical_main.write_bytes(b"historical main PDF")
         self.sources = [(self.source, Path("main.tex"))]
         self.supplement = [(self.evidence, Path("project/evidence.txt"))]
         stack = contextlib.ExitStack()
@@ -48,13 +51,15 @@ class DeliveryTests(unittest.TestCase):
         return build
 
     def test_success_builds_before_copying_and_preserves_historical_drafts(self):
-        for name in ("Working Draft.pdf", "Working Draft v2.pdf"):
+        for name in ("Working Draft.pdf", "Working Draft v2.pdf", "Working Draft v3.pdf"):
             (self.delivery / name).write_bytes(b"historical draft")
         build = self.publish()
         build.assert_called_once_with()
         self.assertEqual((self.delivery / package.PDF_NAME).read_bytes(), b"new compiled PDF")
-        for name in ("Working Draft.pdf", "Working Draft v2.pdf"):
+        for name in ("Working Draft.pdf", "Working Draft v2.pdf", "Working Draft v3.pdf"):
             self.assertEqual((self.delivery / name).read_bytes(), b"historical draft")
+        self.assertEqual(self.historical_main.read_bytes(), b"historical main PDF")
+        self.assertEqual((self.thesis / "main.pdf").read_bytes(), b"new compiled PDF")
         package.check_deliverables()
         self.assertFalse(list(self.delivery.glob(".refresh-*")))
 

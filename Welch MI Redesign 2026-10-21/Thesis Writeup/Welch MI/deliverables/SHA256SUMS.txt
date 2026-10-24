@@ -1,3 +1,0 @@
-98ae2baaa0a5d9a4fa3ed96927867d597b53bb548fbeb6b6fcde924bb51c823e  Working Draft v3.pdf
-535d40496badab5ee620eb0fcaebc3801d8bd32cc9f0728b36f15fc0f4a34794  Working Draft v3 Source.zip
-283722b5173404471ccd37ae1b522864cf8e1ce957c7b8283033f0a714188175  Working Draft v3 Experiment Supplement.zip

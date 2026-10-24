@@ -36,9 +36,12 @@ class ShoppersApplicationTests(unittest.TestCase):
         cls.appendix = (THESIS / "appendices_rewrite" / "C_additional_results.tex").read_text()
 
     def test_source_count_tables_and_reported_group_sizes(self):
+        saved = study.HERE / "results" / "count_tables.json"
+        if not saved.exists():
+            saved = study.HERE / "thesis_application" / "count_tables.json"
         archived = {
             item["id"]: item
-            for item in json.loads((study.HERE / "results" / "count_tables.json").read_text())
+            for item in json.loads(saved.read_text())
         }
         for identifier in ("shoppers_month", "shoppers_weekend"):
             item = self.items[identifier]
