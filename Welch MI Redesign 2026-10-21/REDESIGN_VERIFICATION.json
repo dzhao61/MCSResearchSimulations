@@ -1,5 +1,5 @@
 {
-  "completed": "2026-10-23",
+  "completed": "2026-10-24",
   "evaluation_settings": 366,
   "fitting_settings": 186,
   "pairs_per_setting": 100000,
@@ -19,7 +19,7 @@
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "86affff8b073949e19706a2081c442ce6a9176c8798e21c6bed56e30bdfa799b",
+  "pdf_sha256": "98ae2baaa0a5d9a4fa3ed96927867d597b53bb548fbeb6b6fcde924bb51c823e",
   "isolated_bundled_test_breakdown": {
     "experiment": 141,
     "estimator": 27,
@@ -33,7 +33,8 @@
     "after_readability": 22,
     "before_sensitivity": 22,
     "after_sensitivity": 22,
-    "after_appendix_reduction": 22
+    "after_appendix_reduction": 22,
+    "after_information_order_revision": 22
   },
   "base_total_pairs": 55200000,
   "main_text_pages": 57,
@@ -91,5 +92,50 @@
     "protected_chapters_2_to_4_and_appendices_a_b_unchanged": true,
     "study_data_unchanged": true,
     "review": "Thesis Writeup/Welch MI/notes/APPENDIX_REDUCTION_2026-10-23.md"
+  },
+  "local_tests_last_full_run": "2026-10-23",
+  "information_order_revision": {
+    "date": "2026-10-24",
+    "review": "Thesis Writeup/Welch MI/notes/INFORMATION_ORDER_REVIEW_2026-10-24.md",
+    "approved_local_changes": 7,
+    "before_pdf_pages": 95,
+    "after_pdf_pages": 95,
+    "chapter_and_appendix_page_spans_unchanged": true,
+    "protected_source_asset_and_historical_files_unchanged": 163,
+    "displayed_equations_tables_figures_citations_unchanged": true,
+    "scientific_code_and_results_unchanged": true,
+    "new_study_pairs": 0,
+    "packaging_tests_passed": 8,
+    "changed_physical_pages": [
+      45,
+      46,
+      47,
+      50,
+      51,
+      57,
+      58,
+      59,
+      60,
+      89,
+      90
+    ],
+    "rendered_and_visually_reviewed_physical_pages": [
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      57,
+      58,
+      59,
+      60,
+      89,
+      90
+    ],
+    "source_archive_build_passed": true,
+    "source_archive_pdf_text_identical": true,
+    "delivery_check_passed": true
   }
 }

@@ -190,20 +190,21 @@ margin regimes and ten sample sizes, giving 120 settings. A rate above
 conservative rejection. Valid-result frequencies are reported alongside
 these rates because an unusable calculation produces no rejection.
 
-A further diagnostic uses a fixed Student \(t\) reference whose degrees
-of freedom are fitted from independent null simulations. Comparing it
-with Expanded Welch shows what happens when the sample-dependent degrees
-of freedom are replaced by one value. The fixed reference appears in
-the plots and tables alongside the three main rules. Its construction
-and fitting procedure are given in
-Appendix~\ref{sec:moment-reference-details}.
+A further diagnostic, the fixed moment reference, uses a Student \(t\)
+distribution with fixed degrees of freedom in place of Expanded Welch's
+sample-dependent values. Independent null simulations estimate the mean
+and sampling variance of the squared standard error, \(\SEhat^2\).
+These moments determine the fixed degrees of freedom through moment
+matching (Appendix~\ref{sec:moment-reference-details}).
 
 \section{Power when MI differs}
 
 A lower false-positive rate can accompany lower power. The comparison
-first uses nominal 5\% cutoffs, then adjusts them to match 5\% rejection
-at a specified equal-MI population. Matching one null population does
-not ensure the same false-positive rate elsewhere under equal MI.
+first uses nominal 5\% cutoffs. Empirical calibration then chooses a
+separate p-value threshold for each rule to give at most 5\% rejection
+in an independent fitting batch from a specified equal-MI population.
+Matching one null population does not ensure the same false-positive
+rate elsewhere under equal MI.
 
 The focused comparison uses the three populations in
 Table~\ref{tab:redesign-focus-settings}. Settings A and B were selected
@@ -233,8 +234,8 @@ difference \(\Delta=I(P)-I(Q)\) is negative at every nonzero step.
 Appendix~\ref{app:construction} gives the fixed SD values and resulting
 population construction.
 
-Cutoffs for each full curve are fitted using an independent batch with
-\(I(P)=I(Q)=0.02\) nats. The same fitted cutoff is then applied
+For each full curve, the fitting populations satisfy
+\(I(P)=I(Q)=0.02\) nats. The fitted p-value threshold stays fixed
 throughout that alternative curve. Separate null evaluation samples
 check the achieved false-positive rate. Normal Wald and the fixed
 moment reference give identical calibrated decisions because both order

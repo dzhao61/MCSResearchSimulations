@@ -12,6 +12,8 @@ The experiment code and evidence sit under the sibling WelchSatterthwaiteMI fold
 
 The appendix reduction on 23 October shortens the manuscript from 108 to 95 pages. Appendix C retains the diagnostics, calibration sensitivity, rejection directions and Holm adjustment needed by the main argument. The complete previous 19-page Appendix C, its source, plots and tables are preserved under `WelchSatterthwaiteMI/supplementary_displays/full_additional_results/` in the experiment supplement. Appendices A and B remain unchanged.
 
+The 24 October revision brings seven definitions and setting reminders forward in Chapters 5-6 and Appendix C. It distinguishes moment fitting from rejection-threshold calibration and introduces the application selection and signed difference before their results. The manuscript remains 95 pages; the review is recorded in `notes/INFORMATION_ORDER_REVIEW_2026-10-24.md`.
+
 ## Build an extracted source archive
 
 The source archive builds independently with TeX Live and latexmk. From its root, create `build_v3/chapters_rewrite` and `build_v3/appendices_rewrite`, then run:

@@ -126,15 +126,16 @@ control across the complete equal-MI null.
 
 \section{Sparse-table bias and estimated direction}
 
-At \(16\times16\), different skew, \(n=1{,}000\) and a true
-0.01-nat difference, 10,183 of 10,184 Wald rejections and 9,591 of 9,592
-Expanded Welch rejections have the wrong estimated ordering. The fixed
+For \(16\times16\) different-skew populations at \(n=1{,}000\), the
+true difference is \(I(P)-I(Q)=-0.01\) nats. In this setting, 10,183 of
+10,184 Wald rejections and 9,591 of 9,592 Expanded Welch rejections have
+the wrong estimated ordering. The fixed
 reference gives 9,829 wrong-direction cases among 9,830 rejections.
 Under same skew, the corresponding Wald and Expanded Welch counts are
 59 of 1,809 and 52 of 1,646. At \(n=10{,}000\), none of the four rules
 has a wrong-direction rejection at this alternative under either skew
-regime. The different-skew alternative has true difference \(-0.01\) nats, but
-its difference bias is 0.03071 nats at \(n=1{,}000\). Thus
+regime. Under different skew, the difference bias at \(n=1{,}000\)
+is 0.03071 nats. Thus
 \begin{equation}
  \E(\Deltahat)\approx-0.01+0.03071=0.02071\text{ nats}.
  \label{eq:redesign-alternative-bias-shift}

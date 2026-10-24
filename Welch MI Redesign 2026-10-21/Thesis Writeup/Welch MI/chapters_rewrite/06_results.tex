@@ -73,20 +73,22 @@ the population first-order formula.
 
 The estimated component degrees of freedom can fall further below the
 sampling-moment target than the population first-order values suggest.
-At A, the mean for the \(P\) component is about 6.52 against a moment
-target of 14.81, or
+At setting A (uniform \(4\times4\), \(n_P=n_Q=20\)), the mean for the
+\(P\) component is about 6.52 against a moment target of 14.81, or
 44\% of the target. In the \(16\times16\), \(n=1{,}000\) same- and
 different-skew cases, the corresponding ratios range from 55\% to 60\%.
 All 100,000 component estimates are included in these comparisons.
-At C, the ratios are about 99\%. The bottom-row dashed curves expose
-this sample-estimation error alongside the population approximation
-error; the moment target itself does not guarantee an exact Student
-\(t\) distribution for the test statistic.
+At C (different-skew \(4\times4\), \(n_P=n_Q=10{,}000\)), the ratios
+are about 99\%. The bottom-row dashed curves expose this
+sample-estimation error alongside the population approximation error;
+the moment target itself does not guarantee an exact Student \(t\)
+distribution for the test statistic.
 
 \subsection{Behaviour near independence}
 
 Near independence, quadratic sampling terms contribute substantially to
-\(\Vhat\). At MI 0.0001 and \(n=1{,}000\), the local calculation in
+\(\Vhat\). For \(4\times4\) different-skew populations at common MI
+0.0001 and \(n=1{,}000\), the local calculation in
 Appendix~\ref{sec:independence-boundary} predicts \(n\E\Vhat=9.2\)
 for each population. The observed value for \(P\) is 9.158. Its mean
 estimated component degrees of freedom are 4.86, close to the local
@@ -259,18 +261,20 @@ matching null rejection.
 
 \subsection{Power after empirical null calibration}
 
-Calibrating at common MI 0.02 gives approximately 5\% rejection on
-independent samples from that null population. The achieved rates range
-from 4.93\% to 4.99\% across A--C and the four rules. Wald and the
-fixed moment reference have identical calibrated decisions because
+The lower null sets both population MI values to 0.02 nats. After
+calibration, rejection rates on independent null samples range from
+4.93\% to 4.99\% across A--C and the four rules. Wald and the fixed
+moment reference have identical calibrated decisions because
 both order samples by \(|T|\). Appendix Figure~\ref{fig:redesign-calibrated-power}
 shows the full curves under this lower-null calibration.
 
 
 
-The power gain depends on which null population supplies the cutoff. Table~\ref{tab:redesign-calibration-sensitivity}
-holds each alternative fixed and compares lower- and upper-null
-calibration. At A and two null SDs, the gain over Wald changes from
+The power gain depends on which null population supplies the cutoff.
+The upper null sets both MI values to the fixed alternative's larger MI.
+Table~\ref{tab:redesign-calibration-sensitivity} holds each alternative
+fixed and compares lower- and upper-null calibration. At A and two null
+SDs, the gain over Wald changes from
 3.58 percentage points to a loss of 0.76 points. At B and four SDs,
 a 3.92-point gain becomes a 0.39-point loss. A at four SDs retains a
 small positive estimate whose interval includes zero, while B at two
@@ -287,8 +291,8 @@ well within the one-percentage-point tolerance.
 \end{table}
 
 Brackets give paired 95\% bootstrap intervals including uncertainty from
-fitting the cutoffs. The lower null has common MI 0.02; the upper null
-has the MI in the second column. Appendix~\ref{sec:calibration-sensitivity-results}
+fitting the cutoffs. The second column gives the common MI of the upper
+null. \mbox{Appendix~\ref{sec:calibration-sensitivity-results}}
 reports the cross-null rates and full power tables. The two checks do
 not establish control over every population satisfying equal MI.
 
@@ -329,7 +333,8 @@ comparison of month--purchase MI between new and returning visitors
 A larger MI means that the month provides more information about whether
 a session ends in a purchase. A second comparison uses the weekend
 indicator instead of month to examine whether its MI with purchasing
-differs between the same visitor groups.
+differs between the same visitor groups. This application was selected
+from an initial exploration of six comparisons across three public datasets.
 
 The dataset contains 12,330 sessions, with each session belonging to a
 different user according to the source documentation \citep{sakar2018}.
@@ -392,10 +397,8 @@ The corrected difference is \(-0.013563\) nats, with a standard error of
 \end{equation}
 With 26.79 estimated degrees of freedom, the Student \(t\) distribution gives
 a larger p-value than the standard normal distribution, but both tests
-reject equal month--purchase MI for new and returning visitors. This
-application was selected from an initial exploration
-of six comparisons across three public datasets. Accounting for all six
-comparisons with Holm's multiple-testing adjustment \citep{holm1979}
+reject equal month--purchase MI for new and returning visitors. Accounting
+for all six comparisons with Holm's multiple-testing adjustment \citep{holm1979}
 gives month p-values of 0.000189 for Normal Wald and 0.00149 for Expanded
 Welch, so the conclusion remains unchanged.
 Table~\ref{tab:application-holm} lists all six comparisons and their raw
