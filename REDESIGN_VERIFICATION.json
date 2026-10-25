@@ -1,5 +1,5 @@
 {
-  "completed": "2026-10-25",
+  "completed": "2026-10-26",
   "evaluation_settings": 366,
   "fitting_settings": 186,
   "pairs_per_setting": 100000,
@@ -15,11 +15,11 @@
   "isolated_bundled_tests": 185,
   "independently_reconstructed_pairs": 4512,
   "original_files_verified_unchanged": 30042,
-  "pdf_pages": 99,
+  "pdf_pages": 102,
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "1c7d14342786f4e0a64b52569a001832a8688d290fa3cd701f9464d2535ffc82",
+  "pdf_sha256": "fa66c3a67604ff3216db91787e13ba61f5c99787ff5f59e6fd741226b3a139aa",
   "isolated_bundled_test_breakdown": {
     "experiment": 141,
     "estimator": 27,
@@ -41,10 +41,11 @@
     "after_chapter5_exposition_revision": 25,
     "after_section_5_1_trim": 25,
     "after_chapter6_readability_revision": 25,
-    "after_chapter6_structure_terminology": 26
+    "after_chapter6_structure_terminology": 26,
+    "after_results_display_review": 28
   },
   "base_total_pairs": 55200000,
-  "main_text_pages": 61,
+  "main_text_pages": 63,
   "calibration_sensitivity": {
     "fitting_settings": 6,
     "evaluation_settings": 6,
@@ -659,5 +660,91 @@
     "delivery_check_passed": true,
     "experiments_or_bootstrap_rerun": false,
     "scientific_test_suite_rerun": false
+  },
+  "chapter6_simulation_repetition_wording": {
+    "date": "2026-10-26",
+    "scope": "Replace the opening simulation-repetition paragraph with the exact reader-approved wording.",
+    "changed_physical_pages": [
+      51
+    ],
+    "pdf_pages": 99,
+    "other_pdf_page_text_unchanged": true,
+    "latex_warnings": [],
+    "rendered_and_inspected_physical_pages": [
+      51
+    ],
+    "source_archive_build_passed": true,
+    "source_archive_pdf_text_identical": true,
+    "pages": 99,
+    "warnings": [],
+    "delivery_check_passed": true
+  },
+  "results_display_revision": {
+    "date": "2026-10-26",
+    "review": "Thesis Writeup/Welch MI/notes/RESULTS_DISPLAY_REVIEW_2026-10-26.md",
+    "preserved_snapshot": "Thesis Writeup/Welch MI/archive/before_results_display_revision_2026-10-26.zip",
+    "scope": "All results subsections in Chapter 6 and sections in Appendix C",
+    "moment_figure_split": true,
+    "calibrated_power_figure_moved_into_main_results": true,
+    "new_main_tables": [
+      "moment ranges",
+      "null-grid classification",
+      "shared-estimator diagnostics",
+      "stronger common MI",
+      "association construction",
+      "sample allocation"
+    ],
+    "new_appendix_tables": [
+      "scaled mean-error ranges",
+      "wrong-direction rejection counts"
+    ],
+    "existing_figure_assets_and_numerical_analyses_unchanged": true,
+    "scientific_evidence_files_verified_unchanged": 11878,
+    "displayed_equations_and_citation_sequences_preserved": true,
+    "other_chapters_and_appendices_unchanged": true,
+    "before_pdf_pages": 99,
+    "after_pdf_pages": 102,
+    "before_main_text_pages": 61,
+    "after_main_text_pages": 63,
+    "before_chapter6_pages": 14,
+    "after_chapter6_pages": 16,
+    "appendix_c_pages": 6,
+    "additional_list_of_tables_pages": 1,
+    "rendered_and_inspected_physical_pages": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97
+    ],
+    "thesis_consistency_tests_passed": 5,
+    "packaging_tests_passed": 8,
+    "source_archive_build_passed": true,
+    "source_archive_pdf_text_identical": true,
+    "delivery_check_passed": true,
+    "experiments_or_bootstrap_rerun": false
   }
 }

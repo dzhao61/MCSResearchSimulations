@@ -7,9 +7,10 @@ degrees of freedom, then compares its false-positive rates and power with
 Normal Wald. Supporting simulations and the online shopping application
 examine how the findings extend to other settings.
 
-Each evaluation setting uses 100,000 simulation repetitions. Each repetition
-draws one count table from \(P\) and an independent count table from \(Q\),
-then applies both tests to those same data.
+One simulation repetition consists of independently drawing one count table
+from \(P\) and one from \(Q\). Normal Wald and Expanded Welch are both
+applied to the same two sampled tables in that repetition. Each evaluation
+setting uses 100,000 repetitions.
 
 \section{Accuracy of the variance approximations}
 
@@ -54,22 +55,41 @@ in Chapter~\ref{chap:expanded}. We compare each prediction with the
 corresponding moment observed across repetitions, and repeat the checks
 for \(Q\). A ratio of one indicates agreement.
 
-The two predictions differ in accuracy. At \(n=1{,}000\) and common
-MI 0.02 nats, \(\tau^2(P)/n_P\) and \(\tau^2(Q)/n_Q\), divided by the
-corresponding observed sampling variances, give ratios from 0.710 to
-0.996 across all table sizes and margin regimes. In contrast, the observed
-means of \(\Vhat(P)\) and \(\Vhat(Q)\), divided by \(V(P)\) and
-\(V(Q)\), give ratios from 1.023 to 4.571. Thus the first-order
-calculation can describe the variation of \(\Vhat(P)\) reasonably well
-while substantially underestimating its average value, particularly for
-larger tables.
+Figure~\ref{fig:redesign-moments} shows the different-skew populations
+at common MI 0.02 nats. The top row divides the observed mean of
+\(\Vhat(P)\) by \(V(P)\), and likewise for \(Q\). The bottom row
+divides each prediction of \(\Var\{\Vhat(P)\}\) by its observed value:
+solid curves use \(\tau^2(P)/n_P\), while dashed curves use the average
+of \(\widehat\tau^2(P)/n_P\). The latter replace population probabilities
+by sample proportions. Shading gives approximate 95\% Monte Carlo
+intervals around the solid curves.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_moment_predictions_different_skew.pdf}
+\caption{Mean and sampling-variance ratios under different-skew margins.}
+\label{fig:redesign-moments}
+\end{figure}
 
-Increasing sample size improves both approximations. At \(n=50{,}000\),
-the sampling-variance ratios across the same broad grid lie between
-0.974 and 1.009, while mean ratios range from 1.000 to 1.091. The
-experimental supplement provides the companion uniform and same-skew plots.
+Table~\ref{tab:redesign-moment-ranges} gives the ranges across all four
+table sizes, all three margin regimes and both populations at common
+MI 0.02 nats, using the same ratios.
 
+\begin{table}[H]
+\centering
+\caption{Approximation ratios across table sizes and margin regimes.}
+\label{tab:redesign-moment-ranges}
+\input{figures_rewrite/focused_redesign_moment_ranges}
+\end{table}
+
+At \(n=1{,}000\), the first-order calculation can describe
+\(\Var\{\Vhat(P)\}\) reasonably well while substantially
+underestimating \(\E\{\Vhat(P)\}\), particularly for larger tables.
+Increasing sample size improves both approximations: at \(n=50{,}000\),
+both sets of ratios are close to one. The experimental supplement
+provides the companion uniform and same-skew plots.
+
+\FloatBarrier
 \subsection{Consequences for the degrees of freedom}
 
 Equation~\eqref{eq:design-moment-target} defines
@@ -79,23 +99,17 @@ calculated using the population first-order approximations, and
 \(\widehat\nu_P\), estimated from each sampled table. Their differences show how the moment approximations and the
 substitution of sample proportions affect the degrees of freedom.
 
-Figure~\ref{fig:redesign-moments} shows the different-skew populations
-at common MI 0.02 nats. The top row shows the observed mean relative to
-\(V(P)\) or \(V(Q)\). The middle row compares the observed sampling
-variance with two predictions: the solid curves use \(\tau^2(P)/n_P\)
-and its \(Q\) counterpart, while the dashed curves use the average of
-\(\widehat\tau^2(P)/n_P\) and its \(Q\) counterpart. The latter replace
-population probabilities by sample proportions. The bottom row divides \(\nu_P\) (solid) and the mean
-\(\widehat\nu_P\) (dashed) by \(\nu_{P,\mathrm{mom}}\), and likewise
-for \(Q\). Dashed degrees-of-freedom curves are shown only when all
-component estimates are positive and finite. Shading gives approximate 95\% Monte Carlo intervals around the
-solid curves.
+Figure~\ref{fig:redesign-component-df} divides \(\nu_P\) (solid) and
+the mean \(\widehat\nu_P\) (dashed) by \(\nu_{P,\mathrm{mom}}\),
+and likewise for \(Q\). Dashed curves are shown only when all component
+estimates are positive and finite. Shading gives approximate 95\% Monte
+Carlo intervals around the solid curves.
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth,height=.78\textheight,keepaspectratio]{focused_redesign_moments_different_skew.pdf}
-\caption{Component approximation ratios under different-skew margins.}
-\label{fig:redesign-moments}
+\includegraphics[width=\textwidth]{focused_redesign_component_df_different_skew.pdf}
+\caption{Component degrees of freedom relative to moment targets under different-skew margins.}
+\label{fig:redesign-component-df}
 \end{figure}
 
 Underestimating \(\E\{\Vhat(P)\}\) lowers \(\nu_P\) relative to
@@ -111,7 +125,7 @@ first-order values, 15.30 and 13.61, fall below the moment targets,
 21.03 and 18.14. Table~\ref{tab:variance-stability} gives the component
 values; Appendix~\ref{sec:moment-reference-details} gives the algebra.
 
-\begin{table}[!htbp]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
@@ -132,18 +146,20 @@ all 100,000 are included in each shown row. ``Moment df'' gives
 gives \(\nu_P\) or \(\nu_Q\).
 
 Estimating the component degrees of freedom from each sample can produce
-a further shortfall from the moment target. At setting A (uniform
+a further shortfall from the moment target
+(Table~\ref{tab:redesign-component-spread}). At setting A (uniform
 \(4\times4\), \(n_P=n_Q=20\)), the mean for the \(P\) component is
 about 6.52 against a moment target of 14.81, or 44\% of the target.
 In the \(16\times16\), \(n=1{,}000\) same- and different-skew cases,
 the corresponding ratios range from 55\% to 60\%. All 100,000 component
 estimates are included in these comparisons. At C (different-skew
 \(4\times4\), \(n_P=n_Q=10{,}000\)), the ratios are about 99\%.
-The bottom-row dashed curves show this additional discrepancy when
+The dashed curves in Figure~\ref{fig:redesign-component-df} show this additional discrepancy when
 population probabilities in the first-order formula are replaced by
 sample proportions. The moment target itself does not guarantee an
 exact Student \(t\) distribution for the test statistic.
 
+\FloatBarrier
 \subsection{Behaviour near independence}
 
 As MI approaches zero, \(V(P)\) and \(V(Q)\) become small. Terms
@@ -165,7 +181,8 @@ accurately even though that mean remains below the moment target.
 \label{fig:redesign-a4}
 \end{figure}
 
-The predictions \(\tau^2(P)/n_P\) and \(\widehat\tau^2(P)/n_P\)
+Table~\ref{tab:variance-stability} also reports the predictions near
+independence. The predictions \(\tau^2(P)/n_P\) and \(\widehat\tau^2(P)/n_P\)
 have errors in opposite directions near independence, as do their
 \(Q\) counterparts. At the smallest MI target in
 Figure~\ref{fig:redesign-a4}, \(\tau^2(P)/n_P\) and \(\tau^2(Q)/n_Q\)
@@ -195,14 +212,27 @@ falls below the nominal 5\% level.
 
 Expanded Welch improves false-positive rates in selected settings where
 Normal Wald rejects too often. In others, it further lowers already
-conservative rates. Across the 120 settings at common MI 0.02 nats,
-Expanded Welch moves rejection closer to 5\% in \RedesignToward{}
-settings and farther away in \RedesignAway{}, using changes in distance
+conservative rates. Table~\ref{tab:redesign-null-grid} summarises the
+120 settings at common MI 0.02 nats, using changes in distance from 5\%
 greater than \RedesignGridTolerance{} percentage points. All
 \RedesignToward{} improvements occur with Wald above 5\%;
 \RedesignAwayBelow{} of the \RedesignAway{} deteriorations occur with
-Wald below 5\%. The remaining \RedesignWithin{} settings fall within
-this tolerance.
+Wald below 5\%.
+
+\begin{table}[!htbp]
+\centering
+\caption{Change in distance from 5\% rejection across the broad null grid.}
+\label{tab:redesign-null-grid}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Expanded Welch relative to Normal Wald & Settings\\
+\midrule
+Closer to 5\% & \RedesignToward{}\\
+Farther from 5\% & \RedesignAway{}\\
+Change within the tolerance & \RedesignWithin{}\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 Reported rejection rates divide valid rejections by all simulation
 repetitions, counting invalid outputs as non-rejections. Brackets around
@@ -246,22 +276,23 @@ Difference bias measures how far the average \(\Deltahat\) lies from
 with the observed \(\Var(\Deltahat)\); a value below one indicates
 underestimation, and a value above one indicates overestimation.
 These diagnostics distinguish a shifted estimated difference from an
-inaccurate standard error.
+inaccurate standard error. Table~\ref{tab:redesign-shared-estimates}
+compares the focus settings and the sparse \(16\times16\) cases at
+\(n=1{,}000\). The full diagnostics, including the larger-sample
+\(16\times16\) cases, remain in Table~\ref{tab:redesign-case-diagnostics}.
 
-The selected small-sample improvements occur with different estimation
-errors. At the uniform \(4\times4\) setting A, Expanded Welch gives
-4.90\% rejection compared with 8.35\% for Wald. At the \(8\times8\)
-different-skew setting B, the rates are 5.52\% and 7.47\%, respectively.
-Expanded Welch is closer to 5\% at B but still rejects too often.
+\begin{table}[!htbp]
+\centering
+\caption{Bias and standard-error accuracy at selected equal-MI settings.}
+\label{tab:redesign-shared-estimates}
+\input{figures_rewrite/focused_redesign_shared_estimates}
+\end{table}
+
+Expanded Welch brings rejection close to 5\% at A. At B it also
+reduces rejection, although the rate remains above 5\%.
 Table~\ref{tab:redesign-case-rates} compares these settings with the
 larger-sample and sparse-table cases. Both tests and the fixed moment
-reference are valid in every simulation repetition in all seven settings.
-
-Both tests over-reject at stronger common MI: in A at
-\RedesignUpperAMI{} nats, Wald rejects \RedesignUpperAWaldRate{} and
-Expanded Welch rejects \RedesignUpperAExpandedRate{} of repetitions.
-In B at \RedesignUpperBMI{} nats, the rates are
-\RedesignUpperBWaldRate{} and \RedesignUpperBExpandedRate{}, respectively.
+reference are valid in all 100,000 repetitions at each of these seven settings.
 
 \begin{table}[!htbp]
 \centering
@@ -272,21 +303,31 @@ In B at \RedesignUpperBMI{} nats, the rates are
 \input{figures_rewrite/focused_redesign_cases_rates}
 \end{table}
 
-At A, difference bias is negligible, but the average \(\SEhat^2\)
-is only 0.827 of the observed \(\Var(\Deltahat)\), so \(\SEhat\)
-understates the variation of \(\Deltahat\). At B, difference bias is
-positive and the average \(\SEhat^2\) exceeds the observed
-\(\Var(\Deltahat)\). Expanded Welch lowers false positives in
-both cases, although the shared estimates have different errors. At
-the larger-sample setting C, bias is negligible and the average \(\SEhat^2\) is 1.010 times the
-observed \(\Var(\Deltahat)\). Table~\ref{tab:redesign-case-diagnostics} gives the numerical
-diagnostics and degrees-of-freedom comparisons in the appendix.
+At A, difference bias is negligible, but \(\SEhat\) understates the
+variation of \(\Deltahat\). At B, \(\Deltahat\) is biased upwards
+and the average \(\SEhat^2\) exceeds the observed
+\(\Var(\Deltahat)\). Expanded Welch lowers false positives in both
+cases despite these different estimation errors. At C, bias is negligible
+and the variance ratio is close to one. Table~\ref{tab:redesign-case-diagnostics}
+gives the full diagnostics and degrees-of-freedom comparisons.
+
+Both tests also over-reject at stronger common MI. Table~\ref{tab:redesign-stronger-null}
+retains A's and B's margins, table sizes and sample sizes while increasing
+the common MI. Rates and their pointwise 95\% intervals are percentages
+of all 100,000 repetitions.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{False-positive rates at stronger common MI.}
+\label{tab:redesign-stronger-null}
+\input{figures_rewrite/focused_redesign_stronger_null}
+\end{table}
 
 Changing the degrees of freedom does not resolve the sparse-table
 failure. At \(16\times16\), different skew and \(n=1{,}000\), the
-difference bias is about 0.030 nats, or 2.06 observed SDs. Rejection ranges
-from 24.8\% to 26.0\% across both tests and the fixed moment reference;
-the reference rate is 25.3\% despite its independently fitted moments.
+difference bias is about 0.030 nats, or 2.06 observed SDs. Both tests and the fixed moment reference reject far too often;
+independently fitting the denominator moments does not resolve the bias.
 Under the equal-MI null, the estimated difference is centred at
 \begin{equation}
  \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
@@ -298,8 +339,8 @@ population difference is zero.
 
 Under equal MI, the same-skew populations have identical tables. With
 equal sample sizes, their expected MI estimation biases therefore cancel
-in the difference. Difference bias is negligible, but the average \(\SEhat^2\) is
-1.93 times the observed \(\Var(\Deltahat)\); the three rejection rates lie between 0.53\% and 0.60\%.
+in the difference. The average \(\SEhat^2\) exceeds the observed
+\(\Var(\Deltahat)\), and all three rejection rates are far below 5\%.
 The matched populations distinguish rejection driven by a large
 difference bias from conservative behaviour when that bias cancels.
 At \(n=10{,}000\), both skew regimes have much smaller estimation errors
@@ -359,6 +400,7 @@ repetitions to estimate their power difference. These are paired
 comparisons: the pairing is between methods applied to the same data.
 The calibrated comparison then assesses power after matching null rejection.
 
+\FloatBarrier
 \subsection{Power after empirical null calibration}
 
 Calibration changes the rejection threshold while retaining the same
@@ -377,8 +419,15 @@ the cutoff. With both population MI values set to 0.02 nats, the lower-null
 calibration gives rejection rates of 4.93\% to 4.99\% on independent null
 samples across A--C for both tests and the fixed reference. Wald and the
 fixed moment reference have identical calibrated decisions.
-Appendix Figure~\ref{fig:redesign-calibrated-power} shows the full curves
+Figure~\ref{fig:redesign-calibrated-power} shows the full curves
 under this lower-null calibration.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_power_calibrated.pdf}
+\caption{Power after calibration at common MI 0.02; bands show bootstrap uncertainty.}
+\label{fig:redesign-calibrated-power}
+\end{figure}
 
 Table~\ref{tab:redesign-calibration-sensitivity} compares lower- and
 upper-null calibration while holding each alternative fixed. At A and two
@@ -413,32 +462,51 @@ distortion of the power curve.
 
 \section{Association pattern and sample allocation}
 
-Two supporting comparisons ask whether the results depend on where
-association occurs in the table or on how observations are allocated
-between \(P\) and \(Q\). The first replaces copying by a probability
-transfer within four cells while preserving margins and target MI.
-The second keeps \(P\), \(Q\) and the total sample size fixed while
+The construction comparison replaces copying by a probability transfer
+within four cells, preserving margins and target MI. The allocation
+comparison keeps \(P\), \(Q\) and the total sample size fixed while
 changing \(n_P\) and \(n_Q\).
 
-Concentrating dependence in four cells reproduces the main sparse-table
-failure. At \(16\times16\), \(n=1{,}000\) and different skew, the
-null difference bias is 0.03155 nats, compared with 0.02985 under copying.
-Both tests and the fixed moment reference reject far too often. With
-same-skew populations, expected difference bias cancels and rejection
-remains conservative.
+Table~\ref{tab:redesign-construction-summary} compares the two association
+constructions at \(16\times16\), \(n_P=n_Q=1{,}000\) and common MI
+0.02 nats. Rejection rates are percentages.
 
-In the different-skew \(4\times4\) comparison, allocating fewer
-observations to \(Q\) lowers Expanded Welch's power. Assigning only 400
-of the 2,000 observations to \(Q\) increases the observed SD of
-\(\Deltahat\) from 0.01173
-to 0.01611 nats. At the 0.01-nat alternative, power falls from 10.26\%
-under equal allocation to 3.42\%. Expanded Welch's median degrees of freedom also
-fall, increasing the rejection cutoff. Reversing which population has
-fewer observations changes the result because the two populations have
-different \(V(P)\) and \(V(Q)\) and residual MI estimation biases.
-The experimental supplement
-reports the complete construction and allocation comparisons.
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Bias and false-positive rates under two association constructions.}
+\label{tab:redesign-construction-summary}
+\input{figures_rewrite/focused_redesign_construction_summary}
+\end{table}
 
+Under different-skew margins, both association constructions leave
+\(\Deltahat\) substantially biased, and all three rejection rates remain
+far above 5\%. With same-skew populations, expected difference bias
+cancels and rejection remains conservative.
+
+Table~\ref{tab:redesign-allocation-summary} compares allocations for
+different-skew \(4\times4\) populations with \(I(P)=0.02\) and
+\(I(Q)=0.03\) nats. The total sample size is 2,000; power is reported as a percentage.
+
+\begin{table}[!htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Sampling variation and power under different sample allocations.}
+\label{tab:redesign-allocation-summary}
+\input{figures_rewrite/focused_redesign_allocation_summary}
+\end{table}
+
+Giving the smaller sample to \(Q\) increases the observed SD of
+\(\Deltahat\) and reduces the median degrees of freedom, increasing the
+rejection cutoff. Expanded Welch's power is lower than under equal
+allocation. Reversing which population has fewer observations changes
+the result because \(P\) and \(Q\) have different \(V(P)\), \(V(Q)\)
+and residual MI estimation biases. The experimental supplement reports
+the complete construction and allocation comparisons.
+
+\FloatBarrier
 \section{Application to online shopping data}
 \label{sec:shoppers-application}
 
