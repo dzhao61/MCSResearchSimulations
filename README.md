@@ -2,7 +2,7 @@
 
 The revised Welch MI project became the main version on 24 October 2026.
 
-- Read `Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf` (98 pages).
+- Read `Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf` (99 pages).
 - Edit `Thesis Writeup/Welch MI/main.tex` and its included sources; the compiled manuscript is `main.pdf`.
 - Use `WelchSatterthwaiteMI/` for the current experiment and saved evidence.
 - `DifferentialMI/` supplies the estimator code; `PracticalMIExploration/` supplies the application.

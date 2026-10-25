@@ -2,33 +2,94 @@
 \label{chap:results}
 \input{figures_rewrite/focused_redesign_reporting_values}
 
-Each evaluation setting uses 100,000 sampled pairs. The nominal rates
-divide valid rejections by all attempts, and the plots show validity
-separately. Brackets around rates and shading in rejection plots give
-pointwise 95\% intervals. Intervals for the fixed moment reference
-condition on its independently fitted degrees of freedom.
+This chapter checks the approximations used to choose Expanded Welch's
+degrees of freedom, then compares its false-positive rates and power with
+Normal Wald. Supporting simulations and the online shopping application
+examine how the findings extend to other settings.
+
+Each evaluation setting uses 100,000 simulation repetitions. Each repetition
+draws one count table from \(P\) and an independent count table from \(Q\),
+then applies both tests to those same data.
 
 \section{Accuracy of the variance approximations}
 
-\subsection{Mean and sampling variance}
+For a fixed population table \(P\) and sample size \(n_P\), each
+repetition produces a new \(\Vhat(P)\). We examine its average value,
+\(\E\{\Vhat(P)\}\), and its variation between repetitions,
+\(\Var\{\Vhat(P)\}\). These are the two moments needed for the component
+degrees of freedom. Table~\ref{tab:results-variance-quantities} distinguishes
+them from the variation of the MI difference examined later.
 
-The population first-order approximations can predict the sampling variance of
-\(\Vhat\) reasonably accurately while underestimating its sampling mean.
-At \(n=1{,}000\), the sampling-variance prediction divided by the
-observed variance ranges from 0.710 to 0.996 across all table sizes and
-margin regimes. Over the same grid, the observed mean divided by \(V\)
-ranges from 1.023 to 4.571. The mean discrepancy is particularly large
-for the larger tables.
+\begin{table}[H]
+\centering
+\caption{Variance quantities used in the results.}
+\label{tab:results-variance-quantities}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Quantity & Meaning\\
+\midrule
+\(V(P)\) & Population variance of pointwise MI; \(V(P)/n_P\)
+approximates \(\Var\{\Ihat(P)\}\).\\
+\addlinespace
+\(\Vhat(P)\) & Estimate of \(V(P)\) from one sampled count table.\\
+\addlinespace
+\(\Var\{\Vhat(P)\}\) & Variation of \(\Vhat(P)\) across repeated samples.\\
+\addlinespace
+\(\SEhat^2\) & Estimate of \(\Var(\Deltahat)\), calculated as
+\(\Vhat(P)/n_P+\Vhat(Q)/n_Q\).\\
+\addlinespace
+\(\Var(\Deltahat)\) & Variation of \(\Deltahat\) across repeated samples;
+estimated from the simulation to assess \(\SEhat^2\).\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Mean and sampling-variance predictions}
+
+Equation~\eqref{eq:redesign-moment-approximations} predicts
+\(\E\{\Vhat(P)\}\approx V(P)\) and
+\(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\), where \(\tau^2(P)\)
+measures the variability of the observation-level sensitivities derived
+in Chapter~\ref{chap:expanded}. We compare each prediction with the
+corresponding moment observed across repetitions, and repeat the checks
+for \(Q\). A ratio of one indicates agreement.
+
+The two predictions differ in accuracy. At \(n=1{,}000\) and common
+MI 0.02 nats, \(\tau^2(P)/n_P\) and \(\tau^2(Q)/n_Q\), divided by the
+corresponding observed sampling variances, give ratios from 0.710 to
+0.996 across all table sizes and margin regimes. In contrast, the observed
+means of \(\Vhat(P)\) and \(\Vhat(Q)\), divided by \(V(P)\) and
+\(V(Q)\), give ratios from 1.023 to 4.571. Thus the first-order
+calculation can describe the variation of \(\Vhat(P)\) reasonably well
+while substantially underestimating its average value, particularly for
+larger tables.
+
+
+Increasing sample size improves both approximations. At \(n=50{,}000\),
+the sampling-variance ratios across the same broad grid lie between
+0.974 and 1.009, while mean ratios range from 1.000 to 1.091. The
+experimental supplement provides the companion uniform and same-skew plots.
+
+\subsection{Consequences for the degrees of freedom}
+
+Equation~\eqref{eq:design-moment-target} defines
+\(\nu_{P,\mathrm{mom}}\) from \(\E\{\Vhat(P)\}\) and
+\(\Var\{\Vhat(P)\}\). We compare this target with \(\nu_P\),
+calculated using the population first-order approximations, and
+\(\widehat\nu_P\), estimated from each sampled table. Their differences show how the moment approximations and the
+substitution of sample proportions affect the degrees of freedom.
 
 Figure~\ref{fig:redesign-moments} shows the different-skew populations
-at common MI 0.02 nats. The top row compares the mean of \(\Vhat\)
-with \(V\). In the middle and bottom rows, solid curves use the
-population first-order predictions. Dashed curves use the mean plug-in
-sampling-variance prediction in the middle row and the mean estimated
-component degrees of freedom in the bottom row. The latter are shown
-only when all component estimates are positive and finite. A ratio of
-one indicates agreement; shading gives approximate 95\% Monte Carlo
-intervals around the solid curves.
+at common MI 0.02 nats. The top row shows the observed mean relative to
+\(V(P)\) or \(V(Q)\). The middle row compares the observed sampling
+variance with two predictions: the solid curves use \(\tau^2(P)/n_P\)
+and its \(Q\) counterpart, while the dashed curves use the average of
+\(\widehat\tau^2(P)/n_P\) and its \(Q\) counterpart. The latter replace
+population probabilities by sample proportions. The bottom row divides \(\nu_P\) (solid) and the mean
+\(\widehat\nu_P\) (dashed) by \(\nu_{P,\mathrm{mom}}\), and likewise
+for \(Q\). Dashed degrees-of-freedom curves are shown only when all
+component estimates are positive and finite. Shading gives approximate 95\% Monte Carlo intervals around the
+solid curves.
 
 \begin{figure}[!htbp]
 \centering
@@ -37,13 +98,8 @@ intervals around the solid curves.
 \label{fig:redesign-moments}
 \end{figure}
 
-Increasing sample size improves both approximations. At \(n=50{,}000\),
-the sampling-variance ratios across the same broad grid lie between
-0.974 and 1.009, while mean ratios range from 1.000 to 1.091. The
-experimental supplement provides the companion uniform and same-skew plots.
-
-The remaining mean error lowers the population first-order degrees of
-freedom relative to the sampling-moment target. For different-skew
+Underestimating \(\E\{\Vhat(P)\}\) lowers \(\nu_P\) relative to
+\(\nu_{P,\mathrm{mom}}\). For different-skew
 \(4\times4\) populations at \(n=1{,}000\) and MI 0.02, the
 sampling-variance ratios are 0.970 for \(P\) and 0.967 for \(Q\).
 The observed means are \(1.190V(P)\) and \(1.174V(Q)\). The first-order
@@ -64,12 +120,16 @@ values; Appendix~\ref{sec:moment-reference-details} gives the algebra.
 \input{figures_rewrite/focused_redesign_components}
 \end{table}
 
-In the table, mean ratio is \(\E\Vhat/V\); the next two columns divide
-the population and mean plug-in sampling-variance predictions by the
-observed sampling variance of \(\Vhat\). Mean df averages the positive
-finite component estimates; all 100,000 estimates are included in each
-shown row. Moment df uses the actual sampling moments, while FO df uses
-the population first-order formula.
+In the table, ``Mean ratio'' is the observed mean of \(\Vhat(P)\)
+divided by \(V(P)\), or the corresponding ratio for \(Q\).
+``Pop. var.'' and ``Plug-in var.'' divide the population prediction
+\(\tau^2(P)/n_P\) and the average sample-based prediction
+\(\widehat\tau^2(P)/n_P\) by the observed variance of \(\Vhat(P)\),
+with the same calculations for \(Q\). ``Mean df'' averages
+\(\widehat\nu_P\) or \(\widehat\nu_Q\) over positive finite estimates;
+all 100,000 are included in each shown row. ``Moment df'' gives
+\(\nu_{P,\mathrm{mom}}\) or \(\nu_{Q,\mathrm{mom}}\), while ``FO df''
+gives \(\nu_P\) or \(\nu_Q\).
 
 Estimating the component degrees of freedom from each sample can produce
 a further shortfall from the moment target. At setting A (uniform
@@ -86,10 +146,12 @@ exact Student \(t\) distribution for the test statistic.
 
 \subsection{Behaviour near independence}
 
-Near independence, quadratic sampling terms contribute substantially to
-\(\Vhat\). For \(4\times4\) different-skew populations at common MI
+As MI approaches zero, \(V(P)\) and \(V(Q)\) become small. Terms
+quadratic in the sampling error can then contribute substantially to
+\(\Vhat(P)\) and \(\Vhat(Q)\), so the first-order predictions need
+not remain accurate. For \(4\times4\) different-skew populations at common MI
 0.0001 and \(n=1{,}000\), the local calculation in
-Appendix~\ref{sec:independence-boundary} predicts \(n\E\Vhat=9.2\)
+Appendix~\ref{sec:independence-boundary} predicts \(n\E\{\Vhat(P)\}=9.2\)
 for each population; the observed value for \(P\) is 9.158. The mean
 estimated component degrees of freedom for \(P\) are 4.86, close to the local
 prediction 4.6, while the sampling-moment target is about nine. Thus the
@@ -103,24 +165,33 @@ accurately even though that mean remains below the moment target.
 \label{fig:redesign-a4}
 \end{figure}
 
-The population and sample-based first-order sampling-variance predictions
-have errors in opposite directions near independence. At the smallest MI target in
-Figure~\ref{fig:redesign-a4}, the population sampling-variance prediction
-is only about 5\% of the observed value. The mean plug-in prediction is
+The predictions \(\tau^2(P)/n_P\) and \(\widehat\tau^2(P)/n_P\)
+have errors in opposite directions near independence, as do their
+\(Q\) counterparts. At the smallest MI target in
+Figure~\ref{fig:redesign-a4}, \(\tau^2(P)/n_P\) and \(\tau^2(Q)/n_Q\)
+are only about 5\% of the corresponding observed sampling variances.
+The mean sample-based prediction is
 1.97 times the observed value for \(P\) and 2.14 times for \(Q\).
 The quadratic sampling contribution remains substantial, while the
 population first-order degrees of freedom are below 0.1. The shaded band
 shows the fifth--95th percentile range of estimated component degrees of
 freedom, with their mean and median shown separately.
 
-At MI 0.02, the population sampling-variance approximation is much more
-accurate, while the mean plug-in variance predictions remain about
+At MI 0.02, \(\tau^2(P)/n_P\) and \(\tau^2(Q)/n_Q\) are much more
+accurate, while the mean sample-based predictions remain about
 7--8\% above the observed values. The remaining mean error still lowers
 the first-order degrees of freedom relative to the moment target.
 Appendix~\ref{sec:component-diagnostics} reports the mean error across
 MI and margins.
 
 \section{False positives when MI is equal}
+
+We now set \(I(P)=I(Q)\), so every rejection is a false positive.
+Both tests use \(T=\Deltahat/\SEhat\), but Expanded Welch uses a
+cutoff from the Student \(t\) distribution in place of Wald's standard
+normal cutoff. This larger cutoff reduces rejection. Whether that
+reduction improves accuracy depends on whether Wald's rate exceeds or
+falls below the nominal 5\% level.
 
 Expanded Welch improves false-positive rates in selected settings where
 Normal Wald rejects too often. In others, it further lowers already
@@ -133,9 +204,18 @@ greater than \RedesignGridTolerance{} percentage points. All
 Wald below 5\%. The remaining \RedesignWithin{} settings fall within
 this tolerance.
 
+Reported rejection rates divide valid rejections by all simulation
+repetitions, counting invalid outputs as non-rejections. Brackets around
+rates and shading in rejection plots give pointwise 95\% intervals for
+uncertainty from the finite simulation batch. Intervals for the fixed
+moment reference condition on its independently fitted degrees of freedom.
+
 Figures~\ref{fig:redesign-null-uniform} and
 \ref{fig:redesign-null-different} show uniform and different-skew margins,
-with the fixed moment reference as a diagnostic. The lower panels give
+with the fixed moment reference as a diagnostic. Its fixed
+\(\nu_{\mathrm{ref}}\) is fitted from the mean and sampling variance
+of \(\SEhat^2\), as defined in Equation~\eqref{eq:design-fixed-reference}.
+The lower panels give
 the fraction of valid outputs for Normal Wald and Expanded Welch. The
 fixed moment reference shares Wald's validity in these settings. Validity
 is lowest in the smallest samples: across the 120 settings, the minimum
@@ -160,6 +240,14 @@ included counts separately.
 \FloatBarrier
 \subsection{Small-sample improvements and sparse-table failures}
 
+To explain these rejection rates, we examine the two shared estimates.
+Difference bias measures how far the average \(\Deltahat\) lies from
+\(\Delta\). The variance ratio for \(\Deltahat\) compares the average \(\SEhat^2\)
+with the observed \(\Var(\Deltahat)\); a value below one indicates
+underestimation, and a value above one indicates overestimation.
+These diagnostics distinguish a shifted estimated difference from an
+inaccurate standard error.
+
 The selected small-sample improvements occur with different estimation
 errors. At the uniform \(4\times4\) setting A, Expanded Welch gives
 4.90\% rejection compared with 8.35\% for Wald. At the \(8\times8\)
@@ -167,11 +255,11 @@ different-skew setting B, the rates are 5.52\% and 7.47\%, respectively.
 Expanded Welch is closer to 5\% at B but still rejects too often.
 Table~\ref{tab:redesign-case-rates} compares these settings with the
 larger-sample and sparse-table cases. Both tests and the fixed moment
-reference are valid on every sampled pair in all seven settings.
+reference are valid in every simulation repetition in all seven settings.
 
 Both tests over-reject at stronger common MI: in A at
 \RedesignUpperAMI{} nats, Wald rejects \RedesignUpperAWaldRate{} and
-Expanded Welch rejects \RedesignUpperAExpandedRate{} of pairs.
+Expanded Welch rejects \RedesignUpperAExpandedRate{} of repetitions.
 In B at \RedesignUpperBMI{} nats, the rates are
 \RedesignUpperBWaldRate{} and \RedesignUpperBExpandedRate{}, respectively.
 
@@ -184,13 +272,14 @@ In B at \RedesignUpperBMI{} nats, the rates are
 \input{figures_rewrite/focused_redesign_cases_rates}
 \end{table}
 
-At A, difference bias is negligible, but the mean squared standard error
-is only 0.827 of the observed difference variance, so the standard error
-understates sampling variation. At B, difference bias is positive and
-the variance is overestimated. Expanded Welch lowers false positives in
+At A, difference bias is negligible, but the average \(\SEhat^2\)
+is only 0.827 of the observed \(\Var(\Deltahat)\), so \(\SEhat\)
+understates the variation of \(\Deltahat\). At B, difference bias is
+positive and the average \(\SEhat^2\) exceeds the observed
+\(\Var(\Deltahat)\). Expanded Welch lowers false positives in
 both cases, although the shared estimates have different errors. At
-the larger-sample setting C, bias is negligible and the variance ratio is
-1.010. Table~\ref{tab:redesign-case-diagnostics} gives the numerical
+the larger-sample setting C, bias is negligible and the average \(\SEhat^2\) is 1.010 times the
+observed \(\Var(\Deltahat)\). Table~\ref{tab:redesign-case-diagnostics} gives the numerical
 diagnostics and degrees-of-freedom comparisons in the appendix.
 
 Changing the degrees of freedom does not resolve the sparse-table
@@ -209,8 +298,8 @@ population difference is zero.
 
 Under equal MI, the same-skew populations have identical tables. With
 equal sample sizes, their expected MI estimation biases therefore cancel
-in the difference. Difference bias is negligible, but the variance ratio is
-1.93; the three rejection rates lie between 0.53\% and 0.60\%.
+in the difference. Difference bias is negligible, but the average \(\SEhat^2\) is
+1.93 times the observed \(\Var(\Deltahat)\); the three rejection rates lie between 0.53\% and 0.60\%.
 The matched populations distinguish rejection driven by a large
 difference bias from conservative behaviour when that bias cancels.
 At \(n=10{,}000\), both skew regimes have much smaller estimation errors
@@ -221,17 +310,26 @@ shared statistic.
 
 \section{Power at the selected settings}
 
+The power comparison uses A (uniform \(4\times4\), \(n_P=n_Q=20\)),
+B (different-skew \(8\times8\), \(n_P=n_Q=100\)) and
+C (different-skew \(4\times4\), \(n_P=n_Q=10{,}000\)). For each
+setting, \(\sigma_0\) is the independently fitted SD of \(\Deltahat\)
+under \(I(P)=I(Q)=0.02\) nats. We hold \(I(P)=0.02\) and increase
+\(I(Q)\), measuring their separation in units of \(\sigma_0\).
+Nominal power uses each test's usual 5\% cutoff; calibrated power uses
+cutoffs fitted to target 5\% rejection at a specified equal-MI population.
+
 \subsection{Nominal power}
 
 Expanded Welch has lower nominal power than Normal Wald at the selected
 small-sample settings A and B (Table~\ref{tab:redesign-focus-settings}).
 At A, two null SDs correspond to about 0.310 nats: Expanded Welch rejects
-35.9\% of pairs, compared with 41.0\% for Wald.
+35.9\% of repetitions, compared with 41.0\% for Wald.
 Figure~\ref{fig:redesign-power} shows all three focus settings with MI
 differences measured in fitted null standard deviations. The nominal
 comparison includes their different null rejection rates at zero.
 Appendix~\ref{sec:calibration-sensitivity-results} gives numerical rates
-and paired contrasts.
+and differences between methods evaluated on the same simulated data.
 
 \begin{figure}[!htbp]
 \centering
@@ -253,14 +351,26 @@ among rejections in the sparse-table comparisons.
 
 At C, nominal power differences are small. At two null SDs, or about
 0.00635 nats, Wald gives 45.2\% and Expanded Welch gives 44.9\%.
-Expanded Welch's paired loss relative to Wald is 0.30 percentage points,
+Expanded Welch's loss relative to Wald is 0.30 percentage points,
 with a 95\% interval of 0.27--0.34. Table~\ref{tab:redesign-power-contrasts}
-reports paired comparisons at two null SDs for all three focus settings.
-The intervals use the same sampled pairs to estimate the difference
-directly. The calibrated comparison then assesses power after matching
-null rejection.
+reports comparisons at two null SDs for all three focus settings.
+Each interval uses both methods' decisions from the same simulation
+repetitions to estimate their power difference. These are paired
+comparisons: the pairing is between methods applied to the same data.
+The calibrated comparison then assesses power after matching null rejection.
 
 \subsection{Power after empirical null calibration}
+
+Calibration changes the rejection threshold while retaining the same
+\(\Deltahat\), \(\SEhat\) and alternative samples. Independent
+equal-MI simulations fit a threshold for each method, which is then
+held fixed during evaluation. This allows power to be compared after
+matching rejection at the chosen null population.
+
+For an alternative with \(I(P)=0.02\) and \(I(Q)>0.02\), the lower
+null sets both MI values to 0.02, while the upper null sets both to
+the alternative's larger \(I(Q)\). Both retain the alternative's
+margins and sample sizes.
 
 Expanded Welch's power gain depends on which equal-MI population supplies
 the cutoff. With both population MI values set to 0.02 nats, the lower-null
@@ -270,7 +380,6 @@ fixed moment reference have identical calibrated decisions.
 Appendix Figure~\ref{fig:redesign-calibrated-power} shows the full curves
 under this lower-null calibration.
 
-The upper null sets both MI values to the fixed alternative's larger MI.
 Table~\ref{tab:redesign-calibration-sensitivity} compares lower- and
 upper-null calibration while holding each alternative fixed. At A and two
 null SDs, the gain over Wald changes from 3.58 percentage points to a loss
@@ -281,8 +390,8 @@ smaller gain. At C, both calibrations give differences well within the
 one-percentage-point tolerance.
 
 The second column gives the common MI of the upper null. Brackets give
-paired 95\% bootstrap intervals including uncertainty from fitting the
-cutoffs.
+95\% bootstrap intervals for the power differences, preserving the
+shared evaluation data and including uncertainty from fitting the cutoffs.
 
 \begin{table}[!htbp]
 \centering
@@ -304,6 +413,13 @@ distortion of the power curve.
 
 \section{Association pattern and sample allocation}
 
+Two supporting comparisons ask whether the results depend on where
+association occurs in the table or on how observations are allocated
+between \(P\) and \(Q\). The first replaces copying by a probability
+transfer within four cells while preserving margins and target MI.
+The second keeps \(P\), \(Q\) and the total sample size fixed while
+changing \(n_P\) and \(n_Q\).
+
 Concentrating dependence in four cells reproduces the main sparse-table
 failure. At \(16\times16\), \(n=1{,}000\) and different skew, the
 null difference bias is 0.03155 nats, compared with 0.02985 under copying.
@@ -313,12 +429,14 @@ remains conservative.
 
 In the different-skew \(4\times4\) comparison, allocating fewer
 observations to \(Q\) lowers Expanded Welch's power. Assigning only 400
-of the 2,000 observations to \(Q\) increases the observed SD from 0.01173
+of the 2,000 observations to \(Q\) increases the observed SD of
+\(\Deltahat\) from 0.01173
 to 0.01611 nats. At the 0.01-nat alternative, power falls from 10.26\%
 under equal allocation to 3.42\%. Expanded Welch's median degrees of freedom also
 fall, increasing the rejection cutoff. Reversing which population has
 fewer observations changes the result because the two populations have
-different variances and residual biases. The experimental supplement
+different \(V(P)\) and \(V(Q)\) and residual MI estimation biases.
+The experimental supplement
 reports the complete construction and allocation comparisons.
 
 \section{Application to online shopping data}
@@ -359,7 +477,7 @@ MI estimate \citep{miller1955,moddemeijer1989};
 for the weekend tables, it subtracts \(1/(2n)\). Here \(n\) is the
 number of sessions in the relevant visitor group. The estimated
 difference is new-visitor MI minus returning-visitor MI for the same
-predictor--purchase pair. Both tests use this difference and the shared standard error,
+predictor and purchase outcome. Both tests use this difference and the shared standard error,
 with two-sided rejection at the 5\% level.
 
 \begin{table}[H]

@@ -11,6 +11,10 @@ and power compare with those of Normal Wald. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
 being estimated, methods and performance measures.
 
+One observation records an \((X,Y)\) outcome. One simulation repetition
+draws a sample of observations from each population, producing two count
+tables to which both tests are applied.
+
 \section{Setup: Constructing joint distributions with known MI}
 
 Before drawing samples, we construct population probability tables with
@@ -169,14 +173,15 @@ identical tables and distinct tables with equal MI.
 
 \section{RQ1: Checking the variance approximations}
 
-Expanded Welch chooses its degrees of freedom from the mean and sampling
-variance of an estimated variance. To check these quantities, we hold the
+Expanded Welch chooses its component degrees of freedom from
+\(\E\{\Vhat(P)\}\) and \(\Var\{\Vhat(P)\}\), and likewise for \(Q\).
+To check these quantities, we hold the
 population table \(P\) and sample size \(n_P\) fixed, then draw repeated
 count tables. Each draw gives a new \(\Vhat(P)\), which estimates the
 pointwise-MI variance \(V(P)\). Dividing by \(n_P\) gives that
 population's estimated contribution to the variance of the MI difference.
-The average of the \(\Vhat(P)\) values and their variation across draws
-are the two moments needed for the degrees-of-freedom calculation.
+The average of the \(\Vhat(P)\) values estimates \(\E\{\Vhat(P)\}\);
+their variation across draws estimates \(\Var\{\Vhat(P)\}\).
 
 The observation-level sensitivity derived in Chapter~\ref{chap:expanded}
 describes how the estimated MI variance responds to changes in the table.
@@ -241,12 +246,13 @@ Near independence &
 \section{RQ2: False-positive rates under equal MI}
 
 To measure false positives, we set the two population MI values equal and
-repeatedly test sampled table pairs. Every rejection is then a false
-positive. Normal Wald and Expanded Welch use the same bias-corrected MI
+draw a count table from each population in every repetition. Every
+rejection is then a false positive. Normal Wald and Expanded Welch use the same bias-corrected MI
 difference and estimated standard error from
 Chapter~\ref{chap:baselines}. Their cutoffs differ: Normal Wald uses the
 standard normal distribution, while Expanded Welch uses a Student \(t\)
-distribution with MI-specific degrees of freedom estimated from that pair.
+distribution with MI-specific degrees of freedom estimated from the two
+sampled count tables.
 
 Both tests use a two-sided 5\% nominal test. The broad null comparison
 uses the first grid in Table~\ref{tab:design-primary-grids}: common MI
@@ -269,7 +275,7 @@ degrees-of-freedom target uses the mean and sampling variance of the
 Independent null simulations estimate these moments, and the fitted
 degrees of freedom stay fixed throughout evaluation at that setting.
 Expanded Welch instead recalculates its degrees of freedom for every
-sampled pair. Matching the denominator
+simulation repetition. Matching the denominator
 moments does not by itself ensure that the shared statistic follows a
 Student \(t\) distribution. Appendix~\ref{sec:moment-reference-details}
 gives the moment calculation.
@@ -349,7 +355,7 @@ Normal Wald and the fixed moment reference give identical
 calibrated decisions because each orders samples by \(|T|\): with fixed
 degrees of freedom, larger \(|T|\) always gives a smaller p-value.
 Expanded Welch can order samples differently because its degrees of
-freedom change with the sampled pair.
+freedom change with the sampled count tables.
 
 \medskip
 \thesisminiheading{Changing the calibration population.}
@@ -369,7 +375,7 @@ to its larger value. Both retain the alternative's margins and sample sizes.
 \label{tab:design-calibration-populations}
 \begin{tabular}{@{}lll@{}}
 \toprule
-Population pair & \(I(P)\) & \(I(Q)\)\\
+Calibration case & \(I(P)\) & \(I(Q)\)\\
 \midrule
 Fixed alternative & \(0.02\) & \(0.02+h\sigma_0\)\\
 Lower null & \(0.02\) & \(0.02\)\\
@@ -379,8 +385,8 @@ Upper null & \(0.02+h\sigma_0\) & \(0.02+h\sigma_0\)\\
 \end{table}
 
 Independent upper-null batches fit and validate the new cutoffs. We apply
-both calibrations to the same alternative pairs, so any change in measured
-power comes from the cutoffs rather than a change of alternative samples.
+both calibrations to the same alternative simulation outputs, so any
+change in measured power comes from the cutoffs rather than a change of alternative samples.
 Each calibration is also evaluated at both nulls. Matching rejection at
 one null population does not ensure the same false-positive rate elsewhere
 under equal MI. Appendix~\ref{sec:calibration-sensitivity-design} gives
@@ -393,7 +399,7 @@ Three supporting comparisons extend the focused power curves:
  \item \textbf{Association construction:} replace copying by a probability
  transfer within four cells, preserving the margins and target MI.
  This changes where dependence occurs in the table.
- \item \textbf{Sample allocation:} keep each population pair and 2,000
+ \item \textbf{Sample allocation:} keep \(P\), \(Q\) and the total of 2,000
  observations fixed, comparing allocations \((n_P,n_Q)\) of
  \((1000,1000)\), \((400,1600)\) and \((1600,400)\).
 \end{itemize}
@@ -404,9 +410,9 @@ supplement retains the full results.
 
 At one evaluation setting, each repetition draws a count table from
 \(P\) and an independent count table from \(Q\). Both tests and the fixed
-moment reference use this same pair, so their rejection decisions can be
-compared on the same sampled data. Each batch contains 100,000 independent
-pairs. The study uses three types of batch:
+moment reference use these same two tables, so their rejection decisions
+can be compared on the same sampled data. Each batch contains 100,000
+independent repetitions. The study uses three types of batch:
 \begin{enumerate}
  \item \textbf{Base evaluation:} 366 distinct settings for estimating
  rejection rates and the performance measures below.
@@ -417,7 +423,7 @@ pairs. The study uses three types of batch:
 \end{enumerate}
 Separate random streams supply fitting and evaluation samples. Settings
 shared between comparisons are sampled once within each role. The base
-study uses 55.2 million pairs; sensitivity adds 1.2 million.
+study uses 55.2 million repetitions; sensitivity adds 1.2 million.
 
 Table~\ref{tab:design-performance-measures} defines the measures for each
 evaluation setting.
@@ -431,10 +437,10 @@ evaluation setting.
 Measure & Calculation\\
 \midrule
 Rejection rate &
-\(\dfrac{\text{number of valid rejections}}{\text{number of attempted pairs}}\)\\
+\(\dfrac{\text{number of valid rejections}}{\text{number of simulation repetitions}}\)\\
 \addlinespace
 Valid-result fraction &
-\(\dfrac{\text{number of valid outputs}}{\text{number of attempted pairs}}\)\\
+\(\dfrac{\text{number of valid outputs}}{\text{number of simulation repetitions}}\)\\
 \addlinespace
 Difference bias &
 \(\operatorname{mean}(\Deltahat)-\Delta\)\\
@@ -449,8 +455,9 @@ opposite when \(\Deltahat\Delta<0\).\\
 \end{tabularx}
 \end{table}
 
-Bias uses finite MI differences even when a test is invalid. The variance
-ratio uses matched finite pairs. A ratio of one indicates agreement.
+Bias uses finite MI differences even when a test is invalid. The
+variance ratio uses repetitions with both finite \(\Deltahat\)
+and finite \(\SEhat^2\). A ratio of one indicates agreement.
 Ratios below one mean that the squared standard error understates the
 observed difference variance on average; ratios above one indicate
 overstatement. Power includes opposite-direction rejections,
@@ -459,8 +466,9 @@ Appendix~\ref{sec:estimation-diagnostics} specifies the inclusion rules
 and complete calculations.
 
 Rejection rates have Wilson 95\% confidence intervals \citep{wilson1927},
-which describe uncertainty from the finite number of simulation pairs.
-Intervals for method differences account for the shared pairs. For
+which describe uncertainty from the finite number of simulation repetitions.
+Intervals for method differences account for both methods being applied
+to the same simulated data. For
 calibrated power, we resample fitting and evaluation outputs and refit
 the cutoffs, so the intervals also include cutoff-fitting uncertainty.
 We compare power-difference intervals with a practical tolerance of

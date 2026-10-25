@@ -30,6 +30,8 @@ The Chapter 5 heading revision on 25 October labels the population construction 
 
 The subsequent chapter-title revision identifies Chapter 3 as an overview of the shared two-sample MI test and Wald baseline, and Chapter 4 as the detailed derivation of Expanded Welch–Satterthwaite. Only the two chapter titles change; mathematical content and labels remain unchanged. The manuscript remains 98 pages; see `notes/CHAPTERS_3_4_TITLE_REVISION_2026-10-25.md`.
 
+The later Chapter 6 structural revision on 25 October introduces the variance quantities in a compact symbol guide, separates moment accuracy from its consequences for degrees of freedom, and explains the null, power and calibration comparisons before presenting their numerical results. Chapters 5–6 now use simulation repetitions for draws of two count tables and explain paired comparisons as methods evaluated on the same data. Existing symbols are used consistently after definition. All existing displayed equations, figure assets, numerical results and scientific qualifications are retained. The manuscript is now 99 pages; Chapter 6 is 14 pages. See `notes/CHAPTER_6_STRUCTURE_TERMINOLOGY_2026-10-25.md`.
+
 ## Build an extracted source archive
 
 The source archive builds independently with TeX Live and latexmk. From its root, create `build/chapters_rewrite` and `build/appendices_rewrite`, then run:
