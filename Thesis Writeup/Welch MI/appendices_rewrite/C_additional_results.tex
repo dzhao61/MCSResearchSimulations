@@ -85,11 +85,11 @@ cutoff-fitting uncertainty for the calibrated intervals.
 \label{fig:redesign-calibrated-power}
 \end{figure}
 
-\begin{table}[!htbp]
+\begin{table}[!t]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
-\caption{Expanded Welch minus each comparator at two null SDs, in percentage points.}
+\caption{Expanded Welch minus Normal Wald at two null SDs, in percentage points.}
 \label{tab:redesign-power-contrasts}
 \input{figures_rewrite/focused_redesign_power_contrasts}
 \end{table}
@@ -109,13 +109,16 @@ in Chapter~\ref{chap:results} gives the Wald contrasts with intervals.
 \input{figures_rewrite/focused_redesign_sensitivity_power_full}
 \end{table}
 
+\begin{samepage}
 Table~\ref{tab:redesign-sensitivity-cross-null} applies each fitted cutoff
 to both null validation populations. Each row includes all 100,000
 pairs, with invalid outputs contributing no rejection. The two null
 populations check sensitivity to calibration; they do not establish
 control across the complete equal-MI null.
+\par
+\end{samepage}
 
-\begin{table}[!htbp]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
@@ -132,7 +135,7 @@ true difference is \(I(P)-I(Q)=-0.01\) nats. In this setting, 10,183 of
 the wrong estimated ordering. The fixed
 reference gives 9,829 wrong-direction cases among 9,830 rejections.
 Under same skew, the corresponding Wald and Expanded Welch counts are
-59 of 1,809 and 52 of 1,646. At \(n=10{,}000\), none of the four rules
+59 of 1,809 and 52 of 1,646. At \(n=10{,}000\), neither test nor the fixed reference
 has a wrong-direction rejection at this alternative under either skew
 regime. Under different skew, the difference bias at \(n=1{,}000\)
 is 0.03071 nats. Thus

@@ -2,6 +2,8 @@
 
 This is the main Welch MI experiment, promoted on 24 October 2026. It contains the fresh 366-setting four-rule study and supports the main thesis deliverable. The previous baseline is preserved under the workspace root's `Archive/Welch MI baseline 2026-10-24/`, with its original-file SHA-256 manifest.
 
+The main thesis now compares Expanded Welch with Normal Wald, retaining the independently fitted moment reference as a diagnostic. The sample-size df arm remains in the experiment evidence and `supplementary_displays/sample_size_df_comparison/`, which preserves the preceding four-rule displays and reporters. Current reporters omit that arm from thesis displays; no simulation or bootstrap records were changed.
+
 ## Current experiment
 
 The weak null is H0:I(P)=I(Q), allowing distinct joint probability tables. The rules share the same bias-corrected categorical MI difference and influence-function standard error: normal Wald; sample-size degrees of freedom using n_i exactly; unchanged Expanded Welch; and a fixed, independently fitted moment reference.

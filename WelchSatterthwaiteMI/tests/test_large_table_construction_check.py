@@ -178,6 +178,7 @@ class LargeConstructionTests(unittest.TestCase):
             rates = pd.read_csv(fresh / "rates.csv")
             rates = rates[rates.denominator.eq("all")].set_index(["configuration_id", "method"])
             table = (source / "figures_rewrite/focused_redesign_construction.tex").read_text()
+            preserved = (ROOT / "supplementary_displays/sample_size_df_comparison/figures/focused_redesign_construction.tex").read_text()
             display = pd.read_csv(fresh / "displays.csv", keep_default_na=False)
             ids = set(display[display.study.eq("construction")].configuration_id)
             null = configs[configs.configuration_id.isin(ids) & configs.mi_p.eq(configs.mi_q)]
@@ -186,7 +187,8 @@ class LargeConstructionTests(unittest.TestCase):
                 for method in ("wald", "size", "expanded", "reference"):
                     result = rates.loc[(row.configuration_id, method)]
                     self.assertEqual(result["count"], 100000)
-                    self.assertIn(f"{result.rate:.4f}", table)
+                    target = preserved if method == "size" else table
+                    self.assertIn(f"{result.rate:.4f}", target)
 
     def test_generated_table_contains_all_comparisons_and_precise_rounding(self):
         rows = comparison_rows(DEFAULT_BASE, DEFAULT_OUTPUT)

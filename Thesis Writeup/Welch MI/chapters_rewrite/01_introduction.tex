@@ -71,7 +71,7 @@ The thesis addresses two research questions:
  sampling variance of the estimated MI variance, and what degrees of
  freedom do they imply near and away from independence?
  \item How do Expanded Welch's false-positive rates and power compare
- with Normal Wald and a sample-size degrees-of-freedom comparator?
+ with Normal Wald?
 \end{enumerate}
 
 The simulations first check the variance approximations, then compare
@@ -118,10 +118,9 @@ are independent, and observations within each sample are also independent.
 For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where
 \(X\) and \(Y\) are independent, is considered separately.
-The main simulations compare Normal Wald, Expanded Welch and a sample-size
-degrees-of-freedom rule using two-sided tests at the 5\% significance level.
-An independently fitted reference helps examine the role of the degrees
-of freedom.
+The main simulations compare Normal Wald and Expanded Welch using
+two-sided tests at the 5\% significance level. An independently fitted
+moment reference helps examine the role of the degrees of freedom.
 
 Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the statistic

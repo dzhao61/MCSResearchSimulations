@@ -20,6 +20,9 @@ LABELS={'wald':'Normal Wald','size':'Sample-size df','expanded':'Expanded Welch'
 COLOURS={'wald':'#28679b','size':'#b46c14','expanded':'#a53648','reference':'#34866f'}
 STYLES={'wald':'-','size':'--','expanded':'-','reference':':'}
 FIGURES=study.ROOT.parent/'Thesis Writeup/Welch MI/figures_rewrite'
+# The full four-rule evidence is retained; thesis displays focus on the
+# Wald comparison and the independently fitted moment diagnostic.
+DISPLAY_METHODS=('wald','expanded','reference')
 
 
 def percentage_text(value):
@@ -277,7 +280,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
             ax=fig.add_subplot(pair[0]); validity_ax=fig.add_subplot(pair[1],sharex=ax)
             if first is None: first=ax
             data=configs[configs.configuration_id.isin(null_ids)&configs.profile.eq(profile)&configs.k.eq(k)].sort_values('n_p')
-            for m in study.METHODS:
+            for m in DISPLAY_METHODS:
                 y=[raw.loc[(key,m),'rate'] for key in data.configuration_id]
                 lo=[raw.loc[(key,m),'low'] for key in data.configuration_id]
                 hi=[raw.loc[(key,m),'high'] for key in data.configuration_id]
@@ -299,7 +302,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         source=cal if calibrated else raw
         for ax,label in zip(axes,study.FOCUS):
             selected=focus[focus.focus.eq(label)].sort_values('standardised_difference')
-            for m in study.METHODS:
+            for m in DISPLAY_METHODS:
                 if calibrated and m=='reference': continue
                 y=[source.loc[(key,m),'rate'] for key in selected.configuration_id]
                 ax.plot(selected.standardised_difference,y,color=COLOURS[m],ls=STYLES[m],label=LABELS[m])
@@ -310,7 +313,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
             ax.axhline(.05,color='black',lw=.5); ax.set_title(label); ax.set_ylim(0,1)
             ax.set_xlabel('MI difference / null SD')
         axes[0].set_ylabel('Calibrated rejection rate' if calibrated else 'Nominal rejection rate')
-        fig.legend(*axes[0].get_legend_handles_labels(),loc='lower center',ncol=2 if not calibrated else 3)
+        fig.legend(*axes[0].get_legend_handles_labels(),loc='lower center',ncol=3 if not calibrated else 2)
         fig.tight_layout(rect=(0,.14,1,1)); save(fig,'power_calibrated' if calibrated else 'power',figures)
 
     for profile in ('same_skew','different_skew'):
@@ -328,18 +331,14 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     cases=[(label,select_case(configs,*spec)) for label,spec in study.FOCUS.items()]
     cases += [(f'16, {"same" if profile=="same_skew" else "different"}, {n:,}',select_case(configs,16,profile,n))
               for profile in ('same_skew','different_skew') for n in (1000,10000)]
-    lines=[r'\begin{tabular}{@{}lrr@{}}',r'\toprule']
-    for panel,methods_panel in enumerate((('wald','size'),('expanded','reference'))):
-        if panel: lines.extend([r'\addlinespace[5pt]',r'\midrule'])
-        lines.append('Setting & '+' & '.join(LABELS[m] for m in methods_panel)+r'\\')
-        lines.append(r'\midrule')
-        for label,key in cases:
-            cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
-                   decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
-                   decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in methods_panel]
-            lines.append(label+' & '+' & '.join(cells)+r'\\')
-    lines.extend([r'\bottomrule',r'\end{tabular}'])
-    (figures/'focused_redesign_cases_rates.tex').write_text('\n'.join(lines)+'\n')
+    rows=[]
+    for label,key in cases:
+        cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
+               decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
+               decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
+        rows.append([label]+cells)
+    table(figures/'focused_redesign_cases_rates.tex',
+          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows)
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]
@@ -349,20 +348,20 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     rows=[]
     for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
         rows.append([f'{row.focus}: {row.standardised_difference:g}',significant_text(row.difference_nats)]+
-                    [percentage_text(cal.loc[(row.configuration_id,m),'rate']) for m in ('wald','size','expanded')])
-    table(figures/'focused_redesign_calibrated_power.tex',['Setting: SD','Nats','Wald/ref.','Size df','Expanded'],rows)
+                    [percentage_text(cal.loc[(row.configuration_id,m),'rate']) for m in ('wald','expanded')])
+    table(figures/'focused_redesign_calibrated_power.tex',['Setting: SD','Nats','Wald/ref.','Expanded'],rows)
     paired=pd.read_csv(output/'paired.csv')
     paired=paired[paired.denominator.eq('all')].set_index(['configuration_id','comparator'])
     rows=[]
     for row in focus[focus.standardised_difference.eq(2)].sort_values('focus').itertuples():
-        for other in ('wald','size'):
+        for other in ('wald',):
             nominal=paired.loc[(row.configuration_id,other)]
             calibrated=cal.loc[(row.configuration_id,'expanded'),'rate']-cal.loc[(row.configuration_id,other),'rate']
             ci=boot.loc[(row.configuration_id,'expanded_minus_'+other)]
-            label=f'{row.focus}, {"Wald" if other=="wald" else "size df"}'
+            label=row.focus
             rows.append([label,f'{100*nominal.difference:+.3f}',f'[{100*nominal.low:+.3f}, {100*nominal.high:+.3f}]',
                          f'{100*calibrated:+.3f}',f'[{100*ci.low:+.3f}, {100*ci.high:+.3f}]'])
-    table(figures/'focused_redesign_power_contrasts.tex',['Setting, comparator','Nominal','95\\% interval','Calibrated','95\\% interval'],rows)
+    table(figures/'focused_redesign_power_contrasts.tex',['Setting','Nominal','95\\% interval','Calibrated','95\\% interval'],rows)
     rows=[]
     for label,key in cases[:3]:
         r=refs[key]
@@ -385,8 +384,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
             profile='Same' if c.profile=='same_skew' else 'Different'
             label=(f'{profile}, {c.n_p}/{c.n_q}, {abs(c.delta):.2f}' if study_name=='allocation' else
                    f'{c.k}, {profile}, {"copy" if c.construction=="copying" else "four"}, {c.n_p}')
-            rows.append([label]+[f'{raw.loc[(c.configuration_id,m),"rate"]:.4f}' for m in study.METHODS])
-        table(figures/f'focused_redesign_{study_name}.tex',['Setting','Wald','Size df','Expanded','Reference'],rows)
+            rows.append([label]+[f'{raw.loc[(c.configuration_id,m),"rate"]:.4f}' for m in DISPLAY_METHODS])
+        table(figures/f'focused_redesign_{study_name}.tex',['Setting','Wald','Expanded','Reference'],rows)
     # A compact selection makes component-level numerical comparisons inspectable.
     selected=[]
     for mi in (.0001,.02,.05):
@@ -398,7 +397,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     evidence={'settings':len(configs),'fitting_settings':len(refs),'evaluation_pairs':len(configs)*100000,
               'fitting_pairs':len(refs)*100000,'focus_cases':dict(cases),
               'focus_null_sd':{label:refs[key]['null_sd'] for label,key in json.loads((output/'focus_nulls.json').read_text()).items()},
-              'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])}
+              'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0]),
+              'display_methods':list(DISPLAY_METHODS)}
     study.atomic_json(figures/'focused_redesign_evidence.json',evidence)
     study.atomic_json(output/'report_summary.json',evidence)
     study.atomic_json(output/'report_provenance.json',{
@@ -407,7 +407,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         'dependence_input_sha256':study.sha(dependence_path),
         'upper_nominal_input_sha256':study.sha(upper_nominal_path),
         'grid_summary':grid_summary,
-        'null_display_settings':len(null_ids),'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0])})
+        'null_display_settings':len(null_ids),'bootstrap_repetitions':int(boot.bootstrap_repetitions.iloc[0]),
+              'display_methods':list(DISPLAY_METHODS)})
     print(json.dumps(evidence,indent=2),flush=True)
 
 

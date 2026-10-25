@@ -100,6 +100,9 @@ class RedesignTests(unittest.TestCase):
         if not (figures/'focused_redesign_cases_rates.tex').exists():
             self.skipTest('Delivered manuscript source is separate.')
         text=(figures/'focused_redesign_cases_rates.tex').read_text()
+        preserved=(study.ROOT/'supplementary_displays/sample_size_df_comparison/figures/focused_redesign_cases_rates.tex').read_text()
+        self.assertNotIn('Sample-size df',text)
+        self.assertIn('Sample-size df',preserved)
         rates=pd.read_csv(output/'rates.csv')
         rates=rates[rates.denominator.eq('all')].set_index(['configuration_id','method'])
         keys=list(self.focus.values())
@@ -112,13 +115,15 @@ class RedesignTests(unittest.TestCase):
                 interval=binomtest(int(row.rejected),int(row['count'])).proportion_ci(method='wilson')
                 values=[(Decimal(str(x))*100).quantize(Decimal('.01'),rounding=ROUND_HALF_UP)
                         for x in (row.rate,interval.low,interval.high)]
-                self.assertIn(f'{values[0]:.2f}\\% [{values[1]:.2f}, {values[2]:.2f}]',text)
+                target=preserved if method=='size' else text
+                self.assertIn(f'{values[0]:.2f}\\% [{values[1]:.2f}, {values[2]:.2f}]',target)
 
     def test_deliverable_power_contrasts_preserve_pairing_and_percentage_units(self):
         figures=study.ROOT.parent/'Thesis Writeup/Welch MI/figures_rewrite'
         if not (figures/'focused_redesign_power_contrasts.tex').exists():
             self.skipTest('Delivered manuscript source is separate.')
         text=(figures/'focused_redesign_power_contrasts.tex').read_text()
+        preserved=(study.ROOT/'supplementary_displays/sample_size_df_comparison/figures/focused_redesign_power_contrasts.tex').read_text()
         focus=pd.read_csv(study.OUTPUT/'focus.csv')
         paired=pd.read_csv(study.OUTPUT/'paired.csv')
         paired=paired[paired.denominator.eq('all')].set_index(['configuration_id','comparator'])
@@ -128,7 +133,8 @@ class RedesignTests(unittest.TestCase):
                 difference=(p.only_expanded-p.only_comparator)/p['count']
                 variance=((p.only_expanded+p.only_comparator)/p['count']-difference**2)/(p['count']-1)
                 lo=difference-1.96*np.sqrt(variance);hi=difference+1.96*np.sqrt(variance)
-                self.assertIn(f'{100*difference:+.3f} & [{100*lo:+.3f}, {100*hi:+.3f}]',text)
+                target=preserved if other=='size' else text
+                self.assertIn(f'{100*difference:+.3f} & [{100*lo:+.3f}, {100*hi:+.3f}]',target)
 
 
 if __name__=='__main__': unittest.main()

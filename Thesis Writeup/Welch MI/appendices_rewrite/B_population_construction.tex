@@ -163,8 +163,8 @@ For one repetition, draw
       (n_P;p_{11},\ldots,p_{kk}),
 \end{equation}
 and independently draw the corresponding \(Q\) counts.
-Reshape these counts into their \(k\times k\) tables and apply all four
-rejection rules to that pair. Repeat independently 100,000 times per distinct
+Reshape these counts into their \(k\times k\) tables and apply both tests
+and the fixed moment reference to that pair. Repeat independently 100,000 times per distinct
 evaluation setting. Independently generate another 100,000 pairs for each
 equal-MI fitting setting. The simulations use the PCG64 pseudo-random
 generator with master seed 20261021 and separate streams for population,
@@ -197,14 +197,13 @@ expanded p-value. A failed component makes Expanded Welch invalid under
 this rule, including the zero-component case in
 Appendix~\ref{sec:zero-component}.
 
-The sample-size comparator requires the base conditions and positive finite
-combined degrees of freedom in Equation~\eqref{eq:redesign-size-df}. The
-fixed reference requires the base conditions and a positive finite fitted
-reference value. No component-degree requirement is added to the fixed rule.
+The fixed reference requires the base conditions and a positive finite
+fitted reference value. No component-degree requirement is added to the fixed rule.
 
 The primary rate divides valid rejections by all repetitions. A
 method-valid rate uses only that method's valid repetitions; a
-common-valid rate uses only pairs where all four methods are valid. Report
+common-valid rate uses only pairs where both tests and the fixed
+reference are valid. Report
 the denominator for either conditional rate, which is undefined when
 the denominator is zero. Invalid outputs contribute no rejection to
 the primary rate.
@@ -391,9 +390,8 @@ The next section gives the cancellation explicitly. Independent fitting samples 
 sample means and sample variances. The Student \(t\) distribution remains
 an approximation to the shared statistic's distribution.
 
-The sample-size and fixed-reference rules use the two-sided p-value
-formula in Equation~\eqref{eq:expanded-p}, substituting their estimated
-or fitted degrees of freedom. A valid p-value at most 0.05 produces a
+The fixed reference uses the two-sided p-value formula in
+Equation~\eqref{eq:expanded-p}, substituting its fitted degrees of freedom. A valid p-value at most 0.05 produces a
 nominal rejection.
 
 The moment reference requires known simulation populations and is held
@@ -526,8 +524,8 @@ the achieved rate, including any effect of discreteness.
 For focused calibrated power, resample the fitting outputs and refit
 these thresholds in each of 1,000 bootstrap repetitions. Apply a common
 resampled fitting batch across all points of a curve. At each evaluation
-point, resample the joint four-method decision outcomes, preserving their
-pairing. Use the 2.5th and 97.5th percentiles for pointwise intervals of
+point, resample the joint decisions of both tests and the fixed moment
+reference, preserving their pairing. Use the 2.5th and 97.5th percentiles for pointwise intervals of
 rates and paired rate differences. Compare the paired intervals with the
 practical tolerance of minus one to plus one percentage point.
 The fixed reference and Normal Wald
@@ -557,8 +555,9 @@ For uncertainty in power and its contrasts, use 1,000 joint bootstrap
 repetitions. In each repetition, resample the lower fitting pairs once
 per focus setting and share that resample across its two alternatives.
 Independently resample each upper fitting batch and refit all cutoffs.
-For a fixed alternative, resample the joint eight decisions: four rules
-under each calibration. This retains pairing between rules and between
+For a fixed alternative, jointly resample the decisions of both tests
+and the fixed moment reference under both calibrations. This retains
+pairing between rules and between
 calibrations when estimating gains and changes in gains. Use percentile
 95\% intervals, keeping population tables and effect sizes fixed.
 Cross-null rate intervals use the Wilson calculation conditional on

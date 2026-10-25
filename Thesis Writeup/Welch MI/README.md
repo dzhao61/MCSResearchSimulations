@@ -14,6 +14,22 @@ The appendix reduction on 23 October shortens the manuscript from 108 to 95 page
 
 The 24 October revision brings seven definitions and setting reminders forward in Chapters 5-6 and Appendix C. It distinguishes moment fitting from rejection-threshold calibration and introduces the application selection and signed difference before their results. The manuscript remains 95 pages; the review is recorded in `notes/INFORMATION_ORDER_REVIEW_2026-10-24.md`.
 
+The 25 October rewrite develops Section 5.1 more gradually, explaining the category probabilities, independent and copying choices, fixed population margins, target-MI search and numerical example before comparing the margin regimes. The added exposition brings the manuscript to 96 pages. The population formulas, settings and numerical results are unchanged; see `notes/SECTION_5_1_REWRITE_2026-10-25.md`.
+
+The subsequent Chapter 5 presentation revision adds parameter-grid, calibration-population and performance-measure tables, displays the power grid and sampling-moment target, and lists the three sampling roles. The focus-setting table now includes the fitted null standard deviations. These displays bring the manuscript to 97 pages; population settings, test rules, experiment code and results are unchanged. See `notes/CHAPTER_5_VISUAL_REVISION_2026-10-25.md`.
+
+The 25 October scope reduction removes the sample-size degrees-of-freedom comparator from the main manuscript, figures and tables. The comparison is now Expanded Welch versus Normal Wald, with the fixed moment reference retained as a diagnostic. All existing numerical evidence and the preceding four-rule displays are preserved in the experiment supplement. No simulations or bootstrap samples were rerun. The manuscript remains 97 pages; see `notes/COMPARATOR_SCOPE_REDUCTION_2026-10-25.md`.
+
+The later 25 October exposition revision applies the Section 5.1 approach to Sections 5.2–5.5: it separates the two variance concepts, explains the independently fitted moment reference, works through a concrete power alternative, and introduces calibration as a sequence of fitting and evaluation steps. Section 5.1, all previous equations and tables, the experiment and its results are unchanged. The additional explanation brings the thesis to 98 pages; see `notes/CHAPTER_5_EXPOSITION_REVISION_2026-10-25.md`.
+
+The final Section 5.1 trim on 25 October removes the bias-cancellation preview and the redundant restatement about increasing table size. The construction now ends with the distinction between identical tables and distinct tables with equal MI. Bias cancellation remains explained beside the results and in the discussion. The manuscript remains 98 pages; see `notes/SECTION_5_1_TRIM_2026-10-25.md`.
+
+The Chapter 6 readability revision on 25 October separates findings from plot instructions, distinguishes the variance estimator’s sampling mean from its first-order approximation, and removes repeated explanations of calibration and the power curve at B. The application receives a light prose trim. All numerical evidence, figures, tables, equations and scientific qualifications are retained. The manuscript remains 98 pages; see `notes/CHAPTER_6_READABILITY_REVISION_2026-10-25.md`.
+
+The Chapter 5 heading revision on 25 October labels the population construction as Setup, the approximation checks as RQ1, false-positive and power comparisons as RQ2, and sampling/uncertainty as shared evaluation. Only the five section headings change; body text, numbering and scientific content are unchanged. The manuscript remains 98 pages; see `notes/CHAPTER_5_HEADING_REVISION_2026-10-25.md`.
+
+The subsequent chapter-title revision identifies Chapter 3 as an overview of the shared two-sample MI test and Wald baseline, and Chapter 4 as the detailed derivation of Expanded Welch–Satterthwaite. Only the two chapter titles change; mathematical content and labels remain unchanged. The manuscript remains 98 pages; see `notes/CHAPTERS_3_4_TITLE_REVISION_2026-10-25.md`.
+
 ## Build an extracted source archive
 
 The source archive builds independently with TeX Live and latexmk. From its root, create `build/chapters_rewrite` and `build/appendices_rewrite`, then run:
