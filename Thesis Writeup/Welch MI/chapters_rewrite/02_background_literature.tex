@@ -195,8 +195,11 @@ that describes its sampling variation.
 \section{Sampling variance of plug-in MI}
 \label{sec:first-order-mi-background}
 
-Comparing two MI estimates requires knowing how much each varies across
-repeated samples. We derive the large-sample approximation
+Two MI estimates can differ even when their population values are equal,
+because each estimate varies between samples. Testing their difference
+therefore requires a standard error that accounts for this sampling
+variation. We first derive the established large-sample approximation
+for the variance of one plug-in MI estimate:
 \begin{equation}
   \Var\{\Ihat(P)\}\approx\frac{V(P)}{n}.
   \label{eq:first-order-mi-var-background}
@@ -206,6 +209,8 @@ observation varies across the population. The derivation assumes that the
 population cell probabilities are positive, so the logarithms and their
 derivatives are well defined. This first-order variance is established for
 histogram and discrete MI \citep{moddemeijer1989,brillinger2004}.
+Section~\ref{sec:welch-background} then explains how this result supports
+a comparison between two populations.
 
 The argument proceeds in three steps. First, sampling changes the empirical
 cell probabilities. Second, a first-order Taylor expansion translates those
@@ -475,10 +480,12 @@ positive MI values.
 \allowdisplaybreaks
 \label{sec:welch-background}
 
-This section reviews methods for estimating uncertainty in MI and testing
-differences between two MI values. The question in this thesis is whether two
-populations have the same MI, \(I(P)=I(Q)\), even when their cell
-probabilities differ.
+The preceding section describes the sampling variation of one MI estimate.
+For two independent samples, their variance contributions add, providing
+the standard error needed to compare their MI estimates. This section
+reviews the Normal Wald test, the Welch--Satterthwaite principle and other
+approaches to that comparison. The hypothesis is that the populations
+have the same MI, \(I(P)=I(Q)\), even when their cell probabilities differ.
 
 \thesisminiheading{The Normal Wald test.}
 

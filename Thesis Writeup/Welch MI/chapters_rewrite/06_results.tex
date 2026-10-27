@@ -233,6 +233,9 @@ normal cutoff. This larger cutoff reduces rejection. Whether that
 reduction improves accuracy depends on whether Wald's rate exceeds or
 falls below the nominal 5\% level.
 
+\subsection{Overall false-positive patterns}
+\label{sec:null-rejection-patterns}
+
 Expanded Welch improves false-positive rates in selected settings where
 Normal Wald rejects too often. In others, it further lowers already
 conservative rates. Table~\ref{tab:redesign-null-grid} summarises the
@@ -290,7 +293,8 @@ included counts separately.
 \end{figure}
 
 \FloatBarrier
-\subsection{Small-sample improvements and sparse-table failures}
+\subsection{Bias and standard-error accuracy}
+\label{sec:null-estimator-accuracy}
 
 To explain these rejection rates, we examine the two shared estimates.
 Difference bias measures how far the average \(\Deltahat\) lies from

@@ -1,6 +1,6 @@
 # Main Welch MI thesis deliverable
 
-Current PDF: **97 pages**, rebuilt and reviewed on 27 October 2026. A subsequent abstract language refinement is source-only and awaits the next requested rebuild.
+Current PDF: **98 pages**, rebuilt and reviewed on 27 October 2026. The latest abstract wording, parallel Section 6.2 subsections and clearer openings to Sections 2.3–2.4 are included.
 
 Successful direct `latexmk` builds of `main.tex` now run a post-build hook
 that refreshes the named PDF in `deliverables/`, source archive, experiment
@@ -75,6 +75,8 @@ The later 27 October Section 6.3.2 revision explains why power is compared after
 The 27 October abstract rewrite states the comparison and derivation directly, retains a brief near-independence finding and the shopping application, and summarises false-positive and power results without detailed settings. Calibrated power is explained through matching false-positive rates at a chosen equal-MI population. The PDF and delivery files remain the previous build; see `notes/ABSTRACT_REWRITE_2026-10-27.md`.
 
 The requested 27 October rebuild incorporates all preceding source revisions. The main thesis is now 97 pages, with 64 pages of main text; Chapter 6 is 17 pages, Appendix A five pages, Appendix B nine pages and Appendix C five pages. All paragraphs are flush left. Formatting review shortened three crowded headings, kept the A power walkthrough together, and placed the application null hypothesis within its notation table. Both new supplementary documents are compiled and visually checked. The current named delivery files are refreshed together; earlier statements about deferred builds describe the historical source-edit stages. Future rebuilds still wait for the user's explicit request. See `notes/PDF_REBUILD_FORMAT_REVIEW_2026-10-27.md`.
+
+The subsequent requested build on 27 October incorporates the abstract language pass, the parallel Section 6.2 subsections and the motivation added to Sections 2.3–2.4. The manuscript is 98 pages (65 pages of main text; Chapter 6 is 18 pages). Formatting and references compile without warnings. The direct-build delivery hook refreshes the named delivery set without a second TeX compilation. Future rebuilds still wait for an explicit request.
 
 ## Build an extracted source archive
 

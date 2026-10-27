@@ -3,7 +3,7 @@
 The redesign became the main version on 24 October 2026. Use the canonical
 folders at the parent Simulations workspace root:
 
-- `Thesis Writeup/Welch MI/` for the 97-page main thesis, `main.tex` and named delivery files.
+- `Thesis Writeup/Welch MI/` for the 98-page main thesis, `main.tex` and named delivery files.
 - `WelchSatterthwaiteMI/` for the current experiment and evidence.
 - `DifferentialMI/` for the estimator code.
 - `PracticalMIExploration/` for the application.

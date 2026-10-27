@@ -15,11 +15,11 @@
   "isolated_bundled_tests": 185,
   "independently_reconstructed_pairs": 4512,
   "original_files_verified_unchanged": 30042,
-  "pdf_pages": 97,
+  "pdf_pages": 98,
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "5a0cb3ea9f3e6f280c54e941d5803f9da652e3391fc79491d85e0902d1a1b9a5",
+  "pdf_sha256": "2ac8526f40d219f83025ca8bd75e64501054b0f5d1bed4eb9f50a5a3cc0e5965",
   "isolated_bundled_test_breakdown": {
     "experiment": 141,
     "estimator": 27,
@@ -48,7 +48,7 @@
     "after_approximation_plot_simplification": 29
   },
   "base_total_pairs": 55200000,
-  "main_text_pages": 64,
+  "main_text_pages": 65,
   "calibration_sensitivity": {
     "fitting_settings": 6,
     "evaluation_settings": 6,
@@ -1283,7 +1283,7 @@
     "delivery_refresh_deferred_by_user": true,
     "visual_qa_pending_rebuild": true
   },
-  "pending_source_rebuild": true,
+  "pending_source_rebuild": false,
   "paragraph_style_source_revision": {
     "date": "2026-10-27",
     "paragraph_indent": "0pt",
@@ -1510,5 +1510,67 @@
     "abstract_braces_math_delimiters_checked": true,
     "main_and_delivery_pdfs_unchanged": true,
     "pdf_rebuilt": false
+  },
+  "section_6_2_parallel_subsections": {
+    "date": "2026-10-27",
+    "preserved_snapshot": "Thesis Writeup/Welch MI/archive/before_section_6_2_subsections_2026-10-27.zip",
+    "subsections": {
+      "6.2.1": "Overall false-positive patterns",
+      "6.2.2": "Bias and standard-error accuracy"
+    },
+    "section_intro_retained_before_subsections": true,
+    "only_heading_and_label_changes": true,
+    "existing_prose_numerical_results_tables_equations_figures_unchanged": true,
+    "source_references_and_paragraph_style_checked": true,
+    "main_and_delivery_pdfs_unchanged": true,
+    "pdf_rebuilt": false
+  },
+  "background_motivation_source_revision": {
+    "date": "2026-10-27",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_background_motivation_2026-10-27.zip",
+    "scope": "Motivation and connection in openings to Sections 2.3 and 2.4",
+    "established_result_identified_before_derivation": true,
+    "sampling_variance_connected_to_standard_error_and_test_review": true,
+    "derivation_assumptions_equations_labels_citations_preserved": true,
+    "source_references_and_paragraph_style_checked": true,
+    "main_and_delivery_pdfs_unchanged": true,
+    "pdf_rebuilt": false
+  },
+  "latest_requested_build": {
+    "date": "2026-10-27",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_latest_source_build_2026-10-27.zip",
+    "pdf_pages": 98,
+    "main_text_pages": 65,
+    "chapter6_pages": 18,
+    "included_changes": [
+      "Abstract language pass",
+      "Parallel subsections in Section 6.2",
+      "Motivation and signposting in Sections 2.3 and 2.4"
+    ],
+    "latex_warnings": [],
+    "paragraph_style_guard_passed": true,
+    "fonts_embedded": 41,
+    "revised_pages_rendered_and_inspected": [
+      2,
+      5,
+      17,
+      21,
+      59,
+      63
+    ],
+    "background_and_results_contact_sheets_inspected": true,
+    "manuscript_and_figure_source_hashes_unchanged_during_build": true,
+    "direct_latexmk_hook_published_successfully": true,
+    "delivery_check_passed": true,
+    "source_archive_build_passed": true,
+    "source_archive_pdf_text_identical": true,
+    "source_archive_text_sha256": "65cfe3af7cf2ffa9bb3846e5fa38c3dc70cbfb2ed4a8ce5cb40e54651084d40c",
+    "pdf_sha256": "2ac8526f40d219f83025ca8bd75e64501054b0f5d1bed4eb9f50a5a3cc0e5965",
+    "delivery_checksum_manifest": [
+      "2ac8526f40d219f83025ca8bd75e64501054b0f5d1bed4eb9f50a5a3cc0e5965  Daniel_Zhao_Welch_MI_Thesis.pdf",
+      "2b846bd69a1aec3d53d656cfcaa1f892a1af6e18e729c934c9388b7b40ebaa6c  Daniel_Zhao_Welch_MI_Thesis_Source.zip",
+      "417cf5845578057f3576f2eaa6efc3358b7eb0da3d03743b6898f63ccd5975ce  Daniel_Zhao_Welch_MI_Experiment_Supplement.zip"
+    ],
+    "new_experiments_or_bootstraps": 0
   }
 }
