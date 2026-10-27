@@ -1,0 +1,825 @@
+{
+  "review_date": "2026-10-27",
+  "scope": "Current manuscript language, headings, captions, included table text and eight included plot labels; sentence-by-sentence reading with context. No manuscript edits or build.",
+  "findings": [
+    {
+      "id": "I01",
+      "priority": "P2",
+      "file": "chapters_rewrite/01_introduction.tex",
+      "line": 18,
+      "end_line": 20,
+      "title": "Keep the equal-MI distinction without stating it twice",
+      "current": "Under \\(H_0\\), the populations have equal MI. However, this does not mean\nthat their joint probability tables are the same, as two populations can\nhave equal MI while having different probability tables.",
+      "reason": "The second clause repeats the first. The distinction itself is essential and should stay.",
+      "proposed": "Under \\(H_0\\), the populations have equal MI even though their joint probability tables may differ.",
+      "dependencies": ""
+    },
+    {
+      "id": "I02",
+      "priority": "P2",
+      "file": "chapters_rewrite/01_introduction.tex",
+      "line": 47,
+      "end_line": 49,
+      "title": "Name the variance estimate used by the standard error",
+      "current": "Choosing\nits degrees of freedom requires estimating how much the MI variance\nestimates change from sample to sample.",
+      "reason": "“MI variance estimates” can mean an estimated variance of MI or the sampling variance of that estimate. This is the first explanation of the second layer of uncertainty.",
+      "proposed": "Choosing its degrees of freedom requires estimating how much the variance estimates used in the standard error change between samples.",
+      "dependencies": "In the next two sentences, use “pointwise MI values” for the cell-level logarithms, rather than the less specific “MI values”. Keep the explanation that changing a cell changes its margins."
+    },
+    {
+      "id": "I03",
+      "priority": "P2",
+      "file": "chapters_rewrite/01_introduction.tex",
+      "line": 59,
+      "end_line": 62,
+      "title": "Explain calibration when first introducing it",
+      "current": "The evaluation measures the resulting false-positive rates and nominal\npower, then compares power after matching rejection at specified equal-MI\npopulations through independent simulation. Changing the calibration\npopulation checks whether the resulting power comparison is stable.",
+      "reason": "“Matching rejection” leaves the quantity and target unstated. “Calibration population” then appears before calibration has been explained.",
+      "proposed": "The evaluation measures false-positive rates and power under the usual cutoffs. It then adjusts each test’s cutoff using independent equal-MI simulations to target a 5\\% false-positive rate before comparing power. Repeating this calibration at a different common MI checks whether the power comparison changes.",
+      "dependencies": "Keep the fuller fitting and independent validation procedure in Chapter 5. Use the terminology decision in D01 consistently."
+    },
+    {
+      "id": "I04",
+      "priority": "P1",
+      "file": "chapters_rewrite/01_introduction.tex",
+      "line": 84,
+      "end_line": 86,
+      "title": "Describe a first-order sensitivity rather than an exact finite change",
+      "current": "The thesis derives how changing\n  one observation affects the estimated MI variance, including the resulting\n  changes in the row and column totals and in pointwise MI.",
+      "reason": "The contribution is an exact derivative used in a first-order approximation. “How changing one observation affects” can suggest an exact formula for replacing a whole observation.",
+      "proposed": "The thesis derives the first-order effect of an observation on the estimated MI variance, accounting for changes in the row and column totals and in pointwise MI.",
+      "dependencies": "Keep the exact derivative/approximate sampling-error distinction in Chapter 4; no equation change is proposed."
+    },
+    {
+      "id": "I05",
+      "priority": "P2",
+      "file": "chapters_rewrite/01_introduction.tex",
+      "line": 104,
+      "end_line": 108,
+      "title": "Split the practical contribution into parallel claims",
+      "current": "The evaluation identifies\n  selected populations at common MI 0.02 nats where Expanded Welch brings\n  false-positive rates closer to 5\\% than Normal Wald, the dependence of calibrated power on\n  the fitting population, and estimation errors that make both tests\n  unreliable.",
+      "reason": "The verb “identifies” governs populations, a dependence and errors in one long list. Those objects require the reader to reconstruct the sentence.",
+      "proposed": "At common MI 0.02 nats, the evaluation identifies settings where Expanded Welch brings false-positive rates closer to 5\\% than Normal Wald. It also shows how calibrated power depends on the setting used to fit the cutoffs and how errors in the shared estimates can make both tests unreliable.",
+      "dependencies": "Avoid duplicating the empirical contribution’s full parameter list."
+    },
+    {
+      "id": "B01",
+      "priority": "P2",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 123,
+      "end_line": 123,
+      "title": "Use the stated positive-cell assumption instead of undefined support shorthand",
+      "current": "For a fixed positive \\(r\\times c\\) support,",
+      "reason": "“Positive support” is compressed terminology. Here the intended condition is a fixed table whose population cell probabilities are all positive.",
+      "proposed": "For a fixed \\(r\\times c\\) population table with positive cell probabilities,",
+      "dependencies": ""
+    },
+    {
+      "id": "B02",
+      "priority": "P1",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 164,
+      "end_line": 165,
+      "title": "Remove a misleading contrast with plug-in estimation",
+      "current": "Bayesian estimators model the unknown probabilities rather than treating\nobserved proportions as the complete population.",
+      "reason": "The plug-in estimator substitutes empirical probabilities; it does not assert that the sample is the complete population. The present contrast understates the other approach.",
+      "proposed": "Bayesian estimators place a probability distribution on the unknown cell probabilities.",
+      "dependencies": "The following explanation of priors can remain; it develops what that distribution does."
+    },
+    {
+      "id": "B03",
+      "priority": "P1",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 475,
+      "end_line": 477,
+      "title": "Limit the chi-squared statement to the likelihood-ratio approximation",
+      "current": "Testing independence therefore uses a\nchi-squared distribution rather than the normal approximation for comparing\npositive MI values.",
+      "reason": "Independence can also be tested by other procedures. The derivation establishes the chi-squared limiting distribution for the usual likelihood-ratio statistic, not a requirement for every independence test.",
+      "proposed": "The usual likelihood-ratio test of independence therefore uses a chi-squared limiting distribution, while the first-order normal approximation for positive MI degenerates at independence.",
+      "dependencies": "This is in Section 2.3, which local instructions protect from unsolicited revision. It is a narrowly identified scope clarification for review; retain all its algebra and teaching steps."
+    },
+    {
+      "id": "B04",
+      "priority": "P2",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 574,
+      "end_line": 577,
+      "title": "Distinguish the two variances directly",
+      "current": "The estimate \\(\\Vhat(P)/n_P\\)\ndescribes the expected spread of an MI estimate across samples. The\nvariability of \\(\\Vhat(P)\\) describes how much that assessment of spread\nitself changes across samples.",
+      "reason": "“Expected spread” can mean either variance or standard deviation, and “assessment of spread itself” adds another verbal layer at the point where the distinction matters.",
+      "proposed": "\\(\\Vhat(P)/n_P\\) estimates the sampling variance of \\(\\Ihat(P)\\). In contrast, \\(\\Var\\{\\Vhat(P)\\}\\) measures how much \\(\\Vhat(P)\\) itself changes between samples.",
+      "dependencies": "Keep the following explanation of equal means, different variability and the moment-matching cutoff. This replacement belongs in Section 2.4, not the protected derivation."
+    },
+    {
+      "id": "B05",
+      "priority": "P2",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 619,
+      "end_line": 619,
+      "title": "Replace a compressed historical label with the actual operation",
+      "current": "Hutcheson's test is a direct information-theoretic Welch predecessor.",
+      "reason": "The stacked label does not say what Hutcheson compares; the following sentence provides that explanation.",
+      "proposed": "Hutcheson applies a Welch-type comparison to two estimates of Shannon diversity.",
+      "dependencies": "Merge with the following sentence so “compares two Shannon diversity estimates” is not repeated. Preserve the formula and citation."
+    },
+    {
+      "id": "B06",
+      "priority": "P1",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 636,
+      "end_line": 638,
+      "title": "Describe a precedent without implying general validity",
+      "current": "The entropy comparison establishes that a Student \\(t\\) distribution can\nbe used to compare estimated information quantities, but MI requires\nmore than substituting a different numerator.",
+      "reason": "An entropy test supplies a precedent. It does not establish the validity of a Student t approximation for information estimators generally. The “different numerator” phrase also obscures the linked entropy errors explained next.",
+      "proposed": "Hutcheson’s test provides a precedent for comparing information estimates using a Student \\(t\\) distribution. Applying this approach to MI requires accounting for the linked errors in its joint and marginal entropy estimates.",
+      "dependencies": "Keep the next cell-count explanation. Remove any immediately repeated statement that MI combines those same entropies only if it adds no mechanism."
+    },
+    {
+      "id": "B07",
+      "priority": "P3",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 650,
+      "end_line": 652,
+      "title": "Keep the scientific connection instead of publication-status commentary",
+      "current": "Their later\npeer-reviewed account places the MI index within the segregation literature\n\\citep{mora2011}.",
+      "reason": "The publication status does not help explain the MI comparison. The earlier sentence already provides the relevant methodological precedent.",
+      "proposed": "Omit this sentence; retain the 2011 citation beside the segregation-literature claim if it supports that claim.",
+      "dependencies": "Check citation placement rather than deleting the reference automatically."
+    },
+    {
+      "id": "B08",
+      "priority": "P2",
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "line": 666,
+      "end_line": 667,
+      "title": "Name what is paired in the bootstrap",
+      "current": "and the MI difference recalculated for\neach pair.",
+      "reason": "“Pair” could refer to an observation (X,Y), populations, tables or method decisions.",
+      "proposed": "and the MI difference recalculated from each pair of resampled count tables.",
+      "dependencies": ""
+    },
+    {
+      "id": "M01",
+      "priority": "P3",
+      "file": "chapters_rewrite/03_problem_baselines.tex",
+      "line": 66,
+      "end_line": 66,
+      "title": "Present units separately from statistical assumptions",
+      "current": "\\begin{assumption}[Logarithm units]",
+      "reason": "The block itself correctly says this is a choice of units. Labelling it an assumption creates an unnecessary conceptual contradiction.",
+      "proposed": "Present the existing paragraph under the miniheading “Logarithm units” rather than as an assumption.",
+      "dependencies": "Preserve all wording about nats and invariance. Check assumption numbering and references if the environment is changed; do not renumber manually in prose."
+    },
+    {
+      "id": "M02",
+      "priority": "P2",
+      "file": "chapters_rewrite/03_problem_baselines.tex",
+      "line": 178,
+      "end_line": 180,
+      "title": "Identify both component estimates",
+      "current": "Expanded\nWelch uses the variability of that variance estimate to choose a Student\n\\(t\\) distribution instead.",
+      "reason": "“That variance estimate” follows a sentence about the standard error and can refer either to its square or to the individual V-hat terms. The derivation that follows uses their component sampling moments.",
+      "proposed": "Expanded Welch uses the sampling variability of \\(\\Vhat(P)\\) and \\(\\Vhat(Q)\\) to choose the degrees of freedom of a Student \\(t\\) distribution.",
+      "dependencies": ""
+    },
+    {
+      "id": "E01",
+      "priority": "P3",
+      "file": "chapters_rewrite/04_expanded_welch.tex",
+      "line": 368,
+      "end_line": 368,
+      "title": "Place the plug-in cancellation beside its empirical use",
+      "current": "This weighted cancellation also holds after exact plug-in substitution.",
+      "reason": "The empirical sensitivities are introduced later in this section. This preview interrupts the population mean-zero argument before the reader needs it.",
+      "proposed": "Move this point to the paragraph introducing \\(\\widehat\\tau^2(P)\\): “The empirical sensitivities also have probability-weighted mean zero under exact substitution; the displayed variance centres them explicitly.”",
+      "dependencies": "Keep the probability-weighted mean-zero proof and the centred empirical formula unchanged. Do not add a second proof."
+    },
+    {
+      "id": "E02",
+      "priority": "P3",
+      "file": "chapters_rewrite/04_expanded_welch.tex",
+      "line": 403,
+      "end_line": 404,
+      "title": "Use an explicit noun and verb for the plug-in calculation",
+      "current": "The plug-in \\(\\Vhat(P)\\) applies the variance calculation to this empirical\ntable.",
+      "reason": "“The plug-in V-hat” is grammatically awkward and makes the calculation sound like an operator.",
+      "proposed": "The plug-in estimate \\(\\Vhat(P)\\) evaluates \\(V\\) at this empirical table.",
+      "dependencies": ""
+    },
+    {
+      "id": "D01",
+      "priority": "P2",
+      "file": "chapters_rewrite/05_experimental_design.tex",
+      "line": 348,
+      "end_line": 351,
+      "title": "Use “calibration setting” for a specification of both populations",
+      "current": "To examine how that\nchoice affects the power comparison, we repeat calibration at \\(h=2\\)\nand \\(h=4\\) for A--C using the two null populations in\nTable~\\ref{tab:design-calibration-populations}.",
+      "reason": "Each lower or upper null specifies both P and Q. Calling these “two null populations” can make the reader think they are P and Q themselves.",
+      "proposed": "To examine how that choice affects power, we repeat calibration for A--C at \\(h=2\\) and \\(h=4\\), using the lower and upper equal-MI settings in Table~\\ref{tab:design-calibration-populations}.",
+      "dependencies": "Use “lower-null setting”, “upper-null setting” or “setting used to fit the cutoffs” in the corresponding Chapter 6, conclusion and appendix passages. Reserve “population P” and “population Q” for the individual joint distributions. Retain actual population terminology where a single table is intended."
+    },
+    {
+      "id": "D02",
+      "priority": "P3",
+      "file": "chapters_rewrite/05_experimental_design.tex",
+      "line": 363,
+      "end_line": 363,
+      "title": "Use a table heading that includes the alternative",
+      "current": "Calibration case & \\(I(P)\\) & \\(I(Q)\\)",
+      "reason": "The first row is a fixed alternative, so it is not itself a calibration case.",
+      "proposed": "Scenario & \\(I(P)\\) & \\(I(Q)\\)",
+      "dependencies": ""
+    },
+    {
+      "id": "D03",
+      "priority": "P3",
+      "file": "chapters_rewrite/05_experimental_design.tex",
+      "line": 380,
+      "end_line": 382,
+      "title": "Remove a repeated supplement signpost",
+      "current": "The experimental supplement reports broader MI differences from 0 to\n0.2 nats at \\(n=1{,}000\\) and 10,000, and a separate sample-allocation\nanalysis. The experimental supplement specifies those additional settings.",
+      "reason": "The second sentence adds no scientific information.",
+      "proposed": "The experimental supplement specifies the broader comparison over MI differences from 0 to 0.2 nats at \\(n=1{,}000\\) and 10,000, together with a separate sample-allocation analysis.",
+      "dependencies": ""
+    },
+    {
+      "id": "R01",
+      "priority": "P1",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 7,
+      "end_line": 8,
+      "title": "Distinguish simulation checks from an application without known truth",
+      "current": "Supporting simulations and the online shopping application\nexamine how the findings extend to other settings.",
+      "reason": "The application illustrates the outputs but cannot establish rejection behaviour because its population MI values are unknown. This opening gives the application the same evidential role as supporting simulations.",
+      "proposed": "Supporting simulations examine additional settings, and the online-shopping application illustrates interpretation of the test outputs.",
+      "dependencies": "The conclusion already makes this distinction clearly; retain that explanation."
+    },
+    {
+      "id": "R02",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 59,
+      "end_line": 60,
+      "title": "Identify the simulated estimate of the expectation",
+      "current": "The top row divides \\(\\E\\{\\Vhat(P)\\}\\)\nby the population benchmark \\(V(P)\\), and likewise for \\(Q\\).",
+      "reason": "The plotted numerator is an empirical mean used to estimate the expectation. The mathematical target and its Monte Carlo estimate should not silently become the same object.",
+      "proposed": "The top row divides the simulated mean of \\(\\Vhat(P)\\) by the population benchmark \\(V(P)\\), and likewise for \\(Q\\).",
+      "dependencies": "Keep the expectation symbol in the axis label; the body explains how it is estimated. No new symbol is needed."
+    },
+    {
+      "id": "R03",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 91,
+      "end_line": 92,
+      "title": "Keep the direction of error tied to the example",
+      "current": "The population calculation therefore\nunderestimates variation, whereas the sample-based calculation overestimates it.",
+      "reason": "The preceding values describe one setting; this final sentence can sound like a universal property of the two calculations.",
+      "proposed": "At this setting, the population prediction underestimates \\(\\Var\\{\\Vhat(P)\\}\\), while the average sample-based prediction overestimates it.",
+      "dependencies": ""
+    },
+    {
+      "id": "R04",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 118,
+      "end_line": 119,
+      "title": "State which benchmark defines “too few”",
+      "current": "Ratios below one mean too few\ndegrees of freedom; ratios above one mean too many.",
+      "reason": "The benchmark is a sampling-moment target. It is not a degree-of-freedom value proven to calibrate T exactly.",
+      "proposed": "Ratios below one indicate fewer degrees of freedom than the moment target; ratios above one indicate more.",
+      "dependencies": "Keep the later single sentence explaining that matching moments does not guarantee an exact Student t distribution. Do not repeat that qualification after every plot."
+    },
+    {
+      "id": "R05",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 119,
+      "end_line": 120,
+      "title": "Make the plotted inclusion rule explicit",
+      "current": "Bottom-row curves\nrequire all component estimates to be positive and finite.",
+      "reason": "“All component estimates” can mean both components in one repetition or every repetition for the component being plotted. Appendix B specifies the latter condition for these mean curves.",
+      "proposed": "A bottom-row value is shown only when that component’s estimate is positive and finite in all 100,000 repetitions.",
+      "dependencies": "Confirm that this matches the plot mask when implementing; do not substitute a conditional mean or silently change which points are shown. Appendix B already distinguishes conditional summaries."
+    },
+    {
+      "id": "R06",
+      "priority": "P3",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 229,
+      "end_line": 229,
+      "title": "Avoid implying that the preceding RQ1 simulations used unequal MI",
+      "current": "We now set \\(I(P)=I(Q)\\), so every rejection is a false positive.",
+      "reason": "RQ1 also used equal-MI grids. The scientific transition is from approximation accuracy to rejection rates.",
+      "proposed": "Under \\(I(P)=I(Q)\\), every rejection is a false positive. We now compare how often the two tests reject.",
+      "dependencies": ""
+    },
+    {
+      "id": "R07",
+      "priority": "P1",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 305,
+      "end_line": 306,
+      "title": "Describe estimation errors without claiming a causal separation",
+      "current": "These diagnostics distinguish a shifted estimated difference from an\ninaccurate standard error.",
+      "reason": "The summaries measure mean error and average variance error. They do not isolate each error’s contribution to rejection, and changes between margin regimes change more than bias alone.",
+      "proposed": "These diagnostics measure bias in \\(\\Deltahat\\) and average error in \\(\\SEhat^2\\), both of which can affect rejection.",
+      "dependencies": "Also replace “The matched populations distinguish rejection driven by a large difference bias from conservative behaviour when that bias cancels” with “In the different-skew case, large difference bias accompanies excessive rejection; in the same-skew case, that bias cancels and both tests are conservative.” Retain the mechanism and numeric evidence. Appendix B already states the causal limitation once."
+    },
+    {
+      "id": "R08",
+      "priority": "P1",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 333,
+      "end_line": 334,
+      "title": "Report the squared-standard-error quantity actually assessed",
+      "current": "At A, difference bias is negligible, but \\(\\SEhat\\) understates the\nvariation of \\(\\Deltahat\\).",
+      "reason": "The table compares mean squared SE with the observed variance. That is not a direct comparison of the mean SE with the observed SD.",
+      "proposed": "At A, difference bias is negligible, but the average \\(\\SEhat^2\\) is below the observed \\(\\Var(\\Deltahat)\\).",
+      "dependencies": "Use the same precise comparison in the corresponding Chapter 7 explanation. The plain-language consequence can follow: “The estimated uncertainty is too small on average.”"
+    },
+    {
+      "id": "R09",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 420,
+      "end_line": 424,
+      "title": "Anchor B’s power explanation to its sampling mean along the alternatives",
+      "current": "As\n\\(I(Q)\\) increases, the true signed difference becomes negative,\ninitially offsetting the positive estimation bias observed under the\nnull. The estimated difference moves towards zero, reducing \\(|T|\\)\nand rejection before the curve rises.",
+      "reason": "The mechanism is supported by the saved alternative-path diagnostics. The current paragraph refers only to bias under the null and says that “the estimated difference” moves, without identifying its sampling mean. It should connect the available evidence explicitly and avoid attributing the whole rate change to the mean alone.",
+      "proposed": "At B, positive estimation bias persists at the first alternatives. As \\(I(Q)\\) increases, the negative true difference partly offsets this bias, moving the sampling mean of \\(\\Deltahat\\) towards zero. This movement helps explain the initial fall in rejection. A larger cutoff leaves the estimated difference and standard error unchanged.",
+      "dependencies": "Read-only evidence check: focus.csv and diagnostics.csv in results/approximation_redesign give mean Delta-hat approximately +0.056712 at h=0, +0.023695 at h=0.5 and -0.007704 at h=1. Bias remains positive; the variance ratio also changes. Retain the direct mechanism with this scope in Chapter 7 and the calibrated-power paragraph; avoid repeating the full explanation three times. The numbers need not all be added to the manuscript."
+    },
+    {
+      "id": "R10",
+      "priority": "P3",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 434,
+      "end_line": 436,
+      "title": "Define the paired comparison once",
+      "current": "Each interval uses both methods' decisions from the same simulation\nrepetitions to estimate their power difference. These are paired\ncomparisons: the pairing is between methods applied to the same data.",
+      "reason": "Two consecutive sentences explain the same pairing. Retain the explicit subjects because “paired” was a genuine source of confusion.",
+      "proposed": "The intervals account for both tests being applied to the same two sampled count tables in each repetition.",
+      "dependencies": ""
+    },
+    {
+      "id": "R11",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 649,
+      "end_line": 651,
+      "title": "Name the uncertainty that lowers the weekend degrees of freedom",
+      "current": "Expanded Welch's 2.18 degrees of freedom for weekend reflect substantial\nestimated sampling uncertainty relative to the sizes of \\(\\Vhat(P)\\)\nand \\(\\Vhat(Q)\\), even with large samples",
+      "reason": "“Sampling uncertainty” could mean the uncertainty of the MI difference, the standard error or the variance estimates. Here the degrees of freedom concern the estimated variance components relative to their squared means.",
+      "proposed": "For weekend, the estimated variability of the variance components is large relative to their squared means, giving Expanded Welch only 2.18 degrees of freedom despite the large samples",
+      "dependencies": "Keep the reference to the near-independence diagnostic. Do not imply that simulation results establish the unknown application population’s moment target."
+    },
+    {
+      "id": "K01",
+      "priority": "P2",
+      "file": "chapters_rewrite/07_conclusions.tex",
+      "line": 10,
+      "end_line": 12,
+      "title": "Name the target of the concluding variance statement",
+      "current": "The variance of this sensitivity gives a first-order\nsampling-variance approximation, which is used with moment matching to\nchoose MI-specific degrees of freedom for a Student \\(t\\) distribution.",
+      "reason": "The sentence omits what the sampling-variance approximation is for. This is the central mathematical contribution and deserves an explicit object.",
+      "proposed": "The variance of this sensitivity gives the first-order approximation \\(\\Var\\{\\Vhat(P)\\}\\approx\\tau^2(P)/n_P\\). Moment matching then uses this approximation to choose MI-specific degrees of freedom for a Student \\(t\\) distribution.",
+      "dependencies": ""
+    },
+    {
+      "id": "K02",
+      "priority": "P2",
+      "file": "chapters_rewrite/07_conclusions.tex",
+      "line": 16,
+      "end_line": 18,
+      "title": "Lead the RQ1 conclusion with the finding",
+      "current": "The mean and sampling variance of \\(\\Vhat(P)\\) need separate checks.\nThe predicted sampling variance can be close to its observed value while\nthe mean estimate remains above \\(V(P)\\).",
+      "reason": "The opening describes how to assess the approximation before stating the result. “Mean estimate” can also mean an estimator of the mean instead of the sampling mean of V-hat.",
+      "proposed": "The predicted sampling variance of \\(\\Vhat(P)\\) can be close to its observed value even when the sampling mean \\(\\E\\{\\Vhat(P)\\}\\) remains above \\(V(P)\\).",
+      "dependencies": "In the following explanation, “sampling mean” is clearer than “inflated sampling mean”. Keep the squared-mean mechanism and population/sample distinction."
+    },
+    {
+      "id": "K03",
+      "priority": "P1",
+      "file": "chapters_rewrite/07_conclusions.tex",
+      "line": 71,
+      "end_line": 71,
+      "title": "Attach calibrated power gains to the alternatives being compared",
+      "current": "At common MI 0.02 nats, Expanded Welch gains power over Wald at A and B.",
+      "reason": "The common MI identifies the calibration null, not the alternatives. The sentence can sound like a gain across every point on both curves; both curves include the null and B is nonmonotone.",
+      "proposed": "After calibration at common MI 0.02 nats, Expanded Welch has higher power at the reported two- and four-null-SD alternatives for A and B.",
+      "dependencies": "Keep the following reversals at A/2 and B/4 and the table citation. Those identify the alternative and the changed calibration separately."
+    },
+    {
+      "id": "K04",
+      "priority": "P1",
+      "file": "chapters_rewrite/07_conclusions.tex",
+      "line": 100,
+      "end_line": 102,
+      "title": "Include the additional regularity condition used by Expanded Welch",
+      "current": "The derivation assumes independent categorical observations, fixed\ncategories, positive population cell probabilities and positive\nfirst-order MI variance.",
+      "reason": "Chapter 4 explicitly also requires positive variance sensitivity tau-squared. Positive V alone does not guarantee it, as Chapter 4 explains.",
+      "proposed": "The derivation assumes independent categorical observations, fixed categories, positive population cell probabilities, and positive \\(V(P)\\), \\(V(Q)\\), \\(\\tau^2(P)\\) and \\(\\tau^2(Q)\\).",
+      "dependencies": "The surrounding discussion already explains independence and higher-order behaviour. A cross-reference to the regular-sensitivity assumption can identify tau-squared without repeating its derivation."
+    },
+    {
+      "id": "A01",
+      "priority": "P1",
+      "file": "appendices_rewrite/A_derivation_details.tex",
+      "line": 218,
+      "end_line": 219,
+      "title": "Keep nI(P) labelled as a local approximation",
+      "current": "even\nwhen the population value \\(nI(P)\\) is very small.",
+      "reason": "nI(P) is the near-independence first-order approximation to component degrees of freedom, not the exact population moment target.",
+      "proposed": "even when the population first-order approximation \\(nI(P)\\) is very small.",
+      "dependencies": ""
+    },
+    {
+      "id": "A02",
+      "priority": "P1",
+      "file": "appendices_rewrite/A_derivation_details.tex",
+      "line": 222,
+      "end_line": 223,
+      "title": "State that the G moments come from the approximating distribution",
+      "current": "Since \\(\\E(G)=d+\\kappa\\) and\n\\(\\Var(G)=2(d+2\\kappa)\\),",
+      "reason": "G was defined as the finite-sample likelihood-ratio statistic and only given an approximate noncentral chi-squared distribution. Its moments should not suddenly be presented as exact finite-sample identities.",
+      "proposed": "Under the noncentral chi-squared approximation, \\(\\E(G)\\approx d+\\kappa\\) and \\(\\Var(G)\\approx2(d+2\\kappa)\\). Hence",
+      "dependencies": "Only the scope of the G-moment statement changes. The subsequent approximations and numerical predictions remain unchanged; retain the displayed derivation."
+    },
+    {
+      "id": "X01",
+      "priority": "P2",
+      "file": "appendices_rewrite/B_population_construction.tex",
+      "line": 134,
+      "end_line": 135,
+      "title": "Identify the fitting units",
+      "current": "Independently generate another 100,000 pairs for each\nequal-MI fitting setting for the focused power comparison.",
+      "reason": "“Pairs” is undefined at this point and could mean categorical observations.",
+      "proposed": "For each equal-MI fitting setting in the focused power comparison, independently generate another 100,000 repetitions, each producing one count table from \\(P\\) and one from \\(Q\\).",
+      "dependencies": "The existing paragraph already defines evaluation repetitions. A shorter acceptable version is “Generate a separate 100,000-repetition fitting batch for each focused equal-MI setting.”"
+    },
+    {
+      "id": "X02",
+      "priority": "P1",
+      "file": "appendices_rewrite/B_population_construction.tex",
+      "line": 315,
+      "end_line": 316,
+      "title": "Distinguish a required assumption from a verified population property",
+      "current": "The assumptions in Chapter~\\ref{chap:expanded} ensure positive population\nvariance quantities for the tested populations.",
+      "reason": "Assumptions specify which populations the argument covers. They do not, by themselves, verify positivity in every constructed population.",
+      "proposed": "For populations satisfying the assumptions in Chapter~\\ref{chap:expanded}, both \\(V(P)\\) and \\(\\tau^2(P)\\) are positive.",
+      "dependencies": "If the sentence is intended to report an actual check of all constructed populations, state that check explicitly and retain its evidence in the experiment record. This language review does not assert a failed positivity check."
+    },
+    {
+      "id": "X03",
+      "priority": "P3",
+      "file": "appendices_rewrite/B_population_construction.tex",
+      "line": 307,
+      "end_line": 308,
+      "title": "Make the existing notation equivalence explicit",
+      "current": "The subscript FO identifies the population first-order formula from\nChapter~\\ref{chap:expanded}.",
+      "reason": "The main chapters use nu-P for the first-order formula, while this appendix adds nu-P,FO. Both are understandable locally, but the reader should not have to infer their equivalence.",
+      "proposed": "\\(\\nu_{P,\\mathrm{FO}}\\) is the population first-order value denoted by \\(\\nu_P\\) in the main results.",
+      "dependencies": "Prefer this one equivalence sentence over a thesis-wide symbol replacement. Keep the distinct sampling-moment target and sample-based estimate."
+    },
+    {
+      "id": "C01",
+      "priority": "P2",
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "line": 16,
+      "end_line": 18,
+      "title": "Identify which estimator a proposed 9/n correction would change",
+      "current": "The coefficient suggested near independence is \\((k-1)^2=9\\).\nVariation in the observed scaled error leaves residual mean error under\na fixed \\(9/n\\) correction.",
+      "reason": "The main thesis also subtracts a leading bias correction from MI. A second “correction” without an explicit target can be confused with that existing correction.",
+      "proposed": "Near independence, Appendix~\\ref{sec:independence-boundary} predicts \\(\\E\\{\\Vhat(P)\\}-V(P)\\approx9/n\\) for these \\(4\\times4\\) tables. The observed scaled errors vary, so subtracting \\(9/n\\) from \\(\\Vhat(P)\\) would leave residual mean error.",
+      "dependencies": "Keep this as a diagnostic of a possible variance-estimator correction, not a change to the estimator actually used in the thesis."
+    },
+    {
+      "id": "C02",
+      "priority": "P2",
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "line": 45,
+      "end_line": 46,
+      "title": "Say what centres the difference in the dependence diagnostic",
+      "current": "Rank corr. is Spearman's correlation between the\nabsolute centred difference and its standard error,",
+      "reason": "“Centred” could mean subtracting zero, the true Delta or the observed sampling mean. The reporting code uses the observed sampling mean.",
+      "proposed": "“Rank corr.” is Spearman’s correlation between \\(|\\Deltahat-\\operatorname{mean}(\\Deltahat)|\\) and \\(\\SEhat\\),",
+      "dependencies": "The reporting calculation was inspected: report_calibration_sensitivity.py subtracts delta.mean() before taking the absolute value. Keep the existing finite-value inclusion rule. In the next example, replace “signed correlation about -0.001” with “Pearson correlation between Delta-hat and SE-hat about -0.001”; identify the 0.547 value as the rank correlation between the centred magnitude and SE-hat. redesign_study.py uses np.corrcoef for the signed statistic. Preserve both figures."
+    },
+    {
+      "id": "C03",
+      "priority": "P2",
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "line": 47,
+      "end_line": 48,
+      "title": "Explain the shape statistic instead of repeating its column label",
+      "current": "Skew\ndescribes the difference estimates.",
+      "reason": "The current sentence does not explain what “Skew” measures or what its sign means.",
+      "proposed": "“Skew” is the skewness of \\(\\Deltahat\\); positive values indicate a longer right tail and negative values a longer left tail.",
+      "dependencies": "Use “Skewness” in the generated header if space permits. Keep this short definition near the table."
+    },
+    {
+      "id": "C04",
+      "priority": "P2",
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "line": 103,
+      "end_line": 103,
+      "title": "Name the direction and quantity in the power contrast",
+      "current": "gives the Wald contrasts with intervals.",
+      "reason": "“Wald contrasts” does not specify which method is subtracted or that the quantity is power.",
+      "proposed": "gives Expanded Welch minus Normal Wald power differences with their intervals.",
+      "dependencies": "Also add “power” to the caption “Expanded Welch minus Normal Wald at two null SDs, in percentage points.” The signed direction is already consistent in the data."
+    },
+    {
+      "id": "C05",
+      "priority": "P3",
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "line": 196,
+      "end_line": 197,
+      "title": "Remove an ambiguous pronoun in the Holm algorithm",
+      "current": "replace any value below the\npreceding adjusted value by that value,",
+      "reason": "Two different values appear before “that value”. This is easy to make explicit without adding a formula.",
+      "proposed": "replace any value below the preceding adjusted value with the preceding adjusted value,",
+      "dependencies": ""
+    },
+    {
+      "id": "T01",
+      "priority": "P2",
+      "file": "figures_rewrite/focused_redesign_cases_rates.tex",
+      "line": 8,
+      "end_line": 8,
+      "title": "Expand compressed setting labels consistently",
+      "current": "16, same, 1,000",
+      "reason": "The first number is the number of categories, not an MI value or sample size, and “same” abbreviates a margin regime. The legend forces the reader to decode three fields.",
+      "proposed": "Use \\(16\\times16\\), same skew, \\(n=1{,}000\\), with the analogous labels for the other sparse cases.",
+      "dependencies": "Apply to cases_rates, cases_diagnostics and component_spread; the latter also needs its P/Q component identified. Change the reporter templates rather than only generated tables. Use line breaks or clearer separate columns if needed; do not shrink the table text to accommodate the expanded wording."
+    },
+    {
+      "id": "T02",
+      "priority": "P2",
+      "file": "figures_rewrite/focused_redesign_calibration_sensitivity.tex",
+      "line": 3,
+      "end_line": 3,
+      "title": "Use the defined effect-size symbol in calibration tables",
+      "current": "Setting: SD & Upper MI",
+      "reason": "“Setting: SD” can be mistaken for an estimated standard deviation. The number is h, the number of fitted null SDs separating the alternative MI values.",
+      "proposed": "Use “Setting, \\(h\\)” and “Upper-null MI (nats)”.",
+      "dependencies": "Apply the same h convention to sensitivity_power_full and sensitivity_cross_null. Keep lower/upper fitting and evaluation nulls distinct. Define pp as percentage points in the adjacent body or table header; it is already explained in the Chapter 6 paragraph."
+    },
+    {
+      "id": "T03",
+      "priority": "P2",
+      "file": "figures_rewrite/focused_redesign_cases_diagnostics.tex",
+      "line": 3,
+      "end_line": 3,
+      "title": "Distinguish combined degrees of freedom from component summaries",
+      "current": "Setting & Bias/SD & Est./obs. var. & Rank corr. & Skew & Median df",
+      "reason": "“Median df” has different objects across the component and shared-estimator tables. This table reports combined Expanded Welch degrees of freedom.",
+      "proposed": "Use “Median combined df” here, “Skewness” for the shape statistic, and explicitly define df as degrees of freedom once beside the first abbreviated table.",
+      "dependencies": "The component-spread table should say “component df” in its caption or header; its existing caption already does. Preserve the numeric values and use a wrapped header if necessary."
+    },
+    {
+      "id": "T04",
+      "priority": "P3",
+      "file": "figures_rewrite/focused_redesign_null_sd_fitting.tex",
+      "line": 3,
+      "end_line": 3,
+      "title": "Expand a one-off table abbreviation",
+      "current": "Setting & Null SD (nats) & MCSE (nats)",
+      "reason": "MCSE is not explicitly introduced as an abbreviation. “Monte Carlo SE” is readable and short enough for a wrapped header.",
+      "proposed": "Setting & Null SD (nats) & Monte Carlo SE (nats)",
+      "dependencies": "Keep the body definition of Monte Carlo standard error. This is a label refinement, not a change to its calculation."
+    },
+    {
+      "id": "R12",
+      "priority": "P2",
+      "file": "chapters_rewrite/06_results.tex",
+      "line": 283,
+      "end_line": 283,
+      "title": "Label the validity panels as fractions",
+      "current": "\\includegraphics[width=\\textwidth]{focused_redesign_null_uniform.pdf}",
+      "reason": "The embedded axes say “Valid”, which names a property rather than the plotted quantity. Their values are fractions between zero and one.",
+      "proposed": "Use “Valid fraction” on the lower panels of both main false-positive figures.",
+      "dependencies": "Change the active plotting template in WelchSatterthwaiteMI/experiments/redesign_report.py and update only the corresponding current figures when figure edits are authorized. Do not revive older A.4 legends or supplementary figures that are no longer included in the thesis."
+    }
+  ],
+  "counts": {
+    "P2": 27,
+    "P1": 12,
+    "P3": 11
+  },
+  "source_and_pdf_manifest": [
+    {
+      "file": "main.tex",
+      "sha256": "bbe067e1998dcbff92e6e72231d6f06f370b5a82042ad429e191c15e8868e4f6",
+      "bytes": 922
+    },
+    {
+      "file": "metadata.tex",
+      "sha256": "eab0fc5ef229d732eac0a40c848b7da57007e5875c80afc4f6cd8261808572fa",
+      "bytes": 466
+    },
+    {
+      "file": "preamble.tex",
+      "sha256": "7e07e57a0f4c7ece0cfe4bf491d36ecf9710cfad729d412bf27004e8c1e488ef",
+      "bytes": 2176
+    },
+    {
+      "file": "frontmatter/abstract.tex",
+      "sha256": "9f5de9451e66988c01c4a8f59c0c09e435c275c62a51092dd204a2b4c073eaac",
+      "bytes": 1719
+    },
+    {
+      "file": "frontmatter/acknowledgements.tex",
+      "sha256": "dfa01789a8b823f91c62f23ad4216cfbb205fb08aa780a382e102f0c320876b5",
+      "bytes": 264
+    },
+    {
+      "file": "frontmatter/titlepage.tex",
+      "sha256": "c12776979ffb5fd28822b82b8104faa3a510f22b3b42336417997395dc4fd7e9",
+      "bytes": 518
+    },
+    {
+      "file": "chapters_rewrite/01_introduction.tex",
+      "sha256": "5cf88fa3109706f5e1486ebc8580fe3eef09a396893f762cce462a5f42761e68",
+      "bytes": 6491
+    },
+    {
+      "file": "chapters_rewrite/02_background_literature.tex",
+      "sha256": "d137d37552bbb04aae1e330050450c1449a6651dd3807b1236a9cb80f9686197",
+      "bytes": 31215
+    },
+    {
+      "file": "chapters_rewrite/03_problem_baselines.tex",
+      "sha256": "2ef5bfe9f97055bb81aaa6c311aa30e1cb8bc267b0c0e2abf351ec90f161b3ab",
+      "bytes": 7132
+    },
+    {
+      "file": "chapters_rewrite/04_expanded_welch.tex",
+      "sha256": "27a57eff2894a19135b392feebc167a488e21ac8ec62d7f35e5bd4005f7455aa",
+      "bytes": 24299
+    },
+    {
+      "file": "chapters_rewrite/05_experimental_design.tex",
+      "sha256": "9e6e16dd0e497fd5a892e51d13e27891d4137d07d46803acc10048c3a6732dec",
+      "bytes": 20911
+    },
+    {
+      "file": "chapters_rewrite/06_results.tex",
+      "sha256": "260daebf1afffb40089e30bc976765629b0092a007579b57f886f1f4fe9d249c",
+      "bytes": 31039
+    },
+    {
+      "file": "chapters_rewrite/07_conclusions.tex",
+      "sha256": "b22520d0c5bf66037f7919178f5f38894bbc32726975db50ceb61147c50c4d9a",
+      "bytes": 8808
+    },
+    {
+      "file": "appendices_rewrite/A_derivation_details.tex",
+      "sha256": "66fae1ee24bea7d79c19bcd18b66a644a4b3ab36b3996872e7444a1cbeaac24d",
+      "bytes": 10548
+    },
+    {
+      "file": "appendices_rewrite/B_population_construction.tex",
+      "sha256": "253e1e165d0bd13e033fff4af47610a720a181401484cac875243885cd4c3917",
+      "bytes": 19201
+    },
+    {
+      "file": "appendices_rewrite/C_additional_results.tex",
+      "sha256": "b8f6d1ad52f5c5ef672d1041f1d016ad45d614a473d0d71fff53ade39aa920c8",
+      "bytes": 8293
+    },
+    {
+      "file": "figures_rewrite/evidence_values.tex",
+      "sha256": "cb348b64d37b26bf79eb1c2da8f5a778b03594e32a27a5848abd3e7109e476ca",
+      "bytes": 2256
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_calibration_sensitivity.tex",
+      "sha256": "0c64d035381957ed30d53a15821871680ea617e32417526c9fc273cdf4d969dd",
+      "bytes": 515
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_cases_diagnostics.tex",
+      "sha256": "441e37568e88fa641381fb33187cd430a6ea53691b00b5fc04d30a96a3839d37",
+      "bytes": 528
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_cases_rates.tex",
+      "sha256": "53844629ff3ca15cc271295d5e96ce81ff4f766fa0f2120941e365f4b7fa6922",
+      "bytes": 522
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_component_spread.tex",
+      "sha256": "ef76eeb5c308859e53ef3596f1690c3d2d5f53a53a129f04a5485578b6751bc9",
+      "bytes": 1115
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_components.tex",
+      "sha256": "9c59c2ad3c4b063f5fddcecde6fa9c01ec35336d9da0aa54fee77ae7c8f9097c",
+      "bytes": 547
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_null_sd_fitting.tex",
+      "sha256": "bf93b530e4d62475359bc764cd03d90cbc0eeb461001213c62adcdd4ead58310",
+      "bytes": 190
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_power_contrasts.tex",
+      "sha256": "463442c4323a4c272d6710b3c402383de44dbc8108e50668650247581ae1008f",
+      "bytes": 318
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_rejection_direction.tex",
+      "sha256": "4e12f7e0219dac84d4314022d0676d51c2c764fb5e480be25daaed7ed9f263ea",
+      "bytes": 200
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_reporting_values.tex",
+      "sha256": "09b15d1d98a48b4103c7add45ab8eb40828ba16b9e34082054f935e0a5a00ad6",
+      "bytes": 438
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_scaled_mean_error.tex",
+      "sha256": "fbde5163d9d549971aa37ad5fba6c9994ecfb69037406ff7de3c17d5db4fda6f",
+      "bytes": 171
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_sensitivity_cross_null.tex",
+      "sha256": "44672925554ada90571cc5fc4261c4bfa0d8cc6c6e136ba5f7b5993c5208ec56",
+      "bytes": 898
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_sensitivity_power_full.tex",
+      "sha256": "b68e84cc56531b464d975b48ac2eea6a815eb1dfb4f6e63852e427bf83259eba",
+      "bytes": 520
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_shared_estimates.tex",
+      "sha256": "c7146f1aebee6da66ff553ce97b0ea6f22fb3ceeded0eabe1a5cc55a53b22943",
+      "bytes": 312
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_stronger_null.tex",
+      "sha256": "edd4bd08e11c545f74640a4c239f9e55cbf30e7278cc255e6888b69de7f209e5",
+      "bytes": 244
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_component_df_different_skew.pdf",
+      "sha256": "6d73a11d523b03ed0a99eb677135913cf7fb2e60e8fd36e00869391d1dedfd77",
+      "bytes": 30261
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_moment_predictions_different_skew.pdf",
+      "sha256": "707c3ca6b2d1a1937463c7482fbb5db4edf481b20df59cc57a90b1687f2fef9e",
+      "bytes": 37374
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_near_independence_different_skew_1000.pdf",
+      "sha256": "0a668907f5bbbfb137648c1ab1c6749f6ad645b9bb3cd11649f77dd305e34db7",
+      "bytes": 27727
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_null_different_skew.pdf",
+      "sha256": "09f4ddf840acc19eb2589a2fddc68329e9d1340af284562d59152bf5a61ee21c",
+      "bytes": 17450
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_null_uniform.pdf",
+      "sha256": "07ac76d91534746fb9d51b6fe9857c3858d959a76d065bcd92cbd108034f0f14",
+      "bytes": 17520
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_power.pdf",
+      "sha256": "3baef10a83dfbff07163c3611b4f9a3d98b1a00af3c4cb988c2643e4fd516ec7",
+      "bytes": 14944
+    },
+    {
+      "file": "figures_rewrite/focused_redesign_power_calibrated.pdf",
+      "sha256": "126135a95919910200d77f3c67f39a8666708ec59d1ee33ac7d75bd0e452a376",
+      "bytes": 15888
+    },
+    {
+      "file": "figures_rewrite/focused_reference_distributions.pdf",
+      "sha256": "9cb8d99c9505e99d81c26617fbb30ecd240d3e10c827cdcde6254c129dd96f6f",
+      "bytes": 17097
+    },
+    {
+      "file": "main.pdf",
+      "sha256": "2ac8526f40d219f83025ca8bd75e64501054b0f5d1bed4eb9f50a5a3cc0e5965",
+      "bytes": 707515
+    },
+    {
+      "file": "deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf",
+      "sha256": "2ac8526f40d219f83025ca8bd75e64501054b0f5d1bed4eb9f50a5a3cc0e5965",
+      "bytes": 707515
+    }
+  ],
+  "exclusions": [
+    "Historical drafts and archives",
+    "Experimental supplement prose not included in main.tex",
+    "Bibliography entry titles and author names; citations preserved",
+    "Independent scientific validation of every literature claim or experiment output",
+    "Fresh page-layout QA or a new PDF build"
+  ]
+}
