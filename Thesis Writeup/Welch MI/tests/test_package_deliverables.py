@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import io
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -11,6 +12,8 @@ from unittest.mock import patch
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "package_deliverables.py"
+PREAMBLE = (SCRIPT.parent / "preamble.tex").read_text()
+LATEXMKRC = (SCRIPT.parent / ".latexmkrc").read_text()
 spec = importlib.util.spec_from_file_location("delivery_package", SCRIPT)
 package = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(package)
@@ -27,6 +30,7 @@ class DeliveryTests(unittest.TestCase):
         self.delivery.mkdir()
         self.source = self.thesis / "main.tex"
         self.source.write_text("current source")
+        (self.thesis / "preamble.tex").write_text(PREAMBLE)
         self.evidence = self.root / "evidence.txt"
         self.evidence.write_text("current evidence")
         (self.thesis / "main.pdf").write_bytes(b"old compiled PDF")
@@ -65,16 +69,81 @@ class DeliveryTests(unittest.TestCase):
 
     def test_build_uses_separate_directory_and_updates_canonical_pdf(self):
         def compile_pdf(*args, **kwargs):
-            (self.thesis / "build/main.pdf").write_bytes(b"fresh build")
+            (self.thesis / "build/main.pdf").write_bytes(b"%PDF-fresh build")
+            (self.thesis / "build/main.log").write_text("Output written on build/main.pdf")
         with patch.object(package.shutil, "which", return_value="/latexmk"):
             with patch.object(package.subprocess, "run", side_effect=compile_pdf) as run:
                 package.build_main()
         args, kwargs = run.call_args
         self.assertIn("-outdir=build", args[0])
+        self.assertIn("$success_cmd = '';", args[0])
         self.assertEqual(args[0][-1], "main.tex")
         self.assertEqual(kwargs, {"cwd": self.thesis, "check": True})
-        self.assertEqual((self.thesis / "main.pdf").read_bytes(), b"fresh build")
+        self.assertEqual((self.thesis / "main.pdf").read_bytes(), b"%PDF-fresh build")
         self.assertTrue((self.thesis / "build/chapters_rewrite").is_dir())
+
+    def test_post_build_publishes_without_a_second_compilation(self):
+        build = self.thesis / "build"
+        build.mkdir()
+        compiled = build / "main.pdf"
+        compiled.write_bytes(b"%PDF-completed external build")
+        compiled.with_suffix(".log").write_text("Output written on build/main.pdf")
+        with patch.object(package, "build_main") as rebuild:
+            with contextlib.redirect_stdout(io.StringIO()):
+                package.publish_deliverables(compiled=compiled)
+        rebuild.assert_not_called()
+        self.assertEqual((self.delivery / package.PDF_NAME).read_bytes(), compiled.read_bytes())
+        package.check_deliverables()
+
+    def test_post_build_rejects_incomplete_or_warning_outputs_before_publishing(self):
+        self.publish()
+        before = {p.name: p.read_bytes() for p in self.delivery.iterdir()}
+        build = self.thesis / "build"
+        build.mkdir()
+        compiled = build / "main.pdf"
+        compiled.write_bytes(b"%PDF-current build")
+        for log in (None, "Incomplete run", "Output written on build/main.pdf\nOverfull \\hbox"):
+            if log is not None:
+                compiled.with_suffix(".log").write_text(log)
+            with self.subTest(log=log), self.assertRaises(RuntimeError):
+                package.publish_deliverables(compiled=compiled)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in self.delivery.iterdir()})
+
+    @unittest.skipUnless(shutil.which("perl"), "The latexmk hook requires Perl.")
+    def test_latexmk_hook_targets_only_main_and_passes_output_without_shell_expansion(self):
+        hook = self.thesis / ".latexmkrc"
+        hook.write_text(LATEXMKRC)
+        stub = self.thesis / "package_deliverables.py"
+        stub.write_text("import sys\nfrom pathlib import Path\n"
+                        "Path('hook-args.txt').write_text(repr(sys.argv[1:]))\n")
+        historical = self.thesis / "Working Draft v3.tex"
+        historical.write_text("historical source")
+        run = subprocess.run(["perl", "-e",
+                              'do $ARGV[0] or die $@; welch_publish_delivery($ARGV[1], $ARGV[2]);',
+                              str(hook), str(historical), "build/Working Draft v3.pdf"],
+                             cwd=self.thesis, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertFalse((self.thesis / "hook-args.txt").exists())
+        output = "build/main with spaces.pdf"
+        run = subprocess.run(["perl", "-e",
+                              'do $ARGV[0] or die $@; welch_publish_delivery($ARGV[1], $ARGV[2]);',
+                              str(hook), str(self.source), output],
+                             cwd=self.thesis, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertEqual((self.thesis / "hook-args.txt").read_text(),
+                         repr(["--publish-built", output]))
+
+    @unittest.skipUnless(shutil.which("perl"), "The latexmk hook requires Perl.")
+    def test_latexmk_hook_surfaces_delivery_failure(self):
+        hook = self.thesis / ".latexmkrc"
+        hook.write_text(LATEXMKRC)
+        (self.thesis / "package_deliverables.py").write_text("raise SystemExit(3)\n")
+        run = subprocess.run(["perl", "-e",
+                              'do $ARGV[0] or die $@; welch_publish_delivery($ARGV[1], $ARGV[2]);',
+                              str(hook), str(self.source), "build/main.pdf"],
+                             cwd=self.thesis, capture_output=True, text=True)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("Delivery refresh failed", run.stderr)
 
     def test_failed_build_leaves_previous_delivery_untouched(self):
         self.publish()
@@ -83,6 +152,34 @@ class DeliveryTests(unittest.TestCase):
             with self.assertRaises(subprocess.CalledProcessError):
                 package.publish_deliverables()
         self.assertEqual(before, {p.name: p.read_bytes() for p in self.delivery.iterdir()})
+
+    def test_paragraph_override_stops_build_before_latex_or_pdf_changes(self):
+        self.source.write_text(r"\noindent An inconsistent opening paragraph.")
+        before = (self.thesis / "main.pdf").read_bytes()
+        with patch.object(package.subprocess, "run") as run:
+            with self.assertRaisesRegex(AssertionError, "main.tex:1"):
+                package.build_main()
+        run.assert_not_called()
+        self.assertEqual((self.thesis / "main.pdf").read_bytes(), before)
+
+    def test_style_check_ignores_comments_but_rejects_local_length_changes(self):
+        self.source.write_text("% \\noindent Historical note\nOrdinary paragraph.")
+        package.check_paragraph_style()
+        for override in (r"\setlength{\parindent}{1.5em}", r"\parskip=1em"):
+            self.source.write_text(override)
+            with self.subTest(override=override), self.assertRaises(AssertionError):
+                package.check_paragraph_style()
+
+    def test_preamble_cannot_restore_indents_or_override_the_rule_later(self):
+        path = self.thesis / "preamble.tex"
+        for changed in (
+            PREAMBLE.replace(r"\setlength{\parindent}{0pt}",
+                             r"\setlength{\parindent}{1.5em}"),
+            PREAMBLE + "\n" + r"\parindent=1.5em",
+        ):
+            path.write_text(changed)
+            with self.subTest(changed=changed), self.assertRaises(AssertionError):
+                package.check_paragraph_style()
 
     def test_failed_archive_preparation_leaves_previous_delivery_untouched(self):
         self.publish()

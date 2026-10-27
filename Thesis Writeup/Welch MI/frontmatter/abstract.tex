@@ -1,33 +1,31 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Mutual information (MI) measures how much observing one variable reduces
-uncertainty about another. This thesis considers whether MI between two
-categorical variables differs across independent populations. A Normal
-Wald test provides one approach, but small or sparse samples can distort
-the estimated difference and its standard error, producing unreliable
-false-positive rates and power.
+Mutual information (MI) measures how much knowing one variable reduces
+uncertainty about another. This thesis develops a test for comparing MI
+between two categorical variables across independent populations. The
+Normal Wald test uses a normal approximation for this comparison, which
+can give inaccurate false-positive rates when samples are small or contain
+many rare category combinations.
 
-This thesis develops an Expanded Welch--Satterthwaite test that retains
-Wald's estimated difference and standard error and uses a Student \(t\)
-distribution. Its degrees of freedom depend on how much the estimated
-MI variance changes between samples. The thesis derives a first-order
-approximation to that variability by accounting for changes in cell
-probabilities, their margins and the resulting MI values.
+The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
+Wald's estimated MI difference and standard error but compares the test
+statistic with a Student \(t\) distribution. To choose its degrees of
+freedom, the thesis derives a first-order approximation to how much the
+variance estimate within that standard error changes between samples.
+The calculation accounts for changes in cell probabilities and their row
+and column totals.
 
-Simulations check the moment approximations and compare false-positive
-rates and power with Normal Wald. The mean and sampling-variance
-approximations have different errors,
-and estimated degrees of freedom can remain well below the target based
-on the actual sampling moments. An online-shopping dataset illustrates
-interpretation on observed data.
+Simulations assess the approximations and compare false-positive rates
+and power to detect genuine MI differences. Near independence, sampling
+noise can make the degrees-of-freedom approximations inaccurate. An
+online-shopping application illustrates the tests on observed data.
 
-Expanded Welch brings false-positive rates closer to the intended level
-in selected small-sample populations at common MI 0.02 nats, at a cost
-in nominal power. Its
-power advantage after empirical calibration depends on which equal-MI
-population supplies the cutoff and reverses in some comparisons when
-that population changes. A larger cutoff also leaves sparse-table bias
-and inaccurate standard errors unresolved. The results support selected
-calibration improvements while identifying estimation errors that limit
-reliable inference.
+Expanded Welch brings false-positive rates closer to 5\% in selected
+small-sample settings, with lower power under the usual rejection
+thresholds. We also adjust the rejection thresholds to give both tests
+approximately 5\% false positives at a chosen common MI value. Expanded
+Welch then has higher power in some comparisons, but this advantage can
+reverse when a different common MI value is used for the adjustment.
+Changing the rejection threshold cannot correct bias in the MI difference
+or errors in its estimated uncertainty.

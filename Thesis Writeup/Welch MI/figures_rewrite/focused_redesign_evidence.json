@@ -2,8 +2,7 @@
   "bootstrap_repetitions": 1000,
   "display_methods": [
     "wald",
-    "expanded",
-    "reference"
+    "expanded"
   ],
   "evaluation_pairs": 36600000,
   "fitting_pairs": 18600000,

@@ -7,7 +7,7 @@ argument. Each simulation setting uses 100,000 evaluation repetitions. The
 experimental supplement retains the full companion plots and supporting
 comparisons.
 
-\section{Component diagnostics and reference fitting}
+\section{Component diagnostics and fitted null SDs}
 \label{sec:component-diagnostics}
 
 Table~\ref{tab:redesign-scaled-mean-error} shows how the mean error of
@@ -43,8 +43,10 @@ Table~\ref{tab:redesign-case-diagnostics} describes the shared difference
 and standard error. Bias/SD divides difference bias by its observed SD;
 variance ratio divides the mean squared standard error by the observed
 difference variance. Rank corr. is Spearman's correlation between the
-absolute centred difference and its standard error, and skew describes
-the difference estimates. All 100,000 repetitions are included in each row.
+absolute centred difference and its standard error, using every repetition
+where both quantities are finite without a test-validity restriction. Skew
+describes the difference estimates. All 100,000 repetitions are included
+in each row.
 A near-zero signed correlation can follow from symmetry despite
 magnitude dependence: the same-skew \(2\times2\), \(n=100\) null has
 signed correlation about \(-0.001\) and magnitude rank correlation 0.547.
@@ -59,8 +61,8 @@ signed correlation about \(-0.001\) and magnitude rank correlation 0.547.
 \end{table}
 
 \begin{samepage}
-The fixed references and null SDs in
-Table~\ref{tab:redesign-reference-fitting} use independent 100,000-repetition
+The null SDs in
+Table~\ref{tab:redesign-null-sd-fitting} use independent 100,000-repetition
 fitting batches. Their Monte Carlo standard errors follow
 Appendix~\ref{sec:moment-uncertainty}. The fitted SDs define the fixed
 alternative populations, so power intervals condition on those tables.
@@ -70,9 +72,9 @@ alternative populations, so power intervals condition on those tables.
 \begin{table}[!htbp]
 \centering
 \small
-\caption{Independent moment references and fitted null standard deviations.}
-\label{tab:redesign-reference-fitting}
-\input{figures_rewrite/focused_redesign_reference_fitting}
+\caption{Independently fitted null standard deviations.}
+\label{tab:redesign-null-sd-fitting}
+\input{figures_rewrite/focused_redesign_null_sd_fitting}
 \end{table}
 
 \section{Calibrated power and sensitivity checks}
@@ -80,8 +82,7 @@ alternative populations, so power intervals condition on those tables.
 
 Figure~\ref{fig:redesign-calibrated-power} in Chapter~\ref{chap:results}
 shows the full power curves
-under calibration at common MI 0.02. Wald and the fixed moment reference
-have identical calibrated decisions. Table~\ref{tab:redesign-power-contrasts}
+under calibration at common MI 0.02. Table~\ref{tab:redesign-power-contrasts}
 gives nominal and calibrated paired contrasts at two null SDs, including
 cutoff-fitting uncertainty for the calibrated intervals.
 
@@ -143,8 +144,7 @@ the same-skew populations show far fewer such cases.
 \input{figures_rewrite/focused_redesign_rejection_direction}
 \end{table}
 
-At \(n=10{,}000\), neither test nor the fixed reference
-has a wrong-direction rejection at this alternative under either skew
+At \(n=10{,}000\), neither test has a wrong-direction rejection at this alternative under either skew
 regime. Under different skew, the difference bias at \(n=1{,}000\)
 is 0.03071 nats. Thus
 \begin{equation}

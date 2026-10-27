@@ -2,7 +2,7 @@
 
 This is the main Welch MI experiment, promoted on 24 October 2026. It contains the fresh 366-setting four-rule study and supports the main thesis deliverable. The previous baseline is preserved under the workspace root's `Archive/Welch MI baseline 2026-10-24/`, with its original-file SHA-256 manifest.
 
-The main thesis now compares Expanded Welch with Normal Wald, retaining the independently fitted moment reference as a diagnostic. The sample-size df arm remains in the experiment evidence and `supplementary_displays/sample_size_df_comparison/`, which preserves the preceding four-rule displays and reporters. Current reporters omit that arm from thesis displays; no simulation or bootstrap records were changed.
+The main thesis source compares Expanded Welch with Normal Wald. The fixed moment reference is now a supporting diagnostic in `supplementary_displays/fixed_moment_reference/`, which preserves its definition, combination identity and original full comparison assets. The sample-size df arm remains in the experiment evidence and `supplementary_displays/sample_size_df_comparison/`, which preserves the preceding four-rule displays and reporters. Current reporters omit both supplementary rules from thesis displays; no simulation or bootstrap records were changed.
 
 ## Current experiment
 
@@ -169,3 +169,5 @@ MPLBACKEND=Agg MPLCONFIGDIR=$PWD/.mplcache XDG_CACHE_HOME=$PWD/.cache \
 
 The full repository's [`experiments/README.md`](experiments/README.md)
 indexes exploratory scripts separately from the final thesis protocol.
+
+The two-test figure/table refresh `python experiments/redesign_report.py --displays-only` reads saved CSV/JSON summaries without resampling or writing experiment results. It does not build the thesis. PDF and delivery-package rebuilds are currently deferred until the user requests them.

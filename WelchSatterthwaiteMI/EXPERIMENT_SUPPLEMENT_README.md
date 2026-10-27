@@ -15,6 +15,12 @@ source. The statistical audit itself requires only this supplement. The 20,000-p
 
 The full fresh run passes chunk hash/dimension checks and independent count/probability-formula reconstruction for 4,416 pairs. Eight dedicated integrity/statistical tests cover scope, null matching, exact n_i comparator, zero moments, ties, stream independence, batching and corruption detection. Additional manuscript consistency tests check generated tables and calibrated fixed-rule equivalence.
 
+The final 26 October ratio review uses the quantity being assessed divided by its corresponding benchmark. Mean variance-coefficient estimates use population V; both sampling-variance predictions use the same observed variance; both component degrees-of-freedom approximations use the same sampling-moment target. Shared squared-standard-error diagnostics use the observed variance of the MI difference. The saved `moments.csv` ratio fields and `diagnostics.csv` variance ratio already have these definitions, so current reporters use their unrounded values and matching intervals directly. `experiments/report_ratio_tools.py` supplies the shared display functions and unconditional df inclusion rule. Rebuild with `python experiments/redesign_report.py --bootstrap 0` to reuse existing bootstrap results, then regenerate the main split figures with the thesis source's `figures_rewrite/focused_results_displays.py`. Historical archived displays keep their original conventions. Current power curves use `-Delta/sigma_0` on the positive horizontal axis because `Delta=I(P)-I(Q)` is negative along these alternatives.
+
+The 26 October Chapter 6 reduction moves the construction table and sample-allocation analysis into `supplementary_displays/construction_allocation/`. Its two-page `construction_allocation.pdf`, standalone LaTeX source and unchanged table sources preserve the former Section 6.4 material. The main thesis retains a short construction finding in Section 6.2.1; its application is now Section 6.4. The raw results, parameter settings, experiment code and existing figure assets are unchanged.
+
+The later 26 October plot revision separates population and sample-based calculations into different rows of Figures 6.1–6.2. The main near-independence panel retains four df curves. `supplementary_displays/near_independence_diagnostics/` preserves all six curves and the fifth–95th percentile band for all nine margin/sample-size combinations, using descriptive legends in place of “A.4”. The thesis helper accepts `--diagnostics` to regenerate these full plots from the original saved summaries. These plots use the same unrounded values; no simulations, moment estimates or bootstrap samples are rerun.
+
 # Historical supplement documentation
 
 # Welch-MI Focused Experiment Supplement
@@ -267,3 +273,7 @@ deterministic resamples of paired saved outputs. These are precision checks
 on the simulation summaries, not bootstrap MI tests or new sampled data.
 Appendix C.3 reports its estimator, exact settings and mixed findings within
 the standalone manuscript.
+
+The 27 October scope reduction moves the fixed moment reference into `supplementary_displays/fixed_moment_reference/`. That folder preserves its definition, combined-moment derivation and original full comparison assets. RQ1's component moment targets remain in the main thesis. `redesign_report.py --displays-only` updates the two-test views from saved summaries without fitting, bootstrap draws or result-file writes. The new supplement source and revised main manuscript await an explicitly requested PDF/package rebuild.
+
+The subsequent 27 October appendix reduction preserves covariance calculations, derivative checks, binary-construction algebra, full moment-uncertainty derivation, Wilson formulas and supplementary-only grids in `supplementary_displays/supporting_calculations/`. The standalone source includes its bibliography; exact pre-edit appendix sources are retained separately. No numerical evidence was changed or rerun, and PDF builds remain deferred.

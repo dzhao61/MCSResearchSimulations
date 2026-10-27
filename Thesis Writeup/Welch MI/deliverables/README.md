@@ -14,3 +14,5 @@ From the thesis folder, run `python3 package_deliverables.py` (or
 `make`) to build the main manuscript and refresh all three files together.
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.
+Direct `latexmk` builds of `main.tex` also refresh this delivery set through
+the project's post-build hook. Failed builds do not publish delivery files.

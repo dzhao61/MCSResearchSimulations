@@ -11,6 +11,23 @@
       "0.974--1.009"
     ]
   ],
+  "figure_rows": {
+    "moment_predictions": [
+      "mean",
+      "population variance prediction",
+      "average sample variance prediction"
+    ],
+    "component_df": [
+      "population first-order df",
+      "mean estimated df"
+    ]
+  },
+  "near_independence_curves": [
+    "mean estimated df",
+    "near-independence prediction of mean df",
+    "moment target",
+    "population first-order df"
+  ],
   "shared_estimates": [
     [
       "A",
@@ -58,32 +75,28 @@
       "Copying",
       "0.02985",
       "26.01",
-      "24.84",
-      "25.35"
+      "24.84"
     ],
     [
       "Different skew",
       "Four-cell transfer",
       "0.03155",
       "30.96",
-      "29.72",
-      "30.13"
+      "29.72"
     ],
     [
       "Same skew",
       "Copying",
       "-0.00004",
       "0.60",
-      "0.53",
-      "0.56"
+      "0.53"
     ],
     [
       "Same skew",
       "Four-cell transfer",
       "0.00004",
       "1.13",
-      "1.00",
-      "1.04"
+      "1.00"
     ]
   ],
   "allocation": [
@@ -136,13 +149,9 @@
       "Expanded Welch",
       "9,591 / 9,592",
       "52 / 1,646"
-    ],
-    [
-      "Moment reference",
-      "9,829 / 9,830",
-      "53 / 1,705"
     ]
   ],
+  "ratio_orientation": "quantity assessed / corresponding benchmark",
   "inputs_sha256": {
     "configurations.csv": "e57959184297f21e6ab1b8075104a67dab2b36f2a59dc24a9c92ad4ed26bc4a8",
     "displays.csv": "a65686f710d2a1984870b050ef4b34cd00dcef5b2d325101a7a144ee25ea6ab0",

@@ -1,26 +1,22 @@
 \chapter{Experimental Details}
 \label{app:construction}
 
-This appendix specifies the population formulas, target-MI search, complete
-parameter grids, sampling procedure and outcome calculations. Together with
-the test formulas in Chapters~\ref{chap:baselines}--\ref{chap:design},
+This appendix specifies the population construction, target-MI search,
+settings underlying the main results, sampling procedure and outcome
+calculations. Together with the test formulas in
+Chapters~\ref{chap:baselines}--\ref{chap:design},
 these details define the statistical experiment.
 
 \section{Copying construction and target selection}
 
-For a positive marginal vector \(a\), the joint distribution is
-\begin{equation}
- p_{ij}(\lambda)=(1-\lambda)a_i a_j+\lambda a_i\mathbf{1}_{\{i=j\}}.
-\end{equation}
-Summing a row gives
+For the copying construction in Equation~\eqref{eq:copying-construction},
+summing a row gives
 \begin{equation}
  \sum_jp_{ij}(\lambda)
  =(1-\lambda)a_i\sum_ja_j+\lambda a_i=a_i.
 \end{equation}
-Summing a column similarly gives \(a_j\). The copying branch contributes
-only to its matching category, while the independent branch contributes
-across every category. Thus the construction preserves both margins and
-has positive cells whenever \(0\leq\lambda<1\).
+Summing a column similarly gives \(a_j\), so both margins are preserved.
+All cells are positive for \(0\leq\lambda<1\).
 
 MI increases continuously from zero to the entropy of \(a\).
 With the margins fixed, differentiating the joint terms gives
@@ -74,26 +70,11 @@ Solve \(I\{R(t)\}=I_{\rm target}\) by the same root search on
 \([0,t_{\max}]\). The target must lie below the endpoint MI, and the
 constructed table passes the same checks as the copying table.
 
-In a binary table the copying construction is exactly this transfer:
-\begin{align}
- P(\lambda)
- &=(1-\lambda)
- \begin{pmatrix}a_1^2&a_1a_2\\a_1a_2&a_2^2\end{pmatrix}
- +\lambda\begin{pmatrix}a_1&0\\0&a_2\end{pmatrix}\\
- &=\begin{pmatrix}a_1^2&a_1a_2\\a_1a_2&a_2^2\end{pmatrix}
-   +\lambda a_1a_2\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
- \label{eq:binary-copy-equivalence}
-\end{align}
-The second equality uses \(a_1+a_2=1\), giving
-\(a_1-a_1^2=a_1a_2\) and \(a_2-a_2^2=a_1a_2\).
-Hence \(t=\lambda a_1a_2\). This equivalence does not extend to the
-larger tables: copying changes cells throughout the table, whereas
-Equation~\eqref{eq:additive-construction} changes only four.
+\section{Parameter grids and sampling}
 
-\section{Complete parameter grids and sampling}
-
-Table~\ref{tab:exact-grids} lists the parameter combinations for each study
-and supporting check.
+Table~\ref{tab:exact-grids} lists the settings underlying the main results.
+The experimental supplement specifies the broader power and sample-allocation
+comparisons.
 Table sizes are \(k\in\{2,4,8,16\}\). Each population has identical
 row and column margins. Uniform margins give probability \(1/k\) to
 every category; same skew uses \(m_k(0.8)\) in both populations; different
@@ -111,10 +92,6 @@ Equal MI & All four sizes and three margin regimes;
 Population MI & \(4\times4\), uniform, same skew and different skew;
 \(I(P)=I(Q)\in\{0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\}\);
 \(n\in\{100,1000,10000\}\).\\
-Power & All four sizes with same skew and different skew, plus uniform
-\(4\times4\); \(I(P)=0.02\), \(I(Q)=0.02+|\Delta|\);
-\(|\Delta|\in\{0,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2\}\);
-\(n\in\{1000,10000\}\).\\
 Focused power & Settings A--C in Table~\ref{tab:redesign-focus-settings};
 \(I(P)=0.02\), \(I(Q)=0.02+h\sigma_0\),
 \(h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}\).
@@ -127,24 +104,13 @@ Four-cell check & \(k\in\{4,16\}\), same skew and different skew;
 \((I(P),I(Q))\in\{(0.02,0.02),(0.02,0.03)\}\);
 \(n\in\{1000,10000\}\); construction in
 Equation~\eqref{eq:additive-construction}.\\
-Sample allocation & Copying \(4\times4\), same skew and different skew;
-\((I(P),I(Q))\in\{(0.02,0.02),(0.02,0.03)\}\);
-\((n_P,n_Q)\in\{(1000,1000),(400,1600),(1600,400)\}\).
-The total sample size is 2,000 in every comparison.\\
 \bottomrule
 \end{longtable}
 
-For the focused power comparison, let
-\(\sigma_0=\operatorname{SD}_0(\Deltahat)\) be the SD estimated from the
-independent null fitting batch, centring at its sampling mean. The grid is
-\begin{equation}
- I(P)=0.02,\qquad I(Q)=0.02+h\sigma_0,\qquad
- h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}.
- \label{eq:redesign-power-grid}
-\end{equation}
-The true signed difference is \(\Delta=-h\sigma_0\). Population tables
-and differences in nats are fixed after this construction.
-
+For the focused power comparison, \(\sigma_0\) is the SD of
+\(\Deltahat\) estimated from the independent null fitting batch,
+centred at its sampling mean. Equation~\eqref{eq:design-focused-populations}
+defines the alternatives in multiples of this SD.
 The fixed null-SD constants used to construct the focused alternatives are
 \begin{align*}
  \sigma_{0,A}&=0.154966805570126\text{ nats},\\
@@ -154,7 +120,7 @@ The fixed null-SD constants used to construct the focused alternatives are
 For each \(h\) in the focused grid, set the target MI of \(Q\) to
 \(0.02+h\sigma_0\) and solve for its copying probability. The fitting
 uncertainty of these constants is reported in
-Table~\ref{tab:redesign-reference-fitting}; the constructed populations
+Table~\ref{tab:redesign-null-sd-fitting}; the constructed populations
 remain fixed during evaluation.
 
 For one repetition, draw
@@ -164,9 +130,9 @@ For one repetition, draw
 \end{equation}
 and independently draw the corresponding \(Q\) counts.
 Reshape these counts into their \(k\times k\) tables and apply both tests
-and the fixed moment reference to that pair. Repeat independently 100,000 times per distinct
+to those same two sampled tables. Repeat independently 100,000 times per distinct
 evaluation setting. Independently generate another 100,000 pairs for each
-equal-MI fitting setting. The simulations use the PCG64 pseudo-random
+equal-MI fitting setting for the focused power comparison. The simulations use the PCG64 pseudo-random
 generator with master seed 20261021 and separate streams for population,
 setting, fitting and evaluation samples.
 Repeated settings use one set of repetitions in every relevant display.
@@ -174,13 +140,9 @@ Repeated settings use one set of repetitions in every relevant display.
 All samples retain their declared table dimensions, including empty rows
 and columns. Use natural logarithms, \(0\log0=0\), and no smoothing.
 The bias correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
-negative corrected estimates. In the equal-sample studies, the two
-corrections cancel in their difference. In the allocation check,
-Equation~\eqref{eq:bias-corrected-difference} subtracts
-\(9/(2n_P)\) and adds \(9/(2n_Q)\) to the plug-in difference.
-Their combined contribution is \(-0.0084375\) nats at \((400,1600)\)
-and \(+0.0084375\) at \((1600,400)\). These terms remove the leading
-unequal-sample bias; the diagnostics measure the remaining bias.
+negative corrected estimates. In the equal-sample studies, the two bias corrections cancel in their
+difference. The experimental supplement gives the corrections for the
+unequal-sample comparison.
 Calculate the standard error using
 Equation~\eqref{eq:shared-se} and the component and combined degrees of freedom
 using Chapter~\ref{chap:expanded}.
@@ -194,16 +156,33 @@ The threshold treats variances extremely close to zero as numerically
 unusable. Expanded Welch additionally requires positive finite degrees
 of freedom for both components and their combination, and a finite
 expanded p-value. A failed component makes Expanded Welch invalid under
-this rule, including the zero-component case in
-Appendix~\ref{sec:zero-component}.
+this rule.
 
-The fixed reference requires the base conditions and a positive finite
-fitted reference value. No component-degree requirement is added to the fixed rule.
+For positive component degrees of freedom, substituting
+Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
+Equation~\eqref{eq:expanded-df} gives the equivalent combined form
+\begin{equation}
+  \widehat\nu_{\mathrm{expanded}}
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \widehat\tau^2(P)/(2n_P^3)
+  +
+  \widehat\tau^2(Q)/(2n_Q^3)
+  }.
+  \label{eq:expanded-df-direct}
+\end{equation}
+This direct form remains defined when one table has
+\(\Vhat=\widehat\tau^2=0\) and the other gives a positive denominator.
+The zero contribution drops out, leaving the other table's component degrees
+of freedom. The implementation nevertheless requires both components to have
+positive, finite degrees of freedom, so it records this case as invalid.
+
 
 The primary rate divides valid rejections by all repetitions. A
 method-valid rate uses only that method's valid repetitions; a
-common-valid rate uses only pairs where both tests and the fixed
-reference are valid. Report
+common-valid rate uses only repetitions where both tests are valid. Report
 the denominator for either conditional rate, which is undefined when
 the denominator is zero. Invalid outputs contribute no rejection to
 the primary rate.
@@ -214,7 +193,7 @@ than eligibility rules. The minimum expected cell count is
 \(\min_{ij}np_{ij}\), with the corresponding definition for \(Q\).
 The study applies no minimum expected-count filter.
 
-\section{Bias, variance and degrees-of-freedom diagnostics}
+\section{Bias, variance and degrees of freedom}
 \label{sec:estimation-diagnostics}
 
 Let \(\widehat\Delta_s\) be the corrected difference in repetition
@@ -225,42 +204,29 @@ estimates minus the known \(\Delta\). Its observed sampling variance is
  \left(\widehat\Delta_s-\frac{1}{M}\sum_{u=1}^M\widehat\Delta_u\right)^2,
  \label{eq:observed-sampling-variance}
 \end{equation}
-where \(M\) counts those finite-valued estimates. Centre at their sample
-mean, rather than the true difference, so this measures variance
-separately from bias. Include finite-valued MI differences even when the test
-output is invalid. For \(P\) and \(Q\), the individual corrected MI biases
+where \(M\) counts the finite-valued differences, including those whose
+test output is invalid. Centring at their sample mean separates variance
+from bias. For \(P\) and \(Q\), the individual corrected MI biases
 are the mean finite corrected MI estimates minus \(I(P)\) and \(I(Q)\),
 respectively.
 
-For the estimated/observed variance ratio, restrict both averages to
+For the estimated / observed variance ratio, restrict the calculations to
 the same repetitions with a finite difference and finite squared
 standard error. Retain finite zero variance estimates. Divide the mean
-squared standard error by the observed variance on this matched subset;
-the ratio is undefined if the observed variance is zero. Report its
-included fraction. The population comparison instead uses
+squared standard error by the observed variance on this matched subset.
+Report the included fraction. The ratio is defined only when the observed
+variance is positive. The population comparison instead uses
 \(V(P)/n_P+V(Q)/n_Q\) and the primary observed variance.
 
 The Monte Carlo standard error of estimated bias is the observed SD
-divided by \(\sqrt M\). Component degrees-of-freedom summaries use positive finite component
-values, with their included fraction reported. Combined summaries use
-positive finite combined values. Finite zero variance estimates remain
-in the moment calculations even when component degrees of freedom are undefined. Percentile ranges describe the spread of those outputs,
-not confidence intervals for their median. These summaries expose
-estimation problems but do not isolate the causal contribution of
-each problem to rejection. The figures show a mean-estimate-to-moment-target
-ratio only where all component degrees of freedom are defined. Conditional
-means elsewhere retain their inclusion counts in the numerical summaries.
-
-The dependence diagnostic uses Spearman's rank correlation between
-\(|\widehat\Delta_s-\overline{\Deltahat}|\) and \(\widehat{\mathrm{SE}}_s\),
-where the mean is taken over repetitions with both quantities finite.
-No validity restriction removes finite pairs; included and excluded
-counts accompany the summaries. Centring removes the mean shift so
-the diagnostic measures whether larger deviations accompany larger
-estimated standard errors. With identical populations and equal sample
-sizes, exchanging the two samples reverses the signed difference but
-leaves the standard error unchanged. A zero signed correlation can
-therefore occur by symmetry even when their magnitudes are dependent.
+divided by \(\sqrt M\). Component and combined degrees-of-freedom
+summaries retain positive finite values and report their included fractions.
+Finite zero variance estimates remain in moment calculations even when
+component degrees of freedom are undefined. Percentile ranges describe
+sampling spread. Figures divide the mean estimate by its moment target
+only where every component estimate is defined; conditional summaries
+elsewhere retain their inclusion counts. These diagnostics do not isolate
+each estimation error's causal contribution to rejection.
 
 \medskip
 \thesisminiheading{Variability of the estimated MI variance.}
@@ -283,9 +249,10 @@ The population prediction uses the known probabilities, whereas the mean plug-in
 prediction uses the empirical probabilities in each repetition. Repeat both for
 \(Q\). For each population, use the same repetitions with finite
 \(\widehat V_s\) and \(\widehat\tau_s^2\), including finite zeros
-and outputs whose test is invalid. Divide each prediction by the observed
-variability: a ratio of one means agreement, and the ratio is undefined
-when observed variability is zero.
+and outputs whose test is invalid. Divide both predictions by the same
+observed variability. A ratio below one indicates underprediction, a ratio
+above one indicates overprediction, and one indicates agreement. The
+observed variability must be positive; a zero prediction gives a zero ratio.
 
 \medskip
 \thesisminiheading{Estimated direction among rejections.}
@@ -305,33 +272,27 @@ which includes every valid rejection regardless of direction.
 For a rate estimate \(\widehat r\) from \(M\) independent repetitions,
 its approximate Monte Carlo standard error is
 \(\{\widehat r(1-\widehat r)/M\}^{1/2}\).
-Wilson intervals use \(z=\Phi^{-1}(0.975)\) and have centre and
-half-width
-\begin{equation}
- \frac{\widehat r+z^2/(2M)}{1+z^2/M},
- \qquad
- \frac{z\sqrt{\widehat r(1-\widehat r)/M+z^2/(4M^2)}}{1+z^2/M}.
-\end{equation}
-These intervals are used for both rejection and validity rates
+Rejection and validity rates use pointwise 95\% Wilson intervals
 \citep{wilson1927}.
 
 For the paired method contrast, let \(D_s\) equal the Expanded Welch
-valid-rejection indicator minus the comparator
-valid-rejection indicator on pair \(s\). The approximate interval for the average paired difference
+valid-rejection indicator minus Normal Wald's valid-rejection indicator
+in repetition \(s\). The approximate interval for the average paired difference
 \(\bar D\) is
 \begin{equation}
  \bar D\ \pm\ 1.96
  \left\{\frac{1}{M(M-1)}\sum_{s=1}^M(D_s-\bar D)^2\right\}^{1/2}.
 \end{equation}
 Use the same common-valid subset when reporting a conditional paired
-contrast. Cross-construction comparisons use independent simulation
-streams, as do different sample allocations, so their difference uncertainty is not calculated from paired
-indicators. All intervals describe simulation uncertainty at fixed
+contrast. Comparisons across constructions or sample allocations use
+independent streams and therefore do not use paired indicators. All
+intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
 
 
-\section{Moment targets and the fixed reference}
-\label{sec:moment-reference-details}
+\section{Component moment targets and uncertainty}
+\label{sec:moment-target-details}
+\label{sec:moment-uncertainty}
 
 The first comparison in Chapter~\ref{chap:design} measures the mean and
 sampling variance of \(\Vhat(P)\) separately. Expectations and variances
@@ -357,208 +318,87 @@ values can nevertheless differ at finite sample sizes. Dividing their
 definitions before applying either approximation gives the exact identity
 \begin{equation}
  \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
- =\left\{\frac{V(P)}{\E\Vhat(P)}\right\}^{2}
-   \frac{\Var\{\Vhat(P)\}}{\tau^2(P)/n_P}.
+ =\frac{\left\{V(P)/\E\Vhat(P)\right\}^{2}}
+        {\{\tau^2(P)/n_P\}/\Var\{\Vhat(P)\}}.
  \label{eq:redesign-df-decomposition}
 \end{equation}
-The first factor measures the contribution of the mean approximation;
-the second measures the contribution of the sampling-variance
-approximation. A mean estimate above \(V(P)\) lowers the first-order
+The numerator is the reciprocal of the squared mean ratio in
+Figure~\ref{fig:redesign-moments}; the denominator is the middle-row
+predicted / observed sampling-variance ratio. A mean estimate above \(V(P)\) lowers the first-order
 degrees of freedom relative to the moment target when the variance
 prediction is otherwise accurate. The same calculations are made
 separately for \(Q\).
 
-The fixed diagnostic rule uses a moment-matched reference, estimated from
-independent simulations of the corresponding equal-MI populations:
-\begin{equation}
- \nu_{\mathrm{ref}}=
- \frac{2\{\E(\SEhat^2)\}^{2}}{\Var(\SEhat^2)}.
- \label{eq:redesign-combined-reference}
-\end{equation}
-Independence of the population samples gives
-\begin{align}
- \E(\SEhat^2)&=\frac{\E\Vhat(P)}{n_P}+\frac{\E\Vhat(Q)}{n_Q},\\
- \Var(\SEhat^2)&=\frac{\Var\{\Vhat(P)\}}{n_P^2}
-                  +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}.
- \label{eq:redesign-reference-variance}
-\end{align}
-Substitution of the component moment targets into the combination formula
-at these expected variance contributions gives exactly
-Equation~\eqref{eq:redesign-combined-reference}. Thus the combination
-identity introduces no further approximation at the level of moments.
-The next section gives the cancellation explicitly. Independent fitting samples estimate these moments by their
-sample means and sample variances. The Student \(t\) distribution remains
-an approximation to the shared statistic's distribution.
+\medskip
+\thesisminiheading{Estimating the targets and their uncertainty.}
 
-The fixed reference uses the two-sided p-value formula in
-Equation~\eqref{eq:expanded-p}, substituting its fitted degrees of freedom. A valid p-value at most 0.05 produces a
-nominal rejection.
-
-The moment reference requires known simulation populations and is held
-fixed within an evaluation setting and across the alternatives belonging
-to the same null. For an alternative, the fitting populations have equal
-MI of 0.02 nats and the same table size, margins, construction and sample
-allocation as that alternative. Expanded Welch versus this reference measures the
-change in rejection when the sample-dependent degrees of freedom are
-replaced by that fixed value. The reference can still reject incorrectly
-when the shared difference is biased, its standard error has the wrong
-scale, or their joint distribution is poorly described by the Student
-\(t\) distribution.
-
-\section{Combining component moment targets}
-\label{sec:combined-moment-identity}
-
-The combined moment reference follows exactly from the component moments
-when the two samples are independent. This calculation assumes positive
-component means, finite component variances and a positive variance of
-the summed contributions. Substitute the expected variance contributions
-and component moment degrees of freedom into the combination formula:
-\begin{equation}
- \frac{\{\E\Vhat(P)/n_P+\E\Vhat(Q)/n_Q\}^{2}}
- {\dfrac{\{\E\Vhat(P)/n_P\}^{2}}
-              {2\{\E\Vhat(P)\}^{2}/\Var\{\Vhat(P)\}}
- +\dfrac{\{\E\Vhat(Q)/n_Q\}^{2}}
-              {2\{\E\Vhat(Q)\}^{2}/\Var\{\Vhat(Q)\}}}.
- \label{eq:combined-component-moment-substitution}
-\end{equation}
-For either component, the square of the mean cancels:
-\begin{equation}
- \frac{\{\E\Vhat(P)/n_P\}^{2}}
- {2\{\E\Vhat(P)\}^{2}/\Var\{\Vhat(P)\}}
- =\frac{\{\E\Vhat(P)\}^{2}}{n_P^2}
-  \frac{\Var\{\Vhat(P)\}}{2\{\E\Vhat(P)\}^{2}}
- =\frac{\Var\{\Vhat(P)\}}{2n_P^2}.
-\end{equation}
-Applying the same cancellation to \(Q\) reduces
-Equation~\eqref{eq:combined-component-moment-substitution} to
-\begin{equation}
- \frac{2\{\E\Vhat(P)/n_P+\E\Vhat(Q)/n_Q\}^{2}}
- {\Var\{\Vhat(P)\}/n_P^2+\Var\{\Vhat(Q)\}/n_Q^2}
- =\frac{2\{\E(\SEhat^2)\}^{2}}{\Var(\SEhat^2)}.
-\end{equation}
-The final equality uses independence to remove the covariance between
-\(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\). Thus matching each component
-and combining at its expected contribution yields the same target as
-matching the sum directly. This identity concerns moments; it does not
-assert that the sum has a scaled chi-squared distribution. Using random
-sample contributions instead of their expectations produces a different,
-sample-dependent degrees-of-freedom rule.
-
-\section{Moment estimation and Monte Carlo uncertainty}
-\label{sec:moment-uncertainty}
-
-For a component, let \(X_s=\widehat V_s\) for repetition \(s\), with
-population sampling mean \(\mu=\E(X_s)\) and sampling variance
-\(\sigma^2=\Var(X_s)>0\). From \(M\) repetitions, calculate
+For a component, let \(X_s=\widehat V_s\) in repetition \(s\). Use
+all finite values, including zeros, even if component degrees of freedom
+are undefined. From \(M\) repetitions, calculate
 \begin{equation}
  \bar X=\frac1M\sum_{s=1}^M X_s,\qquad
  S_X^2=\frac1{M-1}\sum_{s=1}^M(X_s-\bar X)^2.
 \end{equation}
-These moments retain finite zero values. Estimate the moment degrees of
-freedom by \(2\bar X^2/S_X^2\). The diagnostic decomposition uses
-these evaluation moments, whereas the reference cutoff uses the
-independent fitting moments. An undefined component degree of freedom
-does not remove its finite variance estimate from either calculation.
+For \(S_X^2>0\), the estimated moment target is \(2\bar X^2/S_X^2\).
+The diagnostic decomposition uses these evaluation moments.
 
-To quantify uncertainty in the moment degrees of freedom, apply the
-multivariate delta method to
-\(f(m,v)=2m^2/v\). The first-order Taylor formula for a function of two
-arguments is
-\begin{equation}
- f(m+\Delta m,v+\Delta v)
- \approx f(m,v)+\frac{\partial f}{\partial m}(m,v)\Delta m
-                +\frac{\partial f}{\partial v}(m,v)\Delta v.
-\end{equation}
-Here the expansion point is \((\mu,\sigma^2)\), the estimated point is
-\((\bar X,S_X^2)\), and the differences are \(\bar X-\mu\) and
-\(S_X^2-\sigma^2\). The derivatives are
-\begin{equation}
- \frac{\partial f}{\partial m}=\frac{4m}{v},\qquad
- \frac{\partial f}{\partial v}=-\frac{2m^2}{v^2}.
-\end{equation}
-Substitution gives
-\begin{equation}
- \frac{2\bar X^2}{S_X^2}-\frac{2\mu^2}{\sigma^2}
- \approx\frac{4\mu}{\sigma^2}(\bar X-\mu)
-       -\frac{2\mu^2}{(\sigma^2)^2}(S_X^2-\sigma^2).
-\end{equation}
-The mean and variance estimation errors come from the same repetitions,
-so their covariance must be retained. Their first-order contributions
-for one repetition are estimated by
+The delta method propagates errors in the estimated mean and variance
+jointly. Their covariance matters because both use the same repetitions.
+Define
 \begin{equation}
  U_s=X_s-\bar X,\qquad W_s=(X_s-\bar X)^2-S_X^2.
 \end{equation}
-Using the fitted derivatives, the contribution for the degrees-of-freedom
-estimate is
+The first-order contribution to the target's estimation error is
 \begin{equation}
  Z_s=\frac{4\bar X}{S_X^2}U_s
        -\frac{2\bar X^2}{(S_X^2)^2}W_s.
  \label{eq:moment-df-mc-contribution}
 \end{equation}
-The sample SD of \(Z_s\), divided by \(\sqrt M\), estimates the Monte
-Carlo standard error. Taking the variance of the combined contribution
-preserves the covariance between the estimated mean and variance. The
-combined reference uses the corresponding weighted contributions from
-both independent populations. Mean and variance ratios use the same
-delta-method calculation; the plug-in prediction and observed variance
-are kept paired when both are estimated from the same outputs.
+Its sample SD divided by \(\sqrt M\) estimates the Monte Carlo standard
+error. Calculating the SD after combining the two terms retains the
+mean--variance covariance. The experimental supplement gives the Taylor
+expansion producing these coefficients.
 
-Nominal reference-rate intervals condition on the fitted degrees of
-freedom. Its fitting Monte Carlo standard error is reported separately.
-For the calibrated comparison, refitting the fixed degrees of freedom
-would not change the ordering by \(|T|\); the calibration bootstrap
-therefore resamples its empirical absolute-statistic cutoff directly.
+Mean and variance ratios use the same joint delta-method calculation,
+keeping the plug-in prediction and observed variance paired. For the
+fitted null SD, apply the sampling-variance calculation to the corrected
+MI differences and propagate through the square root, whose derivative
+at \(S_X^2\) is \(1/(2S_X)\).
 
 \section{Empirical calibration and power uncertainty}
-
-For a sample-dependent rule, assign an invalid output p-value one for
-calibration and order the fitting p-values. The threshold is the
-\((\lfloor0.05M\rfloor+1)\)th smallest value, and rejection requires a
-strictly smaller evaluation p-value. Every tie at the boundary is
-excluded. Normal Wald and the fixed reference instead share the equivalent
-empirical upper-tail threshold for \(|T|\), with invalid fitting values
-placed below all valid absolute statistics. This convention gives at most
-5\% rejection in the fitting batch. Independent null evaluation measures
-the achieved rate, including any effect of discreteness.
-
-For focused calibrated power, resample the fitting outputs and refit
-these thresholds in each of 1,000 bootstrap repetitions. Apply a common
-resampled fitting batch across all points of a curve. At each evaluation
-point, resample the joint decisions of both tests and the fixed moment
-reference, preserving their pairing. Use the 2.5th and 97.5th percentiles for pointwise intervals of
-rates and paired rate differences. Compare the paired intervals with the
-practical tolerance of minus one to plus one percentage point.
-The fixed reference and Normal Wald
-remain identical after this calibration, so refitting their moment degrees
-of freedom cannot change the calibrated decisions. The population tables
-and effect sizes in nats stay fixed throughout the bootstrap.
-
-
-\subsection{Sensitivity to the calibration population}
 \label{sec:calibration-sensitivity-design}
 
-For each focus setting and \(h=2,4\), retain the alternative
-\((I(P),I(Q))=(0.02,0.02+h\sigma_0)\). The lower fitting null is
-\((0.02,0.02)\); construct the upper null by setting both MI values to
-\(0.02+h\sigma_0\). For each population, solve for its copying
-probability using its original margin vector, retaining the dimensions
-and sample sizes in Table~\ref{tab:redesign-focus-settings}.
+Calibration follows the fitting and independent evaluation steps in
+Chapter~\ref{chap:design}. For Expanded Welch, assign invalid fitting
+outputs p-value one and sort the fitting p-values. Set the threshold to
+the \((\lfloor0.05M\rfloor+1)\)th smallest value, rejecting only
+strictly smaller evaluation p-values. Ties at the boundary are excluded.
+Normal Wald uses the equivalent upper-tail threshold for \(|T|\), with
+invalid fitting values below all valid absolute statistics. This gives
+at most 5\% rejection in the fitting batch; independent null evaluation
+measures the achieved rate, including discreteness.
 
-Generate 100,000 new fitting pairs and 100,000 independent validation
-pairs for each of these six upper nulls. Compare lower- and upper-null calibration
-on the same original alternative pairs, then apply both sets of cutoffs
-to the original lower-null and new upper-null validation pairs. Invalid
-outputs remain non-rejections in every comparison. Validation concerns
-these two null populations.
+The calibration-sensitivity comparison uses the lower and upper nulls in
+Table~\ref{tab:design-calibration-populations} at \(h=2,4\) for A--C.
+For each upper null, solve for the copying probability with the original
+margin vectors, dimensions and sample sizes. Generate 100,000 independent
+fitting repetitions and 100,000 validation repetitions for each of these
+six nulls. Apply both calibrations to the same original alternatives and
+to both null validation populations. Invalid outputs remain non-rejections.
 
-For uncertainty in power and its contrasts, use 1,000 joint bootstrap
-repetitions. In each repetition, resample the lower fitting pairs once
-per focus setting and share that resample across its two alternatives.
-Independently resample each upper fitting batch and refit all cutoffs.
-For a fixed alternative, jointly resample the decisions of both tests
-and the fixed moment reference under both calibrations. This retains
-pairing between rules and between
-calibrations when estimating gains and changes in gains. Use percentile
-95\% intervals, keeping population tables and effect sizes fixed.
-Cross-null rate intervals use the Wilson calculation conditional on
-the fitted cutoffs; they quantify validation sampling uncertainty only.
+All calibrated-power intervals use 1,000 joint bootstrap repetitions.
+For each full curve, share one lower fitting resample across its points.
+For the sensitivity comparison, share one lower fitting resample across
+the two alternatives within each focus setting. Independently resample
+each upper fitting batch and refit the cutoffs. At each evaluation point,
+resample the tests' joint decisions; in the sensitivity comparison, retain
+both calibrations in that joint resample. This preserves dependence between
+methods and between calibrations when estimating power differences and
+changes in those differences. Population tables and effect sizes stay fixed.
+
+Use the 2.5th and 97.5th percentiles for pointwise intervals of rates and
+paired differences, comparing the latter with the practical tolerance of
+minus one to plus one percentage point. Cross-null rates use Wilson
+intervals conditional on the fitted cutoffs, quantifying validation
+sampling uncertainty only. These checks concern the two specified null
+populations.

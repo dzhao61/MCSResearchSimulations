@@ -10,6 +10,12 @@ The previous baseline is preserved under the workspace root's
 under `Thesis Writeup/Archive/`. Do not edit or rebuild those archives or
 any historical working draft.
 
+The user requested on 27 October 2026 that PDF builds and delivery-package
+refreshes wait until explicitly requested. Until then, edit and check the
+source without running LaTeX or `package_deliverables.py`; the existing PDF
+and delivery files will lag behind the source. When a rebuild is requested,
+use the complete packaging and verification procedure below.
+
 Current delivery files belong in `deliverables/`. After any manuscript,
 figure, bibliography, source or evidence change, run `python3
 package_deliverables.py` from this folder. It builds `main.tex`, keeps
@@ -17,6 +23,14 @@ generated LaTeX files in `build/`, and refreshes the PDF, source archive,
 experiment supplement and checksums together. Run `python3
 package_deliverables.py --check` to check that the delivery files match
 current inputs. Do not deliver an older PDF by merely copying it.
+
+The local `.latexmkrc` hooks successful direct builds of `main.tex` into
+`package_deliverables.py --publish-built`, which validates the completed
+PDF/log and refreshes the named PDF, archives and checksums without
+compiling again. Other TeX targets, including historical drafts, do not
+trigger it. The normal packaging command suppresses this hook internally
+so it publishes only once. Always link the named PDF in `deliverables/`
+when returning a rebuilt thesis to the user.
 
 Internal plans and review records are under `notes/`. Superseded loose
 sources, plots and comparison entry points are preserved under
@@ -38,6 +52,13 @@ derivation benchmark and do not revise it without a specific request.
 The main build is a deliverable build. Only an explicitly requested
 working-draft rebuild uses a separate `Working Draft v3` source/output
 target. Preserve all archived and historical sources and PDFs.
+
+Use flush-left body paragraphs throughout: `\parindent` is `0pt`, with
+the existing `0.25em` paragraph spacing controlled in `preamble.tex`.
+Do not add local indentation or paragraph-spacing overrides to chapter,
+appendix or generated-display sources. The packaging build checks this
+policy before running LaTeX; `python3 package_deliverables.py --check-style`
+checks it without building or refreshing deliveries.
 
 # Main project paths
 

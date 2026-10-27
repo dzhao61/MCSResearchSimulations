@@ -4,6 +4,24 @@ These displays accompany the shortened Appendix C. They retain the complete
 equal-MI table and two full-range power plots omitted from the manuscript.
 No populations, sampled pairs, estimators or simulation results changed.
 
+## Construction and allocation comparisons
+
+`construction_allocation/` contains the two-page supporting analysis moved
+from the former Section 6.4 on 26 October 2026. It retains both tables,
+interpretation and standalone LaTeX source for the current 100,000-repetition
+study. The main thesis keeps the construction finding beside the sparse-table
+failure in Section 6.2.1. See the folder README for the current evidence and
+rebuild instructions. The older 20,000-repetition displays described below
+remain preserved.
+
+## Full near-independence diagnostics
+
+`near_independence_diagnostics/` retains the six df curves and percentile
+band behind the simplified main Figure 6.3 for all three margin regimes and
+sample sizes 100, 1,000 and 10,000. Its README explains every curve and the
+near-independence calculation from Appendix A.4. The thesis plotting helper
+regenerates these figures with its optional `--diagnostics` argument.
+
 ## Complete equal-MI results
 
 - `complete_null_results.csv` contains all 120 combinations of four table

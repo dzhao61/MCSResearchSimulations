@@ -99,8 +99,8 @@ class CalibrationSensitivityTests(unittest.TestCase):
 
     def test_conditional_df_means_are_not_plotted_as_unconditional(self):
         data=pd.DataFrame(dict(df_mean=[5.,5.,5.],nu_mom=[10.,10.,10.],df_valid_count=[100,99,0],count=[100]*3))
-        out=redesign_report.estimated_df_ratio(data)
-        assert out.iloc[0]==.5 and out.iloc[1:].isna().all()
+        out=redesign_report.mean_df_over_moment_target(data)
+        assert out[0]==.5 and np.isnan(out[1:]).all()
 
 
 if __name__=="__main__": unittest.main()

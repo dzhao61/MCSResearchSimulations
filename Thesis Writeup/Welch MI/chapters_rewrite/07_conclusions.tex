@@ -1,0 +1,155 @@
+\chapter{Conclusions}
+\label{chap:conclusion}
+
+\section{Contributions and main findings}
+
+This thesis derives an Expanded Welch--Satterthwaite test for comparing
+categorical MI across independent populations. Its mathematical
+contribution is the observation-level sensitivity of the estimated MI
+variance, accounting for changes in cell probabilities, margins and
+pointwise MI. The variance of this sensitivity gives a first-order
+sampling-variance approximation, which is used with moment matching to
+choose MI-specific degrees of freedom for a Student \(t\) distribution.
+
+\subsection{RQ1: Accuracy of variance approximations}
+
+The mean and sampling variance of \(\Vhat(P)\) need separate checks.
+The predicted sampling variance can be close to its observed value while
+the mean estimate remains above \(V(P)\). In the moment target in
+Equation~\eqref{eq:design-moment-target}, the mean is squared in the
+numerator. Replacing the inflated sampling mean by the smaller population
+value therefore lowers the population first-order degrees of freedom,
+even when the sampling-variance approximation is accurate. The mean
+estimated component degrees of freedom can fall further below the moment
+target when population probabilities are replaced by sample proportions.
+The size of these discrepancies depends on the population and sample size.
+
+Near independence, the first-order prediction \(\tau^2(P)/n_P\) for
+\(\Var\{\Vhat(P)\}\) is small and quadratic sampling terms remain
+substantial. The calculation in
+Appendix~\ref{sec:independence-boundary} explains the observed scale of
+the estimated component degrees of freedom. These results
+explain why the first-order approximation becomes inadequate near
+independence and why substituting sample probabilities requires its own
+evaluation, even when the population approximation is accurate.
+
+\subsection{RQ2.1: False-positive rates under equal MI}
+
+Expanded Welch brings false-positive rates closer to 5\% in the selected
+small-sample settings A and B, both at common MI 0.02 nats
+(Table~\ref{tab:redesign-focus-settings}). Both tests return valid results
+in every repetition at these settings, so the lower rejection rates
+reflect the larger cutoff from the Student \(t\) distribution. Across the
+broad grid, Expanded Welch also lowers rates that are already below 5\%.
+Its larger cutoff helps when it corrects excessive rejection and increases
+conservatism when rejection is already too infrequent.
+
+A false-positive rate near 5\% does not establish that the estimated
+degrees of freedom accurately match the denominator's sampling moments.
+At A, the standard error understates the observed sampling variation of
+the MI difference, while the low estimated degrees of freedom increase
+the rejection cutoff. These errors can compensate in the false-positive
+rate. At B, the average squared standard error exceeds the observed
+variance of the MI difference and the difference is biased, so the same
+explanation does not apply unchanged.
+
+The sparse same-skew null illustrates how error in the standard error can
+remain when the expected difference bias cancels. Identical population
+tables at equal sample sizes have the same expected MI estimation bias.
+However, the average \(\SEhat^2\) is almost twice the observed
+\(\Var(\Deltahat)\) in the sparse copying case, and both tests are
+conservative. Unequal sample sizes can also leave unequal residual biases
+in otherwise identical populations. Reliable testing therefore requires
+accurate estimation of both the MI difference and its uncertainty.
+
+\subsection{RQ2.2: Nominal and calibrated power}
+
+Expanded Welch has lower nominal power than Normal Wald at the selected
+small-sample settings A and B. Because the two tests also have different
+false-positive rates, the calibrated comparison adjusts their cutoffs to
+match rejection at a specified equal-MI population before comparing power.
+At common MI 0.02 nats, Expanded Welch gains power over Wald at A and B.
+Moving calibration to the upper equal-MI population while holding the
+alternative fixed reverses the gain at A and two null SDs, and at B and
+four null SDs (Table~\ref{tab:redesign-calibration-sensitivity}). At C,
+nominal power differences are small and calibrated differences remain
+practically small under both calibrations.
+
+The calibrated power advantage depends on the population used to fit the
+cutoff. Matching false-positive rates at the lower common MI does not
+ensure that the two tests have the same false-positive rate at the upper
+common MI. Expanded Welch's sample-dependent degrees of freedom can change
+the ordering of datasets by their p-values, but the observed gains do not
+establish a stable power advantage across the equal-MI null.
+
+Changing the cutoff also leaves errors in the estimated MI difference
+unchanged. At B, positive estimation bias initially offsets the negative
+true difference as \(I(Q)\) increases. The estimated difference moves
+towards zero, so rejection initially falls even though the population MI
+values move farther apart. This distortion remains after calibration.
+
+The sparse \(16\times16\) different-skew comparison shows a more severe
+failure. Its positive difference bias exceeds the true negative difference
+at the 0.01-nat alternative, so almost every rejection gives the wrong
+estimated ordering. Equation~\eqref{eq:redesign-alternative-bias-shift}
+explains the sign reversal. The four-cell construction also reproduces
+the sparse-table failure. A larger rejection cutoff cannot correct that bias.
+
+\section{Limitations}
+
+The derivation assumes independent categorical observations, fixed
+categories, positive population cell probabilities and positive
+first-order MI variance. Paired samples would require a covariance term
+in the difference variance. Growing alphabets and continuous MI estimators
+have different approximation errors. Exact independence requires the
+second-order argument in Appendix~\ref{sec:independence-boundary}.
+
+The findings concern the tested populations, association constructions and
+alternative paths. The power settings were selected using earlier
+false-positive results and evaluated on independent samples. Each curve
+keeps \(I(P)=0.02\) and increases \(I(Q)\) along the copying family.
+Both tested constructions use equal row and column margins within each
+table and align association locations between populations. Other directions
+of MI change, unequal row and column margins within a table and other
+locations of dependence remain untested. The results therefore support
+further investigation of Expanded Welch rather than its use as a general
+replacement for Normal Wald.
+
+Empirical calibration uses known simulation populations. The two calibration
+checks do not bound rejection across the entire equal-MI null or supply
+a calibration procedure for arbitrary observed tables. The pointwise
+confidence intervals quantify simulation uncertainty for the specified
+populations; the calibrated power intervals also include uncertainty from
+fitting the cutoffs.
+
+The online-shopping application illustrates how to report the estimated
+MI difference and its direction, standard error, p-value and Expanded Welch
+degrees of freedom. Its unknown population MI values prevent a direct
+check of false-positive rates. The application therefore demonstrates
+interpretation of the test outputs, while the simulation evidence
+establishes their behaviour under known populations.
+
+\section{Future work}
+
+A first extension is to derive the second-order mean contribution to the
+variance estimator and evaluate a corresponding degrees-of-freedom
+correction. The observed variation across MI and margins indicates that
+the correction should depend on the population table. A fixed coefficient
+based only on table size would leave errors in some settings. Any
+estimated correction should be evaluated through the resulting test's
+false-positive rates and power.
+
+Improved MI bias and standard-error estimators could address the sparse-table
+failures. Their effects should be assessed separately by changing one
+estimate while holding the others fixed, then measuring null rejection,
+power and estimated direction. Near independence, the quadratic sampling
+approximation may support a more accurate comparison of MI differences.
+Any likelihood-ratio or resampling procedure must preserve the equal-MI
+null even when the complete population tables differ.
+
+Reversed power paths, stronger dependence at small sample sizes,
+additional association constructions, unequal margins and unequal sample
+sizes would assess whether power rankings persist across a wider range
+of populations. Simulations from plausible application populations could
+also examine sensitivity to rare cells and distinct equal-MI tables,
+with conclusions tied to the populations chosen for that assessment.

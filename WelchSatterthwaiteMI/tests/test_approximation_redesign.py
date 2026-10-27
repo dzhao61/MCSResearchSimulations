@@ -103,6 +103,9 @@ class RedesignTests(unittest.TestCase):
         preserved=(study.ROOT/'supplementary_displays/sample_size_df_comparison/figures/focused_redesign_cases_rates.tex').read_text()
         self.assertNotIn('Sample-size df',text)
         self.assertIn('Sample-size df',preserved)
+        fixed=(study.ROOT/'supplementary_displays/fixed_moment_reference/figures/focused_redesign_cases_rates.tex').read_text()
+        self.assertNotIn('Moment reference',text)
+        self.assertIn('Moment reference',fixed)
         rates=pd.read_csv(output/'rates.csv')
         rates=rates[rates.denominator.eq('all')].set_index(['configuration_id','method'])
         keys=list(self.focus.values())
@@ -115,7 +118,7 @@ class RedesignTests(unittest.TestCase):
                 interval=binomtest(int(row.rejected),int(row['count'])).proportion_ci(method='wilson')
                 values=[(Decimal(str(x))*100).quantize(Decimal('.01'),rounding=ROUND_HALF_UP)
                         for x in (row.rate,interval.low,interval.high)]
-                target=preserved if method=='size' else text
+                target=preserved if method=='size' else fixed if method=='reference' else text
                 self.assertIn(f'{values[0]:.2f}\\% [{values[1]:.2f}, {values[2]:.2f}]',target)
 
     def test_deliverable_power_contrasts_preserve_pairing_and_percentage_units(self):

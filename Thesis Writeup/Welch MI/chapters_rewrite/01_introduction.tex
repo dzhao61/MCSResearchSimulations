@@ -66,18 +66,17 @@ The frequency of usable p-values is reported alongside these rates.
 \label{sec:research-questions}
 
 The thesis addresses two research questions:
-\begin{enumerate}
+\begin{enumerate}[label=\textbf{RQ\arabic*:},leftmargin=*]
  \item How accurately do the derived approximations predict the mean and
  sampling variance of the estimated MI variance, and what degrees of
  freedom do they imply near and away from independence?
  \item How do Expanded Welch's false-positive rates and power compare
  with Normal Wald?
+ \begin{enumerate}[label=\textbf{RQ2.\arabic*:},leftmargin=*,nosep]
+  \item How do their false-positive rates compare under equal population MI?
+  \item How do their nominal and calibrated power compare when population MI differs?
+ \end{enumerate}
 \end{enumerate}
-
-The simulations first check the variance approximations, then compare
-false positives and power. Power is measured both at the stated 5\%
-cutoffs and after independent adjustment to approximately equal
-false-positive rates.
 
 \section{Contributions to the field}
 
@@ -97,8 +96,8 @@ false-positive rates.
   \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations check
   the variance approximations and compare false-positive rates, power and
   usable results as sample size, table size, category frequencies and MI
-  change. Further comparisons examine association pattern and sample
-  allocation.
+  change. A supporting comparison checks whether sparse-table failures
+  persist under another association construction.
   \par
   \end{samepage}
 
@@ -119,13 +118,12 @@ For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where
 \(X\) and \(Y\) are independent, is considered separately.
 The main simulations compare Normal Wald and Expanded Welch using
-two-sided tests at the 5\% significance level. An independently fitted
-moment reference helps examine the role of the degrees of freedom.
+two-sided tests at the 5\% significance level.
 
 Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the statistic
 and derive Expanded Welch. Chapters~\ref{chap:design} and~\ref{chap:results}
 present the experiment, results and online-shopping application.
-Chapters~\ref{chap:discussion} and~\ref{chap:conclusion} discuss the
-implications and limitations. The appendices give supporting calculations,
+Chapter~\ref{chap:conclusion} brings together the findings, limitations
+and future work. The appendices give supporting calculations,
 experimental settings and additional results.

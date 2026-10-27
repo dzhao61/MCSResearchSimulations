@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import shutil
 import subprocess
 import tempfile
@@ -33,6 +34,8 @@ From the thesis folder, run `python3 package_deliverables.py` (or
 `make`) to build the main manuscript and refresh all three files together.
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.
+Direct `latexmk` builds of `main.tex` also refresh this delivery set through
+the project's post-build hook. Failed builds do not publish delivery files.
 """
 
 
@@ -95,12 +98,12 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "run_focused_jackknife_check.py", "report_focused_jackknife_check.py",
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py",
-                   "redesign_study.py", "redesign_report.py",
+                   "redesign_study.py", "redesign_report.py", "report_ratio_tools.py",
                    "calibration_sensitivity.py", "report_calibration_sensitivity.py",
                    "same_skew_extension_core.py", "run_same_skew_extension.py",
                    "report_same_skew_extension.py"]
     tests = [
-        "test_calibration_sensitivity.py",
+        "test_calibration_sensitivity.py", "test_report_ratio_tools.py",
         "test_approximation_redesign.py", "test_thesis_consistency.py", "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
         "test_numerical_degeneracy.py", "test_focused_audit_guards.py",
         "test_thesis_derivation_audit.py", "test_welch.py",
@@ -157,7 +160,39 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def check_paragraph_style() -> None:
+    """Reject paragraph-style drift before compiling or checking a delivery."""
+    def uncomment(text: str) -> str:
+        return re.sub(r"(?<!\\)%[^\n]*", "", text)
+
+    preamble = uncomment((THESIS / "preamble.tex").read_text())
+    required = {
+        "use no paragraph indent": r"\\setlength\{\\parindent\}\{0pt\}",
+        "use 0.25em paragraph spacing": r"\\setlength\{\\parskip\}\{0\.25em\}",
+    }
+    for description, pattern in required.items():
+        if len(re.findall(pattern, preamble)) != 1:
+            raise AssertionError(f"Paragraph style must {description} in preamble.tex.")
+    for length in ("parindent", "parskip"):
+        if len(re.findall(r"\\" + length + r"\b", preamble)) != 1:
+            raise AssertionError(f"Define {length} only once in preamble.tex.")
+    overrides = re.compile(
+        r"\\(?:noindent|indent|parindent|parskip|parshape|hangindent|hangafter|"
+        r"@afterindenttrue|@afterindentfalse)\b"
+    )
+    for source, relative in source_files():
+        if source.suffix != ".tex" or relative == Path("preamble.tex"):
+            continue
+        for number, line in enumerate(uncomment(source.read_text()).splitlines(), 1):
+            if overrides.search(line):
+                raise AssertionError(
+                    f"Local paragraph-style override at {relative}:{number}; "
+                    "use the shared preamble rule."
+                )
+
+
 def build_main() -> None:
+    check_paragraph_style()
     latexmk = shutil.which("latexmk")
     if latexmk is None:
         fallback = Path("/Library/TeX/texbin/latexmk")
@@ -167,11 +202,29 @@ def build_main() -> None:
     build = THESIS / "build"
     for directory in ("", "chapters_rewrite", "appendices_rewrite"):
         (build / directory).mkdir(parents=True, exist_ok=True)
-    subprocess.run([latexmk, "-pdf", "-interaction=nonstopmode", "-halt-on-error",
+    # This command publishes once below; suppress the direct-latexmk hook here.
+    subprocess.run([latexmk, "-e", "$success_cmd = '';", "-pdf",
+                    "-interaction=nonstopmode", "-halt-on-error",
                     "-outdir=build", "main.tex"], cwd=THESIS, check=True)
-    compiled = build / "main.pdf"
+    sync_main_pdf(build / "main.pdf")
+
+
+def sync_main_pdf(compiled: Path) -> None:
+    compiled = compiled.resolve()
+    if compiled.name != "main.pdf" or THESIS.resolve() not in compiled.parents:
+        raise ValueError("Only a main.pdf inside the active thesis folder can be published.")
     if not compiled.is_file() or compiled.stat().st_size == 0:
         raise RuntimeError("The thesis build did not produce a PDF.")
+    if not compiled.read_bytes().startswith(b"%PDF-"):
+        raise RuntimeError("The thesis build output is not a PDF.")
+    log = compiled.with_suffix(".log")
+    if not log.is_file() or "Output written on" not in log.read_text(errors="replace"):
+        raise RuntimeError("A completed LaTeX log is required before publishing.")
+    issues = [line for line in log.read_text(errors="replace").splitlines()
+              if any(marker in line for marker in ("Warning", "Overfull", "Underfull"))]
+    if issues:
+        raise RuntimeError("Resolve LaTeX formatting/reference warnings before publishing:\n"
+                           + "\n".join(issues))
     target = THESIS / "main.pdf"
     if not target.exists() or sha256(target) != sha256(compiled):
         temporary = THESIS / ".main.pdf.tmp"
@@ -192,6 +245,7 @@ def check_archive(path: Path, files: list[tuple[Path, Path]]) -> None:
 
 
 def check_deliverables() -> None:
+    check_paragraph_style()
     if sha256(DELIVERABLES / PDF_NAME) != sha256(THESIS / "main.pdf"):
         raise AssertionError("Delivery PDF does not match the current main PDF.")
     check_archive(DELIVERABLES / SOURCE_NAME, source_files())
@@ -204,8 +258,12 @@ def check_deliverables() -> None:
         raise AssertionError("Delivery instructions are stale.")
 
 
-def publish_deliverables() -> None:
-    build_main()
+def publish_deliverables(*, compiled: Path | None = None) -> None:
+    if compiled is None:
+        build_main()
+    else:
+        check_paragraph_style()
+        sync_main_pdf(compiled)
     DELIVERABLES.mkdir(exist_ok=True)
     sources, supplement = source_files(), supplement_files()
     # Prepare and verify everything before replacing the previous delivery set.
@@ -228,9 +286,22 @@ def publish_deliverables() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Check existing files without rebuilding.")
+    checks = parser.add_mutually_exclusive_group()
+    checks.add_argument("--check", action="store_true", help="Check existing files without rebuilding.")
+    checks.add_argument("--check-style", action="store_true",
+                        help="Check paragraph-style sources without building or refreshing files.")
+    checks.add_argument("--publish-built", type=Path, metavar="PDF",
+                        help="Post-build hook: publish a completed main PDF without compiling again.")
     args = parser.parse_args()
-    if args.check:
+    if args.publish_built is not None:
+        compiled = args.publish_built
+        if not compiled.is_absolute():
+            compiled = THESIS / compiled
+        publish_deliverables(compiled=compiled)
+    elif args.check_style:
+        check_paragraph_style()
+        print("Paragraph style is consistent across the current thesis sources.")
+    elif args.check:
         check_deliverables()
         print("All delivery files match the current PDF, source and evidence.")
     else:

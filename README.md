@@ -2,13 +2,13 @@
 
 The revised Welch MI project became the main version on 24 October 2026.
 
-- Read `Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf` (102 pages).
+- Read `Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf` (97 pages).
 - Edit `Thesis Writeup/Welch MI/main.tex` and its included sources; the compiled manuscript is `main.pdf`.
 - Use `WelchSatterthwaiteMI/` for the current experiment and saved evidence.
 - `DifferentialMI/` supplies the estimator code; `PracticalMIExploration/` supplies the application.
 - `REDESIGN_VERIFICATION.json` records the current delivery checks.
 
-The main thesis compares Expanded Welch with Normal Wald, with a fixed moment reference as a supporting diagnostic. The sample-size df comparison remains in the experiment supplement.
+The main thesis source compares Expanded Welch with Normal Wald. The fixed moment reference and sample-size df comparisons are preserved in the experiment supplement. The 27 October rebuild includes the latest abstract, chapter structure, appendix reductions and flush-left paragraph formatting.
 
 The complete previous baseline is preserved in
 `Archive/Welch MI baseline 2026-10-24/`, including its thesis, code, results

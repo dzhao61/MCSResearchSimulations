@@ -346,6 +346,10 @@ describe how the estimated variance varies across samples.
 \par
 \end{samepage}
 
+Centred finite-difference checks on positive tables agreed with the MI
+and variance derivatives to errors of order \(10^{-10}\). The experimental
+supplement gives the checked tables and step size.
+
 \section{Component degrees of freedom and final test}
 
 \thesisminiheading{Population component degrees of freedom.}
@@ -355,9 +359,31 @@ Define the population variability of the observation-level sensitivities by
   \tau^2(P)=\Var_P\{g_P(X,Y)\}.
   \label{eq:tau-definition}
 \end{equation}
-The sensitivities average to zero under \(P\), as shown in
-Appendix~\ref{app:derivation-details}. Their variation, not their average,
-determines how much the estimated MI variance changes between samples.
+The observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
+mean of zero. Averaging the one-cell perturbation directions leaves the
+population table unchanged:
+\begin{equation}
+  \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
+\end{equation}
+This weighted cancellation also holds after exact plug-in substitution.
+Because the first derivative is linear in the direction of change, the
+weighted average of the one-cell derivatives is the derivative in the
+weighted-average direction:
+\begin{align}
+  \E_P\{g_P(X,Y)\}
+  &=\sum_{x,y}p_{xy}
+    \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+    V\{(1-\varepsilon)P+\varepsilon\delta_{(x,y)}\}
+    \right|_{0}\\
+  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}
+    V\left\{P+\varepsilon
+    \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}\right\}
+    \right|_{0}\\
+  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
+    \right|_{0}=0.
+\end{align}
+Their variation determines how much the estimated MI variance changes
+between samples.
 
 \begin{assumption}[Regular variance sensitivity]
 For the first-order Expanded Welch construction,
@@ -501,8 +527,8 @@ also Wald-valid, so every Expanded Welch rejection is also a Wald
 rejection, including when invalid
 outputs count as non-rejections in the reported rates. Expanded Welch cannot
 raise rejection where Wald is already too conservative.
-Appendix~\ref{sec:zero-component} examines a zero-component case in the
-combined degrees-of-freedom formula.
+Appendix~\ref{sec:validity-rules} explains why a zero variance component
+is excluded under the implemented validity rule.
 
 \section{Worked example and implementation}
 
@@ -669,8 +695,8 @@ The MI difference and standard error come from the same tables. A sample
 that changes the estimated difference can also change its standard error,
 and Expanded Welch's larger cutoff does not account for how the estimated
 MI difference and its standard error move together.
-Appendix~\ref{sec:mi-variance-covariance} gives the first-order covariance
-between each population's MI and variance estimates.
+The experimental supplement gives the corresponding first-order
+covariance calculation.
 As sample sizes grow under regular conditions, the estimated
 degrees of freedom increase and the Student \(t\) distribution approaches the
 standard normal distribution used by Wald.

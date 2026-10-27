@@ -24,7 +24,8 @@
 \usepackage{hyperref}
 
 \setstretch{1.24}
-\setlength{\parindent}{1.5em}
+% All body paragraphs are flush left, including after headings and displays.
+\setlength{\parindent}{0pt}
 \setlength{\parskip}{0.25em}
 \widowpenalty=10000
 \clubpenalty=10000
@@ -45,11 +46,11 @@
 \renewcommand{\arraystretch}{1.16}
 \makeatletter
 \setlength{\@fptop}{0pt}
-% Match numbered headings: keep an unindented opening paragraph with the heading.
+% Keep the small heading and its opening body paragraph flush left.
 \newcommand{\thesisminiheading}[1]{%
   \par\noindent\textbf{#1}\par
   \nobreak
-  \@afterindentfalse
+  \@afterindenttrue
   \@afterheading
 }
 \makeatother

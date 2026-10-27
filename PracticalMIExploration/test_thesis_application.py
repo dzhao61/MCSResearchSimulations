@@ -71,11 +71,15 @@ class ShoppersApplicationTests(unittest.TestCase):
             else:
                 normal = f"{actual['normal_p_value']:.4f}"
                 expanded = f"{actual['expanded_welch_p_value']:.4f}"
-            expected = (
+            estimates = (
                 f"{name} & {actual['corrected_mi_p']:.6f} & {actual['corrected_mi_q']:.6f} & "
-                f"{actual['expanded_welch_degrees_of_freedom']:.2f} & {normal} & {expanded}"
+                f"{actual['delta_corrected']:.6f} & {actual['standard_error']:.6f} & {actual['statistic']:.3f}"
             )
-            self.assertIn(expected, self.application)
+            decisions = (
+                f"{name} & {actual['expanded_welch_degrees_of_freedom']:.2f} & {normal} & {expanded}"
+            )
+            self.assertIn(estimates, self.application)
+            self.assertIn(decisions, self.application)
             self.assertIn(f"{actual['delta_corrected']:.6f}", self.application)
             self.assertIn(f"{actual['standard_error']:.6f}", self.application)
             self.assertIn(f"{actual['statistic']:.3f}", self.application)
@@ -153,7 +157,7 @@ class ShoppersApplicationTests(unittest.TestCase):
         self.assertIn("10.24432/C5F88Q", bibliography)
         self.assertIn(study.SOURCES["Online Shoppers"]["page"], bibliography)
         self.assertIn("@article{holm1979,", bibliography)
-        conclusion = (THESIS / "chapters_rewrite" / "08_conclusion.tex").read_text()
+        conclusion = (THESIS / "chapters_rewrite" / "07_conclusions.tex").read_text()
         self.assertNotIn("and a real-data application would", conclusion)
 
 

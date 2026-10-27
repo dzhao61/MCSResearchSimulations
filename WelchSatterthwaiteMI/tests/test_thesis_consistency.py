@@ -63,7 +63,7 @@ class ThesisConsistencyTests(unittest.TestCase):
                 & configurations.construction.eq("copying")]
             self.assertEqual(len(selected),1)
             key=selected.iloc[0].configuration_id
-            for method in ("wald","expanded","reference"):
+            for method in ("wald","expanded"):
                 row=rates.loc[(key,method)]
                 self.assertEqual(row["count"],100000)
                 self.assertIn(decimal_text(Decimal(str(row.rate))*100,2)+r'\%',table)

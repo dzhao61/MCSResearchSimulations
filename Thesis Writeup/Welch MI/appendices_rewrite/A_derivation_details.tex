@@ -1,34 +1,12 @@
-\chapter{Supporting Calculations}
+\chapter{Near-Independence Calculations}
 \label{app:derivation-details}
 
-These calculations support the variance sensitivity, near-independence
-interpretation and validity conditions in Chapter~\ref{chap:expanded}.
+These calculations support the near-independence results in
+Chapter~\ref{chap:expanded} and their interpretation in
+Chapter~\ref{chap:results}. The first calculation varies population
+association while keeping the margins fixed. The second retains the
+quadratic sampling variation needed at independence and very small MI.
 
-\section{Mean of the variance influence function}
-
-The observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
-mean of zero. Averaging the one-cell perturbation directions leaves the
-population table unchanged:
-\begin{equation}
-  \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
-\end{equation}
-This weighted cancellation also holds after exact plug-in substitution.
-Because the first derivative is linear in the direction of change, the
-weighted average of the one-cell derivatives is the derivative in the
-weighted-average direction:
-\begin{align}
-  \E_P\{g_P(X,Y)\}
-  &=\sum_{x,y}p_{xy}
-    \left.\frac{\mathrm d}{\mathrm d\varepsilon}
-    V\{(1-\varepsilon)P+\varepsilon\delta_{(x,y)}\}
-    \right|_{0}\\
-  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}
-    V\left\{P+\varepsilon
-    \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}\right\}
-    \right|_{0}\\
-  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
-    \right|_{0}=0.
-\end{align}
 \begin{samepage}
 \section{Fixed-margin behaviour near independence}
 \label{sec:fixed-margin-local-derivation}
@@ -129,45 +107,6 @@ gives \(V(P_t)\approx2I(P_t)\) and
 \(\tau^2(P_t)\approx4V(P_t)\) for small positive MI along this path.
 At \(t=0\), the first-order sampling variance is zero;
 Appendix~\ref{sec:independence-boundary} treats that case separately.
-
-\section{Dependence between the MI and variance estimates}
-\label{sec:mi-variance-covariance}
-
-Both \(\Ihat(P)\) and \(\Vhat(P)\) are calculated from the same sample. Under
-fixed positive support, their first-order covariance is
-\begin{equation}
-  \operatorname{Cov}\{\Ihat(P),\Vhat(P)\}
-  \approx \frac{1}{n_P}\E_P\!
-  \left[\{\pmi_P(X,Y)-I(P)\}g_P(X,Y)\right].
-\end{equation}
-The corresponding expression for \(Q\) replaces \(P\) and \(n_P\) with
-\(Q\) and \(n_Q\). To determine how the MI and variance estimates move
-together near independence, use the fixed-margin
-path \(P_t=(q_{ij}+tH_{ij})\) from
-Appendix~\ref{sec:fixed-margin-local-derivation}. For small positive \(t\),
-the expansions there give
-\begin{equation}
-  \pmi_{P_t}(i,j)-I(P_t)
-  =\frac{tH_{ij}}{q_{ij}}+O(t^2),
-  \qquad
-  g_{P_t}(i,j)=\frac{2tH_{ij}}{q_{ij}}+O(t^2).
-\end{equation}
-Substituting both expressions into the first-order covariance above gives
-\begin{align}
-  \operatorname{Cov}\{\Ihat(P_t),\Vhat(P_t)\}
-  &\approx \frac{2t^2}{n_P}
-      \sum_{i,j}\frac{H_{ij}^2}{q_{ij}}
-      +O\!\left(\frac{t^3}{n_P}\right)\\
-  &=\frac{2V(P_t)}{n_P}
-      +O\!\left(\frac{t^3}{n_P}\right).
-\end{align}
-The first-order covariance is therefore positive for small positive MI
-along this path: samples with a larger MI estimate also tend to have a
-larger variance estimate. In the two-sample statistic, \(P\)'s and \(Q\)'s
-MI estimates enter the numerator with opposite signs, whereas their variance
-contributions add under the square root in the standard error.
-At exact independence, \(V(P_0)=0\) and a second-order sampling
-approximation is needed.
 
 \section{The independence boundary}
 \label{sec:independence-boundary}
@@ -316,45 +255,3 @@ roughly twofold plug-in overprediction in Table~\ref{tab:variance-stability}.
 The population formula alone omits the quadratic sampling contribution
 responsible for both effects.
 
-\section{Combined degrees of freedom with a zero variance estimate}
-\label{sec:zero-component}
-
-For positive component degrees of freedom, substituting
-Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
-Equation~\eqref{eq:expanded-df} gives the equivalent combined form
-\begin{equation}
-  \widehat\nu_{\mathrm{expanded}}
-  =
-  \frac{
-  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
-  }{
-  \widehat\tau^2(P)/(2n_P^3)
-  +
-  \widehat\tau^2(Q)/(2n_Q^3)
-  }.
-  \label{eq:expanded-df-direct}
-\end{equation}
-This direct form remains defined when one table has
-\(\Vhat=\widehat\tau^2=0\) and the other gives a positive denominator.
-The zero contribution drops out, leaving the other table's component degrees
-of freedom. The implementation nevertheless requires both components to have
-positive, finite degrees of freedom, so it records this case as invalid.
-
-\section{Numerical derivative checks}
-\label{sec:derivative-checks}
-
-The analytic derivatives in Equations~\eqref{eq:mi-derivative} and
-\eqref{eq:g-final} were checked by centred finite differences along the
-one-cell perturbation paths in Chapter~\ref{chap:expanded}. Two positive
-tables,
-\begin{equation*}
- \begin{pmatrix}0.36&0.14\\0.09&0.41\end{pmatrix},
- \qquad
- \begin{pmatrix}0.28&0.09&0.07\\0.08&0.17&0.06\\0.04&0.10&0.11\end{pmatrix},
-\end{equation*}
-were checked at every cell with step size \(\varepsilon=10^{-6}\).
-For each path, the difference
-between the values at \(+\varepsilon\) and \(-\varepsilon\) was divided
-by \(2\varepsilon\); all perturbed probabilities remained positive.
-The maximum absolute error was of order \(10^{-10}\) for both
-derivatives.

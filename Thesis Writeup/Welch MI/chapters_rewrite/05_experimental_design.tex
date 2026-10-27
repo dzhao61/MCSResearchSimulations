@@ -214,7 +214,7 @@ that the estimated degrees of freedom are lower on average. Medians and
 percentile ranges describe their sampling spread. When a summary uses only
 positive finite degrees of freedom, we report the included fraction. The
 same checks are made for \(Q\).
-Appendix~\ref{sec:moment-reference-details} gives the definitions and algebra.
+Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
 
 Table~\ref{tab:design-primary-grids} specifies two grids. The first varies
 sample size at common MI 0.02 nats. The second includes very small positive
@@ -243,7 +243,7 @@ Near independence &
 \end{tabularx}
 \end{table}
 
-\section{RQ2: False-positive rates under equal MI}
+\section{RQ2.1: False-positive rates under equal MI}
 
 To measure false positives, we set the two population MI values equal and
 draw a count table from each population in every repetition. Every
@@ -262,25 +262,12 @@ means excessive rejection; a rate below 5\% means conservative rejection.
 We also report the fraction of valid results, because an unusable
 calculation contributes no rejection.
 
-The fixed moment reference checks whether a Student \(t\) distribution
-based on the denominator's sampling moments gives reliable null rejection.
-It uses the same MI difference and standard error as both tests. Its
-degrees-of-freedom target uses the mean and sampling variance of the
-\emph{combined} squared standard error, \(\SEhat^2\):
-\begin{equation}
- \nu_{\mathrm{ref}}
- =\frac{2\{\E(\SEhat^2)\}^{2}}{\Var(\SEhat^2)}.
- \label{eq:design-fixed-reference}
-\end{equation}
-Independent null simulations estimate these moments, and the fitted
-degrees of freedom stay fixed throughout evaluation at that setting.
-Expanded Welch instead recalculates its degrees of freedom for every
-simulation repetition. Matching the denominator
-moments does not by itself ensure that the shared statistic follows a
-Student \(t\) distribution. Appendix~\ref{sec:moment-reference-details}
-gives the moment calculation.
+To check whether rejection behaviour depends on the association
+construction, a supporting comparison replaces copying by a probability
+transfer within four cells while preserving the margins and target MI.
+The experimental supplement reports the full construction results.
 
-\section{RQ2: Nominal and calibrated power}
+\section{RQ2.2: Nominal and calibrated power}
 
 Power is the probability of rejecting equal MI when the population MI
 values differ. We first compare power using the nominal 5\% cutoffs.
@@ -297,8 +284,7 @@ Setting C provides a larger-sample comparison.
 To choose the MI differences for a power curve, we first measure the
 sampling variation under equal MI. An independent null simulation
 estimates the standard deviation (SD) of the corrected MI difference;
-denote this fitted value by \(\sigma_0\). This fitting batch also fixes
-\(\nu_{\mathrm{ref}}\) for the entire curve. Measuring differences in units
+denote this fitted value by \(\sigma_0\). Measuring differences in units
 of \(\sigma_0\) makes the three curves comparable relative to their null
 sampling variation.
 
@@ -340,7 +326,7 @@ gives their construction and the fixed SD values.
 \thesisminiheading{Power after matching null rejection.}
 
 Empirical calibration chooses a p-value threshold separately for each
-test and the fixed moment reference. For each full power curve, the
+test. For each full power curve, the
 procedure is:
 \begin{enumerate}
  \item Use the independent fitting samples with \(I(P)=I(Q)=0.02\) nats,
@@ -351,9 +337,8 @@ procedure is:
  to the alternative samples, measuring the achieved false-positive rates
  and power.
 \end{enumerate}
-Normal Wald and the fixed moment reference give identical
-calibrated decisions because each orders samples by \(|T|\): with fixed
-degrees of freedom, larger \(|T|\) always gives a smaller p-value.
+Normal Wald orders samples by \(|T|\): larger \(|T|\) always gives a
+smaller p-value.
 Expanded Welch can order samples differently because its degrees of
 freedom change with the sampled count tables.
 
@@ -392,38 +377,27 @@ one null population does not ensure the same false-positive rate elsewhere
 under equal MI. Appendix~\ref{sec:calibration-sensitivity-design} gives
 the construction and uncertainty calculation.
 
-Three supporting comparisons extend the focused power curves:
-\begin{itemize}
- \item \textbf{Broader MI differences:} differences from 0 to 0.2 nats
- at \(n=1{,}000\) and 10,000.
- \item \textbf{Association construction:} replace copying by a probability
- transfer within four cells, preserving the margins and target MI.
- This changes where dependence occurs in the table.
- \item \textbf{Sample allocation:} keep \(P\), \(Q\) and the total of 2,000
- observations fixed, comparing allocations \((n_P,n_Q)\) of
- \((1000,1000)\), \((400,1600)\) and \((1600,400)\).
-\end{itemize}
-Appendix~\ref{app:construction} gives the exact settings; the experimental
-supplement retains the full results.
+The experimental supplement reports broader MI differences from 0 to
+0.2 nats at \(n=1{,}000\) and 10,000, and a separate sample-allocation
+analysis. The experimental supplement specifies those additional settings.
 
 \section{Shared evaluation: Sampling and uncertainty}
 
 At one evaluation setting, each repetition draws a count table from
-\(P\) and an independent count table from \(Q\). Both tests and the fixed
-moment reference use these same two tables, so their rejection decisions
+\(P\) and an independent count table from \(Q\). Both tests use these
+same two tables, so their rejection decisions
 can be compared on the same sampled data. Each batch contains 100,000
 independent repetitions. The study uses three types of batch:
 \begin{enumerate}
- \item \textbf{Base evaluation:} 366 distinct settings for estimating
- rejection rates and the performance measures below.
- \item \textbf{Independent fitting:} 186 distinct equal-MI settings for
- moment references and calibration cutoffs.
+ \item \textbf{Base evaluation:} 366 settings across the main and
+ supplementary comparisons, measuring rejection and estimation accuracy.
+ \item \textbf{Independent fitting:} the equal-MI populations for A--C,
+ used to estimate the null SDs and fit calibration cutoffs.
  \item \textbf{Calibration sensitivity:} six upper-null settings, each
  with separate fitting and validation batches.
 \end{enumerate}
 Separate random streams supply fitting and evaluation samples. Settings
-shared between comparisons are sampled once within each role. The base
-study uses 55.2 million repetitions; sensitivity adds 1.2 million.
+shared between comparisons are sampled once within each role.
 
 Table~\ref{tab:design-performance-measures} defines the measures for each
 evaluation setting.
