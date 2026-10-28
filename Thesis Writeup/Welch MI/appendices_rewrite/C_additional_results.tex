@@ -25,6 +25,14 @@ residual mean error.
 \input{figures_rewrite/focused_redesign_scaled_mean_error}
 \end{table}
 
+At \(n=100\), the whole scaled-error range is below nine, so a
+\(9/n\) subtraction would overcorrect the mean throughout the checked
+grid. At the two larger sample sizes the ranges straddle nine: the same
+correction would be too large for some populations and too small for
+others. The wider scaled ranges do not imply larger absolute errors,
+since the entries must be divided by \(n\) to recover the mean error
+of \(\Vhat\). They show that its coefficient depends on MI and margins.
+
 Table~\ref{tab:redesign-component-spread} gives the means, medians and
 fifth--95th percentile ranges of component degrees of freedom. The
 moment target uses the evaluation sampling moments. All 100,000
@@ -39,6 +47,25 @@ ranges describe sampling spread.
 \label{tab:redesign-component-spread}
 \input{figures_rewrite/focused_redesign_component_spread}
 \end{table}
+
+In Table~\ref{tab:redesign-component-spread}, the means at A and B exceed the medians and the upper percentile extends
+farther from the median than the lower percentile. Large estimates in
+the upper tail therefore affect the mean, which alone does not describe
+a typical repetition. Both summaries remain below the moment targets.
+At C, the mean and median nearly coincide and the
+percentile range is much narrower relative to their size. The much
+larger component degrees of freedom are also more stable in relative
+terms, although their absolute percentile ranges are wider.
+
+The \(P\) and \(Q\) rows of Table~\ref{tab:redesign-component-spread}
+nearly match at A and the same-skew settings, as expected
+for identical population tables. Under different skew, \(Q\) has lower
+estimated component degrees of freedom and a lower moment target.
+Increasing the \(16\times16\) sample size raises the estimates, narrows
+their relative spread and brings their means closer to the targets in
+both populations. The remaining gaps at the smaller sample size occur
+with complete inclusion, so they are not produced by dropping invalid
+component estimates.
 
 Table~\ref{tab:redesign-case-diagnostics} describes the shared difference
 and standard error. Bias/SD divides difference bias by its observed SD;
@@ -67,7 +94,26 @@ Pearson correlation between \(\Deltahat\) and \(\SEhat\) about
 \input{figures_rewrite/focused_redesign_cases_diagnostics}
 \end{table}
 
-Additional checks examine the curve shapes in Chapter~\ref{chap:results}.
+The small skewness values in Table~\ref{tab:redesign-case-diagnostics}
+concern symmetry about the sampling
+mean, whereas Bias/SD concerns displacement from the true difference.
+The different-skew sparse case can therefore be approximately symmetric
+while centred more than two observed SDs above zero. Its median combined
+degrees of freedom are already large enough for the two rejection
+cutoffs to be fairly close, yet both tests fail because the shared
+statistic remains displaced.
+
+Across the sample-size rows of Table~\ref{tab:redesign-case-diagnostics},
+increasing \(n\) from 1,000 to 10,000 gives both sparse regimes variance
+ratios much closer to one, weaker magnitude dependence and higher combined
+degrees of freedom. The different-skew bias also falls sharply and changes
+sign. These changes accompany the recovery of the false-positive rates
+in Table~\ref{tab:redesign-case-rates}. The modest rank correlations in
+these selected rows differ from the much stronger \(2\times2\)
+dependence noted above; one average variance ratio cannot describe all
+these sampling distributions.
+
+Additional checks examine the peaks in Figure~\ref{fig:redesign-moments}.
 For \(16\times16\) different-skew populations at common MI 0.02, the
 cell contributions to \(\Vhat\) and \(\widehat\tau^2\) are partitioned
 into cells observed once and cells observed more than once. The check uses
@@ -80,7 +126,8 @@ linear change derived in Chapter~\ref{chap:expanded} with
 the peak. Its covariance with the linear change is retained when
 checking the total sampling variance.
 
-For the \(4\times4\) different-skew MI sweep at \(n=1{,}000\),
+For the MI sweep in Figure~\ref{fig:redesign-a4} (\(4\times4\),
+different skew, \(n=1{,}000\)),
 the local approximations \(\Vhat\approx2\Ihat\) and
 \(\widehat\tau^2\approx4\Vhat\) are checked against the sampled
 values. Twice the plug-in MI increasingly understates the mean and
@@ -90,7 +137,8 @@ of \(2n\Ihat\) also exceeds its local noncentral
 chi-squared prediction. Both parts of the local calculation therefore
 contribute to the separation in Figure~\ref{fig:redesign-a4}.
 
-The uniform \(2\times2\) sample-size grid shows a further source of
+The uniform \(2\times2\) panel in Figure~\ref{fig:redesign-null-uniform}
+shows a further source of
 conservatism: the centred magnitude of \(\Deltahat\) is positively
 associated with \(\SEhat\), especially around the rejection-rate
 trough. The magnitude correlation falls from 0.656 at \(n=50\) to
@@ -107,13 +155,18 @@ alternative populations, so power intervals condition on those tables.
 \par
 \end{samepage}
 
-\begin{table}[!htbp]
+\begin{table}[H]
 \centering
 \small
 \caption{Independently fitted null standard deviations.}
 \label{tab:redesign-null-sd-fitting}
 \input{figures_rewrite/focused_redesign_null_sd_fitting}
 \end{table}
+
+The fitted SD is largest at A and smallest at C, so a common number of
+null SDs corresponds to very different MI differences in nats. Each
+Monte Carlo SE is small relative to its fitted SD, showing that these
+scales are estimated precisely within the specified fitting populations.
 
 \section{Calibrated power and sensitivity checks}
 \label{sec:calibration-sensitivity-results}
@@ -133,6 +186,24 @@ cutoff-fitting uncertainty for the calibrated intervals.
 \input{figures_rewrite/focused_redesign_power_contrasts}
 \end{table}
 
+In Table~\ref{tab:redesign-power-contrasts}, the nominal power loss is
+largest at A and much smaller at B and C.
+After calibration, the ordering reverses at A and B, while C's gain
+remains small. Its interval excludes zero but stays well within the
+one-percentage-point tolerance: a precisely estimated difference can
+still be practically small. The following tables examine whether the
+larger A/B gains persist under a different fitting null.
+
+Along the alternative paths in Figure~\ref{fig:redesign-power}, the
+sampling SD also changes. At four
+fitted null SDs, the observed SD of \(\Deltahat\) is approximately
+\(1.41\sigma_0\) at A, \(1.70\sigma_0\) at B and
+\(1.16\sigma_0\) at C. Difference bias remains positive at A and B
+but negligible at C. These checks support the cross-panel interpretation
+of Figure~\ref{fig:redesign-power}: a common null-SD separation does
+not give the same distance from zero relative to the alternative
+sampling variation.
+
 Table~\ref{tab:redesign-sensitivity-power-full} compares both calibrations
 on the same fixed alternatives. The lower null has common MI 0.02;
 the upper null sets both MI values to the alternative's larger value.
@@ -148,6 +219,17 @@ power differences with intervals.
 \label{tab:redesign-sensitivity-power-full}
 \input{figures_rewrite/focused_redesign_sensitivity_power_full}
 \end{table}
+
+Across the two- and four-null-SD rows of Table~\ref{tab:redesign-sensitivity-power-full},
+power increases for both tests under
+each calibration, but changing the fitting null has different effects
+across settings. At A, upper-null fitting substantially lowers both
+power estimates at either separation. At B, the changes are smaller
+and method-specific: at two SDs, Wald's power rises slightly while
+Expanded Welch's falls. At C, both power levels and method differences
+are nearly unchanged by the fitting null. Because each alternative
+sample is held fixed between calibrations, these changes come from
+the fitted thresholds.
 
 \begin{samepage}
 Table~\ref{tab:redesign-sensitivity-cross-null} applies each fitted cutoff
@@ -167,13 +249,23 @@ performance at a different common MI.
 \input{figures_rewrite/focused_redesign_sensitivity_cross_null}
 \end{table}
 
-At A and \(h=2\), lower-null fitting gives rates close to 5\% at
+In Table~\ref{tab:redesign-sensitivity-cross-null}, lower-null calibration
+at A and \(h=2\) gives rates close to 5\% at
 the lower evaluation null, but more than twice that target at the upper
 null. Upper-null fitting reverses the pattern: rejection is close to 5\%
-there and conservative at the lower null. Matching at one common MI
-therefore leaves substantial errors at the other, explaining why the
-power comparison depends on the calibration setting. Neither calibration
-establishes control across the complete equal-MI null.
+there and conservative at the lower null. The same pattern is stronger
+at \(h=4\), where the two common MI values are farther apart.
+
+At B, transfer errors are smaller than at A but differ between methods.
+With lower-null fitting, Expanded Welch has higher rejection than Wald
+at the upper null and exceeds 5\%; with upper-null fitting, it becomes more
+conservative at the lower null. These differences grow at the larger
+separation. At C, rates remain near 5\% across both fitting choices,
+evaluation nulls and separations, consistent with the stable power
+comparison. The sensitivity of power at A and B therefore accompanies
+changes in their relative false-positive rates when calibration is
+transferred. Neither calibration establishes control across the
+complete equal-MI null.
 
 \section{Sparse-table bias and estimated direction}
 
@@ -190,6 +282,11 @@ the same-skew populations show far fewer such cases.
 \label{tab:redesign-rejection-direction}
 \input{figures_rewrite/focused_redesign_rejection_direction}
 \end{table}
+
+Expanded Welch reduces the number of rejections in both columns, but
+under different skew almost every retained rejection still has the
+wrong direction. Its larger cutoff removes some rejections without
+repairing the sign error in the estimated difference.
 
 At \(n=10{,}000\), neither test has a wrong-direction rejection at this alternative under either skew
 regime. Under different skew, the difference bias at \(n=1{,}000\)
@@ -243,3 +340,10 @@ Apply Holm's adjustment separately to each method's six p-values
 3, 2 and 1. Moving through that order, replace any value below the
 preceding adjusted value with the preceding adjusted value, and cap the
 results at one.
+
+Both Adult comparisons and the shopping month comparison remain below
+0.05 after adjustment for either method. The other three comparisons
+remain above 0.05. Expanded Welch gives larger raw p-values
+throughout the table, but it selects the same three comparisons as
+Normal Wald at this threshold. Holm's adjustment changes the reported
+p-values without changing those decisions in this exploratory family.

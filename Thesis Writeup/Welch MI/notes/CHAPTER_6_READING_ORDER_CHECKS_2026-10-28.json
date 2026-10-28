@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-28",
+  "snapshot": "Thesis Writeup/Welch MI/archive/before_chapter6_final_readability_2026-10-28.zip",
+  "edited_manuscript_source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+  "sections": [
+    "6.1.2",
+    "6.1.3",
+    "6.3.2"
+  ],
+  "other_manuscript_and_figure_assets_hash_identical": 103,
+  "changes_confined_to_three_approved_subsections": true,
+  "displayed_equations_figures_tables_and_citations_unchanged": true,
+  "table_labels_meanings_and_inclusion_rule_preserved": true,
+  "tex_braces_environments_math_delimiters_checked": true,
+  "calibrated_B_explanation_precedes_sensitivity_question": true,
+  "no_early_lower_null_term": true,
+  "manuscript_consistency_tests_passed": 5,
+  "paragraph_style_check_passed": true,
+  "source_word_counts": [
+    {
+      "passage": "\\subsection{How moment errors",
+      "before_source_words": 540,
+      "after_source_words": 532
+    },
+    {
+      "passage": "\\subsection{Behaviour near",
+      "before_source_words": 417,
+      "after_source_words": 420
+    },
+    {
+      "passage": "\\subsection{Power after",
+      "before_source_words": 593,
+      "after_source_words": 596
+    }
+  ],
+  "chapter_source_words_before": 4647,
+  "chapter_source_words_after": 4645,
+  "delivery_files_unchanged": 10,
+  "preceding_pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
+  "pdf_rebuilt": false,
+  "delivery_refreshed": false,
+  "layout_review_pending_requested_build": true,
+  "new_simulations_fits_bootstraps": 0,
+  "review": "Thesis Writeup/Welch MI/notes/CHAPTER_6_READING_ORDER_2026-10-28.md",
+  "whitespace_check_passed": true
+}

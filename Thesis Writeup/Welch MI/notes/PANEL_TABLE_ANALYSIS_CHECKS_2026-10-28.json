@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-28",
+  "snapshot": "Thesis Writeup/Welch MI/archive/before_panel_table_analysis_2026-10-28.zip",
+  "review": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_ANALYSIS_2026-10-28.md",
+  "evidence": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_ANALYSIS_EVIDENCE_2026-10-28.json",
+  "chapter6_figures_reviewed": 7,
+  "individual_panels_including_validity_strips_reviewed": 38,
+  "chapter6_and_appendixC_tables_reviewed": 18,
+  "saved_evidence_trend_checks_passed": 43,
+  "existing_tests_passed": {
+    "manuscript_consistency": 5,
+    "ratio_display": 7,
+    "total": 12
+  },
+  "only_two_manuscript_sources_changed": true,
+  "other_source_and_figure_hashes_unchanged": 105,
+  "displayed_equations_figure_table_blocks_labels_and_citations_unchanged": true,
+  "active_tex_sources_checked": 31,
+  "unique_labels": 157,
+  "references_checked": 187,
+  "source_delimiters_environments_references_checked": true,
+  "paragraph_style_check_passed": true,
+  "whitespace_check_passed": true,
+  "result_summary_hashes_unchanged": 7381,
+  "protected_pdf_and_delivery_files_unchanged": 10,
+  "main_pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
+  "source_word_counts": {
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex": {
+      "before": 4645,
+      "after": 5960
+    },
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex": {
+      "before": 1201,
+      "after": 2040
+    }
+  },
+  "pdf_rebuilt": false,
+  "delivery_refreshed": false,
+  "layout_review_pending_requested_build": true,
+  "new_simulations_fits_bootstraps": 0
+}

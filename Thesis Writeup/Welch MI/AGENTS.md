@@ -16,6 +16,18 @@ source without running LaTeX or `package_deliverables.py`; the existing PDF
 and delivery files will lag behind the source. When a rebuild is requested,
 use the complete packaging and verification procedure below.
 
+On 28 October 2026 the user requested quicker interim builds. For these,
+compile with the paragraph-style and log/reference checks, inspect changed
+sections for obvious layout defects, and refresh the main/named PDF and
+source archive. Reuse the previously verified experimental supplement and
+its checksum when its input inventory, sizes and modification times are
+unchanged. Do not rerender every page, rebuild an unchanged large supplement,
+or independently compile the exported source on each interim request.
+Reserve the full procedure below for final delivery or substantive build,
+figure, formatting or experiment changes that warrant it. An explicit rebuild
+request is still required. This interim preference takes precedence over
+the otherwise mandatory full-package refresh described below.
+
 Current delivery files belong in `deliverables/`. After any manuscript,
 figure, bibliography, source or evidence change, run `python3
 package_deliverables.py` from this folder. It builds `main.tex`, keeps

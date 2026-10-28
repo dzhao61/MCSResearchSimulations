@@ -15,11 +15,11 @@
   "isolated_bundled_tests": 185,
   "independently_reconstructed_pairs": 4512,
   "original_files_verified_unchanged": 30042,
-  "pdf_pages": 102,
+  "pdf_pages": 107,
   "latex_warnings": [],
   "isolated_source_build_text_identical": true,
   "delivery_check_passed": true,
-  "pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
+  "pdf_sha256": "806dc3cab1ca8d65d069ac67494750363428bab6217946e71b00db9de2b6612a",
   "isolated_bundled_test_breakdown": {
     "experiment": 141,
     "estimator": 27,
@@ -48,7 +48,7 @@
     "after_approximation_plot_simplification": 29
   },
   "base_total_pairs": 55200000,
-  "main_text_pages": 67,
+  "main_text_pages": 70,
   "calibration_sensitivity": {
     "fitting_settings": 6,
     "evaluation_settings": 6,
@@ -1538,27 +1538,21 @@
   },
   "latest_requested_build": {
     "date": "2026-10-28",
-    "pdf_pages": 102,
-    "previous_pdf_pages": 99,
-    "main_text_pages": 67,
-    "chapter6_pages": 19,
+    "mode": "interim",
+    "pdf_pages": 107,
+    "previous_pdf_pages": 106,
+    "main_text_pages": 70,
+    "chapter6_pages": 22,
     "appendix_pages": {
       "A": 5,
       "B": 9,
-      "C": 7
+      "C": 9
     },
+    "review": "Thesis Writeup/Welch MI/notes/SIGNPOSTING_INTERIM_BUILD_2026-10-28.md",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_signposting_interim_build_2026-10-28.zip",
     "latex_warnings": [],
-    "embedded_fonts": 41,
-    "all_fonts_embedded": true,
-    "all_pages_A4": true,
-    "all_102_pages_rendered_and_contact_reviewed": true,
-    "detailed_pages_reviewed": [
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
+    "paragraph_style_check_passed": true,
+    "changed_section_contact_pages_reviewed": [
       54,
       55,
       56,
@@ -1578,44 +1572,31 @@
       70,
       71,
       72,
-      91,
-      92,
+      73,
+      74,
+      75,
       93,
       94,
       95,
       96,
-      97
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103
     ],
-    "published_pages_pixel_identical_to_reviewed_pages": 102,
-    "formatting_changes": {
-      "tables": [
-        "6.4",
-        "6.5",
-        "C.2",
-        "C.3"
-      ],
-      "change": "Keep expanded tables with their introduction and before their interpretation using existing H placement",
-      "prose_equations_numbers_citations_and_figure_assets_unchanged_during_build": true
-    },
-    "paragraph_style_check_passed": true,
-    "whitespace_check_passed": true,
-    "source_archive_independent_build_passed": true,
-    "independent_source_pdf_text_identical": true,
-    "delivery_check_passed": true,
-    "main_build_and_named_delivery_sha256_identical": true,
-    "pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
-    "source_sha256": "28632793065655771c790f7e97514a73b14d67f6770fca77e81008bb70030878",
-    "experiment_supplement_sha256": "3607ff1cba335d8dfaef448bacccf98e508d20bb120f1da155041f51ec79f839",
-    "results_summary_hashes_unchanged": 7381,
-    "new_simulations_fits_bootstraps": 0,
-    "snapshot": "Thesis Writeup/Welch MI/archive/before_mechanism_pdf_build_2026-10-28.zip",
-    "review": "Thesis Writeup/Welch MI/notes/MECHANISM_PDF_BUILD_2026-10-28.md",
-    "checks": "Thesis Writeup/Welch MI/notes/MECHANISM_PDF_BUILD_CHECKS_2026-10-28.json",
-    "delivery_pdf": "Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf",
+    "source_archive_contents_verified": true,
+    "main_and_named_pdf_identical": true,
+    "pdf_sha256": "806dc3cab1ca8d65d069ac67494750363428bab6217946e71b00db9de2b6612a",
+    "experiment_archive_reused": true,
+    "supplement_input_inventory_size_timestamps_checked": 24996,
+    "independent_exported_source_build_run": false,
+    "full_delivery_content_rehash_run": false,
     "pdf_rebuilt": true,
-    "source_archive_build_passed": true,
     "delivery_files_current": true,
-    "future_rebuilds_only_on_explicit_request": true
+    "future_build_policy": "Quick interim builds; full verification for final delivery or relevant substantive changes"
   },
   "current_sources_match_delivery": true,
   "first_reader_source_revision": {
@@ -1819,5 +1800,480 @@
     "source_archive_build_passed": true,
     "delivery_files_current": true,
     "future_rebuilds_only_on_explicit_request": true
-  }
+  },
+  "chapter6_reading_order_source_revision": {
+    "date": "2026-10-28",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_chapter6_final_readability_2026-10-28.zip",
+    "edited_manuscript_source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+    "sections": [
+      "6.1.2",
+      "6.1.3",
+      "6.3.2"
+    ],
+    "other_manuscript_and_figure_assets_hash_identical": 103,
+    "changes_confined_to_three_approved_subsections": true,
+    "displayed_equations_figures_tables_and_citations_unchanged": true,
+    "table_labels_meanings_and_inclusion_rule_preserved": true,
+    "tex_braces_environments_math_delimiters_checked": true,
+    "calibrated_B_explanation_precedes_sensitivity_question": true,
+    "no_early_lower_null_term": true,
+    "manuscript_consistency_tests_passed": 5,
+    "paragraph_style_check_passed": true,
+    "source_word_counts": [
+      {
+        "passage": "\\subsection{How moment errors",
+        "before_source_words": 540,
+        "after_source_words": 532
+      },
+      {
+        "passage": "\\subsection{Behaviour near",
+        "before_source_words": 417,
+        "after_source_words": 420
+      },
+      {
+        "passage": "\\subsection{Power after",
+        "before_source_words": 593,
+        "after_source_words": 596
+      }
+    ],
+    "chapter_source_words_before": 4647,
+    "chapter_source_words_after": 4645,
+    "delivery_files_unchanged": 10,
+    "preceding_pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
+    "pdf_rebuilt": false,
+    "delivery_refreshed": false,
+    "layout_review_pending_requested_build": false,
+    "new_simulations_fits_bootstraps": 0,
+    "review": "Thesis Writeup/Welch MI/notes/CHAPTER_6_READING_ORDER_2026-10-28.md",
+    "whitespace_check_passed": true,
+    "subsequent_requested_build_record": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_PDF_BUILD_2026-10-28.md"
+  },
+  "panel_table_analysis_source_revision": {
+    "date": "2026-10-28",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_panel_table_analysis_2026-10-28.zip",
+    "review": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_ANALYSIS_2026-10-28.md",
+    "evidence": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_ANALYSIS_EVIDENCE_2026-10-28.json",
+    "chapter6_figures_reviewed": 7,
+    "individual_panels_including_validity_strips_reviewed": 38,
+    "chapter6_and_appendixC_tables_reviewed": 18,
+    "saved_evidence_trend_checks_passed": 43,
+    "existing_tests_passed": {
+      "manuscript_consistency": 5,
+      "ratio_display": 7,
+      "total": 12
+    },
+    "only_two_manuscript_sources_changed": true,
+    "other_source_and_figure_hashes_unchanged": 105,
+    "displayed_equations_figure_table_blocks_labels_and_citations_unchanged": true,
+    "active_tex_sources_checked": 31,
+    "unique_labels": 157,
+    "references_checked": 187,
+    "source_delimiters_environments_references_checked": true,
+    "paragraph_style_check_passed": true,
+    "whitespace_check_passed": true,
+    "result_summary_hashes_unchanged": 7381,
+    "protected_pdf_and_delivery_files_unchanged": 10,
+    "main_pdf_sha256": "d896d386d14ad35cbfb140ca77fc8930f548dfdca9f5360b83334c93fba04432",
+    "source_word_counts": {
+      "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex": {
+        "before": 4645,
+        "after": 5960
+      },
+      "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex": {
+        "before": 1201,
+        "after": 2040
+      }
+    },
+    "pdf_rebuilt": false,
+    "delivery_refreshed": false,
+    "layout_review_pending_requested_build": false,
+    "new_simulations_fits_bootstraps": 0,
+    "subsequent_requested_build_record": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_PDF_BUILD_2026-10-28.md"
+  },
+  "panel_table_requested_pdf_build_2026_10_28": {
+    "date": "2026-10-28",
+    "review": "Thesis Writeup/Welch MI/notes/PANEL_TABLE_PDF_BUILD_2026-10-28.md",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_panel_analysis_pdf_build_2026-10-28.zip",
+    "previous_pdf_pages": 102,
+    "pdf_pages": 106,
+    "main_text_pages": 69,
+    "chapter6_pages": 21,
+    "appendix_pages": {
+      "A": 5,
+      "B": 9,
+      "C": 9
+    },
+    "all_pages_rendered_and_contact_reviewed": 106,
+    "detailed_pages_reviewed": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ],
+    "latex_warnings": [],
+    "all_fonts_embedded": true,
+    "embedded_fonts": 41,
+    "all_pages_A4": true,
+    "paragraph_style_check_passed": true,
+    "whitespace_check_passed": true,
+    "manuscript_consistency_tests_passed": 5,
+    "source_archive_independent_build_passed": true,
+    "independent_source_pdf_text_identical": true,
+    "delivery_check_passed": true,
+    "main_build_and_named_pdf_identical": true,
+    "pdf_sha256": "6820888e12ba7dda3875e544576be826094cd7d604420aa044c2c4995476c2ef",
+    "delivery_checksums": [
+      "6820888e12ba7dda3875e544576be826094cd7d604420aa044c2c4995476c2ef  Daniel_Zhao_Welch_MI_Thesis.pdf",
+      "06b313c5b317958fe6d7039c8b3c0658cf20520b3832e93d041d1ca22549e5bd  Daniel_Zhao_Welch_MI_Thesis_Source.zip",
+      "3607ff1cba335d8dfaef448bacccf98e508d20bb120f1da155041f51ec79f839  Daniel_Zhao_Welch_MI_Experiment_Supplement.zip"
+    ],
+    "numerical_equations_figures_table_cells_unchanged_during_build": true,
+    "result_summary_hashes_unchanged": 7381,
+    "new_simulations_fits_bootstraps": 0,
+    "pdf_rebuilt": true,
+    "delivery_files_current": true,
+    "source_archive_build_passed": true,
+    "formatting_changes": [
+      "Keep fitted-null-SD table C.4 before interpretation",
+      "Compact table/caption spacing around application tables without changing paragraph spacing or font sizes",
+      "Shorten equivalent Holm-adjustment paragraph to remove trailing near-empty page"
+    ],
+    "future_rebuilds_only_on_explicit_request": true
+  },
+  "display_signposting_source_revision": {
+    "date": "2026-10-28",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_display_signposting_2026-10-28.zip",
+    "scope": "Paragraph openings and display transitions in Chapter 6 and Appendix C",
+    "paragraphs_changed": 36,
+    "opening_changes": [
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 8,
+        "old_opening": "At A and B, the means exceed the medians and the upper percentile extends farther from the median than the lower percentile. Large estimates in the upper tail therefore affect the mean, which alone does not describe a typical repetition. Bo",
+        "new_opening": "In Table~\\ref{tab:redesign-component-spread}, the means at A and B exceed the medians and the upper percentile extends farther from the median than the lower percentile. Large estimates in the upper tail therefore affect the mean, which alone does not describe a typical repetition. Both summaries re"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 9,
+        "old_opening": "The population comparison is equally important. A and the same-skew settings give nearly matching \\(P\\) and \\(Q\\) summaries, as expected for identical population tables. Under different skew, \\(Q\\) has lower estimated component degrees of f",
+        "new_opening": "The \\(P\\) and \\(Q\\) rows of Table~\\ref{tab:redesign-component-spread} nearly match at A and the same-skew settings, as expected for identical population tables. Under different skew, \\(Q\\) has lower estimated component degrees of freedom and a lower moment target. Increasing the \\(16\\times16\\) sampl"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 13,
+        "old_opening": "The small skewness values in all rows concern symmetry about the sampling mean, whereas Bias/SD concerns displacement from the true difference. The different-skew sparse case can therefore be approximately symmetric while centred more than ",
+        "new_opening": "The small skewness values in Table~\\ref{tab:redesign-case-diagnostics} concern symmetry about the sampling mean, whereas Bias/SD concerns displacement from the true difference. The different-skew sparse case can therefore be approximately symmetric while centred more than two observed SDs above zero"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 14,
+        "old_opening": "From \\(n=1{,}000\\) to \\(n=10{,}000\\), both sparse regimes have variance ratios much closer to one, weaker magnitude dependence and higher combined degrees of freedom. The different-skew bias also falls sharply and changes sign. These change",
+        "new_opening": "Across the sample-size rows of Table~\\ref{tab:redesign-case-diagnostics}, increasing \\(n\\) from 1,000 to 10,000 gives both sparse regimes variance ratios much closer to one, weaker magnitude dependence and higher combined degrees of freedom. The different-skew bias also falls sharply and changes sig"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 15,
+        "old_opening": "Additional checks examine the curve shapes in Chapter~\\ref{chap:results}. For \\(16\\times16\\) different-skew populations at common MI 0.02, the cell contributions to \\(\\Vhat\\) and \\(\\widehat\\tau^2\\) are partitioned into cells observed once a",
+        "new_opening": "Additional checks examine the peaks in Figure~\\ref{fig:redesign-moments}. For \\(16\\times16\\) different-skew populations at common MI 0.02, the cell contributions to \\(\\Vhat\\) and \\(\\widehat\\tau^2\\) are partitioned into cells observed once and cells observed more than once. The check uses 10,000 eval"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 16,
+        "old_opening": "For the \\(4\\times4\\) different-skew MI sweep at \\(n=1{,}000\\), the local approximations \\(\\Vhat\\approx2\\Ihat\\) and \\(\\widehat\\tau^2\\approx4\\Vhat\\) are checked against the sampled values. Twice the plug-in MI increasingly understates the mea",
+        "new_opening": "For the MI sweep in Figure~\\ref{fig:redesign-a4} (\\(4\\times4\\), different skew, \\(n=1{,}000\\)), the local approximations \\(\\Vhat\\approx2\\Ihat\\) and \\(\\widehat\\tau^2\\approx4\\Vhat\\) are checked against the sampled values. Twice the plug-in MI increasingly understates the mean and sampling variance of "
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 17,
+        "old_opening": "The uniform \\(2\\times2\\) sample-size grid shows a further source of conservatism: the centred magnitude of \\(\\Deltahat\\) is positively associated with \\(\\SEhat\\), especially around the rejection-rate trough. The magnitude correlation falls ",
+        "new_opening": "The uniform \\(2\\times2\\) panel in Figure~\\ref{fig:redesign-null-uniform} shows a further source of conservatism: the centred magnitude of \\(\\Deltahat\\) is positively associated with \\(\\SEhat\\), especially around the rejection-rate trough. The magnitude correlation falls from 0.656 at \\(n=50\\) to 0.1"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 24,
+        "old_opening": "The nominal power loss is largest at A and much smaller at B and C. After calibration, the ordering reverses at A and B, while C's gain remains small. Its interval excludes zero but stays well within the one-percentage-point tolerance: a pr",
+        "new_opening": "In Table~\\ref{tab:redesign-power-contrasts}, the nominal power loss is largest at A and much smaller at B and C. After calibration, the ordering reverses at A and B, while C's gain remains small. Its interval excludes zero but stays well within the one-percentage-point tolerance: a precisely estimat"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 25,
+        "old_opening": "The sampling SD also changes along each alternative path. At four fitted null SDs, the observed SD of \\(\\Deltahat\\) is approximately \\(1.41\\sigma_0\\) at A, \\(1.70\\sigma_0\\) at B and \\(1.16\\sigma_0\\) at C. Difference bias remains positive at",
+        "new_opening": "Along the alternative paths in Figure~\\ref{fig:redesign-power}, the sampling SD also changes. At four fitted null SDs, the observed SD of \\(\\Deltahat\\) is approximately \\(1.41\\sigma_0\\) at A, \\(1.70\\sigma_0\\) at B and \\(1.16\\sigma_0\\) at C. Difference bias remains positive at A and B but negligible "
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 28,
+        "old_opening": "Moving from two to four null SDs increases power for both tests under each calibration, but changing the fitting null has different effects across settings. At A, upper-null fitting substantially lowers both power estimates at either separa",
+        "new_opening": "Across the two- and four-null-SD rows of Table~\\ref{tab:redesign-sensitivity-power-full}, power increases for both tests under each calibration, but changing the fitting null has different effects across settings. At A, upper-null fitting substantially lowers both power estimates at either separatio"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+        "paragraph_index": 31,
+        "old_opening": "At A and \\(h=2\\), lower-null fitting gives rates close to 5\\% at the lower evaluation null, but more than twice that target at the upper null. Upper-null fitting reverses the pattern: rejection is close to 5\\% there and conservative at the ",
+        "new_opening": "In Table~\\ref{tab:redesign-sensitivity-cross-null}, lower-null calibration at A and \\(h=2\\) gives rates close to 5\\% at the lower evaluation null, but more than twice that target at the upper null. Upper-null fitting reverses the pattern: rejection is close to 5\\% there and conservative at the lower"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 9,
+        "old_opening": "The larger-table mean ratios first rise and then fall. Initially, many rare combinations are unobserved and contribute nothing to \\(\\Vhat\\). As more appear, cells observed only once can have large estimated pointwise MI. For example, if a c",
+        "new_opening": "In the top row of Figure~\\ref{fig:redesign-moments}, the larger-table mean ratios first rise and then fall. Initially, many rare combinations are unobserved and contribute nothing to \\(\\Vhat\\). As more appear, cells observed only once can have large estimated pointwise MI. For example, if a cell and"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 12,
+        "old_opening": "Substituting sample proportions also changes the sensitivities used to estimate \\(\\tau^2(P)\\). Around the peak, once-observed cells contribute strongly to this estimate as well as to \\(\\Vhat(P)\\). The sample-based prediction can consequentl",
+        "new_opening": "In the bottom row, substituting sample proportions changes the sensitivities used to estimate \\(\\tau^2(P)\\). Around the peak, once-observed cells contribute strongly to this estimate as well as to \\(\\Vhat(P)\\). The sample-based prediction can consequently overshoot the observed sampling variance, gi"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 13,
+        "old_opening": "The contrast between the variance rows is strongest for the larger tables in both populations: their population predictions dip farther below the observed variance, while their sample-based predictions first underestimate it and then oversh",
+        "new_opening": "The contrast between the middle and bottom rows is strongest for the larger tables in both populations: their population predictions dip farther below the observed variance, while their sample-based predictions first underestimate it and then overshoot. The \\(2\\times2\\) curves have much smaller depa"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 14,
+        "old_opening": "With larger samples, empirical probabilities become more accurate and the variance ratios approach one. The mean ratios can remain above one after the variance ratios are already close, so accurate prediction of variation between samples do",
+        "new_opening": "Across all three rows, larger samples make empirical probabilities more accurate and the variance ratios approach one. The mean ratios can remain above one after the variance ratios are already close, so accurate prediction of variation between samples does not require equally accurate prediction of"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 19,
+        "old_opening": "The two moment errors act in opposite directions. In the moment-matching formula, underestimating \\(\\E\\{\\Vhat(P)\\}\\) lowers the squared numerator, whereas underestimating \\(\\Var\\{\\Vhat(P)\\}\\) lowers the denominator and raises the resulting ",
+        "new_opening": "The top row of Figure~\\ref{fig:redesign-component-df} combines two moment errors that act in opposite directions. In the moment-matching formula, underestimating \\(\\E\\{\\Vhat(P)\\}\\) lowers the squared numerator, whereas underestimating \\(\\Var\\{\\Vhat(P)\\}\\) lowers the denominator and raises the result"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 23,
+        "old_opening": "``Mean ratio'' divides the simulated mean of \\(\\Vhat(P)\\) by \\(V(P)\\). Both ``Var. ratio'' columns divide their prediction by the observed \\(\\Var\\{\\Vhat(P)\\}\\): ``pop.'' uses the population prediction; ``sample'' averages the sample-based p",
+        "new_opening": "In Table~\\ref{tab:variance-stability}, ``Mean ratio'' divides the simulated mean of \\(\\Vhat(P)\\) by \\(V(P)\\). Both ``Var. ratio'' columns divide their prediction by the observed \\(\\Var\\{\\Vhat(P)\\}\\): ``pop.'' uses the population prediction; ``sample'' averages the sample-based predictions."
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 25,
+        "old_opening": "Sample substitution changes both parts of the formula. Using \\(\\Vhat(P)\\) in the numerator captures its enlarged sampling mean, but the sample-based prediction of its sampling variance can be too large.",
+        "new_opening": "Returning to the bottom row of Figure~\\ref{fig:redesign-component-df}, sample substitution changes both parts of the degrees-of-freedom formula. Using \\(\\Vhat(P)\\) in the numerator captures its enlarged sampling mean, but the sample-based prediction of its sampling variance can be too large."
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 26,
+        "old_opening": "The bottom panels also recover in table-size order, but their early curves differ from the broadly rising first-order ratios. The first shown \\(16\\times16\\) estimates exceed the target, then fall below it as the sample-based variance predic",
+        "new_opening": "These bottom panels also recover in table-size order, but their early curves differ from the broadly rising first-order ratios. The first shown \\(16\\times16\\) estimates exceed the target, then fall below it as the sample-based variance prediction changes from too small to too large. The \\(4\\times4\\)"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 28,
+        "old_opening": "As the sample-based variance prediction improves, the mean estimated degrees of freedom recover towards the moment target. The population first-order value can remain farther below the target because it still uses \\(V(P)\\) in place of the e",
+        "new_opening": "At larger sample sizes in these bottom panels, the sample-based variance prediction improves and the mean estimated degrees of freedom recover towards the moment target. The population first-order value can remain farther below the target because it still uses \\(V(P)\\) in place of the enlarged sampl"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 33,
+        "old_opening": "At the smallest MI values, the near-independence predictions capture the positive mean and sampling variance of \\(\\Vhat\\) sustained by sampling noise. In the bottom row, the quadratic sampling contribution also explains why the mean estimat",
+        "new_opening": "At the smallest MI values in Figure~\\ref{fig:redesign-a4}, the top and middle rows show that the near-independence predictions capture the positive mean and sampling variance of \\(\\Vhat\\) sustained by sampling noise. In the bottom row, the quadratic sampling contribution also explains why the mean e"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 34,
+        "old_opening": "The moment target has a shallow initial dip before rising. Across those early MI settings, the observed sampling variance grows faster than the square of the observed mean, lowering their moment-matching ratio. At larger MI the squared mean",
+        "new_opening": "In the bottom row, the moment target has a shallow initial dip before rising. Across those early MI settings, the observed sampling variance grows faster than the square of the observed mean, lowering their moment-matching ratio. At larger MI the squared mean grows faster and the target rises. The m"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 35,
+        "old_opening": "As MI increases, stronger population association raises the observed moments and degrees of freedom. The dashed predictions become less accurate as the terms omitted from the local expansion around independence become more important. In par",
+        "new_opening": "Across the figure, stronger population association raises the observed moments and degrees of freedom as MI increases. The dashed predictions become less accurate as the terms omitted from the local expansion around independence become more important. In particular, the approximation \\(\\Vhat(P)\\appr"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 36,
+        "old_opening": "The local moment predictions are the same for \\(P\\) and \\(Q\\), since they use the same table size, sample size and MI. The observed moments separate as MI increases, with a larger sampling variance in \\(Q\\). The different margins therefore ",
+        "new_opening": "Comparing the two columns, the local moment predictions are the same for \\(P\\) and \\(Q\\), since they use the same table size, sample size and MI. The observed moments separate as MI increases, with a larger sampling variance in \\(Q\\). The different margins therefore matter beyond the quantities reta"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 51,
+        "old_opening": "Under uniform margins, \\(P=Q\\), so the expected MI estimation biases cancel in the difference at every plotted sample size. The four panels therefore show how testing can fail even without difference bias. Errors in the shared standard erro",
+        "new_opening": "In Figure~\\ref{fig:redesign-null-uniform}, uniform margins give \\(P=Q\\), so the expected MI estimation biases cancel in the difference at every plotted sample size. The four panels therefore show how testing can fail even without difference bias. Errors in the shared standard error and the tails of "
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 55,
+        "old_opening": "The two smaller different-skew panels also have a trough followed by recovery. In \\(2\\times2\\), even Wald remains below 5\\% throughout the grid, so Expanded Welch mainly increases conservatism. In \\(4\\times4\\), Wald starts above the target ",
+        "new_opening": "In Figure~\\ref{fig:redesign-null-different}, the two smaller-table panels also have a trough followed by recovery. In \\(2\\times2\\), even Wald remains below 5\\% throughout the grid, so Expanded Welch mainly increases conservatism. In \\(4\\times4\\), Wald starts above the target and then falls below it;"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 58,
+        "old_opening": "At the smallest sample sizes, closeness to 5\\% can also accompany a loss of usable results. For different-skew \\(4\\times4\\) tables at \\(n=10\\), Expanded Welch's rate is close to 5\\%, but it produces valid outputs in only about three quarter",
+        "new_opening": "At the smallest sample sizes in Figure~\\ref{fig:redesign-null-different}, closeness to 5\\% can also accompany a loss of usable results. For different-skew \\(4\\times4\\) tables at \\(n=10\\), Expanded Welch's rate is close to 5\\%, but it produces valid outputs in only about three quarters of repetitions"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 59,
+        "old_opening": "The validity strips distinguish these early failures from the later patterns. Under uniform margins, appreciable losses are concentrated in the smallest \\(2\\times2\\) samples; the other strips stay near one. Under different skew, several tab",
+        "new_opening": "The validity strips in Figures~\\ref{fig:redesign-null-uniform} and~\\ref{fig:redesign-null-different} distinguish these early failures from the later patterns. Under uniform margins, appreciable losses are concentrated in the smallest \\(2\\times2\\) samples; the other strips stay near one. Under differ"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 60,
+        "old_opening": "At the largest sample size, both tests' rates are close to 5\\% across these panels. Better-estimated cell frequencies reduce the distortions of the shared statistic, while larger estimated degrees of freedom bring Expanded Welch's cutoff cl",
+        "new_opening": "At the largest sample size in both figures, both tests' rates are close to 5\\% across all table-size panels. Better-estimated cell frequencies reduce the distortions of the shared statistic, while larger estimated degrees of freedom bring Expanded Welch's cutoff closer to Wald's. The curves therefor"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 67,
+        "old_opening": "At A, difference bias is negligible, but the average \\(\\SEhat^2\\) is below the observed \\(\\Var(\\Deltahat)\\). At B, \\(\\Deltahat\\) is biased upwards and the average \\(\\SEhat^2\\) exceeds the observed \\(\\Var(\\Deltahat)\\). Expanded Welch lowers ",
+        "new_opening": "In Table~\\ref{tab:redesign-shared-estimates}, A's difference bias is negligible, but the average \\(\\SEhat^2\\) is below the observed \\(\\Var(\\Deltahat)\\). At B, \\(\\Deltahat\\) is biased upwards and the average \\(\\SEhat^2\\) exceeds the observed \\(\\Var(\\Deltahat)\\). Expanded Welch lowers false positives "
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 68,
+        "old_opening": "The uniform-table curves help separate errors in \\(\\SEhat^2\\) from difference bias. Across their sample-size grid, the difference remains centred near zero, but the average \\(\\SEhat^2\\) can move from below to above the observed \\(\\Var(\\Delt",
+        "new_opening": "Returning to Figure~\\ref{fig:redesign-null-uniform}, the uniform-table curves help separate errors in \\(\\SEhat^2\\) from difference bias. Across their sample-size grid, the difference remains centred near zero, but the average \\(\\SEhat^2\\) can move from below to above the observed \\(\\Var(\\Deltahat)\\)"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 69,
+        "old_opening": "Average variance accuracy does not fully determine the tails of \\(T\\). In the \\(2\\times2\\) trough, sampled datasets with larger absolute MI differences tend also to have larger standard errors. Dividing by those larger standard errors reduc",
+        "new_opening": "In that figure's \\(2\\times2\\) trough, average variance accuracy does not fully determine the tails of \\(T\\). Sampled datasets with larger absolute MI differences tend also to have larger standard errors. Dividing by those larger standard errors reduces the extreme values of \\(T\\), helping explain wh"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 73,
+        "old_opening": "Changing the degrees of freedom does not resolve the sparse-table failure. At \\(16\\times16\\), different skew and \\(n=1{,}000\\), the difference bias is about 0.030 nats, or 2.06 observed SDs. Both tests reject far too often; changing the rej",
+        "new_opening": "The sparse different-skew rows of Tables~\\ref{tab:redesign-shared-estimates} and~\\ref{tab:redesign-case-rates} show that changing the degrees of freedom does not resolve the failure. At \\(16\\times16\\), different skew and \\(n=1{,}000\\), the difference bias is about 0.030 nats, or 2.06 observed SDs. B"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 81,
+        "old_opening": "At A and C, increasing \\(I(Q)\\) moves the sampling centre of \\(\\Deltahat\\) farther below zero. Its magnitude grows relative to the standard error, so more repetitions cross the negative rejection boundary and power rises. Expanded Welch's l",
+        "new_opening": "In panels A and C of Figure~\\ref{fig:redesign-power}, increasing \\(I(Q)\\) moves the sampling centre of \\(\\Deltahat\\) farther below zero. Its magnitude grows relative to the standard error, so more repetitions cross the negative rejection boundary and power rises. Expanded Welch's larger cutoff leave"
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 92,
+        "old_opening": "At A, calibration mainly lowers Wald's curve: its nominal false-positive rate was above 5\\%, whereas Expanded Welch's was already close to the target. Expanded Welch now has higher power over the alternatives shown, reversing the nominal or",
+        "new_opening": "In panel A of Figure~\\ref{fig:redesign-calibrated-power}, calibration mainly lowers Wald's curve: its nominal false-positive rate was above 5\\%, whereas Expanded Welch's was already close to the target. Expanded Welch now has higher power over the alternatives shown, reversing the nominal ordering. "
+      },
+      {
+        "source": "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+        "paragraph_index": 100,
+        "old_opening": "Under lower-null calibration, the gains at A and B increase from two to four null SDs. Changing the fitting setting nevertheless reverses the gain in two comparisons. At A and two null SDs, the 3.58-point gain becomes a 0.76-point loss. At ",
+        "new_opening": "In Table~\\ref{tab:redesign-calibration-sensitivity}, the lower-null gains at A and B increase from two to four null SDs. Changing the fitting setting nevertheless reverses the gain in two comparisons. At A and two null SDs, the 3.58-point gain becomes a 0.76-point loss. At B and four SDs, a 3.92-poi"
+      }
+    ],
+    "other_sources_and_figure_assets_hash_identical": 105,
+    "displayed_equations_figures_tables_labels_citations_and_numeric_tokens_preserved": true,
+    "paragraph_order_and_count_preserved": true,
+    "active_tex_sources_checked": 31,
+    "unique_labels": 157,
+    "references_checked": 214,
+    "source_braces_environments_math_delimiters_and_references_passed": true,
+    "existing_manuscript_consistency_tests_passed": 5,
+    "paragraph_style_passed": true,
+    "delivery_files_unchanged": 10,
+    "pdf_sha256": "6820888e12ba7dda3875e544576be826094cd7d604420aa044c2c4995476c2ef",
+    "pdf_rebuilt": false,
+    "delivery_refreshed": false,
+    "layout_review_pending_requested_build": false,
+    "review": "Thesis Writeup/Welch MI/notes/DISPLAY_SIGNPOSTING_2026-10-28.md",
+    "whitespace_check_passed": true,
+    "subsequent_requested_build_record": "Thesis Writeup/Welch MI/notes/SIGNPOSTING_INTERIM_BUILD_2026-10-28.md"
+  },
+  "signposting_interim_requested_build_2026_10_28": {
+    "date": "2026-10-28",
+    "mode": "interim",
+    "pdf_pages": 107,
+    "previous_pdf_pages": 106,
+    "main_text_pages": 70,
+    "chapter6_pages": 22,
+    "appendix_pages": {
+      "A": 5,
+      "B": 9,
+      "C": 9
+    },
+    "review": "Thesis Writeup/Welch MI/notes/SIGNPOSTING_INTERIM_BUILD_2026-10-28.md",
+    "snapshot": "Thesis Writeup/Welch MI/archive/before_signposting_interim_build_2026-10-28.zip",
+    "latex_warnings": [],
+    "paragraph_style_check_passed": true,
+    "changed_section_contact_pages_reviewed": [
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103
+    ],
+    "source_archive_contents_verified": true,
+    "main_and_named_pdf_identical": true,
+    "pdf_sha256": "806dc3cab1ca8d65d069ac67494750363428bab6217946e71b00db9de2b6612a",
+    "experiment_archive_reused": true,
+    "supplement_input_inventory_size_timestamps_checked": 24996,
+    "independent_exported_source_build_run": false,
+    "full_delivery_content_rehash_run": false,
+    "pdf_rebuilt": true,
+    "delivery_files_current": true,
+    "future_build_policy": "Quick interim builds; full verification for final delivery or relevant substantive changes"
+  },
+  "current_build_verification_mode": "interim; full historical delivery checks are not rerun for this build"
 }

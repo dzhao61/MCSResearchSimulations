@@ -1,6 +1,10 @@
 # Main Welch MI thesis deliverable
 
-Current PDF: **102 pages**, rebuilt and reviewed on 28 October 2026. The first-reader revisions, clearer display labels and Chapter 6 mechanism explanations are included. Formatting review checks the expanded tables, figure placement and flush-left paragraphs.
+Current PDF: **107 pages**, rebuilt on 28 October 2026 with the focused display-signposting edits. This interim build checks compilation, references, paragraph style and the changed sections for obvious layout issues. The main/named PDF and source archive are current; the unchanged, previously verified experiment archive is reused.
+
+For interim review builds, use the lighter checks described in `AGENTS.md`.
+The full packaging and independent-build review below remains the final-delivery
+procedure. PDF builds still require an explicit request.
 
 Successful direct `latexmk` builds of `main.tex` now run a post-build hook
 that refreshes the named PDF in `deliverables/`, source archive, experiment
@@ -79,6 +83,8 @@ The requested 27 October rebuild incorporates all preceding source revisions. Th
 The subsequent requested build on 27 October incorporates the abstract language pass, the parallel Section 6.2 subsections and the motivation added to Sections 2.3–2.4. The manuscript is 98 pages (65 pages of main text; Chapter 6 is 18 pages). Formatting and references compile without warnings. The direct-build delivery hook refreshes the named delivery set without a second TeX compilation. Future rebuilds still wait for an explicit request.
 
 The requested 28 October mechanism rebuild incorporates the first-reader and display revisions and the evidence-backed explanations of the Chapter 6 curves. The manuscript has 102 pages, including 67 pages of main text; Chapter 6 occupies 19 pages and Appendices A/B/C occupy 5/9/7 pages. Formatting-only table placement changes keep introductions, displays and interpretation in reading order without changing values, font sizes or figure dimensions. The named delivery files and source/supplement archives are refreshed together. Earlier deferred-build statements above describe historical source-edit stages. Future builds continue to wait for an explicit request. See `notes/MECHANISM_PDF_BUILD_2026-10-28.md`.
+
+The subsequent requested panel/table-analysis build on 28 October has 106 pages, including 69 pages of main text. Chapter 6 occupies 21 pages and Appendices A/B/C occupy 5/9/9 pages. Compact spacing around the three application tables and a shorter, equivalent Holm-adjustment paragraph remove a nearly empty trailing page. The fitted-null-SD table now precedes its interpretation. Font sizes, page margins, numerical evidence and figure dimensions are preserved. The named delivery files and archives are refreshed together. See `notes/PANEL_TABLE_PDF_BUILD_2026-10-28.md`.
 
 ## Build an extracted source archive
 
