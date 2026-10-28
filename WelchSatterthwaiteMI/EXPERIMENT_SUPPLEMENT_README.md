@@ -21,6 +21,30 @@ The 26 October Chapter 6 reduction moves the construction table and sample-alloc
 
 The later 26 October plot revision separates population and sample-based calculations into different rows of Figures 6.1–6.2. The main near-independence panel retains four df curves. `supplementary_displays/near_independence_diagnostics/` preserves all six curves and the fifth–95th percentile band for all nine margin/sample-size combinations, using descriptive legends in place of “A.4”. The thesis helper accepts `--diagnostics` to regenerate these full plots from the original saved summaries. These plots use the same unrounded values; no simulations, moment estimates or bootstrap samples are rerun.
 
+The 28 October mechanism review inspects the saved evaluation records for
+63 settings. It checks the link between moment errors and degrees of freedom,
+the local near-independence substitutions, joint difference/standard-error
+behaviour, and power-curve centres and rejection tails. At seven existing
+16-by-16 different-skew null settings it reconstructs the first 10,000
+repetitions from their original streams, verifies their MI, variance,
+sensitivity-variance and empty-cell outputs, and partitions contributions
+from cells observed once versus repeatedly. No new evaluation samples are
+added. The checked evidence is included as
+`supplementary_displays/chapter6_mechanisms/evidence.json`.
+
+Reproduce this diagnostic in a separate output file from the extracted
+archive root:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/report_chapter6_mechanisms.py --support-decomposition --output mechanism-evidence.json
+```
+
+The reporter checks raw chunk hashes before reading or reconstructing them
+and rejects output paths within the original results directory. Its fixed-RMS
+standard-error tail calculation is an internal diagnostic of dataset-dependent
+scaling, not a third test in the thesis. The original two-test rates, fitted
+thresholds and bootstrap intervals remain unchanged.
+
 # Historical supplement documentation
 
 # Welch-MI Focused Experiment Supplement

@@ -99,6 +99,7 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "run_large_table_construction_check.py",
                    "report_large_table_construction_check.py",
                    "redesign_study.py", "redesign_report.py", "report_ratio_tools.py",
+                   "report_chapter6_mechanisms.py",
                    "calibration_sensitivity.py", "report_calibration_sensitivity.py",
                    "same_skew_extension_core.py", "run_same_skew_extension.py",
                    "report_same_skew_extension.py"]
@@ -117,6 +118,8 @@ def supplement_files() -> list[tuple[Path, Path]]:
     exact.extend(project / "tests" / name for name in tests)
     for source in exact:
         files.append((source, source.relative_to(WORKSPACE)))
+    files.append((THESIS / "notes/CHAPTER_6_MECHANISM_EVIDENCE_2026-10-28.json",
+                  Path("WelchSatterthwaiteMI/supplementary_displays/chapter6_mechanisms/evidence.json")))
     for directory in (
         project / "src",
         differential / "src",

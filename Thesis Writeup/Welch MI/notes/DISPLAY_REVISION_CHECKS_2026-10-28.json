@@ -1,0 +1,101 @@
+{
+  "plot_figures_compared": [
+    "null_uniform",
+    "null_same_skew",
+    "null_different_skew",
+    "power",
+    "power_calibrated"
+  ],
+  "plot_series_bands_limits_axes_positions_and_declared_sizes_identical": true,
+  "generated_tables_numeric_cells_identical": [
+    "cases_rates",
+    "cases_diagnostics",
+    "component_spread",
+    "components",
+    "null_sd_fitting",
+    "sensitivity_power_full"
+  ],
+  "copied_plot_assets": [
+    "null_uniform",
+    "null_different_skew"
+  ],
+  "new_simulations_fits_bootstraps": 0,
+  "date": "2026-10-28",
+  "active_tex_sources_checked": 31,
+  "unique_labels": 157,
+  "references_checked": 174,
+  "source_syntax_references_equations_and_citations_passed": true,
+  "result_summary_hashes_unchanged": 7381,
+  "protected_pdf_delivery_files_unchanged": 10,
+  "delivery_pdf_sha256_unchanged": "e1cd07279e5f7ccb93ae187d0e167e2d8b5b91fc7b839180550fc172bec6738b",
+  "added_numeric_examples_checked": true,
+  "changed_files": [
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_sensitivity_power_full.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_diagnostics.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_components.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_component_spread.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_sd_fitting.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_rates.tex",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_different_skew.pdf",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_uniform.pdf",
+    "WelchSatterthwaiteMI/experiments/redesign_report.py",
+    "WelchSatterthwaiteMI/experiments/report_calibration_sensitivity.py"
+  ],
+  "net_source_words_in_two_edited_chapters": 426,
+  "pdf_rebuilt": false,
+  "delivery_refreshed": false,
+  "typeset_table_and_page_layout_pending": true,
+  "existing_tests_passed": {
+    "manuscript_consistency": 5,
+    "ratio_display": 7
+  },
+  "paragraph_style_guard_passed": true,
+  "git_diff_whitespace_passed": true,
+  "updated_plot_assets_rendered_and_visually_inspected": true,
+  "figure_pdf_trim_points": {
+    "null_uniform": {
+      "before": [
+        502.081,
+        444.641
+      ],
+      "after": [
+        502.364,
+        445.596
+      ],
+      "delta": [
+        0.2829999999999586,
+        0.9549999999999841
+      ]
+    },
+    "null_different_skew": {
+      "before": [
+        502.081,
+        444.641
+      ],
+      "after": [
+        502.364,
+        445.596
+      ],
+      "delta": [
+        0.2829999999999586,
+        0.9549999999999841
+      ]
+    }
+  },
+  "revised_input_sha256": {
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex": "325bee15be2ccad165207e14f76d176eb09346ae35e9204f316da7d7ddacf89d",
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex": "82d094fbf361a819931fa1f33e01a484b178ac2d75dec45846f2ab4053c8071a",
+    "WelchSatterthwaiteMI/experiments/redesign_report.py": "3a900a5ad7080b87d3cbe50e27459d3c5ad466af0d35e9bc31d9f058c1bf5108",
+    "WelchSatterthwaiteMI/experiments/report_calibration_sensitivity.py": "1d4984027f37948c3dc28727f3664710217140ca00ef41735750ed068a0cc574",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_rates.tex": "235854ead1d5f4776e564cd7e8e0a51737e0d8840513d1faebdd216341a3caa9",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_diagnostics.tex": "df48248926331947352e21896fd7cea46226ed4106c3b29afc3ff8cb5f8d0e22",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_component_spread.tex": "fa9f1c0bd7dd6a4d4fe083f249586fecd6a17045b12ca16467ae7d2c38fc4866",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_components.tex": "369fb335ff9a56d48ef958cddcfa3f0802b399685c92d9f7c444c7616523a54b",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_sd_fitting.tex": "7b38ef58623368c5ded3d9ec78d5395ad15ca7ffe82a1cd6dccc37d8d47475cc",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_sensitivity_power_full.tex": "6cb8ee2f245c0648fec643b2e474fb3e146d8c8d99cd1f0c61a5891c0a518c44",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_uniform.pdf": "76f847377f26bcaed3cb0ef0a4296e4892d6ef18834fd4f24531ae42ed619aa2",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_different_skew.pdf": "f7766ffc5aa5dada1768eaeccc383a6ab52b85d99955657b3405aef14c2a107a"
+  }
+}

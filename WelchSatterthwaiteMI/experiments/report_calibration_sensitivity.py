@@ -164,7 +164,7 @@ def write_tables(output,figures):
             for location in ('lower','upper'):
                 rows.append([f'{label}: {effect:g}, {location}']+
                             [percentage_text(values.loc[(label,effect,location,m),'estimate']) for m in ('wald','expanded')])
-    table(figures/'focused_redesign_sensitivity_power_full.tex',[r'Setting, \(h\), null','Normal Wald','Expanded'],rows)
+    table(figures/'focused_redesign_sensitivity_power_full.tex',[r'Setting, \(h\), fitting null','Normal Wald','Expanded'],rows)
     cross=pd.read_csv(output/'cross_null_rates.csv').set_index(['focus','effect','calibration','null_location','method'])
     lines=[r'\begin{tabular}{@{}llrrrr@{}}',r'\toprule',
            r' & & \multicolumn{2}{c}{Lower evaluation null} & \multicolumn{2}{c}{Upper evaluation null}\\',

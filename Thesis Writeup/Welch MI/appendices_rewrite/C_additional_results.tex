@@ -31,7 +31,7 @@ moment target uses the evaluation sampling moments. All 100,000
 component estimates are positive and finite in each row; percentile
 ranges describe sampling spread.
 
-\begin{table}[!htbp]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
@@ -45,16 +45,20 @@ and standard error. Bias/SD divides difference bias by its observed SD;
 variance ratio divides the mean squared standard error by the observed
 difference variance. Rank corr. is Spearman's correlation between
 \(|\Deltahat-\operatorname{mean}(\Deltahat)|\) and \(\SEhat\), using every repetition
-where both quantities are finite without a test-validity restriction. Skew
-describes the difference estimates. All 100,000 repetitions are included
+where both quantities are finite without a test-validity restriction.
+Skewness measures asymmetry in \(\Deltahat\): positive values indicate a
+longer right tail and negative values a longer left tail. ``Median combined
+df'' summarises \(\widehat\nu_{\mathrm{expanded}}\), rather than either
+component's degrees of freedom. All 100,000 repetitions are included
 in each row.
+
 A near-zero signed correlation can follow from symmetry despite
 magnitude dependence: the same-skew \(2\times2\), \(n=100\) null has
 Pearson correlation between \(\Deltahat\) and \(\SEhat\) about
 \(-0.001\), but rank correlation between the centred magnitude and
 \(\SEhat\) of 0.547.
 
-\begin{table}[!htbp]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
@@ -62,6 +66,37 @@ Pearson correlation between \(\Deltahat\) and \(\SEhat\) about
 \label{tab:redesign-case-diagnostics}
 \input{figures_rewrite/focused_redesign_cases_diagnostics}
 \end{table}
+
+Additional checks examine the curve shapes in Chapter~\ref{chap:results}.
+For \(16\times16\) different-skew populations at common MI 0.02, the
+cell contributions to \(\Vhat\) and \(\widehat\tau^2\) are partitioned
+into cells observed once and cells observed more than once. The check uses
+10,000 evaluation repetitions at each
+\(n\in\{10,20,50,100,250,1000,10000\}\), for both populations.
+Once-observed cells account for most of the mean estimates around the
+peak, but much less at the largest checked sample size. Comparing the
+linear change derived in Chapter~\ref{chap:expanded} with
+\(\Vhat(P)-V(P)\) also shows substantial remaining variation around
+the peak. Its covariance with the linear change is retained when
+checking the total sampling variance.
+
+For the \(4\times4\) different-skew MI sweep at \(n=1{,}000\),
+the local approximations \(\Vhat\approx2\Ihat\) and
+\(\widehat\tau^2\approx4\Vhat\) are checked against the sampled
+values. Twice the plug-in MI increasingly understates the mean and
+sampling variance of \(\Vhat\), while \(4\Vhat\) increasingly
+understates the mean of \(\widehat\tau^2\). The observed variance
+of \(2n\Ihat\) also exceeds its local noncentral
+chi-squared prediction. Both parts of the local calculation therefore
+contribute to the separation in Figure~\ref{fig:redesign-a4}.
+
+The uniform \(2\times2\) sample-size grid shows a further source of
+conservatism: the centred magnitude of \(\Deltahat\) is positively
+associated with \(\SEhat\), especially around the rejection-rate
+trough. The magnitude correlation falls from 0.656 at \(n=50\) to
+0.167 at \(n=1{,}000\). This check uses the same correlation defined
+above; it concerns the joint behaviour of the estimates, which their
+average variance ratio alone does not describe.
 
 \begin{samepage}
 The null SDs in
@@ -93,7 +128,7 @@ cutoff-fitting uncertainty for the calibrated intervals.
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
-\caption{Expanded Welch minus Normal Wald at two null SDs, in percentage points.}
+\caption{Expanded Welch minus Normal Wald power at two null SDs, in percentage points.}
 \label{tab:redesign-power-contrasts}
 \input{figures_rewrite/focused_redesign_power_contrasts}
 \end{table}
@@ -103,7 +138,8 @@ on the same fixed alternatives. The lower null has common MI 0.02;
 the upper null sets both MI values to the alternative's larger value.
 Appendix~\ref{sec:calibration-sensitivity-design} specifies the construction
 and joint bootstrap. Table~\ref{tab:redesign-calibration-sensitivity}
-in Chapter~\ref{chap:results} gives the Wald contrasts with intervals.
+in Chapter~\ref{chap:results} gives Expanded Welch minus Normal Wald
+power differences with intervals.
 
 \begin{table}[!htbp]
 \centering
@@ -117,8 +153,8 @@ in Chapter~\ref{chap:results} gives the Wald contrasts with intervals.
 Table~\ref{tab:redesign-sensitivity-cross-null} applies each fitted cutoff
 to both null validation settings. Each row includes all 100,000
 repetitions, with invalid outputs contributing no rejection. The two null
-settings check sensitivity to calibration; they do not establish
-control across the complete equal-MI null.
+settings distinguish performance where thresholds were fitted from
+performance at a different common MI.
 \par
 \end{samepage}
 
@@ -130,6 +166,14 @@ control across the complete equal-MI null.
 \label{tab:redesign-sensitivity-cross-null}
 \input{figures_rewrite/focused_redesign_sensitivity_cross_null}
 \end{table}
+
+At A and \(h=2\), lower-null fitting gives rates close to 5\% at
+the lower evaluation null, but more than twice that target at the upper
+null. Upper-null fitting reverses the pattern: rejection is close to 5\%
+there and conservative at the lower null. Matching at one common MI
+therefore leaves substantial errors at the other, explaining why the
+power comparison depends on the calibration setting. Neither calibration
+establishes control across the complete equal-MI null.
 
 \section{Sparse-table bias and estimated direction}
 
@@ -197,4 +241,5 @@ Online Shoppers: weekend & 0.9554 & 1 & 0.9601 & 1\\
 Apply Holm's adjustment separately to each method's six p-values
 \citep{holm1979}. Order the raw p-values and multiply them by 6, 5, 4,
 3, 2 and 1. Moving through that order, replace any value below the
-preceding adjusted value by that value, and cap the results at one.
+preceding adjusted value with the preceding adjusted value, and cap the
+results at one.

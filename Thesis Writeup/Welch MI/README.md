@@ -1,6 +1,6 @@
 # Main Welch MI thesis deliverable
 
-Current PDF: **98 pages**, rebuilt and reviewed on 27 October 2026. The latest abstract wording, parallel Section 6.2 subsections and clearer openings to Sections 2.3–2.4 are included.
+Current PDF: **102 pages**, rebuilt and reviewed on 28 October 2026. The first-reader revisions, clearer display labels and Chapter 6 mechanism explanations are included. Formatting review checks the expanded tables, figure placement and flush-left paragraphs.
 
 Successful direct `latexmk` builds of `main.tex` now run a post-build hook
 that refreshes the named PDF in `deliverables/`, source archive, experiment
@@ -77,6 +77,8 @@ The 27 October abstract rewrite states the comparison and derivation directly, r
 The requested 27 October rebuild incorporates all preceding source revisions. The main thesis is now 97 pages, with 64 pages of main text; Chapter 6 is 17 pages, Appendix A five pages, Appendix B nine pages and Appendix C five pages. All paragraphs are flush left. Formatting review shortened three crowded headings, kept the A power walkthrough together, and placed the application null hypothesis within its notation table. Both new supplementary documents are compiled and visually checked. The current named delivery files are refreshed together; earlier statements about deferred builds describe the historical source-edit stages. Future rebuilds still wait for the user's explicit request. See `notes/PDF_REBUILD_FORMAT_REVIEW_2026-10-27.md`.
 
 The subsequent requested build on 27 October incorporates the abstract language pass, the parallel Section 6.2 subsections and the motivation added to Sections 2.3–2.4. The manuscript is 98 pages (65 pages of main text; Chapter 6 is 18 pages). Formatting and references compile without warnings. The direct-build delivery hook refreshes the named delivery set without a second TeX compilation. Future rebuilds still wait for an explicit request.
+
+The requested 28 October mechanism rebuild incorporates the first-reader and display revisions and the evidence-backed explanations of the Chapter 6 curves. The manuscript has 102 pages, including 67 pages of main text; Chapter 6 occupies 19 pages and Appendices A/B/C occupy 5/9/7 pages. Formatting-only table placement changes keep introductions, displays and interpretation in reading order without changing values, font sizes or figure dimensions. The named delivery files and source/supplement archives are refreshed together. Earlier deferred-build statements above describe historical source-edit stages. Future builds continue to wait for an explicit request. See `notes/MECHANISM_PDF_BUILD_2026-10-28.md`.
 
 ## Build an extracted source archive
 

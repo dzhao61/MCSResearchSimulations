@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-28",
+  "saved_record_settings_checked": 63,
+  "reconstructed_existing_repetitions_per_setting": 10000,
+  "support_decomposition_settings": 7,
+  "new_evaluation_samples": 0,
+  "result_summaries_unchanged": 7381,
+  "protected_delivery_files_unchanged": 10,
+  "all_figure_and_table_assets_unchanged_this_phase": true,
+  "displayed_equations_and_citations_unchanged": true,
+  "active_tex_sources_checked": 31,
+  "unique_labels": 157,
+  "references_checked": 183,
+  "source_syntax_and_references_passed": true,
+  "mechanism_claim_checks_passed": true,
+  "reporter_input_preservation_guard_passed": true,
+  "future_supplement_includes_code_and_evidence": true,
+  "existing_tests_passed": {
+    "manuscript_consistency": 5,
+    "ratio_display": 7,
+    "packaging": 15
+  },
+  "paragraph_style_passed": true,
+  "whitespace_passed": true,
+  "source_word_changes": {
+    "chapters_rewrite/06_results.tex": 465,
+    "appendices_rewrite/C_additional_results.tex": 211
+  },
+  "numeric_token_counts": {
+    "chapters_rewrite/06_results.tex": {
+      "before": 286,
+      "after": 213
+    },
+    "appendices_rewrite/C_additional_results.tex": {
+      "before": 111,
+      "after": 125
+    }
+  },
+  "pdf_rebuilt": false,
+  "delivery_refreshed": false,
+  "typeset_layout_pending_requested_build": true,
+  "existing_files_changed": [
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex",
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex",
+    "REDESIGN_VERIFICATION.json",
+    "Thesis Writeup/Welch MI/notes/DISPLAY_REVISION_PLAN_2026-10-28.md",
+    "Thesis Writeup/Welch MI/package_deliverables.py",
+    "WelchSatterthwaiteMI/EXPERIMENT_SUPPLEMENT_README.md"
+  ],
+  "mechanism_evidence_sha256": "ed4b729374443ed23cbfa6ae9657af180bea8c4e31232c20c93470ea1cc32cfb",
+  "revised_input_sha256": {
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex": "b577b4e7971afb7703285dbf9fbbbd2f2764ad4d2f5afe092d1ff57b5c6c72a9",
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex": "50dc2aa212587064c3468bd4891fb3f8d91c1aedb956ad865884e7588d8666a8",
+    "Thesis Writeup/Welch MI/package_deliverables.py": "560ec4e5098469884cfd4cb4186c6b5d5b0955f8994f8b8c53a6c655f298346c",
+    "WelchSatterthwaiteMI/EXPERIMENT_SUPPLEMENT_README.md": "e8e7e6615b1458b4d1c4a200a0163fadc027abbeed92429987ef40e089cfd569",
+    "WelchSatterthwaiteMI/experiments/report_chapter6_mechanisms.py": "eba6b9554cfe2d033b92a185bd0752c6ac221a7d69036603b2dff81192e9405a"
+  },
+  "plan_completion_record": "Thesis Writeup/Welch MI/notes/DISPLAY_REVISION_PLAN_2026-10-28.md"
+}

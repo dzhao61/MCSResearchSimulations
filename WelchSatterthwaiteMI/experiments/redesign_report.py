@@ -111,19 +111,58 @@ def bootstrap_focus(task):
     return rows
 
 
-def save(fig,name,figures):
-    fig.savefig(figures/('focused_redesign_'+name+'.pdf'),bbox_inches='tight')
+def save(fig,name,figures,bbox_inches='tight'):
+    fig.savefig(figures/('focused_redesign_'+name+'.pdf'),bbox_inches=bbox_inches)
     plt.close(fig)
 
 
-def table(path,columns,rows):
-    alignment='l'+'r'*(len(columns)-1)
-    lines=[r'\begin{tabular}{@{}'+alignment+r'@{}}',r'\toprule',' & '.join(columns)+r'\\',r'\midrule']
+def table(path,columns,rows,flexible_first=False,group_header=None):
+    alignment=(r'>{\raggedright\arraybackslash}X' if flexible_first else 'l')+'r'*(len(columns)-1)
+    opening=(r'\begin{tabularx}{\textwidth}' if flexible_first else r'\begin{tabular}')
+    lines=[opening+r'{@{}'+alignment+r'@{}}',r'\toprule']
+    if group_header is not None:
+        lines.extend(group_header)
+    lines.extend([' & '.join(columns)+r'\\',r'\midrule'])
     lines += [' & '.join(map(str,row))+r'\\' for row in rows]
-    lines += [r'\bottomrule',r'\end{tabular}']
+    lines += [r'\bottomrule',r'\end{tabularx}' if flexible_first else r'\end{tabular}']
     text='\n'.join(lines)+'\n'
     text=re.sub(r'(?<![\d.])-0(\.0+)(?![\d.])',r'0\1',text)
     path.write_text(text)
+
+
+def case_display_label(label,side=None):
+    """Expand display wording while retaining the existing evidence keys."""
+    match=re.fullmatch(r'16, (same|different), ([\d,]+)',label)
+    if match:
+        profile,n=match.groups()
+        number=n.replace(',',r'{,}')
+        label=rf'\(16\times16\), {profile} skew\newline \(n={number}\)'
+    if side is not None:
+        label+=rf', \({side.upper()}\)'
+    return label
+
+
+def component_spread_table(figures,cases,moments):
+    rows=[]
+    for label,key in cases:
+        for side in 'pq':
+            measured=moments[moments.configuration_id.eq(key)&moments.side.eq(side)].iloc[0]
+            rows.append([case_display_label(label,side),f'{measured.df_mean:.2f}',f'{measured.df_median:.2f}',
+                         f'[{measured.df_p05:.2f}, {measured.df_p95:.2f}]',f'{measured.nu_mom:.2f}',f'{int(measured.df_valid_count):,}'])
+    table(figures/'focused_redesign_component_spread.tex',
+          ['Setting, population',r'\shortstack{Mean\\df}',r'\shortstack{Median\\df}',
+           r'\shortstack{5th--95th\\percentiles}',r'\shortstack{Moment\\target}','Included'],
+          rows,flexible_first=True)
+
+
+def component_comparison_table(figures,selected):
+    rows=[[f'{r["mi"]:g}, {r["side"].upper()}',f'{r["mean_ratio"]:.3f}',f'{r["variance_ratio"]:.3f}',
+           f'{r["plugin_variance_ratio"]:.3f}',f'{r["df_mean"]:.2f}',f'{r["nu_mom"]:.2f}',f'{r["nu_fo"]:.2f}'] for r in selected]
+    table(figures/'focused_redesign_components.tex',
+          ['MI, pop.','Mean ratio',r'\shortstack{Var. ratio\\(pop.)}',
+           r'\shortstack{Var. ratio\\(sample)}','Mean df','Moment df',r'\(\nu_{\mathrm{FO}}\)'],rows,
+          group_header=[r'& \multicolumn{3}{c}{Moment ratios} & \multicolumn{3}{c}{Component df}\\',
+                        r'\cmidrule(lr){2-4}\cmidrule(l){5-7}'])
 
 
 def select_case(configs,k,profile,n,mi=.02,construction='copying',iq=None,nq=None):
@@ -141,10 +180,11 @@ def testing_rule_figures(configs,displays,focus,raw,cal,boot,figures,methods=DIS
     for profile in study.PROFILES:
         fig=plt.figure(figsize=(7.1,6.2))
         grid=fig.add_gridspec(2,2,hspace=.50,wspace=.28,left=.11,right=.98,top=.94,bottom=.16)
-        first=None
+        first=None; panels=[]
         for position,k in enumerate((2,4,8,16)):
             pair=grid[position//2,position%2].subgridspec(2,1,height_ratios=[4,1],hspace=.10)
             ax=fig.add_subplot(pair[0]); validity_ax=fig.add_subplot(pair[1],sharex=ax)
+            panels.append((ax,validity_ax))
             if first is None: first=ax
             data=configs[configs.configuration_id.isin(null_ids)&configs.profile.eq(profile)&configs.k.eq(k)].sort_values('n_p')
             for m in methods:
@@ -161,8 +201,20 @@ def testing_rule_figures(configs,displays,focus,raw,cal,boot,figures,methods=DIS
             ax.tick_params(labelbottom=False)
             ax.axhline(.05,color='black',lw=.6); ax.set_xscale('log'); ax.set_title(f'{k} x {k}')
             ax.set_ylabel('False-positive rate')
-        fig.legend(*first.get_legend_handles_labels(),loc='lower center',ncol=2)
-        save(fig,'null_'+profile,figures)
+        # Retain the canvas size, panel geometry and preceding margins. The full
+        # validity label fits horizontally in the unused lower part of its strip.
+        previous_legend=fig.legend(*first.get_legend_handles_labels(),loc='lower center',ncol=2)
+        fig.canvas.draw()
+        bounds=fig.get_tightbbox(fig.canvas.get_renderer()).padded(plt.rcParams['savefig.pad_inches'])
+        previous_legend.remove()
+        for ax,validity_ax in panels:
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda value,position:f'{100*value:g}%'))
+            validity_ax.set_ylabel('Valid fraction',fontsize=9,rotation=0,ha='left',va='bottom')
+            validity_ax.yaxis.set_label_coords(.02,.13)
+        handles,labels=first.get_legend_handles_labels()
+        fig.legend(handles+[Line2D([],[],color='black',lw=.6)],labels+['Nominal 5%'],
+                   loc='lower center',ncol=3)
+        save(fig,'null_'+profile,figures,bbox_inches=bounds)
 
     for calibrated in (False,True):
         fig,axes=plt.subplots(1,3,figsize=(7.1,3.1),sharey=True)
@@ -343,15 +395,17 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
-        rows.append([label]+cells)
+        rows.append([case_display_label(label)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
-          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows)
+          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True)
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]
-        rows.append([label,f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{dependence.loc[key,"centered_magnitude_spearman"]:.3f}',
+        rows.append([case_display_label(label),f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{dependence.loc[key,"centered_magnitude_spearman"]:.3f}',
                      f'{d.delta_skewness:.3f}',f'{d.df_median:.2f}'])
-    table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Est./obs. var.','Rank corr.','Skew','Median df'],rows)
+    table(figures/'focused_redesign_cases_diagnostics.tex',
+          ['Setting','Bias/SD',r'\shortstack{Est./obs.\\variance}',r'\shortstack{Rank\\corr.}',
+           'Skewness',r'\shortstack{Median\\combined df}'],rows,flexible_first=True)
     rows=[]
     for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
         rows.append([f'{row.focus}: {row.standardised_difference:g}',significant_text(row.difference_nats)]+
@@ -373,15 +427,8 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     for label,key in cases[:3]:
         r=refs[key]
         rows.append([label,f'{r["null_sd"]:.6f}',f'{r["null_sd_mcse"]:.6f}'])
-    table(figures/'focused_redesign_null_sd_fitting.tex',['Setting','Null SD (nats)','MCSE (nats)'],rows)
-    rows=[]
-    for label,key in cases:
-        r=refs[key]
-        for side in 'pq':
-            measured=moments[moments.configuration_id.eq(key)&moments.side.eq(side)].iloc[0]
-            rows.append([label+', '+side.upper(),f'{measured.df_mean:.2f}',f'{measured.df_median:.2f}',
-                         f'[{measured.df_p05:.2f}, {measured.df_p95:.2f}]',f'{measured.nu_mom:.2f}',f'{int(measured.df_valid_count):,}'])
-    table(figures/'focused_redesign_component_spread.tex',['Setting, pop.','Mean df','Median df','5th--95th','Moment df','Included'],rows)
+    table(figures/'focused_redesign_null_sd_fitting.tex',['Setting','Null SD (nats)',r'\shortstack{Monte Carlo SE\\(nats)}'],rows)
+    component_spread_table(figures,cases,moments)
     for study_name in ('allocation','construction'):
         ids=set(displays[displays.study.eq(study_name)].configuration_id)
         selected=configs[configs.configuration_id.isin(ids)].sort_values(['k','profile','construction','mi_q','n_p'])
@@ -398,9 +445,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     for mi in (.0001,.02,.05):
         key=select_case(configs,4,'different_skew',1000,mi=mi)
         selected.extend(moments[moments.configuration_id.eq(key)].to_dict('records'))
-    rows=[[f'{r["mi"]:g}, {r["side"].upper()}',f'{r["mean_ratio"]:.3f}',f'{r["variance_ratio"]:.3f}',
-           f'{r["plugin_variance_ratio"]:.3f}',f'{r["df_mean"]:.2f}',f'{r["nu_mom"]:.2f}',f'{r["nu_fo"]:.2f}'] for r in selected]
-    table(figures/'focused_redesign_components.tex',['MI, pop.','Mean ratio',r'\shortstack{Var. ratio\\(pop.)}',r'\shortstack{Var. ratio\\(sample)}','Mean df','Moment df',r'\(\nu_{\mathrm{FO}}\)'],rows)
+    component_comparison_table(figures,selected)
     evidence={'settings':len(configs),'fitting_settings':len(refs),'evaluation_pairs':len(configs)*100000,
               'fitting_pairs':len(refs)*100000,'focus_cases':dict(cases),
               'focus_null_sd':{label:refs[key]['null_sd'] for label,key in json.loads((output/'focus_nulls.json').read_text()).items()},
@@ -446,15 +491,17 @@ def render_testing_rule_displays(output=study.OUTPUT,figures=FIGURES):
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
-        rows.append([label]+cells)
+        rows.append([case_display_label(label)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
-          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows)
+          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True)
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]
-        rows.append([label,f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{dependence.loc[key,"centered_magnitude_spearman"]:.3f}',
+        rows.append([case_display_label(label),f'{d.bias_sd:.3f}',f'{d.variance_ratio:.3f}',f'{dependence.loc[key,"centered_magnitude_spearman"]:.3f}',
                      f'{d.delta_skewness:.3f}',f'{d.df_median:.2f}'])
-    table(figures/'focused_redesign_cases_diagnostics.tex',['Setting','Bias/SD','Est./obs. var.','Rank corr.','Skew','Median df'],rows)
+    table(figures/'focused_redesign_cases_diagnostics.tex',
+          ['Setting','Bias/SD',r'\shortstack{Est./obs.\\variance}',r'\shortstack{Rank\\corr.}',
+           'Skewness',r'\shortstack{Median\\combined df}'],rows,flexible_first=True)
     rows=[]
     for row in focus[focus.standardised_difference.isin([0,1,2,3,4])].sort_values(['focus','standardised_difference']).itertuples():
         rows.append([f'{row.focus}: {row.standardised_difference:g}',significant_text(row.difference_nats)]+
@@ -464,7 +511,14 @@ def render_testing_rule_displays(output=study.OUTPUT,figures=FIGURES):
     for label,key in cases[:3]:
         r=refs[key]
         rows.append([label,f'{r["null_sd"]:.6f}',f'{r["null_sd_mcse"]:.6f}'])
-    table(figures/'focused_redesign_null_sd_fitting.tex',['Setting','Null SD (nats)','MCSE (nats)'],rows)
+    table(figures/'focused_redesign_null_sd_fitting.tex',['Setting','Null SD (nats)',r'\shortstack{Monte Carlo SE\\(nats)}'],rows)
+    moments=pd.read_csv(output/'moments.csv')
+    component_spread_table(figures,cases,moments)
+    selected=[]
+    for mi in (.0001,.02,.05):
+        key=select_case(configs,4,'different_skew',1000,mi=mi)
+        selected.extend(moments[moments.configuration_id.eq(key)].to_dict('records'))
+    component_comparison_table(figures,selected)
     evidence_path=figures/'focused_redesign_evidence.json'
     if evidence_path.exists():
         evidence=json.loads(evidence_path.read_text())
