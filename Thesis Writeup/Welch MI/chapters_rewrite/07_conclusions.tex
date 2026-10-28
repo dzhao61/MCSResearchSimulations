@@ -7,21 +7,22 @@ This thesis derives an Expanded Welch--Satterthwaite test for comparing
 categorical MI across independent populations. Its mathematical
 contribution is the observation-level sensitivity of the estimated MI
 variance, accounting for changes in cell probabilities, margins and
-pointwise MI. The variance of this sensitivity gives a first-order
-sampling-variance approximation, which is used with moment matching to
-choose MI-specific degrees of freedom for a Student \(t\) distribution.
+pointwise MI. The variance of this sensitivity gives the first-order
+approximation
+\(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\). Moment matching uses it
+to choose MI-specific degrees of freedom for a Student \(t\) distribution.
 
 \subsection{RQ1: Accuracy of variance approximations}
 
-The mean and sampling variance of \(\Vhat(P)\) need separate checks.
-The predicted sampling variance can be close to its observed value while
-the mean estimate remains above \(V(P)\). In the moment target in
+The predicted sampling variance of \(\Vhat(P)\) can be close to its
+observed value even when the sampling mean \(\E\{\Vhat(P)\}\) remains
+above \(V(P)\). In the moment target in
 Equation~\eqref{eq:design-moment-target}, the mean is squared in the
-numerator. Replacing the inflated sampling mean by the smaller population
-value therefore lowers the population first-order degrees of freedom,
-even when the sampling-variance approximation is accurate. The mean
-estimated component degrees of freedom can fall further below the moment
-target when population probabilities are replaced by sample proportions.
+numerator. Replacing that sampling mean by the smaller population value
+therefore
+lowers \(\nu_{P,\mathrm{FO}}\) relative to \(\nu_{P,\mathrm{mom}}\),
+even when the sampling-variance approximation is accurate. The sampling
+mean \(\E(\widehat\nu_P)\) can also fall below the moment target.
 The size of these discrepancies depends on the population and sample size.
 
 Near independence, the first-order prediction \(\tau^2(P)/n_P\) for
@@ -45,9 +46,9 @@ Its larger cutoff helps when it corrects excessive rejection and increases
 conservatism when rejection is already too infrequent.
 
 A false-positive rate near 5\% does not establish that the estimated
-degrees of freedom accurately match the denominator's sampling moments.
-At A, the standard error understates the observed sampling variation of
-the MI difference, while the low estimated degrees of freedom increase
+component degrees of freedom match their sampling-moment targets.
+At A, the average \(\SEhat^2\) is below the observed
+\(\Var(\Deltahat)\), while the low estimated degrees of freedom increase
 the rejection cutoff. These errors can compensate in the false-positive
 rate. At B, the average squared standard error exceeds the observed
 variance of the MI difference and the difference is biased, so the same
@@ -67,26 +68,28 @@ accurate estimation of both the MI difference and its uncertainty.
 Expanded Welch has lower nominal power than Normal Wald at the selected
 small-sample settings A and B. Because the two tests also have different
 false-positive rates, the calibrated comparison adjusts their cutoffs to
-match rejection at a specified equal-MI population before comparing power.
-At common MI 0.02 nats, Expanded Welch gains power over Wald at A and B.
-Moving calibration to the upper equal-MI population while holding the
+match rejection at a specified equal-MI setting before comparing power.
+After calibration at common MI 0.02 nats, Expanded Welch has higher power
+at the reported two- and four-null-SD alternatives for A and B.
+Moving calibration to the upper equal-MI setting while holding the
 alternative fixed reverses the gain at A and two null SDs, and at B and
 four null SDs (Table~\ref{tab:redesign-calibration-sensitivity}). At C,
 nominal power differences are small and calibrated differences remain
 practically small under both calibrations.
 
-The calibrated power advantage depends on the population used to fit the
-cutoff. Matching false-positive rates at the lower common MI does not
+The calibrated power advantage depends on the setting used to fit the
+cutoffs. Matching false-positive rates at the lower common MI does not
 ensure that the two tests have the same false-positive rate at the upper
 common MI. Expanded Welch's sample-dependent degrees of freedom can change
 the ordering of datasets by their p-values, but the observed gains do not
 establish a stable power advantage across the equal-MI null.
 
 Changing the cutoff also leaves errors in the estimated MI difference
-unchanged. At B, positive estimation bias initially offsets the negative
-true difference as \(I(Q)\) increases. The estimated difference moves
-towards zero, so rejection initially falls even though the population MI
-values move farther apart. This distortion remains after calibration.
+unchanged. At B, positive estimation bias persists at the first alternatives
+as the
+true difference becomes negative. Their partial cancellation moves the
+sampling mean of \(\Deltahat\) towards zero, so rejection initially falls
+even though the population MI values move farther apart. This distortion remains after calibration.
 
 The sparse \(16\times16\) different-skew comparison shows a more severe
 failure. Its positive difference bias exceeds the true negative difference
@@ -98,8 +101,9 @@ the sparse-table failure. A larger rejection cutoff cannot correct that bias.
 \section{Limitations}
 
 The derivation assumes independent categorical observations, fixed
-categories, positive population cell probabilities and positive
-first-order MI variance. Paired samples would require a covariance term
+categories, positive population cell probabilities, and positive
+\(V(P)\), \(V(Q)\), \(\tau^2(P)\) and \(\tau^2(Q)\). Paired samples would
+require a covariance term
 in the difference variance. Growing alphabets and continuous MI estimators
 have different approximation errors. Exact independence requires the
 second-order argument in Appendix~\ref{sec:independence-boundary}.

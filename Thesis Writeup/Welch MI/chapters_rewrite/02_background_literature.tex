@@ -120,13 +120,18 @@ rare cells can change both even when the categories and sample size are
 unchanged
 \citep{paninski2003}.
 
-For a fixed positive \(r\times c\) support, the large-sample expansion of
-the plug-in estimator's bias has a positive leading term:
+Bias is the difference between the average estimate across repeated samples
+and the population value:
+\(\Bias\{\Ihat(P)\}=\E\{\Ihat(P)\}-I(P)\).
+For a fixed \(r\times c\) table with positive population cell probabilities,
+the large-sample expansion has a positive leading term:
 \begin{equation}
   \Bias\{\Ihat(P)\}
   =\frac{(r-1)(c-1)}{2n}+O(n^{-2}).
   \label{eq:mi-leading-bias}
 \end{equation}
+The remainder \(O(n^{-2})\) collects terms bounded in magnitude by a
+constant times \(n^{-2}\) as \(n\) grows for this fixed population table.
 The leading term grows with table size and shrinks as the sample grows,
 although it does not describe every small or sparse sample. The result is closely related
 to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
@@ -410,6 +415,9 @@ zero because
   =0.
   \label{eq:mi-if-mean-zero-background}
 \end{align}
+The linear approximation therefore has mean-zero error. The higher-order
+terms omitted by this approximation generate the leading bias described in
+Section~\ref{sec:background-mi-bias}.
 The centred function \(\pmi_P(i,j)-I(P)\) is called the influence function
 of MI\@. Equation~\eqref{eq:mi-error-as-average-background} uses it to
 approximate the sampling error \citep{hampel1974,vanderVaart1998,kandasamy2015}.
@@ -481,8 +489,9 @@ positive MI values.
 \label{sec:welch-background}
 
 The preceding section describes the sampling variation of one MI estimate.
-For two independent samples, their variance contributions add, providing
-the standard error needed to compare their MI estimates. This section
+For two independent samples, their variance contributions add. The square
+root of an estimate of this sum is the standard error: it estimates the
+standard deviation of the MI difference across repeated samples. This section
 reviews the Normal Wald test, the Welch--Satterthwaite principle and other
 approaches to that comparison. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\), even when their cell probabilities differ.
@@ -526,7 +535,9 @@ This thesis adapts the Welch--Satterthwaite principle from comparing population
 means to comparing population MI values. Welch's test allows the population
 variances to differ and compares the standardised difference between two
 sample means with a Student \(t\) distribution with \(\nu\) degrees of
-freedom \citep{welch1947}. For two independent samples with sample means
+freedom \citep{welch1947}. Here \(\nu>0\) controls the distribution's
+tail weight; an effective value need not be an integer. For two independent
+samples with sample means
 \(\bar X_P,\bar X_Q\) and sample variances \(s_P^2,s_Q^2\), the statistic for
 testing equal population means and the effective degrees of freedom are
 \begin{align}
@@ -570,13 +581,13 @@ Chapter~\ref{chap:expanded} therefore derives the component degrees of
 freedom from the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\),
 using the same moment-matching principle.
 
-This distinction matters because the size of a variance estimate and its
-stability answer different questions. The estimate \(\Vhat(P)/n_P\)
-describes the expected spread of an MI estimate across samples. The
-variability of \(\Vhat(P)\) describes how much that assessment of spread
-itself changes across samples. Two variance estimators with the same mean
-can have different variability. Satterthwaite's calculation uses both
-moments: greater variability relative to the squared mean gives fewer
+The two variance quantities have different roles. \(\Vhat(P)/n_P\)
+estimates the sampling variance of \(\Ihat(P)\), while
+\(\Var\{\Vhat(P)\}\) measures how much the variance estimate itself
+changes between samples. Two variance estimators with the same mean can
+have different sampling variances. Satterthwaite's calculation matches these
+two moments, the mean and variance: greater sampling
+variance relative to the squared mean gives fewer
 degrees of freedom and a larger rejection cutoff
 \citep{satterthwaite1946}. A sample-size assignment alone does not adapt
 to differences in this relative variability between probability tables.
@@ -616,16 +627,16 @@ resulting MI distribution. Our repeated-sampling comparison instead asks
 how often Normal Wald and Expanded Welch reject equal MI when new samples
 are drawn from fixed populations \(P\) and \(Q\).
 
-Hutcheson's test is a direct information-theoretic Welch predecessor. It
-compares two Shannon diversity estimates with an estimated variance and a
-Student \(t\) distribution, using
+Hutcheson's test applies a Welch-type comparison to two estimates of
+Shannon diversity, or entropy. It uses a Student \(t\) distribution with
+effective degrees of freedom
 \begin{equation}
   \nu_H=
   \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
        {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
   \label{eq:hutcheson-df}
 \end{equation}
-as its effective degrees of freedom \citep{hutcheson1970}. Here each of
+\citep{hutcheson1970}. Here each of
 \(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).

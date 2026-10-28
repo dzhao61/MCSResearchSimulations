@@ -5,7 +5,7 @@ import numpy as np
 MEAN_LABEL = r'\mathbb{E}(\widehat V)/V'
 VAR_POP_LABEL = r'\frac{\tau^2/n}{\mathrm{Var}(\widehat V)}'
 VAR_SAMPLE_LABEL = r'\frac{\mathbb{E}(\widehat{\tau}^{\,2})/n}{\mathrm{Var}(\widehat V)}'
-DF_POP_LABEL = r'\nu/\nu_{\mathrm{mom}}'
+DF_POP_LABEL = r'\nu_{\mathrm{FO}}/\nu_{\mathrm{mom}}'
 DF_SAMPLE_LABEL = r'\mathbb{E}(\widehat\nu)/\nu_{\mathrm{mom}}'
 RATIO_ORIENTATION = 'quantity assessed / corresponding benchmark'
 VAR_AXIS_LABEL = 'Variance prediction\n/ $\\mathrm{Var}(\\widehat V)$'

@@ -12,8 +12,11 @@ probabilities change.
 \section[Choosing degrees of freedom for Expanded Welch]{Choosing degrees of
 freedom for\\Expanded Welch}
 
-The Welch--Satterthwaite equation combines the two estimated MI variance
-contributions
+The squared standard error contains two estimated variance contributions,
+\(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\). We assign component degrees of
+freedom to each contribution, then combine them to choose the test's
+Student \(t\) distribution. For component inputs \(\nu_P\) and
+\(\nu_Q\), the Welch--Satterthwaite equation is
 \citep{satterthwaite1946,welch1947}:
 \begin{equation}
   \nu
@@ -26,13 +29,6 @@ contributions
   }.
   \label{eq:ws-general}
 \end{equation}
-The terms \(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\) are the estimated variance
-contributions used to calculate the standard error for both Normal Wald and
-Expanded Welch in Chapter~\ref{chap:baselines}. The new variables being
-introduced are the component degrees of freedom \(\nu_P\) and \(\nu_Q\).
-They describe how much each
-estimated MI variance varies between samples relative to its mean.
-
 The derivation has four steps. First, we relate the degrees of freedom to the
 average and across-sample variation of \(\Vhat(P)\). Second, we calculate how \(V(P)\)
 changes when a small amount of probability moves into one cell. Third, that
@@ -40,47 +36,62 @@ change tells us how variable \(\Vhat(P)\) is. Finally, we combine the
 degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 
 \medskip
+The role of the variance estimate follows from the standard construction
+of a Student \(t\) variable. If \(Z\) has a standard normal distribution
+and \(U\) independently has a chi-squared distribution with \(\nu\)
+degrees of freedom, the scaled ratio follows a Student \(t\) distribution:
+\begin{equation}
+ \frac{Z}{\sqrt{U/\nu}}\sim t_\nu.
+ \label{eq:t-reference-construction}
+\end{equation}
+Dividing by the independent scaled chi-squared term gives the heavier
+tails of the Student \(t\) distribution. For MI, we approximate this
+construction by modelling the
+estimated variance with a scaled chi-squared variable whose mean and
+variance match its sampling moments. The exact identity assumes the stated
+normal distribution and independence; the MI reference is an approximation.
+
+\medskip
 \thesisminiheading{Moment matching for one MI variance estimate.}
 
-Satterthwaite approximates the nonnegative variance estimate \(\Vhat(P)\) by
-the scaled chi-squared variable
+Let \(\nu_{P,\mathrm{mom}}\) denote the component target obtained by matching
+the mean and variance of \(\Vhat(P)\). Satterthwaite approximates this
+nonnegative estimate by the scaled chi-squared variable
 \begin{equation}
   \E\{\Vhat(P)\}
-  \frac{\chi^2_{\nu_P}}{\nu_P}.
+  \frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}.
   \label{eq:scaled-chi-working}
 \end{equation}
-The scale and degrees of freedom are chosen to match the mean and variance
-of \(\Vhat(P)\).
 
-For a chi-squared variable with \(\nu_P\) degrees of freedom,
+For a chi-squared variable with \(\nu_{P,\mathrm{mom}}\) degrees of freedom,
 \begin{equation}
-  \E(\chi^2_{\nu_P})=\nu_P,
+  \E(\chi^2_{\nu_{P,\mathrm{mom}}})=\nu_{P,\mathrm{mom}},
   \qquad
-  \Var(\chi^2_{\nu_P})=2\nu_P.
+  \Var(\chi^2_{\nu_{P,\mathrm{mom}}})=2\nu_{P,\mathrm{mom}}.
 \end{equation}
 The scaling in Equation~\eqref{eq:scaled-chi-working} therefore matches the
 mean automatically:
 \begin{equation}
   \E\left[
-  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_P}}{\nu_P}
+  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}
   \right]
   =\E\{\Vhat(P)\}.
 \end{equation}
 Its variance is
 \begin{align}
   \Var\left[
-  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_P}}{\nu_P}
+  \E\{\Vhat(P)\}\frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}
   \right]
   &=
-  \frac{[\E\{\Vhat(P)\}]^2}{\nu_P^2}
-  \Var(\chi^2_{\nu_P})\\
+  \frac{[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}^2}
+  \Var(\chi^2_{\nu_{P,\mathrm{mom}}})\\
   &=
-  \frac{2[\E\{\Vhat(P)\}]^2}{\nu_P}.
+  \frac{2[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}}.
 \end{align}
 Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
 \begin{equation}
   \boxed{
-  \nu_P
+  \nu_{P,\mathrm{mom}}
   =
   \frac{2[\E\{\Vhat(P)\}]^2}
        {\Var\{\Vhat(P)\}}
@@ -88,8 +99,10 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
   \label{eq:component-df-moments}
 \end{equation}
 \begin{samepage}%
-The numerator depends on the mean of the estimated MI variance; the
-denominator measures how much that estimate fluctuates between samples.
+The target squares the sampling mean of \(\Vhat(P)\) and divides by its
+sampling variance. Dividing \(\Vhat(P)\) by fixed \(n_P\) rescales both the
+numerator and denominator by \(1/n_P^2\), so the same target applies to
+\(\Vhat(P)/n_P\) in the squared standard error.
 To first order, \(\E\{\Vhat(P)\}\approx V(P)\), so the remaining task is
 to calculate \(\Var\{\Vhat(P)\}\).
 \par
@@ -110,7 +123,12 @@ is moved into one cell \citep{hampel1974,vanderVaart1998}. Fix a cell
 where \(\delta_{(x,y)}\) places probability one on cell \((x,y)\). At
 \(\varepsilon=0\), the distribution is \(P\). Increasing \(\varepsilon\)
 moves a small amount of probability toward the selected cell while preserving
-total probability one.
+total probability one. This direction represents the table error contributed
+by an observation in cell \((x,y)\). The empirical table averages such
+one-observation tables, so averaging their first-order effects will give
+a first-order approximation to the sampling error of \(\Vhat(P)\).
+Section~\ref{sec:component-df} shows that averaging step after we calculate
+the effect for one cell.
 \par
 \end{samepage}
 
@@ -351,6 +369,7 @@ and variance derivatives to errors of order \(10^{-10}\). The experimental
 supplement gives the checked tables and step size.
 
 \section{Component degrees of freedom and final test}
+\label{sec:component-df}
 
 \thesisminiheading{Population component degrees of freedom.}
 
@@ -365,7 +384,6 @@ population table unchanged:
 \begin{equation}
   \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
 \end{equation}
-This weighted cancellation also holds after exact plug-in substitution.
 Because the first derivative is linear in the direction of change, the
 weighted average of the one-cell derivatives is the derivative in the
 weighted-average direction:
@@ -400,7 +418,7 @@ tables, so its difference from \(P\) is
   =\frac{1}{n_P}\sum_{a=1}^{n_P}
   \left\{\delta_{Z_a^{(P)}}-P\right\}.
 \end{equation}
-The plug-in \(\Vhat(P)\) applies the variance calculation to this empirical
+The plug-in estimate \(\Vhat(P)\) evaluates \(V\) at this empirical
 table. Equation~\eqref{eq:g-definition} gives its first-order change for
 one observation's direction. Because a first-order change is linear in the
 table error \citep[Chapter~20]{vanderVaart1998}, the changes from the
@@ -422,12 +440,13 @@ The observations are independent, so
   &=\frac{\tau^2(P)}{n_P}.
   \label{eq:vhat-sampling-variance}
 \end{align}
-Substitution into Equation~\eqref{eq:component-df-moments} gives the
-population component degree of freedom
+Substituting the first-order mean and variance approximations into
+Equation~\eqref{eq:component-df-moments} gives the population first-order
+approximation to \(\nu_{P,\mathrm{mom}}\). Define this value by
 \begin{equation}
   \boxed{
-  \nu_P
-  \approx
+  \nu_{P,\mathrm{FO}}
+  =
   \frac{2n_PV(P)^2}{\tau^2(P)}
   }.
   \label{eq:population-component-df}
@@ -472,8 +491,9 @@ each occupied cell,
 \label{eq:g-hat}
 \end{equation}
 In all weighted sums, an empty cell contributes zero; no logarithm or
-sensitivity needs to be evaluated there. The empirical variance is centred
-explicitly:
+sensitivity needs to be evaluated there. The empirical sensitivities also
+have probability-weighted mean zero under exact substitution. Their
+variance is centred explicitly:
 \begin{equation}
   \widehat\tau^2(P)
   =\sum_{i,j}\widehat p_{ij}
@@ -491,6 +511,31 @@ The estimated component degree of freedom is
 \end{equation}
 Repeating the same calculation for the second table gives
 \(\widehat\nu_Q\).
+
+\medskip
+Table~\ref{tab:component-df-roles} distinguishes the three component
+quantities. The first two are fixed for a population and sample size;
+\(\widehat\nu_P\) changes with each sampled table.
+
+\begin{table}[htbp]
+\centering
+\caption{Component degrees of freedom and their inputs.}
+\label{tab:component-df-roles}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Quantity & Role & Inputs\\
+\midrule
+\(\nu_{P,\mathrm{mom}}\) & Sampling-moment target &
+\(\E\{\Vhat(P)\}\) and \(\Var\{\Vhat(P)\}\) at fixed \(P,n_P\)\\
+\addlinespace
+\(\nu_{P,\mathrm{FO}}\) & Population first-order approximation to the target &
+Population \(V(P)\), \(\tau^2(P)\) and \(n_P\)\\
+\addlinespace
+\(\widehat\nu_P\) & Component estimate used by Expanded Welch &
+\(\Vhat(P)\), \(\widehat\tau^2(P)\) and \(n_P\) from one sample\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \medskip
 \thesisminiheading{Combining the two samples' degrees of freedom.}
@@ -523,12 +568,13 @@ Student \(t\) distribution with \(\nu\) degrees of freedom, evaluated at \(x\).
 For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
 p-value at least as large as the standard normal distribution used by Wald.
 Under the implemented validity rules, every valid Expanded Welch result is
-also Wald-valid, so every Expanded Welch rejection is also a Wald
-rejection, including when invalid
-outputs count as non-rejections in the reported rates. Expanded Welch cannot
-raise rejection where Wald is already too conservative.
-Appendix~\ref{sec:validity-rules} explains why a zero variance component
-is excluded under the implemented validity rule.
+also Wald-valid. At a common p-value threshold, every Expanded Welch
+rejection is therefore also a Wald rejection, including when invalid
+outputs count as non-rejections in the reported rates. At the nominal
+threshold, Expanded Welch cannot raise rejection where Wald is already
+conservative.
+Appendix~\ref{sec:validity-rules} specifies the componentwise validity
+rule, including the exclusion of a zero variance component.
 
 \section{Worked example and implementation}
 
@@ -650,10 +696,16 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 Consider a population table that
 approaches independence while its row and column margins stay fixed. At
-independence, MI is zero and its first-order change is also zero. The
-leading changes in MI, the pointwise-MI variance \(V(P)\), and the variance
-sensitivity \(\tau^2(P)\) can therefore be compared using a second-order
-expansion. Appendix~\ref{sec:fixed-margin-local-derivation} gives the
+independence, every pointwise-MI value is zero. The linear error in
+Equation~\eqref{eq:mi-error-from-cell-errors} weights each cell-probability
+error by its pointwise MI, so those linear contributions vanish. Products
+of cell errors can still remain: these are the quadratic terms retained
+by a second-order expansion. Near independence, the linear weights are
+small enough that the quadratic terms can contribute substantially.
+
+Along the fixed-margin path, the expansion relates MI, the pointwise-MI
+variance \(V(P)\), and the variance of the sensitivities \(\tau^2(P)\).
+Appendix~\ref{sec:fixed-margin-local-derivation} gives the
 calculation and its fixed-margin assumptions. Close to independence on
 that path, it gives
 \begin{equation}
@@ -664,14 +716,14 @@ that path, it gives
 Substituting these local approximations into
 the component degrees-of-freedom formula gives
 \begin{equation}
- \nu_P\approx\frac{2n_PV(P)^2}{\tau^2(P)}
+ \nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)}
  \approx\frac{n_PV(P)}{2}
  \approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-This population approximation describes the estimated degrees of freedom
-when sampling errors are small enough for the first-order calculation to
-be accurate. Smaller population MI then gives fewer degrees of freedom
+The sample-based \(\widehat\nu_P\) is close to this population
+first-order value when its estimated inputs are sufficiently accurate.
+Smaller population MI then gives fewer degrees of freedom
 and a larger cutoff from the Student \(t\) distribution.
 
 Very close to independence, sampling noise itself creates apparent MI in

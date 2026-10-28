@@ -131,8 +131,8 @@ For one repetition, draw
 and independently draw the corresponding \(Q\) counts.
 Reshape these counts into their \(k\times k\) tables and apply both tests
 to those same two sampled tables. Repeat independently 100,000 times per distinct
-evaluation setting. Independently generate another 100,000 pairs for each
-equal-MI fitting setting for the focused power comparison. The simulations use the PCG64 pseudo-random
+evaluation setting. Generate a separate 100,000-repetition fitting batch for each
+equal-MI setting in the focused power comparison. The simulations use the PCG64 pseudo-random
 generator with master seed 20261021 and separate streams for population,
 setting, fitting and evaluation samples.
 Repeated settings use one set of repetitions in every relevant display.
@@ -176,8 +176,10 @@ Equation~\eqref{eq:expanded-df} gives the equivalent combined form
 This direct form remains defined when one table has
 \(\Vhat=\widehat\tau^2=0\) and the other gives a positive denominator.
 The zero contribution drops out, leaving the other table's component degrees
-of freedom. The implementation nevertheless requires both components to have
-positive, finite degrees of freedom, so it records this case as invalid.
+of freedom. For the zero component, however, Equation~\eqref{eq:nu-p-hat} requires
+\(0/0\). The specified componentwise algorithm requires both component
+degrees of freedom to be positive and finite, so it records this case as
+invalid even though the direct combined expression remains defined.
 
 
 The primary rate divides valid rejections by all repetitions. A
@@ -304,7 +306,7 @@ formula gives
  \nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)}.
  \label{eq:redesign-first-order-df}
 \end{equation}
-The subscript FO identifies the population first-order formula from
+This is the population first-order approximation defined in
 Chapter~\ref{chap:expanded}. The sampling-moment target instead uses
 the actual mean and variance of the estimator:
 \begin{equation}
@@ -312,8 +314,8 @@ the actual mean and variance of the estimator:
  =\frac{2\{\E\Vhat(P)\}^2}{\Var\{\Vhat(P)\}}.
  \label{eq:redesign-moment-df}
 \end{equation}
-The assumptions in Chapter~\ref{chap:expanded} ensure positive population
-variance quantities for the tested populations. The two degrees-of-freedom
+The construction assumes positive \(V(P)\) and \(\tau^2(P)\), as
+specified in Chapter~\ref{chap:expanded}. The two degrees-of-freedom
 values can nevertheless differ at finite sample sizes. Dividing their
 definitions before applying either approximation gives the exact identity
 \begin{equation}
@@ -324,7 +326,7 @@ definitions before applying either approximation gives the exact identity
 \end{equation}
 The numerator is the reciprocal of the squared mean ratio in
 Figure~\ref{fig:redesign-moments}; the denominator is the middle-row
-predicted / observed sampling-variance ratio. A mean estimate above \(V(P)\) lowers the first-order
+predicted / observed sampling-variance ratio. A sampling mean \(\E\{\Vhat(P)\}\) above \(V(P)\) lowers the first-order
 degrees of freedom relative to the moment target when the variance
 prediction is otherwise accurate. The same calculations are made
 separately for \(Q\).
@@ -342,9 +344,14 @@ are undefined. From \(M\) repetitions, calculate
 For \(S_X^2>0\), the estimated moment target is \(2\bar X^2/S_X^2\).
 The diagnostic decomposition uses these evaluation moments.
 
-The delta method propagates errors in the estimated mean and variance
-jointly. Their covariance matters because both use the same repetitions.
-Define
+The delta method uses a first-order Taylor expansion of
+\(f(\mu,v)=2\mu^2/v\), where \(\mu\) and \(v\) are the sampling
+mean and variance of \(\Vhat(P)\). Its derivatives are
+\(\partial f/\partial\mu=4\mu/v\) and
+\(\partial f/\partial v=-2\mu^2/v^2\). Evaluating them at
+\(\bar X,S_X^2\) gives the two coefficients below. The mean and variance
+errors are propagated jointly because both estimates use the same
+repetitions. Define
 \begin{equation}
  U_s=X_s-\bar X,\qquad W_s=(X_s-\bar X)^2-S_X^2.
 \end{equation}
@@ -383,8 +390,8 @@ Table~\ref{tab:design-calibration-populations} at \(h=2,4\) for A--C.
 For each upper null, solve for the copying probability with the original
 margin vectors, dimensions and sample sizes. Generate 100,000 independent
 fitting repetitions and 100,000 validation repetitions for each of these
-six nulls. Apply both calibrations to the same original alternatives and
-to both null validation populations. Invalid outputs remain non-rejections.
+six equal-MI settings. Apply both calibrations to the same original alternatives and
+to both null validation settings. Invalid outputs remain non-rejections.
 
 All calibrated-power intervals use 1,000 joint bootstrap repetitions.
 For each full curve, share one lower fitting resample across its points.
@@ -401,4 +408,4 @@ paired differences, comparing the latter with the practical tolerance of
 minus one to plus one percentage point. Cross-null rates use Wilson
 intervals conditional on the fitted cutoffs, quantifying validation
 sampling uncertainty only. These checks concern the two specified null
-populations.
+settings.

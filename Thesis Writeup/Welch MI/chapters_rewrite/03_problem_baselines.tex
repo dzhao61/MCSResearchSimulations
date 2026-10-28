@@ -140,6 +140,40 @@ contributions add:
   +\frac{\Vhat(Q)}{n_Q}.
   \label{eq:shared-se}
 \end{equation}
+Taking the positive square root gives \(\SEhat\), which estimates the
+standard deviation of \(\Deltahat\) across repeated samples.
+Table~\ref{tab:results-variance-quantities} distinguishes the variation of
+pointwise MI across observation outcomes from the sampling variation of
+the estimates calculated from whole tables.
+
+\begin{table}[H]
+\centering
+\caption{Variance quantities in the two-sample MI test.}
+\label{tab:results-variance-quantities}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Quantity & Meaning\\
+\midrule
+\(V(P)\) & Population variance of pointwise MI; \(V(P)/n_P\)
+approximates \(\Var\{\Ihat(P)\}\).\\
+\addlinespace
+\(\Vhat(P)\) & Estimate of \(V(P)\) from one sampled count table.\\
+\addlinespace
+\(\Vhat(P)/n_P\) & Estimated sampling variance of \(\Ihat(P)\);
+one contribution to \(\SEhat^2\).\\
+\addlinespace
+\(\Var\{\Vhat(P)\}\) & Sampling variance of \(\Vhat(P)\) across repeated samples;
+used to choose the component degrees of freedom.\\
+\addlinespace
+\(\SEhat^2\) & Estimate of \(\Var(\Deltahat)\), calculated as
+\(\Vhat(P)/n_P+\Vhat(Q)/n_Q\).\\
+\addlinespace
+\(\Var(\Deltahat)\) & Sampling variance of \(\Deltahat\); the quantity
+that \(\SEhat^2\) estimates.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 The common standardised statistic is
 \begin{equation}
   T=\frac{\Deltahat}{\SEhat}.
@@ -170,14 +204,19 @@ The two-sided Normal Wald p-value is
   \label{eq:wald-pvalue}
 \end{equation}
 where \(\Phi\) is the standard normal distribution function.
+Under this reference distribution for equal MI, the p-value is the
+probability of a statistic at least as far from zero as the observed
+\(T\). The upper-tail probability is \(1-\Phi(|T|)\); symmetry gives
+the same probability in the lower tail, so the two-sided p-value doubles it.
+At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 
 \medskip
 \thesisminiheading{Why use a Student \(t\) distribution?}
 
 Wald uses the standard normal distribution at every sample size, even
 though its standard error is estimated from the observed tables. Expanded
-Welch uses the variability of that variance estimate to choose a Student
-\(t\) distribution instead.
+Welch uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\)
+to choose the degrees of freedom of a Student \(t\) distribution.
 Hutcheson's entropy test and ordinary Welch's test
 set each variance component's degrees of freedom from its sample size:
 \(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment

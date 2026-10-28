@@ -400,7 +400,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         selected.extend(moments[moments.configuration_id.eq(key)].to_dict('records'))
     rows=[[f'{r["mi"]:g}, {r["side"].upper()}',f'{r["mean_ratio"]:.3f}',f'{r["variance_ratio"]:.3f}',
            f'{r["plugin_variance_ratio"]:.3f}',f'{r["df_mean"]:.2f}',f'{r["nu_mom"]:.2f}',f'{r["nu_fo"]:.2f}'] for r in selected]
-    table(figures/'focused_redesign_components.tex',['MI, pop.','Mean ratio',r'\shortstack{Var. ratio\\(pop.)}',r'\shortstack{Var. ratio\\(sample)}','Mean df','Moment df','FO df'],rows)
+    table(figures/'focused_redesign_components.tex',['MI, pop.','Mean ratio',r'\shortstack{Var. ratio\\(pop.)}',r'\shortstack{Var. ratio\\(sample)}','Mean df','Moment df',r'\(\nu_{\mathrm{FO}}\)'],rows)
     evidence={'settings':len(configs),'fitting_settings':len(refs),'evaluation_pairs':len(configs)*100000,
               'fitting_pairs':len(refs)*100000,'focus_cases':dict(cases),
               'focus_null_sd':{label:refs[key]['null_sd'] for label,key in json.loads((output/'focus_nulls.json').read_text()).items()},

@@ -1,0 +1,198 @@
+{
+  "started": "2026-10-27",
+  "completed": "2026-10-28",
+  "status": "source revision complete; main PDF and delivery refresh deferred",
+  "issues_addressed": [
+    "N01",
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N06",
+    "N07",
+    "N08",
+    "N09",
+    "N10",
+    "N11"
+  ],
+  "plan": "Thesis Writeup/Welch MI/notes/FIRST_READER_REVISION_PLAN_2026-10-27.md",
+  "source_snapshot": "Thesis Writeup/Welch MI/archive/before_first_reader_edits_2026-10-27.zip",
+  "checks": {
+    "active_sources_checked": 31,
+    "unique_labels": 157,
+    "references_checked": 173,
+    "displayed_math": {
+      "01_introduction.tex": {
+        "preserved_displayed_blocks": 1,
+        "new_displayed_blocks": 0
+      },
+      "02_background_literature.tex": {
+        "preserved_displayed_blocks": 33,
+        "new_displayed_blocks": 0
+      },
+      "03_problem_baselines.tex": {
+        "preserved_displayed_blocks": 13,
+        "new_displayed_blocks": 0
+      },
+      "04_expanded_welch.tex": {
+        "preserved_displayed_blocks": 48,
+        "new_displayed_blocks": 1
+      },
+      "05_experimental_design.tex": {
+        "preserved_displayed_blocks": 8,
+        "new_displayed_blocks": 0
+      },
+      "06_results.tex": {
+        "preserved_displayed_blocks": 2,
+        "new_displayed_blocks": 0
+      },
+      "07_conclusions.tex": {
+        "preserved_displayed_blocks": 0,
+        "new_displayed_blocks": 0
+      },
+      "A_derivation_details.tex": {
+        "preserved_displayed_blocks": 22,
+        "new_displayed_blocks": 0
+      },
+      "B_population_construction.tex": {
+        "preserved_displayed_blocks": 17,
+        "new_displayed_blocks": 0
+      },
+      "C_additional_results.tex": {
+        "preserved_displayed_blocks": 1,
+        "new_displayed_blocks": 0
+      }
+    },
+    "table_numeric_rows_preserved": 13,
+    "results_summary_hashes_preserved": 7381,
+    "protected_delivery_files_unchanged": 10,
+    "section_2_3_algebra_byte_identical": true,
+    "worked_example_byte_identical": true,
+    "section_5_1_byte_identical": true,
+    "citations_preserved": true,
+    "notation_roles_consistent": true,
+    "pdf_rebuilt": false
+  },
+  "figure_check": {
+    "figure_size_unchanged": true,
+    "all_series_and_intervals_identical": true,
+    "axes_limits_identical": true,
+    "new_population_label": "\\nu_{\\mathrm{FO}}/\\nu_{\\mathrm{mom}}",
+    "new_simulations": 0
+  },
+  "tests_passed": {
+    "manuscript_consistency": 5,
+    "ratio_display": 7,
+    "total": 12
+  },
+  "calibration_tables_reproduced_exactly": 3,
+  "paragraph_style_check_passed": true,
+  "git_diff_check_passed": true,
+  "source_word_counts": {
+    "before": 19511,
+    "after": 20392,
+    "increase": 881,
+    "increase_percent": 4.52,
+    "by_file": {
+      "01_introduction.tex": {
+        "before": 866,
+        "after": 874,
+        "change": 8
+      },
+      "02_background_literature.tex": {
+        "before": 3653,
+        "after": 3724,
+        "change": 71
+      },
+      "03_problem_baselines.tex": {
+        "before": 812,
+        "after": 1001,
+        "change": 189
+      },
+      "04_expanded_welch.tex": {
+        "before": 2463,
+        "after": 2753,
+        "change": 290
+      },
+      "05_experimental_design.tex": {
+        "before": 2622,
+        "after": 2767,
+        "change": 145
+      },
+      "06_results.tex": {
+        "before": 3762,
+        "after": 3879,
+        "change": 117
+      },
+      "07_conclusions.tex": {
+        "before": 1192,
+        "after": 1182,
+        "change": -10
+      },
+      "A_derivation_details.tex": {
+        "before": 1031,
+        "after": 1038,
+        "change": 7
+      },
+      "B_population_construction.tex": {
+        "before": 2255,
+        "after": 2307,
+        "change": 52
+      },
+      "C_additional_results.tex": {
+        "before": 855,
+        "after": 867,
+        "change": 12
+      }
+    }
+  },
+  "new_experiment_fitting_bootstrap_runs": 0,
+  "pdf_rebuilt": false,
+  "deliveries_refreshed": false,
+  "layout_and_page_count_pending_rebuild": true,
+  "revised_source_hashes": {
+    "Thesis Writeup/Welch MI/main.tex": "bbe067e1998dcbff92e6e72231d6f06f370b5a82042ad429e191c15e8868e4f6",
+    "Thesis Writeup/Welch MI/metadata.tex": "eab0fc5ef229d732eac0a40c848b7da57007e5875c80afc4f6cd8261808572fa",
+    "Thesis Writeup/Welch MI/preamble.tex": "7e07e57a0f4c7ece0cfe4bf491d36ecf9710cfad729d412bf27004e8c1e488ef",
+    "Thesis Writeup/Welch MI/frontmatter/abstract.tex": "9f5de9451e66988c01c4a8f59c0c09e435c275c62a51092dd204a2b4c073eaac",
+    "Thesis Writeup/Welch MI/frontmatter/acknowledgements.tex": "dfa01789a8b823f91c62f23ad4216cfbb205fb08aa780a382e102f0c320876b5",
+    "Thesis Writeup/Welch MI/frontmatter/titlepage.tex": "c12776979ffb5fd28822b82b8104faa3a510f22b3b42336417997395dc4fd7e9",
+    "Thesis Writeup/Welch MI/chapters_rewrite/01_introduction.tex": "f884369ca779091c587328ce30837ac2283dd405bd9ee56d0001d7a24772aba5",
+    "Thesis Writeup/Welch MI/chapters_rewrite/02_background_literature.tex": "70a31296c07dc42b9264738ee26de638cf818078a4be60af94baffd4dd127a58",
+    "Thesis Writeup/Welch MI/chapters_rewrite/03_problem_baselines.tex": "4277fd759b2dd7ca6c509c63668afde05a887bc8b9a928c69c25c424a39184db",
+    "Thesis Writeup/Welch MI/chapters_rewrite/04_expanded_welch.tex": "5f52231939b1ec819b7a69cf328ad45937c1de85ec156307e5bac085469ae1f8",
+    "Thesis Writeup/Welch MI/chapters_rewrite/05_experimental_design.tex": "77e12b0a1d3e4770a96e6fdeb5d95b23175754898462f73d0ee890fef3055732",
+    "Thesis Writeup/Welch MI/chapters_rewrite/06_results.tex": "046690f475dcf899618fae11993922b956e2054812c2d47a4b1a44b08c1af117",
+    "Thesis Writeup/Welch MI/chapters_rewrite/07_conclusions.tex": "eef33a6b5ab4bd1568216565538d4f351f2c69d88e8679dd648aaaf3ef60ce60",
+    "Thesis Writeup/Welch MI/appendices_rewrite/A_derivation_details.tex": "74f569e43f6bd98f10bb5ee45b3b7fdc92e89c50129854b5372bd6b50b6e9617",
+    "Thesis Writeup/Welch MI/appendices_rewrite/B_population_construction.tex": "107f15ee8702d1fccf94d41f1f6b670605bdaf521fe308474d6faf7bdb2fb5e5",
+    "Thesis Writeup/Welch MI/appendices_rewrite/C_additional_results.tex": "2df5c426a3942ffeae9cb41bb33fe363df64931a5d78765934bcbedbe4856d5a",
+    "Thesis Writeup/Welch MI/figures_rewrite/evidence_values.tex": "cb348b64d37b26bf79eb1c2da8f5a778b03594e32a27a5848abd3e7109e476ca",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_calibration_sensitivity.tex": "b0d1a38a371c7b57d6f6f276ce8d2533869746007f99366b7ea1817b74af6faf",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_diagnostics.tex": "441e37568e88fa641381fb33187cd430a6ea53691b00b5fc04d30a96a3839d37",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_cases_rates.tex": "53844629ff3ca15cc271295d5e96ce81ff4f766fa0f2120941e365f4b7fa6922",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_component_spread.tex": "ef76eeb5c308859e53ef3596f1690c3d2d5f53a53a129f04a5485578b6751bc9",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_components.tex": "b23928f7371990a75191c5c952d191c8568ad2933d41b19826bff11fa016eac6",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_sd_fitting.tex": "bf93b530e4d62475359bc764cd03d90cbc0eeb461001213c62adcdd4ead58310",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_power_contrasts.tex": "463442c4323a4c272d6710b3c402383de44dbc8108e50668650247581ae1008f",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_rejection_direction.tex": "4e12f7e0219dac84d4314022d0676d51c2c764fb5e480be25daaed7ed9f263ea",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_reporting_values.tex": "09b15d1d98a48b4103c7add45ab8eb40828ba16b9e34082054f935e0a5a00ad6",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_scaled_mean_error.tex": "fbde5163d9d549971aa37ad5fba6c9994ecfb69037406ff7de3c17d5db4fda6f",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_sensitivity_cross_null.tex": "1fb92f6b9dd97071baad01de168634f693e43826e5c0498dc9cd1bd9d7a1ef73",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_sensitivity_power_full.tex": "ba58fe68629f7b0ab4ef0f102b80e9b1707738de77d671199a500aa3eb8ae051",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_shared_estimates.tex": "c7146f1aebee6da66ff553ce97b0ea6f22fb3ceeded0eabe1a5cc55a53b22943",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_stronger_null.tex": "edd4bd08e11c545f74640a4c239f9e55cbf30e7278cc255e6888b69de7f209e5",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_component_df_different_skew.pdf": "36dc8e3a683fd02a9fd9da67dc2f786bf4b9777f44088f3bc76d9960d0081abe",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_moment_predictions_different_skew.pdf": "707c3ca6b2d1a1937463c7482fbb5db4edf481b20df59cc57a90b1687f2fef9e",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_near_independence_different_skew_1000.pdf": "0a668907f5bbbfb137648c1ab1c6749f6ad645b9bb3cd11649f77dd305e34db7",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_different_skew.pdf": "09f4ddf840acc19eb2589a2fddc68329e9d1340af284562d59152bf5a61ee21c",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_null_uniform.pdf": "07ac76d91534746fb9d51b6fe9857c3858d959a76d065bcd92cbd108034f0f14",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_power.pdf": "3baef10a83dfbff07163c3611b4f9a3d98b1a00af3c4cb988c2643e4fd516ec7",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_redesign_power_calibrated.pdf": "126135a95919910200d77f3c67f39a8666708ec59d1ee33ac7d75bd0e452a376",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_reference_distributions.pdf": "9cb8d99c9505e99d81c26617fbb30ecd240d3e10c827cdcde6254c129dd96f6f",
+    "WelchSatterthwaiteMI/experiments/report_ratio_tools.py": "5660acaab974baa40aed25c815627e9c3ac6ce73986ea2704af07eaf5048475c",
+    "WelchSatterthwaiteMI/experiments/redesign_report.py": "fad3154ddb680fa5297080616880a3324067edcefcab9b9d1c586881ae60e030",
+    "WelchSatterthwaiteMI/experiments/report_calibration_sensitivity.py": "99405d8e09f7837368fce9711e10e93c7f5b72ad8bab6fdc798b6b70438d087e",
+    "Thesis Writeup/Welch MI/figures_rewrite/focused_results_displays.py": "8052a555e712438246d82777a6e692492415c14c2838dd8bcd900d5a2dcfe398"
+  }
+}

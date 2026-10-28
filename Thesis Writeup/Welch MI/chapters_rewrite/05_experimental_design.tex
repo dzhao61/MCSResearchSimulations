@@ -197,17 +197,20 @@ prediction \(\widehat\tau^2(P)/n_P\) across the repeated tables. Comparing
 this average with the same observed sampling variance shows the effect of
 estimating the sensitivity from each sample.
 
-We next examine how the moment approximations affect the degrees of
-freedom. Using the actual sampling moments gives the component target
+We next compare the component degrees of freedom with the sampling-moment
+target from Chapter~\ref{chap:expanded}:
 \begin{equation}
  \nu_{P,\mathrm{mom}}
  =\frac{2\{\E\Vhat(P)\}^{2}}{\Var\{\Vhat(P)\}}.
  \label{eq:design-moment-target}
 \end{equation}
 The repeated samples estimate the mean and variance in this expression.
-We compare both the population first-order degrees of freedom and the
-average estimated component degrees of freedom with this target. For the
-latter, the ratio
+We compare \(\nu_{P,\mathrm{FO}}\), calculated from the population
+probabilities, and the average of the sampled \(\widehat\nu_P\) values
+with this target. Averaging \(\widehat\nu_P\) need not recover
+\(\nu_{P,\mathrm{mom}}\): the estimate is a nonlinear ratio of
+sample-based quantities, whereas the target uses the sampling mean and
+variance of \(\Vhat(P)\). For the sampled estimates, the ratio
 \(\operatorname{mean}(\widehat\nu_P)/\nu_{P,\mathrm{mom}}\) equals one
 when the average estimate matches the target; a ratio below one means
 that the estimated degrees of freedom are lower on average. Medians and
@@ -257,10 +260,15 @@ sampled count tables.
 Both tests use a two-sided 5\% nominal test. The broad null comparison
 uses the first grid in Table~\ref{tab:design-primary-grids}: common MI
 0.02 nats, four table sizes, three margin regimes and ten sample sizes,
-giving 120 settings. At each setting, a false-positive rate above 5\%
-means excessive rejection; a rate below 5\% means conservative rejection.
-We also report the fraction of valid results, because an unusable
-calculation contributes no rejection.
+giving 120 settings. A false-positive rate above 5\% means excessive
+rejection; a rate below 5\% means conservative rejection. Lower rates alone
+do not establish better testing: a rule that never rejects has zero false
+positives and zero power. We assess nominal calibration by closeness to
+5\% and evaluate power separately.
+
+We also report the fraction of valid results. Because invalid calculations
+contribute no rejection to the all-repetition rate, failures can lower that
+rate without improving the decisions made on usable samples.
 
 To check whether rejection behaviour depends on the association
 construction, a supporting comparison replaces copying by a probability
@@ -273,7 +281,7 @@ Power is the probability of rejecting equal MI when the population MI
 values differ. We first compare power using the nominal 5\% cutoffs.
 A test that rejects less often under equal MI can also reject less often
 under alternatives, so we then compare power after adjusting the cutoffs
-to match rejection at a specified equal-MI population.
+to match rejection at a specified equal-MI setting.
 
 The focused comparison uses settings A--C in
 Table~\ref{tab:redesign-focus-settings}. Earlier simulations identified
@@ -337,17 +345,23 @@ procedure is:
  to the alternative samples, measuring the achieved false-positive rates
  and power.
 \end{enumerate}
-Normal Wald orders samples by \(|T|\): larger \(|T|\) always gives a
-smaller p-value.
-Expanded Welch can order samples differently because its degrees of
-freedom change with the sampled count tables.
+The thresholds are fitted for these known simulation settings, where
+calibrated power compares the tests after matching false-positive rates.
+
+Normal Wald ranks simulated datasets by \(|T|\): larger \(|T|\) always
+gives a smaller p-value and stronger evidence against equal MI.
+Expanded Welch's p-value also depends on degrees of freedom that change
+with the sampled tables, so it can rank the datasets differently.
+At a common p-value threshold, its rejections are a subset of Wald's.
+Calibration fits a separate threshold for each test, so that earlier
+nesting no longer determines which test has greater power.
 
 \medskip
-\thesisminiheading{Changing the calibration population.}
+\thesisminiheading{Changing the calibration setting.}
 
 Equal MI can occur at different common MI values. To examine how that
 choice affects the power comparison, we repeat calibration at \(h=2\)
-and \(h=4\) for A--C using the two null populations in
+and \(h=4\) for A--C using the two equal-MI settings in
 Table~\ref{tab:design-calibration-populations}.
 
 The lower null sets both
@@ -360,7 +374,7 @@ to its larger value. Both retain the alternative's margins and sample sizes.
 \label{tab:design-calibration-populations}
 \begin{tabular}{@{}lll@{}}
 \toprule
-Calibration case & \(I(P)\) & \(I(Q)\)\\
+Scenario & \(I(P)\) & \(I(Q)\)\\
 \midrule
 Fixed alternative & \(0.02\) & \(0.02+h\sigma_0\)\\
 Lower null & \(0.02\) & \(0.02\)\\
@@ -372,14 +386,14 @@ Upper null & \(0.02+h\sigma_0\) & \(0.02+h\sigma_0\)\\
 Independent upper-null batches fit and validate the new cutoffs. We apply
 both calibrations to the same alternative simulation outputs, so any
 change in measured power comes from the cutoffs rather than a change of alternative samples.
-Each calibration is also evaluated at both nulls. Matching rejection at
-one null population does not ensure the same false-positive rate elsewhere
+Each calibration is also evaluated at both null settings. Matching
+rejection at one equal-MI setting does not ensure the same false-positive rate elsewhere
 under equal MI. Appendix~\ref{sec:calibration-sensitivity-design} gives
 the construction and uncertainty calculation.
 
-The experimental supplement reports broader MI differences from 0 to
-0.2 nats at \(n=1{,}000\) and 10,000, and a separate sample-allocation
-analysis. The experimental supplement specifies those additional settings.
+The experimental supplement specifies the broader comparison over MI
+differences from 0 to 0.2 nats at \(n=1{,}000\) and 10,000, together
+with a separate sample-allocation analysis.
 
 \section{Shared evaluation: Sampling and uncertainty}
 
@@ -387,7 +401,9 @@ At one evaluation setting, each repetition draws a count table from
 \(P\) and an independent count table from \(Q\). Both tests use these
 same two tables, so their rejection decisions
 can be compared on the same sampled data. Each batch contains 100,000
-independent repetitions. The study uses three types of batch:
+independent repetitions. More repetitions improve the precision of the
+reported rates; each test still uses only \(n_P\) and \(n_Q\) observations
+within a repetition. The study uses three types of batch:
 \begin{enumerate}
  \item \textbf{Base evaluation:} 366 settings across the main and
  supplementary comparisons, measuring rejection and estimation accuracy.

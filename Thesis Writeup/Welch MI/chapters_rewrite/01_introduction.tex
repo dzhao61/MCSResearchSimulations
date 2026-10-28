@@ -57,9 +57,10 @@ cutoff than Normal Wald, so it rejects less often. This can reduce false
 positives, but it can also reduce statistical power: the probability of
 rejecting equal MI when the population MI values genuinely differ.
 The evaluation measures the resulting false-positive rates and nominal
-power, then compares power after matching rejection at specified equal-MI
-populations through independent simulation. Changing the calibration
-population checks whether the resulting power comparison is stable.
+power, then uses independent equal-MI simulations to adjust each test's
+cutoff to target 5\% false positives before comparing power. Changing the
+equal-MI setting used for this calibration checks whether the power
+comparison is stable.
 The frequency of usable p-values is reported alongside these rates.
 
 \section{Research questions}
@@ -104,7 +105,7 @@ The thesis addresses two research questions:
   \item \textbf{Practical contribution.} The evaluation identifies
   selected populations at common MI 0.02 nats where Expanded Welch brings
   false-positive rates closer to 5\% than Normal Wald, the dependence of calibrated power on
-  the fitting population, and estimation errors that make both tests
+  the calibration setting, and estimation errors that make both tests
   unreliable.
 \end{enumerate}
 

@@ -216,11 +216,12 @@ Substitution into the implemented component formula gives
  \label{eq:small-mi-plugin-df}
 \end{equation}
 Thus sampling noise contributes to the estimated degrees of freedom even
-when the population value \(nI(P)\) is very small.
+when the population first-order approximation \(nI(P)\) is very small.
 
 The same approximation separates that plug-in calculation from matching
-the actual sampling moments. Since \(\E(G)=d+\kappa\) and
-\(\Var(G)=2(d+2\kappa)\),
+the actual sampling moments. Under the noncentral chi-squared
+approximation, \(\E(G)\approx d+\kappa\) and
+\(\Var(G)\approx2(d+2\kappa)\), giving
 \begin{equation}
  \E\{\Vhat(P)\}\approx\frac{d+\kappa}{n},
  \qquad
@@ -228,7 +229,7 @@ the actual sampling moments. Since \(\E(G)=d+\kappa\) and
 \end{equation}
 Keeping both terms in the moment-matching equation gives
 \begin{equation}
- \nu_P^{\mathrm{mom}}
+ \nu_{P,\mathrm{mom}}
  \approx
  \frac{2\{(d+\kappa)/n\}^2}{2(d+2\kappa)/n^2}
  =\frac{(d+\kappa)^2}{d+2\kappa}.

@@ -13,9 +13,10 @@ comparisons.
 Table~\ref{tab:redesign-scaled-mean-error} shows how the mean error of
 \(\Vhat\) varies across MI values, margin regimes and populations in
 the \(4\times4\) sweep. The scaled error is \(n\{\E\Vhat-V\}\).
-The coefficient suggested near independence is \((k-1)^2=9\).
-Variation in the observed scaled error leaves residual mean error under
-a fixed \(9/n\) correction.
+The near-independence calculation suggests a mean error of
+\((k-1)^2/n=9/n\) for \(\Vhat\) in these tables. The observed scaled
+errors vary, so subtracting \(9/n\) from \(\Vhat\) would leave
+residual mean error.
 
 \begin{table}[!htbp]
 \centering
@@ -42,14 +43,16 @@ ranges describe sampling spread.
 Table~\ref{tab:redesign-case-diagnostics} describes the shared difference
 and standard error. Bias/SD divides difference bias by its observed SD;
 variance ratio divides the mean squared standard error by the observed
-difference variance. Rank corr. is Spearman's correlation between the
-absolute centred difference and its standard error, using every repetition
+difference variance. Rank corr. is Spearman's correlation between
+\(|\Deltahat-\operatorname{mean}(\Deltahat)|\) and \(\SEhat\), using every repetition
 where both quantities are finite without a test-validity restriction. Skew
 describes the difference estimates. All 100,000 repetitions are included
 in each row.
 A near-zero signed correlation can follow from symmetry despite
 magnitude dependence: the same-skew \(2\times2\), \(n=100\) null has
-signed correlation about \(-0.001\) and magnitude rank correlation 0.547.
+Pearson correlation between \(\Deltahat\) and \(\SEhat\) about
+\(-0.001\), but rank correlation between the centred magnitude and
+\(\SEhat\) of 0.547.
 
 \begin{table}[!htbp]
 \centering
@@ -112,9 +115,9 @@ in Chapter~\ref{chap:results} gives the Wald contrasts with intervals.
 
 \begin{samepage}
 Table~\ref{tab:redesign-sensitivity-cross-null} applies each fitted cutoff
-to both null validation populations. Each row includes all 100,000
+to both null validation settings. Each row includes all 100,000
 repetitions, with invalid outputs contributing no rejection. The two null
-populations check sensitivity to calibration; they do not establish
+settings check sensitivity to calibration; they do not establish
 control across the complete equal-MI null.
 \par
 \end{samepage}
