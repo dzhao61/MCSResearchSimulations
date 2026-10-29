@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-30",
+  "changed_manuscript_files": [
+    "chapters_rewrite/06_results.tex",
+    "chapters_rewrite/07_conclusions.tex"
+  ],
+  "numbered_display_preservation": {
+    "chapters_rewrite/06_results.tex": {
+      "original_numbered_displays_preserved": 18,
+      "new_numbered_displays": 1,
+      "source_word_change": 170
+    },
+    "chapters_rewrite/07_conclusions.tex": {
+      "original_numbered_displays_preserved": 0,
+      "new_numbered_displays": 0,
+      "source_word_change": 33
+    }
+  },
+  "active_tex_files": 31,
+  "unique_labels": 158,
+  "reference_uses_resolved_statically": 216,
+  "unmodified_chapter_6_sections_preserved": [
+    "Application to online shopping data",
+    "Behaviour near independence",
+    "Mean and sampling-variance predictions",
+    "Nominal power",
+    "Overall false-positive patterns",
+    "RQ1: Accuracy of variance approximations",
+    "RQ2.1: False-positive rates under equal MI",
+    "RQ2.2: Nominal and calibrated power"
+  ],
+  "new_calibration_rates_match_saved_evidence": true,
+  "new_calibration_common_MI_matches_saved_evidence": true,
+  "environment_brace_and_math_delimiter_checks": "passed",
+  "source_reading_order_checks": "passed",
+  "pdf_rebuilt": true,
+  "rendered_layout_review": "passed on affected pages; no further manuscript or layout changes required",
+  "source_stage_unchanged_fingerprinted_inputs": 123,
+  "source_stage_delivery_files_preserved_before_requested_build": [
+    "main.pdf",
+    "deliverables/Working Draft v2.pdf",
+    "deliverables/.DS_Store",
+    "deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf",
+    "deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip",
+    "deliverables/README.md",
+    "deliverables/Working Draft.pdf",
+    "deliverables/Daniel_Zhao_Welch_MI_Thesis_Source.zip",
+    "deliverables/SHA256SUMS.txt"
+  ],
+  "requested_pdf_build": {
+    "mode": "interim",
+    "pages": 107,
+    "previous_pages": 107,
+    "page_format": "A4",
+    "fonts_embedded": 41,
+    "latex_warnings": [],
+    "rendered_PDF_pages_inspected": [
+      58,
+      59,
+      67,
+      68,
+      69,
+      70,
+      72,
+      73,
+      77,
+      78,
+      79
+    ],
+    "pdf_sha256": "1c6b6b29c2a34fbeaa0f91f8ed5fd16fe60a876b314c15bfacfa0db8faf7b4ff",
+    "source_archive_sha256": "46442cbc811c584df32ee00ac0edc9b9e3ff79f7538a355fa9931b33d0181535",
+    "main_build_named_PDFs_identical": true,
+    "source_archive_contents_verified": true,
+    "experiment_supplement_reused": true,
+    "supplement_inventory_size_timestamps_checked": 24996,
+    "full_supplement_content_rehash_run": false,
+    "independent_exported_source_build_run": false,
+    "prior_delivery_snapshot": "archive/before_high_impact_pdf_build_2026-10-30.zip"
+  }
+}

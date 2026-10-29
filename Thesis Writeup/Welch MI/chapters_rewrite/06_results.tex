@@ -157,35 +157,7 @@ in Figure~\ref{fig:redesign-moments}, amplified by squaring the mean.
 The first-order ratios are generally closer to one for \(Q\), whose
 normalised mean overshoot is smaller.
 
-For different-skew \(4\times4\) populations at \(n=1{,}000\) and
-MI 0.02, the sampling-variance prediction is already close to its observed
-value, but the mean is still underestimated. Squaring that smaller mean
-leaves the first-order degrees of freedom below the moment target:
-15.30 rather than 21.03 for \(P\). Table~\ref{tab:variance-stability}
-gives the corresponding comparisons for both populations; df abbreviates
-degrees of freedom. Appendix~\ref{sec:moment-target-details} gives the algebra.
-
-\begin{table}[H]
-\centering
-\small
-\setlength{\tabcolsep}{3pt}
-\caption{Component moment and degrees-of-freedom comparisons at \(4\times4\), \(n=1{,}000\), different skew.}
-\label{tab:variance-stability}
-\input{figures_rewrite/focused_redesign_components}
-\end{table}
-
-In Table~\ref{tab:variance-stability}, ``Mean ratio'' divides the simulated mean of \(\Vhat(P)\) by
-\(V(P)\). Both ``Var. ratio'' columns divide their prediction by the
-observed \(\Var\{\Vhat(P)\}\): ``pop.'' uses the population
-prediction; ``sample'' averages the sample-based predictions.
-
-For component degrees of freedom, ``Mean df'' averages
-\(\widehat\nu_P\), ``Moment df'' gives \(\nu_{P,\mathrm{mom}}\), and
-\(\nu_{\mathrm{FO}}\) gives \(\nu_{P,\mathrm{FO}}\). The corresponding
-definitions apply to \(Q\).
-All 100,000 component estimates are positive, finite and included in each row.
-
-Returning to the bottom row of Figure~\ref{fig:redesign-component-df},
+In the bottom row of Figure~\ref{fig:redesign-component-df},
 sample substitution changes both parts of the degrees-of-freedom formula. Using
 \(\Vhat(P)\) in the numerator captures its enlarged sampling mean,
 but the sample-based prediction of its sampling variance can be too large.
@@ -209,6 +181,36 @@ prediction improves and the mean estimated
 degrees of freedom recover towards the moment target. The population
 first-order value can remain farther below the target because it still
 uses \(V(P)\) in place of the enlarged sampling mean.
+
+Table~\ref{tab:variance-stability} gives numerical comparisons for
+different-skew \(4\times4\) populations at \(n=1{,}000\).
+``Mean ratio'' divides the simulated mean of \(\Vhat(P)\) by
+\(V(P)\). Both ``Var. ratio'' columns divide their prediction by the
+observed \(\Var\{\Vhat(P)\}\): ``pop.'' uses the population
+prediction; ``sample'' averages the sample-based predictions.
+
+For component degrees of freedom (df), ``Mean df'' averages
+\(\widehat\nu_P\), ``Moment df'' gives \(\nu_{P,\mathrm{mom}}\), and
+\(\nu_{\mathrm{FO}}\) gives \(\nu_{P,\mathrm{FO}}\). The corresponding
+definitions apply to \(Q\).
+All 100,000 component estimates are positive, finite and included in each row.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Component moment and degrees-of-freedom comparisons at \(4\times4\), \(n=1{,}000\), different skew.}
+\label{tab:variance-stability}
+\input{figures_rewrite/focused_redesign_components}
+\end{table}
+
+At MI 0.02 in Table~\ref{tab:variance-stability}, the population
+prediction of \(\Var\{\Vhat(P)\}\) is already close to its observed
+value, but \(V(P)\) still underestimates \(\E\{\Vhat(P)\}\).
+Squaring that smaller mean leaves the first-order degrees of freedom
+below the moment target: 15.30 rather than 21.03 for \(P\).
+Appendix~\ref{sec:moment-target-details} gives the algebra.
+
 Table~\ref{tab:redesign-component-spread} gives means, medians and
 sampling ranges at the focus and sparse-table settings; all 100,000
 component estimates are included in each row. The moment target itself
@@ -525,9 +527,48 @@ cases despite these different estimation errors. At C, bias is negligible
 and the variance ratio is close to one. Table~\ref{tab:redesign-case-diagnostics}
 gives the full diagnostics and degrees-of-freedom comparisons.
 
-Returning to Figure~\ref{fig:redesign-null-uniform}, the uniform-table
-curves help separate errors in \(\SEhat^2\) from
-difference bias. Across their sample-size grid, the difference remains
+The sparse different-skew rows of Tables~\ref{tab:redesign-shared-estimates}
+and~\ref{tab:redesign-case-rates} show that changing the degrees of freedom
+does not resolve excessive rejection. At \(16\times16\), different skew and \(n=1{,}000\), the
+difference bias is about 0.030 nats, or 2.06 observed SDs. Both tests
+reject far too often; changing the rejection cutoff leaves the bias
+unchanged.
+The sampling centre is
+\(\E(\Deltahat)=\Delta+\Bias(\Deltahat)\). Under the equal-MI null,
+this gives
+\begin{equation}
+ \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
+ \label{eq:redesign-null-bias-shift}
+\end{equation}
+This shift is large relative to the observed SD of approximately 0.01450
+nats. It moves most rejections into the positive tail even though the
+population difference is zero.
+
+The sparse same-skew and different-skew rows have almost the same
+variance ratio in Table~\ref{tab:redesign-shared-estimates}, yet their
+rejection rates lie on opposite sides of 5\%. The distinction is the
+centre of the estimated difference. Under equal MI, the same-skew
+populations have identical tables. With
+equal sample sizes, their expected MI estimation biases therefore cancel
+in the difference. The average \(\SEhat^2\) exceeds the observed
+\(\Var(\Deltahat)\), and both rejection rates are far below 5\%.
+Large difference bias accompanies excessive rejection in the different-skew
+case; in the same-skew case, that bias cancels and both tests are conservative.
+At \(n=10{,}000\), both skew regimes have much smaller estimation errors
+and rates closer to 5\%.
+
+
+The sparse-table failure also occurs under the four-cell construction.
+At \(16\times16\), common MI 0.02 nats and
+\(n_P=n_Q=1{,}000\), replacing copying by a probability transfer
+within four cells preserves each population's margins and MI.
+Under different-skew margins, the estimated difference remains
+substantially biased and both false-positive rates are near 30\%.
+The experimental supplement reports the full construction comparison.
+
+The uniform-table curves in Figure~\ref{fig:redesign-null-uniform}
+help separate errors in \(\SEhat^2\) from difference bias. Across their
+sample-size grid, the difference remains
 centred near zero, but the average \(\SEhat^2\) can move from below
 to above the observed \(\Var(\Deltahat)\). For a given estimated
 difference, a smaller standard error increases the magnitude of \(T\).
@@ -570,45 +611,6 @@ At B, Wald's rate changes little, but Expanded Welch's earlier reduction
 becomes much smaller; both remain above the target. The larger cutoff
 still reduces rejection in each row, but the improvement at common MI
 0.02 does not extend to reliable calibration at these stronger MI values.
-
-The sparse different-skew rows of Tables~\ref{tab:redesign-shared-estimates}
-and~\ref{tab:redesign-case-rates} show that changing the degrees of freedom
-does not resolve the failure. At \(16\times16\), different skew and \(n=1{,}000\), the
-difference bias is about 0.030 nats, or 2.06 observed SDs. Both tests
-reject far too often; changing the rejection cutoff leaves the bias
-unchanged.
-The sampling centre is
-\(\E(\Deltahat)=\Delta+\Bias(\Deltahat)\). Under the equal-MI null,
-this gives
-\begin{equation}
- \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
- \label{eq:redesign-null-bias-shift}
-\end{equation}
-This shift is large relative to the observed SD of approximately 0.01450
-nats. It moves most rejections into the positive tail even though the
-population difference is zero.
-
-The sparse same-skew and different-skew rows have almost the same
-variance ratio in Table~\ref{tab:redesign-shared-estimates}, yet their
-rejection rates lie on opposite sides of 5\%. The distinction is the
-centre of the estimated difference. Under equal MI, the same-skew
-populations have identical tables. With
-equal sample sizes, their expected MI estimation biases therefore cancel
-in the difference. The average \(\SEhat^2\) exceeds the observed
-\(\Var(\Deltahat)\), and both rejection rates are far below 5\%.
-Large difference bias accompanies excessive rejection in the different-skew
-case; in the same-skew case, that bias cancels and both tests are conservative.
-At \(n=10{,}000\), both skew regimes have much smaller estimation errors
-and rates closer to 5\%.
-
-
-The sparse-table failure also occurs under the four-cell construction.
-At \(16\times16\), common MI 0.02 nats and
-\(n_P=n_Q=1{,}000\), replacing copying by a probability transfer
-within four cells preserves each population's margins and MI.
-Under different-skew margins, the estimated difference remains
-substantially biased and both false-positive rates are near 30\%.
-The experimental supplement reports the full construction comparison.
 
 \section{RQ2.2: Nominal and calibrated power}
 
@@ -786,12 +788,43 @@ estimate whose interval includes zero, while B at two SDs retains a much
 smaller gain. At C, both calibrations give differences well within the
 one-percentage-point tolerance.
 
-The calibrated gains therefore depend on where we match false-positive
-rates. Appendix~\ref{sec:calibration-sensitivity-results} reports the
-rates from applying each calibration to both null settings and the
-full power tables. Matching at one equal-MI setting does not ensure matching
-elsewhere. These two checks also do not establish that either test keeps
-its false-positive rate at or below 5\% at every equal-MI setting.
+The null validation at A and two null SDs shows how the fitting choice
+changes false-positive rates as well as power. The lower evaluation
+null has common MI 0.02 nats; the upper evaluation null has common MI
+0.3299 nats, the larger MI in the fixed alternative.
+Table~\ref{tab:redesign-calibration-validation} applies both sets of
+fitted thresholds to independent samples from each null. Each rate uses
+all 100,000 validation repetitions.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Null rejection rates at A under both calibrations.}
+\label{tab:redesign-calibration-validation}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Fitting null & Evaluation null & Normal Wald & Expanded Welch\\
+\midrule
+Lower & Lower & 4.93\% & 4.99\%\\
+Lower & Upper & 11.20\% & 13.71\%\\
+Upper & Upper & 4.87\% & 4.84\%\\
+Upper & Lower & 1.63\% & 0.79\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both calibrations give rates close to 5\% at the null used for fitting,
+but their thresholds behave differently at the other null. Lower-null
+calibration gives excessive rejection at the upper null, with a higher
+rate for Expanded Welch than for Wald. Upper-null calibration instead
+makes both tests conservative at the lower null. Thus the power gain
+and its reversal accompany changes in the relative false-positive
+rates when the thresholds are applied at a different common MI. The
+calibrated power comparison is conditional on the fitting null.
+Appendix~\ref{sec:calibration-sensitivity-results} reports the full
+validation and power tables. These two validation settings do not
+establish that either test keeps its false-positive rate at or below
+5\% at every equal-MI setting.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}
