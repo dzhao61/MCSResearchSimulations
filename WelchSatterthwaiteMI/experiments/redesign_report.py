@@ -116,14 +116,17 @@ def save(fig,name,figures,bbox_inches='tight'):
     plt.close(fig)
 
 
-def table(path,columns,rows,flexible_first=False,group_header=None):
+def table(path,columns,rows,flexible_first=False,group_header=None,row_dividers=()):
     alignment=(r'>{\raggedright\arraybackslash}X' if flexible_first else 'l')+'r'*(len(columns)-1)
     opening=(r'\begin{tabularx}{\textwidth}' if flexible_first else r'\begin{tabular}')
     lines=[opening+r'{@{}'+alignment+r'@{}}',r'\toprule']
     if group_header is not None:
         lines.extend(group_header)
     lines.extend([' & '.join(columns)+r'\\',r'\midrule'])
-    lines += [' & '.join(map(str,row))+r'\\' for row in rows]
+    for index,row in enumerate(rows):
+        if index in row_dividers:
+            lines.append(r'\midrule')
+        lines.append(' & '.join(map(str,row))+r'\\')
     lines += [r'\bottomrule',r'\end{tabularx}' if flexible_first else r'\end{tabular}']
     text='\n'.join(lines)+'\n'
     text=re.sub(r'(?<![\d.])-0(\.0+)(?![\d.])',r'0\1',text)
@@ -390,14 +393,16 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     cases=[(label,select_case(configs,*spec)) for label,spec in study.FOCUS.items()]
     cases += [(f'16, {"same" if profile=="same_skew" else "different"}, {n:,}',select_case(configs,16,profile,n))
               for profile in ('same_skew','different_skew') for n in (1000,10000)]
+    # Match the five shared-estimate cases, then show larger-sample checks.
+    rate_cases=cases[:3]+cases[3::2]+cases[4::2]
     rows=[]
-    for label,key in cases:
+    for label,key in rate_cases:
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
         rows.append([case_display_label(label)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
-          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True)
+          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True,row_dividers=(5,))
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]
@@ -486,14 +491,16 @@ def render_testing_rule_displays(output=study.OUTPUT,figures=FIGURES):
     cases=[(label,select_case(configs,*spec)) for label,spec in study.FOCUS.items()]
     cases += [(f'16, {"same" if profile=="same_skew" else "different"}, {n:,}',select_case(configs,16,profile,n))
               for profile in ('same_skew','different_skew') for n in (1000,10000)]
+    # Match the five shared-estimate cases, then show larger-sample checks.
+    rate_cases=cases[:3]+cases[3::2]+cases[4::2]
     rows=[]
-    for label,key in cases:
+    for label,key in rate_cases:
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
         rows.append([case_display_label(label)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
-          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True)
+          ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True,row_dividers=(5,))
     rows=[]
     for label,key in cases:
         d=diagnostics.loc[key]

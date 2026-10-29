@@ -505,9 +505,11 @@ compares the focus settings and the sparse \(16\times16\) cases at
 
 Expanded Welch brings rejection close to 5\% at A. At B it also
 reduces rejection, although the rate remains above 5\%.
-Table~\ref{tab:redesign-case-rates} compares these settings with the
-larger-sample and sparse-table cases. Both tests are valid in all
-100,000 repetitions at each of these seven settings.
+The first five rows of Table~\ref{tab:redesign-case-rates} give rejection
+rates for the same settings as Table~\ref{tab:redesign-shared-estimates}.
+The two rows below the divider use the same \(16\times16\) populations
+at \(n=10{,}000\). Both tests are valid in all 100,000 repetitions at
+each of these seven settings.
 
 \begin{table}[H]
 \centering
@@ -848,27 +850,14 @@ and 10,551 labelled \texttt{Returning\_Visitor}, excluding the 85
 no purchase. The tests treat the two disjoint visitor groups as independent
 samples and the sessions within each group as independent observations.
 
-For each question, \(X\) is the session attribute and \(Y\) is the
-purchase outcome. The two populations are defined by visitor type:
+For each question, \(X\) is month or weekend status and \(Y\) is the
+purchase outcome. Let \(P\) and \(Q\) be the joint distributions of
+\((X,Y)\) among new and returning visitors, respectively. Each question
+tests \(H_0:I(P)=I(Q)\).
+
 \begingroup
 \setlength{\intextsep}{4pt}
 \setlength{\abovecaptionskip}{4pt}
-\begin{table}[H]
-\centering
-\caption{Variables and populations for the two application questions.}
-\label{tab:shoppers-questions}
-\begin{tabularx}{\textwidth}{@{}lXX@{}}
-\toprule
- & Month question & Weekend question\\
-\midrule
-\(X\) & Month of the session & Weekday or weekend\\
-\(Y\) & \multicolumn{2}{l}{Purchase outcome: no purchase or purchase}\\
-\(P\) & \multicolumn{2}{l}{Joint distribution of \((X,Y)\) among new visitors}\\
-\(Q\) & \multicolumn{2}{l}{Joint distribution of \((X,Y)\) among returning visitors}\\
-\(H_0\) & \multicolumn{2}{l}{\(I(P)=I(Q)\) for each choice of \(X\)}\\
-\bottomrule
-\end{tabularx}
-\end{table}
 For month, each group forms a \(10\times2\) count table. The rows are
 the ten recorded months: February, March, May, June, July, August,
 September, October, November and December. The columns are no purchase
