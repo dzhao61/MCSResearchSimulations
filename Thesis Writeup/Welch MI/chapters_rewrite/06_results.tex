@@ -229,9 +229,11 @@ retains these quadratic terms to predict the moments of \(\Vhat\) and
 the mean estimated component degrees of freedom.
 
 Figure~\ref{fig:redesign-a4} shows \(4\times4\) different-skew
-populations at \(n=1{,}000\). The first two rows compare the observed
-mean and sampling variance of \(\Vhat\), respectively, with their
-near-independence predictions. The bottom row compares the mean
+populations at \(n=1{,}000\), with population MI on the horizontal axis.
+The top and middle rows compare the observed scaled mean
+\(n\E\{\Vhat\}\) and scaled sampling variance
+\(n^2\Var\{\Vhat\}\), respectively, with their near-independence
+predictions. The bottom row compares the mean
 estimated degrees of freedom, its
 near-independence prediction, the sampling-moment target and the
 population first-order value.
@@ -343,29 +345,35 @@ We classify Expanded Welch as improving nominal calibration at a setting
 when its false-positive rate is closer to 5\% than Wald's by more than
 \RedesignGridTolerance{} percentage points. It worsens nominal calibration
 when its rate is farther from 5\% by more than \RedesignGridTolerance{}
-percentage points. Differences within this tolerance are grouped separately. All
-\RedesignToward{} improvements occur with Wald above 5\%;
-\RedesignAwayBelow{} of the \RedesignAway{} deteriorations occur with
-Wald below 5\%.
+percentage points. Differences within this tolerance are grouped separately.
 
 \begin{table}[!htbp]
 \centering
 \caption{Change in distance from 5\% rejection across the broad null grid.}
 \label{tab:redesign-null-grid}
-\begin{tabular}{@{}lr@{}}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-Expanded Welch relative to Normal Wald & Settings\\
+ & \multicolumn{3}{c}{Expanded Welch relative to Normal Wald} &\\
+\cmidrule(lr){2-4}
+\shortstack[l]{Normal Wald\\rejection rate} &
+\shortstack{Closer\\to 5\%} &
+\shortstack{Farther\\from 5\%} &
+\shortstack{Within\\tolerance} & Total\\
 \midrule
-Closer to 5\% & \RedesignToward{}\\
-Farther from 5\% & \RedesignAway{}\\
-Change within the tolerance & \RedesignWithin{}\\
+Above 5\% & \RedesignTowardAbove{} & \RedesignAwayAbove{} &
+\RedesignWithinAbove{} & \RedesignTotalAbove{}\\
+Below 5\% & \RedesignTowardBelow{} & \RedesignAwayBelow{} &
+\RedesignWithinBelow{} & \RedesignTotalBelow{}\\
+\midrule
+Total & \RedesignToward{} & \RedesignAway{} & \RedesignWithin{} & 120\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Moving farther from 5\% is more common than moving closer across this
-grid. The larger cutoff therefore often intensifies conservatism,
-even though it reduces excessive rejection at other settings.
+The improvements all occur where Wald over-rejects, while most
+deteriorations occur where Wald is already conservative. In the four
+deteriorations with Wald above 5\%, Expanded Welch crosses below 5\%
+and ends farther from the target.
 
 Reported rejection rates divide valid rejections by all simulation
 repetitions, counting invalid outputs as non-rejections. Brackets around
@@ -414,6 +422,10 @@ size does not make those errors shrink monotonically. Across the
 larger-table panels, the methods draw close well before both rates
 settle near 5\%, so agreement between tests does not establish good
 calibration.
+
+The different margins in Figure~\ref{fig:redesign-null-different} can
+produce unequal MI estimation biases, even though the population MI
+values are equal.
 
 \begin{figure}[H]
 \centering
@@ -529,6 +541,28 @@ cases despite these different estimation errors. At C, bias is negligible
 and the variance ratio is close to one. Table~\ref{tab:redesign-case-diagnostics}
 gives the full diagnostics and degrees-of-freedom comparisons.
 
+At stronger common MI, both tests over-reject at A and B.
+Table~\ref{tab:redesign-stronger-null}
+retains A's and B's margins, table sizes and sample sizes while increasing
+the common MI. Rates and their pointwise 95\% intervals are percentages
+of all 100,000 repetitions.
+
+\begin{table}[H]
+\centering
+\small
+\caption{False-positive rates at stronger common MI.}
+\label{tab:redesign-stronger-null}
+\input{figures_rewrite/focused_redesign_stronger_null}
+\end{table}
+
+The two rows show different sensitivity to the common MI. At A, the
+stronger association raises both rates well above their values at MI
+0.02, and Expanded Welch no longer brings rejection close to 5\%.
+At B, Wald's rate changes little, but Expanded Welch's earlier reduction
+becomes much smaller; both remain above the target. The larger cutoff
+still reduces rejection in each row, but the improvement at common MI
+0.02 does not extend to reliable calibration at these stronger MI values.
+
 The sparse different-skew rows of Tables~\ref{tab:redesign-shared-estimates}
 and~\ref{tab:redesign-case-rates} show that changing the degrees of freedom
 does not resolve excessive rejection. At \(16\times16\), different skew and \(n=1{,}000\), the
@@ -592,27 +626,6 @@ Beyond the trough, this dependence weakens and the tails move closer
 to the normal approximation. Appendix~\ref{sec:component-diagnostics}
 reports the diagnostic checks. These checks explain the broad patterns
 without isolating every finite-sample contribution to rejection.
-
-Both tests also over-reject at stronger common MI. Table~\ref{tab:redesign-stronger-null}
-retains A's and B's margins, table sizes and sample sizes while increasing
-the common MI. Rates and their pointwise 95\% intervals are percentages
-of all 100,000 repetitions.
-
-\begin{table}[H]
-\centering
-\small
-\caption{False-positive rates at stronger common MI.}
-\label{tab:redesign-stronger-null}
-\input{figures_rewrite/focused_redesign_stronger_null}
-\end{table}
-
-The two rows show different sensitivity to the common MI. At A, the
-stronger association raises both rates well above their values at MI
-0.02, and Expanded Welch no longer brings rejection close to 5\%.
-At B, Wald's rate changes little, but Expanded Welch's earlier reduction
-becomes much smaller; both remain above the target. The larger cutoff
-still reduces rejection in each row, but the improvement at common MI
-0.02 does not extend to reliable calibration at these stronger MI values.
 
 \section{RQ2.2: Nominal and calibrated power}
 

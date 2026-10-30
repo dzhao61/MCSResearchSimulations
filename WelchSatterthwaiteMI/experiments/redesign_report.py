@@ -61,6 +61,23 @@ def calibration_grid(rates,null_ids,tolerance=.003):
     return grid.reset_index(),summary
 
 
+def grid_reporting_values(grid,summary):
+    """Count calibration changes above and below Wald's nominal rate."""
+    if grid.wald.eq(study.ALPHA).any():
+        raise AssertionError('Review the null-grid table: a Wald rate equals the target')
+    commands={'RedesignToward':str(summary['toward']),
+              'RedesignAway':str(summary['away']),
+              'RedesignWithin':str(summary['within']),
+              'RedesignGridTolerance':decimal_text(summary['tolerance_percentage_points'],1)}
+    for side,mask in [('Above',grid.wald.gt(study.ALPHA)),
+                      ('Below',grid.wald.lt(study.ALPHA))]:
+        selected=grid.loc[mask]
+        for name,category in [('Toward','toward'),('Away','away'),('Within','within')]:
+            commands['Redesign'+name+side]=str(int(selected.classification.eq(category).sum()))
+        commands['RedesignTotal'+side]=str(len(selected))
+    return commands
+
+
 def bootstrap_focus(task):
     output,label,focus,configurations,references,repetitions=task
     by_id={c['configuration_id']:c for c in configurations}
@@ -258,11 +275,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
     study.atomic_json(output/'calibration_grid_summary.json',grid_summary)
     upper_nominal_path=output/'calibration_sensitivity/nominal_upper_rates.csv'
     upper_nominal=pd.read_csv(upper_nominal_path).set_index(['focus','effect','method'])
-    commands={'RedesignToward':str(grid_summary['toward']),
-              'RedesignAway':str(grid_summary['away']),
-              'RedesignAwayBelow':str(grid_summary['away_wald_below']),
-              'RedesignWithin':str(grid_summary['within']),
-              'RedesignGridTolerance':decimal_text(grid_summary['tolerance_percentage_points'],1)}
+    commands=grid_reporting_values(grid,grid_summary)
     for focus_label,effect in [('A',2.),('B',4.)]:
         commands['RedesignUpper'+focus_label+'MI']=decimal_text(upper_nominal.loc[(focus_label,effect,'wald'),'common_mi'],2)
         for method in ('wald','expanded'):

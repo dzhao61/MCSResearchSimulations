@@ -1,6 +1,6 @@
 # Chapter 6 table presentation — 30 October 2026
 
-Implemented the requested changes to Table 6.4 and the former Table 6.8, then completed the requested PDF rebuild and delivery refresh. Table 6.2 is unchanged; the two-dimensional version below remains a recommendation for review.
+Implemented the requested changes to Table 6.4 and the former Table 6.8, then completed the requested PDF rebuild and delivery refresh. Table 6.2 was subsequently converted to the two-dimensional version below and rebuilt; the later implementation and current delivery hashes are recorded in [TWO_DIMENSIONAL_NULL_GRID_2026-10-30.md](TWO_DIMENSIONAL_NULL_GRID_2026-10-30.md).
 
 ## Implemented
 
@@ -10,7 +10,7 @@ Implemented the requested changes to Table 6.4 and the former Table 6.8, then co
 
 The preceding sources are preserved in `../archive/before_table_streamlining_2026-10-30.zip`.
 
-## Proposed Table 6.2
+## Table 6.2 proposal, subsequently implemented
 
 Rows should classify **Normal Wald's observed false-positive rate** relative to 5%. Columns should classify how Expanded Welch changes the absolute distance from 5%, using the existing 0.3-percentage-point tolerance.
 
