@@ -10,6 +10,42 @@ comparisons.
 \section{Component diagnostics and fitted null SDs}
 \label{sec:component-diagnostics}
 
+Table~\ref{tab:variance-stability} gives component moment and
+degrees-of-freedom comparisons for different-skew \(4\times4\)
+populations at \(n=1{,}000\). ``Mean ratio'' divides the simulated mean
+of \(\Vhat(P)\) by \(V(P)\). Both ``Var. ratio'' columns divide their
+prediction by the observed \(\Var\{\Vhat(P)\}\): ``pop.'' uses
+\(\tau^2(P)/n_P\), while ``sample'' averages the predictions
+\(\widehat\tau^2(P)/n_P\) from the sampled tables. ``Mean df'' averages
+\(\widehat\nu_P\), ``Moment df'' gives \(\nu_{P,\mathrm{mom}}\), and
+\(\nu_{\mathrm{FO}}\) gives \(\nu_{P,\mathrm{FO}}\). The same definitions
+apply to \(Q\). All 100,000 component estimates are positive, finite and
+included in each row.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Component moment and degrees-of-freedom comparisons at \(4\times4\), \(n=1{,}000\), different skew.}
+\label{tab:variance-stability}
+\input{figures_rewrite/focused_redesign_components}
+\end{table}
+
+At MI 0.0001, the sampling means are far above \(V(P)\) and \(V(Q)\).
+The population first-order variance predictions capture only about 5\%
+of the observed sampling variances, while the sample-based predictions
+are about twice those variances. The resulting first-order degrees of
+freedom are close to zero, whereas the mean estimated values remain
+around half the moment targets. At MI 0.02, the population variance
+predictions are close to the observed values, but using the smaller
+\(V(P)\) and \(V(Q)\) in place of the sampling means still lowers the
+first-order degrees of freedom.
+By MI 0.05, the moment ratios are much closer to one and the mean
+estimated degrees of freedom are close to their targets. These rows
+therefore connect the separate mean and variance errors to the
+comparisons in Chapter~\ref{chap:results}.
+
+
 Table~\ref{tab:redesign-scaled-mean-error} shows how the mean error of
 \(\Vhat\) varies across MI values, margin regimes and populations in
 the \(4\times4\) sweep. The scaled error is \(n\{\E\Vhat-V\}\).

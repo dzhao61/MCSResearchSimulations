@@ -1,6 +1,6 @@
 # Main Welch MI thesis deliverable
 
-Current PDF: **108 pages**, rebuilt on 30 October 2026 with the Figure 6.3 guide and Figure 6.5 transition. This interim build checks compilation, references, paragraph style and the changed sections for obvious layout issues. The main/named PDF and source archive are current; the unchanged, previously verified experiment archive is reused.
+Current PDF: **114 pages**, rebuilt on 30 October 2026 with the expanded Chapter 4 derivations, the Chapter 6 results rewrite and the component comparison table moved to Appendix C (Table C.1). Figure 6.6 is anchored after its introduction. This interim build checks compilation, references, paragraph style and the changed sections for obvious layout issues. The main/named PDF and source archive are current; the unchanged, previously verified experiment archive is reused.
 
 For interim review builds, use the lighter checks described in `AGENTS.md`.
 The full packaging and independent-build review below remains the final-delivery

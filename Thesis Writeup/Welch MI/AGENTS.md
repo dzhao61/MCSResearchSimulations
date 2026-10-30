@@ -57,6 +57,11 @@ Retain short sentences for new definitions, key results and distinct
 derivation steps. Keep each paragraph focused and link paragraphs through
 the argument itself. Do not restore removed tangents or technical previews.
 
+For Chapter 6 results writing, use
+`notes/CHAPTER_6_RESULTS_WRITING_GUIDELINES_2026-10-30.md` alongside the
+workspace research writing preferences. It records the explanation and
+reading-order standards established through the Section 6.1.1 revision.
+
 When editing prose, preserve equations, scientific qualifications, numerical
 evidence, citations, figure dimensions and typography. Keep Section 2.3 as the
 derivation benchmark and do not revise it without a specific request.

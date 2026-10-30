@@ -11,6 +11,7 @@ probabilities change.
 
 \section[Choosing degrees of freedom for Expanded Welch]{Choosing degrees of
 freedom for\\Expanded Welch}
+\label{sec:component-df-choice}
 
 The squared standard error contains two estimated variance contributions,
 \(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\). We assign component degrees of
@@ -77,7 +78,7 @@ mean automatically:
   \right]
   =\E\{\Vhat(P)\}.
 \end{equation}
-Its variance is
+The variance of the scaled chi-squared variable is
 \begin{align}
   \Var\left[
   \E\{\Vhat(P)\}\frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}
@@ -88,7 +89,15 @@ Its variance is
   &=
   \frac{2[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}}.
 \end{align}
-Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
+We now choose \(\nu_{P,\mathrm{mom}}\) so that the scaled chi-squared
+variable also has the same variance as \(\Vhat(P)\). Equating its variance,
+calculated above, to the sampling variance of \(\Vhat(P)\) requires
+\begin{equation*}
+  \frac{2[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}}
+  =\Var\{\Vhat(P)\}.
+\end{equation*}
+This condition determines the degrees of freedom within the scaled
+chi-squared approximation. Solving for \(\nu_{P,\mathrm{mom}}\) gives
 \begin{equation}
   \boxed{
   \nu_{P,\mathrm{mom}}
@@ -98,23 +107,46 @@ Matching this quantity to \(\Var\{\Vhat(P)\}\) gives
   }.
   \label{eq:component-df-moments}
 \end{equation}
-\begin{samepage}%
-The target squares the sampling mean of \(\Vhat(P)\) and divides by its
-sampling variance. Dividing \(\Vhat(P)\) by fixed \(n_P\) rescales both the
-numerator and denominator by \(1/n_P^2\), so the same target applies to
-\(\Vhat(P)/n_P\) in the squared standard error.
-To first order, \(\E\{\Vhat(P)\}\approx V(P)\), so the remaining task is
-to calculate \(\Var\{\Vhat(P)\}\).
-\par
-\end{samepage}
+The squared standard error contains \(\Vhat(P)/n_P\), rather than
+\(\Vhat(P)\). Because the sample size \(n_P\) is fixed, its reciprocal
+can be taken outside the expectation and its square outside the variance.
+Applying the same moment-matching calculation to this variance contribution
+therefore gives
+\begin{align*}
+  \frac{2[\E\{\Vhat(P)/n_P\}]^2}
+       {\Var\{\Vhat(P)/n_P\}}
+  &=\frac{2[\E\{\Vhat(P)\}]^2/n_P^2}
+          {\Var\{\Vhat(P)\}/n_P^2}\\
+  &=\frac{2[\E\{\Vhat(P)\}]^2}
+          {\Var\{\Vhat(P)\}}
+   =\nu_{P,\mathrm{mom}}.
+\end{align*}
+The factors \(1/n_P^2\) cancel, so dividing the estimate by \(n_P\)
+leaves its moment-matched degrees of freedom unchanged.
+
+To evaluate Equation~\eqref{eq:component-df-moments}, we need the mean and
+variance of \(\Vhat(P)\) across repeated samples from \(P\). The first-order
+expansion derived in Section~\ref{sec:component-df} gives
+\begin{equation*}
+  \E\{\Vhat(P)\}\approx V(P).
+\end{equation*}
+At this order, the change in \(\Vhat(P)\) is linear in the empirical
+cell-probability errors. Each empirical cell proportion has expectation
+equal to its population probability, so these errors and their linear
+contribution have mean zero. Bias arises from terms beyond this linear
+approximation.
+
+With the mean approximated by \(V(P)\), the remaining task is to calculate
+\(\Var\{\Vhat(P)\}\). Sampling changes the empirical cell
+probabilities, and the plug-in variance estimate changes with them. We
+therefore first calculate how \(V(P)\) responds to small changes in those
+probabilities.
 
 \begin{samepage}
 \section{How the MI variance changes with the table}
 
-To find how much the estimated MI variance changes between samples, we first
-ask how the population variance responds when a small amount of probability
-is moved into one cell \citep{hampel1974,vanderVaart1998}. Fix a cell
-\((x,y)\) and define the perturbed distribution
+Fix a cell \((x,y)\) and define a distribution that moves a small amount
+of probability toward this cell \citep{hampel1974,vanderVaart1998}:
 \begin{equation}
   P_\varepsilon
   =(1-\varepsilon)P+\varepsilon\delta_{(x,y)},
@@ -302,7 +334,27 @@ For the second sum, define the probability-weighted row and column means
   \E_P\{\pmi_P(X,Y)\mid Y=y\}
   &=\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}}.
 \end{align}
-Substitution of Equation~\eqref{eq:pmi-derivative} gives
+To evaluate the sum multiplied by \(2\) in
+Equation~\eqref{eq:m2-product-rule}, substitute the pointwise-MI derivative
+from Equation~\eqref{eq:pmi-derivative}. The sum has four terms. The
+indicators in the first three select the chosen cell, its row and its column:
+\begin{align*}
+  \sum_{i,j}p_{ij}\pmi_P(i,j)
+  \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
+  &=\pmi_P(x,y),\\
+  \sum_{i,j}p_{ij}\pmi_P(i,j)
+  \frac{\mathbf 1\{i=x\}}{p_{i+}}
+  &=\frac{\sum_j p_{xj}\pmi_P(x,j)}{p_{x+}},\\
+  \sum_{i,j}p_{ij}\pmi_P(i,j)
+  \frac{\mathbf 1\{j=y\}}{p_{+j}}
+  &=\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}},\\
+  \sum_{i,j}p_{ij}\pmi_P(i,j)&=I(P).
+\end{align*}
+The row indicator fixes \(i=x\) but leaves the sum over columns; dividing
+by \(p_{x+}\) makes this the conditional mean within row \(x\). The column
+term works in the same way. The final term comes from the constant \(+1\)
+in the pointwise-MI derivative and averages over the entire table. Keeping
+the minus signs on the row and column terms gives
 \begin{align}
   &\sum_{i,j}p_{ij}\pmi_P(i,j)
   \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
@@ -379,29 +431,37 @@ Define the population variability of the observation-level sensitivities by
   \label{eq:tau-definition}
 \end{equation}
 The observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
-mean of zero. Averaging the one-cell perturbation directions leaves the
-population table unchanged:
+mean of zero. This follows directly by averaging the two parts of
+Equation~\eqref{eq:g-final}. The first part has mean
 \begin{equation}
-  \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}=P-P=0.
+  \E_P\left[\{\pmi_P(X,Y)-I(P)\}^2-V(P)\right]
+  =V(P)-V(P)=0.
 \end{equation}
-Because the first derivative is linear in the direction of change, the
-weighted average of the one-cell derivatives is the derivative in the
-weighted-average direction:
+For the bracket, averaging the row conditional means weights each row by
+its probability. Averaging the column conditional means weights each
+column in the same way:
 \begin{align}
-  \E_P\{g_P(X,Y)\}
-  &=\sum_{x,y}p_{xy}
-    \left.\frac{\mathrm d}{\mathrm d\varepsilon}
-    V\{(1-\varepsilon)P+\varepsilon\delta_{(x,y)}\}
-    \right|_{0}\\
-  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}
-    V\left\{P+\varepsilon
-    \sum_{x,y}p_{xy}\{\delta_{(x,y)}-P\}\right\}
-    \right|_{0}\\
-  &=\left.\frac{\mathrm d}{\mathrm d\varepsilon}V(P)
-    \right|_{0}=0.
+  \E_P\left[\E_P\{\pmi_P(X,Y)\mid X\}\right]
+  &=\sum_x p_{x+}
+    \frac{\sum_y p_{xy}\pmi_P(x,y)}{p_{x+}}
+    \notag\\
+  &=\sum_{x,y}p_{xy}\pmi_P(x,y)=I(P),\\
+  \E_P\left[\E_P\{\pmi_P(X,Y)\mid Y\}\right]
+  &=\sum_y p_{+y}
+    \frac{\sum_x p_{xy}\pmi_P(x,y)}{p_{+y}}
+    \notag\\
+  &=\sum_{x,y}p_{xy}\pmi_P(x,y)=I(P).
 \end{align}
-Their variation determines how much the estimated MI variance changes
-between samples.
+Each marginal probability cancels the denominator of its conditional mean,
+leaving the probability-weighted sum over all cells. The bracket therefore
+also has mean zero, and the full sensitivity satisfies
+\begin{equation}
+  \E_P\{g_P(X,Y)\}
+  =0+2\{I(P)-I(P)-I(P)+I(P)\}=0.
+\end{equation}
+Thus \(\tau^2(P)\) measures variation in the sensitivities around zero.
+We next use these sensitivities to approximate how much \(\Vhat(P)\)
+changes between samples.
 
 \begin{assumption}[Regular variance sensitivity]
 For the first-order Expanded Welch construction,
@@ -418,11 +478,43 @@ tables, so its difference from \(P\) is
   =\frac{1}{n_P}\sum_{a=1}^{n_P}
   \left\{\delta_{Z_a^{(P)}}-P\right\}.
 \end{equation}
-The plug-in estimate \(\Vhat(P)\) evaluates \(V\) at this empirical
-table. Equation~\eqref{eq:g-definition} gives its first-order change for
-one observation's direction. Because a first-order change is linear in the
-table error \citep[Chapter~20]{vanderVaart1998}, the changes from the
-observations can be averaged:
+The plug-in estimate \(\Vhat(P)\) evaluates \(V\) at the empirical table,
+so \(\Vhat(P)=V(\widehat P)\). We approximate its difference from \(V(P)\)
+by a first-order Taylor expansion. For a differentiable scalar function
+expanded at zero, the general formula is
+\begin{equation*}
+  f(t)\approx f(0)+t f'(0).
+\end{equation*}
+Here set \(f(t)=V\{P+t(\widehat P-P)\}\). The scalar \(t\) follows the
+straight line from the population table \(P\) at \(t=0\) to the empirical
+table \(\widehat P\) at \(t=1\). Thus \(V\) is expanded at \(P\), the
+new table is \(\widehat P\), and the table difference is
+\(\widehat P-P\). Since \(f(0)=V(P)\) and \(f(1)=\Vhat(P)\), evaluating
+the Taylor formula at \(t=1\) and subtracting \(f(0)\) gives
+\begin{equation*}
+  \Vhat(P)-V(P)
+  \approx f'(0)
+  =\left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\widehat P-P)\}\right|_{t=0}.
+\end{equation*}
+This approximation retains the terms linear in the cell-probability errors
+and applies when the empirical table is close to the positive population
+table.
+
+At fixed \(P\), the first derivative is linear in the direction of the
+table change \citep[Chapter~20]{vanderVaart1998}. Substituting the
+empirical-table identity above therefore gives
+\begin{align*}
+  &\left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\widehat P-P)\}\right|_{t=0}\\
+  &\quad=\frac{1}{n_P}\sum_{a=1}^{n_P}
+    \left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\delta_{Z_a^{(P)}}-P)\}\right|_{t=0}.
+\end{align*}
+Each term follows the one-observation perturbation
+\(P+t(\delta_{Z_a^{(P)}}-P)=(1-t)P+t\delta_{Z_a^{(P)}}\), so its
+derivative is \(g_P(Z_a^{(P)})\) by Equation~\eqref{eq:g-definition}.
+Combining this derivative identity with the Taylor approximation gives
 \begin{equation}
   \Vhat(P)-V(P)
   \approx
@@ -430,7 +522,17 @@ observations can be averaged:
   \sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
   \label{eq:vhat-linearization}
 \end{equation}
-The observations are independent, so
+Taking expectations in Equation~\eqref{eq:vhat-linearization} and using
+the zero mean of \(g_P\) gives
+\begin{align*}
+  \E\{\Vhat(P)\}-V(P)
+  &\approx\frac{1}{n_P}\sum_{a=1}^{n_P}
+    \E_P\{g_P(Z_a^{(P)})\}\\
+  &=0.
+\end{align*}
+This establishes the first-order mean approximation used in
+Section~\ref{sec:component-df-choice}. Independence of the observations
+gives the corresponding sampling variance:
 \begin{align}
   \Var\{\Vhat(P)\}
   &\approx
@@ -540,8 +642,49 @@ Population \(V(P)\), \(\tau^2(P)\) and \(n_P\)\\
 \medskip
 \thesisminiheading{Combining the two samples' degrees of freedom.}
 
-Substituting the two variance contributions and component degrees of freedom
-into Equation~\eqref{eq:ws-general} gives
+The combining rule follows by applying moment matching to the full
+estimated variance,
+\begin{equation*}
+  \SEhat^2=\frac{\Vhat(P)}{n_P}+\frac{\Vhat(Q)}{n_Q}.
+\end{equation*}
+Linearity of expectation gives its sampling mean:
+\begin{equation*}
+  \E(\SEhat^2)
+  =\frac{\E\{\Vhat(P)\}}{n_P}
+   +\frac{\E\{\Vhat(Q)\}}{n_Q}.
+\end{equation*}
+The two variance estimates are computed from independent samples, so their
+covariance is zero and their variance contributions add. Rearranging
+Equation~\eqref{eq:component-df-moments} expresses each component's sampling
+variance in terms of its sampling mean and moment-matched degrees of
+freedom. Applying this identity to both components gives
+\begin{align*}
+  \Var(\SEhat^2)
+  &=\frac{\Var\{\Vhat(P)\}}{n_P^2}
+    +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}\\
+  &=2\left\{
+    \frac{[\E\{\Vhat(P)\}/n_P]^2}{\nu_{P,\mathrm{mom}}}
+    +\frac{[\E\{\Vhat(Q)\}/n_Q]^2}{\nu_{Q,\mathrm{mom}}}
+    \right\}.
+\end{align*}
+The combined moment-matched degrees of freedom are twice the squared mean
+of \(\SEhat^2\) divided by its variance. Substituting the expressions above
+and cancelling the common factor \(2\) gives
+\begin{equation*}
+  \frac{2[\E(\SEhat^2)]^2}{\Var(\SEhat^2)}
+  =\frac{
+    \left\{\E\{\Vhat(P)\}/n_P+\E\{\Vhat(Q)\}/n_Q\right\}^2
+    }{
+    [\E\{\Vhat(P)\}/n_P]^2/\nu_{P,\mathrm{mom}}
+    +[\E\{\Vhat(Q)\}/n_Q]^2/\nu_{Q,\mathrm{mom}}
+    }.
+\end{equation*}
+This establishes the combining rule in Equation~\eqref{eq:ws-general} for
+population moment inputs. For the observed tables, we replace the sampling
+means \(\E\{\Vhat(P)\}\) and \(\E\{\Vhat(Q)\}\) by \(\Vhat(P)\) and
+\(\Vhat(Q)\), and the component targets \(\nu_{P,\mathrm{mom}}\) and
+\(\nu_{Q,\mathrm{mom}}\) by \(\widehat\nu_P\) and \(\widehat\nu_Q\).
+These substitutions give the estimated combined degrees of freedom:
 \begin{equation}
   \boxed{
   \widehat\nu_{\mathrm{expanded}}
