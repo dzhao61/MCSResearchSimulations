@@ -213,9 +213,8 @@ sample-based quantities, whereas the target uses the sampling mean and
 variance of \(\Vhat(P)\). For the sampled estimates, the ratio
 \(\operatorname{mean}(\widehat\nu_P)/\nu_{P,\mathrm{mom}}\) equals one
 when the average estimate matches the target; a ratio below one means
-that the estimated degrees of freedom are lower on average. Medians and
-percentile ranges describe their sampling spread. When a summary uses only
-positive finite degrees of freedom, we report the included fraction. The
+that the estimated degrees of freedom are lower on average. When a summary
+uses only positive finite degrees of freedom, we report the included fraction. The
 same checks are made for \(Q\).
 Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
 
@@ -437,10 +436,6 @@ Difference bias &
 \addlinespace
 Variance ratio &
 \(\dfrac{\operatorname{mean}(\SEhat^2)}{\text{observed variance of }\Deltahat}\)\\
-\addlinespace
-Direction under alternatives &
-Correct when \(\Deltahat\Delta>0\);\newline
-opposite when \(\Deltahat\Delta<0\).\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -450,8 +445,7 @@ variance ratio uses repetitions with both finite \(\Deltahat\)
 and finite \(\SEhat^2\). A ratio of one indicates agreement.
 Ratios below one mean that the squared standard error understates the
 observed difference variance on average; ratios above one indicate
-overstatement. Power includes opposite-direction rejections,
-so we report estimated direction separately.
+overstatement. Two-sided power includes rejections in either direction.
 Appendix~\ref{sec:estimation-diagnostics} specifies the inclusion rules
 and complete calculations.
 

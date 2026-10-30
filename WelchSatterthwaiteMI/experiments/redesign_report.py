@@ -150,13 +150,14 @@ def table(path,columns,rows,flexible_first=False,group_header=None,row_dividers=
     path.write_text(text)
 
 
-def case_display_label(label,side=None):
+def case_display_label(label,side=None,*,inline_sample_size=False):
     """Expand display wording while retaining the existing evidence keys."""
     match=re.fullmatch(r'16, (same|different), ([\d,]+)',label)
     if match:
         profile,n=match.groups()
         number=n.replace(',',r'{,}')
-        label=rf'\(16\times16\), {profile} skew\newline \(n={number}\)'
+        separator=', ' if inline_sample_size else r'\newline '
+        label=rf'\(16\times16\), {profile} skew{separator}\(n={number}\)'
     if side is not None:
         label+=rf', \({side.upper()}\)'
     return label
@@ -413,7 +414,7 @@ def report(output=study.OUTPUT,figures=FIGURES,bootstrap=1000,workers=3):
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
-        rows.append([case_display_label(label)]+cells)
+        rows.append([case_display_label(label,inline_sample_size=True)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
           ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True,row_dividers=(5,))
     rows=[]
@@ -511,7 +512,7 @@ def render_testing_rule_displays(output=study.OUTPUT,figures=FIGURES):
         cells=[percentage_text(raw.loc[(key,m),'rate'])+' ['+
                decimal_text(Decimal(str(raw.loc[(key,m),'low']))*100,2)+', '+
                decimal_text(Decimal(str(raw.loc[(key,m),'high']))*100,2)+']' for m in DISPLAY_METHODS]
-        rows.append([case_display_label(label)]+cells)
+        rows.append([case_display_label(label,inline_sample_size=True)]+cells)
     table(figures/'focused_redesign_cases_rates.tex',
           ['Setting']+[LABELS[m] for m in DISPLAY_METHODS],rows,flexible_first=True,row_dividers=(5,))
     rows=[]

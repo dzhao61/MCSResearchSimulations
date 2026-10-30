@@ -39,6 +39,18 @@
 \setcounter{tocdepth}{2}
 \allowdisplaybreaks
 
+% Front lists use the samples' compact entry spacing, independently of body prose.
+\newcommand{\thesisfrontlists}{%
+  \begingroup
+  \setlength{\parskip}{0pt}%
+  \tableofcontents
+  \setlength{\parskip}{3pt}%
+  \listoffigures
+  \listoftables
+  \clearpage
+  \endgroup
+}
+
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[R]{\thepage}

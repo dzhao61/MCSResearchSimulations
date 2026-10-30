@@ -64,6 +64,11 @@ However, the average \(\SEhat^2\) is almost twice the observed
 conservative. Unequal sample sizes can also leave unequal residual biases
 in otherwise identical populations.
 
+Under different-skew margins, both tests instead reject too often in the
+sparse \(16\times16\) null comparison. The four-cell construction
+also reproduces this failure (Section~\ref{sec:null-estimator-accuracy}),
+so it is not confined to association introduced through copying.
+
 \subsection{RQ2.2: Nominal and calibrated power}
 
 Expanded Welch has lower nominal power than Normal Wald at the selected
@@ -92,13 +97,6 @@ as the
 true difference becomes negative. Their partial cancellation moves the
 sampling mean of \(\Deltahat\) towards zero, so rejection initially falls
 even though the population MI values move farther apart. This distortion remains after calibration.
-
-The sparse \(16\times16\) different-skew comparison shows a more severe
-failure. Its positive difference bias exceeds the true negative difference
-at the 0.01-nat alternative, so almost every rejection gives the wrong
-estimated ordering. Equation~\eqref{eq:redesign-alternative-bias-shift}
-explains the sign reversal. The four-cell construction also reproduces
-the sparse-table failure. A larger rejection cutoff cannot correct that bias.
 
 The observation-level sensitivity supplies an MI-specific basis for
 choosing the cutoff from the Student \(t\) distribution, while the
@@ -147,9 +145,9 @@ establishes their behaviour under known populations.
 
 A first extension is to derive the second-order mean contribution to the
 variance estimator and evaluate a corresponding degrees-of-freedom
-correction. The observed variation across MI and margins indicates that
-the correction should depend on the population table. A fixed coefficient
-based only on table size would leave errors in some settings. Any
+correction. Figure~\ref{fig:redesign-a4} shows that the mean approximation's
+error changes with MI and differs between the populations, so the
+correction should account for the population table. Any
 estimated correction should be evaluated through the resulting test's
 false-positive rates and power.
 

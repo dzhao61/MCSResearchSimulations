@@ -1,5 +1,7 @@
 # Welch MI thesis experiment supplement
 
+On 30 October 2026, Appendix C was removed as a whole from the submitted thesis. `WelchSatterthwaiteMI/supplementary_displays/additional_results_2026_10_30/` preserves that exact eleven-page version as a readable PDF with its original numbering, source, all nine external table inputs, inline Holm table and preservation hashes. It also preserves Appendix B before the accompanying reduction. This version contains the latest component, calibration, rejection-direction and application-adjustment results; it is distinct from the older nineteen-page appendix below. Essential explanatory evidence remains in Chapter 6, and the thesis retains Appendices A and B. The requested rebuild produces a 109-page thesis and refreshes this supplement's delivery archive.
+
 The thesis retains the supporting results needed for its main conclusions. `WelchSatterthwaiteMI/supplementary_displays/full_additional_results/` preserves the complete previous 19-page Appendix C as a readable PDF, its source, and all local plots and tables. It includes the companion approximation plots, broader power curves, complete construction/allocation results, jackknife investigation and timing study. Original numbering is retained in that supplementary PDF. The main study, estimates and simulations are unchanged.
 
 The 25 October scope reduction removes the sample-size degrees-of-freedom arm from the main thesis comparison. Its original results, four-rule plots and tables, and earlier reporters are preserved in `WelchSatterthwaiteMI/supplementary_displays/sample_size_df_comparison/`. The full four-rule numerical evidence is unchanged. Current displays compare Normal Wald and Expanded Welch, with the fixed moment reference retained as a supporting diagnostic.
@@ -277,10 +279,10 @@ population-MI figure, same-skew power companions and supporting tables at
 the manuscript's intended printed dimensions. The new reporter also stores
 all 312 settings' rates, diagnostics and alternative rejection directions in
 `focused_same_skew_evidence.json`, selecting each setting from its recorded
-origin. Complete scientific
-construction, parameter grids, validity and uncertainty rules are also in
-Appendix B of the thesis; a reader does not need this codebase to understand
-or independently recreate the study.
+origin. Scientific construction, parameter grids, validity and uncertainty
+rules for the main results are specified in Chapter 5 and Appendix B of
+the thesis; a reader does not need this codebase to understand or
+independently recreate those comparisons.
 
 The mechanism reporter checks all base records through the independent audit,
 then reads six existing null settings for variance-estimate stability and
@@ -295,8 +297,9 @@ samples, and do not alter the experiment's settings or its sample count.
 The jackknife evidence also quantifies Monte Carlo precision with 1000
 deterministic resamples of paired saved outputs. These are precision checks
 on the simulation summaries, not bootstrap MI tests or new sampled data.
-Appendix C.3 reports its estimator, exact settings and mixed findings within
-the standalone manuscript.
+The historical Appendix C preserved in
+`supplementary_displays/full_additional_results/` reports its estimator,
+exact settings and mixed findings.
 
 The 27 October scope reduction moves the fixed moment reference into `supplementary_displays/fixed_moment_reference/`. That folder preserves its definition, combined-moment derivation and original full comparison assets. RQ1's component moment targets remain in the main thesis. `redesign_report.py --displays-only` updates the two-test views from saved summaries without fitting, bootstrap draws or result-file writes. The new supplement source and revised main manuscript await an explicitly requested PDF/package rebuild.
 

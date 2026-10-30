@@ -65,9 +65,11 @@ unobserved begin to appear in sampled tables. Cells observed only once
 can have estimated pointwise MI far from the table's plug-in MI,
 producing large squared deviations in \(\Vhat\). For example, if a
 cell and its row and column each contain one observation, its empirical
-pointwise MI is \(\log n\). A decomposition of the \(16\times16\)
-sampled tables confirms that once-observed cells dominate the mean of
-\(\Vhat\) around the peak (Appendix~\ref{sec:component-diagnostics}).
+pointwise MI is \(\log n\). Decomposing the cell contributions in
+10,000 repetitions at each of seven selected sample sizes from 10 to
+10,000 for the \(16\times16\) different-skew populations shows that
+once-observed cells contribute most of the mean of \(\Vhat\) around
+the peak in both populations.
 Their contribution falls as repeated counts give better estimates of
 the cell probabilities. Larger tables spread probability over more rare
 combinations under these margin rules, so this distortion persists to
@@ -97,10 +99,12 @@ proportion can be large relative to its true probability, so its effect
 on \(\Vhat\) can be poorly represented by linearisation around the
 population table. The observed variance can therefore
 initially rise, or fall more slowly than \(1/n\), while the predicted
-variance decreases; the ratio then falls. The \(16\times16\)
-decomposition confirms that changes beyond the linear term account for
-most of the sampling variance around the trough
-(Appendix~\ref{sec:component-diagnostics}). With larger samples, repeated
+variance decreases; the ratio then falls. In the same \(16\times16\)
+repetitions, subtracting the linear change from \(\Vhat-V\) leaves
+a remainder whose variance exceeds that of the linear change around the
+trough. Including their covariance in the total variance confirms that
+the linear change alone misses much of the observed variation.
+With larger samples, repeated
 counts make the estimated cell probabilities and their log ratios more
 stable. The variation missed by the linear approximation becomes smaller
 relative to \(\tau^2(P)/n_P\), and the observed variance approaches
@@ -221,11 +225,7 @@ squares the larger \(\E\{\Vhat(P)\}\). Squaring magnifies the downward
 effect of the mean error. The slightly underestimated variance denominator
 offsets only part of this effect, leaving first-order degrees
 of freedom of 15.30 compared with a moment target of 21.03.
-Table~\ref{tab:variance-stability} in Appendix~\ref{app:additional-results}
-gives the full component comparisons across MI values for both populations.
-Table~\ref{tab:redesign-component-spread} reports the means, medians and
-sampling ranges at the focus and sparse-table settings, including all
-100,000 component estimates in each row. Matching these moments chooses
+Matching these moments chooses
 the degrees of freedom of the scaled chi-squared approximation; it does
 not guarantee an exact Student \(t\) distribution for the test statistic.
 
@@ -288,8 +288,8 @@ a noncentral chi-squared distribution. At stronger association,
 distribution also understates the observed variation in \(2\Ihat\)
 itself. Both errors therefore lower the predicted sampling variance
 relative to the observed \(\Var\{\Vhat\}\).
-Appendix~\ref{sec:component-diagnostics} gives these checks, and the
-experimental supplement retains the full diagnostic plots. The gap is
+These checks use the same \(4\times4\), different-skew MI sweep at
+\(n=1{,}000\) as the figure. The gap is
 larger than in the mean row in both columns, and the observed sampling
 variance is greater in \(Q\) than in \(P\) at the larger MI values.
 Thus the different margins affect sampling variation beyond the terms
@@ -335,8 +335,7 @@ first-order values. The latter still use \(V\) in place of the enlarged
 sampling mean. Across these MI values, \(Q\) has lower absolute component
 degrees of freedom: its sampling
 variance is greater relative to its squared sampling mean, giving a lower
-moment target. Appendix~\ref{sec:component-diagnostics} reports the mean
-error across MI values and margins.
+moment target.
 
 \section{RQ2.1: False-positive rates under equal MI}
 
@@ -561,8 +560,6 @@ B, different-skew \(8\times8\) with \(n=100\); and C,
 different-skew \(4\times4\) with \(n=10{,}000\). They use equal sample
 sizes and common MI 0.02 nats. The table also includes the sparse
 \(16\times16\) cases at \(n=1{,}000\).
-Table~\ref{tab:redesign-case-diagnostics} retains the full diagnostics,
-including the larger-sample \(16\times16\) cases.
 
 \begin{table}[!htbp]
 \centering
@@ -596,8 +593,7 @@ and the larger denominator tends to reduce it. Expanded Welch lowers
 rejection further, but its rate remains above 5\%. Its improvement
 therefore occurs with different input errors from those at A. At C,
 bias is negligible and the variance ratio is close to one, accompanying
-rates close to 5\% for both methods. The full diagnostics and degrees
-of freedom are given in Table~\ref{tab:redesign-case-diagnostics}.
+rates close to 5\% for both methods.
 
 The same margins and sample sizes need not give the same calibration at
 stronger association. Table~\ref{tab:redesign-stronger-null} retains
@@ -649,7 +645,7 @@ large positive bias, and rejection instead remains excessive. Thus the
 similar variance ratios in Table~\ref{tab:redesign-shared-estimates}
 can accompany rates on opposite sides of 5\% in
 Table~\ref{tab:redesign-case-rates}. At \(n=10{,}000\), both skew
-regimes have much smaller estimation errors and rates closer to 5\%.
+regimes have rejection rates closer to 5\%.
 
 This sparse-table failure also occurs under the four-cell construction.
 At \(16\times16\), common MI 0.02 nats and
@@ -678,8 +674,11 @@ extreme values that would otherwise cause rejection. Consequently,
 rejection can be far below 5\% even when the average \(\SEhat^2\)
 is fairly close to the observed difference variance. Beyond the trough,
 this dependence weakens and the tails of \(T\) move closer to the
-normal approximation. Appendix~\ref{sec:component-diagnostics} gives
-the diagnostic checks. Together these checks explain the broad patterns
+normal approximation. The Spearman rank correlation between
+\(|\Deltahat-\operatorname{mean}(\Deltahat)|\) and \(\SEhat\),
+calculated over repetitions with both quantities finite, falls from
+0.656 at \(n=50\) to 0.167 at \(n=1{,}000\).
+Together these checks explain the broad patterns
 without isolating every finite-sample contribution to rejection.
 
 \section{RQ2.2: Nominal and calibrated power}
@@ -710,8 +709,6 @@ give their different false-positive rates; at positive values, they
 give power against increasing MI differences. The black line marks
 5\%. Expanded Welch has lower nominal power at the selected small-sample
 settings A and B, accompanying its lower null rejection rates.
-Appendix~\ref{sec:calibration-sensitivity-results} gives numerical rates
-and paired differences between methods.
 
 \begin{figure}[H]
 \centering
@@ -742,10 +739,9 @@ the cutoff without removing this movement of the shared sampling centre,
 so both methods retain the dip. Farther along the curve, B remains the
 least powerful setting: positive bias still offsets part of the true
 negative difference, while the observed SD of \(\Deltahat\) grows
-relative to its null value. The sampled differences are therefore less
+relative to its null value. At four null SDs, the observed SD is
+approximately \(1.70\sigma_0\). The sampled differences are therefore less
 separated from zero relative to their spread.
-Appendix~\ref{app:additional-results} reports the estimated directions
-among rejections in the sparse-table comparisons.
 
 In panel C, both power curves rise steeply and nearly overlap, eventually
 exceeding A's as well as B's. This rise occurs with negligible bias and
@@ -758,13 +754,6 @@ panels at the same \(-\Delta/\sigma_0\) matches the difference in null
 SD units, but each alternative can still have a different bias and
 sampling variance. Those differences help explain why the common
 horizontal scale does not produce identical power curves.
-
-Table~\ref{tab:redesign-power-contrasts} quantifies the small nominal
-power loss at C and gives comparisons at two null SDs for all three
-settings. Its intervals use both methods' decisions from the same
-simulation repetitions: the pairing is between methods applied to the
-same data. We next compare power after matching their false-positive
-rates at the fitting null.
 
 \FloatBarrier
 \subsection{Power after matching false-positive rates}
@@ -907,8 +896,7 @@ one population pair matches rejection there without controlling rejection
 throughout the equal-MI null. The power gain and its reversal accompany
 changes in the relative false-positive rates at another common MI;
 the calibrated power comparison remains conditional on its fitting null.
-Appendix~\ref{sec:calibration-sensitivity-results} gives the full
-validation and power tables. These two validation settings do not
+These two validation settings do not
 establish that either test keeps rejection at or below 5\% at every
 equal-MI setting.
 
@@ -1040,10 +1028,12 @@ this behaviour near independence. The population tables are unknown in
 the application, so the estimates cannot be checked directly against the
 sampling-moment target.
 
-The shopping comparisons were selected from six exploratory comparisons
-across three public datasets. To account for that larger family, we apply
+The shopping comparisons were selected from six exploratory comparisons:
+month and weekend in Online Shoppers, occupation and education in Adult
+\citep{becker1996}, and study time and maternal education in Student
+Performance \citep{cortez2008}. To account for that larger family, we apply
 Holm's adjustment separately to each method's six p-values
 \citep{holm1979}. The adjusted month p-values are 0.000189 for Normal
 Wald and 0.00149 for Expanded~Welch, so both still reject equal
-month--purchase MI. Table~\ref{tab:application-holm} reports all raw and
-adjusted p-values.
+month--purchase MI. The experimental supplement records the complete
+comparison family, data preparation and adjusted p-values.

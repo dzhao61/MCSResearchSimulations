@@ -172,13 +172,17 @@ def check_paragraph_style() -> None:
     required = {
         "use no paragraph indent": r"\\setlength\{\\parindent\}\{0pt\}",
         "use half a line of paragraph spacing": r"\\setlength\{\\parskip\}\{0\.5\\baselineskip\}",
+        "use no extra space between contents entries": r"\\setlength\{\\parskip\}\{0pt\}",
+        "use 3pt extra space between figure/table list entries": r"\\setlength\{\\parskip\}\{3pt\}",
     }
     for description, pattern in required.items():
         if len(re.findall(pattern, preamble)) != 1:
             raise AssertionError(f"Paragraph style must {description} in preamble.tex.")
-    for length in ("parindent", "parskip"):
-        if len(re.findall(r"\\" + length + r"\b", preamble)) != 1:
-            raise AssertionError(f"Define {length} only once in preamble.tex.")
+    for length, expected in (("parindent", 1), ("parskip", 3)):
+        if len(re.findall(r"\\" + length + r"\b", preamble)) != expected:
+            raise AssertionError(
+                f"Use only the shared body/front-list {length} settings in preamble.tex."
+            )
     overrides = re.compile(
         r"\\(?:noindent|indent|parindent|parskip|parshape|hangindent|hangafter|"
         r"@afterindenttrue|@afterindentfalse)\b"

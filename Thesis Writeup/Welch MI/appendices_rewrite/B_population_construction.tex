@@ -70,42 +70,19 @@ Solve \(I\{R(t)\}=I_{\rm target}\) by the same root search on
 \([0,t_{\max}]\). The target must lie below the endpoint MI, and the
 constructed table passes the same checks as the copying table.
 
+The supporting null comparison uses \(k\in\{4,16\}\), same-skew
+and different-skew margins, common MI 0.02 nats, and equal sample sizes
+\(n\in\{1{,}000,10{,}000\}\). The margin vectors are those in
+Table~\ref{tab:margin-profiles}.
+
 \section{Parameter grids and sampling}
 
-Table~\ref{tab:exact-grids} lists the settings underlying the main results.
-The experimental supplement specifies the broader power and sample-allocation
-comparisons.
-Table sizes are \(k\in\{2,4,8,16\}\). Each population has identical
-row and column margins. Uniform margins give probability \(1/k\) to
-every category; same skew uses \(m_k(0.8)\) in both populations; different
-skew uses \(m_k(0.7)\) in \(P\) and \(m_k(0.8)\) in \(Q\), with
-\(m_k\) defined by Equation~\eqref{eq:skew-margin}. The same copying
-formula and root search apply to every primary-study setting.
-
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.18\textwidth}>{\raggedright\arraybackslash}p{.77\textwidth}@{}}
-\caption{Exact parameter sets; MI values are in nats.}\label{tab:exact-grids}\\
-\toprule Study & Settings\\\midrule\endfirsthead
-\toprule Study & Settings\\\midrule\endhead
-Equal MI & All four sizes and three margin regimes;
-\(I(P)=I(Q)=0.02\); equal sample sizes
-\(n\in\{10,20,50,100,250,500,1000,2500,10000,50000\}\).\\
-Population MI & \(4\times4\), uniform, same skew and different skew;
-\(I(P)=I(Q)\in\{0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\}\);
-\(n\in\{100,1000,10000\}\).\\
-Focused power & Settings A--C in Table~\ref{tab:redesign-focus-settings};
-\(I(P)=0.02\), \(I(Q)=0.02+h\sigma_0\),
-\(h\in\{0,0.5,1,1.5,2,2.5,3,3.5,4\}\).
-The fitted null SDs defining these populations are given below.\\
-Calibration sensitivity & Settings A--C at \(h\in\{2,4\}\);
-upper null \(I(P)=I(Q)=0.02+h\sigma_0\), retaining each setting's
-margins, sample sizes and copying construction. Both calibrations are
-applied to the fixed alternatives in the focused-power row.\\
-Four-cell check & \(k\in\{4,16\}\), same skew and different skew;
-\((I(P),I(Q))\in\{(0.02,0.02),(0.02,0.03)\}\);
-\(n\in\{1000,10000\}\); construction in
-Equation~\eqref{eq:additive-construction}.\\
-\bottomrule
-\end{longtable}
+Table~\ref{tab:design-primary-grids} gives the approximation and broad
+null grids, and Table~\ref{tab:redesign-focus-settings} gives the power
+settings. Equation~\eqref{eq:design-focused-populations} specifies every
+focused alternative; Table~\ref{tab:design-calibration-populations}
+specifies the lower and upper calibration nulls at \(h=2,4\).
+The same copying formula and root search apply throughout these grids.
 
 For the focused power comparison, \(\sigma_0\) is the SD of
 \(\Deltahat\) estimated from the independent null fitting batch,
@@ -118,10 +95,11 @@ The fixed null-SD constants used to construct the focused alternatives are
  \sigma_{0,C}&=0.003174953145465\text{ nats}.
 \end{align*}
 For each \(h\) in the focused grid, set the target MI of \(Q\) to
-\(0.02+h\sigma_0\) and solve for its copying probability. The fitting
-uncertainty of these constants is reported in
-Table~\ref{tab:redesign-null-sd-fitting}; the constructed populations
-remain fixed during evaluation.
+\(0.02+h\sigma_0\) and solve for its copying probability. The Monte
+Carlo standard errors of the fitted SDs are 0.000363, 0.000152 and
+0.000007 nats for A, B and C, respectively, calculated as described in
+Section~\ref{sec:moment-uncertainty}. The constructed populations remain
+fixed during evaluation.
 
 For one repetition, draw
 \begin{equation}
@@ -224,9 +202,9 @@ The Monte Carlo standard error of estimated bias is the observed SD
 divided by \(\sqrt M\). Component and combined degrees-of-freedom
 summaries retain positive finite values and report their included fractions.
 Finite zero variance estimates remain in moment calculations even when
-component degrees of freedom are undefined. Percentile ranges describe
-sampling spread. Figures divide the mean estimate by its moment target
-only where every component estimate is defined; conditional summaries
+component degrees of freedom are undefined. Figures divide the mean
+estimate by its moment target only where every component estimate is
+defined; conditional summaries
 elsewhere retain their inclusion counts. These diagnostics do not isolate
 each estimation error's causal contribution to rejection.
 
@@ -256,18 +234,6 @@ observed variability. A ratio below one indicates underprediction, a ratio
 above one indicates overprediction, and one indicates agreement. The
 observed variability must be positive; a zero prediction gives a zero ratio.
 
-\medskip
-\thesisminiheading{Estimated direction among rejections.}
-
-For a nonzero population difference, classify each valid two-sided rejection
-by the sign of \(\Deltahat\). The estimate has the opposite sign when
-\(\Deltahat\Delta<0\); it has the correct sign when
-\(\Deltahat\Delta>0\). Report the number of rejections and the
-number with opposite signs for each method. The fraction with opposite
-signs divides the opposite-sign count by the rejection count and is undefined
-if there are no rejections. These counts supplement the estimate of power,
-which includes every valid rejection regardless of direction.
-
 \section{Simulation uncertainty}
 \label{sec:simulation-uncertainty}
 
@@ -296,28 +262,14 @@ populations, not simultaneous coverage over every setting.
 \label{sec:moment-target-details}
 \label{sec:moment-uncertainty}
 
-The first comparison in Chapter~\ref{chap:design} measures the mean and
-sampling variance of \(\Vhat(P)\) separately. Expectations and variances
-refer to repeated samples from the same fixed population at the same
-sample size. Substituting the predictions in
-Equation~\eqref{eq:redesign-moment-approximations} into the moment-matching
-formula gives
-\begin{equation}
- \nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)}.
- \label{eq:redesign-first-order-df}
-\end{equation}
-This is the population first-order approximation defined in
-Chapter~\ref{chap:expanded}. The sampling-moment target instead uses
-the actual mean and variance of the estimator:
-\begin{equation}
- \nu_{P,\mathrm{mom}}
- =\frac{2\{\E\Vhat(P)\}^2}{\Var\{\Vhat(P)\}}.
- \label{eq:redesign-moment-df}
-\end{equation}
-The construction assumes positive \(V(P)\) and \(\tau^2(P)\), as
-specified in Chapter~\ref{chap:expanded}. The two degrees-of-freedom
-values can nevertheless differ at finite sample sizes. Dividing their
-definitions before applying either approximation gives the exact identity
+The population first-order degrees of freedom
+\(\nu_{P,\mathrm{FO}}\) in Equation~\eqref{eq:population-component-df}
+approximate the sampling-moment target \(\nu_{P,\mathrm{mom}}\) in
+Equation~\eqref{eq:component-df-moments}. The target uses the actual
+sampling mean and variance of \(\Vhat(P)\), measured over repeated
+samples from the same population at fixed sample size. Assuming positive
+\(V(P)\), \(\tau^2(P)\) and sampling variance, divide the two
+definitions and rearrange to obtain the exact identity
 \begin{equation}
  \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
  =\frac{\left\{V(P)/\E\Vhat(P)\right\}^{2}}
