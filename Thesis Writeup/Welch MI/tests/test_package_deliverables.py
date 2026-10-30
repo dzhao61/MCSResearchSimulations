@@ -170,11 +170,13 @@ class DeliveryTests(unittest.TestCase):
             with self.subTest(override=override), self.assertRaises(AssertionError):
                 package.check_paragraph_style()
 
-    def test_preamble_cannot_restore_indents_or_override_the_rule_later(self):
+    def test_preamble_cannot_restore_old_style_or_override_the_rule_later(self):
         path = self.thesis / "preamble.tex"
         for changed in (
             PREAMBLE.replace(r"\setlength{\parindent}{0pt}",
                              r"\setlength{\parindent}{1.5em}"),
+            PREAMBLE.replace(r"\setlength{\parskip}{0.5\baselineskip}",
+                             r"\setlength{\parskip}{0.25em}"),
             PREAMBLE + "\n" + r"\parindent=1.5em",
         ):
             path.write_text(changed)

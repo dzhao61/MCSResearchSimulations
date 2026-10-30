@@ -171,7 +171,7 @@ def check_paragraph_style() -> None:
     preamble = uncomment((THESIS / "preamble.tex").read_text())
     required = {
         "use no paragraph indent": r"\\setlength\{\\parindent\}\{0pt\}",
-        "use 0.25em paragraph spacing": r"\\setlength\{\\parskip\}\{0\.25em\}",
+        "use half a line of paragraph spacing": r"\\setlength\{\\parskip\}\{0\.5\\baselineskip\}",
     }
     for description, pattern in required.items():
         if len(re.findall(pattern, preamble)) != 1:

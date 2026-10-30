@@ -71,7 +71,11 @@ working-draft rebuild uses a separate `Working Draft v3` source/output
 target. Preserve all archived and historical sources and PDFs.
 
 Use flush-left body paragraphs throughout: `\parindent` is `0pt`, with
-the existing `0.25em` paragraph spacing controlled in `preamble.tex`.
+`0.5\baselineskip` paragraph spacing controlled in `preamble.tex`.
+On 30 October 2026 the user requested formatting to match the three sample
+theses: 11pt Times-style body text, a 19.5pt line baseline, half a line of
+extra paragraph space and the sample text margins. This supersedes the
+previous 12pt Latin Modern / 0.25em paragraph-spacing settings.
 Do not add local indentation or paragraph-spacing overrides to chapter,
 appendix or generated-display sources. The packaging build checks this
 policy before running LaTeX; `python3 package_deliverables.py --check-style`

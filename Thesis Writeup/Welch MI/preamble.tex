@@ -1,7 +1,8 @@
-\usepackage[a4paper,top=26mm,bottom=28mm,left=32mm,right=26mm,bindingoffset=4mm]{geometry}
+% Match the text block of the supplied AMS-based sample theses.
+\usepackage[a4paper,left=1in,right=1in,top=117.52pt,textheight=632pt,headheight=15pt,headsep=14pt,footskip=18pt]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+\usepackage{times}
 \usepackage{microtype}
 \usepackage{setspace}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
@@ -23,13 +24,16 @@
 \usepackage{url}
 \usepackage{hyperref}
 
-\setstretch{1.24}
+% Match the samples' 19.5pt baseline using book's 13.6pt base leading.
+\setstretch{1.433824}
+\setlength{\topskip}{10pt}
 % All body paragraphs are flush left, including after headings and displays.
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.25em}
+\setlength{\parskip}{0.5\baselineskip}
 \widowpenalty=10000
 \clubpenalty=10000
 \setlength{\emergencystretch}{2em}
+\AddToHook{env/thebibliography/begin}{\raggedright}
 \setlength{\headheight}{15pt}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
@@ -41,7 +45,7 @@
 \fancyhead[L]{\nouppercase{\rightmark}}
 \renewcommand{\headrulewidth}{0.4pt}
 
-\captionsetup{font=small,labelfont=bf}
+\captionsetup{font=normalsize,labelfont=bf}
 \setlist{itemsep=0.25em,topsep=0.5em}
 \renewcommand{\arraystretch}{1.16}
 \makeatletter
