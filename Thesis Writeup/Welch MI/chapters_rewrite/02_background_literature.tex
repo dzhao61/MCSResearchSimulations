@@ -523,12 +523,12 @@ the population variances by estimates gives the standardisation
 Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
 \(V(P)\) and \(V(Q)\). The normal limit assumes positive population cell
 probabilities, positive pointwise-MI variances and increasing sample
-sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
-to the numerator and specifies the full Normal Wald test.
-With smaller samples, the MI difference may not follow the normal
+sizes. With smaller samples, the MI difference may not follow the normal
 approximation closely, and the estimated standard error can vary between
 samples. The Wald test still uses the same standard normal distribution
 cutoff, regardless of how much the estimated standard error varies.
+Chapter~\ref{chap:baselines} applies the leading bias correction to the
+numerator and specifies the full Normal Wald test.
 
 \medskip
 \thesisminiheading{The Welch--Satterthwaite principle.}
@@ -619,12 +619,12 @@ Choosing a Welch--Satterthwaite cutoff additionally requires the sampling
 variance of that variance estimate, which describes how much it changes
 when a new sample produces a different table.
 
-To describe uncertainty about population MI given an observed table,
+In a Bayesian approach to uncertainty about population MI,
 \citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
 probabilities and calculate the variance and shape of the resulting MI
-distribution. Our repeated-sampling comparison instead asks
-how often Normal Wald and Expanded Welch reject equal MI when new samples
-are drawn from fixed populations \(P\) and \(Q\).
+distribution conditional on the observed table. Our repeated-sampling
+comparison instead asks how often Normal Wald and Expanded Welch reject
+equal MI when new samples are drawn from fixed populations \(P\) and \(Q\).
 
 Hutcheson's test compares two estimates of Shannon diversity, or entropy,
 using a Welch-type statistic and a Student \(t\) distribution with effective

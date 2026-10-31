@@ -66,3 +66,72 @@ and delivery archives still await an explicit rebuild request. At that
 build, inspect the affected pages for line breaks, display order and page
 breaks; source checks alone do not verify typeset layout. No simulation,
 fitting, bootstrap or delivery publication was performed.
+
+## Subsequent consistency review, 31 October 2026
+
+The user requested a further check of the quality and consistency of the
+revision. The review read the eligible prose in context, rather than
+treating preserved equations and passing tests as evidence of good prose.
+The pre-review source and records are preserved in
+`archive/before_chapters_1_4_consistency_review_2026-10-31.zip`.
+
+Six remaining issues were corrected:
+
+1. Section 2.4 again explicitly identifies the Bayesian interpretation of
+   uncertainty, including conditioning on the observed table. The first
+   pass had left that interpretation implicit in the description of the
+   probability model.
+2. The Chapter 3 introduction now names the shared statistic and its use
+   with the standard normal distribution, replacing “their statistic”.
+3. The standard-error construction now explains that independent samples
+   make the covariance of the MI estimates zero, before adding their
+   estimated variance contributions.
+4. The Taylor-path explanation identifies the table as moving along the
+   straight line while the scalar parameter changes. The expansion point,
+   endpoint, table difference and all formulae remain intact.
+5. The final validity paragraph connects the appendix criteria directly
+   to their use in the experiment, replacing a semicolon-attached reminder.
+6. The forward reference to Chapter 3 now follows the explanation of
+   Wald's finite-sample limitation, allowing that explanation to finish
+   without interruption.
+
+| Review area | Decision after the second reading |
+| --- | --- |
+| Chapter 1: comparison, difficulty, questions, contributions and scope | Retained the focused progression and concise question/outline sentences; no further edit was needed. |
+| Section 2.1: definitions, notation, independence and units | Kept definition/equation units and necessary interpretation; short definitions perform distinct jobs. |
+| Section 2.2: plug-in bias and alternative estimators | Retained all approaches, examples, findings and limitations; checked that each discussion identifies the relevant estimation problem. |
+| Section 2.3 | Protected text and algebra remain byte-identical to the implementation baseline. |
+| Section 2.4: Wald and Welch principles | Completed the finite-sample explanation before its forward reference; retained the distinction between an estimated variance and its sampling variability. |
+| Section 2.4: Bayesian uncertainty, precedents and resampling | Restored the explicit Bayesian interpretation; retained the distinct hypotheses, purposes and limitations of the cited alternatives. |
+| Section 2.5: contribution | Retained the connection from finite-sample estimation limitations to the evaluation performed later. |
+| Section 3.1: assumptions and estimator | Retained separately identifiable assumptions, correction rules and cancellation cases. |
+| Section 3.2: variance and statistic | Explained the zero covariance behind the additive variance calculation; preserved the table distinguishing the variance quantities. |
+| Section 3.3: reference distribution and motivation | Retained the explicit two-tail p-value explanation and first-order qualification of the next chapter's variance approximation. |
+| Section 4.1: moment matching | Retained explicit matching, rescaling and mean-approximation steps; no sentence merging was justified. |
+| Section 4.2: derivatives | Retained the product rule, conditional-mean calculations, signs and cancellations as a guided derivation. |
+| Section 4.3: sampling moments and final test | Clarified the subject of the Taylor-path description; retained target/approximation/estimate distinctions and component/combined calculations. |
+| Section 4.4: worked example and algorithm | Remains byte-identical to the implementation baseline. Its short calculations and final decision remain useful. |
+| Section 4.5: near independence and validity | Retained the local-path conditions, sampling-noise explanation and distinction between exact derivatives and finite-sample approximations; integrated the final criteria reference. |
+
+Cross-chapter review checked the uses of population versus empirical
+quantities, the different variance objects, moment targets versus
+approximations and estimates, and exact versus first-order or distributional
+approximations. No additional mathematical or literature change was needed.
+
+All original preservation checks, paragraph-style checks and five existing
+thesis-consistency tests pass after these corrections. The revised source
+has not been typeset in this review, so line breaks, float placement and
+page breaks remain for the next explicitly requested rebuild.
+
+
+## Requested rebuild, 31 October 2026
+
+The explicit rebuild includes this revision in the 107-page main and named
+PDFs. The abstract fits on one page, and 49 changed or boundary pages were
+rendered and visually reviewed, including the contents, revised chapters
+and research-question headings. The final log has no warnings, overfull
+or underfull boxes, or unresolved references. Manuscript sources and
+typography were unchanged during the build. The source archive and
+checksums were refreshed; the unchanged 25,010-file experiment supplement
+was reused after inventory, size and exact timestamp checks. No Git commit
+was made.

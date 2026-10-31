@@ -1,9 +1,9 @@
 \chapter{Overview of the Two-Sample MI Test and Wald Baseline}
 \label{chap:baselines}
 
-This chapter defines the estimated MI difference and standard error shared
-by Normal Wald and Expanded Welch, then uses their statistic to obtain
-the Normal Wald p-value.
+This chapter defines the estimated MI difference, standard error and test
+statistic shared by Normal Wald and Expanded Welch, then calculates the
+Normal Wald p-value using the standard normal distribution.
 
 \section{Problem setup and bias-corrected estimator}
 
@@ -133,8 +133,9 @@ The observed table estimates \(V(P)\) by
 \end{equation}
 Define \(\Vhat(Q)\) analogously.
 
-Because the two samples are independent, their estimated variance
-contributions add:
+Independence of the two samples makes the covariance between their MI
+estimates zero, so we estimate the sampling variance of their difference
+by adding the two estimated variance contributions:
 \begin{equation}
   \SEhat^2
   =\frac{\Vhat(P)}{n_P}
