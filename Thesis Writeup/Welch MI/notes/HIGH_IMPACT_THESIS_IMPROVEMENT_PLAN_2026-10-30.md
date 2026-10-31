@@ -4,6 +4,19 @@
 
 Implementation and verification are recorded in [HIGH_IMPACT_REVISION_2026-10-30.md](HIGH_IMPACT_REVISION_2026-10-30.md). The original plan follows.
 
+**Planning update, 31 October 2026.** The later prose work is consolidated in
+[Research prose writing guidelines](RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md),
+including a summary of the Chapters 5–7 revisions. The next proposed pass is
+specified in [Chapters 1–4 prose revision plan](CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md).
+The guide now includes concrete before/after examples, paragraph and
+display-placement lessons, and decisions about when to join, split, move,
+delete or retain text. The plan prioritises Chapter 2 outside Section 2.3,
+keeps Chapter 1 light, and protects the mathematical steps in Chapters 3–4.
+It recognises improvements already present in the working sources; this
+planning update makes no manuscript edits or PDF rebuild. The completed
+30 October plan below is retained as historical context; its appendix,
+table and research-question references describe that earlier manuscript.
+
 This plan selects three changes from the marking-rubric review, the comparison with all three sample theses, and the first-reader assessment of language and reading flow. Each addresses a specific difficulty in assessing the existing work and can be implemented using evidence already in the thesis.
 
 The principal opportunity is to make the mathematical contribution and the empirical judgment easier to follow. The derivations, diagnostic experiments and qualifications are substantial strengths. The sample theses provide useful models for connecting a question to its evidence and conclusion; they do not justify adding experiments simply to make this thesis broader. Their exact marks and examiners' reports were unavailable, so they are qualitative references rather than numerical marking benchmarks.

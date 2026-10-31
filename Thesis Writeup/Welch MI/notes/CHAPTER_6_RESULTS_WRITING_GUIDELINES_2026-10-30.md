@@ -5,6 +5,15 @@ Established on 30 October 2026 from the revision and discussion of Section
 the thesis `AGENTS.md`. Section 2.3 remains the benchmark for derivation depth.
 This guide does not itself request further manuscript edits or a PDF rebuild.
 
+The [consolidated research-prose guide](RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md)
+summarises the accumulated Chapters 5–7 edits and makes the transferable
+reading-order, paragraph and sentence principles explicit. Use that guide
+for other chapter types; retain this guide's detailed treatment of
+experimental comparisons and figure interpretation. The proposed application
+to earlier chapters is in the [Chapters 1–4 plan](CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md).
+Current research-question labels are RQ1 for approximation accuracy, RQ2 for
+false-positive rates and RQ3 for nominal and calibrated power.
+
 ## What improved in Section 6.1.1
 
 - The figure introduction states the common MI and identifies the different

@@ -76,12 +76,13 @@ It is nonnegative and equals zero exactly when
 Although MI measures the overall departure from independence, it does not
 specify the shape of association. Two populations can have the same MI while assigning
 probability to different cells, having different margins, or exhibiting
-different association patterns. Equality of MI is therefore weaker than
-equality of distributions. The null hypothesis requires equal MI, not
-identical cell probabilities in the two population tables.
+different association patterns. Equality of MI is therefore weaker than equality of distributions, so
+the null hypothesis requires equal MI without requiring identical cell
+probabilities in the two population tables.
 
-The logarithm base determines the reporting unit. This thesis uses natural
-logarithms, so MI is measured in nats; dividing by \(\log 2\) converts to bits.
+The logarithm base determines the reporting unit, and this thesis uses
+natural logarithms to express MI in nats. Dividing by \(\log 2\)
+converts MI to bits.
 This conversion rescales MI and its standard error together but leaves the
 degrees of freedom unchanged, so the test result is identical in either unit.
 
@@ -112,8 +113,8 @@ table assigns it zero probability, contributing to sparse-sample estimation
 error.
 
 Under multinomial sampling, the cell counts vary between samples but must
-sum to \(n\). An extra observation in one cell therefore leaves fewer
-observations for the others. For a fixed set of categories, the plug-in
+sum to \(n\), so an extra observation in one cell leaves fewer observations
+for the others. For a fixed set of categories, the plug-in
 estimate approaches population MI as the sample grows, but its finite-sample
 bias and sampling variance depend on the complete probability table. In particular,
 rare cells can change both even when the categories and sample size are
@@ -138,8 +139,8 @@ to Miller's entropy correction \citep{miller1955}, and the same histogram-MI
 term appears in \citet{moddemeijer1989}. Sparse sampling can produce further
 error beyond this leading approximation \citep{paninski2003}.
 
-Bias matters directly when comparing MI estimates from two populations. If
-\(I(P)=I(Q)\) but \(n_P\ne n_Q\), the uncorrected difference has leading bias
+When \(I(P)=I(Q)\) but \(n_P\ne n_Q\), unequal sample sizes give
+the uncorrected MI difference a leading bias of
 \begin{equation}
   \frac{(r-1)(c-1)}{2}
   \left(\frac{1}{n_P}-\frac{1}{n_Q}\right).
@@ -154,7 +155,7 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \thesisminiheading{Estimation beyond the leading bias correction.}
 
 Data are undersampled when too few observations are available to estimate
-the joint probabilities reliably. Rare category combinations can then be
+the joint probabilities reliably, which can leave rare category combinations
 poorly represented or absent from the sample. \citet{panzeri1996} derive
 analytical bias corrections that account
 for the categories with nonzero population probability, but these remain
@@ -168,11 +169,11 @@ discovering common and rare categories.
 
 Bayesian estimators model the unknown probabilities rather than treating
 observed proportions as the complete population.
-\citet{nemenman2002} combine priors, or probability weights on possible
-populations, to avoid favouring a narrow range of entropy values before
-observing the data. This is the Nemenman--Shafee--Bialek (NSB) estimator.
-More recently, \citet{piga2024} estimate the strength of a Dirichlet prior
-from the observed counts. This strength controls how much the probability
+The Nemenman--Shafee--Bialek (NSB) estimator combines priors, or probability
+weights on possible populations, to avoid favouring a narrow range of
+entropy values before observing the data \citep{nemenman2002}.
+More recently, \citet{piga2024} use the observed counts to estimate a
+Dirichlet prior's strength, which controls how much the probability
 estimates are drawn towards a uniform distribution, including for
 unobserved categories.
 
@@ -488,10 +489,11 @@ positive MI values.
 \allowdisplaybreaks
 \label{sec:welch-background}
 
-The preceding section describes the sampling variation of one MI estimate.
-For two independent samples, their variance contributions add. The square
-root of an estimate of this sum is the standard error: it estimates the
-standard deviation of the MI difference across repeated samples. This section
+For two independent samples, the variance contributions described in the
+preceding section add to approximate the sampling variance of the MI
+difference. Estimating this sum and taking its square root gives the
+standard error, which estimates the difference's standard deviation across
+repeated samples. This section
 reviews the Normal Wald test, the Welch--Satterthwaite principle and other
 approaches to that comparison. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\), even when their cell probabilities differ.
@@ -508,9 +510,9 @@ first-order variance contributions add:
   \approx \frac{V(P)}{n_P}+\frac{V(Q)}{n_Q}.
   \label{eq:background-two-sample-variance}
 \end{equation}
-Each term is the sampling variance of one MI estimate, and independence of
-the two samples makes their covariance zero. Replacing the population variances
-by estimates gives the standardisation
+Each term approximates the sampling variance of one MI estimate, with
+independence of the two samples making their covariance zero. Replacing
+the population variances by estimates gives the standardisation
 \begin{equation}
   \frac{\Ihat(P)-\Ihat(Q)}
        {\sqrt{\Vhat(P)/n_P+\Vhat(Q)/n_Q}}
@@ -581,14 +583,12 @@ Chapter~\ref{chap:expanded} therefore derives the component degrees of
 freedom from the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\),
 using the same moment-matching principle.
 
-The two variance quantities have different roles. \(\Vhat(P)/n_P\)
-estimates the sampling variance of \(\Ihat(P)\), while
-\(\Var\{\Vhat(P)\}\) measures how much the variance estimate itself
-changes between samples. Two variance estimators with the same mean can
-have different sampling variances. Satterthwaite's calculation matches these
-two moments, the mean and variance: greater sampling
-variance relative to the squared mean gives fewer
-degrees of freedom and a larger rejection cutoff
+The estimated MI sampling variance \(\Vhat(P)/n_P\) describes uncertainty
+in \(\Ihat(P)\), whereas \(\Var\{\Vhat(P)\}\) measures how much the
+variance estimate itself changes between samples. Even variance estimators
+with the same mean can have different sampling variances, so Satterthwaite's
+calculation matches both moments. Greater sampling variance relative to the
+squared mean gives fewer degrees of freedom and a larger rejection cutoff
 \citep{satterthwaite1946}. A sample-size assignment alone does not adapt
 to differences in this relative variability between probability tables.
 
@@ -614,11 +614,11 @@ describe the uncertainty of an individual estimate, a necessary input to a
 comparison of two estimates.
 The first-order results of \citet{moddemeijer1989} and
 \citet{brillinger2004} give this uncertainty as \(V(P)/n_P\), with
-\(V(P)\) determined by the population table. Replacing its probabilities
-by observed proportions produces the variance estimate used by Wald.
-This supplies a standard error for the MI difference. Choosing a
-Welch--Satterthwaite cutoff requires one further quantity: how much the
-estimated variance varies when a new sample produces a different table.
+\(V(P)\) determined by the population table. Replacing its probabilities by observed proportions produces the variance
+estimate used by Wald to calculate the standard error of the MI difference.
+Choosing a Welch--Satterthwaite cutoff additionally requires the sampling
+variance of that variance estimate, which describes how much it changes
+when a new sample produces a different table.
 
 A Bayesian approach describes uncertainty about population MI given an
 observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
@@ -627,9 +627,9 @@ resulting MI distribution. Our repeated-sampling comparison instead asks
 how often Normal Wald and Expanded Welch reject equal MI when new samples
 are drawn from fixed populations \(P\) and \(Q\).
 
-Hutcheson's test applies a Welch-type comparison to two estimates of
-Shannon diversity, or entropy. It uses a Student \(t\) distribution with
-effective degrees of freedom
+Hutcheson's test compares two estimates of Shannon diversity, or entropy,
+using a Welch-type statistic and a Student \(t\) distribution with effective
+degrees of freedom
 \begin{equation}
   \nu_H=
   \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
@@ -640,20 +640,19 @@ effective degrees of freedom
 \(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).
-Hutcheson's rule assigns degrees of freedom from sample sizes. Expanded
-Welch instead calculates how the estimated MI variance changes with the
-table, including the effects of a cell change on its row and column totals.
+Expanded Welch instead calculates its degrees of freedom from how the
+estimated MI variance changes with the table, including the effects of a
+cell change on its row and column totals.
 
 The entropy comparison establishes that a Student \(t\) distribution can
 be used to compare estimated information quantities, but MI requires
-more than substituting a different numerator. MI combines the row,
-column and joint entropies of the same observations. Their estimation
-errors are connected, because one cell count contributes to all three.
+more than substituting a different numerator. The row, column and joint entropies in MI are calculated from the same
+observations, so their estimation errors are connected through the cell
+counts contributing to all three.
 The MI variance formulas in Section~\ref{sec:first-order-mi-background}
-account for that connection. Expanded Welch also tracks how the estimated
-MI variance changes: a cell change alters
-both the weights and the pointwise-MI values whose weighted variance is
-being estimated. Thus Hutcheson supplies a close comparison framework,
+account for that connection. Expanded Welch also tracks changes in the estimated MI variance because
+a cell change alters both the weights and the pointwise-MI values whose
+weighted variance is being estimated. Thus Hutcheson supplies a close comparison framework,
 while the cell and margin derivatives supply the MI-specific inputs.
 
 In a segregation application, \citet{mora2009} derive a normal approximation
@@ -682,15 +681,15 @@ variation around the observed estimate could then be used to construct
 an uncertainty interval for the population difference and assess whether
 that interval includes zero.
 
-An ordinary empirical bootstrap cannot sample an unobserved cell, because it
-assigns that cell zero probability. It can therefore miss error arising from
-unobserved cells. \citet{paninski2003} gives a broader warning: confidence
+Because an ordinary empirical bootstrap assigns an unobserved cell zero
+probability, it cannot sample that cell and can therefore miss error
+arising from unobserved cells. \citet{paninski2003} gives a broader warning: confidence
 intervals based on resampling can be too narrow when information estimates
 remain biased.
 
-A simple permutation test instead combines the two samples and shuffles
-their group labels. This gives an exact test when
-the populations have the same complete distribution, \(P=Q\). Our hypothesis
+A simple permutation test combines the two samples and shuffles their
+group labels, giving an exact test when the populations have the same
+complete distribution, \(P=Q\). Our hypothesis
 requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
 equal. Equal MI alone does not guarantee that this label-permutation test
 has the stated false-positive rate \citep{chung2013}.

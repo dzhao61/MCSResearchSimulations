@@ -4,10 +4,10 @@
 The simulations draw count tables from populations with known MI,
 allowing us to measure errors in the estimated MI difference and its
 standard error, and to count false positives when the population MI
-values are equal. The evaluation addresses the two research questions in
-Section~\ref{sec:research-questions}: whether the variance approximations
-used by Expanded Welch are accurate, and how its false-positive rates
-and power compare with those of Normal Wald. The design follows the simulation
+values are equal. The evaluation addresses the three research questions in
+Section~\ref{sec:research-questions} by checking Expanded Welch's variance
+approximations and comparing its false-positive rates and power with those
+of Normal Wald. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
 being estimated, methods and performance measures.
 
@@ -243,7 +243,7 @@ Near independence &
 \end{tabularx}
 \end{table}
 
-\section{RQ2.1: False-positive rates under equal MI}
+\section{RQ2: False-positive rates under equal MI}
 
 To measure false positives, we draw a count table from each of two
 populations with equal MI in every repetition, so every rejection is
@@ -273,7 +273,7 @@ transfer within four cells while preserving the margins and target MI.
 Appendix~\ref{app:construction} gives the construction and settings, and
 Section~\ref{sec:null-estimator-accuracy} reports the sparse-table comparison.
 
-\section{RQ2.2: Nominal and calibrated power}
+\section{RQ3: Nominal and calibrated power}
 
 Power is the probability of rejecting equal MI when the population MI
 values differ. We first compare power using the nominal 5\% cutoffs.

@@ -15,13 +15,12 @@ Let \(P\) and \(Q\) be the joint probability distributions of \(X\) and
   \qquad H_1:I(P)\ne I(Q).
   \label{eq:introduction-null}
 \end{equation}
-Under \(H_0\), the populations have equal MI. However, this does not mean
-that their joint probability tables are the same, as two populations can
-have equal MI while having different probability tables.
+Under \(H_0\), the populations have equal MI even though their joint
+probability tables can differ.
 
-In practice, MI is estimated from observed data. Two samples can produce
-different MI estimates even when the population MI values are equal,
-because their observed counts vary from sample to sample. A statistical
+In practice, MI is estimated from observed counts that vary from sample
+to sample, so two samples can produce different MI estimates even when
+the population MI values are equal. A statistical
 test must account for this sampling variation before an estimated
 difference can be interpreted as evidence of a population difference.
 
@@ -56,27 +55,24 @@ The Student \(t\) distribution gives Expanded Welch a larger rejection
 cutoff than Normal Wald, so it rejects less often. This can reduce false
 positives, but it can also reduce statistical power: the probability of
 rejecting equal MI when the population MI values genuinely differ.
-The evaluation measures the resulting false-positive rates and nominal
-power, then uses independent equal-MI simulations to adjust each test's
-cutoff to target 5\% false positives before comparing power. Changing the
-equal-MI setting used for this calibration checks whether the power
-comparison is stable.
-The frequency of usable p-values is reported alongside these rates.
+The evaluation reports the resulting false-positive rates, nominal power
+and frequency of usable p-values. It then uses independent equal-MI
+simulations to adjust each test's cutoff to target 5\% false positives
+before comparing power. Changing the equal-MI setting used for this
+calibration checks whether the power comparison is stable.
 
 \section{Research questions}
 \label{sec:research-questions}
 
-The thesis addresses two research questions:
+The thesis addresses three research questions:
 \begin{enumerate}[label=\textbf{RQ\arabic*:},leftmargin=*]
  \item How accurately do the derived approximations predict the mean and
  sampling variance of the estimated MI variance, and what degrees of
  freedom do they imply near and away from independence?
- \item How do Expanded Welch's false-positive rates and power compare
- with Normal Wald?
- \begin{enumerate}[label=\textbf{RQ2.\arabic*:},leftmargin=*,nosep]
-  \item How do their false-positive rates compare under equal population MI?
-  \item How do their nominal and calibrated power compare when population MI differs?
- \end{enumerate}
+ \item How do Expanded Welch's false-positive rates compare with those of
+ Normal Wald under equal population MI?
+ \item How do Expanded Welch's nominal and calibrated power compare with
+ those of Normal Wald when population MI differs?
 \end{enumerate}
 
 \section{Contributions to the field}

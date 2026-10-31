@@ -1,8 +1,9 @@
 \chapter{Overview of the Two-Sample MI Test and Wald Baseline}
 \label{chap:baselines}
 
-Normal Wald and Expanded Welch share an estimated MI difference and standard
-error. This chapter defines their statistic and the Normal Wald p-value.
+This chapter defines the estimated MI difference and standard error shared
+by Normal Wald and Expanded Welch, then uses their statistic to obtain
+the Normal Wald p-value.
 
 \section{Problem setup and bias-corrected estimator}
 
@@ -92,8 +93,8 @@ The plug-in MI estimate is
 \end{equation}
 The same calculation gives \(\Ihat(Q)\).
 
-The leading fixed-support MI bias appears in
-Equation~\eqref{eq:mi-leading-bias} \citep{miller1955,moddemeijer1989}. Subtracting it
+Subtracting the leading fixed-support MI bias in
+Equation~\eqref{eq:mi-leading-bias} \citep{miller1955,moddemeijer1989}
 from each plug-in estimate gives the estimated effect:
 \begin{equation}
   \Deltahat
@@ -101,12 +102,11 @@ from each plug-in estimate gives the estimated effect:
   -\left\{\Ihat(Q)-\frac{(r-1)(c-1)}{2n_Q}\right\}.
   \label{eq:bias-corrected-difference}
 \end{equation}
-The two terms in braces are the bias-corrected MI estimates for the separate
-populations.
-The correction uses the declared row and column categories because every
-population cell has positive probability under the model, even when some
-cells are unobserved in a sample. Corrected estimates can be negative;
-those values are retained when calculating the difference.
+The two terms in braces are the bias-corrected MI estimates for the
+separate populations. Their corrections use the declared row and column
+categories because every population cell has positive probability under
+the model, even when some cells are unobserved in a sample. We retain
+negative corrected estimates when calculating the difference.
 When \(n_P=n_Q\), the two corrections cancel, so \(\Deltahat\) is exactly
 the raw plug-in MI difference. With unequal sample sizes, their difference
 removes the leading unequal-sample bias described in
@@ -180,12 +180,13 @@ The common standardised statistic is
   \label{eq:shared-t}
 \end{equation}
 The sign of \(T\) indicates whether \(P\) or \(Q\) has the larger
-corrected MI estimate, while its magnitude measures the difference
-relative to its estimated standard error. Under \(H_0\), we compare \(T\) with a reference distribution
-centred at zero.
-Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t} are shared
-by Normal Wald and Expanded Welch. Their difference lies in the reference
-distribution, not the effect estimate or plug-in standard error.
+corrected MI estimate, while its magnitude measures the difference relative
+to its estimated standard error. Both tests use
+Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t}, but
+compare \(T\) with different reference distributions centred at zero
+under \(H_0\). The two rejection rules therefore differ through the
+reference distribution while using the same effect estimate and plug-in
+standard error.
 
 \section[Normal Wald test and motivation for Expanded Welch]{Normal Wald test and motivation for\\Expanded Welch}
 
@@ -203,11 +204,12 @@ The two-sided Normal Wald p-value is
   =2\{1-\Phi(|T|)\},
   \label{eq:wald-pvalue}
 \end{equation}
-where \(\Phi\) is the standard normal distribution function.
-Under this reference distribution for equal MI, the p-value is the
-probability of a statistic at least as far from zero as the observed
-\(T\). The upper-tail probability is \(1-\Phi(|T|)\); symmetry gives
-the same probability in the lower tail, so the two-sided p-value doubles it.
+where \(\Phi\) is the standard normal distribution function. Under this
+reference distribution for equal MI, the p-value is the probability of a
+statistic at least as far from zero as the observed \(T\). The
+two-sided calculation doubles the upper-tail probability
+\(1-\Phi(|T|)\) because symmetry gives the same probability in the
+lower tail.
 At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 
 \medskip
@@ -217,11 +219,11 @@ Wald uses the standard normal distribution at every sample size, even
 though its standard error is estimated from the observed tables. Expanded
 Welch uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\)
 to choose the degrees of freedom of a Student \(t\) distribution.
-Hutcheson's entropy test and ordinary Welch's test
-set each variance component's degrees of freedom from its sample size:
-\(n_i\) \citep{hutcheson1970} or \(n_i-1\) \citep{welch1947}. Neither assignment
-measures how cell probabilities and margins make the estimated MI variance
-change between samples.
+Hutcheson's entropy test assigns each variance component \(n_i\)
+degrees of freedom \citep{hutcheson1970}, while ordinary Welch's test
+assigns \(n_i-1\) \citep{welch1947}. These assignments do not measure
+how cell probabilities and margins make the estimated MI variance change
+between samples.
 
 To choose the degrees of freedom, we need the average value of each estimated
 MI variance and how much that estimate varies across samples

@@ -55,9 +55,9 @@ normal distribution and independence; the MI reference is an approximation.
 \medskip
 \thesisminiheading{Moment matching for one MI variance estimate.}
 
-Let \(\nu_{P,\mathrm{mom}}\) denote the component target obtained by matching
-the mean and variance of \(\Vhat(P)\). Satterthwaite approximates this
-nonnegative estimate by the scaled chi-squared variable
+To obtain the component target \(\nu_{P,\mathrm{mom}}\), Satterthwaite
+matches the mean and variance of the nonnegative estimate \(\Vhat(P)\)
+with those of the scaled chi-squared variable
 \begin{equation}
   \E\{\Vhat(P)\}
   \frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}.
@@ -107,9 +107,10 @@ chi-squared approximation. Solving for \(\nu_{P,\mathrm{mom}}\) gives
   }.
   \label{eq:component-df-moments}
 \end{equation}
-The squared standard error contains \(\Vhat(P)/n_P\), rather than
-\(\Vhat(P)\). Because the sample size \(n_P\) is fixed, its reciprocal
-can be taken outside the expectation and its square outside the variance.
+The squared standard error contains \(\Vhat(P)/n_P\), so we apply
+moment matching to this contribution as well as to \(\Vhat(P)\).
+Because the sample size \(n_P\) is fixed, its reciprocal can be taken
+outside the expectation and its square outside the variance.
 Applying the same moment-matching calculation to this variance contribution
 therefore gives
 \begin{align*}
@@ -136,11 +137,10 @@ equal to its population probability, so these errors and their linear
 contribution have mean zero. Bias arises from terms beyond this linear
 approximation.
 
-With the mean approximated by \(V(P)\), the remaining task is to calculate
-\(\Var\{\Vhat(P)\}\). Sampling changes the empirical cell
-probabilities, and the plug-in variance estimate changes with them. We
-therefore first calculate how \(V(P)\) responds to small changes in those
-probabilities.
+With the mean approximated by \(V(P)\), the remaining task is to
+calculate \(\Var\{\Vhat(P)\}\). Because sampling changes the empirical
+cell probabilities and hence the plug-in variance estimate, we first
+calculate how \(V(P)\) responds to small changes in those probabilities.
 
 \begin{samepage}
 \section{How the MI variance changes with the table}
@@ -408,11 +408,11 @@ g_P(x,y)
 }
 \label{eq:g-final}
 \end{equation}
-The first line is the change if the pointwise-MI values were held fixed. The
-bracket accounts for the fact that they change too: each pointwise-MI value
-uses a cell probability and its row and column totals. The conditional means
-collect the effects of those changing totals. Both parts are needed to
-describe how the estimated variance varies across samples.
+The first line describes the change with the pointwise-MI values held
+fixed, while the bracket accounts for changes in those values as the cell
+probabilities and their row and column totals change. The conditional
+means collect the effects of the changing totals, so both parts are needed
+to describe how the estimated variance varies across samples.
 \par
 \end{samepage}
 
@@ -540,7 +540,7 @@ gives the corresponding sampling variance:
 \end{align}
 Substituting the first-order mean and variance approximations into
 Equation~\eqref{eq:component-df-moments} gives the population first-order
-approximation to \(\nu_{P,\mathrm{mom}}\). Define this value by
+approximation to \(\nu_{P,\mathrm{mom}}\), defined by
 \begin{equation}
   \boxed{
   \nu_{P,\mathrm{FO}}
@@ -569,10 +569,10 @@ sampling variation of \(\Vhat(P)\) requires a higher-order approximation.
 \medskip
 \thesisminiheading{Table-based component degrees of freedom.}
 
-The observed table replaces every population quantity in Equation
-\eqref{eq:g-final} by its empirical counterpart. The sums below are over
-occupied cells, because pointwise MI is undefined at an empirical zero. For
-each occupied cell,
+For the observed table, we replace every population quantity in
+Equation~\eqref{eq:g-final} by its empirical counterpart and sum over
+occupied cells, since pointwise MI is undefined at an empirical zero.
+For each occupied cell,
 \begin{equation}
 \begin{aligned}
 \widehat g_P(i,j)
@@ -833,11 +833,11 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 \thesisminiheading{Near independence.}
 
-Consider a population table that
-approaches independence while its row and column margins stay fixed. At
-independence, every pointwise-MI value is zero. The linear error in
-Equation~\eqref{eq:mi-error-from-cell-errors} weights each cell-probability
-error by its pointwise MI, so those linear contributions vanish. Products
+Consider a population table that approaches independence while its row
+and column margins stay fixed. At independence, every pointwise-MI value
+is zero, so the linear contributions in
+Equation~\eqref{eq:mi-error-from-cell-errors} vanish because each
+cell-probability error is weighted by its pointwise MI. Products
 of cell errors can still remain: these are the quadratic terms retained
 by a second-order expansion. Near independence, the linear weights are
 small enough that the quadratic terms can contribute substantially.
@@ -882,10 +882,10 @@ derivatives for positive population tables and provide first-order
 approximations to the sampling errors in MI and its estimated variance.
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
-The MI difference and standard error come from the same tables. A sample
-that changes the estimated difference can also change its standard error,
-and Expanded Welch's larger cutoff does not account for how the estimated
-MI difference and its standard error move together.
+Because the MI difference and standard error come from the same tables,
+a sample that changes the estimated difference can also change its
+standard error. Expanded Welch's larger cutoff does not account for this
+joint movement of the estimated MI difference and its standard error.
 As sample sizes grow under regular conditions, the estimated
 degrees of freedom increase and the Student \(t\) distribution approaches the
 standard normal distribution used by Wald.

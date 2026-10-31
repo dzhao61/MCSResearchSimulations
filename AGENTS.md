@@ -58,8 +58,13 @@ do not merely concatenate independent observations or join sentences to meet
 a length target. Retain short sentences for important definitions, distinct
 findings and derivation steps. Review clusters of short reminders and detached
 consequences, preserving approximation conditions and the strength of causal
-claims when revising. The Chapter 6 writing guide gives examples and a review
-procedure; these sentence-construction principles apply throughout research prose.
+claims when revising. Use
+`Thesis Writeup/Welch MI/notes/RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md`
+for the consolidated lessons from Chapters 5–7, sentence-review decisions
+and adaptation to different chapter roles. The Chapter 6 results guide
+retains the detailed figure and interpretation examples. These principles
+apply throughout research prose; the Chapters 1–4 revision plan is planning
+only until the user requests implementation.
 
 Use colons to introduce lists, equations or explanations that benefit from
 an explicit introduction. Reserve semicolons for closely related parallel

@@ -65,7 +65,16 @@ Retain short sentences for new definitions, key results and distinct
 derivation steps. Keep each paragraph focused and link paragraphs through
 the argument itself. Do not restore removed tangents or technical previews.
 
-For Chapter 6 results writing, use
+For research prose across the thesis, use
+`notes/RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md`. It consolidates
+the Chapters 5–7 changes into guidance on reading order, explanatory
+relationships, named referents and purposeful sentence breaks. Adapt the
+principles to each chapter's role rather than targeting sentence length.
+`notes/CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md` records the proposed
+earlier-chapter pass; it is planning only and does not authorise manuscript
+edits or a rebuild on its own.
+
+For Chapter 6 results writing, also use
 `notes/CHAPTER_6_RESULTS_WRITING_GUIDELINES_2026-10-30.md` alongside the
 workspace research writing preferences. It records the explanation and
 reading-order standards established through the Section 6.1.1 revision.
