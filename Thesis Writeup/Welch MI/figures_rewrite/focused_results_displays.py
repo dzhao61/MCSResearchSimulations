@@ -190,7 +190,10 @@ def generate(results, destination, diagnostics_destination=None):
     rows = []
     for label in labels:
         d = diagnostics.loc[evidence['focus_cases'][label]]
-        display_label = {'16, same, 1,000':r'\(16\times16\), same skew, \(n=1{,}000\)',
+        display_label = {'A':r'A: uniform \(4\times4\), \(n=20\)',
+                         'B':r'B: different skew \(8\times8\), \(n=100\)',
+                         'C':r'C: different skew \(4\times4\), \(n=10{,}000\)',
+                         '16, same, 1,000':r'\(16\times16\), same skew, \(n=1{,}000\)',
                          '16, different, 1,000':r'\(16\times16\), different skew, \(n=1{,}000\)'}.get(label,label)
         rows.append([display_label,fixed(d.bias_sd,3),fixed(d.variance_ratio,3)])
     write_table(destination/'focused_redesign_shared_estimates.tex',

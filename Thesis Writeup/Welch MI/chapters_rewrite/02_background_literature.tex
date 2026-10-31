@@ -578,7 +578,7 @@ standard normal distribution, and their rejection cutoffs become closer.
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). The ordinary \(n_P-1\) and \(n_Q-1\) values follow
 from the scaled chi-squared distribution of a sample variance under normal
-sampling; they do not automatically apply to an estimated MI variance.
+sampling; they do not automatically apply to an estimated pointwise-MI variance.
 Chapter~\ref{chap:expanded} therefore derives the component degrees of
 freedom from the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\),
 using the same moment-matching principle.
@@ -597,7 +597,7 @@ uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
 from the sampling variability of a regression variance estimate, while
-Expanded Welch uses the sampling variability of the MI variance estimate.
+Expanded Welch uses the sampling variability of the pointwise-MI variance estimate.
 These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
@@ -640,7 +640,7 @@ degrees of freedom
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).
 Expanded Welch instead calculates its degrees of freedom from how the
-estimated MI variance changes with the table, including the effects of a
+estimated pointwise-MI variance changes with the table, including the effects of a
 cell change on its row and column totals.
 
 The entropy comparison establishes that a Student \(t\) distribution can
@@ -648,7 +648,7 @@ be used to compare estimated information quantities, but MI requires
 more than substituting a different numerator. The row, column and joint entropies in MI are calculated from the same
 observations, so their estimation errors are connected through the cell
 counts contributing to all three.
-The MI variance formulas in Section~\ref{sec:first-order-mi-background}
+The MI sampling-variance formulas in Section~\ref{sec:first-order-mi-background}
 account for these connected estimation errors. To obtain degrees of freedom,
 Expanded Welch also tracks how a cell change alters both the probability
 weights and the pointwise-MI values whose weighted variance is being
@@ -704,12 +704,12 @@ Existing work provides the leading bias and sampling variance of MI
 Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
 \citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
 regression variance estimate to choose degrees of freedom. Applying this
-approach to MI requires calculating how the estimated MI variance changes
+approach to MI requires calculating how the estimated pointwise-MI variance changes
 with the observed table, including changes to the cell probabilities,
 row and column totals, and pointwise MI values.
 
 This thesis derives how changes in the observed count table affect the
-estimated MI variance and uses that result to calculate MI-specific degrees
+estimated pointwise-MI variance and uses that result to calculate MI-specific degrees
 of freedom for Expanded Welch. The resulting test retains Normal Wald's MI
 difference and standard error but compares the statistic with a Student
 \(t\) distribution rather than a standard normal distribution.

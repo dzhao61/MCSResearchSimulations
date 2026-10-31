@@ -306,6 +306,26 @@ the scientific claim. Mathematical punctuation is a separate matter.
 
 ## 8. Keep scientific distinctions and necessary repetition
 
+Use explicit names for the variance quantities at definitions and
+transitions:
+
+| Quantity | Name and role |
+| --- | --- |
+| \(V(P)\) | Population pointwise-MI variance: variation in pointwise MI across population observations. |
+| \(\widehat V(P)\) | Estimated pointwise-MI variance from one sampled table. |
+| \(V(P)/n_P\) | First-order approximation to the sampling variance of the MI estimator. |
+| \(\widehat V(P)/n_P\) | Estimated sampling variance of the MI estimator; one contribution to the squared standard error. |
+| \(\operatorname{Var}\{\widehat V(P)\}\) | Sampling variance of the estimated pointwise-MI variance across repeated tables. |
+| \(\widehat{\mathrm{SE}}^2\) | Estimated sampling variance of the MI difference. |
+
+Avoid calling \(\widehat V(P)\) merely “the estimated MI variance”, since
+that can suggest the sampling variance of the MI estimator. Use a symbol
+or a shorter local reference once the object is clear; repeating the full
+name in every sentence can make the explanation harder to read. Ordinary
+sample variances in the Welch background and posterior variances in the
+Bayesian literature retain their own names. Table 3.1 supplies the reader's
+reference within the manuscript.
+
 Retain population-versus-sample distinctions, target-versus-approximation
 distinctions, exact-versus-approximate statements, independence assumptions,
 validity rules, uncertainty and directional qualifications. Preserve “can”,

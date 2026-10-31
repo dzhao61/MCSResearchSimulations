@@ -1,14 +1,25 @@
 # Main Welch MI thesis deliverable
 
-Latest built PDF: **107 pages**, rebuilt on 31 October 2026 with the new
-abstract, Chapters 1–4 prose revision and consistency review, and three
-peer research-question labels throughout the thesis. Compilation,
-references and paragraph style pass with no LaTeX warnings. The abstract
-fits on one page, and 49 changed or boundary pages were rendered and
-visually reviewed. No manuscript or formatting change was needed during
-the build. The main and named PDFs, source archive and checksums are
-current; the unchanged 25,010-file experiment supplement was reused after
-inventory, size and timestamp checks.
+Latest built PDF: **109 pages**, rebuilt on 31 October 2026 with the four
+approved reader clarifications and the local definition of h beside
+Table 6.5. Variance names distinguish pointwise-MI variation from sampling
+variation, Appendix B.9 lists the six application p-values used for Holm
+adjustment, Table 6.1's interpretation leads with the conditional
+over-rejection result, and Chapters 5 and 7 state the equal-sample scope
+of the bias correction. All existing mathematical displays, figures and
+tables are preserved; the application-family table is the only new display.
+Compilation, references and paragraph style pass with no LaTeX warnings.
+Twenty-two affected or boundary pages were rendered and visually reviewed,
+including the new table. No manuscript or formatting change was needed
+during the build. Main/named PDFs, source archive and checksums are current;
+the unchanged 25,010-file experiment supplement was reused after inventory,
+size and exact timestamp checks. See
+`notes/FOUR_READER_CLARIFICATIONS_2026-10-31.md`.
+
+The preceding **107-page** PDF included the new abstract, Chapters 1–4
+prose revision and consistency review, and three peer research-question
+labels throughout the thesis. That build passed compilation, references,
+paragraph style and visual inspection of 49 changed or boundary pages.
 
 Included in the requested rebuild, 31 October 2026: the abstract now follows
 the current prose guidelines, connecting the problem, first-order

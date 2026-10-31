@@ -60,7 +60,7 @@ observed counts to show how sparse the samples are.
 \begin{assumption}[Positive MI]
 Both populations have positive MI: \(I(P)>0\) and \(I(Q)>0\). With the positive
 cell probabilities in Assumption~3, this is equivalent to requiring positive
-first-order variances \(V(P)>0\) and \(V(Q)>0\). The positive-MI
+pointwise-MI variances \(V(P)>0\) and \(V(Q)>0\). The positive-MI
 assumption excludes exact independence, where the first-order approximation
 breaks down.
 \end{assumption}
@@ -123,7 +123,7 @@ Subtracting the fixed leading bias term
 in Equation~\eqref{eq:bias-corrected-difference} does not change this
 variance.
 
-The observed table estimates \(V(P)\) by
+The observed table estimates the pointwise-MI variance \(V(P)\) by
 \begin{equation}
   \Vhat(P)
   =\sum_{i,j:\widehat p_{ij}>0}
@@ -132,6 +132,9 @@ The observed table estimates \(V(P)\) by
   \label{eq:estimated-mi-variance}
 \end{equation}
 Define \(\Vhat(Q)\) analogously.
+These estimates describe variation in pointwise MI across observation
+outcomes; dividing each by its sample size estimates the sampling variance
+of the corresponding MI estimate.
 
 Independence of the two samples makes the covariance between their MI
 estimates zero, so we estimate the sampling variance of their difference
@@ -223,15 +226,15 @@ to choose the degrees of freedom of a Student \(t\) distribution.
 Hutcheson's entropy test assigns each variance component \(n_i\)
 degrees of freedom \citep{hutcheson1970}, while ordinary Welch's test
 assigns \(n_i-1\) \citep{welch1947}. These assignments do not measure
-how cell probabilities and margins make the estimated MI variance change
+how cell probabilities and margins make the estimated pointwise-MI variance change
 between samples.
 
 To choose the degrees of freedom, we need the average value of each estimated
-MI variance and how much that estimate varies across samples
+pointwise-MI variance and how much that estimate varies across samples
 \citep{satterthwaite1946}. For \(P\), to first order,
 \begin{equation}
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}
 For the remaining input, Chapter~\ref{chap:expanded} derives a first-order
-approximation to \(\Var\{\Vhat(P)\}\) by tracking how the calculated
-MI variance changes when one observation changes the joint table.
+approximation to \(\Var\{\Vhat(P)\}\) by tracking how the estimated
+pointwise-MI variance changes when one observation changes the joint table.

@@ -15,7 +15,8 @@ each repetition.
 \section{RQ1: Accuracy of variance approximations}
 
 For a fixed population table \(P\) and sample size \(n_P\), each
-repetition produces a new \(\Vhat(P)\). We examine its average value,
+repetition produces an estimate \(\Vhat(P)\) of the pointwise-MI variance
+\(V(P)\). We examine its average value,
 \(\E\{\Vhat(P)\}\), and its variation between repetitions,
 \(\Var\{\Vhat(P)\}\), because both moments enter the component
 degrees-of-freedom calculation. Table~\ref{tab:results-variance-quantities} in
@@ -311,8 +312,9 @@ predicted mean, despite the downward moment errors in the upper rows. Both
 populations show this progression, but \(Q\) has lower absolute
 component degrees of freedom over the displayed range.
 
-The population and sample-based variance predictions also separate near
-independence. At the smallest MI target, 0.0001, the population first-order predictions are only about
+The population and sample-based predictions for the sampling variance of
+\(\Vhat\) also separate near independence. At the smallest MI target,
+0.0001, the population first-order predictions are only about
 5\% of the observed sampling variances, while the sample-based predictions
 average roughly twice those variances. The local relation
 \(\widehat\tau^2\approx4\Vhat\) carries sampling noise into the estimated
@@ -376,11 +378,12 @@ Total & \RedesignToward{} & \RedesignAway{} & \RedesignWithin{} & 120\\
 \end{tabular}
 \end{table}
 
-All improvements occur where Wald over-rejects, while most deteriorations
-occur where Wald is already conservative. This follows the direction of the cutoff change because lowering a rate
-already below 5\% moves it farther from the target. Even where Wald is above 5\%, a reduction can be too large, as in the
-four deteriorations in that row where Expanded Welch crosses below 5\%
-and ends farther from the target than Wald.
+Where Wald rejects too often, Expanded Welch moves closer to 5\% in
+\RedesignTowardAbove{} of \RedesignTotalAbove{} settings, although
+\RedesignAwayAbove{} reductions overshoot and leave the rate farther
+from the target. Where Wald is already conservative, lowering rejection
+cannot bring the rate closer to 5\%, so Expanded Welch either worsens
+calibration or changes it by no more than the stated tolerance.
 
 Each reported rate divides the number of valid rejections by all simulation
 repetitions, counting invalid calculations as non-rejections, so the validity
@@ -426,7 +429,7 @@ it over the conservative range. For a given difference estimate, a smaller
 standard error increases \(|T|\), while a larger standard error decreases
 it. The same increase in rejection cutoff therefore helps in the first
 range and deepens conservatism in the second. With larger samples, the
-variance estimate becomes more accurate and the methods approach 5\%.
+squared standard error becomes more accurate and the methods approach 5\%.
 
 In the \(8\times8\) panel, an early shoulder of excessive rejection is
 followed by a later conservative trough and recovery. The shared squared
@@ -469,7 +472,7 @@ the increasing degrees of freedom bring Expanded Welch's cutoff closer
 to Wald's.
 
 In \(4\times4\), Wald starts above the target and then falls below it,
-while Expanded Welch lowers both regions. The shared variance estimate
+while Expanded Welch lowers both regions. The average squared standard error
 moves from underestimating to overestimating the observed difference
 variance, helping explain the fall into the trough. As that overestimation
 diminishes, both rates rise towards 5\%. At \(n=10\), the first Expanded Welch rate is close to 5\% even though
@@ -810,9 +813,12 @@ separate threshold for each test at each null, we apply the two
 calibrations to the same fixed alternative samples, so any change in
 power arises from the thresholds rather than a change in the alternative data.
 
+Here \(h=(I(Q)-I(P))/\sigma_0=-\Delta/\sigma_0\) measures the population
+MI gap in fitted null SDs, where \(\sigma_0\) is the fitted SD of
+\(\Deltahat\) under \(I(P)=I(Q)=0.02\).
 Table~\ref{tab:redesign-calibration-sensitivity} reports Expanded Welch
-power minus Normal Wald power at \(h=-\Delta/\sigma_0\) equal to two
-and four null SDs. Differences are expressed in percentage points, with positive values
+power minus Normal Wald power at \(h=2\) and \(h=4\).
+Differences are expressed in percentage points, with positive values
 favouring Expanded Welch and negative values favouring Wald. The upper-MI column gives the
 common MI used for upper-null fitting. Brackets give 95\% bootstrap
 intervals accounting for the shared evaluation data and uncertainty in
@@ -913,6 +919,8 @@ in Adult \citep{becker1996}, and study time and maternal education in
 Student Performance \citep{cortez2008}. To account for this exploratory
 family, we apply Holm's adjustment separately to each method's six
 p-values \citep{holm1979}.
+Table~\ref{tab:application-holm-family} in Appendix~\ref{sec:application-holm-family}
+lists the complete family and the unadjusted p-values used in the calculation.
 
 The corrected difference \(\Deltahat\) is new-visitor MI minus
 returning-visitor MI, so a negative value indicates higher estimated MI

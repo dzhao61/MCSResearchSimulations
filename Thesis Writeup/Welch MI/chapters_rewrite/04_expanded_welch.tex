@@ -5,8 +5,8 @@ Expanded Welch keeps the estimated MI difference, standard error and test
 statistic from Chapter~\ref{chap:baselines}, but changes the distribution used
 to judge that statistic from the standard normal distribution to a Student
 \(t\) distribution. To choose its degrees of freedom, this chapter calculates
-how much the estimated MI variance changes between samples. The name
-Expanded Welch refers to this expansion of the MI variance as the table
+how much the estimated pointwise-MI variance changes between samples. The name
+Expanded Welch refers to this expansion of the pointwise-MI variance as the table
 probabilities change.
 
 \section[Choosing degrees of freedom for Expanded Welch]{Choosing degrees of
@@ -53,7 +53,7 @@ variance match its sampling moments. The exact identity assumes the stated
 normal distribution and independence; the MI reference is an approximation.
 
 \medskip
-\thesisminiheading{Moment matching for one MI variance estimate.}
+\thesisminiheading{Moment matching for one pointwise-MI variance estimate.}
 
 To obtain the component target \(\nu_{P,\mathrm{mom}}\), Satterthwaite
 matches the mean and variance of the nonnegative estimate \(\Vhat(P)\)
@@ -143,7 +143,7 @@ cell probabilities and hence the plug-in variance estimate, we first
 calculate how \(V(P)\) responds to small changes in those probabilities.
 
 \begin{samepage}
-\section{How the MI variance changes with the table}
+\section{How pointwise-MI variance changes with the table}
 
 Fix a cell \((x,y)\) and define a distribution that moves a small amount
 of probability toward this cell \citep{hampel1974,vanderVaart1998}:
@@ -264,7 +264,7 @@ This is the centred pointwise-MI influence function from
 Section~\ref{sec:first-order-mi-background}.
 
 \medskip
-\thesisminiheading{Effect on the MI variance.}
+\thesisminiheading{Effect on the pointwise-MI variance.}
 
 The target is the first-order change in
 \begin{equation}
@@ -653,8 +653,9 @@ Linearity of expectation gives its sampling mean:
   =\frac{\E\{\Vhat(P)\}}{n_P}
    +\frac{\E\{\Vhat(Q)\}}{n_Q}.
 \end{equation*}
-The two variance estimates are computed from independent samples, so their
-covariance is zero and their variance contributions add. Rearranging
+The two pointwise-MI variance estimates are computed from independent
+samples, so their covariance is zero and their contributions to
+\(\Var(\SEhat^2)\) add. Rearranging
 Equation~\eqref{eq:component-df-moments} expresses each component's sampling
 variance in terms of its sampling mean and moment-matched degrees of
 freedom. Applying this identity to both components gives
@@ -882,7 +883,8 @@ quadratic sampling terms needed when population MI is very small.
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
 derivatives for positive population tables and provide first-order
-approximations to the sampling errors in MI and its estimated variance.
+approximations to the sampling errors in the MI estimate and the estimated
+pointwise-MI variance.
 The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
 the Student \(t\) distribution for \(T\) are finite-sample approximations.
 Because the MI difference and standard error come from the same tables,

@@ -5,7 +5,7 @@
 
 This thesis derives an Expanded Welch--Satterthwaite test for comparing
 categorical MI across independent populations by calculating the
-observation-level sensitivity of the estimated MI variance. This
+observation-level sensitivity of the estimated pointwise-MI variance. This
 sensitivity accounts for changes in cell probabilities, margins and
 pointwise MI. The variance of this sensitivity gives the first-order approximation
 \(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\), which moment matching uses
@@ -124,6 +124,12 @@ Both tested constructions use equal row and column margins within each
 table and align association locations between populations. Other directions
 of MI change, unequal row and column margins within a table and other
 locations of dependence remain untested.
+
+All reported simulations use equal sample sizes, for which the leading
+bias corrections cancel from the MI difference. They therefore do not
+evaluate the correction's performance under unequal sample sizes, and
+residual biases can still differ between populations in the tested
+equal-sample settings.
 
 Empirical calibration uses known simulation populations, and the two
 calibration checks neither bound rejection across the entire equal-MI

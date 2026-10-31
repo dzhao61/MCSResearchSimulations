@@ -43,13 +43,16 @@ both the MI difference and its estimated uncertainty.
 
 The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
 Wald's estimated MI difference and standard error but uses a Student
-\(t\) distribution instead of the standard normal distribution. Choosing
-its degrees of freedom requires estimating how much the MI variance
-estimates change from sample to sample. For MI, this calculation must
-account for the fact that changing a cell probability also changes its
-row and column totals and the MI values calculated from them. This thesis
-derives how these probability changes affect the estimated MI variance
-and uses that calculation to obtain degrees of freedom for Expanded Welch.
+\(t\) distribution instead of the standard normal distribution. Pointwise MI assigns an
+information value to each cell, and its variance measures how these values
+vary across population observations. Dividing the estimated pointwise-MI
+variance by sample size gives each population's contribution to the squared
+standard error. Choosing the degrees of freedom also requires the sampling
+mean and variance of that pointwise-MI variance estimate. This calculation must account
+for the fact that changing a cell probability also changes its row and
+column totals and the pointwise MI values calculated from them. This thesis
+derives how these probability changes affect the estimated pointwise-MI
+variance and uses that calculation to obtain degrees of freedom for Expanded Welch.
 
 The Student \(t\) distribution gives Expanded Welch a larger rejection
 cutoff than Normal Wald, so it rejects less often. The lower rejection
@@ -68,7 +71,7 @@ calibration checks whether the power comparison is stable.
 The thesis addresses three research questions:
 \begin{enumerate}[label=\textbf{RQ\arabic*:},leftmargin=*]
  \item How accurately do the derived approximations predict the mean and
- sampling variance of the estimated MI variance, and what degrees of
+ sampling variance of the estimated pointwise-MI variance, and what degrees of
  freedom do they imply near and away from independence?
  \item How do Expanded Welch's false-positive rates compare with those of
  Normal Wald under equal population MI?
@@ -80,7 +83,7 @@ The thesis addresses three research questions:
 
 \begin{enumerate}
   \item \begin{samepage}\textbf{Mathematical contribution.} The thesis derives how changing
-  one observation affects the estimated MI variance, including the resulting
+  one observation affects the estimated pointwise-MI variance, including the resulting
   changes in the row and column totals and in pointwise MI.
   \par
   \end{samepage}
