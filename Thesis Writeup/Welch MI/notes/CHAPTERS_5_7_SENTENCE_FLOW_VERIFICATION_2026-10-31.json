@@ -1,0 +1,289 @@
+{
+  "date": "2026-10-31",
+  "chapters": {
+    "05_experimental_design.tex": {
+      "preserved_display_blocks": {
+        "equation": 6,
+        "align*": 1,
+        "equation*": 1,
+        "table": 5
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 2727,
+      "source_words_after": 2717,
+      "sentence_diagnostics": {
+        "before": {
+          "sentences": 152,
+          "mean_words": 15.3,
+          "median_words": 14.0,
+          "at_most_10": 44,
+          "percent_at_most_10": 28.9,
+          "at_most_15": 83,
+          "percent_at_most_15": 54.6,
+          "maximum_words": 34
+        },
+        "after": {
+          "sentences": 124,
+          "mean_words": 18.6,
+          "median_words": 18.5,
+          "at_most_10": 22,
+          "percent_at_most_10": 17.7,
+          "at_most_15": 44,
+          "percent_at_most_15": 35.5,
+          "maximum_words": 36
+        }
+      },
+      "setting_label_aware_sentence_diagnostics": {
+        "before": {
+          "sentences": 152,
+          "mean_words": 15.3,
+          "median_words": 14.0,
+          "at_most_10": 44,
+          "percent_at_most_10": 28.9,
+          "at_most_15": 83,
+          "percent_at_most_15": 54.6,
+          "maximum_words": 34
+        },
+        "after": {
+          "sentences": 124,
+          "mean_words": 18.6,
+          "median_words": 18.5,
+          "at_most_10": 22,
+          "percent_at_most_10": 17.7,
+          "at_most_15": 44,
+          "percent_at_most_15": 35.5,
+          "maximum_words": 36
+        }
+      }
+    },
+    "06_results.tex": {
+      "preserved_display_blocks": {
+        "figure": 7,
+        "table": 8,
+        "equation": 2
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 7452,
+      "source_words_after": 7450,
+      "sentence_diagnostics": {
+        "before": {
+          "sentences": 342,
+          "mean_words": 21.1,
+          "median_words": 20.0,
+          "at_most_10": 10,
+          "percent_at_most_10": 2.9,
+          "at_most_15": 76,
+          "percent_at_most_15": 22.2,
+          "maximum_words": 43
+        },
+        "after": {
+          "sentences": 342,
+          "mean_words": 21.1,
+          "median_words": 20.0,
+          "at_most_10": 10,
+          "percent_at_most_10": 2.9,
+          "at_most_15": 78,
+          "percent_at_most_15": 22.8,
+          "maximum_words": 43
+        }
+      },
+      "setting_label_aware_sentence_diagnostics": {
+        "before": {
+          "sentences": 345,
+          "mean_words": 21.0,
+          "median_words": 20,
+          "at_most_10": 10,
+          "percent_at_most_10": 2.9,
+          "at_most_15": 76,
+          "percent_at_most_15": 22.0,
+          "maximum_words": 41
+        },
+        "after": {
+          "sentences": 345,
+          "mean_words": 21.0,
+          "median_words": 20,
+          "at_most_10": 10,
+          "percent_at_most_10": 2.9,
+          "at_most_15": 78,
+          "percent_at_most_15": 22.6,
+          "maximum_words": 41
+        }
+      }
+    },
+    "07_conclusions.tex": {
+      "preserved_display_blocks": {},
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 1188,
+      "source_words_after": 1189,
+      "sentence_diagnostics": {
+        "before": {
+          "sentences": 63,
+          "mean_words": 19.3,
+          "median_words": 19,
+          "at_most_10": 6,
+          "percent_at_most_10": 9.5,
+          "at_most_15": 25,
+          "percent_at_most_15": 39.7,
+          "maximum_words": 53
+        },
+        "after": {
+          "sentences": 54,
+          "mean_words": 22.6,
+          "median_words": 22.0,
+          "at_most_10": 2,
+          "percent_at_most_10": 3.7,
+          "at_most_15": 12,
+          "percent_at_most_15": 22.2,
+          "maximum_words": 53
+        }
+      },
+      "setting_label_aware_sentence_diagnostics": {
+        "before": {
+          "sentences": 65,
+          "mean_words": 18.7,
+          "median_words": 19,
+          "at_most_10": 6,
+          "percent_at_most_10": 9.2,
+          "at_most_15": 25,
+          "percent_at_most_15": 38.5,
+          "maximum_words": 32
+        },
+        "after": {
+          "sentences": 56,
+          "mean_words": 21.8,
+          "median_words": 22.0,
+          "at_most_10": 2,
+          "percent_at_most_10": 3.6,
+          "at_most_15": 12,
+          "percent_at_most_15": 21.4,
+          "maximum_words": 36
+        }
+      }
+    }
+  },
+  "build_deferred": false,
+  "Figure_6_1_three_row_paragraphs_byte_identical": true,
+  "unchanged_protected_files": 99,
+  "active_tex_files": 21,
+  "unique_labels": 140,
+  "dangling_references": [],
+  "missing_citations": [],
+  "balanced_braces_and_environments": true,
+  "external_supplement_pointers": [],
+  "paragraph_style_passed": true,
+  "numerical_consistency_tests_passed": 5,
+  "earlier_derivations_unchanged": true,
+  "scientific_claim_strength_reviewed": true,
+  "sentence_relationships_reviewed_in_context": true,
+  "existing_writing_guidelines_unchanged": true,
+  "PDF_and_delivery_files_unchanged_during_source_revision": true,
+  "requested_build": {
+    "pages": 108,
+    "previous_pages": 109,
+    "latex_warnings": [],
+    "changed_content_pages": [
+      5,
+      6,
+      8,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      65,
+      68,
+      69,
+      73,
+      76,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108
+    ],
+    "reviewed_physical_pages": [
+      5,
+      6,
+      8,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      65,
+      68,
+      69,
+      73,
+      76,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89
+    ],
+    "external_supplement_mentions": 0,
+    "layout_fixes": [
+      "Table 5.5 anchored before its interpretation",
+      "Repeated final application sentence removed; final scope qualification retained"
+    ],
+    "appendices_and_bibliography_text_unchanged_apart_from_page_numbers": true,
+    "visual_review_passed": true,
+    "date": "2026-10-31",
+    "paragraph_style_passed": true,
+    "main_build_named_PDF_hashes_identical": true,
+    "source_archive_checked": true,
+    "source_files": 95,
+    "supplement_reused": true,
+    "supplement_inputs_unchanged": 25010,
+    "hashes": {
+      "Daniel_Zhao_Welch_MI_Thesis.pdf": "d012196b09fb4146a40f42d75e9f6cdf1cd6030c5b3ff2983caf251d6d4ed538",
+      "Daniel_Zhao_Welch_MI_Thesis_Source.zip": "324e0c4cb416d92c61f818cafa58e437da21ca48211268b4af2ccc5c3dae911a",
+      "Daniel_Zhao_Welch_MI_Experiment_Supplement.zip": "899b3079627f3ec8cb199962276f3e7379d69e8e75bed7df7b45eeb079bbdfdb"
+    }
+  }
+}

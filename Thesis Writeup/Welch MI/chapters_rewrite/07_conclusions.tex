@@ -4,26 +4,24 @@
 \section{Contributions and main findings}
 
 This thesis derives an Expanded Welch--Satterthwaite test for comparing
-categorical MI across independent populations. Its mathematical
-contribution is the observation-level sensitivity of the estimated MI
-variance, accounting for changes in cell probabilities, margins and
-pointwise MI. The variance of this sensitivity gives the first-order
-approximation
-\(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\). Moment matching uses it
+categorical MI across independent populations by calculating the
+observation-level sensitivity of the estimated MI variance. This
+sensitivity accounts for changes in cell probabilities, margins and
+pointwise MI. The variance of this sensitivity gives the first-order approximation
+\(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\), which moment matching uses
 to choose MI-specific degrees of freedom for a Student \(t\) distribution.
 
 \subsection{RQ1: Accuracy of variance approximations}
 
 The predicted sampling variance of \(\Vhat(P)\) can be close to its
 observed value even when the sampling mean \(\E\{\Vhat(P)\}\) remains
-above \(V(P)\). In the moment target in
-Equation~\eqref{eq:design-moment-target}, the mean is squared in the
-numerator. Replacing that sampling mean by the smaller population value
-therefore
-lowers \(\nu_{P,\mathrm{FO}}\) relative to \(\nu_{P,\mathrm{mom}}\),
-even when the sampling-variance approximation is accurate. The sampling
-mean \(\E(\widehat\nu_P)\) can also fall below the moment target.
-The size of these discrepancies depends on the population and sample size.
+above \(V(P)\). Because the moment target in Equation~\eqref{eq:design-moment-target}
+squares the mean in its numerator, replacing that sampling mean by the
+smaller population value lowers \(\nu_{P,\mathrm{FO}}\) relative to
+\(\nu_{P,\mathrm{mom}}\), even when the sampling-variance approximation
+is accurate. The sampling mean \(\E(\widehat\nu_P)\) can also fall
+below the moment target, with the size of both discrepancies depending
+on the population and sample size.
 
 Near independence, the first-order prediction \(\tau^2(P)/n_P\) for
 \(\Var\{\Vhat(P)\}\) is small and quadratic sampling terms remain
@@ -36,32 +34,31 @@ evaluation, even when the population approximation is accurate.
 
 \subsection{RQ2.1: False-positive rates under equal MI}
 
-Expanded Welch brings false-positive rates closer to 5\% at
-A (uniform \(4\times4\), \(n_P=n_Q=20\)) and
-B (different-skew \(8\times8\), \(n_P=n_Q=100\)). Both settings have
-common MI 0.02 nats (Table~\ref{tab:redesign-focus-settings}). Both tests
+At common MI 0.02 nats, Expanded Welch brings false-positive rates
+closer to 5\% at A (uniform \(4\times4\), \(n_P=n_Q=20\)) and
+B (different-skew \(8\times8\), \(n_P=n_Q=100\)), as defined in
+Table~\ref{tab:redesign-focus-settings}. Both tests
 return valid results
 in every repetition at these settings, so the lower rejection rates
-reflect the larger cutoff from the Student \(t\) distribution. Across the
-broad grid, Expanded Welch also lowers rates that are already below 5\%.
-Its larger cutoff helps when it corrects excessive rejection and increases
-conservatism when rejection is already too infrequent.
+reflect the larger cutoff from the Student \(t\) distribution. Across the broad grid, Expanded Welch also lowers rates that are already
+below 5\%, increasing conservatism. The larger cutoff therefore helps
+when it corrects excessive rejection but worsens calibration when
+rejection is already too infrequent.
 
 A false-positive rate near 5\% does not establish that the estimated
 component degrees of freedom match their sampling-moment targets.
 At A, the average \(\SEhat^2\) is below the observed
-\(\Var(\Deltahat)\), while the low estimated degrees of freedom increase
-the rejection cutoff. These errors can compensate in the false-positive
-rate. At B, the average squared standard error exceeds the observed
+\(\Var(\Deltahat)\), while the low estimated degrees of freedom
+increase the rejection cutoff, so the two errors can compensate in the
+false-positive rate. At B, the average squared standard error exceeds the observed
 variance of the MI difference and the difference is biased, so the same
 explanation does not apply unchanged.
 
-The sparse same-skew null illustrates how error in the standard error can
-remain when the expected difference bias cancels. Identical population
-tables at equal sample sizes have the same expected MI estimation bias.
-However, the average \(\SEhat^2\) is almost twice the observed
-\(\Var(\Deltahat)\) in the sparse copying case, and both tests are
-conservative. Unequal sample sizes can also leave unequal residual biases
+In the sparse same-skew null, identical population tables at equal sample
+sizes have the same expected MI estimation bias, so that bias cancels
+in the difference. The average \(\SEhat^2\) is nevertheless almost
+twice the observed \(\Var(\Deltahat)\) in the sparse copying case,
+and both tests are conservative. Unequal sample sizes can also leave unequal residual biases
 in otherwise identical populations.
 
 Under different-skew margins, both tests instead reject too often in the
@@ -71,10 +68,10 @@ so it is not confined to association introduced through copying.
 
 \subsection{RQ2.2: Nominal and calibrated power}
 
-Expanded Welch has lower nominal power than Normal Wald at the selected
-small-sample settings A and B. Because the two tests also have different
-false-positive rates, the calibrated comparison adjusts their cutoffs to
-match rejection at a specified equal-MI setting before comparing power.
+At the selected small-sample settings A and B, Expanded Welch has lower
+nominal power than Normal Wald alongside lower false-positive rates.
+The calibrated comparison therefore adjusts their cutoffs to match
+rejection at a specified equal-MI setting before comparing power.
 After calibration at common MI 0.02 nats, Expanded Welch has higher power
 at the reported two- and four-null-SD alternatives for A and B.
 Moving calibration to the upper equal-MI setting while holding the
@@ -91,12 +88,12 @@ Table~\ref{tab:redesign-calibration-validation} shows that matching
 false-positive rates at the lower common MI does not ensure matching at
 the upper common MI.
 
-Changing the cutoff also leaves errors in the estimated MI difference
-unchanged. At B, positive estimation bias persists at the first alternatives
-as the
-true difference becomes negative. Their partial cancellation moves the
-sampling mean of \(\Deltahat\) towards zero, so rejection initially falls
-even though the population MI values move farther apart. This distortion remains after calibration.
+Changing the cutoff leaves errors in the estimated MI difference
+unchanged, so calibration does not remove the initial power dip at B.
+At the first alternatives, the increasingly negative true difference
+partly cancels the persistent positive estimation bias, moving the
+sampling mean of \(\Deltahat\) towards zero. Rejection therefore
+initially falls even though the population MI values move farther apart.
 
 The observation-level sensitivity supplies an MI-specific basis for
 choosing the cutoff from the Student \(t\) distribution, while the
@@ -118,18 +115,19 @@ in the difference variance. Growing alphabets and continuous MI estimators
 have different approximation errors. Exact independence requires the
 second-order argument in Appendix~\ref{sec:independence-boundary}.
 
-The findings concern the tested populations, association constructions and
-alternative paths. The power settings were selected using earlier
-false-positive results and evaluated on independent samples. Each curve
-keeps \(I(P)=0.02\) and increases \(I(Q)\) along the copying family.
+The findings concern the tested populations, association constructions
+and alternative paths. Although the power settings were selected using
+earlier false-positive results, their evaluation uses independent samples,
+with each curve keeping \(I(P)=0.02\) and increasing \(I(Q)\) along
+the copying family.
 Both tested constructions use equal row and column margins within each
 table and align association locations between populations. Other directions
 of MI change, unequal row and column margins within a table and other
 locations of dependence remain untested.
 
-Empirical calibration uses known simulation populations. The two calibration
-checks do not bound rejection across the entire equal-MI null or supply
-a calibration procedure for arbitrary observed tables. The pointwise
+Empirical calibration uses known simulation populations, and the two
+calibration checks neither bound rejection across the entire equal-MI
+null nor supply a calibration procedure for arbitrary observed tables. The pointwise
 confidence intervals quantify simulation uncertainty for the specified
 populations; the calibrated power intervals also include uncertainty from
 fitting the cutoffs.
@@ -145,11 +143,10 @@ establishes their behaviour under known populations.
 
 A first extension is to derive the second-order mean contribution to the
 variance estimator and evaluate a corresponding degrees-of-freedom
-correction. Figure~\ref{fig:redesign-a4} shows that the mean approximation's
-error changes with MI and differs between the populations, so the
-correction should account for the population table. Any
-estimated correction should be evaluated through the resulting test's
-false-positive rates and power.
+correction. Figure~\ref{fig:redesign-a4} shows that the mean approximation's error
+changes with MI and differs between the populations, so the correction
+should account for the population table. Any estimated correction should then be evaluated through its effect
+on the test's false-positive rates and power.
 
 Improved MI bias and standard-error estimators could address the sparse-table
 failures. Their effects should be assessed separately by changing one

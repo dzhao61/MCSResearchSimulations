@@ -49,6 +49,25 @@ Use complete names for statistical objects when the noun matters: write
 "Student" or "Student cutoff" alone. Do the same for normal and chi-squared
 distributions instead of relying on the reader to supply "distribution".
 
+Construct sentences around a complete explanatory relationship: keep a result
+with its immediate cause, consequence, condition or qualification when that
+relationship is easier to follow within one sentence. Carry a specific quantity
+or finding from one sentence into the next, naming the referent rather than
+relying on a vague "this". Use conjunctions to state genuine relationships;
+do not merely concatenate independent observations or join sentences to meet
+a length target. Retain short sentences for important definitions, distinct
+findings and derivation steps. Review clusters of short reminders and detached
+consequences, preserving approximation conditions and the strength of causal
+claims when revising. The Chapter 6 writing guide gives examples and a review
+procedure; these sentence-construction principles apply throughout research prose.
+
+Use colons to introduce lists, equations or explanations that benefit from
+an explicit introduction. Reserve semicolons for closely related parallel
+statements or lists whose items contain commas. Recast sentences when a
+semicolon merely appends a reminder or cross-reference, and use a full stop
+when the next statement needs independent emphasis. Do not use punctuation
+to disguise short sentences or force unrelated statements into a longer one.
+
 Keep each passage focused on the question it is answering. Detailed explanation
 belongs where it advances the argument; omit or relocate short technical
 digressions that interrupt the transition to the next idea. When describing a
@@ -71,7 +90,13 @@ labels become difficult to read.
 
 The thesis must be understandable as a standalone manuscript without access
 to the codebase. Keep scientific construction details, parameter settings and
-validity rules in the text or appendices. Omit file inventories, local paths,
+validity rules in the text or appendices. Treat the submitted thesis PDF as
+the examiner's reading set: do not direct the reader to an unsubmitted
+experimental supplement, companion report or internal archive. Include
+essential evidence within the thesis or remove a claim that depends on
+unavailable material; omit promises of secondary analyses that are not
+presented. This does not restrict ordinary citations to published literature
+or public data sources. Omit file inventories, local paths,
 configuration identifiers, build commands, version-control history and
 protocol-freeze administration from the manuscript; internal project records
 can retain them.

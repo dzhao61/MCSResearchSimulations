@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-31",
+  "RQ1_unchanged": true,
+  "nominal_power_interpretation_unchanged": true,
+  "unchanged_display_blocks": {
+    "figure": 7,
+    "table": 8,
+    "equation": 2,
+    "equation*": 0,
+    "align": 0,
+    "align*": 0
+  },
+  "references_labels_and_citations_preserved": true,
+  "all_numerical_values_preserved": true,
+  "active_tex_files": 21,
+  "unique_labels": 140,
+  "dangling_references": [],
+  "paragraph_style_passed": true,
+  "source_words_before": 7462,
+  "source_words_after": 7527,
+  "build_deferred": false,
+  "pre_build_PDF_sha256": "689103d576aab6dc532597b9354df8bf6cf281be939a3b3ba968e921e9a7a487",
+  "PDF_unchanged_during_source_edits": true,
+  "requested_build": {
+    "date": "2026-10-31",
+    "pages": 109,
+    "latex_warnings": [],
+    "reviewed_physical_pages": [
+      70,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86
+    ],
+    "main_build_and_named_PDF_identical": true,
+    "source_archive_content_verified": true,
+    "supplement_reused": true,
+    "supplement_verified_files": 25010,
+    "supplement_archive_unchanged": true,
+    "checksums": {
+      "Daniel_Zhao_Welch_MI_Thesis.pdf": "9a2beb31c6043c1b198460191f0dfd54f8e5fca1859a7d84a956d9a2db5a830d",
+      "Daniel_Zhao_Welch_MI_Thesis_Source.zip": "e387fa0c138a9e9a789007b09725182b5d3e20a895a1933cf844a103dc90a492",
+      "Daniel_Zhao_Welch_MI_Experiment_Supplement.zip": "899b3079627f3ec8cb199962276f3e7379d69e8e75bed7df7b45eeb079bbdfdb"
+    },
+    "delivery_instructions_current": true
+  }
+}

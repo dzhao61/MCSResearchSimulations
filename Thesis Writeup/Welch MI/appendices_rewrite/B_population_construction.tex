@@ -119,8 +119,7 @@ All samples retain their declared table dimensions, including empty rows
 and columns. Use natural logarithms, \(0\log0=0\), and no smoothing.
 The bias correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
 negative corrected estimates. In the equal-sample studies, the two bias corrections cancel in their
-difference. The experimental supplement gives the corrections for the
-unequal-sample comparison.
+difference.
 Calculate the standard error using
 Equation~\eqref{eq:shared-se} and the component and combined degrees of freedom
 using Chapter~\ref{chap:expanded}.
@@ -252,7 +251,7 @@ in repetition \(s\). The approximate interval for the average paired difference
  \left\{\frac{1}{M(M-1)}\sum_{s=1}^M(D_s-\bar D)^2\right\}^{1/2}.
 \end{equation}
 Use the same common-valid subset when reporting a conditional paired
-contrast. Comparisons across constructions or sample allocations use
+contrast. Comparisons across constructions use
 independent streams and therefore do not use paired indicators. All
 intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
@@ -315,8 +314,7 @@ The first-order contribution to the target's estimation error is
 \end{equation}
 Its sample SD divided by \(\sqrt M\) estimates the Monte Carlo standard
 error. Calculating the SD after combining the two terms retains the
-mean--variance covariance. The experimental supplement gives the Taylor
-expansion producing these coefficients.
+mean--variance covariance.
 
 Mean and variance ratios use the same joint delta-method calculation,
 keeping the plug-in prediction and observed variance paired. For the

@@ -157,6 +157,13 @@ Preserve necessary numerical evidence and qualifications. Keep the main
 result and interpretation together; use an appendix for detailed support
 rather than making the reader reconstruct the central argument there.
 
+Assume the examiner receives only the submitted thesis PDF. References to
+an experimental supplement, companion report or internal archive must not
+appear as directions to supporting evidence. Include the essential setting,
+calculation or result in the main text or submitted appendices, and remove
+secondary claims or promises of analyses that are not presented. Preserve
+internal evidence separately without directing the examiner to it.
+
 Choose numerical anchors that help the reader assess a claim. Avoid making
 the prose a second inventory of every plotted value. Add a table or graph
 when it resolves a specific comparison that existing displays cannot convey
@@ -204,3 +211,141 @@ Check revised claims against saved evidence. Preserve result equations,
 labels, numerical results, citations and uncertainty; verify references and
 paragraph style. Rebuild only when explicitly requested, then inspect the
 changed pages for the actual order of prose and displays.
+
+## Paragraph continuity, 31 October 2026
+
+The comparison with the three sample theses found that Chapter 6's
+interpretation paragraphs are not generally shorter. Shorter sentences
+and repeated setup passages can nevertheless interrupt the argument.
+
+- Connect an observation with its reason, consequence or qualification
+  when the relationship is clearer within one sentence. Retain short
+  sentences for distinct results and definitions; do not replace them
+  with long sentences containing several unrelated claims.
+- Keep table settings with the explanation of that table when they answer
+  the same question. Combine related setup fragments without merging
+  distinct panel interpretations or moving text across its display.
+- Explain why a comparison is needed before listing its procedural choices.
+  In calibration sensitivity, establish that equal MI leaves the common
+  value unspecified before defining the lower and upper fitting nulls.
+- Preserve Figure 6.1's three row paragraphs and substantive explanations.
+  Sentence wording may be revised for continuity without changing that
+  organisation. Paragraph length is not a target, and the sample medians
+  are descriptive rather than writing rules.
+- Improve continuity by replacing fragmented or repeated text. Do not add
+  filler, extra numerical cases or new results to lengthen a paragraph.
+
+## Sentence construction and progression, 31 October 2026
+
+The sample comparison identified three useful patterns: Michael commonly
+keeps a finding with its interpretation or qualification; Grace carries a
+specific result into the next sentence before explaining its significance;
+Riley develops mechanisms through successive changes in named quantities.
+Adopt these relationships while preserving the thesis's statistical precision.
+Longer sentences are useful when they complete an explanation, not as a
+general replacement for short sentences.
+
+### Develop one relationship within a sentence
+
+Keep the main statement with its immediate cause, consequence, comparison,
+condition or qualification when the reader would otherwise have to connect
+two separate statements. Use `because` for an established explanation,
+`as` for a changing condition, `although` for a qualification, and `whereas`
+or `while` for a substantive comparison. A relative clause can identify what
+an estimate measures or how a statistic is used. Select the construction
+that expresses the actual relationship, rather than adding connectors by habit.
+
+For example, develop the shared-statistic comparison as one unit:
+
+> Both methods use this statistic, which Normal Wald compares with the
+> standard normal distribution and Expanded Welch compares with a Student
+> t distribution with estimated degrees of freedom.
+
+This connects the shared input to the methods' different reference
+distributions. It does not combine a second result or numerical case.
+
+### Carry established information into the next step
+
+Begin a sentence from a quantity or finding the preceding sentence has
+established, then explain what changes or follows. Prefer specific subjects
+such as "this variance underestimation", "the larger cutoff" or "the
+remaining bias" to an isolated "this" or a generic statement that the
+results need explanation. Use the changing quantity to link sentences:
+
+> The variance estimate is too small. For a fixed difference estimate,
+> the smaller denominator enlarges the absolute statistic and can move it
+> beyond the rejection boundary.
+
+The first sentence establishes the error; the second carries that same error
+through the statistic to the decision. Retain a sentence break when it helps
+the reader follow a genuinely distinct mathematical or interpretive step.
+
+### Vary sentence length without creating overloaded sentences
+
+End a sentence when its main relationship is complete. Keep important
+definitions, new findings and non-obvious derivation steps separate when
+they need emphasis. Review short reminders about populations, scales,
+uncertainty bands or repeated calculations for integration into the sentence
+they explain. Do not join different panels, several numerical comparisons
+or unrelated procedural details simply because their sentences are short.
+A semicolon must express a close relationship; it is not a substitute for
+explaining how two statements connect.
+
+### Choose colons and semicolons for a clear purpose
+
+Use a colon to introduce a list, displayed equation or explanation that
+benefits from an explicit introduction. Prefer stating an explanation
+directly when a generic introduction such as "the diagnostics reveal
+competing effects:" merely postpones the quantities and their relationship.
+
+Keep semicolons selectively for closely related parallel statements and
+lists whose items already contain commas, such as the A/B/C settings.
+Opposing effects on a denominator or degrees of freedom can benefit from
+a clearly balanced construction. Mathematical colons, such as the one in
+the null-hypothesis notation, are not prose punctuation.
+
+Recast reminders and procedural asides into the statements they clarify.
+For example:
+
+> Changing the rejection thresholds leaves the estimated difference,
+> standard error and calculated p-values unchanged.
+
+This expresses the effect of the threshold change directly, rather than
+joining "only the thresholds change" to a second independent statement
+with a semicolon. Similarly, describe a figure as showing matched
+false-positive rates at zero and calibrated power as the MI advantage
+increases, rather than repeatedly joining separate plot instructions.
+
+Use a full stop when the next statement needs independent emphasis.
+For example, a rate's calculation and the finding that both methods are
+valid in every repetition may warrant separate sentences. Keep the
+qualification that non-rejection does not establish equality explicit.
+Do not replace semicolons mechanically with commas or conjunctions,
+strengthen a causal claim to justify a join, or introduce long, nested
+sentences to avoid a full stop. Punctuation frequencies are diagnostic
+checks, not targets.
+
+### Preserve the scientific claim when improving the connection
+
+Keep the quantities, direction of error, sample/population distinction,
+inclusion rule and approximation conditions explicit. Preserve words such
+as "can", "tends" and "approximately" where they express real limitations.
+Connecting an observation to a diagnostic must not turn association into
+proof of a mechanism. Keep all necessary intermediate algebra and do not
+reduce derivation depth to make the prose sound smoother.
+
+### Review sentences in context
+
+1. Read the whole paragraph and identify the question it answers.
+2. For each short sentence, decide whether it introduces a distinct point
+   or completes an explanation already underway. Retain the former;
+   consider connecting or integrating the latter.
+3. Check that the next sentence starts from an identifiable quantity or
+   explicitly motivates a new comparison. Remove only genuine repetition.
+4. Reread the revised paragraph for one clear main clause per sentence,
+   manageable qualifications and visible transitions between steps.
+5. Compare the numerical evidence, assumptions, references and claim strength
+   with the original before accepting the edit.
+
+Sentence counts and lengths are diagnostic checks, not quotas. A reduction
+in short sentences is useful only when the explanation becomes easier to follow.

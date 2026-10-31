@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-31",
+  "changed_manuscript_files": [
+    "chapters_rewrite/04_expanded_welch.tex",
+    "chapters_rewrite/05_experimental_design.tex",
+    "chapters_rewrite/06_results.tex",
+    "appendices_rewrite/B_population_construction.tex"
+  ],
+  "previous_supplement_mentions": 11,
+  "remaining_project_supplement_or_companion_references": [],
+  "preserved_display_blocks": {
+    "chapters_rewrite/04_expanded_welch.tex:table": 2,
+    "chapters_rewrite/04_expanded_welch.tex:equation": 37,
+    "chapters_rewrite/04_expanded_welch.tex:equation*": 9,
+    "chapters_rewrite/04_expanded_welch.tex:align": 9,
+    "chapters_rewrite/04_expanded_welch.tex:align*": 7,
+    "chapters_rewrite/05_experimental_design.tex:table": 5,
+    "chapters_rewrite/05_experimental_design.tex:equation": 6,
+    "chapters_rewrite/05_experimental_design.tex:equation*": 1,
+    "chapters_rewrite/05_experimental_design.tex:align*": 1,
+    "chapters_rewrite/06_results.tex:figure": 7,
+    "chapters_rewrite/06_results.tex:table": 8,
+    "chapters_rewrite/06_results.tex:equation": 2,
+    "appendices_rewrite/B_population_construction.tex:equation": 14,
+    "appendices_rewrite/B_population_construction.tex:align*": 1
+  },
+  "labels_preserved": true,
+  "active_tex_files": 21,
+  "unique_labels": 140,
+  "dangling_references": [],
+  "missing_citations": [],
+  "paragraph_style_passed": true,
+  "unchanged_protected_files": 117,
+  "build_deferred": false,
+  "tests_passed": {
+    "numerical_consistency": 5,
+    "independent_derivation": 11,
+    "total": 16
+  },
+  "PDF_and_delivery_files_unchanged_during_source_edits": true,
+  "requested_build": {
+    "pages": 109,
+    "chapter_6_physical_range": [
+      60,
+      86
+    ],
+    "appendix_B_physical_range": [
+      97,
+      104
+    ],
+    "supplement_or_companion_mentions_in_PDF": 0,
+    "latex_warnings": [],
+    "changed_physical_pages": [
+      5,
+      40,
+      41,
+      49,
+      55,
+      57,
+      58,
+      59,
+      61,
+      62,
+      63,
+      66,
+      68,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      99,
+      102,
+      103
+    ],
+    "date": "2026-10-31",
+    "changed_pages_visually_reviewed": 33,
+    "visual_review_passed": true,
+    "paragraph_style_passed": true,
+    "main_build_named_PDF_hashes_identical": true,
+    "source_archive_checked": true,
+    "source_files": 95,
+    "supplement_reused": true,
+    "supplement_inputs_unchanged": 25010,
+    "hashes": {
+      "Daniel_Zhao_Welch_MI_Thesis.pdf": "535f3f7a240129abf142bceb73de87bbe7ffa8bd5bd7818d57315d95fd15987f",
+      "Daniel_Zhao_Welch_MI_Thesis_Source.zip": "f6090e1de3728b4bec970fc791d2b0313e8fdb680aaf6adc49ad2e085c9988e9",
+      "Daniel_Zhao_Welch_MI_Experiment_Supplement.zip": "899b3079627f3ec8cb199962276f3e7379d69e8e75bed7df7b45eeb079bbdfdb"
+    }
+  }
+}

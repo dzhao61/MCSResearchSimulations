@@ -48,6 +48,14 @@ Internal plans and review records are under `notes/`. Superseded loose
 sources, plots and comparison entry points are preserved under
 `archive/cleanup_2026-10-18/`; they are not active build inputs.
 
+The examiner is assumed to receive the submitted thesis PDF. Do not refer
+manuscript readers to the experimental supplement, companion reports or
+internal archives. Essential methods and evidence must appear in the main
+text or its submitted appendices; omit unsupported secondary claims and
+promises of unreported analyses. Keep internal evidence packages and
+preservation records available for project work without making them part
+of the examiner's required reading.
+
 Use connected, varied academic prose rather than uniformly short sentences.
 Longer sentences are useful when they keep a claim with its reason,
 consequence, qualification or comparison. Keep a clear main clause and avoid
