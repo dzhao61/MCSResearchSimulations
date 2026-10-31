@@ -3,9 +3,9 @@
 
 Mutual information (MI) measures how much observing one variable reduces
 uncertainty about another. This thesis develops and evaluates a test for
-equal MI between two categorical variables across independent populations,
-allowing their probability tables to differ. The Normal Wald test uses a
-normal approximation for this comparison, which can give inaccurate
+equal MI between two categorical variables across independent populations.
+The Normal Wald test uses a normal approximation for this comparison,
+which can give inaccurate
 false-positive rates in small samples or when many category combinations
 are rarely observed.
 
@@ -26,12 +26,7 @@ degrees-of-freedom approximations inaccurate. Expanded Welch brings
 false-positive rates closer to 5\% in selected small-sample settings,
 with lower power at the usual rejection thresholds, but also reduces
 rejection where false-positive rates are already below 5\%.
-
-To compare power after matching false-positive rates, we use independent
-equal-MI simulations to fit separate rejection thresholds targeting 5\%
-false positives at a chosen common MI value. Expanded Welch then has higher
-power in some comparisons, but these gains can reverse when the common MI
-used for fitting changes. Changing thresholds leaves bias in the MI
-difference and errors in its estimated standard error unresolved. The
-evidence therefore supports improvements in particular tested settings,
-with power gains that depend on the calibration population.
+After adjusting both tests to achieve approximately 5\% false-positive
+rates at a selected equal-MI setting, Expanded Welch has higher power in
+some comparisons. These gains can reverse when a different equal-MI
+setting is used for the adjustment.

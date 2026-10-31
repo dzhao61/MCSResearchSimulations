@@ -1,6 +1,31 @@
 # Main Welch MI thesis deliverable
 
-Latest built PDF: **109 pages**, rebuilt on 31 October 2026 with the four
+Latest built PDF: **109 pages**, rebuilt on 31 October 2026 with the
+shortened three-paragraph abstract. The calibrated-power finding now ends
+the results paragraph, retaining the reversal under a changed equal-MI
+adjustment setting. The fitting details, repeated concluding qualification
+and earlier probability-table clause are removed from the abstract.
+Compilation, reference and paragraph-style checks pass with no LaTeX
+warnings. The rendered abstract was visually reviewed and fits on one page;
+extracted text on all other pages is unchanged. Main/named PDFs, the
+95-file source archive and checksums are current. The unchanged 25,010-file
+experiment supplement was reused after input inventory, size and exact
+timestamp checks. Chapters, appendices and experiment results are unchanged.
+
+The preceding **109-page** PDF was rebuilt on 31 October 2026 with the
+expanded A–C labels in Table 6.2. Each row includes its margin regime,
+table size and sample size. The generator and display-evidence record
+preserve these labels; numerical values are unchanged. Compilation,
+references and paragraph-style checks pass with no LaTeX warnings.
+The changed page and both neighbours were rendered and visually reviewed:
+all three labels fit on single lines. Extracted text differs from the
+preceding PDF only on physical page 75 (printed page 67). Main/named PDFs,
+the 95-file source archive and checksums are current. The unchanged
+25,010-file experiment supplement was reused after input inventory, size
+and exact timestamp checks. No experiments, derivations or chapter
+structures were removed or changed during this rebuild.
+
+The preceding **109-page** PDF was rebuilt on 31 October 2026 with the four
 approved reader clarifications and the local definition of h beside
 Table 6.5. Variance names distinguish pointwise-MI variation from sampling
 variation, Appendix B.9 lists the six application p-values used for Holm
