@@ -70,9 +70,11 @@ For research prose across the thesis, use
 the Chapters 5–7 changes into guidance on reading order, explanatory
 relationships, named referents and purposeful sentence breaks. Adapt the
 principles to each chapter's role rather than targeting sentence length.
-`notes/CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md` records the proposed
-earlier-chapter pass; it is planning only and does not authorise manuscript
-edits or a rebuild on its own.
+`notes/CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md` records the
+earlier-chapter pass authorised on 31 October 2026. Its completed source
+changes and preservation checks are recorded in
+`notes/CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md`. This source revision does
+not itself request a PDF rebuild.
 
 For Chapter 6 results writing, also use
 `notes/CHAPTER_6_RESULTS_WRITING_GUIDELINES_2026-10-30.md` alongside the

@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-31",
+  "chapters": {
+    "01_introduction.tex": {
+      "preserved_display_blocks": {
+        "equation": 1
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 851,
+      "source_words_after": 840
+    },
+    "02_background_literature.tex": {
+      "preserved_display_blocks": {
+        "equation": 25,
+        "align": 8,
+        "figure": 1
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 3712,
+      "source_words_after": 3705
+    },
+    "03_problem_baselines.tex": {
+      "preserved_display_blocks": {
+        "equation": 13,
+        "table": 1
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 995,
+      "source_words_after": 997
+    },
+    "04_expanded_welch.tex": {
+      "preserved_display_blocks": {
+        "equation": 37,
+        "align": 9,
+        "equation*": 9,
+        "align*": 7,
+        "table": 2
+      },
+      "headings_labels_inputs_and_citations_preserved": true,
+      "reference_occurrences_preserved": true,
+      "all_distinct_inline_expressions_preserved": true,
+      "all_distinct_numerical_values_preserved": true,
+      "paragraph_structure_preserved": true,
+      "source_words_before": 3359,
+      "source_words_after": 3392
+    }
+  },
+  "build_deferred": true,
+  "Section_2_3_byte_identical": true,
+  "Figure_2_1_discussion_byte_identical": true,
+  "Section_4_4_worked_example_and_algorithm_byte_identical": true,
+  "unchanged_protected_files": 120,
+  "active_tex_files": 21,
+  "unique_labels": 140,
+  "dangling_references": [],
+  "missing_citations": [],
+  "balanced_braces_and_environments": true,
+  "external_supplement_pointers": [],
+  "paragraph_style_check": "passed",
+  "thesis_consistency_tests": {
+    "run": 5,
+    "passed": 5
+  },
+  "whitespace_check": "passed",
+  "literature_coverage_retained": true,
+  "pdf_rebuilt": false,
+  "source_snapshot": "archive/before_chapters_1_4_prose_implementation_2026-10-31.zip"
+}

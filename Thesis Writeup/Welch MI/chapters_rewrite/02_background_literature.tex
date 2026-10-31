@@ -47,8 +47,9 @@ mutual information (also called local MI) associated with cell \((i,j)\) is
   \label{eq:background-pmi}
 \end{equation}
 The denominator is the cell probability under independence with the same
-margins. A positive value means that the cell occurs more often than
-independence predicts, whereas a negative value means that it occurs less often.
+margins. Positive pointwise MI means that the cell occurs more often than
+independence predicts, whereas negative pointwise MI means that it occurs
+less often.
 
 Mutual information is the probability-weighted average of these pointwise
 values \citep{shannon1948,bossomaier2016}:
@@ -116,9 +117,9 @@ Under multinomial sampling, the cell counts vary between samples but must
 sum to \(n\), so an extra observation in one cell leaves fewer observations
 for the others. For a fixed set of categories, the plug-in
 estimate approaches population MI as the sample grows, but its finite-sample
-bias and sampling variance depend on the complete probability table. In particular,
-rare cells can change both even when the categories and sample size are
-unchanged
+bias and sampling variance depend on the complete probability table.
+Changing the probabilities of rare cells can change both the bias and the
+sampling variance even when the categories and sample size are unchanged
 \citep{paninski2003}.
 
 Bias is the difference between the average estimate across repeated samples
@@ -161,10 +162,10 @@ analytical bias corrections that account
 for the categories with nonzero population probability, but these remain
 large-sample approximations. \citet{paninski2003} shows that substantial
 error can remain after standard corrections, including the jackknife,
-when many categories are poorly sampled. \citet{chaoshen2003} instead
-adjust entropy for categories missing from the sample. Their method uses
-sample coverage, the total population probability of the categories that
-have been observed, and accounts for the different probabilities of
+when many categories are poorly sampled. To account for categories missing
+from the sample, \citet{chaoshen2003} adjust entropy using sample coverage,
+the total population probability of the categories that have been observed.
+Their adjustment also accounts for the different probabilities of
 discovering common and rare categories.
 
 Bayesian estimators model the unknown probabilities rather than treating
@@ -186,14 +187,13 @@ to one joint probability model and can produce negative MI estimates.
 Nevertheless, these combined estimators generally outperform the authors'
 fully Bayesian MI estimator in their tested examples.
 
-The sampling pattern can also suggest a more targeted estimator.
-\citet{hernandez2019} consider a well-sampled, low-entropy variable paired
-with a variable whose many categories are poorly sampled. They use the
-well-estimated marginal and model the conditional probabilities to estimate
-MI, rather than estimating three entropies separately. Their results also
+\citet{hernandez2019} tailor MI estimation to a well-sampled, low-entropy
+variable paired with a variable whose many categories are poorly sampled.
+Their estimator uses the well-estimated marginal and models the conditional
+probabilities, rather than estimating three entropies separately. Their results also
 show that combining Bayesian entropy estimates can retain bias under severe
-undersampling. Estimation errors need not cancel when MI estimates from
-two distinct populations are subtracted. The two-sample problem therefore
+undersampling. When MI estimates from two distinct populations are
+subtracted, their estimation errors need not cancel. The two-sample problem therefore
 requires both a small bias in the estimated difference and a standard error
 that describes its sampling variation.
 
@@ -521,7 +521,7 @@ the population variances by estimates gives the standardisation
   \label{eq:background-wald-standardisation}
 \end{equation}
 Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
-\(V(P)\) and \(V(Q)\). This limit assumes positive population cell
+\(V(P)\) and \(V(Q)\). The normal limit assumes positive population cell
 probabilities, positive pointwise-MI variances and increasing sample
 sizes. Chapter~\ref{chap:baselines} applies the leading bias correction
 to the numerator and specifies the full Normal Wald test.
@@ -553,9 +553,9 @@ testing equal population means and the effective degrees of freedom are
   \label{eq:background-ordinary-welch}
 \end{align}
 
-The denominator of the statistic contains one estimated variance contribution
-from each sample. Under normal sampling, their component degrees of freedom
-are \(n_P-1\) and \(n_Q-1\). If \(s_P^2/n_P\) dominates, the formula makes the
+The denominator contains one estimated variance contribution from each
+sample, with component degrees of freedom \(n_P-1\) and \(n_Q-1\) under
+normal sampling. If \(s_P^2/n_P\) dominates, the formula makes the
 combined \(\nu\) close to \(n_P-1\); when both contributions matter, both
 samples' degrees of freedom affect \(\nu\). Satterthwaite obtains this form
 by matching the mean and variance of their sum to a scaled chi-squared variable
@@ -596,9 +596,8 @@ The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
 For example, \citet{panwall2002} calculate approximate degrees of freedom
-by examining how a regression variance estimate varies between samples,
-and Expanded Welch uses the variability of the estimated MI variance to choose
-degrees of freedom in the same way.
+from the sampling variability of a regression variance estimate, while
+Expanded Welch uses the sampling variability of the MI variance estimate.
 These regression precedents address variance estimates that are too small
 or confidence intervals that cover too rarely
 \citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
@@ -620,10 +619,10 @@ Choosing a Welch--Satterthwaite cutoff additionally requires the sampling
 variance of that variance estimate, which describes how much it changes
 when a new sample produces a different table.
 
-A Bayesian approach describes uncertainty about population MI given an
-observed table. \citet{hutter2002} and \citet{hutterzaffalon2005} model the
-unknown cell probabilities to calculate the variance and shape of the
-resulting MI distribution. Our repeated-sampling comparison instead asks
+To describe uncertainty about population MI given an observed table,
+\citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
+probabilities and calculate the variance and shape of the resulting MI
+distribution. Our repeated-sampling comparison instead asks
 how often Normal Wald and Expanded Welch reject equal MI when new samples
 are drawn from fixed populations \(P\) and \(Q\).
 
@@ -650,9 +649,10 @@ more than substituting a different numerator. The row, column and joint entropie
 observations, so their estimation errors are connected through the cell
 counts contributing to all three.
 The MI variance formulas in Section~\ref{sec:first-order-mi-background}
-account for that connection. Expanded Welch also tracks changes in the estimated MI variance because
-a cell change alters both the weights and the pointwise-MI values whose
-weighted variance is being estimated. Thus Hutcheson supplies a close comparison framework,
+account for these connected estimation errors. To obtain degrees of freedom,
+Expanded Welch also tracks how a cell change alters both the probability
+weights and the pointwise-MI values whose weighted variance is being
+estimated. Thus Hutcheson supplies a close comparison framework,
 while the cell and margin derivatives supply the MI-specific inputs.
 
 In a segregation application, \citet{mora2009} derive a normal approximation
@@ -689,13 +689,13 @@ remain biased.
 
 A simple permutation test combines the two samples and shuffles their
 group labels, giving an exact test when the populations have the same
-complete distribution, \(P=Q\). Our hypothesis
-requires only \(I(P)=I(Q)\): the tables can differ while their MI values are
-equal. Equal MI alone does not guarantee that this label-permutation test
+complete distribution, \(P=Q\). Our hypothesis requires only
+\(I(P)=I(Q)\), allowing the tables to differ while their MI values are
+equal. Equal MI alone therefore does not guarantee that this label-permutation test
 has the stated false-positive rate \citep{chung2013}.
-Specialised permutation methods allow distinct
-populations in some parameter comparisons \citep{janssen1997,chung2013};
-their validity for equal MI would need to be established.
+Although specialised permutation methods allow distinct populations in
+some parameter comparisons \citep{janssen1997,chung2013}, their validity
+for equal MI would need to be established.
 
 \section{Previous work and this thesis's contribution}
 
@@ -714,9 +714,9 @@ of freedom for Expanded Welch. The resulting test retains Normal Wald's MI
 difference and standard error but compares the statistic with a Student
 \(t\) distribution rather than a standard normal distribution.
 
-The experiment measures errors in the shared MI difference and standard
-error alongside false-positive rates and power.
 \citet{paninski2003} shows that finite-sample information estimates can
 retain substantial bias after a leading correction. Such bias or an
 inaccurate first-order variance approximation can undermine both tests,
-even when Expanded Welch lowers rejection.
+even when Expanded Welch lowers rejection. The experiment therefore
+measures errors in the shared MI difference and standard error alongside
+false-positive rates and power.

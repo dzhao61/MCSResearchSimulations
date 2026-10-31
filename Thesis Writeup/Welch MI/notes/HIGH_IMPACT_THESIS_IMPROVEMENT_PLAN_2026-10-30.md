@@ -6,14 +6,17 @@ Implementation and verification are recorded in [HIGH_IMPACT_REVISION_2026-10-30
 
 **Planning update, 31 October 2026.** The later prose work is consolidated in
 [Research prose writing guidelines](RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md),
-including a summary of the Chapters 5–7 revisions. The next proposed pass is
+including a summary of the Chapters 5–7 revisions. The earlier-chapter pass is
 specified in [Chapters 1–4 prose revision plan](CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md).
 The guide now includes concrete before/after examples, paragraph and
 display-placement lessons, and decisions about when to join, split, move,
 delete or retain text. The plan prioritises Chapter 2 outside Section 2.3,
 keeps Chapter 1 light, and protects the mathematical steps in Chapters 3–4.
-It recognises improvements already present in the working sources; this
-planning update makes no manuscript edits or PDF rebuild. The completed
+The user subsequently authorised the Chapters 1–4 pass, which is now
+implemented in the source with all literature coverage retained. See
+[the revision record](CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md) for the
+changes and preservation checks. The PDF awaits an explicit rebuild
+request. The completed
 30 October plan below is retained as historical context; its appendix,
 table and research-question references describe that earlier manuscript.
 

@@ -1,5 +1,16 @@
 # Main Welch MI thesis deliverable
 
+Source update pending a rebuild, 31 October 2026: the Chapters 1–4 prose
+revision is complete. It clarifies referents and literature connections,
+connects assumptions and substitutions to their consequences, and removes
+one repeated explanation of the shared statistic. All literature coverage,
+mathematical displays, numerical evidence and citations are retained.
+Section 2.3, Figure 2.1's discussion and Section 4.4's worked example and
+algorithm are byte-identical to the preceding source. Source consistency,
+paragraph style and the five existing thesis-consistency tests pass. The
+PDF and delivery files remain the preceding build. See
+`notes/CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md`.
+
 Latest built PDF: **108 pages**, rebuilt on 31 October 2026 with the Chapters 5–7 sentence-construction revision and complete Section 6.4 rewrite. Compilation, references, paragraph style and visual review of the changed pages pass. Table 5.5 is anchored before its interpretation, and removing a repeated application closing sentence avoids a nearly empty page while retaining the final qualification. Typography, numerical evidence, equations and figure assets are unchanged. The thesis is 14 pages shorter than the earlier 122-page build.
 
 Included in the requested rebuild, 31 October 2026: the sentence-construction principles now apply to Chapters 5–7. Chapter 5 connects construction choices, parameter definitions and evaluation steps; Chapter 7 connects findings, mechanisms and limits. Chapter 6 receives a lighter continuity review, retaining already clear definitions, numerical-setting lists and Figure 6.1's three row paragraphs. Earlier chapters, mathematical expressions, displays, numerical evidence, citations and typography are unchanged. Source checks and the five existing numerical-consistency tests pass. The requested rebuild now includes these edits in the main/named PDF and source archive. See `notes/CHAPTERS_5_7_SENTENCE_FLOW_2026-10-31.md`.

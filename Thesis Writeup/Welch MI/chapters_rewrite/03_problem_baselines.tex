@@ -53,15 +53,16 @@ tables.
 \begin{assumption}[Positive cell probabilities]
 Every cell in the population table has a probability greater than zero. A
 sample can still contain no observations in a cell, especially when that cell
-is rare. Such samples remain in the study; we record how often cells have
-zero observed counts to show how sparse the samples are.
+is rare. We retain such samples and record how often cells have zero
+observed counts to show how sparse the samples are.
 \end{assumption}
 
 \begin{assumption}[Positive MI]
 Both populations have positive MI: \(I(P)>0\) and \(I(Q)>0\). With the positive
 cell probabilities in Assumption~3, this is equivalent to requiring positive
-first-order variances \(V(P)>0\) and \(V(Q)>0\). It excludes exact
-independence, where the first-order approximation breaks down.
+first-order variances \(V(P)>0\) and \(V(Q)>0\). The positive-MI
+assumption excludes exact independence, where the first-order approximation
+breaks down.
 \end{assumption}
 
 \begin{assumption}[Logarithm units]
@@ -95,7 +96,7 @@ The same calculation gives \(\Ihat(Q)\).
 
 Subtracting the leading fixed-support MI bias in
 Equation~\eqref{eq:mi-leading-bias} \citep{miller1955,moddemeijer1989}
-from each plug-in estimate gives the estimated effect:
+from each plug-in estimate gives the bias-corrected MI difference:
 \begin{equation}
   \Deltahat
   =\left\{\Ihat(P)-\frac{(r-1)(c-1)}{2n_P}\right\}
@@ -108,8 +109,8 @@ categories because every population cell has positive probability under
 the model, even when some cells are unobserved in a sample. We retain
 negative corrected estimates when calculating the difference.
 When \(n_P=n_Q\), the two corrections cancel, so \(\Deltahat\) is exactly
-the raw plug-in MI difference. With unequal sample sizes, their difference
-removes the leading unequal-sample bias described in
+the raw plug-in MI difference. With unequal sample sizes, the difference
+between the two corrections removes the leading unequal-sample bias described in
 Section~\ref{sec:background-mi-bias}. A correction that estimates support
 from occupied cells would be a different estimator.
 
@@ -181,12 +182,11 @@ The common standardised statistic is
 \end{equation}
 The sign of \(T\) indicates whether \(P\) or \(Q\) has the larger
 corrected MI estimate, while its magnitude measures the difference relative
-to its estimated standard error. Both tests use
+to its estimated standard error. Both tests use the same effect estimate
+and plug-in standard error in
 Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t}, but
 compare \(T\) with different reference distributions centred at zero
-under \(H_0\). The two rejection rules therefore differ through the
-reference distribution while using the same effect estimate and plug-in
-standard error.
+under \(H_0\).
 
 \section[Normal Wald test and motivation for Expanded Welch]{Normal Wald test and motivation for\\Expanded Welch}
 
@@ -231,6 +231,6 @@ MI variance and how much that estimate varies across samples
 \begin{equation}
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}
-Chapter~\ref{chap:expanded} derives
-\(\Var\{\Vhat(P)\}\) by tracking how the calculated MI variance changes
-when one observation changes the joint table.
+For the remaining input, Chapter~\ref{chap:expanded} derives a first-order
+approximation to \(\Var\{\Vhat(P)\}\) by tracking how the calculated
+MI variance changes when one observation changes the joint table.

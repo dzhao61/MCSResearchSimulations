@@ -52,8 +52,9 @@ derives how these probability changes affect the estimated MI variance
 and uses that calculation to obtain degrees of freedom for Expanded Welch.
 
 The Student \(t\) distribution gives Expanded Welch a larger rejection
-cutoff than Normal Wald, so it rejects less often. This can reduce false
-positives, but it can also reduce statistical power: the probability of
+cutoff than Normal Wald, so it rejects less often. The lower rejection
+rate can reduce false positives but can also reduce statistical power,
+the probability of
 rejecting equal MI when the population MI values genuinely differ.
 The evaluation reports the resulting false-positive rates, nominal power
 and frequency of usable p-values. It then uses independent equal-MI
@@ -107,9 +108,9 @@ The thesis addresses three research questions:
 
 \section{Scope and organisation}
 
-The scope of this thesis is the comparison of MI between two populations
-using categorical data. Each sample is summarised in a count table, and
-both tables use the same fixed row and column categories. The two samples
+This thesis compares MI between two populations using categorical samples
+summarised in count tables with the same fixed row and column categories.
+The two samples
 are independent, and observations within each sample are also independent.
 For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where

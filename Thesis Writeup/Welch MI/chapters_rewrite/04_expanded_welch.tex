@@ -38,7 +38,7 @@ degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 
 \medskip
 The role of the variance estimate follows from the standard construction
-of a Student \(t\) variable. If \(Z\) has a standard normal distribution
+of a variable with a Student \(t\) distribution. If \(Z\) has a standard normal distribution
 and \(U\) independently has a chi-squared distribution with \(\nu\)
 degrees of freedom, the scaled ratio follows a Student \(t\) distribution:
 \begin{equation}
@@ -298,13 +298,15 @@ Differentiating Equation~\eqref{eq:v-second-moment} gives
   \label{eq:g-decomposition}
 \end{equation}
 
-It remains to differentiate
+With the MI derivative established, it remains to differentiate the second
+moment,
 \begin{equation}
   \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
   =\sum_{i,j}p_{ij}(\varepsilon)
   \pmi_{P_\varepsilon}(i,j)^2.
 \end{equation}
-The product rule gives
+Applying the product rule to the probability weights and squared
+pointwise-MI values gives
 \begin{align}
   \left.\frac{\mathrm d}{\mathrm d\varepsilon}
   \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
@@ -321,13 +323,14 @@ The product rule gives
   {\mathrm d\varepsilon}\right|_{0}.
   \label{eq:m2-product-rule}
 \end{align}
-The first sum is
+The change in the probability weights contributes
 \begin{equation}
   \pmi_P(x,y)^2-\E_P\{\pmi_P(X,Y)^2\}.
   \label{eq:m2-weight-term}
 \end{equation}
 
-For the second sum, define the probability-weighted row and column means
+To express the margin changes in the second sum, define the
+probability-weighted row and column means
 \begin{align}
   \E_P\{\pmi_P(X,Y)\mid X=x\}
   &=\frac{\sum_j p_{xj}\pmi_P(x,j)}{p_{x+}},\\
@@ -350,8 +353,8 @@ indicators in the first three select the chosen cell, its row and its column:
   &=\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}},\\
   \sum_{i,j}p_{ij}\pmi_P(i,j)&=I(P).
 \end{align*}
-The row indicator fixes \(i=x\) but leaves the sum over columns; dividing
-by \(p_{x+}\) makes this the conditional mean within row \(x\). The column
+The row indicator fixes \(i=x\) while leaving the sum over columns, so
+dividing by \(p_{x+}\) gives the conditional mean within row \(x\). The column
 term works in the same way. The final term comes from the constant \(+1\)
 in the pointwise-MI derivative and averages over the entire table. Keeping
 the minus signs on the row and column terms gives
@@ -426,16 +429,15 @@ Define the population variability of the observation-level sensitivities by
   \tau^2(P)=\Var_P\{g_P(X,Y)\}.
   \label{eq:tau-definition}
 \end{equation}
-The observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
-mean of zero. This follows directly by averaging the two parts of
-Equation~\eqref{eq:g-final}. The first part has mean
+Averaging the two parts of Equation~\eqref{eq:g-final} shows that the
+observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
+mean of zero. The first part has mean
 \begin{equation}
   \E_P\left[\{\pmi_P(X,Y)-I(P)\}^2-V(P)\right]
   =V(P)-V(P)=0.
 \end{equation}
-For the bracket, averaging the row conditional means weights each row by
-its probability. Averaging the column conditional means weights each
-column in the same way:
+For the bracket, the row and column conditional means are averaged by
+weighting each row or column by its probability:
 \begin{align}
   \E_P\left[\E_P\{\pmi_P(X,Y)\mid X\}\right]
   &=\sum_x p_{x+}
@@ -527,8 +529,9 @@ the zero mean of \(g_P\) gives
   &=0.
 \end{align*}
 This establishes the first-order mean approximation used in
-Section~\ref{sec:component-df-choice}. Independence of the observations
-gives the corresponding sampling variance:
+Section~\ref{sec:component-df-choice}. The independent observations give
+independent sensitivity contributions, so their covariance terms vanish
+in the following first-order sampling-variance approximation:
 \begin{align}
   \Var\{\Vhat(P)\}
   &\approx
@@ -556,11 +559,11 @@ population pointwise-MI variance:
   \frac{\Var\{\Vhat(P)\}}{V(P)^2}
   \approx \frac{\tau^2(P)}{n_PV(P)^2},
 \end{equation}
-so the component degrees of freedom are approximately twice the reciprocal of
-this relative variance. When the estimate fluctuates little compared with
-the size of \(V(P)\), the degrees of freedom are large and the Student
-\(t\) distribution is close to the standard normal distribution, whereas
-greater relative fluctuation gives fewer degrees of freedom and a larger rejection
+so the component degrees of freedom are approximately twice the reciprocal
+of this relative variance. When \(\Vhat(P)\) fluctuates little relative to
+\(V(P)\), the degrees of freedom are large and the Student \(t\)
+distribution is close to the standard normal distribution. Greater relative
+fluctuation instead gives fewer degrees of freedom and a larger rejection
 cutoff.
 Positive \(V(P)\) does not guarantee positive \(\tau^2(P)\): table changes
 can have no first-order effect on \(V(P)\). In that case, describing the
@@ -588,8 +591,8 @@ For each occupied cell,
 \end{aligned}
 \label{eq:g-hat}
 \end{equation}
-In all weighted sums, an empty cell contributes zero; no logarithm or
-sensitivity needs to be evaluated there. The empirical sensitivities also
+An empty cell has zero weight in these sums, so no logarithm or sensitivity
+needs to be evaluated there. The empirical sensitivities also
 have probability-weighted mean zero under exact substitution. Their
 variance is centred explicitly:
 \begin{equation}
@@ -611,9 +614,10 @@ Repeating the same calculation for the second table gives
 \(\widehat\nu_Q\).
 
 \medskip
-Table~\ref{tab:component-df-roles} distinguishes the three component
-quantities. The first two are fixed for a population and sample size;
-\(\widehat\nu_P\) changes with each sampled table.
+Table~\ref{tab:component-df-roles} distinguishes the sampling-moment target,
+its population first-order approximation and the sample-based estimate.
+The target and population approximation are fixed for a population and
+sample size, whereas \(\widehat\nu_P\) changes with each sampled table.
 
 \begin{table}[htbp]
 \centering
@@ -842,11 +846,10 @@ of cell errors can still remain: these are the quadratic terms retained
 by a second-order expansion. Near independence, the linear weights are
 small enough that the quadratic terms can contribute substantially.
 
-Along the fixed-margin path, the expansion relates MI, the pointwise-MI
-variance \(V(P)\), and the variance of the sensitivities \(\tau^2(P)\).
-Appendix~\ref{sec:fixed-margin-local-derivation} gives the
-calculation and its fixed-margin assumptions. Close to independence on
-that path, it gives
+The fixed-margin expansion in Appendix~\ref{sec:fixed-margin-local-derivation}
+relates MI, the pointwise-MI variance \(V(P)\), and the variance of the
+sensitivities \(\tau^2(P)\) under the assumptions stated there. Close to
+independence along that path, the expansion gives
 \begin{equation}
  V(P)\approx 2I(P),
  \qquad \tau^2(P)\approx4V(P).

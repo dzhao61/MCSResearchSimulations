@@ -1,5 +1,13 @@
 # Applying the prose guidelines to Chapters 1–4
 
+**Implementation update, 31 October 2026.** The user authorised this pass,
+and the targeted source revisions are complete. The literature coverage
+is retained in full, following the user's subsequent decision to keep the
+alternative-method discussions. Section 2.3, mathematical displays and
+the worked example are preserved. See the [implementation and verification
+record](CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md). The PDF awaits an explicit
+rebuild request. The planning text below is retained as the review basis.
+
 31 October 2026 · Planning update only. No manuscript edits are made by
 this review; existing working-tree revisions are preserved.
 

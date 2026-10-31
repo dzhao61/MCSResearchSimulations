@@ -63,8 +63,10 @@ claims when revising. Use
 for the consolidated lessons from Chapters 5–7, sentence-review decisions
 and adaptation to different chapter roles. The Chapter 6 results guide
 retains the detailed figure and interpretation examples. These principles
-apply throughout research prose; the Chapters 1–4 revision plan is planning
-only until the user requests implementation.
+apply throughout research prose. The user authorised the Chapters 1–4
+revision on 31 October 2026; its completed source changes and preservation
+checks are recorded in
+`Thesis Writeup/Welch MI/notes/CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md`.
 
 Use colons to introduce lists, equations or explanations that benefit from
 an explicit introduction. Reserve semicolons for closely related parallel
