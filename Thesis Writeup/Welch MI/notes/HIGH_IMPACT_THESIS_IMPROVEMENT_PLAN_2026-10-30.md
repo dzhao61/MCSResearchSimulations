@@ -15,8 +15,8 @@ keeps Chapter 1 light, and protects the mathematical steps in Chapters 3–4.
 The user subsequently authorised the Chapters 1–4 pass, which is now
 implemented in the source with all literature coverage retained. See
 [the revision record](CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md) for the
-changes and preservation checks. The PDF awaits an explicit rebuild
-request. The completed
+changes and preservation checks. The requested rebuild now includes the
+revisions and new abstract in the 107-page PDF. The completed
 30 October plan below is retained as historical context; its appendix,
 table and research-question references describe that earlier manuscript.
 
