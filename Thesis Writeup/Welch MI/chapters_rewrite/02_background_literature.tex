@@ -13,8 +13,8 @@ For a discrete random variable \(X\) with probability mass function
 \(p_X(x)\), the information content of outcome \(x\) is
 \(-\log p_X(x)\).
 Rare outcomes have larger information content because they are less expected.
-Using natural logarithms gives information in nats. The Shannon entropy is the
-expected information content,
+The Shannon entropy is the expected information content, measured here in
+nats using natural logarithms:
 \begin{equation}
   H(X)=-\sum_x p_X(x)\log p_X(x).
   \label{eq:entropy}
@@ -83,9 +83,9 @@ probabilities in the two population tables.
 
 The logarithm base determines the reporting unit, and this thesis uses
 natural logarithms to express MI in nats. Dividing by \(\log 2\)
-converts MI to bits.
-This conversion rescales MI and its standard error together but leaves the
-degrees of freedom unchanged, so the test result is identical in either unit.
+converts MI to bits by rescaling MI and its standard error together,
+while leaving the degrees of freedom unchanged. The test result is
+therefore identical in either unit.
 
 \section{Estimating discrete mutual information}
 \label{sec:background-mi-bias}
@@ -193,7 +193,7 @@ Their estimator uses the well-estimated marginal and models the conditional
 probabilities, rather than estimating three entropies separately. Their results also
 show that combining Bayesian entropy estimates can retain bias under severe
 undersampling. When MI estimates from two distinct populations are
-subtracted, their estimation errors need not cancel. The two-sample problem therefore
+subtracted, their estimation errors need not cancel, so the two-sample problem
 requires both a small bias in the estimated difference and a standard error
 that describes its sampling variation.
 
@@ -570,8 +570,8 @@ by matching the mean and variance of their sum to a scaled chi-squared variable
 
 Figure~\ref{fig:normal-student-t} shows that the Student \(t\) distribution
 has heavier tails than the standard normal distribution, especially when
-\(\nu\) is small. More probability in the tails means a larger absolute
-statistic is needed to reject the null at the same significance level.
+\(\nu\) is small, so a larger absolute statistic is needed to reject the
+null at the same significance level.
 As \(\nu\) increases, the Student \(t\) distribution approaches the
 standard normal distribution, and their rejection cutoffs become closer.
 

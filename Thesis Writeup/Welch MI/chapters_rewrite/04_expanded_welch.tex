@@ -596,9 +596,9 @@ For each occupied cell,
 \label{eq:g-hat}
 \end{equation}
 An empty cell has zero weight in these sums, so no logarithm or sensitivity
-needs to be evaluated there. The empirical sensitivities also
-have probability-weighted mean zero under exact substitution. Their
-variance is centred explicitly:
+needs to be evaluated there. Although the empirical sensitivities have
+probability-weighted mean zero under exact substitution, their variance
+is centred explicitly:
 \begin{equation}
   \widehat\tau^2(P)
   =\sum_{i,j}\widehat p_{ij}
@@ -917,7 +917,7 @@ therefore remains a finite-sample approximation.
 
 For fixed population tables with positive \(V\) and \(\tau^2\), increasing
 the sample sizes under regular conditions increases the estimated degrees
-of freedom. The Student \(t\) distribution then approaches the standard
+of freedom, bringing the Student \(t\) distribution closer to the standard
 normal distribution used by Wald. This large-sample behaviour holds the
 populations fixed, whereas the near-independence comparison above reduces
 population MI at a fixed sample size.

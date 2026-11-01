@@ -18,8 +18,8 @@ tables to which both tests are applied.
 \section{Setup: Constructing joint distributions with known MI}
 
 Before drawing samples, we construct population probability tables with
-specified MI values. Equal MI values allow us to measure false-positive
-rates, while different MI values allow us to measure power. For each table,
+specified MI values, using equal values to measure false-positive rates
+and different values to measure power. For each table,
 we first choose how frequently the categories occur, then change the
 association between \(X\) and \(Y\) while keeping those frequencies fixed.
 
@@ -71,7 +71,7 @@ and therefore gives every cell positive probability. This copying
 construction is a special case of the mixture model described by
 \citet{bocci2010}.
 
-At \(\lambda=0\), MI is zero. Increasing \(\lambda\) increases MI,
+MI is zero at \(\lambda=0\) and increases with \(\lambda\),
 although the copying probability needed to reach a particular MI depends
 on the category frequencies \(a\). To construct a table with the desired
 MI, we hold \(a\) fixed and search numerically for \(\lambda\),
@@ -128,8 +128,8 @@ cells.
 
 At each table size, we compare three patterns of category frequencies,
 called margin regimes. Uniform margins assign probability \(1/k\) to
-every category. For uneven margins, the first category has probability
-\(\rho\), and the remaining probability \(1-\rho\) is shared equally
+every category, whereas uneven margins assign probability \(\rho\) to
+the first category and share the remaining probability \(1-\rho\) equally
 among the other \(k-1\) categories. We write this vector as
 \begin{equation}
  m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
@@ -185,8 +185,8 @@ The average of the \(\Vhat(P)\) values estimates \(\E\{\Vhat(P)\}\);
 their variation across draws estimates \(\Var\{\Vhat(P)\}\).
 
 The observation-level sensitivity derived in Chapter~\ref{chap:expanded}
-describes how the estimated pointwise-MI variance responds to changes in the table.
-Let \(\tau^2(P)\) be its population variance. The first-order predictions are
+has population variance \(\tau^2(P)\) and describes how the estimated
+pointwise-MI variance responds to changes in the table. The first-order predictions are
 \begin{equation}
  \E\{\Vhat(P)\}\approx V(P),\qquad
  \Var\{\Vhat(P)\}\approx\frac{\tau^2(P)}{n_P}.
@@ -278,8 +278,8 @@ across those four experimental parameters.
 At each setting, we draw 100,000 independent pairs of count tables and
 apply both tests to the same pair using their usual two-sided p-value
 threshold of 0.05. The false-positive rate is the fraction of all
-repetitions that reject equal MI. Invalid calculations count as
-non-rejections, and we report the valid-result fraction separately so
+repetitions that reject equal MI, with invalid calculations counted as
+non-rejections. We report the valid-result fraction separately so
 calculation failures can be distinguished from conservative decisions.
 
 A rejection rate above 5\% indicates excessive rejection, while a rate
@@ -310,16 +310,16 @@ MI gap stay fixed as sample size increases; comparing curves changes
 
 For each setting, we generate 100,000 independent pairs of count tables
 and apply both tests to each pair using their usual p-value threshold of
-0.05. Power is the fraction of all repetitions that reject equal MI;
-invalid calculations count as non-rejections, and the valid-result
-fraction is reported separately. The sample sizes and margin profiles
+0.05. Power is the fraction of all repetitions that reject equal MI,
+with invalid calculations counted as non-rejections and the valid-result
+fraction reported separately. The sample sizes and margin profiles
 are specified in Tables~\ref{tab:design-primary-grids} and
 \ref{tab:margin-profiles}.
 
 Expanded Welch uses the same statistic as Normal Wald with a larger
 rejection cutoff, so it cannot have higher power at this common threshold.
-The comparison measures the reduction in detection probability across the
-grid. We interpret that reduction alongside the false-positive rates in
+We measure the reduction in detection probability across the grid and
+interpret it alongside the false-positive rates in
 Section~\ref{sec:null-design}, because a higher rejection rate under an
 alternative can accompany excessive rejection under equal MI.
 

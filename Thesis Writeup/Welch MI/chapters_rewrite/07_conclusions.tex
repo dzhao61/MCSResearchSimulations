@@ -34,10 +34,9 @@ evaluation, even when the population approximation is accurate.
 
 \subsection{RQ2: False-positive rates under equal MI}
 
-Across the null grid, Expanded Welch lowers rejection, bringing some
-excessive rates closer to 5\% while making conservative rates lower
-still. The effect on calibration depends on the population as well as
-sample size.
+Across the null grid, Expanded Welch's effect on calibration depends on
+the population and sample size, as its lower rejection brings some
+excessive rates closer to 5\% while making conservative rates lower still.
 
 The diagnostic comparison in Table~\ref{tab:balanced-null-diagnostics}
 shows how different errors in the shared statistic accompany these
@@ -109,9 +108,9 @@ association constructions, unequal row and column margins within a table
 and other locations of dependence remain untested by the power study.
 
 All reported simulations use equal sample sizes, for which the leading
-bias corrections cancel from the MI difference. They therefore do not
-evaluate the correction's performance under unequal sample sizes, and
-residual biases can still differ between populations in the tested
+bias corrections cancel from the MI difference, so they do not evaluate
+the correction's performance under unequal sample sizes. Residual biases
+can still differ between populations in the tested
 equal-sample settings.
 
 The power comparison uses both tests' nominal thresholds,
@@ -124,8 +123,8 @@ and sample size.
 The online-shopping application illustrates how to report the estimated
 MI difference and its direction, standard error, p-value and Expanded Welch
 degrees of freedom. Its unknown population MI values prevent a direct
-check of false-positive rates. The application therefore demonstrates
-interpretation of the test outputs, while the simulation evidence
+check of false-positive rates, so the application demonstrates
+interpretation of the test outputs while the simulation evidence
 establishes their behaviour under known populations.
 
 \section{Future work}

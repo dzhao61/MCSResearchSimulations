@@ -364,8 +364,8 @@ show the effects of sample size, table size and common MI together.
 
 Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
 populations, giving identical population tables at each common MI.
-Each panel increases sample size along the logarithmic horizontal axis.
-Colour identifies common MI; solid lines with filled circles show Normal
+Each panel increases sample size along the logarithmic horizontal axis,
+with colour identifying common MI. Solid lines with filled circles show Normal
 Wald, and dashed lines with open squares show Expanded Welch. Where the
 method curves overlap, their observed false-positive rates are equal or
 too close to distinguish on the plotted scale. The dotted line marks 5\%.
@@ -385,9 +385,9 @@ rejection before recovering towards 5\%, with later recovery for larger
 tables. At common MI 0.30, the curves instead show substantial excessive
 rejection over parts of the smaller-sample range before settling near the
 target. Increasing common MI therefore changes the rejection pattern,
-even though the population difference remains zero. Because the population
-tables and sample sizes are identical, expected difference bias cancels;
-the departures from 5\% arise through the estimated standard error and
+even though the population difference remains zero. Expected difference
+bias cancels because the population tables and sample sizes are identical,
+so the departures from 5\% arise through the estimated standard error and
 the sampling distribution of the shared statistic.
 
 Expanded Welch lowers both the excessive and conservative parts of these
@@ -423,9 +423,9 @@ oversized standard error can shrink the statistic and suppress rejection.
 At common MI 0.30, both methods instead over-reject at several small
 sample sizes before approaching 5\% with more observations.
 
-The validity strips distinguish low rejection from failed calculations.
-At the smallest sample sizes, Expanded Welch can return fewer valid
-outputs than Wald, and those failures also lower its all-repetition rate.
+At the smallest sample sizes, the validity strips show that Expanded
+Welch can return fewer valid outputs than Wald, so failed calculations
+also lower its all-repetition rate.
 The conservative troughs persist after validity becomes complete, however,
 so calculation failure is not their sole explanation. At larger samples,
 the methods' curves become close as the estimated degrees of freedom
@@ -437,8 +437,8 @@ larger-table settings.
 Figure~\ref{fig:balanced-null-different-skew} uses \(m_k(0.7)\) for
 \(P\) and \(m_k(0.8)\) for \(Q\). The population MI values are equal,
 but the tables differ, allowing their MI estimates to have different
-residual biases. That bias difference can shift the shared statistic away
-from zero under the null.
+residual biases that can shift the shared statistic away from zero
+under the null.
 
 \begin{figure}[H]
 \centering
@@ -493,8 +493,8 @@ In the uniform \(4\times4\) setting, difference bias is negligible,
 but the average squared standard error understates the observed sampling
 variance. For a given estimated difference, a smaller denominator enlarges
 \(|T|\) and tends to increase rejection. Expanded Welch's larger cutoff
-reduces that excess and brings the rate close to 5\%. This result shows
-how the cutoff can offset an error in the shared standard error at a
+reduces that excess and brings the rate close to 5\%, showing how the
+cutoff can offset an error in the shared standard error at a
 particular population pair.
 
 The two \(16\times16\) settings have almost the same variance ratio
@@ -502,8 +502,8 @@ but opposite rejection behaviour. Under same-skew margins, expected
 difference bias cancels and the oversized standard error suppresses
 rejection, which Expanded Welch lowers further. Under different-skew
 margins, the positive bias shifts the estimated difference more than two
-sampling SDs above its true zero value. That displacement coexists with
-the oversized standard error, and both methods reject far too often.
+sampling SDs above its true zero value. Both methods reject far too often
+even though the estimated standard error is oversized.
 Changing the cutoff leaves the displaced numerator unchanged.
 
 Across the grid, the methods become close with larger samples, but their
@@ -527,8 +527,8 @@ divides valid rejections by all 100,000 repetitions at that setting, with
 invalid calculations counted as non-rejections. Shading gives pointwise
 95\% intervals, and the lower strips show the fraction of valid results.
 
-Both tests use their usual p-value threshold of 0.05. Expanded Welch's
-larger cutoff makes its rejections a subset of Wald's, so the comparison
+At the usual p-value threshold of 0.05, Expanded Welch's larger cutoff
+makes its rejections a subset of Wald's, so the comparison
 quantifies how much detection probability is lost. These rates are read
 alongside the false-positive results in Section~\ref{sec:null-rejection-patterns}:
 high rejection under an alternative can coexist with excessive rejection
@@ -576,8 +576,8 @@ Expanded Welch's power rises from 11.14\% for the 0.005-nat gap to
 first-order sampling SD of the difference. The population difference is
 therefore more strongly separated from zero relative to its sampling spread.
 
-Expanded Welch remains below Wald for every gap. For the 0.01-nat gap,
-the largest separation occurs at the smallest sample size in the
+Expanded Welch remains below Wald for every gap, with the largest
+separation for the 0.01-nat gap occurring at the smallest sample size in the
 \(16\times16\) panel. Expanded Welch's valid-result fraction at that
 setting is above 99\%, so most of that separation comes from the larger
 cutoff rather than failed calculations. The method gap becomes small
