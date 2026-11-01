@@ -192,7 +192,7 @@ The derivatives of the joint probabilities sum to zero because
 \end{equation}
 
 \medskip
-\thesisminiheading{Effect on pointwise MI and MI.}
+\thesisminiheading{Effect of the perturbation on pointwise MI and MI.}
 
 Along the perturbation path, pointwise MI is
 \begin{equation}
@@ -247,8 +247,9 @@ weights and the change in pointwise-MI values:
   \left.\frac{\mathrm d\pmi_{P_\varepsilon}(i,j)}
   {\mathrm d\varepsilon}\right|_{0}.
 \end{align}
-The first sum is \(\pmi_P(x,y)-I(P)\). In the second sum, the selected-cell
-term contributes \(p_{xy}/p_{xy}=1\). The row term contributes
+The first sum is \(\pmi_P(x,y)-I(P)\). Evaluating the second sum using
+Equation~\eqref{eq:pmi-derivative}, the selected-cell term contributes
+\(p_{xy}/p_{xy}=1\); the row term contributes
 \(-\sum_j p_{xj}/p_{x+}=-1\); the column term likewise contributes \(-1\);
 and the constant contributes \(\sum_{i,j}p_{ij}=1\). These four
 contributions cancel. Hence
@@ -264,7 +265,7 @@ This is the centred pointwise-MI influence function from
 Section~\ref{sec:first-order-mi-background}.
 
 \medskip
-\thesisminiheading{Effect on the pointwise-MI variance.}
+\thesisminiheading{Effect of the perturbation on the pointwise-MI variance.}
 
 The target is the first-order change in
 \begin{equation}
@@ -840,17 +841,19 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 
 Consider a population table that approaches independence while its row
 and column margins stay fixed. At independence, every pointwise-MI value
-is zero, so the linear contributions in
-Equation~\eqref{eq:mi-error-from-cell-errors} vanish because each
-cell-probability error is weighted by its pointwise MI. Products
-of cell errors can still remain: these are the quadratic terms retained
-by a second-order expansion. Near independence, the linear weights are
-small enough that the quadratic terms can contribute substantially.
+is zero. Since the linear MI error in
+Equation~\eqref{eq:mi-error-from-cell-errors} weights each cell-probability
+error by its population pointwise MI, this linear contribution vanishes.
+Sampling errors can still create apparent association through products of
+cell-probability errors, which are retained by a second-order expansion.
+Near independence, the small linear weights allow these quadratic terms
+to contribute substantially to the MI estimation error.
 
 The fixed-margin expansion in Appendix~\ref{sec:fixed-margin-local-derivation}
 relates MI, the pointwise-MI variance \(V(P)\), and the variance of the
 sensitivities \(\tau^2(P)\) under the assumptions stated there. Close to
-independence along that path, the expansion gives
+independence along that path, with fixed table dimensions and positive
+cell probabilities, the expansion gives
 \begin{equation}
  V(P)\approx 2I(P),
  \qquad \tau^2(P)\approx4V(P).
@@ -864,36 +867,49 @@ the component degrees-of-freedom formula gives
  \approx n_PI(P).
  \label{eq:near-independent-df}
 \end{equation}
-The sample-based \(\widehat\nu_P\) is close to this population
-first-order value when its estimated inputs are sufficiently accurate.
-Smaller population MI then gives fewer degrees of freedom
-and a larger cutoff from the Student \(t\) distribution.
+At a fixed sample size, this population first-order value tends to zero
+as positive population MI approaches zero. When \(\Vhat(P)\) and
+\(\widehat\tau^2(P)\) estimate their population counterparts accurately
+enough for the component formula to be reliable, \(\widehat\nu_P\) follows this
+prediction: smaller MI gives fewer degrees of freedom and a larger cutoff
+from the Student \(t\) distribution.
 
-Very close to independence, sampling noise itself creates apparent MI in
-the empirical table. The resulting variance estimates need not be close to
-their population values, so the estimated degrees of freedom need not tend
-to zero with population MI at a fixed sample size. These local expansions
-assume fixed table dimensions, positive cell probabilities and the
-fixed-margin path. Appendix~\ref{sec:independence-boundary} retains the
-quadratic sampling terms needed when population MI is very small.
+The empirical table, however, need not be independent even when the
+population is independent. Random differences between its observed cell
+proportions and the products of its observed margins produce nonzero
+pointwise-MI values in occupied cells. Both \(\Vhat(P)\) and \(\widehat\tau^2(P)\) are
+calculated from these values, so sampling-induced association enters the
+estimated degrees of freedom. At a fixed sample size, these estimated
+inputs need not track the shrinking population quantities accurately
+enough for \(\widehat\nu_P\) to follow \(n_PI(P)\). Consequently, the
+estimated degrees of freedom need not approach zero with population MI.
+Appendix~\ref{sec:independence-boundary} retains the quadratic sampling
+terms and derives their contribution to the estimated degrees of freedom.
 
 \begin{samepage}
 \medskip
 \thesisminiheading{Theoretical status and validity conditions.}
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
-derivatives for positive population tables and provide first-order
-approximations to the sampling errors in the MI estimate and the estimated
-pointwise-MI variance.
-The scaled chi-squared model in Equation~\eqref{eq:scaled-chi-working} and
-the Student \(t\) distribution for \(T\) are finite-sample approximations.
-Because the MI difference and standard error come from the same tables,
-a sample that changes the estimated difference can also change its
-standard error. Expanded Welch's larger cutoff does not account for this
-joint movement of the estimated MI difference and its standard error.
-As sample sizes grow under regular conditions, the estimated
-degrees of freedom increase and the Student \(t\) distribution approaches the
-standard normal distribution used by Wald.
+derivatives for positive population tables. Using these derivatives to
+describe finite sampling errors gives first-order approximations for the
+MI estimate and the estimated pointwise-MI variance. Moment matching then
+approximates each variance contribution by a scaled chi-squared variable,
+as in Equation~\eqref{eq:scaled-chi-working}. The exact Student \(t\)
+construction in Section~\ref{sec:component-df-choice} also requires a
+standard normal numerator independent of its scaled chi-squared
+denominator. Here, the corrected MI difference and its estimated standard
+error come from the same tables, so an observation can change both
+quantities. Matching the variance moments does not establish the required
+normality or independence, and the Student \(t\) distribution for \(T\)
+therefore remains a finite-sample approximation.
+
+For fixed population tables with positive \(V\) and \(\tau^2\), increasing
+the sample sizes under regular conditions increases the estimated degrees
+of freedom. The Student \(t\) distribution then approaches the standard
+normal distribution used by Wald. This large-sample behaviour holds the
+populations fixed, whereas the near-independence comparison above reduces
+population MI at a fixed sample size.
 \par\nopagebreak[4]
 
 Both tests need a finite corrected MI difference and a positive, finite

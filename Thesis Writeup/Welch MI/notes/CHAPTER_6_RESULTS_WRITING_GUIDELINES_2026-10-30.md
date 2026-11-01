@@ -12,7 +12,15 @@ for other chapter types; retain this guide's detailed treatment of
 experimental comparisons and figure interpretation. The proposed application
 to earlier chapters is in the [Chapters 1–4 plan](CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md).
 Current research-question labels are RQ1 for approximation accuracy, RQ2 for
-false-positive rates and RQ3 for nominal and calibrated power.
+false-positive rates and RQ3 for power at a fixed MI difference.
+
+On 1 November 2026 the user replaced the submitted calibrated-power study
+with the full fixed-gap grid. Section 6.3 now follows uniform, same-skew and
+different-skew margins as sample size changes. Calibration examples below
+record earlier writing lessons; they are not instructions to restore that
+analysis. Introduce the fixed alternative and shared nominal thresholds,
+interpret power alongside null rejection, and distinguish detecting unequal
+MI from identifying its direction when bias reverses the estimated sign.
 
 ## What improved in Section 6.1.1
 
@@ -199,8 +207,7 @@ perform these jobs.
 | 6.1.3: behaviour near independence | Fixed sample size and changing MI; meaning of scaled moments; how each prediction departs from its comparison quantity and why. |
 | 6.2.1: overall false-positive patterns | Calculation of rejection rates; validity and inclusion; movement towards or away from 5%; differences between margins and table sizes. |
 | 6.2.2: bias and standard-error accuracy | Changes in the estimated difference, its sampling spread and estimated standard error; their effects on the shared statistic before applying the rejection cutoff. |
-| 6.3.1: nominal power | What changes along the alternative axis; direction of the corrected difference and absolute statistic; why a curve may initially fall before rising. |
-| 6.3.2: calibrated power and sensitivity | Fitting null, evaluation population and fixed alternatives; fitted thresholds; what is matched and where; limits of calibration at one null. |
+| 6.3.1–6.3.3: fixed-gap power | Fixed population tables and MI gap; changing sample size; all-repetition rejection and validity; the power cost of a larger cutoff; bias, shrinking sampling spread and the direction of rejection. |
 | 6.4: application | Question, direction and units of the MI difference, statistic and decision; what the observed data establish about equality and approximation accuracy. |
 
 These are revision priorities, not findings that every passage needs rewriting.

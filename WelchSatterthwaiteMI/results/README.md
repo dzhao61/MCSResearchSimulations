@@ -1,5 +1,14 @@
 # Results
 
+## Active fixed-gap power evidence, 1 November 2026
+
+[`fixed_gap_power_2026-11-01/`](fixed_gap_power_2026-11-01/) contains the new
+120-setting nominal-power study at MI 0.02 versus 0.03: 12 million sampled
+pairs, full scalar records, population definitions, manifests, summaries
+and a passed independent audit. The existing approximation and null evidence
+remains in `approximation_redesign/`. Earlier focused/calibrated power is
+preserved there internally and no longer appears in the thesis source.
+
 ## Current Thesis Evidence
 
 [`thesis_redesign/`](thesis_redesign/) contains the frozen Wald-versus-Expanded-

@@ -13,6 +13,15 @@ diagnostics, not targets. A successful edit makes a particular relationship
 easier to follow while preserving the scientific claim. It need not make
 the sentence longer, the paragraph larger or the manuscript shorter.
 
+The 1 November 2026 fixed-gap revision replaces the submitted calibrated-
+power experiment with a direct counterpart to the null grid. Earlier
+calibration examples in this guide remain historical writing examples.
+For parallel experiments, reuse the scientific grid and describe the one
+changed condition directly; introduce extra fitting stages only when the
+research question requires them. Report the resulting evidence and narrow
+the claim to the stated design instead of retaining a more elaborate study
+solely to support a broader comparison.
+
 Expanded on 31 October after reviewing the implementation records, archived
 before-text and current Chapters 5–7. The examples below distinguish actual
 sentence edits from broader changes to the order of explanation. The

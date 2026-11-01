@@ -1,5 +1,32 @@
 # Welch MI thesis experiment supplement
 
+## Current source revision: fixed-gap power, 1 November 2026
+
+The submitted power design now parallels the 120-setting null grid:
+MI 0.02 versus 0.03, the same four table sizes, three margin regimes and
+ten sample sizes, and 100,000 repetitions per setting. New evidence is in
+`WelchSatterthwaiteMI/results/fixed_gap_power_2026-11-01/` (12 million pairs).
+Its manifest, populations, chunked scalar records, checksums, rate/paired/
+diagnostic summaries and independent audit are included in this package.
+The 960 independently reconstructed pairs are additional to the older audits.
+
+From the workspace or extracted archive root, reproduce the new experiment
+in a separate directory:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/fixed_gap_power_study.py --mode full --output fixed-gap-reproduction --workers 3
+.venv/bin/python -m unittest WelchSatterthwaiteMI/tests/test_fixed_gap_power.py
+```
+
+The separate thesis source includes `figures_rewrite/fixed_gap_power_displays.py`
+for rendering the three current figures. Point it at the new results with
+`--results` when reproducing elsewhere. Current power uses ordinary 0.05
+p-value thresholds and an increasing sample-size axis. It uses no fitted
+null SDs, threshold calibration or bootstrap fitting batches. The earlier
+calibrated-power and four-cell experiments remain preserved internally and
+are not submitted manuscript analyses. The documentation below records
+those earlier studies and their reproduction.
+
 On 30 October 2026, Appendix C was removed as a whole from the submitted thesis. `WelchSatterthwaiteMI/supplementary_displays/additional_results_2026_10_30/` preserves that exact eleven-page version as a readable PDF with its original numbering, source, all nine external table inputs, inline Holm table and preservation hashes. It also preserves Appendix B before the accompanying reduction. This version contains the latest component, calibration, rejection-direction and application-adjustment results; it is distinct from the older nineteen-page appendix below. Essential explanatory evidence remains in Chapter 6, and the thesis retains Appendices A and B. The requested rebuild produces a 109-page thesis and refreshes this supplement's delivery archive.
 
 The thesis retains the supporting results needed for its main conclusions. `WelchSatterthwaiteMI/supplementary_displays/full_additional_results/` preserves the complete previous 19-page Appendix C as a readable PDF, its source, and all local plots and tables. It includes the companion approximation plots, broader power curves, complete construction/allocation results, jackknife investigation and timing study. Original numbering is retained in that supplementary PDF. The main study, estimates and simulations are unchanged.

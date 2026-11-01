@@ -26,7 +26,8 @@ degrees-of-freedom approximations inaccurate. Expanded Welch brings
 false-positive rates closer to 5\% in selected small-sample settings,
 with lower power at the usual rejection thresholds, but also reduces
 rejection where false-positive rates are already below 5\%.
-After adjusting both tests to achieve approximately 5\% false-positive
-rates at a selected equal-MI setting, Expanded Welch has higher power in
-some comparisons. These gains can reverse when a different equal-MI
-setting is used for the adjustment.
+Across the full simulation grid at a fixed MI difference of 0.01 nats,
+the power gap becomes small with larger samples. In sparse settings,
+bias in the shared MI difference can also produce rejection in the
+opposite direction to the true difference, which changing the cutoff
+does not resolve.

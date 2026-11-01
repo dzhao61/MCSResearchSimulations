@@ -1,5 +1,37 @@
 # Main Welch MI thesis deliverable
 
+Rebuilt on 1 November 2026: the current main and named thesis PDFs contain
+**105 pages**, down from 109. The build includes the fixed-gap 120-setting
+power study, removal of the four-cell supporting experiment, and the
+approved Chapter 4 explanation/heading edits. Compilation, references and
+paragraph style pass without LaTeX warnings. The source archive was built
+independently and reproduced the main PDF's extracted text and page breaks
+exactly. Thirty-four changed or boundary pages were rendered and visually
+checked, including all three new power figures. Main/named PDFs, the
+100-file source archive, experiment supplement and delivery checksums are
+current. The experiment supplement was regenerated because the new raw
+records and runner change its inventory. No experimental sampling was
+repeated during this build.
+
+The following source-revision entry records the state before this rebuild.
+
+
+Source revision, 1 November 2026: the user authorised a fixed-gap power
+study parallel to the broad null grid. All 120 settings now use MI 0.02
+versus 0.03 and 100,000 sampled pairs, for 12 million new pairs. Three new
+power figures show every margin regime. Sections 5.4 and 6.3, RQ3, the
+abstract, conclusions and Appendix B have been reconciled with this study;
+calibrated-power results and favourable-case selection are removed from
+the active manuscript. The old experiment and its evidence are preserved
+internally. The four-cell supporting experiment was also removed from the
+manuscript, while near-independence and stronger-common-MI checks remain.
+The source archive and experiment-supplement inventory include the new
+runner, results and plots on the next build. The main and named thesis
+PDFs have not been rebuilt and still reflect the preceding source.
+See `notes/FIXED_GAP_POWER_REVISION_2026-11-01.md` for the plan and checks.
+
+The entries below record earlier source/build stages.
+
 Latest built PDF: **109 pages**, rebuilt on 31 October 2026 with the
 shortened three-paragraph abstract. The calibrated-power finding now ends
 the results paragraph, retaining the reversal under a changed equal-MI

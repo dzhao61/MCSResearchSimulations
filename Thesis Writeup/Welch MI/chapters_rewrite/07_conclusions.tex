@@ -37,7 +37,7 @@ evaluation, even when the population approximation is accurate.
 At common MI 0.02 nats, Expanded Welch brings false-positive rates
 closer to 5\% at A (uniform \(4\times4\), \(n_P=n_Q=20\)) and
 B (different-skew \(8\times8\), \(n_P=n_Q=100\)), as defined in
-Table~\ref{tab:redesign-focus-settings}. Both tests
+Table~\ref{tab:redesign-shared-estimates}. Both tests
 return valid results
 in every repetition at these settings, so the lower rejection rates
 reflect the larger cutoff from the Student \(t\) distribution. Across the broad grid, Expanded Welch also lowers rates that are already
@@ -61,49 +61,41 @@ twice the observed \(\Var(\Deltahat)\) in the sparse copying case,
 and both tests are conservative. Unequal sample sizes can also leave unequal residual biases
 in otherwise identical populations.
 
-Under different-skew margins, both tests instead reject too often in the
-sparse \(16\times16\) null comparison. The four-cell construction
-also reproduces this failure (Section~\ref{sec:null-estimator-accuracy}),
-so it is not confined to association introduced through copying.
+Under different-skew margins, the large positive bias in the estimated
+MI difference instead accompanies excessive rejection by both tests in
+the sparse \(16\times16\) null comparison
+(Section~\ref{sec:null-estimator-accuracy}).
 
-\subsection{RQ3: Nominal and calibrated power}
+\subsection{RQ3: Power at a fixed MI difference}
 
-At the selected small-sample settings A and B, Expanded Welch has lower
-nominal power than Normal Wald alongside lower false-positive rates.
-The calibrated comparison therefore adjusts their cutoffs to match
-rejection at a specified equal-MI setting before comparing power.
-After calibration at common MI 0.02 nats, Expanded Welch has higher power
-at the reported two- and four-null-SD alternatives for A and B.
-Moving calibration to the upper equal-MI setting while holding the
-alternative fixed reverses the gain at A and two null SDs, and at B and
-four null SDs (Table~\ref{tab:redesign-calibration-sensitivity}).
-At the larger-sample setting C (different-skew \(4\times4\),
-\(n_P=n_Q=10{,}000\)), nominal power differences are small and calibrated
-differences remain practically small under both calibrations.
+The power study uses the full 120-setting grid with \(I(P)=0.02\) and
+\(I(Q)=0.03\) nats. At the usual p-value threshold of 0.05, Expanded
+Welch's rejections remain a subset of Wald's, so its lower rejection
+probability also reduces power. The size of that loss depends on the
+population and sample size, with failed calculations contributing at the
+smallest samples. At \(n=10{,}000\), the power gap is below 0.32
+percentage points throughout the grid, and both methods exceed 99.9\%
+power at \(n=50{,}000\).
 
-Expanded Welch's sample-dependent degrees of freedom can change the
-ordering of sampled datasets by their p-values, allowing higher calibrated
-power than Normal Wald. However, the null validation in
-Table~\ref{tab:redesign-calibration-validation} shows that matching
-false-positive rates at the lower common MI does not ensure matching at
-the upper common MI.
-
-Changing the cutoff leaves errors in the estimated MI difference
-unchanged, so calibration does not remove the initial power dip at B.
-At the first alternatives, the increasingly negative true difference
-partly cancels the persistent positive estimation bias, moving the
-sampling mean of \(\Deltahat\) towards zero. Rejection therefore
-initially falls even though the population MI values move farther apart.
+High rejection in a sparse alternative does not necessarily identify the
+direction of the MI difference reliably. In the different-skew
+\(16\times16\) case at \(n=1{,}000\), positive estimation bias
+outweighs the true negative difference, and almost all rejections have
+the opposite estimated direction. As that bias diminishes, the sampling
+centre first approaches zero, reducing rejection, before moving towards
+the negative population difference and giving higher power. Expanded
+Welch's cutoff changes the frequency of rejection but leaves this movement
+of the shared numerator unchanged.
 
 The observation-level sensitivity supplies an MI-specific basis for
 choosing the cutoff from the Student \(t\) distribution, while the
 simulations distinguish errors in the degrees-of-freedom approximations
-from errors in the shared statistic. Expanded Welch improves
-false-positive rates in selected tested settings, but its larger cutoff
-also increases conservatism where rejection is already too infrequent,
-and its calibrated power gains depend on the fitting null. The evidence
-therefore supports these setting-specific improvements rather than a
-general replacement of Normal Wald.
+from errors in the shared statistic. Expanded Welch brings false-positive
+rates closer to 5\% in selected tested settings and reduces detection
+probability at the same nominal threshold. Where Wald is already
+conservative, the larger cutoff instead lowers both null rejection and
+power. These findings support improvements in particular settings while
+showing the detection cost and estimation errors that limit the method.
 
 \section{Limitations}
 
@@ -115,15 +107,14 @@ in the difference variance. Growing alphabets and continuous MI estimators
 have different approximation errors. Exact independence requires the
 second-order argument in Appendix~\ref{sec:independence-boundary}.
 
-The findings concern the tested populations, association constructions
-and alternative paths. Although the power settings were selected using
-earlier false-positive results, their evaluation uses independent samples,
-with each curve keeping \(I(P)=0.02\) and increasing \(I(Q)\) along
-the copying family.
-Both tested constructions use equal row and column margins within each
-table and align association locations between populations. Other directions
-of MI change, unequal row and column margins within a table and other
-locations of dependence remain untested.
+The findings concern the tested copying populations. The power study
+holds \(I(P)=0.02\) and \(I(Q)=0.03\) nats throughout the grid,
+so it evaluates one absolute MI gap with \(Q\) having greater MI.
+The copying construction uses identical row and column margin profiles
+within each table and places its added association on matching diagonal
+cells in both populations. Other association constructions, directions
+and magnitudes of MI change, unequal row and column margins within a
+table and other locations of dependence remain untested by the power study.
 
 All reported simulations use equal sample sizes, for which the leading
 bias corrections cancel from the MI difference. They therefore do not
@@ -131,12 +122,12 @@ evaluate the correction's performance under unequal sample sizes, and
 residual biases can still differ between populations in the tested
 equal-sample settings.
 
-Empirical calibration uses known simulation populations, and the two
-calibration checks neither bound rejection across the entire equal-MI
-null nor supply a calibration procedure for arbitrary observed tables. The pointwise
-confidence intervals quantify simulation uncertainty for the specified
-populations; the calibrated power intervals also include uncertainty from
-fitting the cutoffs.
+The power comparison uses the proposed tests' nominal thresholds,
+so their false-positive rates need not match. A larger rejection
+probability under the alternative therefore cannot establish superior
+power at a common achieved false-positive rate. The pointwise confidence
+intervals quantify simulation uncertainty for each specified population
+and sample size.
 
 The online-shopping application illustrates how to report the estimated
 MI difference and its direction, standard error, p-value and Expanded Welch
@@ -163,8 +154,8 @@ Any likelihood-ratio or resampling procedure must preserve the equal-MI
 null even when the complete population tables differ.
 
 Reversed power paths, stronger dependence at small sample sizes,
-additional association constructions, unequal margins and unequal sample
-sizes would assess whether power rankings persist across a wider range
-of populations. Simulations from plausible application populations could
+alternative association constructions, unequal margins and unequal sample
+sizes would measure how much the false-positive rates and power change
+across a wider range of populations. Simulations from plausible application populations could
 also examine sensitivity to rare cells and distinct equal-MI tables,
 with conclusions tied to the populations chosen for that assessment.

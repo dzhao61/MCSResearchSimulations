@@ -44,64 +44,20 @@ method \citep{brent1973}. Absolute and relative root tolerances are
 sampled populations use the interior solution. Accept a table only when
 every cell is positive, its total and marginal errors are at most
 \(10^{-12}\), and its MI error is at most
-\(10^{-12}+10^{-8}I_{\rm target}\). Every target is checked against its own population entropy endpoint,
-including the alternatives scaled by the fitted null standard deviation.
-
-\section{Four-cell supporting construction}
-
-For the supporting \(4\times4\) and \(16\times16\) comparisons,
-begin with the independence probabilities \(a_i a_j\) and transfer
-an amount \(t\) within the first two rows and columns. The resulting
-table \(R(t)\) has cell probabilities
-\begin{equation}
- r_{ij}(t)=
- \begin{cases}
- a_i a_j+t,&(i,j)=(1,1)\text{ or }(2,2),\\
- a_i a_j-t,&(i,j)=(1,2)\text{ or }(2,1),\\
- a_i a_j,&\text{all other cells}.
- \end{cases}
- \label{eq:additive-construction}
-\end{equation}
-Every affected row and column gains and loses \(t\), preserving its
-total. The decreasing cells have starting probability \(a_1a_2\), so
-\begin{equation}
- 0\leq t<t_{\max}=a_1a_2.
- \label{eq:design-tmax}
-\end{equation}
-Solve \(I\{R(t)\}=I_{\rm target}\) by the same root search on
-\([0,t_{\max}]\). The target must lie below the endpoint MI, and the
-constructed table passes the same checks as the copying table.
-
-The supporting null comparison uses \(k\in\{4,16\}\), same-skew
-and different-skew margins, common MI 0.02 nats, and equal sample sizes
-\(n\in\{1{,}000,10{,}000\}\). The margin vectors are those in
-Table~\ref{tab:margin-profiles}.
+\(10^{-12}+10^{-8}I_{\rm target}\). Every target is checked against its own population entropy endpoint.
 
 \section{Parameter grids and sampling}
 
-Table~\ref{tab:design-primary-grids} gives the approximation and broad
-null grids, and Table~\ref{tab:redesign-focus-settings} gives the power
-settings. Equation~\eqref{eq:design-focused-populations} specifies every
-focused alternative; Table~\ref{tab:design-calibration-populations}
-specifies the lower and upper calibration nulls at \(h=2,4\).
-The same copying formula and root search apply throughout these grids.
+Table~\ref{tab:design-primary-grids} gives the approximation, broad null
+and power grids. The power study uses Equation~\eqref{eq:design-fixed-gap-populations}
+for every table size, margin regime and sample size in its grid. The same
+copying formula and root search apply throughout.
 
-For the focused power comparison, \(\sigma_0\) is the SD of
-\(\Deltahat\) estimated from the independent null fitting batch,
-centred at its sampling mean. Equation~\eqref{eq:design-focused-populations}
-defines the alternatives in multiples of this SD.
-The fixed null-SD constants used to construct the focused alternatives are
-\begin{align*}
- \sigma_{0,A}&=0.154966805570126\text{ nats},\\
- \sigma_{0,B}&=0.065137776499116\text{ nats},\\
- \sigma_{0,C}&=0.003174953145465\text{ nats}.
-\end{align*}
-For each \(h\) in the focused grid, set the target MI of \(Q\) to
-\(0.02+h\sigma_0\) and solve for its copying probability. The Monte
-Carlo standard errors of the fitted SDs are 0.000363, 0.000152 and
-0.000007 nats for A, B and C, respectively, calculated as described in
-Section~\ref{sec:moment-uncertainty}. The constructed populations remain
-fixed during evaluation.
+The stronger-common-MI checks in Section~\ref{sec:null-estimator-accuracy}
+retain the margins and sample sizes of the selected null cases A and B.
+Their common MI targets are 0.329933611140 nats for A and
+0.280551105996 nats for B. Solve separately for the copying probability
+of each population at its specified target.
 
 For one repetition, draw
 \begin{equation}
@@ -110,12 +66,12 @@ For one repetition, draw
 \end{equation}
 and independently draw the corresponding \(Q\) counts.
 Reshape these counts into their \(k\times k\) tables and apply both tests
-to those same two sampled tables. Repeat independently 100,000 times per distinct
-evaluation setting. Generate a separate 100,000-repetition fitting batch for each
-equal-MI setting in the focused power comparison. The simulations use the PCG64 pseudo-random
-generator with master seed 20261021 and separate streams for population,
-setting, fitting and evaluation samples.
-Repeated settings use one set of repetitions in every relevant display.
+to those same two sampled tables. Repeat independently 100,000 times
+per distinct evaluation setting. The simulations use the PCG64
+pseudo-random generator, with master seed 20261021 for the approximation
+and null studies and 20261101 for the fixed-gap power study. Separate
+streams distinguish settings and the two populations. Repeated settings
+use one set of repetitions in every relevant display.
 
 All samples retain their declared table dimensions, including empty rows
 and columns. Use natural logarithms, \(0\log0=0\), and no smoothing.
@@ -253,9 +209,7 @@ in repetition \(s\). The approximate interval for the average paired difference
  \left\{\frac{1}{M(M-1)}\sum_{s=1}^M(D_s-\bar D)^2\right\}^{1/2}.
 \end{equation}
 Use the same common-valid subset when reporting a conditional paired
-contrast. Comparisons across constructions use
-independent streams and therefore do not use paired indicators. All
-intervals describe simulation uncertainty at fixed
+contrast. All intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
 
 
@@ -319,48 +273,7 @@ error. Calculating the SD after combining the two terms retains the
 mean--variance covariance.
 
 Mean and variance ratios use the same joint delta-method calculation,
-keeping the plug-in prediction and observed variance paired. For the
-fitted null SD, apply the sampling-variance calculation to the corrected
-MI differences and propagate through the square root, whose derivative
-at \(S_X^2\) is \(1/(2S_X)\).
-
-\section{Empirical calibration and power uncertainty}
-\label{sec:calibration-sensitivity-design}
-
-Calibration follows the fitting and independent evaluation steps in
-Chapter~\ref{chap:design}. For Expanded Welch, assign invalid fitting
-outputs p-value one and sort the fitting p-values. Set the threshold to
-the \((\lfloor0.05M\rfloor+1)\)th smallest value, rejecting only
-strictly smaller evaluation p-values. Ties at the boundary are excluded.
-Normal Wald uses the equivalent upper-tail threshold for \(|T|\), with
-invalid fitting values below all valid absolute statistics. This gives
-at most 5\% rejection in the fitting batch; independent null evaluation
-measures the achieved rate, including discreteness.
-
-The calibration-sensitivity comparison uses the lower and upper nulls in
-Table~\ref{tab:design-calibration-populations} at \(h=2,4\) for A--C.
-For each upper null, solve for the copying probability with the original
-margin vectors, dimensions and sample sizes. Generate 100,000 independent
-fitting repetitions and 100,000 validation repetitions for each of these
-six equal-MI settings. Apply both calibrations to the same original alternatives and
-to both null validation settings. Invalid outputs remain non-rejections.
-
-All calibrated-power intervals use 1,000 joint bootstrap repetitions.
-For each full curve, share one lower fitting resample across its points.
-For the sensitivity comparison, share one lower fitting resample across
-the two alternatives within each focus setting. Independently resample
-each upper fitting batch and refit the cutoffs. At each evaluation point,
-resample the tests' joint decisions; in the sensitivity comparison, retain
-both calibrations in that joint resample. This preserves dependence between
-methods and between calibrations when estimating power differences and
-changes in those differences. Population tables and effect sizes stay fixed.
-
-Use the 2.5th and 97.5th percentiles for pointwise intervals of rates and
-paired differences, comparing the latter with the practical tolerance of
-minus one to plus one percentage point. Cross-null rates use Wilson
-intervals conditional on the fitted cutoffs, quantifying validation
-sampling uncertainty only. These checks concern the two specified null
-settings.
+keeping the plug-in prediction and observed variance paired.
 
 \section{Application comparison family and Holm adjustment}
 \label{sec:application-holm-family}

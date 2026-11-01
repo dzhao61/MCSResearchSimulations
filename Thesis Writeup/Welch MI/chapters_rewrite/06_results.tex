@@ -485,7 +485,7 @@ uniform counterpart. Expanded Welch initially rises as its validity and
 cutoff change, then both methods fall below 5\% before recovering.
 The diagnostics show that positive bias moves the centre of
 \(\Deltahat\) away from zero, while overestimation of \(\SEhat^2\)
-in the intermediate range tends to reduce \(|T|\). At B, both effects are present even though Expanded
+in the intermediate range tends to reduce \(|T|\). At \(n=100\), both effects are present even though Expanded
 Welch brings the rate closer to 5\%. As the bias diminishes, the remaining
 variance overestimation accompanies the conservative trough. The larger
 cutoff deepens that trough before the shared estimates recover. A rate
@@ -542,7 +542,7 @@ The variance ratio divides the average \(\SEhat^2\) by the observed
 sampling variance, and values above one indicate overestimation. The
 observed variance is measured about the sampling mean, so this ratio
 can be close to one even when the difference is biased.
-The table compares the focus settings A, uniform \(4\times4\) with \(n=20\);
+The table compares the selected null settings A, uniform \(4\times4\) with \(n=20\);
 B, different-skew \(8\times8\) with \(n=100\); and C,
 different-skew \(4\times4\) with \(n=10{,}000\), together with the sparse
 \(16\times16\) cases at \(n=1{,}000\). All use equal sample sizes
@@ -631,15 +631,6 @@ can accompany rates on opposite sides of 5\% in
 Table~\ref{tab:redesign-case-rates}. At \(n=10{,}000\), both skew
 regimes have rejection rates closer to 5\%.
 
-This sparse-table failure also occurs under the four-cell construction.
-At \(16\times16\), common MI 0.02 nats and
-\(n_P=n_Q=1{,}000\), transferring probability within four cells
-preserves each population's margins and MI while changing its joint
-probability pattern. Under different-skew margins, the estimated
-difference remains substantially biased and both false-positive rates
-are near 30\%. The failure therefore persists when association is
-introduced through this alternative construction.
-
 For the identical uniform-margin populations, expected difference bias
 cancels, while changes in the average \(\SEhat^2\) below or above the
 observed \(\Var(\Deltahat)\) tend to enlarge or reduce \(|T|\), respectively. These changes accompany the repeated
@@ -662,223 +653,145 @@ calculated over repetitions with both quantities finite, falls from
 Together these checks explain the broad patterns
 without isolating every finite-sample contribution to rejection.
 
-\section{RQ3: Nominal and calibrated power}
+\section{RQ3: Power at a fixed MI difference}
+\label{sec:fixed-gap-power-results}
 
-The power comparison uses A (uniform \(4\times4\), \(n_P=n_Q=20\)),
-B (different-skew \(8\times8\), \(n_P=n_Q=100\)) and C
-(different-skew \(4\times4\), \(n_P=n_Q=10{,}000\)). For each setting,
-\(\sigma_0\) is the independently fitted SD of \(\Deltahat\) under
-\(I(P)=I(Q)=0.02\) nats. We hold \(I(P)=0.02\) and increase \(I(Q)\),
-so the true difference \(\Delta=I(P)-I(Q)\) becomes negative. Moving right along the horizontal axis, \(-\Delta/\sigma_0\), from the
-equal-MI null at zero therefore gives \(Q\) a larger MI advantage in
-fitted null SD units.
+The power study retains the four table sizes, three margin regimes and
+ten sample sizes of the broad null comparison, but fixes \(I(P)=0.02\)
+and \(I(Q)=0.03\) nats. The true difference is therefore
+\(\Delta=-0.01\) nats throughout. Each plotted rate divides valid
+rejections by all 100,000 repetitions at that setting, with invalid
+calculations counted as non-rejections. Shading gives pointwise 95\%
+intervals, and the lower strips show the fraction of valid results.
 
-Nominal power uses each test's usual p-value threshold of 0.05, whereas
-calibrated power uses separately fitted thresholds that target 5\%
-rejection at a specified equal-MI population pair. The two comparisons use the same
-alternative samples, allowing us to examine the effect of changing the
-rejection thresholds.
+Both tests use their usual p-value threshold of 0.05. Expanded Welch's
+larger cutoff makes its rejections a subset of Wald's, so the comparison
+quantifies how much detection probability is lost. These rates are read
+alongside the false-positive results in Section~\ref{sec:null-rejection-patterns}:
+high rejection under an alternative can coexist with excessive rejection
+under equal MI. Because the tests are two-sided, power also includes
+rejections whose estimated MI difference has the opposite sign to the
+population difference.
 
-\subsection{Nominal power}
+\subsection{Uniform margins}
 
-Figure~\ref{fig:redesign-power} gives both tests' rejection fractions
-from the same sampled pairs of tables at each alternative in the three
-focus settings (Table~\ref{tab:redesign-focus-settings}). At zero on the horizontal axis, the curves give their different
-false-positive rates relative to the black 5\% line, whereas at positive
-values they give power against increasing MI differences. Expanded Welch has lower nominal power at the selected small-sample
-settings A and B, accompanying its lower null rejection rates.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{focused_redesign_power.pdf}
-\caption{Nominal power across differences measured in fitted null standard deviations.}
-\label{fig:redesign-power}
-\end{figure}
-
-In panel A of Figure~\ref{fig:redesign-power}, both power curves rise
-as the MI advantage of \(Q\) increases. Increasing \(I(Q)\) moves the
-sampling centre of \(\Deltahat\) farther below zero, so more repetitions
-have a negative statistic large enough in magnitude to cross the rejection
-boundary. Expanded Welch requires a larger \(|T|\) and consequently
-rejects fewer of those repetitions than Wald. The gap is greatest over
-the middle of the curve, where more sampled statistics lie between the
-two boundaries. At stronger alternatives, the power gap narrows as more statistics cross
-both boundaries and larger estimated degrees of freedom lower the cutoff
-from the Student \(t\) distribution.
-
-In panel B, rejection initially falls even though the population MI
-values move farther apart, then rises at stronger alternatives. This dip
-occurs because \(\Deltahat\) has positive estimation bias at the first
-alternatives. The increasingly negative true difference initially offsets
-that bias and moves the sampling mean towards zero, reducing positive-tail
-rejections. Once the negative difference becomes sufficiently large,
-negative-tail rejections increase and power rises. Expanded Welch changes
-the cutoff without removing this movement of the shared sampling centre,
-so both methods retain the dip. Farther along the curve, B remains the least powerful setting because
-positive bias still offsets part of the true negative difference, while the observed SD of \(\Deltahat\) grows
-relative to its null value, reaching approximately \(1.70\sigma_0\)
-at four null SDs. The sampled differences are therefore less
-separated from zero relative to their spread.
-
-In panel C, both power curves rise steeply and nearly overlap, eventually
-exceeding A's as well as B's. This rise occurs with negligible bias and
-a smaller relative change in sampling SD along the alternative path.
-As \(I(Q)\) increases, the sampling centre therefore moves below zero
-without the offsetting bias seen at B. The near-overlap occurs because
-the large estimated degrees of freedom make the cutoff from the Student
-\(t\) distribution close to the standard normal cutoff. Comparing
-panels at the same \(-\Delta/\sigma_0\) matches the difference in null
-SD units, but each alternative can still have a different bias and
-sampling variance. Those differences help explain why the common
-horizontal scale does not produce identical power curves.
-
-\FloatBarrier
-\subsection{Power after matching false-positive rates}
-
-At A and B, Expanded Welch's lower nominal power accompanies a lower
-false-positive rate than Wald's, so we use empirical calibration to
-compare power after matching rejection to approximately 5\% at a
-specified equal-MI setting. Independent equal-MI simulations fit a
-separate p-value threshold for each test, replacing the usual threshold
-of 0.05. We then hold those thresholds fixed,
-evaluate their false-positive rates on independent null samples, and
-apply them to the alternative samples used in the nominal comparison.
-Changing the rejection thresholds leaves \(\Deltahat\), \(\SEhat\)
-and the calculated p-values unchanged.
-
-Separately fitted thresholds can reverse the nominal ordering because the
-two methods can rank sampled datasets differently. Wald's p-value depends
-only on \(|T|\), while Expanded Welch's also depends on the estimated
-degrees of freedom, so two datasets with similar \(|T|\) can receive
-different relative rankings when their degrees of freedom differ. Although the nominal nesting of rejections holds at a common p-value
-threshold, separate calibration allows either method to reject samples
-that the other retains, permitting a different power ordering.
-
-With thresholds fitted at \(I(P)=I(Q)=0.02\) nats, both tests reject
-between 4.93\% and 4.99\% on independent null evaluation samples across
-A--C. Figure~\ref{fig:redesign-calibrated-power} applies these thresholds
-to the same alternative samples as Figure~\ref{fig:redesign-power}, with
-bands showing bootstrap uncertainty. The figure shows the closely matched false-positive rates at zero and
-calibrated power as the MI advantage of \(Q\) increases.
+Figure~\ref{fig:fixed-gap-power-uniform} uses uniform row and column
+margins in both populations. Each panel holds the population tables and
+MI difference fixed while increasing the common sample size along the
+logarithmic horizontal axis. The two lines compare Normal Wald and
+Expanded Welch at the same sampled table pairs.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{focused_redesign_power_calibrated.pdf}
-\caption{Power after calibration at common MI 0.02; bands show bootstrap uncertainty.}
-\label{fig:redesign-calibrated-power}
+\includegraphics[width=\textwidth]{fixed_gap_power_uniform.pdf}
+\caption{Power at a fixed MI difference under uniform margins.}
+\label{fig:fixed-gap-power-uniform}
 \end{figure}
 
-In panel A of Figure~\ref{fig:redesign-calibrated-power}, Expanded Welch
-now has higher power over the alternatives shown, reversing the nominal
-ordering. Calibration mainly lowers Wald's curve because its nominal
-false-positive rate was above 5\%, whereas Expanded Welch's was already
-close to the target. After this adjustment, the different rankings of
-sampled datasets give Expanded Welch more rejections under the alternatives.
-Its advantage grows over the middle of the curve and narrows slightly
-at the largest difference.
+All four panels show low detection over part of the small-sample range,
+followed by a sustained rise with more observations. Larger tables
+require more observations before power becomes high. For example, at
+\(n=10{,}000\), Expanded Welch detects the difference in 89.44\% of
+\(2\times2\) repetitions and 71.12\% of \(16\times16\) repetitions.
+This ordering reflects both the sparse-table estimation errors discussed
+in Section~\ref{sec:null-estimator-accuracy} and the population variances:
+in this copying family, increasing table size also increases \(V(P)\)
+and \(V(Q)\). Their contributions \(V(P)/n+V(Q)/n\) therefore give a
+larger first-order sampling variance for the same MI gap and sample size.
+As the variance decreases with more observations, the estimated
+difference becomes more consistently separated from zero and power rises.
 
-In panel B, both calibrated curves lie below their nominal counterparts
-because both nominal false-positive rates exceeded 5\%. Expanded Welch
-now has greater power at positive horizontal-axis values, with a larger
-advantage at stronger alternatives. Both curves nevertheless retain the initial dip because fitting a
-threshold changes which p-values cause rejection but leaves the biased
-\(\Deltahat\) and its movement towards zero unchanged. Reversing the method ordering therefore does not resolve this
-distortion in the shared statistic.
+Expanded Welch remains below Wald, with the largest separation at the
+smallest sample size in the \(16\times16\) panel. Its valid fraction
+there is above 99\%, so most of that separation comes from the larger
+cutoff rather than failed calculations. The method gap becomes small
+in the larger-sample range as increasing degrees of freedom bring the
+Student \(t\) distribution close to the standard normal distribution.
+The early shoulders and troughs also occur in the null rejection curves,
+where standard-error errors and the distribution of \(T\) can produce
+excessive or conservative rejection. Consequently, the early high points
+are not evidence that fewer observations reliably identify the MI difference.
 
-In panel C, calibration changes little because both nominal false-positive
-rates were already close to 5\%, and the curves continue to overlap as
-they rise steeply towards high power. At stronger alternatives, C remains
-the most powerful setting and B the least powerful, consistent with their different
-bias and sampling-variation patterns. Matching null rejection at zero
-does not make those alternative sampling distributions the same.
+\subsection{Same-skew margins}
 
-\medskip
-\thesisminiheading{Does the calibration setting change the comparison?}
+Figure~\ref{fig:fixed-gap-power-same-skew} assigns both populations the
+row and column profile \(m_k(0.8)\), retaining the same MI targets and
+sample sizes. The margins agree between populations, but their different
+MI values require different copying probabilities and hence different
+population tables.
 
-The preceding comparison matches false-positive rates at common MI 0.02,
-but the null hypothesis requires only equality of the two MI values
-without specifying their common value. Changing that value can change
-the sampling distribution of the statistic and estimated degrees of
-freedom, and hence the thresholds needed for 5\% rejection. We therefore
-check whether Expanded Welch's calibrated power advantage persists when
-we change the equal-MI populations used to fit the thresholds.
-
-For each alternative with \(I(P)=0.02\) and \(I(Q)>0.02\),
-\emph{lower-null calibration} fits both tests at
-\(I(P)=I(Q)=0.02\), the alternative's smaller MI.
-\emph{Upper-null calibration} instead uses the alternative's larger
-\(I(Q)\) as the common MI, with both fitting settings retaining the
-alternative's margins and sample sizes. After fitting a
-separate threshold for each test at each null, we apply the two
-calibrations to the same fixed alternative samples, so any change in
-power arises from the thresholds rather than a change in the alternative data.
-
-Here \(h=(I(Q)-I(P))/\sigma_0=-\Delta/\sigma_0\) measures the population
-MI gap in fitted null SDs, where \(\sigma_0\) is the fitted SD of
-\(\Deltahat\) under \(I(P)=I(Q)=0.02\).
-Table~\ref{tab:redesign-calibration-sensitivity} reports Expanded Welch
-power minus Normal Wald power at \(h=2\) and \(h=4\).
-Differences are expressed in percentage points, with positive values
-favouring Expanded Welch and negative values favouring Wald. The upper-MI column gives the
-common MI used for upper-null fitting. Brackets give 95\% bootstrap
-intervals accounting for the shared evaluation data and uncertainty in
-the fitted thresholds.
-
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\small
-\setlength{\tabcolsep}{3pt}
-\caption{Expanded Welch minus Wald power under two null calibrations.}
-\label{tab:redesign-calibration-sensitivity}
-\input{figures_rewrite/focused_redesign_calibration_sensitivity}
-\end{table}
+\includegraphics[width=\textwidth]{fixed_gap_power_same_skew.pdf}
+\caption{Power at a fixed MI difference under same-skew margins.}
+\label{fig:fixed-gap-power-same-skew}
+\end{figure}
 
-Under lower-null calibration, the gains at A and B increase from two to
-four null SDs. Changing the fitting populations reverses the gain in two
-comparisons: at A and two null SDs, the 3.58-point gain becomes a 0.76-point
-loss; at B and four SDs, the 3.92-point gain becomes a 0.39-point loss.
-The alternative data are identical within each comparison, so these
-reversals arise from the changed thresholds. Under upper-null calibration,
-A at four SDs retains a small positive estimate whose interval includes
-zero, while B at two SDs retains a much smaller gain. At C, both
-calibrations give differences well within the one-percentage-point
-tolerance. The apparent power advantage is therefore sensitive to the
-fitting null, particularly at the smaller-sample settings.
+The curves again have an early low-power range followed by recovery,
+with the trough occurring later for larger tables. Relative to uniform
+margins, the uneven frequencies leave more combinations rarely observed,
+and the population pointwise-MI variances are also larger. Both features
+make the fixed gap harder to detect. In the \(16\times16\) case at
+\(n=1{,}000\), the average squared standard error is 1.81 times the
+observed variance of the difference, while difference bias is small
+relative to the true gap. The oversized denominator suppresses \(|T|\),
+contributing to Expanded Welch's power of only 1.64\% at that setting.
 
-Table~\ref{tab:redesign-calibration-validation} checks whether the
-thresholds that give about 5\% false positives at one null also do so
-at the other, using the equal-MI populations at A and two null SDs. The lower evaluation null has common MI 0.02 nats, while the upper null
-sets both MI values to 0.3299 nats, the larger MI in the fixed alternative. Each row applies the thresholds fitted at the named null to independent
-samples from the evaluation null, with rates calculated over all 100,000
-validation repetitions.
+Both methods gain power once larger samples improve the cell estimates
+and reduce the spread of the MI difference. Expanded Welch reaches
+60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
+under uniform margins, and exceeds 99.9\% in every same-skew panel at
+\(n=50{,}000\). The differences between methods become much smaller
+than these differences between table sizes and margin regimes. At the
+smallest sample sizes, however, the validity strips show that failed
+Expanded Welch calculations also contribute to its lower all-repetition
+power; the larger cutoff is not the only source of that loss.
 
-\begin{table}[H]
+\subsection{Different-skew margins}
+
+Figure~\ref{fig:fixed-gap-power-different-skew} uses \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\). The true difference remains
+\(-0.01\) nats, but the unequal margins can give the MI estimates
+different residual biases, shifting the centre of their difference.
+
+\begin{figure}[H]
 \centering
-\small
-\caption{Null rejection rates at A under both calibrations.}
-\label{tab:redesign-calibration-validation}
-\begin{tabular}{@{}llrr@{}}
-\toprule
-Fitting null & Evaluation null & Normal Wald & Expanded Welch\\
-\midrule
-Lower & Lower & 4.93\% & 4.99\%\\
-Lower & Upper & 11.20\% & 13.71\%\\
-Upper & Upper & 4.87\% & 4.84\%\\
-Upper & Lower & 1.63\% & 0.79\%\\
-\bottomrule
-\end{tabular}
-\end{table}
+\includegraphics[width=\textwidth]{fixed_gap_power_different_skew.pdf}
+\caption{Power at a fixed MI difference under different-skew margins.}
+\label{fig:fixed-gap-power-different-skew}
+\end{figure}
 
-Both calibrations give rates close to 5\% at the null used for fitting,
-but their thresholds transfer differently to the other null. Lower-null
-calibration produces excessive rejection at the upper null, with a
-higher rate for Expanded Welch than for Wald, whereas upper-null
-calibration makes both tests conservative at the lower null.
-The power gain and its reversal therefore accompany changes in the
-relative false-positive rates at another common MI. Matching rejection
-at one population pair does not establish that either test keeps
-rejection at or below 5\% throughout the equal-MI null, so the calibrated
-power comparison remains conditional on its fitting null.
+The \(2\times2\) and \(4\times4\) panels retain the low-power range
+and subsequent rise, while the two larger tables have more pronounced
+early rejection before falling and recovering. The \(16\times16\)
+curve shows why this early rejection needs careful interpretation.
+At \(n=1{,}000\), positive difference bias is approximately 0.0307
+nats, moving the sampling mean from the true \(-0.01\) to approximately
+\(+0.0207\) nats. Expanded Welch rejects in 9.66\% of repetitions,
+but more than 99.9\% of those rejections have a positive estimated
+difference, opposite to the true direction. The shared biased numerator
+therefore produces rejection without reliably identifying which population
+has greater MI, as in the displaced null comparison in
+Section~\ref{sec:null-estimator-accuracy}.
+
+As sample size increases, that positive bias decreases and the sampling
+centre passes back towards zero. At \(n=2{,}500\), the remaining positive
+bias nearly cancels the negative population difference, leaving the
+sampling mean close to zero, and Expanded Welch's power falls to 2.48\%.
+With still more observations, the bias diminishes further and the
+sampling centre approaches the negative population difference, while
+sampling variance decreases. Negative-tail rejection then rises and
+power becomes high. Changing the cutoff lowers both parts of this
+nonmonotonic curve without removing the biased movement of its centre.
+
+Across all three margin regimes, both methods exceed 99.9\% power at
+\(n=50{,}000\). At \(n=10{,}000\), their power differences are below
+0.32 percentage points at every table size and margin regime. The fixed-gap
+study therefore shows a detection cost from Expanded Welch's larger cutoff,
+especially with small samples, alongside shared estimation errors that
+can leave both methods with low power or rejection in the wrong direction.
+The false-positive findings determine whether that lower rejection
+improves calibration in the corresponding null setting.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}
