@@ -14,7 +14,7 @@ THESIS = study.WORKSPACE / "Thesis Writeup" / "Welch MI"
 
 def displayed_p_value(value):
     if value < 0.01:
-        mantissa, exponent = f"{value:.2e}".split("e")
+        mantissa, exponent = f"{value:.3e}".split("e")
         return rf"\({mantissa}\times10^{{{int(exponent)}}}\)"
     return "1" if value == 1 else f"{value:.4f}"
 
@@ -33,7 +33,7 @@ class ShoppersApplicationTests(unittest.TestCase):
         cls.saved = pd.read_csv(saved).set_index("id")
         cls.chapter = (THESIS / "chapters_rewrite" / "06_results.tex").read_text()
         cls.application = cls.chapter.split(r"\label{sec:shoppers-application}", 1)[1]
-        cls.appendix = (THESIS / "appendices_rewrite" / "C_additional_results.tex").read_text()
+        cls.appendix = (THESIS / "appendices_rewrite" / "B_population_construction.tex").read_text()
 
     def test_source_count_tables_and_reported_group_sizes(self):
         saved = study.HERE / "results" / "count_tables.json"
@@ -94,13 +94,12 @@ class ShoppersApplicationTests(unittest.TestCase):
             self.assertAlmostEqual(value, self.saved.loc["shoppers_month", saved_column], places=12)
             self.assertIn(f"{value:.3g}", self.application)
             self.assertLess(value, study.ALPHA)
-        self.assertIn("six comparisons across three public datasets", self.application)
+        self.assertIn("six comparisons across three public datasets", " ".join(self.application.split()))
         self.assertIn("\\citep{holm1979}", self.application)
 
     def test_appendix_p_values_match_all_six_source_comparisons(self):
         results = {identifier: study.full_result(item) for identifier, item in self.items.items()}
         identifiers = list(results)
-        adjusted = {}
         for column, saved_column in (
             ("normal_p_value", "wald_holm_p"),
             ("expanded_welch_p_value", "expanded_holm_p"),
@@ -114,31 +113,30 @@ class ShoppersApplicationTests(unittest.TestCase):
                 running = max(running, (len(raw) - rank) * raw[index])
                 values[index] = min(running, 1.0)
             np.testing.assert_allclose(values, self.saved.loc[identifiers, saved_column], rtol=1e-12, atol=0)
-            adjusted[column] = dict(zip(identifiers, values))
 
         labels = {
-            "adult_occupation": "Adult: occupation",
-            "adult_education": "Adult: education",
-            "shoppers_month": "Online Shoppers: month",
-            "students_studytime": "Student Performance: study time",
-            "students_maternal_education": "Student Performance: maternal education",
-            "shoppers_weekend": "Online Shoppers: weekend",
+            "adult_occupation": ("Adult", "Occupation"),
+            "adult_education": ("Adult", "Education"),
+            "shoppers_month": ("Online Shoppers", "Month"),
+            "students_studytime": ("Student Performance", "Study time"),
+            "students_maternal_education": ("Student Performance", "Maternal education"),
+            "shoppers_weekend": ("Online Shoppers", "Weekend"),
         }
         for identifier, label in labels.items():
-            cells = [label]
+            cells = list(label)
             for column in ("normal_p_value", "expanded_welch_p_value"):
-                cells.extend((displayed_p_value(results[identifier][column]),
-                              displayed_p_value(adjusted[column][identifier])))
+                cells.append(displayed_p_value(results[identifier][column]))
             self.assertIn(" & ".join(cells) + r"\\", self.appendix)
 
     def test_appendix_identifies_adjustment_inputs_and_application_pointer(self):
-        self.assertIn(r"\ref{tab:application-holm}", self.application)
-        self.assertIn(r"\label{tab:application-holm}", self.appendix)
-        section = " ".join(self.appendix.split(r"\label{sec:application-holm}", 1)[1].split())
-        for detail in ("female and male", "US\\$50,000", "training and test partitions",
-                       "without survey weights", "missing occupation", "Portuguese-language",
-                       "schools GP and MS", "final grade of at least 10",
-                       "four levels", "five levels", "new and returning visitors"):
+        self.assertIn(r"\ref{tab:application-holm-family}", self.application)
+        self.assertIn(r"\ref{sec:application-holm-family}", self.application)
+        self.assertIn(r"\label{tab:application-holm-family}", self.appendix)
+        section = " ".join(self.appendix.split(r"\label{sec:application-holm-family}", 1)[1].split())
+        for detail in ("female and male", r"\$50{,}000", "Portuguese",
+                       "GP and MS", "final grade at least 10",
+                       "separately to each method's six p-values",
+                       r"\ref{sec:shoppers-application}"):
             self.assertIn(detail, section)
         bibliography = (THESIS / "references.bib").read_text()
         for key, doi in (("becker1996", "10.24432/C5XW20"), ("cortez2008", "10.24432/C5TG7T")):

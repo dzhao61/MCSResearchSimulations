@@ -159,7 +159,7 @@ class LargeConstructionTests(unittest.TestCase):
                 self.assertEqual(direction["correct_sign"], 1 if row["n"] == 1000 else mask.sum())
                 self.assertEqual(direction["zero_sign"], 0)
 
-    def test_diagnostic_values_and_added_interpretation(self):
+    def test_diagnostic_values_and_preserved_comparison(self):
         rows = comparison_rows(DEFAULT_BASE, DEFAULT_OUTPUT)
         selected = {(r["construction"], r["n"], r["mi_q"]): r for r in rows}
         null = selected[("four_cell", 1000, .02)]["diagnostics"]
@@ -171,24 +171,24 @@ class LargeConstructionTests(unittest.TestCase):
             d = row["diagnostics"]
             self.assertAlmostEqual(d["bias_mcse"], np.sqrt(d["observed_variance"]/20000), places=12)
             self.assertAlmostEqual(d["difference_bias"], d["bias_p"]-d["bias_q"], places=12)
-        source = ROOT.parent / "Thesis Writeup/Welch MI"
-        if source.exists():
-            fresh = ROOT / "results/approximation_redesign"
-            configs = pd.read_csv(fresh / "configurations.csv")
-            rates = pd.read_csv(fresh / "rates.csv")
-            rates = rates[rates.denominator.eq("all")].set_index(["configuration_id", "method"])
-            table = (source / "figures_rewrite/focused_redesign_construction.tex").read_text()
-            preserved = (ROOT / "supplementary_displays/sample_size_df_comparison/figures/focused_redesign_construction.tex").read_text()
-            display = pd.read_csv(fresh / "displays.csv", keep_default_na=False)
-            ids = set(display[display.study.eq("construction")].configuration_id)
-            null = configs[configs.configuration_id.isin(ids) & configs.mi_p.eq(configs.mi_q)]
-            self.assertEqual(len(null), 16)
-            for row in null.itertuples():
-                for method in ("wald", "size", "expanded", "reference"):
-                    result = rates.loc[(row.configuration_id, method)]
-                    self.assertEqual(result["count"], 100000)
-                    target = preserved if method == "size" else table
-                    self.assertIn(f"{result.rate:.4f}", target)
+        fresh = ROOT / "results/approximation_redesign"
+        configs = pd.read_csv(fresh / "configurations.csv")
+        rates = pd.read_csv(fresh / "rates.csv")
+        rates = rates[rates.denominator.eq("all")].set_index(["configuration_id", "method"])
+        preserved = (ROOT / "supplementary_displays/sample_size_df_comparison/figures/focused_redesign_construction.tex").read_text()
+        display = pd.read_csv(fresh / "displays.csv", keep_default_na=False)
+        ids = set(display[display.study.eq("construction")].configuration_id)
+        null = configs[configs.configuration_id.isin(ids) & configs.mi_p.eq(configs.mi_q)]
+        self.assertEqual(len(null), 16)
+        for row in null.itertuples():
+            profile = {"different_skew": "Different", "same_skew": "Same"}[row.profile]
+            construction = {"copying": "copy", "four_cell": "four"}[row.construction]
+            cells = [f"{row.k}, {profile}, {construction}, {row.n_p}"]
+            for method in ("wald", "size", "expanded", "reference"):
+                result = rates.loc[(row.configuration_id, method)]
+                self.assertEqual(result["count"], 100000)
+                cells.append(f"{result.rate:.4f}")
+            self.assertIn(" & ".join(cells) + r"\\", preserved)
 
     def test_generated_table_contains_all_comparisons_and_precise_rounding(self):
         rows = comparison_rows(DEFAULT_BASE, DEFAULT_OUTPUT)
