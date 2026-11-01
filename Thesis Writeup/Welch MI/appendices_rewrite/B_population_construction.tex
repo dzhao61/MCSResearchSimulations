@@ -262,19 +262,27 @@ course, comparing records from schools labelled GP and MS
 \citep{cortez2008}. The shopping variables and visitor groups are defined
 in Section~\ref{sec:shoppers-application}.
 
+% Keep the table and its short Holm-adjustment explanation on one page.
+\Needspace{16\baselineskip}
 \begin{table}[H]
 \centering
 \caption{Unadjusted p-values in the six-comparison application family.}
 \label{tab:application-holm-family}
+\thesistableformat
 \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}Xrr@{}}
 \toprule
-Dataset & Predictor & Normal Wald & Expanded Welch\\
+\textbf{Dataset} & \textbf{Predictor} & \textbf{Normal Wald} & \textbf{Expanded Welch}\\
 \midrule
 Adult & Occupation & \(1.184\times10^{-44}\) & \(1.635\times10^{-42}\)\\
+\addlinespace[0.3em]
 Adult & Education & \(1.890\times10^{-34}\) & \(4.930\times10^{-33}\)\\
+\addlinespace[0.3em]
 Online Shoppers & Month & \(4.714\times10^{-5}\) & \(3.726\times10^{-4}\)\\
+\addlinespace[0.3em]
 Student Performance & Study time & 0.1982 & 0.2339\\
+\addlinespace[0.3em]
 Student Performance & Maternal education & 0.8361 & 0.8468\\
+\addlinespace[0.3em]
 Online Shoppers & Weekend & 0.9554 & 0.9601\\
 \bottomrule
 \end{tabularx}

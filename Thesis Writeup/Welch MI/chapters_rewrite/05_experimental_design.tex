@@ -151,12 +151,15 @@ margins can differ between populations.
 \centering
 \caption{Row and column margins for each population.}
 \label{tab:margin-profiles}
+\thesistableformat
 \begin{tabular}{@{}lll@{}}
 \toprule
-Regime & \(P\): rows and columns & \(Q\): rows and columns\\
+\textbf{Regime} & \(P\): \textbf{rows and columns} & \(Q\): \textbf{rows and columns}\\
 \midrule
 Uniform & \((1/k,\ldots,1/k)\) & \((1/k,\ldots,1/k)\)\\
+\addlinespace[0.3em]
 Same skew & \(m_k(0.8)\) & \(m_k(0.8)\)\\
+\addlinespace[0.3em]
 Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
 \bottomrule
 \end{tabular}
@@ -228,9 +231,10 @@ combines every listed table size, MI value and sample size.
 \centering
 \caption{Settings for the approximation checks, broad null comparison and power study.}
 \label{tab:design-primary-grids}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.24\textwidth}X@{}}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.24\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
-Check & Parameter values\\
+\textbf{Check} & \textbf{Parameter values}\\
 \midrule
 Across sample sizes &
 \(k\in\{2,4,8,16\}\), \(I(P)=I(Q)=0.02\) nats.\newline
@@ -344,21 +348,24 @@ evaluation setting.
 \centering
 \caption{Performance measures calculated from repeated samples.}
 \label{tab:design-performance-measures}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.28\textwidth}X@{}}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.28\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
-Measure & Calculation\\
+\textbf{Measure} & \textbf{Calculation}\\
 \midrule
+\addlinespace[0.35em]
 Rejection rate &
 \(\dfrac{\text{number of valid rejections}}{\text{number of simulation repetitions}}\)\\
-\addlinespace
+\addlinespace[0.85em]
 Valid-result fraction &
 \(\dfrac{\text{number of valid outputs}}{\text{number of simulation repetitions}}\)\\
-\addlinespace
+\addlinespace[0.85em]
 Difference bias &
 \(\operatorname{mean}(\Deltahat)-\Delta\)\\
-\addlinespace
+\addlinespace[0.85em]
 Variance ratio &
 \(\dfrac{\operatorname{mean}(\SEhat^2)}{\text{observed variance of }\Deltahat}\)\\
+\addlinespace[0.35em]
 \bottomrule
 \end{tabularx}
 \end{table}

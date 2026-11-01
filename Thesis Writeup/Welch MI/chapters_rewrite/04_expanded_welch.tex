@@ -624,9 +624,10 @@ sample size, whereas \(\widehat\nu_P\) changes with each sampled table.
 \centering
 \caption{Component degrees of freedom and their inputs.}
 \label{tab:component-df-roles}
+\thesistableformat
 \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-Quantity & Role & Inputs\\
+\textbf{Quantity} & \textbf{Role} & \textbf{Inputs}\\
 \midrule
 \(\nu_{P,\mathrm{mom}}\) & Sampling-moment target &
 \(\E\{\Vhat(P)\}\) and \(\Var\{\Vhat(P)\}\) at fixed \(P,n_P\)\\
@@ -814,16 +815,23 @@ Table~\ref{tab:expanded-algorithm} summarises one comparison.
 \centering
 \caption{Operational Expanded Welch--Satterthwaite algorithm.}
 \label{tab:expanded-algorithm}
-\begin{tabularx}{\textwidth}{@{}cX@{}}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X@{}}
 \toprule
-Step & Calculation \\
+\textbf{Step} & \textbf{Calculation} \\
 \midrule
 1 & Validate the two aligned count tables and their declared alphabet dimensions; independence of samples is a design assumption. \\
+\addlinespace[0.4em]
 2 & Compute empirical probabilities, pointwise MI, plug-in MI, and the leading bias-corrected difference. \\
+\addlinespace[0.4em]
 3 & Compute \(\Vhat(P)\), \(\Vhat(Q)\), the shared standard error, and \(T\). \\
+\addlinespace[0.4em]
 4 & Compute the row and column pointwise-MI means needed in \(\widehat g_P\) and \(\widehat g_Q\). \\
+\addlinespace[0.4em]
 5 & Compute \(\widehat\tau^2(P)\), \(\widehat\tau^2(Q)\), and the two component degrees of freedom. \\
+\addlinespace[0.4em]
 6 & Combine the components using Equation~\eqref{eq:expanded-df}. \\
+\addlinespace[0.4em]
 7 & Return the p-value from the Student \(t\) distribution, effective degrees of freedom, and validity diagnostics. \\
 \bottomrule
 \end{tabularx}

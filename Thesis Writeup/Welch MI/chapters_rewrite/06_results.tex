@@ -485,6 +485,7 @@ these three settings; rates are percentages of all 100,000 repetitions.
 \centering
 \caption{Estimation errors and false-positive rates at three illustrative null settings.}
 \label{tab:balanced-null-diagnostics}
+\thesistableformat
 \input{figures_rewrite/balanced_null_diagnostics}
 \end{table}
 
@@ -737,19 +738,18 @@ alongside the resulting \(T=\Deltahat/\SEhat\).
 \centering
 \caption{Corrected MI estimates and uncertainty of their differences.}
 \label{tab:shoppers-application}
-\begingroup
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrrr@{}}
+\thesistableformat
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
 \toprule
- & \multicolumn{2}{c}{Corrected MI} & & & \\
+ & \multicolumn{2}{c}{\textbf{Corrected MI}} & & & \\
 \cmidrule(lr){2-3}
-Predictor & New & Returning & \(\Deltahat\) & \(\SEhat\) & \(T\)\\
+\textbf{Predictor} & \textbf{New} & \textbf{Returning} & \(\Deltahat\) & \(\SEhat\) & \(T\)\\
 \midrule
 Month & 0.004316 & 0.017880 & -0.013563 & 0.003333 & -4.069\\
+\addlinespace[0.35em]
 Weekend & 0.000664 & 0.000727 & -0.000063 & 0.001124 & -0.056\\
 \bottomrule
-\end{tabular}
-\endgroup
+\end{tabular*}
 \end{table}
 
 For month, returning visitors have the higher corrected MI estimate,
@@ -770,20 +770,19 @@ the usual p-value threshold of 0.05.
 \centering
 \caption{Two-sample test results for online shopping sessions.}
 \label{tab:shoppers-test-results}
-\begingroup
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{@{}lrrr@{}}
+\thesistableformat
+\begin{tabular*}{0.92\textwidth}{@{\extracolsep{\fill}}lrrr@{}}
 \toprule
- & & \multicolumn{2}{c}{p-value}\\
-\cmidrule(l){3-4}
-Predictor & \shortstack{Expanded Welch\\degrees of freedom}
- & \shortstack{Normal\\Wald} & \shortstack{Expanded\\Welch}\\
+ & & \multicolumn{2}{c}{\textbf{p-value}}\\
+\cmidrule(lr){3-4}
+\textbf{Predictor} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{degrees of freedom}}
+ & \textbf{Normal Wald} & \textbf{Expanded Welch}\\
 \midrule
 Month & 26.79 & \(4.71\times10^{-5}\) & \(3.73\times10^{-4}\)\\
+\addlinespace[0.35em]
 Weekend & 2.18 & 0.9554 & 0.9601\\
 \bottomrule
-\end{tabular}
-\endgroup
+\end{tabular*}
 \end{table}
 \endgroup
 

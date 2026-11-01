@@ -14,6 +14,7 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{needspace}
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -60,6 +61,12 @@
 \captionsetup{font=normalsize,labelfont=bf}
 \setlist{itemsep=0.25em,topsep=0.5em}
 \renewcommand{\arraystretch}{1.16}
+% Keep table leading consistent for both fixed and floating placement.
+% Row gaps in the sources separate entries without changing body spacing.
+\newcommand{\thesistableformat}{%
+  \setstretch{1}%
+  \renewcommand{\arraystretch}{1.25}%
+}
 \makeatletter
 \setlength{\@fptop}{0pt}
 % Keep the small heading and its opening body paragraph flush left.

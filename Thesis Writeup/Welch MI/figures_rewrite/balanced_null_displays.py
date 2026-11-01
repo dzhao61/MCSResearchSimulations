@@ -90,8 +90,11 @@ def generate(results=RESULTS,destination=HERE):
             f'{100*case.loc["normal_wald","rejection_rate"]:.2f}',
             f'{100*case.loc["expanded_welch","rejection_rate"]:.2f}'])
     table=[r'\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}',r'\toprule',
-           r'Setting & Bias / SD & \shortstack{Variance\\ratio} & \shortstack{Normal Wald\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\',r'\midrule']
-    table.extend(' & '.join(row)+r'\\' for row in rows)
+           r'\textbf{Setting} & \textbf{Bias / SD} & \shortstack[r]{\textbf{Variance}\\\textbf{ratio}} & \shortstack[r]{\textbf{Normal Wald}\\\textbf{(\%)}} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{(\%)}}\\',r'\midrule']
+    for index, row in enumerate(rows):
+        if index:
+            table.append(r'\addlinespace[0.35em]')
+        table.append(' & '.join(row)+r'\\')
     table.extend([r'\bottomrule',r'\end{tabularx}'])
     (destination/"balanced_null_diagnostics.tex").write_text('\n'.join(table)+'\n')
     evidence["diagnostic_cases"]=case_ids;evidence["diagnostic_rows"]=rows

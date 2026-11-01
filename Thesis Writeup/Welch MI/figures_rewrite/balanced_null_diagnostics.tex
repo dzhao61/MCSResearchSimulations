@@ -1,9 +1,11 @@
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
 \toprule
-Setting & Bias / SD & \shortstack{Variance\\ratio} & \shortstack{Normal Wald\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\
+\textbf{Setting} & \textbf{Bias / SD} & \shortstack[r]{\textbf{Variance}\\\textbf{ratio}} & \shortstack[r]{\textbf{Normal Wald}\\\textbf{(\%)}} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{(\%)}}\\
 \midrule
 Uniform \(4\times4\), \(n=20\) & 0.003 & 0.827 & 8.35 & 4.90\\
+\addlinespace[0.35em]
 Same skew \(16\times16\), \(n=1{,}000\) & -0.003 & 1.929 & 0.60 & 0.53\\
+\addlinespace[0.35em]
 Different skew \(16\times16\), \(n=1{,}000\) & 2.058 & 1.938 & 26.01 & 24.84\\
 \bottomrule
 \end{tabularx}
