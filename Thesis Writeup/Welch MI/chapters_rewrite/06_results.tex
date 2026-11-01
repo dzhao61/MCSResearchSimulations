@@ -682,13 +682,14 @@ affects detection once the estimates become accurate, while Expanded
 Welch's larger cutoff gives a smaller loss relative to Wald in this
 larger-sample range.
 
-\section{Application to online shopping data}
+\section{Example application to online shopping data}
 \label{sec:shoppers-application}
 
+This example illustrates how Normal Wald and Expanded Welch are applied
+and interpreted in practice by comparing month--purchase and
+weekend--purchase associations between new and returning visitors.
 The Online Shoppers Purchasing Intention dataset records website sessions
-and whether each session ends in a purchase \citep{sakar2018}. We compare
-month--purchase MI between new and returning visitors, then make the
-same comparison for weekend--purchase MI. For each predictor,
+and whether each session ends in a purchase \citep{sakar2018}. For each predictor,
 \(X\) is month or weekend status and \(Y\) is the purchase outcome,
 giving joint distributions \(P\) and \(Q\) of \((X,Y)\) among new
 and returning visitors, respectively. Each comparison therefore tests
