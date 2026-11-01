@@ -20,16 +20,15 @@ and pointwise MI.
 
 Simulations from known populations assess these approximations and compare
 false-positive rates across three common MI values and power across three
-MI-gap magnitudes, while an
-online-shopping application illustrates the tests on observed data. Near
+MI-gap magnitudes, while an online-shopping application illustrates the
+tests on observed data. Near
 independence, apparent association from sampling noise can make the
-degrees-of-freedom approximations inaccurate. Expanded Welch brings
-false-positive rates closer to 5\% in selected small-sample settings,
-with lower power at the usual rejection thresholds, but also reduces
-rejection where false-positive rates are already below 5\%.
-Across the simulation grid at three MI-gap magnitudes, the power
-difference between methods becomes small with larger samples, while
-smaller MI gaps remain harder to detect once bias diminishes. In sparse settings,
-bias in the shared MI difference can also produce rejection in the
-opposite direction to the true difference, which changing the cutoff
-does not resolve.
+degrees-of-freedom approximations inaccurate. Expanded Welch's larger
+cutoff brings some excessive false-positive rates closer to 5\%, but
+also increases conservatism where Wald already rejects too rarely and
+reduces power at the usual rejection thresholds. The power difference
+between methods becomes small with larger samples, while smaller MI
+gaps remain harder to detect once bias diminishes. Changing the cutoff
+leaves bias in the shared MI difference and errors in its estimated
+standard error unchanged. In sparse settings, bias in the MI difference
+can also produce rejection in the opposite direction to the true difference.

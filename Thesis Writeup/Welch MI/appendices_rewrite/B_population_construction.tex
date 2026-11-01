@@ -48,41 +48,35 @@ every cell is positive, its total and marginal errors are at most
 
 \section{Parameter grids and sampling}
 
-Table~\ref{tab:design-primary-grids} gives the approximation, broad null
-and power grids. The power study uses Equation~\eqref{eq:design-mi-gap-populations}
-at each of its three MI gaps and every table size, margin regime and sample size. The same
-copying formula and root search apply throughout.
-
-The null study uses Equation~\eqref{eq:design-balanced-null} at every
-combination of table size, margin regime and sample size. Solve for each
-population's copying probability at its specified common MI; differing
-margins can require different copying probabilities even under equal MI.
+Table~\ref{tab:design-primary-grids} specifies the parameter grids, with
+the null and power MI values given in
+Equations~\eqref{eq:design-balanced-null} and
+\eqref{eq:design-mi-gap-populations}. Solve separately for each
+population's copying probability, since different margins can require
+different copying probabilities even under equal MI.
 
 For one repetition, draw
 \begin{equation}
  (N_{P,11},\ldots,N_{P,kk})\sim\operatorname{Multinomial}
       (n_P;p_{11},\ldots,p_{kk}),
 \end{equation}
-and independently draw the corresponding \(Q\) counts.
-Reshape these counts into their \(k\times k\) tables and apply both tests
-to those same two sampled tables. Repeat independently 100,000 times
-per distinct evaluation setting. The simulations use the PCG64
-pseudo-random generator, with master seed 20261021 for the approximation
-and the original common-MI-0.02 null study. The additional null levels
-and the power study use master seed 20261101. Separate
-streams distinguish settings and the two populations. Repeated settings
-use one set of repetitions in every relevant display.
+and draw the corresponding \(Q\) counts independently. Apply both tests
+to each sampled pair of \(k\times k\) tables, using 100,000 independent
+repetitions per distinct setting. The simulations use the PCG64
+pseudo-random generator with master seed 20261021 for the approximation
+checks and common-MI-0.02 null settings, and 20261101 for the other null
+settings and the power study. Separate streams distinguish settings and
+the two populations, while repeated settings share the same repetitions
+across displays.
 
 All samples retain their declared table dimensions, including empty rows
 and columns. Use natural logarithms, \(0\log0=0\), and no smoothing.
 The bias correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
-negative corrected estimates. In the equal-sample studies, the two bias corrections cancel in their
-difference.
-Calculate the standard error using
+negative corrected estimates. Calculate the standard error using
 Equation~\eqref{eq:shared-se} and the component and combined degrees of freedom
 using Chapter~\ref{chap:expanded}.
 
-\section{Validity and sparse-sample measures}
+\section{Validity and rejection rates}
 \label{sec:validity-rules}
 
 Normal Wald requires a finite corrected difference, a finite positive
@@ -116,18 +110,8 @@ of freedom. For the zero component, however, Equation~\eqref{eq:nu-p-hat} requir
 degrees of freedom to be positive and finite, so it records this case as
 invalid even though the direct combined expression remains defined.
 
-
-The primary rate divides valid rejections by all repetitions. A
-method-valid rate uses only that method's valid repetitions; a
-common-valid rate uses only repetitions where both tests are valid. Report
-the denominator for either conditional rate, which is undefined when
-the denominator is zero. Invalid outputs contribute no rejection to
-the primary rate.
-
-Record the number of zero-count cells, empty rows and empty columns
-separately for each population. These are sampling diagnostics rather
-than eligibility rules. The minimum expected cell count is
-\(\min_{ij}np_{ij}\), with the corresponding definition for \(Q\).
+The primary rejection rate divides valid rejections by all repetitions,
+with invalid outputs counted as non-rejections.
 The study applies no minimum expected-count filter.
 
 \section{Bias, variance and degrees of freedom}
@@ -143,26 +127,19 @@ estimates minus the known \(\Delta\). Its observed sampling variance is
 \end{equation}
 where \(M\) counts the finite-valued differences, including those whose
 test output is invalid. Centring at their sample mean separates variance
-from bias. For \(P\) and \(Q\), the individual corrected MI biases
-are the mean finite corrected MI estimates minus \(I(P)\) and \(I(Q)\),
-respectively.
+from bias.
 
 For the estimated / observed variance ratio, restrict the calculations to
 the same repetitions with a finite difference and finite squared
 standard error. Retain finite zero variance estimates. Divide the mean
 squared standard error by the observed variance on this matched subset.
-Report the included fraction. The ratio is defined only when the observed
-variance is positive. The population comparison instead uses
-\(V(P)/n_P+V(Q)/n_Q\) and the primary observed variance.
+The ratio is defined only when the observed variance is positive.
 
-The Monte Carlo standard error of estimated bias is the observed SD
-divided by \(\sqrt M\). Component and combined degrees-of-freedom
-summaries retain positive finite values and report their included fractions.
+Degrees-of-freedom summaries retain positive finite estimates.
+The mean-to-target ratios in Figure~\ref{fig:redesign-component-df}
+are shown only when every component estimate is positive and finite.
 Finite zero variance estimates remain in moment calculations even when
-component degrees of freedom are undefined. Figures divide the mean
-estimate by its moment target only where every component estimate is
-defined; conditional summaries
-elsewhere retain their inclusion counts. These diagnostics do not isolate
+component degrees of freedom are undefined. These diagnostics do not isolate
 each estimation error's causal contribution to rejection.
 
 \medskip
@@ -171,9 +148,7 @@ each estimation error's causal contribution to rejection.
 For each selected population, measure the observed variability of
 \(\Vhat(P)\) by replacing \(\widehat\Delta_s\) with
 \(\widehat V_s(P)\) in Equation~\eqref{eq:observed-sampling-variance}.
-This measures how much the variance estimate itself changes between
-samples. Chapter~\ref{chap:expanded} predicts that variability to first
-order. Compare the observed value with
+Compare the observed value with
 \begin{equation}
 \begin{aligned}
  \text{population prediction}&=\frac{\tau^2(P)}{n_P},\\
@@ -182,14 +157,12 @@ order. Compare the observed value with
 \end{aligned}
  \label{eq:variance-stability-predictions}
 \end{equation}
-The population prediction uses the known probabilities, whereas the mean plug-in
-prediction uses the empirical probabilities in each repetition. Repeat both for
-\(Q\). For each population, use the same repetitions with finite
+The population prediction uses the known probabilities, whereas the mean
+plug-in prediction uses the empirical probabilities in each repetition.
+Repeat both for \(Q\). For each population, use the same repetitions with finite
 \(\widehat V_s\) and \(\widehat\tau_s^2\), including finite zeros
 and outputs whose test is invalid. Divide both predictions by the same
-observed variability. A ratio below one indicates underprediction, a ratio
-above one indicates overprediction, and one indicates agreement. The
-observed variability must be positive; a zero prediction gives a zero ratio.
+observed variability, which must be positive.
 
 \section{Simulation uncertainty}
 \label{sec:simulation-uncertainty}
@@ -198,20 +171,8 @@ For a rate estimate \(\widehat r\) from \(M\) independent repetitions,
 its approximate Monte Carlo standard error is
 \(\{\widehat r(1-\widehat r)/M\}^{1/2}\).
 Rejection and validity rates use pointwise 95\% Wilson intervals
-\citep{wilson1927}.
-
-For the paired method contrast, let \(D_s\) equal the Expanded Welch
-valid-rejection indicator minus Normal Wald's valid-rejection indicator
-in repetition \(s\). The approximate interval for the average paired difference
-\(\bar D\) is
-\begin{equation}
- \bar D\ \pm\ 1.96
- \left\{\frac{1}{M(M-1)}\sum_{s=1}^M(D_s-\bar D)^2\right\}^{1/2}.
-\end{equation}
-Use the same common-valid subset when reporting a conditional paired
-contrast. All intervals describe simulation uncertainty at fixed
+\citep{wilson1927}. These intervals describe simulation uncertainty at fixed
 populations, not simultaneous coverage over every setting.
-
 
 \section{Component moment targets and uncertainty}
 \label{sec:moment-target-details}

@@ -1,5 +1,17 @@
 # Main Welch MI thesis deliverable
 
+Interim rebuild on 1 November 2026: the main and named thesis PDFs now
+contain **103 pages**, down from 104. This build includes the refined
+abstract, shortened Appendix B, matching Chapter 5 uncertainty description
+and focused Chapter 7 revision. Compilation, references and paragraph style
+pass without LaTeX warnings. Nineteen changed or boundary pages were
+rendered and visually checked; all Chapter 6 and Appendix A pages retain
+identical extracted text and page breaks. The source archive is refreshed.
+The verified experimental supplement and its checksum are reused after
+inventory, size and timestamp checks. No experiments were rerun.
+
+The entries below record earlier source and build stages.
+
 Rebuilt on 1 November 2026 after the balanced RQ2 revision: the main and
 named thesis PDFs now contain **104 pages**, down from 105. This build
 includes the full three-common-MI null study and three-gap power study,

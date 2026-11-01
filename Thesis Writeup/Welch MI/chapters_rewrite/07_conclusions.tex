@@ -34,14 +34,10 @@ evaluation, even when the population approximation is accurate.
 
 \subsection{RQ2: False-positive rates under equal MI}
 
-The balanced null study covers common MI values of 0.005, 0.02 and 0.30
-nats across the same table sizes, margin regimes and sample sizes.
-Expanded Welch lowers rejection throughout, bringing some excessive rates
-closer to 5\% while making conservative rates lower still. The effect
-on calibration depends on the population as well as sample size. In
-uniform \(4\times4\) at \(n=20\), its rate is 4.90\% at common MI
-0.02 but 13.11\% at common MI 0.30, so the improvement at the lower MI
-does not extend unchanged to stronger association.
+Across the null grid, Expanded Welch lowers rejection, bringing some
+excessive rates closer to 5\% while making conservative rates lower
+still. The effect on calibration depends on the population as well as
+sample size.
 
 The diagnostic comparison in Table~\ref{tab:balanced-null-diagnostics}
 shows how different errors in the shared statistic accompany these
@@ -50,50 +46,48 @@ and the larger cutoff can offset some excessive rejection. Overestimated
 variance without appreciable difference bias instead suppresses rejection,
 which Expanded Welch reduces further. When the population tables differ,
 residual bias can shift the estimated MI difference away from zero even
-under equal MI; increasing the cutoff leaves that displacement unchanged.
+under equal MI.
 
-The severe different-skew \(16\times16\) failure persists in the
-balanced grid. At common MI 0.005 and \(n=1{,}000\), Wald rejects in
+The different-skew \(16\times16\) comparison illustrates how far both
+tests can remain from the target. At common MI 0.005 and
+\(n=1{,}000\), Wald rejects in
 36.38\% of repetitions and Expanded Welch in 34.38\%, despite complete
-validity. At the other extreme, both tests remain below 4\% in every
-\(16\times16\) margin regime at common MI 0.005 and
-\(n=50{,}000\). Agreement between methods at large sample sizes
+validity. Even at the largest sample size, both tests remain conservative
+in the weakest-MI \(16\times16\) settings across all margin regimes.
+Agreement between methods at large sample sizes
 therefore does not by itself establish accurate false-positive rates.
 
 \subsection{RQ3: Power across MI differences}
 
-The power study repeats the full grid at MI-gap magnitudes of 0.005,
-0.01 and 0.02 nats, giving 360 settings. At the usual p-value threshold of
-0.05, Expanded Welch's rejections remain a subset of Wald's, so its lower
-rejection probability also reduces power. The size of that loss depends
+At the usual p-value threshold of 0.05, Expanded Welch's rejections
+remain a subset of Wald's, so its lower rejection probability also
+reduces power. The size of that loss depends
 on the population, MI gap and sample size, with failed calculations
-contributing at the smallest samples. At \(n=10{,}000\), the method
-power gap is below 0.32 percentage points throughout the study. Both
-methods exceed 99.9\% power at \(n=50{,}000\) for the two larger gaps,
-while detection of the 0.005-nat gap ranges from 79.87\% to 96.47\%.
+contributing at the smallest samples. The power loss becomes small with
+larger samples, falling below 0.32 percentage points at \(n=10{,}000\)
+throughout the study. The smallest MI gap remains harder to detect than
+the two larger gaps even at the largest sample size.
 
 High rejection in a sparse alternative does not necessarily identify the
-direction of the MI difference reliably. In the different-skew
-\(16\times16\) case at \(n=1{,}000\) and the 0.01-nat gap, positive estimation bias
-outweighs the true negative difference, and almost all rejections have
-the opposite estimated direction. As that bias diminishes, the sampling
+direction of the MI difference reliably. In the sparse different-skew
+\(16\times16\) comparisons, positive estimation bias can outweigh the
+true negative difference, producing rejection in the opposite estimated
+direction. As that bias diminishes with more observations, the sampling
 centre first approaches zero, reducing rejection, before moving towards
-the negative population difference and giving higher power. Expanded
-Welch's cutoff changes the frequency of rejection but leaves this movement
-of the shared numerator unchanged. At a fixed sample size in this
-biased range, making the population difference more negative can also
-move the centre towards zero and reduce rejection. Larger MI gaps become
-easier to detect once the bias diminishes sufficiently.
+the negative population difference and giving higher power. At a fixed
+sample size in this biased range, making the population difference more
+negative can also move the centre towards zero and reduce rejection.
+Larger MI gaps become easier to detect once the bias diminishes sufficiently.
 
 The observation-level sensitivity supplies an MI-specific basis for
 choosing the cutoff from the Student \(t\) distribution, while the
 simulations distinguish errors in the degrees-of-freedom approximations
-from errors in the shared statistic. Expanded Welch brings false-positive
-rates closer to 5\% in selected tested settings and reduces detection
-probability at the same nominal threshold. Where Wald is already
-conservative, the larger cutoff instead lowers both null rejection and
-power. These findings support improvements in particular settings while
-showing the detection cost and estimation errors that limit the method.
+from errors in the shared statistic. Expanded Welch's larger cutoff can
+bring excessive false-positive rates closer to 5\%, but also reduces
+power and increases conservatism where Wald already rejects too rarely.
+Because Expanded Welch retains Wald's estimated MI difference and
+standard error, the larger cutoff leaves errors in those estimates
+unchanged.
 
 \section{Limitations}
 
@@ -151,9 +145,11 @@ approximation may support a more accurate comparison of MI differences.
 Any likelihood-ratio or resampling procedure must preserve the equal-MI
 null even when the complete population tables differ.
 
-Reversed power paths, stronger dependence at small sample sizes,
-alternative association constructions, unequal margins and unequal sample
-sizes would measure how much the false-positive rates and power change
-across a wider range of populations. Simulations from plausible application populations could
+Power comparisons starting from higher \(I(P)\) values would examine
+whether the observed detection patterns extend to stronger baseline
+association. Reversed power paths, alternative association constructions,
+unequal margins and unequal sample sizes would measure how much the
+false-positive rates and power change across a wider range of populations.
+Simulations from plausible application populations could
 also examine sensitivity to rare cells and distinct equal-MI tables,
 with conclusions tied to the populations chosen for that assessment.
