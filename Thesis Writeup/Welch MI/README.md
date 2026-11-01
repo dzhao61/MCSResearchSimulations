@@ -1,5 +1,42 @@
 # Main Welch MI thesis deliverable
 
+Rebuilt on 1 November 2026 after the balanced RQ2 revision: the main and
+named thesis PDFs now contain **104 pages**, down from 105. This build
+includes the full three-common-MI null study and three-gap power study,
+their six replacement figures, the compact null diagnostic table and
+the reconciled design, abstract, introduction, conclusions and Appendix B.
+Compilation, reference and paragraph-style checks pass without LaTeX
+warnings. Forty changed or boundary pages were rendered and visually
+checked. The source and experiment packages include the new studies;
+sampling was not repeated during the rebuild.
+
+The entries below record earlier source and build stages.
+
+Source revision, 1 November 2026: RQ2 now repeats the complete null grid
+at common MI 0.005, 0.02 and 0.30 nats. The study contains 360 settings
+and 36 million distinct pairs: 24 million new pairs and 12 million
+verified pairs reused unchanged from the original MI-0.02 study. Three
+margin figures show every setting; one compact diagnostic table explains
+the main estimation errors. The separate favourable-case narrative,
+stronger-MI follow-up and tolerance-based count table have been replaced.
+Design, results, introduction, abstract, conclusions and Appendix B agree
+with the new study. The detailed plan and verification record are in
+`notes/BALANCED_RQ2_REVISION_2026-11-01.md`. RQ1, near-independence,
+derivations, power results and the application are preserved. The main
+and named PDFs and delivery archives have not been rebuilt; the latest
+105-page PDF predates both this revision and the three-gap power extension.
+
+Source extension, 1 November 2026: power now uses MI-gap magnitudes
+0.005, 0.01 and 0.02 nats throughout the complete grid. The verified
+12 million pairs at gap 0.01 are reused unchanged; 24 million new pairs
+cover the other two gaps. All 360 settings appear in three replacement
+figures, with colour identifying gap magnitude and line style identifying
+method. RQ3, design/results, abstract, conclusions and Appendix B describe
+the extension. Source/evidence packaging includes its separate runner,
+combined summaries, provenance and tests. The 105-page PDF below is the
+latest built version and does not yet include this extension. See
+`notes/MI_GAP_EXTENSION_2026-11-01.md`.
+
 Rebuilt on 1 November 2026: the current main and named thesis PDFs contain
 **105 pages**, down from 109. The build includes the fixed-gap 120-setting
 power study, removal of the four-cell supporting experiment, and the

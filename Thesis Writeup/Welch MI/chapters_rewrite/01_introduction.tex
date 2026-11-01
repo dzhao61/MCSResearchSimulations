@@ -59,11 +59,10 @@ cutoff than Normal Wald, so it rejects less often. The lower rejection
 rate can reduce false positives but can also reduce statistical power,
 the probability of
 rejecting equal MI when the population MI values genuinely differ.
-The evaluation reports false-positive rates under equal population MI
-and power at a fixed MI difference of 0.01 nats across the same table
-sizes, category frequencies and sample sizes. Considering these rates
-together shows where reduced false positives accompany a loss of
-detection probability.
+The evaluation compares false-positive rates across common MI values
+and power across MI differences, varying table sizes, category frequencies
+and sample sizes in both studies. Considering these rates together shows
+where reduced false positives accompany a loss of detection probability.
 
 \section{Research questions}
 \label{sec:research-questions}
@@ -73,10 +72,11 @@ The thesis addresses three research questions:
  \item How accurately do the derived approximations predict the mean and
  sampling variance of the estimated pointwise-MI variance, and what degrees of
  freedom do they imply near and away from independence?
- \item How do Expanded Welch's false-positive rates compare with those of
- Normal Wald under equal population MI?
- \item How does Expanded Welch's power compare with Normal Wald's for a fixed
- population MI difference as sample size, table size and category
+ \item How do Expanded Welch's false-positive rates compare with Normal Wald's
+ as common population MI, sample size, table size and category frequencies
+ change?
+ \item How does Expanded Welch's power compare with Normal Wald's as the
+ population MI difference, sample size, table size and category
  frequencies change?
 \end{enumerate}
 
@@ -102,10 +102,9 @@ The thesis addresses three research questions:
   \par
   \end{samepage}
 
-  \item \textbf{Practical contribution.} The evaluation identifies
-  selected populations at common MI 0.02 nats where Expanded Welch brings
-  false-positive rates closer to 5\% than Normal Wald, quantifies the
-  accompanying detection cost across the fixed-gap power grid, and
+  \item \textbf{Practical contribution.} The evaluation identifies where
+  Expanded Welch brings false-positive rates closer to 5\% and where it
+  increases conservatism, quantifies the accompanying detection cost, and
   identifies estimation errors that make both tests unreliable.
 \end{enumerate}
 

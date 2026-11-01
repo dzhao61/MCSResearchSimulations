@@ -12,7 +12,7 @@ for other chapter types; retain this guide's detailed treatment of
 experimental comparisons and figure interpretation. The proposed application
 to earlier chapters is in the [Chapters 1–4 plan](CHAPTERS_1_4_PROSE_REVISION_PLAN_2026-10-31.md).
 Current research-question labels are RQ1 for approximation accuracy, RQ2 for
-false-positive rates and RQ3 for power at a fixed MI difference.
+false-positive rates and RQ3 for power across MI differences.
 
 On 1 November 2026 the user replaced the submitted calibrated-power study
 with the full fixed-gap grid. Section 6.3 now follows uniform, same-skew and
@@ -21,6 +21,24 @@ record earlier writing lessons; they are not instructions to restore that
 analysis. Introduce the fixed alternative and shared nominal thresholds,
 interpret power alongside null rejection, and distinguish detecting unequal
 MI from identifying its direction when bias reverses the estimated sign.
+
+The subsequent extension uses gap magnitudes 0.005, 0.01 and 0.02 nats at
+every grid setting. Keep sample size as the horizontal variable, colour
+as gap magnitude, and line style as method. Explain trends along a curve,
+between gaps and between methods without treating a more negative signed
+Delta as a numerically larger Delta. Interpret the inverse ordering across
+gaps in a biased range through the sampling centre, not through gap size
+alone. Use numerical anchors from named gaps rather than narrating all six
+curves separately.
+
+The later RQ2 revision uses common MI 0.005, 0.02 and 0.30 at all grid
+settings, with the same sample-size/panel/margin organisation as power.
+Section 6.2 now has three margin subsections and one compact mechanism
+comparison. Explain broad effects and material failures rather than every
+local shoulder. Keep the 5% reference and validity strips visible, and
+distinguish low rejection from accurate calibration. The A/B/C narrative,
+separate stronger-MI follow-up and tolerance-based improvement counts are
+historical examples, not current results to restore.
 
 ## What improved in Section 6.1.1
 
@@ -205,9 +223,9 @@ perform these jobs.
 | --- | --- |
 | 6.1.2: moment errors and degrees of freedom | Moment target, population first-order value and sample-based estimate; competing numerator and denominator errors; averaging a ratio; missing points. |
 | 6.1.3: behaviour near independence | Fixed sample size and changing MI; meaning of scaled moments; how each prediction departs from its comparison quantity and why. |
-| 6.2.1: overall false-positive patterns | Calculation of rejection rates; validity and inclusion; movement towards or away from 5%; differences between margins and table sizes. |
-| 6.2.2: bias and standard-error accuracy | Changes in the estimated difference, its sampling spread and estimated standard error; their effects on the shared statistic before applying the rejection cutoff. |
-| 6.3.1–6.3.3: fixed-gap power | Fixed population tables and MI gap; changing sample size; all-repetition rejection and validity; the power cost of a larger cutoff; bias, shrinking sampling spread and the direction of rejection. |
+| 6.2.1–6.2.3: null rejection by margin regime | Common MI, changing sample size and table size; validity and inclusion; movement towards or away from 5%; visible failures. |
+| 6.2.4: main departures from 5% | One compact comparison of difference bias, sampling spread, estimated variance and rejection; explain the three mechanisms without a separate diagnostic investigation. |
+| 6.3.1–6.3.3: power across MI gaps | Fixed population tables within a curve; changing sample size and gap magnitude; all-repetition rejection and validity; the power cost of a larger cutoff; bias, shrinking sampling spread and the direction of rejection. |
 | 6.4: application | Question, direction and units of the MI difference, statistic and decision; what the observed data establish about equality and approximation accuracy. |
 
 These are revision priorities, not findings that every passage needs rewriting.

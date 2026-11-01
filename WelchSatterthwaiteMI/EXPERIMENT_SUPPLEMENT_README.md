@@ -1,5 +1,61 @@
 # Welch MI thesis experiment supplement
 
+## Current RQ2 revision: balanced common MI, 1 November 2026
+
+The null study repeats all 120 combinations of table size, margin regime
+and sample size at common MI 0.005, 0.02 and 0.30 nats. Each of the
+360 settings uses 100,000 independent pairs and the usual 0.05 p-value
+threshold. Its 36 million distinct pairs comprise 24 million new pairs in
+`results/balanced_null_2026-11-01/` and the 12 million original MI-0.02
+pairs in `results/approximation_redesign/`. The combined summaries refer
+to those original records without copying or changing them. Do not count
+combined summaries as additional samples.
+
+The combined audit verifies the full grid, original identities and hashes,
+unchanged reused rates, paired decisions and 2,880 independently reconstructed
+table pairs. All 720 primary Wilson intervals have also been checked
+independently. Three margin figures include every setting, and a compact
+table explains three previously identified estimation mechanisms. Older
+selected-case and stronger-MI results remain preserved internally.
+
+Reproduce in a separate directory after the original null records are
+available at their canonical location:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/balanced_null_study.py --mode full --output balanced-null-reproduction --workers 3
+.venv/bin/python -m unittest WelchSatterthwaiteMI/tests/test_balanced_null.py
+```
+
+The thesis helper `figures_rewrite/balanced_null_displays.py` generates
+the replacement null figures and diagnostic table from combined summaries.
+The 1 November 2026 rebuild includes this study and the three-gap power
+extension in the refreshed delivery archives.
+
+## Current extension: three MI gaps, 1 November 2026
+
+The power study now repeats the 120-setting grid at gap magnitudes 0.005,
+0.01 and 0.02 nats, with I(P)=0.02 and I(Q)=0.025, 0.03, 0.04. The
+360-setting combined evidence represents 36 million distinct pairs: the
+original 12 million pairs at gap 0.01 plus 24 million new pairs in
+`results/mi_gap_power_2026-11-01/`. The original directory is unchanged.
+New records reside only in the extension directory; its combined summaries
+and audit identify reuse, check original hashes/rates and reconstruct
+2,880 table pairs independently across all gaps. These counts must not be
+added to a second copy of the combined summaries as if they were new samples.
+
+Reproduce the extension after the original fixed-gap study is available:
+
+```bash
+.venv/bin/python WelchSatterthwaiteMI/experiments/mi_gap_power_study.py --mode full --output mi-gap-reproduction --workers 3
+.venv/bin/python -m unittest WelchSatterthwaiteMI/tests/test_mi_gap_power.py
+```
+
+The extension expects the original evidence in its canonical directory
+`WelchSatterthwaiteMI/results/fixed_gap_power_2026-11-01/` for reuse. The
+thesis-source helper `figures_rewrite/mi_gap_power_displays.py` renders
+all gaps together. It replaces the one-gap figures in the manuscript.
+The earlier documentation below records the original study and archives.
+
 ## Current source revision: fixed-gap power, 1 November 2026
 
 The submitted power design now parallels the 120-setting null grid:

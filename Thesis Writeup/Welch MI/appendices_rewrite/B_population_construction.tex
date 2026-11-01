@@ -49,15 +49,14 @@ every cell is positive, its total and marginal errors are at most
 \section{Parameter grids and sampling}
 
 Table~\ref{tab:design-primary-grids} gives the approximation, broad null
-and power grids. The power study uses Equation~\eqref{eq:design-fixed-gap-populations}
-for every table size, margin regime and sample size in its grid. The same
+and power grids. The power study uses Equation~\eqref{eq:design-mi-gap-populations}
+at each of its three MI gaps and every table size, margin regime and sample size. The same
 copying formula and root search apply throughout.
 
-The stronger-common-MI checks in Section~\ref{sec:null-estimator-accuracy}
-retain the margins and sample sizes of the selected null cases A and B.
-Their common MI targets are 0.329933611140 nats for A and
-0.280551105996 nats for B. Solve separately for the copying probability
-of each population at its specified target.
+The null study uses Equation~\eqref{eq:design-balanced-null} at every
+combination of table size, margin regime and sample size. Solve for each
+population's copying probability at its specified common MI; differing
+margins can require different copying probabilities even under equal MI.
 
 For one repetition, draw
 \begin{equation}
@@ -69,7 +68,8 @@ Reshape these counts into their \(k\times k\) tables and apply both tests
 to those same two sampled tables. Repeat independently 100,000 times
 per distinct evaluation setting. The simulations use the PCG64
 pseudo-random generator, with master seed 20261021 for the approximation
-and null studies and 20261101 for the fixed-gap power study. Separate
+and the original common-MI-0.02 null study. The additional null levels
+and the power study use master seed 20261101. Separate
 streams distinguish settings and the two populations. Repeated settings
 use one set of repetitions in every relevant display.
 

@@ -19,15 +19,17 @@ including changes in cell probabilities, their row and column totals,
 and pointwise MI.
 
 Simulations from known populations assess these approximations and compare
-false-positive rates and power to detect genuine MI differences, while an
+false-positive rates across three common MI values and power across three
+MI-gap magnitudes, while an
 online-shopping application illustrates the tests on observed data. Near
 independence, apparent association from sampling noise can make the
 degrees-of-freedom approximations inaccurate. Expanded Welch brings
 false-positive rates closer to 5\% in selected small-sample settings,
 with lower power at the usual rejection thresholds, but also reduces
 rejection where false-positive rates are already below 5\%.
-Across the full simulation grid at a fixed MI difference of 0.01 nats,
-the power gap becomes small with larger samples. In sparse settings,
+Across the simulation grid at three MI-gap magnitudes, the power
+difference between methods becomes small with larger samples, while
+smaller MI gaps remain harder to detect once bias diminishes. In sparse settings,
 bias in the shared MI difference can also produce rejection in the
 opposite direction to the true difference, which changing the cutoff
 does not resolve.

@@ -334,335 +334,185 @@ variance is greater relative to its squared sampling mean, giving a lower
 moment target.
 
 \section{RQ2: False-positive rates under equal MI}
-
-Under \(I(P)=I(Q)\), every rejection is a false positive. Both tests use
-\(T=\Deltahat/\SEhat\), but Expanded Welch replaces Wald's standard normal
-cutoff with a larger cutoff from the Student \(t\) distribution, reducing
-rejection at the common nominal p-value threshold. We
-therefore assess whether the reduction moves the rate towards the nominal
-5\% level, and use the shared estimates to explain when it helps or
-increases conservatism.
-
-\subsection{Overall false-positive patterns}
 \label{sec:null-rejection-patterns}
 
-Table~\ref{tab:redesign-null-grid} summarises the comparison across
-120 settings at common MI 0.02 nats. A setting is classified as improved
-when Expanded Welch's false-positive rate is closer to 5\% than Wald's
-by more than \RedesignGridTolerance{} percentage points, and worsened
-when it is farther away by more than \RedesignGridTolerance{} percentage
-points. Differences within this tolerance are grouped separately. The
-rows distinguish settings where Wald starts above or below the target,
-so a reduction in rejection can be assessed against its starting position.
+The null study uses common population MI values of 0.005, 0.02 and 0.30
+nats, with all four table sizes, three margin regimes and ten sample
+sizes at each level. Every population pair has \(\Delta=0\), so each
+rejection is a false positive. Each plotted rate divides valid rejections
+by all 100,000 repetitions, including invalid calculations as non-rejections.
+Shading gives pointwise 95\% intervals, and the lower strips show the
+fraction of valid results.
 
-\begin{table}[!htbp]
-\centering
-\caption{Change in distance from 5\% rejection across the broad null grid.}
-\label{tab:redesign-null-grid}
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
- & \multicolumn{3}{c}{Expanded Welch relative to Normal Wald} &\\
-\cmidrule(lr){2-4}
-\shortstack[l]{Normal Wald\\rejection rate} &
-\shortstack{Closer\\to 5\%} &
-\shortstack{Farther\\from 5\%} &
-\shortstack{Within\\tolerance} & Total\\
-\midrule
-Above 5\% & \RedesignTowardAbove{} & \RedesignAwayAbove{} &
-\RedesignWithinAbove{} & \RedesignTotalAbove{}\\
-Below 5\% & \RedesignTowardBelow{} & \RedesignAwayBelow{} &
-\RedesignWithinBelow{} & \RedesignTotalBelow{}\\
-\midrule
-Total & \RedesignToward{} & \RedesignAway{} & \RedesignWithin{} & 120\\
-\bottomrule
-\end{tabular}
-\end{table}
+Expanded Welch uses the same statistic as Normal Wald with a larger
+rejection cutoff, so its rejection rate is always lower or equal at the
+common p-value threshold of 0.05. The comparison asks whether that
+reduction brings rejection closer to 5\% or deepens conservatism. The
+three figures below follow the same margin order as the power study and
+show the effects of sample size, table size and common MI together.
 
-Where Wald rejects too often, Expanded Welch moves closer to 5\% in
-\RedesignTowardAbove{} of \RedesignTotalAbove{} settings, although
-\RedesignAwayAbove{} reductions overshoot and leave the rate farther
-from the target. Where Wald is already conservative, lowering rejection
-cannot bring the rate closer to 5\%, so Expanded Welch either worsens
-calibration or changes it by no more than the stated tolerance.
+\subsection{Uniform margins}
 
-Each reported rate divides the number of valid rejections by all simulation
-repetitions, counting invalid calculations as non-rejections, so the validity
-fraction is reported separately to distinguish low rejection from a loss of
-usable calculations. Brackets around rates and shading in rejection plots
-give pointwise 95\% intervals for uncertainty from the finite simulation batch.
-
-Figures~\ref{fig:redesign-null-uniform} and
-\ref{fig:redesign-null-different} hold population MI at 0.02 nats and
-increase the common sample size. Each panel compares Normal Wald with Expanded Welch at one table size,
-with the black line marking 5\%.
-The first figure uses uniform margins, whereas the second uses
-\(m_k(0.7)\) for \(P\) and \(m_k(0.8)\) for \(Q\). Vertical scales differ between
-panels, so comparisons between table sizes require the labelled rates.
-The lower strips give the fraction of valid outputs for each method.
+Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
+populations, giving identical population tables at each common MI.
+Each panel increases sample size along the logarithmic horizontal axis.
+Colour identifies common MI; solid lines with filled circles show Normal
+Wald, and dashed lines with open squares show Expanded Welch. The dotted
+line marks 5\%. For a given table size, the vertical scale is the same
+across the three margin figures, while different table sizes can use
+different scales.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{focused_redesign_null_uniform.pdf}
-\caption{False-positive rates under uniform margins.}
-\label{fig:redesign-null-uniform}
+\includegraphics[width=\textwidth]{balanced_null_uniform.pdf}
+\caption{False-positive rates across common MI values under uniform margins.}
+\label{fig:balanced-null-uniform}
 \end{figure}
 
-In the \(2\times2\) panel of Figure~\ref{fig:redesign-null-uniform}, both
-rates fall into a deep trough and then recover towards 5\%, with Expanded
-Welch more conservative over most of the range. These uniform-margin
-settings use identical population tables, \(P=Q\), and equal sample
-sizes, so the expected MI
-estimation biases cancel in the difference. The trough therefore requires
-an explanation through the standard error and the distribution of \(T\).
-Because sampled tables with larger absolute MI differences also tend to
-give larger standard errors, division by those denominators reduces the
-extreme values of \(T\). This reduction in extreme statistics contributes to the low rejection
-rate, which Expanded Welch's larger cutoff lowers further. The dependence weakens at larger sample sizes, allowing both rates to
-recover, as shown by the diagnostics in
-Section~\ref{sec:null-estimator-accuracy}.
+At common MI 0.005 and 0.02, both tests have ranges of conservative
+rejection before recovering towards 5\%, with later recovery for larger
+tables. At common MI 0.30, the curves instead show substantial excessive
+rejection over parts of the smaller-sample range before settling near the
+target. Increasing common MI therefore changes the rejection pattern,
+even though the population difference remains zero. Because the population
+tables and sample sizes are identical, expected difference bias cancels;
+the departures from 5\% arise through the estimated standard error and
+the sampling distribution of the shared statistic.
 
-In the \(4\times4\) panel, Wald initially rejects too often while Expanded
-Welch is close to the target, before both rates fall below 5\% and then
-recover. This reversal accompanies the average \(\SEhat^2\) moving from below
-the observed variance of \(\Deltahat\) at small sample sizes to above
-it over the conservative range. For a given difference estimate, a smaller
-standard error increases \(|T|\), while a larger standard error decreases
-it. The same increase in rejection cutoff therefore helps in the first
-range and deepens conservatism in the second. With larger samples, the
-squared standard error becomes more accurate and the methods approach 5\%.
+Expanded Welch lowers both the excessive and conservative parts of these
+curves. In \(4\times4\) at \(n=20\), its rate of 4.90\% is closer
+to 5\% than Wald's 8.35\% at common MI 0.02. At common MI 0.30,
+however, Expanded Welch still rejects in 13.11\% of repetitions at the
+same dimensions and sample size. The larger cutoff can correct some
+excess rejection without making the method uniformly accurate as common
+MI changes. Conversely, where Wald is already below 5\%, the reduction
+moves rejection farther from the target.
 
-In the \(8\times8\) panel, an early shoulder of excessive rejection is
-followed by a later conservative trough and recovery. The shared squared
-standard error initially underestimates the difference's sampling variance,
-then overestimates it across the trough. The larger alphabet spreads
-probability over more combinations, so the sampled tables require more
-observations before these variance errors diminish. Expanded Welch reduces
-the early excess but also lowers the conservative part of the curve. As in
-\(4\times4\), its effect on calibration changes along the horizontal axis.
+\subsection{Same-skew margins}
 
-The \(16\times16\) panel has an additional rise between the early decline
-and the later conservative trough. The average variance error also changes
-direction more than once as the sampled tables fill: underestimation,
-closer agreement, renewed underestimation and then overestimation accompany
-the corresponding changes in rejection. Because the populations are identical, expected difference bias still
-cancels, so the nonmonotonic curve reflects errors in the standard error
-and the tails of \(T\), rather than a changing population difference. Expanded Welch lowers rejection throughout, but the methods become close
-well before both rates settle near 5\%, so their agreement alone does not
-establish accurate false-positive rates.
-
-Under different-skew margins, \(I(P)=I(Q)\) in
-Figure~\ref{fig:redesign-null-different}, but the population tables differ
-and their expected MI estimation biases can therefore differ too.
-The resulting bias in \(\Deltahat\) can shift the shared statistic away
-from zero as well as changing its spread.
+Figure~\ref{fig:balanced-null-same-skew} assigns both populations the
+row and column profile \(m_k(0.8)\), again giving identical tables
+under equal MI. This comparison retains the same common MI values and
+sample-size grid while concentrating more probability in the first category.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{focused_redesign_null_different_skew.pdf}
-\caption{False-positive rates under different-skew margins.}
-\label{fig:redesign-null-different}
+\includegraphics[width=\textwidth]{balanced_null_same_skew.pdf}
+\caption{False-positive rates across common MI values under same-skew margins.}
+\label{fig:balanced-null-same-skew}
 \end{figure}
 
-In the different-skew \(2\times2\) panel, Wald remains below 5\%
-throughout the grid, so Expanded Welch's reduction mainly increases
-conservatism. Both methods again have a trough and recovery, retaining
-the small-table pattern seen under uniform margins despite the changed
-margins. As the shared estimates improve, both rates recover towards 5\%, while
-the increasing degrees of freedom bring Expanded Welch's cutoff closer
-to Wald's.
+The weaker common MI values produce deep conservative ranges, with the
+trough occurring later as table size increases. Uneven margins leave
+more category combinations rarely observed, prolonging errors in the
+estimated cell probabilities and standard error. With identical population
+tables, the expected bias of the MI difference still cancels, so it cannot
+explain these departures. The diagnostic comparison below shows how an
+oversized standard error can shrink the statistic and suppress rejection.
+At common MI 0.30, both methods instead over-reject at several small
+sample sizes before approaching 5\% with more observations.
 
-In \(4\times4\), Wald starts above the target and then falls below it,
-while Expanded Welch lowers both regions. The average squared standard error
-moves from underestimating to overestimating the observed difference
-variance, helping explain the fall into the trough. As that overestimation
-diminishes, both rates rise towards 5\%. At \(n=10\), the first Expanded Welch rate is close to 5\% even though
-only about three quarters of calculations are valid. Its
-apparent closeness at that point therefore includes repetitions recorded
-as non-rejections because the calculation failed.
+The validity strips distinguish low rejection from failed calculations.
+At the smallest sample sizes, Expanded Welch can return fewer valid
+outputs than Wald, and those failures also lower its all-repetition rate.
+The conservative troughs persist after validity becomes complete, however,
+so calculation failure is not their sole explanation. At larger samples,
+the methods' curves become close as the estimated degrees of freedom
+increase, but both can remain below 5\% in the weak-association,
+larger-table settings.
 
-The \(8\times8\) panel begins with much greater over-rejection than its
-uniform counterpart. Expanded Welch initially rises as its validity and
-cutoff change, then both methods fall below 5\% before recovering.
-The diagnostics show that positive bias moves the centre of
-\(\Deltahat\) away from zero, while overestimation of \(\SEhat^2\)
-in the intermediate range tends to reduce \(|T|\). At \(n=100\), both effects are present even though Expanded
-Welch brings the rate closer to 5\%. As the bias diminishes, the remaining
-variance overestimation accompanies the conservative trough. The larger
-cutoff deepens that trough before the shared estimates recover. A rate
-close to the target at an intermediate point can therefore reflect the
-combined effects of errors rather than accurate estimation of each input.
+\subsection{Different-skew margins}
 
-In the \(16\times16\) panel, both methods severely over-reject across
-several intermediate sample sizes. Here the bias in \(\Deltahat\) grows relative to its sampling SD,
-shifting the statistic away from zero (see
-Section~\ref{sec:null-estimator-accuracy} for the comparison with the
-unbiased same-skew case). The squared standard error is also too large
-on average over part of this range, but that compensating effect does
-not remove the large displacement. Expanded Welch changes the cutoff
-without changing the displaced difference estimate, so its reduction in
-rejection leaves substantial over-rejection. With larger samples, bias diminishes and both rates fall towards 5\%.
+Figure~\ref{fig:balanced-null-different-skew} uses \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\). The population MI values are equal,
+but the tables differ, allowing their MI estimates to have different
+residual biases. That bias difference can shift the shared statistic away
+from zero under the null.
 
-The validity strips separate early calculation failures from these later
-patterns. Under uniform margins, appreciable losses are concentrated in the smallest
-\(2\times2\) samples, whereas under different skew several table sizes
-lose outputs at the smallest sample sizes. Across the full
-120-setting grid, the minimum valid fractions are 0.958 for Normal Wald
-and 0.631 for Expanded Welch. The conservative troughs in \(4\times4\)
-and larger tables, and the different-skew \(16\times16\) plateau,
-persist after validity is complete, so those patterns require explanations
-through the estimates and statistic.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{balanced_null_different_skew.pdf}
+\caption{False-positive rates across common MI values under different-skew margins.}
+\label{fig:balanced-null-different-skew}
+\end{figure}
 
-At the largest sample size in both figures, both tests' rates are close
-to 5\% across the table sizes. More accurate cell frequencies reduce the
-bias and variance errors entering the shared statistic, while larger
-estimated degrees of freedom bring Expanded Welch's cutoff towards Wald's.
-The curves consequently approach one another and the nominal target in
-these settings.
+The two smaller tables retain the conservative ranges at weaker MI and
+the excessive rejection at stronger MI seen in the other margin regimes.
+The \(16\times16\) panel shows a more severe failure: at common MI
+0.005 and \(n=1{,}000\), Wald rejects in 36.38\% of repetitions and
+Expanded Welch in 34.38\%. The larger cutoff reduces rejection but
+leaves it far above 5\%. These high rates occur after both methods return
+valid results in every repetition, so they reflect inaccurate inference
+rather than calculation failures.
 
-\FloatBarrier
+The contrast across common MI depends on the bias relative to sampling
+spread. At \(16\times16\) and \(n=1{,}000\), difference bias is about
+0.03 nats at all three MI levels, but the sampling SD is larger at stronger
+association. The shift therefore has a greater effect relative to the
+spread at weaker MI, accompanying the much higher rejection there.
+With more observations, the bias diminishes and rejection falls. At common
+MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
+\(16\times16\) case eventually falls below the target. Increasing
+sample size can therefore pass through excessive and conservative ranges
+as the shared estimates recover.
 
-\subsection{Bias and standard-error accuracy}
+\subsection{Explaining the main departures from 5\%}
 \label{sec:null-estimator-accuracy}
 
-RQ1 examined the moments of \(\Vhat(P)\) and \(\Vhat(Q)\) needed to
-choose degrees of freedom. For the shared statistic, we now separately check whether \(\Deltahat\)
-is centred on the population difference and whether \(\SEhat^2\)
-describes its sampling variance.
-At small sample sizes, \(V(P)/n_P\) can itself understate MI sampling
-variance because it includes only linear sampling error. Consequently,
-\(\Vhat(P)/n_P\) can exceed that population approximation while still
-falling below the actual sampling variance of the MI estimate.
-
-Table~\ref{tab:redesign-shared-estimates} calculates both diagnostics
-across the evaluation repetitions. ``Bias / SD'' divides
-\(\E(\Deltahat)-\Delta\) by the observed sampling SD of \(\Deltahat\),
-so it measures displacement relative to the spread of the estimates.
-The variance ratio divides the average \(\SEhat^2\) by the observed
-\(\Var(\Deltahat)\): values below one indicate underestimation of
-sampling variance, and values above one indicate overestimation. The
-observed variance is measured about the sampling mean, so this ratio
-can be close to one even when the difference is biased.
-The table compares the selected null settings A, uniform \(4\times4\) with \(n=20\);
-B, different-skew \(8\times8\) with \(n=100\); and C,
-different-skew \(4\times4\) with \(n=10{,}000\), together with the sparse
-\(16\times16\) cases at \(n=1{,}000\). All use equal sample sizes
-and common MI 0.02 nats.
-
-\begin{table}[!htbp]
-\centering
-\caption{Bias and standard-error accuracy at selected equal-MI settings.}
-\label{tab:redesign-shared-estimates}
-\input{figures_rewrite/focused_redesign_shared_estimates}
-\end{table}
-
-Table~\ref{tab:redesign-case-rates} gives rejection rates for the same
-five settings, followed below the divider by the same \(16\times16\)
-populations at \(n=10{,}000\). Each rate divides valid rejections by all 100,000 repetitions and is
-reported with a pointwise 95\% interval. Both tests are valid in every
-repetition at these seven settings.
+Table~\ref{tab:balanced-null-diagnostics} contrasts three common-MI-0.02
+settings that illustrate different estimation errors. ``Bias / SD'' is
+the sampling mean of \(\Deltahat\), whose true value is zero here,
+divided by its observed sampling SD. The variance ratio divides the
+average \(\SEhat^2\) by the observed variance of \(\Deltahat\) about
+its sampling mean, so it measures uncertainty estimation separately from
+bias. Ratios below one indicate underestimation and ratios above one
+indicate overestimation. Both methods are valid in every repetition in
+these three settings; rates are percentages of all 100,000 repetitions.
 
 \begin{table}[H]
 \centering
-\small
-\setlength{\tabcolsep}{4pt}
-\caption{Null rejection rates with pointwise 95\% intervals.}
-\label{tab:redesign-case-rates}
-\input{figures_rewrite/focused_redesign_cases_rates}
+\caption{Estimation errors and false-positive rates at three illustrative null settings.}
+\label{tab:balanced-null-diagnostics}
+\input{figures_rewrite/balanced_null_diagnostics}
 \end{table}
 
-At A, difference bias is negligible, but the average \(\SEhat^2\) is
-below the observed \(\Var(\Deltahat)\), tending to enlarge \(|T|\)
-and accompanying Wald's excessive rejection.
-Expanded Welch's larger cutoff brings the rate close to 5\%.
-At B, \(\Deltahat\) is biased upwards while \(\SEhat^2\) overestimates
-its sampling variance. The upward displacement tends to increase
-rejection, whereas the larger denominator tends to reduce it. Expanded Welch lowers
-rejection further but remains above 5\%, so its improvement occurs with
-different input errors from those at A. At C,
-bias is negligible and the variance ratio is close to one, accompanying
-rates close to 5\% for both methods.
+In the uniform \(4\times4\) setting, difference bias is negligible,
+but the average squared standard error understates the observed sampling
+variance. For a given estimated difference, a smaller denominator enlarges
+\(|T|\) and tends to increase rejection. Expanded Welch's larger cutoff
+reduces that excess and brings the rate close to 5\%. This result shows
+how the cutoff can offset an error in the shared standard error at a
+particular population pair.
 
-The same margins and sample sizes need not give the same calibration at
-stronger association. Table~\ref{tab:redesign-stronger-null} retains
-A's and B's margins, table sizes and sample sizes while increasing their
-common population MI. Rates and their pointwise 95\% intervals are
-percentages of all 100,000 repetitions.
+The two \(16\times16\) settings have almost the same variance ratio
+but opposite rejection behaviour. Under same-skew margins, expected
+difference bias cancels and the oversized standard error suppresses
+rejection, which Expanded Welch lowers further. Under different-skew
+margins, the positive bias shifts the estimated difference more than two
+sampling SDs above its true zero value. That displacement coexists with
+the oversized standard error, and both methods reject far too often.
+Changing the cutoff leaves the displaced numerator unchanged.
 
-\begin{table}[H]
-\centering
-\small
-\caption{False-positive rates at stronger common MI.}
-\label{tab:redesign-stronger-null}
-\input{figures_rewrite/focused_redesign_stronger_null}
-\end{table}
+Across the grid, the methods become close with larger samples, but their
+agreement does not itself establish accurate rejection. For example, at
+common MI 0.005 and \(n=50{,}000\), both tests remain below 4\% in
+every \(16\times16\) margin regime, with the shared estimated variance
+still exceeding the observed difference variance. Expanded Welch improves
+calibration where its lower rejection corrects an excess, while increasing
+conservatism where Wald already rejects too rarely. The power comparison
+measures the accompanying reduction in detection probability.
 
-At A, increasing the common MI raises both rejection rates well above
-their values at MI 0.02, and Expanded Welch no longer brings rejection
-close to 5\%. At B, Wald's rate changes little, but Expanded Welch's
-earlier reduction becomes much smaller. Both methods over-reject at both stronger-MI settings even though the
-larger cutoff still lowers rejection. The improvement at MI 0.02 is
-therefore specific to that tested population pair rather than a property
-of its table dimensions and sample size alone.
+\section{RQ3: Power across MI differences}
+\label{sec:mi-gap-power-results}
 
-The sparse different-skew case shows why changing the cutoff cannot
-resolve a displaced difference estimate. At \(16\times16\) and
-\(n=1{,}000\), the difference bias is about 0.030 nats, or 2.06 observed
-SDs. Under the equal-MI null, its sampling centre
-\(\E(\Deltahat)=\Delta+\Bias(\Deltahat)\) becomes
-\begin{equation}
- \E(\Deltahat)\approx 0+0.02985=0.02985\text{ nats}.
- \label{eq:redesign-null-bias-shift}
-\end{equation}
-With an observed SD of approximately 0.01450 nats, this positive shift
-places the sampling distribution largely above zero and moves most
-rejections into the positive tail despite a zero population difference.
-Expanded Welch leaves this centre unchanged, so both tests reject far too often.
-
-The same-skew \(16\times16\) case has almost the same variance ratio
-but rejection far below 5\%. Under equal MI, the expected estimation
-biases cancel in the difference because the population tables and sample
-sizes are identical. Its average
-\(\SEhat^2\) exceeds the observed \(\Var(\Deltahat)\), shrinking
-\(|T|\) without a large bias shifting the estimates away from zero.
-Under different skew, that variance overestimation coexists with the
-large positive bias, and rejection instead remains excessive. Thus the
-similar variance ratios in Table~\ref{tab:redesign-shared-estimates}
-can accompany rates on opposite sides of 5\% in
-Table~\ref{tab:redesign-case-rates}. At \(n=10{,}000\), both skew
-regimes have rejection rates closer to 5\%.
-
-For the identical uniform-margin populations, expected difference bias
-cancels, while changes in the average \(\SEhat^2\) below or above the
-observed \(\Var(\Deltahat)\) tend to enlarge or reduce \(|T|\), respectively. These changes accompany the repeated
-crossings in the \(16\times16\) panel of
-Figure~\ref{fig:redesign-null-uniform}. The estimates recover at
-different rates as sparse tables fill, so increasing sample size need
-not improve rejection monotonically.
-
-The \(2\times2\) trough also involves how the numerator and denominator
-move together within repetitions. Larger absolute MI differences tend
-to occur with larger standard errors, so division suppresses the
-extreme values that would otherwise cause rejection. Consequently,
-rejection can be far below 5\% even when the average \(\SEhat^2\)
-is fairly close to the observed difference variance. Beyond the trough,
-this dependence weakens and the tails of \(T\) move closer to the
-normal approximation. The Spearman rank correlation between
-\(|\Deltahat-\operatorname{mean}(\Deltahat)|\) and \(\SEhat\),
-calculated over repetitions with both quantities finite, falls from
-0.656 at \(n=50\) to 0.167 at \(n=1{,}000\).
-Together these checks explain the broad patterns
-without isolating every finite-sample contribution to rejection.
-
-\section{RQ3: Power at a fixed MI difference}
-\label{sec:fixed-gap-power-results}
-
-The power study retains the four table sizes, three margin regimes and
-ten sample sizes of the broad null comparison, but fixes \(I(P)=0.02\)
-and \(I(Q)=0.03\) nats. The true difference is therefore
-\(\Delta=-0.01\) nats throughout. Each plotted rate divides valid
-rejections by all 100,000 repetitions at that setting, with invalid
-calculations counted as non-rejections. Shading gives pointwise 95\%
-intervals, and the lower strips show the fraction of valid results.
+The power study repeats the four table sizes, three margin regimes and
+ten sample sizes of the broad null comparison at three MI-gap magnitudes:
+\(|\Delta|=0.005,0.01,0.02\) nats. Population \(P\) has MI 0.02 nats,
+while \(Q\) has MI 0.025, 0.03 or 0.04 nats, respectively, so each
+signed difference \(\Delta=I(P)-I(Q)\) is negative. Each plotted rate
+divides valid rejections by all 100,000 repetitions at that setting, with
+invalid calculations counted as non-rejections. Shading gives pointwise
+95\% intervals, and the lower strips show the fraction of valid results.
 
 Both tests use their usual p-value threshold of 0.05. Expanded Welch's
 larger cutoff makes its rejections a subset of Wald's, so the comparison
@@ -675,23 +525,24 @@ population difference.
 
 \subsection{Uniform margins}
 
-Figure~\ref{fig:fixed-gap-power-uniform} uses uniform row and column
-margins in both populations. Each panel holds the population tables and
-MI difference fixed while increasing the common sample size along the
-logarithmic horizontal axis. The two lines compare Normal Wald and
-Expanded Welch at the same sampled table pairs.
+Figure~\ref{fig:mi-gap-power-uniform} uses uniform row and column
+margins in both populations. Each panel increases the common sample size
+along the logarithmic horizontal axis, while colour identifies the MI-gap
+magnitude. Solid lines with filled circles show Normal Wald, and dashed
+lines with open squares show Expanded Welch. The same colour and line
+conventions apply to all three power figures.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{fixed_gap_power_uniform.pdf}
-\caption{Power at a fixed MI difference under uniform margins.}
-\label{fig:fixed-gap-power-uniform}
+\includegraphics[width=\textwidth]{mi_gap_power_uniform.pdf}
+\caption{Power across three MI differences under uniform margins.}
+\label{fig:mi-gap-power-uniform}
 \end{figure}
 
-All four panels show low detection over part of the small-sample range,
+For each MI gap, all four panels show low detection over part of the small-sample range,
 followed by a sustained rise with more observations. Larger tables
-require more observations before power becomes high. For example, at
-\(n=10{,}000\), Expanded Welch detects the difference in 89.44\% of
+require more observations before power becomes high. For the 0.01-nat
+gap at \(n=10{,}000\), Expanded Welch detects the difference in 89.44\% of
 \(2\times2\) repetitions and 71.12\% of \(16\times16\) repetitions.
 This ordering reflects both the sparse-table estimation errors discussed
 in Section~\ref{sec:null-estimator-accuracy} and the population variances:
@@ -701,47 +552,58 @@ larger first-order sampling variance for the same MI gap and sample size.
 As the variance decreases with more observations, the estimated
 difference becomes more consistently separated from zero and power rises.
 
-Expanded Welch remains below Wald, with the largest separation at the
-smallest sample size in the \(16\times16\) panel. Its valid fraction
+Once samples are sufficiently large, increasing the MI gap shifts the
+power curves upwards. In the \(4\times4\) panel at \(n=2{,}500\),
+Expanded Welch's power rises from 11.14\% for the 0.005-nat gap to
+78.74\% for the 0.02-nat gap. Increasing \(I(Q)\) also increases
+\(V(Q)\), but in these populations the MI gap grows faster than the
+first-order sampling SD of the difference. The population difference is
+therefore more strongly separated from zero relative to its sampling spread.
+
+Expanded Welch remains below Wald for every gap. For the 0.01-nat gap,
+the largest separation occurs at the smallest sample size in the
+\(16\times16\) panel. Its valid fraction
 there is above 99\%, so most of that separation comes from the larger
 cutoff rather than failed calculations. The method gap becomes small
 in the larger-sample range as increasing degrees of freedom bring the
 Student \(t\) distribution close to the standard normal distribution.
 The early shoulders and troughs also occur in the null rejection curves,
-where standard-error errors and the distribution of \(T\) can produce
+where errors in the estimated standard error and the distribution of \(T\) can produce
 excessive or conservative rejection. Consequently, the early high points
 are not evidence that fewer observations reliably identify the MI difference.
 
 \subsection{Same-skew margins}
 
-Figure~\ref{fig:fixed-gap-power-same-skew} assigns both populations the
-row and column profile \(m_k(0.8)\), retaining the same MI targets and
+Figure~\ref{fig:mi-gap-power-same-skew} assigns both populations the
+row and column profile \(m_k(0.8)\), retaining the same three MI gaps and
 sample sizes. The margins agree between populations, but their different
 MI values require different copying probabilities and hence different
 population tables.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{fixed_gap_power_same_skew.pdf}
-\caption{Power at a fixed MI difference under same-skew margins.}
-\label{fig:fixed-gap-power-same-skew}
+\includegraphics[width=\textwidth]{mi_gap_power_same_skew.pdf}
+\caption{Power across three MI differences under same-skew margins.}
+\label{fig:mi-gap-power-same-skew}
 \end{figure}
 
 The curves again have an early low-power range followed by recovery,
 with the trough occurring later for larger tables. Relative to uniform
 margins, the uneven frequencies leave more combinations rarely observed,
 and the population pointwise-MI variances are also larger. Both features
-make the fixed gap harder to detect. In the \(16\times16\) case at
-\(n=1{,}000\), the average squared standard error is 1.81 times the
+make a given gap harder to detect. For the 0.01-nat gap in the
+\(16\times16\) case at \(n=1{,}000\), the average squared standard error is 1.81 times the
 observed variance of the difference, while difference bias is small
 relative to the true gap. The oversized denominator suppresses \(|T|\),
 contributing to Expanded Welch's power of only 1.64\% at that setting.
 
 Both methods gain power once larger samples improve the cell estimates
-and reduce the spread of the MI difference. Expanded Welch reaches
-60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
-under uniform margins, and exceeds 99.9\% in every same-skew panel at
-\(n=50{,}000\). The differences between methods become much smaller
+and reduce the spread of the MI difference. For the 0.01-nat gap,
+Expanded Welch reaches 60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
+under uniform margins. The smaller 0.005-nat gap remains harder to
+detect even at \(n=50{,}000\), where Expanded Welch reaches 79.87\%
+in \(16\times16\), compared with over 99.9\% for both larger gaps.
+The differences between methods become much smaller
 than these differences between table sizes and margin regimes. At the
 smallest sample sizes, however, the validity strips show that failed
 Expanded Welch calculations also contribute to its lower all-repetition
@@ -749,23 +611,23 @@ power; the larger cutoff is not the only source of that loss.
 
 \subsection{Different-skew margins}
 
-Figure~\ref{fig:fixed-gap-power-different-skew} uses \(m_k(0.7)\) for
-\(P\) and \(m_k(0.8)\) for \(Q\). The true difference remains
-\(-0.01\) nats, but the unequal margins can give the MI estimates
+Figure~\ref{fig:mi-gap-power-different-skew} uses \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\). Each true difference is negative,
+but the unequal margins can give the MI estimates
 different residual biases, shifting the centre of their difference.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{fixed_gap_power_different_skew.pdf}
-\caption{Power at a fixed MI difference under different-skew margins.}
-\label{fig:fixed-gap-power-different-skew}
+\includegraphics[width=\textwidth]{mi_gap_power_different_skew.pdf}
+\caption{Power across three MI differences under different-skew margins.}
+\label{fig:mi-gap-power-different-skew}
 \end{figure}
 
 The \(2\times2\) and \(4\times4\) panels retain the low-power range
 and subsequent rise, while the two larger tables have more pronounced
 early rejection before falling and recovering. The \(16\times16\)
 curve shows why this early rejection needs careful interpretation.
-At \(n=1{,}000\), positive difference bias is approximately 0.0307
+For the 0.01-nat gap at \(n=1{,}000\), positive difference bias is approximately 0.0307
 nats, moving the sampling mean from the true \(-0.01\) to approximately
 \(+0.0207\) nats. Expanded Welch rejects in 9.66\% of repetitions,
 but more than 99.9\% of those rejections have a positive estimated
@@ -774,8 +636,19 @@ therefore produces rejection without reliably identifying which population
 has greater MI, as in the displaced null comparison in
 Section~\ref{sec:null-estimator-accuracy}.
 
-As sample size increases, that positive bias decreases and the sampling
-centre passes back towards zero. At \(n=2{,}500\), the remaining positive
+This positive bias also explains why a larger MI gap can give lower
+rejection at the same sample size. In \(16\times16\) at
+\(n=1{,}000\), Expanded Welch's power falls from 16.11\% for
+\(|\Delta|=0.005\) to 3.39\% for \(|\Delta|=0.02\). The positive
+bias remains about 0.03 nats across these gaps, so making the true
+difference more negative moves the sampling centre closer to zero.
+The resulting loss of positive-tail rejections outweighs the increase in
+negative-tail rejections over this range. The ordering reverses at larger
+samples, once bias is small enough for the negative population difference
+to determine the direction of most rejections.
+
+Along the 0.01-nat curve, increasing sample size reduces the positive
+bias and moves the sampling centre back towards zero. At \(n=2{,}500\), the remaining positive
 bias nearly cancels the negative population difference, leaving the
 sampling mean close to zero, and Expanded Welch's power falls to 2.48\%.
 With still more observations, the bias diminishes further and the
@@ -785,13 +658,18 @@ power becomes high. Changing the cutoff lowers both parts of this
 nonmonotonic curve without removing the biased movement of its centre.
 
 Across all three margin regimes, both methods exceed 99.9\% power at
-\(n=50{,}000\). At \(n=10{,}000\), their power differences are below
-0.32 percentage points at every table size and margin regime. The fixed-gap
-study therefore shows a detection cost from Expanded Welch's larger cutoff,
-especially with small samples, alongside shared estimation errors that
-can leave both methods with low power or rejection in the wrong direction.
-The false-positive findings determine whether that lower rejection
-improves calibration in the corresponding null setting.
+\(n=50{,}000\) for gaps of 0.01 and 0.02 nats, whereas power for the
+0.005-nat gap ranges from 79.87\% to 96.47\%. At \(n=10{,}000\),
+the method power differences are below 0.32 percentage points across all
+three gaps, table sizes and margin regimes. Thus the gap magnitude strongly
+affects detection once the estimates become accurate, while Expanded
+Welch's larger cutoff gives a smaller loss relative to Wald in this
+larger-sample range. In sparse settings, shared estimation errors can
+instead produce low power or rejection in the wrong direction, and a
+larger population difference can temporarily reduce rejection by
+cancelling bias. The null results establish whether the lower rejection
+from Expanded Welch improves false-positive rates at the corresponding
+starting populations.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}

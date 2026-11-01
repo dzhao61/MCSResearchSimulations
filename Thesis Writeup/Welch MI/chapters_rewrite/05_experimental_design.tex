@@ -215,7 +215,8 @@ that the estimated degrees of freedom are lower on average. We make the same che
 whenever a summary uses only positive finite degrees of freedom.
 Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
 
-Table~\ref{tab:design-primary-grids} specifies two grids: the first varies
+The approximation checks in Table~\ref{tab:design-primary-grids} use two grids:
+the first varies
 sample size at common MI 0.02 nats, while the second includes very small
 positive MI to examine behaviour near independence. In this latter range,
 the predicted sampling variance of \(\Vhat(P)\) becomes small and
@@ -240,8 +241,13 @@ Near independence &
 \(I(P)=I(Q)\) takes the values (nats)\newline
 \(0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\).\\
 \addlinespace
-Fixed-gap power &
-\(k\in\{2,4,8,16\}\), \(I(P)=0.02\), \(I(Q)=0.03\) nats.\newline
+False-positive rates &
+\(k\in\{2,4,8,16\}\), \(I(P)=I(Q)\in\{0.005,0.02,0.30\}\) nats.\newline
+The same ten sample sizes as the across-sample-size checks.\\
+\addlinespace
+Power at three MI gaps &
+\(k\in\{2,4,8,16\}\), \(I(P)=0.02\) nats,\newline
+\(I(Q)\in\{0.025,0.03,0.04\}\) nats.\newline
 The same ten sample sizes as the across-sample-size checks.\\
 \bottomrule
 \end{tabularx}
@@ -250,49 +256,53 @@ The same ten sample sizes as the across-sample-size checks.\\
 \section{RQ2: False-positive rates under equal MI}
 \label{sec:null-design}
 
-To measure false positives, we draw a count table from each of two
-populations with equal MI in every repetition, so every rejection is
-a false positive. Normal Wald and Expanded Welch use the
-same bias-corrected MI difference and estimated standard error from
-Chapter~\ref{chap:baselines}, but compare the resulting statistic with
-different reference distributions. Normal Wald uses the standard normal
-distribution, while Expanded Welch uses a Student \(t\) distribution
-with MI-specific degrees of freedom estimated from the two sampled count
-tables.
+To measure false positives, we draw samples from populations with equal
+MI, so every rejection is a false positive. The copying construction
+sets
+\begin{equation}
+ I(P)=I(Q)\in\{0.005,0.02,0.30\}\text{ nats},
+ \qquad \Delta=0.
+ \label{eq:design-balanced-null}
+\end{equation}
+These levels cover weaker association, the baseline MI used for the power
+study, and stronger association. For each common MI, we use all four
+table sizes, three margin regimes and ten sample sizes in
+Tables~\ref{tab:design-primary-grids} and \ref{tab:margin-profiles}.
+The resulting 360 settings test whether the methods' behaviour changes
+across those four experimental parameters.
 
-All reported simulation comparisons use equal sample sizes, so the two
-leading MI bias corrections cancel from \(\Deltahat\), leaving the raw
-plug-in MI difference. Residual biases can still differ between distinct
-population tables, shifting the estimated difference away from its true
-value even under equal population MI.
+At each setting, we draw 100,000 independent pairs of count tables and
+apply both tests to the same pair using their usual two-sided p-value
+threshold of 0.05. The false-positive rate is the fraction of all
+repetitions that reject equal MI. Invalid calculations count as
+non-rejections, and we report the valid-result fraction separately so
+calculation failures can be distinguished from conservative decisions.
 
-Both tests use a two-sided 5\% nominal test. The broad null comparison
-uses the first grid in Table~\ref{tab:design-primary-grids}: common MI
-0.02 nats, four table sizes, three margin regimes and ten sample sizes,
-giving 120 settings. A false-positive rate above 5\% means excessive rejection, while a rate
-below 5\% means conservative rejection. Because a rule that never rejects
-has zero false positives and zero power, we assess nominal calibration
-by closeness to 5\% and evaluate power separately.
+A rejection rate above 5\% indicates excessive rejection, while a rate
+below 5\% indicates conservatism. We assess calibration by closeness to
+5\%, rather than treating every reduction in rejection as an improvement.
 
-We also report the fraction of valid results. Because invalid calculations
-contribute no rejection to the all-repetition rate, failures can lower that
-rate without improving the decisions made on usable samples.
-
-\section{RQ3: Power at a fixed MI difference}
-\label{sec:fixed-gap-power-design}
+\section{RQ3: Power across MI differences}
+\label{sec:mi-gap-power-design}
 
 To measure power, we draw samples from populations with different MI, so
 rejection detects a genuine difference. The power study uses the same
 four table sizes, three margin regimes and ten sample sizes as the broad
-null comparison in Section~\ref{sec:null-design}. At each of these 120
-settings, the copying construction gives
+null comparison in Section~\ref{sec:null-design}. We repeat that grid for
+three MI gaps by holding \(I(P)=0.02\) nats and changing \(I(Q)\):
 \begin{equation}
- I(P)=0.02,\qquad I(Q)=0.03,\qquad
- \Delta=I(P)-I(Q)=-0.01\text{ nats}.
- \label{eq:design-fixed-gap-populations}
+\begin{aligned}
+ I(P)&=0.02,\qquad I(Q)\in\{0.025,0.03,0.04\},\\
+ \Delta&=I(P)-I(Q)\in\{-0.005,-0.01,-0.02\}\text{ nats}.
+\end{aligned}
+ \label{eq:design-mi-gap-populations}
 \end{equation}
-The population tables stay fixed as sample size increases, so the curves
-show how more observations affect detection of the same MI difference.
+Thus \(Q\) has greater MI in each alternative, with gap magnitudes
+\(|\Delta|\in\{0.005,0.01,0.02\}\) nats. Each magnitude uses all
+120 combinations of table size, margin regime and sample size, giving
+360 power settings. Within each curve, the two population tables and
+MI gap stay fixed as sample size increases; comparing curves changes
+\(Q\)'s association while retaining its margins.
 
 For each setting, we generate 100,000 independent pairs of count tables
 and apply both tests to each pair using their usual p-value threshold of
@@ -319,7 +329,13 @@ independent repetitions, which determine the precision of the reported
 rates; each test uses only \(n_P\) and \(n_Q\) observations within a
 repetition. Each distinct setting uses separate random streams for the two
 populations, and repeated settings use the same repetitions wherever they
-appear. The fixed-gap power study uses new simulation streams.
+appear. Different MI-gap settings use independent simulation streams.
+
+All reported simulation comparisons use equal sample sizes, so the two
+leading MI bias corrections cancel from \(\Deltahat\), leaving the raw
+plug-in MI difference. Residual biases can still differ between distinct
+population tables, shifting the estimated difference away from its true
+value even under equal population MI.
 
 Table~\ref{tab:design-performance-measures} defines the measures for each
 evaluation setting.

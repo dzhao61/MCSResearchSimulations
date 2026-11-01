@@ -74,7 +74,7 @@ def source_files() -> list[tuple[Path, Path]]:
     for source in clean_files(
         THESIS / "figures_rewrite", suffixes={".pdf", ".py", ".json", ".tex"}
     ):
-        if not (source.name.startswith(("focused_", "fixed_gap_power_")) or source.name == "evidence_values.tex"):
+        if not (source.name.startswith(("focused_", "fixed_gap_power_", "mi_gap_power_", "balanced_null_")) or source.name == "evidence_values.tex"):
             continue
         files.append((source, source.relative_to(THESIS)))
     return files
@@ -100,12 +100,16 @@ def supplement_files() -> list[tuple[Path, Path]]:
                    "report_large_table_construction_check.py",
                    "redesign_study.py", "redesign_report.py", "report_ratio_tools.py",
                    "fixed_gap_power_study.py",
+                   "mi_gap_power_study.py",
+                   "balanced_null_study.py",
                    "report_chapter6_mechanisms.py",
                    "calibration_sensitivity.py", "report_calibration_sensitivity.py",
                    "same_skew_extension_core.py", "run_same_skew_extension.py",
                    "report_same_skew_extension.py"]
     tests = [
         "test_fixed_gap_power.py",
+        "test_mi_gap_power.py",
+        "test_balanced_null.py",
         "test_calibration_sensitivity.py", "test_report_ratio_tools.py",
         "test_approximation_redesign.py", "test_thesis_consistency.py", "test_focused_study.py", "test_focused_report.py", "test_report_formatting.py",
         "test_numerical_degeneracy.py", "test_focused_audit_guards.py",
@@ -127,6 +131,8 @@ def supplement_files() -> list[tuple[Path, Path]]:
         differential / "src",
         project / "results/approximation_redesign",
         project / "results/fixed_gap_power_2026-11-01",
+        project / "results/mi_gap_power_2026-11-01",
+        project / "results/balanced_null_2026-11-01",
         project / "results/focused_study",
         project / "results/unequal_sample_check",
         project / "results/large_table_construction_check",

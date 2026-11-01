@@ -1,5 +1,27 @@
 # Results
 
+## Balanced null study, 1 November 2026
+
+[`balanced_null_2026-11-01/`](balanced_null_2026-11-01/) adds 240 settings
+and 24 million pairs at common MI 0.005 and 0.30. Its `combined_*`
+summaries include all 120 original common-MI-0.02 settings in
+`approximation_redesign/`, without copying or changing their raw records.
+The complete null study has 360 settings and 36 million distinct pairs.
+`combined_audit.json` records coverage, source/seed/hash provenance,
+unchanged original rates and 2,880 independently reconstructed pairs.
+Three manuscript figures show the full grid; one compact table explains
+the main estimation errors. Historical follow-ups remain preserved below.
+
+## Three-gap power extension, 1 November 2026
+
+[`mi_gap_power_2026-11-01/`](mi_gap_power_2026-11-01/) adds 240 settings and
+24 million pairs at gaps 0.005 and 0.02. Its `combined_*` summaries include
+the original 120 gap-0.01 settings without copying or changing their raw
+records. The combined study has 360 settings and 36 million distinct pairs.
+`combined_audit.json` records full-grid checks, original evidence provenance
+and 2,880 independently reconstructed pairs. Current manuscript plots use
+all three gaps; the one-gap results remain preserved below.
+
 ## Active fixed-gap power evidence, 1 November 2026
 
 [`fixed_gap_power_2026-11-01/`](fixed_gap_power_2026-11-01/) contains the new
