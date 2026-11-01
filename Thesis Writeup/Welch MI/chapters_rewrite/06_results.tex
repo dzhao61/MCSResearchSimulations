@@ -4,8 +4,8 @@
 
 This chapter checks the approximations used to choose Expanded Welch's
 degrees of freedom, then compares its false-positive rates and power with
-Normal Wald. Supporting simulations examine additional settings, and the
-online-shopping application illustrates interpretation of the test outputs.
+Normal Wald. The online-shopping application illustrates how to interpret
+the test outputs.
 
 Each evaluation setting uses 100,000 independent repetitions, each drawing
 one count table from \(P\) and one independently from \(Q\). Normal Wald
@@ -16,12 +16,18 @@ each repetition.
 
 For a fixed population table \(P\) and sample size \(n_P\), each
 repetition produces an estimate \(\Vhat(P)\) of the pointwise-MI variance
-\(V(P)\). We examine its average value,
+\(V(P)\). We first check predictions for its sampling mean,
 \(\E\{\Vhat(P)\}\), and its variation between repetitions,
 \(\Var\{\Vhat(P)\}\), because both moments enter the component
-degrees-of-freedom calculation. Table~\ref{tab:results-variance-quantities} in
+degrees-of-freedom calculation. We then examine how errors in these
+moments affect the degrees of freedom, before checking the approximations
+as the populations approach independence.
+Table~\ref{tab:results-variance-quantities} in
 Chapter~\ref{chap:baselines} distinguishes these quantities from the
 sampling variance of the MI difference.
+The figures focus on populations with equal MI but different margins,
+allowing approximation accuracy to be compared between distinct population
+tables.
 
 \subsection{Mean and sampling-variance predictions}
 
@@ -66,11 +72,10 @@ unobserved begin to appear in sampled tables. Cells observed only once
 can have estimated pointwise MI far from the table's plug-in MI,
 producing large squared deviations in \(\Vhat\). For example, if a
 cell and its row and column each contain one observation, its empirical
-pointwise MI is \(\log n\). Decomposing the cell contributions in
-10,000 repetitions at each of seven selected sample sizes from 10 to
-10,000 for the \(16\times16\) different-skew populations shows that
-once-observed cells contribute most of the mean of \(\Vhat\) around
-the peak in both populations.
+pointwise MI is \(\log n\). A cell-contribution decomposition for the
+\(16\times16\) populations shows that once-observed cells contribute
+most of the mean of \(\Vhat\) around the peak in both populations
+(Appendix~\ref{sec:estimation-diagnostics}).
 Their contribution falls as repeated counts give better estimates of
 the cell probabilities. Larger tables spread probability over more rare
 combinations under these margin rules, so this distortion persists to
@@ -189,6 +194,17 @@ the larger-table ratios are generally closer to one in \(Q\), whose
 smaller normalised mean
 overshoot produces a smaller downward error in the squared numerator.
 
+A numerical example shows why a fairly accurate variance prediction can
+still give degrees of freedom below the target. For different-skew
+\(4\times4\) population \(P\) at \(n=1{,}000\) and MI 0.02, the
+sampling mean of \(\Vhat(P)\) is about 19\% above \(V(P)\), whereas
+\(\tau^2(P)/n_P\) is only about 3\% below the observed sampling variance.
+The first-order calculation squares \(V(P)\), whereas the moment target
+squares the larger \(\E\{\Vhat(P)\}\), so the mean error's downward
+effect on the numerator is magnified. The slightly underestimated variance denominator
+offsets only part of this effect, leaving first-order degrees
+of freedom of 15.30 compared with a moment target of 21.03.
+
 In the bottom row, the \(16\times16\) curves first appear above the target,
 fall below it, and then recover towards one. The \(4\times4\) and
 \(8\times8\) curves have smaller excursions, while the \(2\times2\)
@@ -212,20 +228,6 @@ validity is met at a larger sample size. Missing earlier points indicate
 failed component calculations in some repetitions, rather than zero degrees
 of freedom.
 
-A numerical example shows why a fairly accurate variance prediction can
-still give degrees of freedom below the target. For different-skew
-\(4\times4\) population \(P\) at \(n=1{,}000\) and MI 0.02, the
-sampling mean of \(\Vhat(P)\) is about 19\% above \(V(P)\), whereas
-\(\tau^2(P)/n_P\) is only about 3\% below the observed sampling variance.
-The first-order calculation squares \(V(P)\), whereas the moment target
-squares the larger \(\E\{\Vhat(P)\}\), so the mean error's downward
-effect on the numerator is magnified. The slightly underestimated variance denominator
-offsets only part of this effect, leaving first-order degrees
-of freedom of 15.30 compared with a moment target of 21.03.
-Matching these moments chooses
-the degrees of freedom of the scaled chi-squared approximation; it does
-not guarantee an exact Student \(t\) distribution for the test statistic.
-
 \FloatBarrier
 
 \subsection{Behaviour near independence}
@@ -244,7 +246,10 @@ the table size at \(4\times4\), and increases the common population MI
 along the horizontal axis. The margins are \(m_k(0.7)\) for \(P\) and
 \(m_k(0.8)\) for \(Q\). The top row multiplies the observed sampling
 mean of \(\Vhat\) by \(n\); the middle row multiplies its observed
-sampling variance by \(n^2\). Their dashed near-independence predictions
+sampling variance by \(n^2\). These scalings cancel the sample-size
+denominators in the near-independence moment formulas in
+Appendix~\ref{sec:independence-boundary}. The dashed near-independence
+predictions
 use the same scalings and depend on the common table size, sample size
 and MI, so they are identical in the two columns. The bottom row compares
 the mean estimated degrees of freedom, its near-independence prediction,
@@ -296,7 +301,8 @@ units at the smallest MI values, around half the sampling-moment target,
 while the population first-order value approaches zero. This separation
 arises because the sample-based calculation retains apparent association
 from sampling noise. Substituting \(\Vhat\approx2\Ihat\) and
-\(\widehat\tau^2\approx4\Vhat\) into its formula gives
+\(\widehat\tau^2\approx4\Vhat\) into the component degrees-of-freedom
+formula gives
 \(\widehat\nu_P\approx n_P\Ihat(P)\), whose average stays positive at
 fixed sample size even when \(I(P)\) is almost zero. The population
 first-order value instead approaches \(n_PI(P)\), which becomes very
@@ -304,34 +310,37 @@ small. The moment target has a shallow initial dip because its observed
 sampling variance initially grows faster in proportion than its squared
 sampling mean. Their relative growth later reverses and the target rises,
 with the mean estimated degrees of freedom approaching it. At stronger
-association, the dashed prediction rises above the mean estimated degrees
-of freedom, while the population first-order curve remains below the
-moment target. Here both local substitutions enter a ratio, with
-\(\Vhat\) squared in the numerator and \(\widehat\tau^2\) in the denominator, so their combined error gives an upward error in the
-predicted mean, despite the downward moment errors in the upper rows. Both
-populations show this progression, but \(Q\) has lower absolute
-component degrees of freedom over the displayed range.
+association, the dashed near-independence prediction rises above the
+observed mean estimated degrees of freedom, while the population
+first-order curve remains below the moment target. The near-independence
+calculation approximates a ratio with \(\Vhat\) squared in the numerator
+and \(\widehat\tau^2\) in the denominator. Errors in both substitutions
+combine to raise the predicted mean estimated component degrees of
+freedom, even though the near-independence predictions for the moments
+in the upper rows are too low. Both populations show this progression,
+but the observed mean estimated degrees of freedom and the moment target
+are lower in \(Q\). The lower moment target follows from \(Q\)'s greater
+sampling variance relative to its squared sampling mean.
 
-The population and sample-based predictions for the sampling variance of
-\(\Vhat\) also separate near independence. At the smallest MI target,
+Using the same repetitions, we also compare the population first-order
+and average sample-based variance predictions defined for the middle and
+bottom rows of Figure~\ref{fig:redesign-moments}. At the smallest MI target,
 0.0001, the population first-order predictions are only about
 5\% of the observed sampling variances, while the sample-based predictions
 average roughly twice those variances. The local relation
 \(\widehat\tau^2\approx4\Vhat\) carries sampling noise into the estimated
-variance prediction, explaining its upward error in this range
+variance prediction, explaining the sample-based prediction's upward error
+in this range
 (Appendix~\ref{sec:independence-boundary}). At MI 0.02, the population
 first-order variance predictions are much more accurate, although the
 sample-based ratios remain above one. The population calculation improves
 as the linear sampling term becomes more informative, while the local
 near-independence calculation loses accuracy as association grows. At MI
-0.05, the mean and both variance predictions are close to their observed
-sampling moments, and the mean estimated
-degrees of freedom are closer to the moment target than the population
-first-order values. The latter still use \(V\) in place of the enlarged
-sampling mean. Across these MI values, \(Q\) has lower absolute component
-degrees of freedom: its sampling
-variance is greater relative to its squared sampling mean, giving a lower
-moment target.
+0.05, \(V\) is close to the observed mean of \(\Vhat\), and both the
+population first-order and average sample-based variance predictions are
+close to its observed sampling variance. The mean estimated degrees of
+freedom are closer to the moment target than the population first-order
+values, which still use \(V\) in place of the enlarged sampling mean.
 
 \section{RQ2: False-positive rates under equal MI}
 \label{sec:null-rejection-patterns}
@@ -357,8 +366,10 @@ Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
 populations, giving identical population tables at each common MI.
 Each panel increases sample size along the logarithmic horizontal axis.
 Colour identifies common MI; solid lines with filled circles show Normal
-Wald, and dashed lines with open squares show Expanded Welch. The dotted
-line marks 5\%. For a given table size, the vertical scale is the same
+Wald, and dashed lines with open squares show Expanded Welch. Where the
+method curves overlap, their observed false-positive rates are equal or
+too close to distinguish on the plotted scale. The dotted line marks 5\%.
+For a given table size, the vertical scale is the same
 across the three margin figures, while different table sizes can use
 different scales.
 
@@ -460,9 +471,10 @@ as the shared estimates recover.
 \label{sec:null-estimator-accuracy}
 
 Table~\ref{tab:balanced-null-diagnostics} contrasts three common-MI-0.02
-settings that illustrate different estimation errors. ``Bias / SD'' is
-the sampling mean of \(\Deltahat\), whose true value is zero here,
-divided by its observed sampling SD. The variance ratio divides the
+settings that illustrate different estimation errors. Because the
+population MI difference \(\Delta\) is zero, ``Bias / SD'' equals the
+sampling mean of \(\Deltahat\) divided by its observed sampling SD.
+The variance ratio divides the
 average \(\SEhat^2\) by the observed variance of \(\Deltahat\) about
 its sampling mean, so it measures uncertainty estimation separately from
 bias. Ratios below one indicate underestimation and ratios above one
@@ -530,7 +542,10 @@ margins in both populations. Each panel increases the common sample size
 along the logarithmic horizontal axis, while colour identifies the MI-gap
 magnitude. Solid lines with filled circles show Normal Wald, and dashed
 lines with open squares show Expanded Welch. The same colour and line
-conventions apply to all three power figures.
+conventions apply to all three power figures, with overlapping method
+curves indicating equal or visually indistinguishable power. Curves for
+different MI gaps also meet near 100\% once almost every repetition
+rejects the null hypothesis.
 
 \begin{figure}[H]
 \centering
@@ -562,8 +577,8 @@ therefore more strongly separated from zero relative to its sampling spread.
 
 Expanded Welch remains below Wald for every gap. For the 0.01-nat gap,
 the largest separation occurs at the smallest sample size in the
-\(16\times16\) panel. Its valid fraction
-there is above 99\%, so most of that separation comes from the larger
+\(16\times16\) panel. Expanded Welch's valid-result fraction at that
+setting is above 99\%, so most of that separation comes from the larger
 cutoff rather than failed calculations. The method gap becomes small
 in the larger-sample range as increasing degrees of freedom bring the
 Student \(t\) distribution close to the standard normal distribution.
@@ -664,12 +679,7 @@ the method power differences are below 0.32 percentage points across all
 three gaps, table sizes and margin regimes. Thus the gap magnitude strongly
 affects detection once the estimates become accurate, while Expanded
 Welch's larger cutoff gives a smaller loss relative to Wald in this
-larger-sample range. In sparse settings, shared estimation errors can
-instead produce low power or rejection in the wrong direction, and a
-larger population difference can temporarily reduce rejection by
-cancelling bias. The null results establish whether the lower rejection
-from Expanded Welch improves false-positive rates at the corresponding
-starting populations.
+larger-sample range.
 
 \section{Application to online shopping data}
 \label{sec:shoppers-application}

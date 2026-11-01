@@ -46,8 +46,8 @@ def generate(results=RESULTS,destination=HERE):
                     r=subset[np.isclose(subset.gap,gap)&subset.method.eq(method)].sort_values("n_p")
                     assert len(r)==10 and not r.n_p.duplicated().any()
                     ax.plot(r.n_p,r.rejection_rate,color=colour,ls=style,marker=marker,
-                        markerfacecolor=colour if method=="normal_wald" else "white",
-                        markeredgewidth=.65,ms=3,lw=1.3)
+                        markerfacecolor=colour if method=="normal_wald" else "none",
+                        markeredgewidth=.65,ms=3 if method=="normal_wald" else 5,lw=1.3)
                     ax.fill_between(r.n_p,r.rejection_low,r.rejection_high,color=colour,alpha=.08)
                     valid.plot(r.n_p,r.valid_rate,color=colour,ls=style,lw=1.1)
             ax.set(xscale="log",ylim=(-.025,1.025),title=rf"${k}\times{k}$",ylabel="Power")
@@ -58,8 +58,9 @@ def generate(results=RESULTS,destination=HERE):
             valid.set_ylabel("Valid fraction",fontsize=9,rotation=0,ha="left",va="bottom")
             valid.yaxis.set_label_coords(.02,.13)
         gap_handles=[Line2D([],[],color=colour,lw=1.5,label=f'{gap:g}') for gap,colour in GAPS.items()]
-        method_handles=[Line2D([],[],color="black",ls=style,marker=marker,ms=3,
-            markerfacecolor="black" if method=="normal_wald" else "white",label=label)
+        method_handles=[Line2D([],[],color="black",ls=style,marker=marker,
+            ms=3 if method=="normal_wald" else 5,markeredgewidth=.65,
+            markerfacecolor="black" if method=="normal_wald" else "none",label=label)
             for method,(label,style,marker) in METHODS.items()]
         fig.legend(handles=gap_handles,loc="lower center",bbox_to_anchor=(.5,.075),ncol=3,
             title=r"MI-gap magnitude $|\Delta|$ (nats)",title_fontsize=9)

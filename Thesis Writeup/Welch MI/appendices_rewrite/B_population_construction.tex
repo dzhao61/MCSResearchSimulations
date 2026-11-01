@@ -164,6 +164,19 @@ Repeat both for \(Q\). For each population, use the same repetitions with finite
 and outputs whose test is invalid. Divide both predictions by the same
 observed variability, which must be positive.
 
+The checks of cell contributions and the linear approximation accompanying
+Figure~\ref{fig:redesign-moments} use 10,000 of the approximation-study
+repetitions for each \(16\times16\) different-skew population at common
+MI 0.02 nats and sample sizes
+\(n\in\{10,20,50,100,250,1000,10000\}\).
+Contributions to \(\Vhat\) and \(\widehat\tau^2\) are separated into
+once-observed cells whose row and column totals also equal one, other
+once-observed cells and cells observed more than once. To assess the
+linear approximation, subtract the
+first-order change from \(\Vhat-V\) and include the covariance between
+that change and the remainder when comparing their contributions to the
+observed variance.
+
 \section{Simulation uncertainty}
 \label{sec:simulation-uncertainty}
 
