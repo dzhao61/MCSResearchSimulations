@@ -199,11 +199,16 @@ still give degrees of freedom below the target. For different-skew
 \(4\times4\) population \(P\) at \(n=1{,}000\) and MI 0.02, the
 sampling mean of \(\Vhat(P)\) is about 19\% above \(V(P)\), whereas
 \(\tau^2(P)/n_P\) is only about 3\% below the observed sampling variance.
-The first-order calculation squares \(V(P)\), whereas the moment target
-squares the larger \(\E\{\Vhat(P)\}\), so the mean error's downward
-effect on the numerator is magnified. The slightly underestimated variance denominator
-offsets only part of this effect, leaving first-order degrees
-of freedom of 15.30 compared with a moment target of 21.03.
+The first-order calculation uses \(V(P)\) in place of the larger sampling
+mean and squares their ratio, giving approximately
+\begin{equation*}
+  \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
+  \approx\frac{(1/1.19)^2}{0.97}
+  \approx0.73.
+\end{equation*}
+The squared mean ratio therefore dominates the modest variance error,
+consistent with first-order degrees of freedom of 15.30 compared with a
+moment target of 21.03.
 
 In the bottom row, the \(16\times16\) curves first appear above the target,
 fall below it, and then recover towards one. The \(4\times4\) and

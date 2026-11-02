@@ -87,28 +87,12 @@ of freedom for both components and their combination, and a finite
 p-value for Expanded Welch. A failed component makes Expanded Welch invalid
 under this rule.
 
-For positive component degrees of freedom, substituting
-Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
-Equation~\eqref{eq:expanded-df} gives the equivalent combined form
-\begin{equation}
-  \widehat\nu_{\mathrm{expanded}}
-  =
-  \frac{
-  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
-  }{
-  \widehat\tau^2(P)/(2n_P^3)
-  +
-  \widehat\tau^2(Q)/(2n_Q^3)
-  }.
-  \label{eq:expanded-df-direct}
-\end{equation}
-This direct form remains defined when one table has
-\(\Vhat=\widehat\tau^2=0\) and the other gives a positive denominator.
-The zero contribution drops out, leaving the other table's component degrees
-of freedom. For the zero component, however, Equation~\eqref{eq:nu-p-hat} requires
-\(0/0\). The specified componentwise algorithm requires both component
-degrees of freedom to be positive and finite, so it records this case as
-invalid even though the direct combined expression remains defined.
+The componentwise algorithm requires positive, finite degrees of freedom
+for both populations. If a sampled table has
+\(\Vhat=\widehat\tau^2=0\), the component formula in
+Equation~\eqref{eq:nu-p-hat} requires \(0/0\). Expanded Welch records the
+comparison as invalid even if the other table makes the shared standard
+error positive and finite.
 
 The primary rejection rate divides valid rejections by all repetitions,
 with invalid outputs counted as non-rejections.

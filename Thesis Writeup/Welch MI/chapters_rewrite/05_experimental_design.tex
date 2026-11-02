@@ -174,15 +174,13 @@ identical tables and distinct tables with equal MI.
 
 \section{RQ1: Checking the variance approximations}
 
-Expanded Welch chooses its component degrees of freedom from
-\(\E\{\Vhat(P)\}\) and \(\Var\{\Vhat(P)\}\), and likewise for \(Q\).
-To check these quantities, we hold the
-population table \(P\) and sample size \(n_P\) fixed, then draw repeated
-count tables. From each table, we estimate the pointwise-MI variance \(V(P)\) by
-\(\Vhat(P)\), then divide this estimate by \(n_P\) to obtain that
-population's estimated contribution to the variance of the MI difference.
-The average of the \(\Vhat(P)\) values estimates \(\E\{\Vhat(P)\}\);
-their variation across draws estimates \(\Var\{\Vhat(P)\}\).
+The component moment target depends on the sampling mean
+\(\E\{\Vhat(P)\}\) and variance \(\Var\{\Vhat(P)\}\), with analogous
+quantities for \(Q\). To estimate these moments, we hold the population
+table \(P\) and sample size \(n_P\) fixed, then draw repeated count tables
+and calculate \(\Vhat(P)\) from each. The average of these estimates
+measures their sampling mean, and their sample variance measures their
+variation between samples.
 
 The observation-level sensitivity derived in Chapter~\ref{chap:expanded}
 has population variance \(\tau^2(P)\) and describes how the estimated
