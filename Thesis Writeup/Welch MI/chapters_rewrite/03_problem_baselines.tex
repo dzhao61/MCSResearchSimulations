@@ -45,7 +45,7 @@ population, and the two population samples are independent.
 \end{assumption}
 \end{samepage}
 
-\begin{assumption}[Aligned fixed alphabets]
+\begin{assumption}[Fixed categories shared by both tables]
 The row and column categories are fixed in advance and aligned between the two
 tables.
 \end{assumption}
@@ -93,7 +93,7 @@ The plug-in MI estimate is
 \end{equation}
 The same calculation gives \(\Ihat(Q)\).
 
-Subtracting the leading fixed-support MI bias in
+For a fixed set of row and column categories, subtracting the leading MI bias in
 Equation~\eqref{eq:mi-leading-bias} \citep{miller1955,moddemeijer1989}
 from each plug-in estimate gives the bias-corrected MI difference:
 \begin{equation}
@@ -110,8 +110,9 @@ negative corrected estimates when calculating the difference.
 When \(n_P=n_Q\), the two corrections cancel, so \(\Deltahat\) is exactly
 the raw plug-in MI difference. With unequal sample sizes, the difference
 between the two corrections removes the leading unequal-sample bias described in
-Section~\ref{sec:background-mi-bias}. A correction that estimates support
-from occupied cells would be a different estimator.
+Section~\ref{sec:background-mi-bias}. A correction that uses occupied sample
+cells to estimate how many population cells have positive probability
+would be a different estimator.
 
 \section{Shared standard error and test statistic}
 
@@ -220,14 +221,14 @@ At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 \thesisminiheading{Why use a Student \(t\) distribution?}
 
 Wald uses the standard normal distribution at every sample size, even
-though its standard error is estimated from the observed tables. Expanded
-Welch uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\)
-to choose the degrees of freedom of a Student \(t\) distribution.
+though its standard error is estimated from the observed tables.
 Hutcheson's entropy test assigns each variance component \(n_i\)
 degrees of freedom \citep{hutcheson1970}, while ordinary Welch's test
-assigns \(n_i-1\) \citep{welch1947}. These assignments do not measure
-how cell probabilities and margins make the estimated pointwise-MI variance change
-between samples.
+assigns \(n_i-1\) \citep{welch1947}. For MI, these sample-size assignments
+do not measure how cell probabilities and margins make the estimated
+pointwise-MI variance change between samples. Expanded Welch therefore
+uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\) to choose
+the degrees of freedom of a Student \(t\) distribution.
 
 To choose the degrees of freedom, we need the average value of each estimated
 pointwise-MI variance and how much that estimate varies across samples

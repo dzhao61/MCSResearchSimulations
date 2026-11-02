@@ -13,6 +13,20 @@ diagnostics, not targets. A successful edit makes a particular relationship
 easier to follow while preserving the scientific claim. It need not make
 the sentence longer, the paragraph larger or the manuscript shorter.
 
+## Language convention
+
+Use Australian English with consistent British-style spelling throughout
+authored prose, headings, captions and table labels. Prefer analyse,
+behaviour, centre, colour, labelled, modelling, normalise, organisation,
+standardise and summarise. Check variants in context rather than replacing
+suffixes mechanically, and distinguish noun and verb forms such as practice
+and practise. Retain computer program in computing contexts.
+
+Preserve the original spelling in published titles, quotations, proper names,
+dataset field names, URLs, paths, citation keys, code and LaTeX identifiers.
+Spelling corrections must preserve the scientific claims, numerical results,
+equations and references. An already consistent passage needs no change.
+
 The 1 November 2026 fixed-gap revision replaces the submitted calibrated-
 power experiment with a direct counterpart to the null grid. Earlier
 calibration examples in this guide remain historical writing examples.
@@ -157,7 +171,7 @@ This sequence depends on the chapter's purpose:
   steps with their assumptions and interpretations.
 - A result discussion introduces the comparison, follows its evidence and
   explains the finding with its relevant qualifications.
-- A conclusion connects the contribution, evidence and resulting judgment.
+- A conclusion connects the contribution, evidence and resulting judgement.
 
 These are reading needs, not compulsory paragraph templates. Do not insert
 an extra roadmap, definition, caveat or summary when the passage already
@@ -227,6 +241,66 @@ The application similarly connects a coding fact to the table dimension:
 
 These examples complete specific relationships. They do not justify
 joining unrelated settings, results or numerical cases into one sentence.
+
+### Flow patterns in all three sample theses
+
+A further review on 2 November 2026 examined selected introductory, method,
+results and concluding passages in Riley Jones, Grace Yan and Michael Fang.
+The [sample review](SAMPLE_THESIS_FLOW_REVIEW_2026-11-02.md) records the
+passages and page numbers. The useful patterns extend beyond conjunctions:
+each sentence prepares the next, and each paragraph completes a comparison
+or explanation before changing its question.
+
+| Sample passage | How the passage connects its ideas | Application to this thesis |
+| --- | --- | --- |
+| Riley, subsampling and aggregation, pp. 31–33 and 46 | A limitation of the preceding experiment creates the reason for the next test. The aggregation paragraph moves from unreliable individual estimates to the chosen response, compares two responses on the same basis, and interprets their difference. | Introduce a check through the unresolved question it answers. Keep a method comparison together before moving to a different population or sample-size range. |
+| Grace, dynamic connectivity and method comparison, pp. 40 and 48 | A displayed feature is followed by the property explaining it and its interpretation. The limitation of a fixed window then motivates the alternative method; design choices are linked to comparability. | Make observation-to-explanation transitions explicit. State why a setting or procedure is used beside the procedure, rather than leaving the reader to reconstruct its purpose. |
+| Michael, synthetic results, pp. 35 and 37 | Conditions such as increasing spike count precede the changing estimate and uncertainty. The explanation carries the same performance difference into its variance mechanism, while a new paragraph marks a different experimental parameter. | Put the changing condition before its result, name the quantity that carries the explanation forward, and separate distinct comparisons instead of joining them with an additive connector. |
+
+Use the following decisions when reviewing a passage:
+
+- **Develop a relationship, not a sequence of announcements.** A result,
+  its reason and its consequence can form one sentence or several connected
+  sentences. Choose because for a supported explanation, so or therefore
+  for a consequence, although for a genuine qualification, and whereas for
+  two cases compared on the same basis. As and when should identify the
+  condition under which a quantity changes. Do not add a causal connector
+  when the evidence supports only an association or partial explanation.
+- **Carry information forward.** Let a sentence begin from the estimate,
+  error, method or condition established immediately before it. Repeating
+  a necessary noun is useful; a generic this or these results is less useful
+  when several referents are possible. Make the transition from a plotted
+  pattern to its explanation visible by naming the pattern and the quantity
+  that explains it.
+- **Keep the comparison order stable.** Complete the small-sample behaviour
+  before moving to recovery with larger samples. Finish the comparison
+  between methods before introducing a different question about curve
+  shape. A however cannot repair an unnecessary return to an earlier
+  sample-size range or an unfinished comparison.
+- **Attach the reason where it is needed.** Keep an experimental choice
+  with its purpose, a condition with the finding it restricts, and an
+  unchanged estimation error with the test behaviour it helps explain.
+  Move an out-of-place qualification to the definition or result it
+  qualifies instead of appending another reminder sentence.
+- **Use paragraph boundaries to mark a real change of task.** A paragraph
+  can develop a pattern, an explanation or a comparison. Split when it
+  begins a second task that needs its own setup; combine only when the
+  two passages complete the same argument. Preserve the established
+  row-by-row interpretation of Figure 6.1 and the logical positions of
+  figures and tables.
+- **Retain useful sentence breaks.** Definitions, equation substitutions,
+  cancellations, separate figure-row definitions and important decisions
+  can remain short. Use explicit mathematical transitions to connect them
+  rather than merging algebra steps into dense prose. Do not change a clear
+  derivation to imitate the rhythm of a results discussion.
+
+The samples also contain awkward grammar, generic announcements and claims
+stronger than their immediate evidence warrants. Borrow the explanatory
+structure without importing those habits, their subject-specific terminology
+or their spelling variants. In our thesis, observational diagnostics must
+retain wording such as helps explain when they do not isolate a complete
+cause. Conjunction counts and sentence lengths remain diagnostics rather
+than targets.
 
 ## 4. Carry a named quantity into the next sentence
 
@@ -407,6 +481,14 @@ application table that only mapped a few variables to their names.
 6. Run source consistency checks. When a rebuild is explicitly requested,
    inspect the actual prose/display order and page breaks in the PDF.
 
+As a final flow check, give each sentence a role: condition, definition,
+observation, explanation, comparison, consequence or qualification. Check
+that its relationship to the preceding sentence is visible. If adding a
+connector still leaves two unrelated tasks, change the order or paragraph
+boundary. Reread the finished paragraph without looking at individual edits
+to check for repetitive openings, overlong joins and explanations that have
+become stronger than the evidence.
+
 Sentence audits can identify places to reread. Compare like chapter roles
 and distinguish complete prose from headings, list labels, captions, table
 entries and equation lead-ins. Mathematical expressions need consistent
@@ -419,6 +501,9 @@ does not itself implement those edits or request a PDF rebuild.
 
 ## Records supporting this consolidation
 
+- [Sample-thesis flow review](SAMPLE_THESIS_FLOW_REVIEW_2026-11-02.md):
+  source passages from all three samples, their connective and paragraph
+  techniques, and the boundaries on transferring those techniques.
 - [Chapter 5 exposition](CHAPTER_5_EXPOSITION_REVISION_2026-10-25.md):
   procedure, purpose, repeated sampling and calibration design.
 - [Chapter 6 results rewrite](CHAPTER_6_RESULTS_REWRITE_2026-10-30.md)

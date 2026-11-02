@@ -14,6 +14,13 @@ below applies only to explicitly requested working drafts, not main builds.
 
 # Research Writing Preference
 
+Use Australian English throughout the thesis and related research writing,
+with consistent British-style spelling such as analyse, behaviour, centre,
+colour, labelled, modelling and standardise. Include a regional-spelling
+check when drafting or reviewing prose. Preserve original spelling in
+published titles, direct quotations, proper names, dataset fields, code,
+URLs, paths and LaTeX identifiers.
+
 For the Welch MI thesis and related research writing, use Section 2.3 of
 `Thesis Writeup/Welch MI/chapters_rewrite/02_background_literature.tex` as the
 model for the depth of important derivations. Assume the reader knows basic

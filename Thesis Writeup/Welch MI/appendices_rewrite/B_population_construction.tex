@@ -64,8 +64,8 @@ and draw the corresponding \(Q\) counts independently. Apply both tests
 to each sampled pair of \(k\times k\) tables, using 100,000 independent
 repetitions per distinct setting. The simulations use the PCG64
 pseudo-random generator with master seed 20261021 for the approximation
-checks and common-MI-0.02 null settings, and 20261101 for the other null
-settings and the power study. Separate streams distinguish settings and
+checks and null settings with a common MI of 0.02 nats, and 20261101 for
+the other null settings and the power study. Separate streams distinguish settings and
 the two populations, while repeated settings share the same repetitions
 across displays.
 
@@ -84,8 +84,8 @@ standard error, \(\Vhat(P)+\Vhat(Q)>10^{-14}\), and a finite p-value.
 The threshold treats variances extremely close to zero as numerically
 unusable. Expanded Welch additionally requires positive finite degrees
 of freedom for both components and their combination, and a finite
-expanded p-value. A failed component makes Expanded Welch invalid under
-this rule.
+p-value for Expanded Welch. A failed component makes Expanded Welch invalid
+under this rule.
 
 For positive component degrees of freedom, substituting
 Equation~\eqref{eq:nu-p-hat} and its \(Q\) analogue into
@@ -242,9 +242,9 @@ The first-order contribution to the target's estimation error is
        -\frac{2\bar X^2}{(S_X^2)^2}W_s.
  \label{eq:moment-df-mc-contribution}
 \end{equation}
-Its sample SD divided by \(\sqrt M\) estimates the Monte Carlo standard
-error. Calculating the SD after combining the two terms retains the
-mean--variance covariance.
+Its sample standard deviation divided by \(\sqrt M\) estimates the Monte
+Carlo standard error. Calculating the standard deviation after combining
+the two terms retains the mean--variance covariance.
 
 Mean and variance ratios use the same joint delta-method calculation,
 keeping the plug-in prediction and observed variance paired.

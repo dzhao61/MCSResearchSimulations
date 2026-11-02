@@ -134,8 +134,8 @@ expansion derived in Section~\ref{sec:component-df} gives
 At this order, the change in \(\Vhat(P)\) is linear in the empirical
 cell-probability errors. Each empirical cell proportion has expectation
 equal to its population probability, so these errors and their linear
-contribution have mean zero. Bias arises from terms beyond this linear
-approximation.
+contribution have mean zero. Any bias therefore arises from terms beyond
+this linear approximation.
 
 With the mean approximated by \(V(P)\), the remaining task is to
 calculate \(\Var\{\Vhat(P)\}\). Because sampling changes the empirical
@@ -705,7 +705,7 @@ These substitutions give the estimated combined degrees of freedom:
   }.
   \label{eq:expanded-df}
 \end{equation}
-The expanded two-sided p-value is
+The two-sided p-value for Expanded Welch is
 \begin{equation}
   p_{\mathrm{expanded}}
   =2\left\{1-F_t(|T|;\widehat\nu_{\mathrm{expanded}})\right\},
@@ -823,7 +823,7 @@ Table~\ref{tab:expanded-algorithm} summarises one comparison.
 \toprule
 \textbf{Step} & \textbf{Calculation} \\
 \midrule
-1 & Validate the two aligned count tables and their declared alphabet dimensions; independence of samples is a design assumption. \\
+1 & Validate the two aligned count tables and their specified numbers of row and column categories; independence of samples is a design assumption. \\
 \addlinespace[0.4em]
 2 & Compute empirical probabilities, pointwise MI, plug-in MI, and the leading bias-corrected difference. \\
 \addlinespace[0.4em]

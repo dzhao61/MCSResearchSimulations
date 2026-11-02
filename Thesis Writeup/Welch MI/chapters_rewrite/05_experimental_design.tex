@@ -47,10 +47,10 @@ occur more often.
 
 Both choices preserve the category frequencies of \(Y\): copying
 inherits the probabilities \(a\) used to draw \(X\), while an
-independent draw of \(Y\) uses \(a\) directly. Consequently, changing how often we copy changes which
-categories occur together, while the row and column margins remain fixed.
-Sample row and column proportions fluctuate around these population
-probabilities.
+independent draw of \(Y\) uses \(a\) directly. Consequently, changing how
+often we copy changes which categories occur together while preserving the
+population row and column margins. Sample row and column proportions
+nevertheless fluctuate around these fixed probabilities.
 
 Each cell probability is the sum of the contributions from these two
 choices. The independent choice, made with probability \(1-\lambda\),
@@ -214,7 +214,8 @@ sample-based quantities, whereas the target uses the sampling mean and
 variance of \(\Vhat(P)\). For the sampled estimates, the ratio
 \(\operatorname{mean}(\widehat\nu_P)/\nu_{P,\mathrm{mom}}\) equals one
 when the average estimate matches the target; a ratio below one means
-that the estimated degrees of freedom are lower on average. We make the same checks for \(Q\) and report the included fraction
+that the estimated degrees of freedom are lower on average. We make the
+same checks for \(Q\) and report the fraction of repetitions retained
 whenever a summary uses only positive finite degrees of freedom.
 Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
 
@@ -312,7 +313,8 @@ For each setting, we generate 100,000 independent pairs of count tables
 and apply both tests to each pair using their usual p-value threshold of
 0.05. Power is the fraction of all repetitions that reject equal MI,
 with invalid calculations counted as non-rejections and the valid-result
-fraction reported separately. The sample sizes and margin profiles
+fraction reported separately. Power includes rejections in either direction
+because the tests are two-sided. The sample sizes and margin profiles
 are specified in Tables~\ref{tab:design-primary-grids} and
 \ref{tab:margin-profiles}.
 
@@ -330,10 +332,10 @@ At one evaluation setting, each repetition draws a count table from
 same two tables, so their rejection decisions
 can be compared on the same sampled data. Each setting has 100,000
 independent repetitions, which determine the precision of the reported
-rates; each test uses only \(n_P\) and \(n_Q\) observations within a
-repetition. Each distinct setting uses separate random streams for the two
-populations, and repeated settings use the same repetitions wherever they
-appear. Different MI-gap settings use independent simulation streams.
+rates, whereas each test uses only \(n_P\) and \(n_Q\) observations within
+a repetition. Each distinct setting uses separate random streams for the
+two populations. Repeated settings use the same repetitions wherever they
+appear, whereas different MI-gap settings use independent simulation streams.
 
 All reported simulation comparisons use equal sample sizes, so the two
 leading MI bias corrections cancel from \(\Deltahat\), leaving the raw
@@ -360,7 +362,7 @@ Rejection rate &
 Valid-result fraction &
 \(\dfrac{\text{number of valid outputs}}{\text{number of simulation repetitions}}\)\\
 \addlinespace[0.85em]
-Difference bias &
+Bias in the estimated MI difference &
 \(\operatorname{mean}(\Deltahat)-\Delta\)\\
 \addlinespace[0.85em]
 Variance ratio &
@@ -372,9 +374,9 @@ Variance ratio &
 
 Bias uses finite MI differences even when a test is invalid. The variance ratio uses repetitions with both finite \(\Deltahat\)
 and finite \(\SEhat^2\), with one indicating agreement. Ratios below
-one mean that the squared standard error understates the observed
-difference variance on average, while ratios above one indicate
-overstatement. Two-sided power includes rejections in either direction.
+one mean that the squared standard error understates the observed sampling
+variance of the estimated MI difference on average, while ratios above one
+indicate overstatement.
 Appendix~\ref{sec:estimation-diagnostics} specifies the inclusion rules
 and complete calculations.
 
