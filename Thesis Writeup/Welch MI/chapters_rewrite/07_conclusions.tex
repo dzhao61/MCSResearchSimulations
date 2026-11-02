@@ -19,18 +19,19 @@ above \(V(P)\). Because the moment target in Equation~\eqref{eq:design-moment-ta
 squares the mean in its numerator, replacing that sampling mean by the
 smaller population value lowers \(\nu_{P,\mathrm{FO}}\) relative to
 \(\nu_{P,\mathrm{mom}}\), even when the sampling-variance approximation
-is accurate. The sampling mean \(\E(\widehat\nu_P)\) can also fall
-below the moment target, with the size of both discrepancies depending
-on the population and sample size.
+is accurate. For example, the different-skew \(4\times4\) setting at
+common MI 0.02 and \(n_P=1{,}000\) gives
+\(\nu_{P,\mathrm{FO}}=15.30\) compared with
+\(\nu_{P,\mathrm{mom}}=21.03\).
+Substituting sample probabilities can introduce further error into the
+variance prediction, and the mean estimated degrees of freedom
+\(\E(\widehat\nu_P)\) can also fall below the moment target.
 
 Near independence, the first-order prediction \(\tau^2(P)/n_P\) for
 \(\Var\{\Vhat(P)\}\) is small and quadratic sampling terms remain
 substantial. The calculation in
 Appendix~\ref{sec:independence-boundary} explains the observed scale of
-the estimated component degrees of freedom. These results
-explain why the first-order approximation becomes inadequate near
-independence and why substituting sample probabilities requires its own
-evaluation, even when the population approximation is accurate.
+the estimated component degrees of freedom.
 
 \subsection{RQ2: False-positive rates under equal MI}
 
@@ -70,8 +71,8 @@ the two larger gaps even at the largest sample size.
 High rejection in a sparse alternative does not necessarily identify the
 direction of the MI difference reliably. In the sparse different-skew
 \(16\times16\) comparisons, positive estimation bias can outweigh the
-true negative difference, producing rejection in the opposite estimated
-direction. As that bias diminishes with more observations, the sampling
+true negative difference, producing rejections with a positive estimated
+MI difference. As that bias diminishes with more observations, the sampling
 centre first approaches zero, reducing rejection, before moving towards
 the negative population difference and giving higher power. At a fixed
 sample size in this biased range, making the population difference more
@@ -94,18 +95,19 @@ The derivation assumes independent categorical observations, fixed
 categories, positive population cell probabilities, and positive
 \(V(P)\), \(V(Q)\), \(\tau^2(P)\) and \(\tau^2(Q)\). Paired samples would
 require a covariance term
-in the difference variance. Growing alphabets and continuous MI estimators
-have different approximation errors. Exact independence requires the
+in the difference variance. The fixed-category derivation does not cover
+growing alphabets or continuous MI estimators. Exact independence requires the
 second-order argument in Appendix~\ref{sec:independence-boundary}.
 
 The findings concern the tested copying populations. The null study
 covers three positive common MI values, and the power study holds
 \(I(P)=0.02\) nats while giving \(Q\) greater MI at three gap magnitudes.
-The copying construction uses identical row and column margin profiles
-within each table and places its added association on matching diagonal
-cells in both populations. Other starting MI values, the opposite direction of MI change, other
-association constructions, unequal row and column margins within a table
-and other locations of dependence remain untested by the power study.
+Other starting MI values and the opposite direction of MI change remain
+untested by the power study. Both studies use identical row and column
+margin profiles within each table, with added association on matching
+diagonal cells. Neither study tests other association constructions,
+unequal row and column margins within a table, or other locations of
+dependence.
 
 All reported simulations use equal sample sizes, for which the leading
 bias corrections cancel from the MI difference, so they do not evaluate
@@ -139,8 +141,9 @@ on the test's false-positive rates and power.
 Improved MI bias and standard-error estimators could address the sparse-table
 failures. Their effects should be assessed separately by changing one
 estimate while holding the others fixed, then measuring null rejection,
-power and estimated direction. Near independence, the quadratic sampling
-approximation may support a more accurate comparison of MI differences.
+power and estimated direction. Near independence, a reference distribution
+for the MI difference could be developed from the quadratic sampling terms
+omitted by the first-order approximation.
 Any likelihood-ratio or resampling procedure must preserve the equal-MI
 null even when the complete population tables differ.
 
@@ -150,5 +153,4 @@ association. Reversed power paths, alternative association constructions,
 unequal margins and unequal sample sizes would measure how much the
 false-positive rates and power change across a wider range of populations.
 Simulations from plausible application populations could
-also examine sensitivity to rare cells and distinct equal-MI tables,
-with conclusions tied to the populations chosen for that assessment.
+also examine sensitivity to rare cells and distinct equal-MI tables.

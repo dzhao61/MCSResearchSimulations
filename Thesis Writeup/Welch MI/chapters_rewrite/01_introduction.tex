@@ -55,9 +55,9 @@ derives how these probability changes affect the estimated pointwise-MI
 variance and uses that calculation to obtain degrees of freedom for Expanded Welch.
 
 The Student \(t\) distribution gives Expanded Welch a larger rejection
-cutoff than Normal Wald, so it rejects less often. The lower rejection
-rate can reduce false positives but can also reduce statistical power,
-the probability of
+cutoff than Normal Wald, so its rejection rate cannot exceed Wald's.
+A lower rejection rate can reduce false positives but can also reduce
+statistical power, the probability of
 rejecting equal MI when the population MI values genuinely differ.
 The evaluation compares false-positive rates across common MI values
 and power across MI differences, varying table sizes, category frequencies

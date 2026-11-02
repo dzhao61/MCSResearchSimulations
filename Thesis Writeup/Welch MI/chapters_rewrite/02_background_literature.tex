@@ -416,7 +416,7 @@ zero because
   =0.
   \label{eq:mi-if-mean-zero-background}
 \end{align}
-The linear approximation therefore has mean-zero error. The higher-order
+The first-order term in the MI error therefore has mean zero. The higher-order
 terms omitted by this approximation generate the leading bias described in
 Section~\ref{sec:background-mi-bias}.
 The centred function \(\pmi_P(i,j)-I(P)\) is called the influence function
@@ -435,8 +435,8 @@ Define the population variance of these centred contributions by
 \end{equation}
 Under independent sampling, the \(n\) terms in
 Equation~\eqref{eq:mi-error-as-average-background} are independent and each
-has variance \(V(P)\). The covariance between any two different observations
-is therefore zero. Hence
+has variance \(V(P)\). The covariance between the contributions of any two
+distinct observations is therefore zero. Hence
 \begin{align}
   \Var\{\Ihat(P)\}
   &\approx
@@ -643,17 +643,18 @@ Expanded Welch instead calculates its degrees of freedom from how the
 estimated pointwise-MI variance changes with the table, including the effects of a
 cell change on its row and column totals.
 
-The entropy comparison establishes that a Student \(t\) distribution can
-be used to compare estimated information quantities, but MI requires
-more than substituting a different numerator. The row, column and joint entropies in MI are calculated from the same
+The entropy comparison provides a precedent for using a Student \(t\)
+distribution as an approximate reference when comparing estimated
+information quantities, but MI requires more than substituting a different
+numerator. The row, column and joint entropies in MI are calculated from the same
 observations, so their estimation errors are connected through the cell
 counts contributing to all three.
 The MI sampling-variance formulas in Section~\ref{sec:first-order-mi-background}
 account for these connected estimation errors. To obtain degrees of freedom,
 Expanded Welch also tracks how a cell change alters both the probability
 weights and the pointwise-MI values whose weighted variance is being
-estimated. Thus Hutcheson supplies a close comparison framework,
-while the cell and margin derivatives supply the MI-specific inputs.
+estimated. The resulting cell and margin derivatives supply the MI-specific
+inputs to the Welch--Satterthwaite calculation.
 
 In a segregation application, \citet{mora2009} derive a normal approximation
 for comparing positive population MI between populations and time periods,

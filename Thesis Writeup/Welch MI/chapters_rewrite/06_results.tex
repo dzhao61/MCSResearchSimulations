@@ -314,13 +314,16 @@ association, the dashed near-independence prediction rises above the
 observed mean estimated degrees of freedom, while the population
 first-order curve remains below the moment target. The near-independence
 calculation approximates a ratio with \(\Vhat\) squared in the numerator
-and \(\widehat\tau^2\) in the denominator. Errors in both substitutions
-combine to raise the predicted mean estimated component degrees of
-freedom, even though the near-independence predictions for the moments
-in the upper rows are too low. Both populations show this progression,
+and \(\widehat\tau^2\) in the denominator. In this range, replacing
+\(\widehat\tau^2\) by \(4\Vhat\) generally reduces the denominator
+and raises the mean estimated degrees of freedom. The subsequent
+substitution \(\Vhat\approx2\Ihat\) lowers that mean because
+\(2\Ihat\) understates \(\Vhat\), partly offsetting the first
+increase. The denominator effect is larger, so the local calculation
+overpredicts the mean estimated degrees of freedom even though it
+underpredicts the moments in the upper rows. Both populations show this progression,
 but the observed mean estimated degrees of freedom and the moment target
-are lower in \(Q\). The lower moment target follows from \(Q\)'s greater
-sampling variance relative to its squared sampling mean.
+are lower in \(Q\).
 
 Using the same repetitions, we also compare the population first-order
 and average sample-based variance predictions defined for the middle and
@@ -336,9 +339,10 @@ first-order variance predictions are much more accurate, although the
 sample-based ratios remain above one. The population calculation improves
 as the linear sampling term becomes more informative, while the local
 near-independence calculation loses accuracy as association grows. At MI
-0.05, \(V\) is close to the observed mean of \(\Vhat\), and both the
-population first-order and average sample-based variance predictions are
-close to its observed sampling variance. The mean estimated degrees of
+0.05, the observed means of \(\Vhat\) remain roughly 6\% above \(V\)
+in both populations, while the population first-order and average
+sample-based variance predictions are close to the observed sampling
+variances. The mean estimated degrees of
 freedom are closer to the moment target than the population first-order
 values, which still use \(V\) in place of the enlarged sampling mean.
 
@@ -576,7 +580,7 @@ Expanded Welch's power rises from 11.14\% for the 0.005-nat gap to
 first-order sampling SD of the difference. The population difference is
 therefore more strongly separated from zero relative to its sampling spread.
 
-Expanded Welch remains below Wald for every gap, with the largest
+Expanded Welch's power is no higher than Wald's for any gap, with the largest
 separation for the 0.01-nat gap occurring at the smallest sample size in the
 \(16\times16\) panel. Expanded Welch's valid-result fraction at that
 setting is above 99\%, so most of that separation comes from the larger
