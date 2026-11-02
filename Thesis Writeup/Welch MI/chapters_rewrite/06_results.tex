@@ -214,8 +214,8 @@ squared numerator \(\Vhat(P)^2\) and the variance prediction
 \(\widehat\tau^2(P)/n_P\). At the first shown \(16\times16\) points, the variance prediction is
 too small on average, tending to raise the estimated degrees of freedom.
 As the prediction subsequently becomes too large, it tends to lower
-the estimated degrees of freedom before recovering towards the observed
-sampling variance. The two inputs come from the same table, so their joint variation also
+the estimated degrees of freedom before the variance prediction returns
+towards the observed sampling variance. The two inputs come from the same table, so their joint variation also
 affects the mean degrees of freedom when we average the sampled ratios
 rather than insert average inputs into a single ratio.
 With larger samples, both inputs become more stable and the mean estimated
@@ -507,8 +507,8 @@ The two \(16\times16\) settings have almost the same variance ratio
 but opposite rejection behaviour. Under same-skew margins, the biases in
 the two MI estimates cancel and the oversized standard error suppresses
 rejection, which Expanded Welch lowers further. Under different-skew
-margins, the positive bias shifts the estimated difference more than two
-sampling standard deviations above its true zero value. Changing the cutoff
+margins, the positive bias places the sampling mean of the estimated
+difference more than two sampling standard deviations above zero. Changing the cutoff
 leaves that bias in the estimated MI difference unchanged, helping explain
 why both methods reject far too often even though the estimated standard
 error is oversized.
@@ -566,8 +566,9 @@ rejects the null hypothesis.
 For each MI gap, all four panels show low detection over part of the small-sample range,
 followed by a sustained rise with more observations. The early shoulders
 and troughs also occur in the null rejection curves, where errors in the
-estimated standard error and the distribution of \(T\) can produce
-excessive or conservative rejection. Consequently, the early high points
+estimated standard error and a poor fit between the sampling distribution
+of \(T\) and its reference distribution can produce excessive or
+conservative rejection. Consequently, the early high points
 are not evidence that fewer observations reliably identify the MI difference.
 
 Larger tables require more observations before power becomes high. For the 0.01-nat
@@ -586,8 +587,8 @@ power curves upwards. In the \(4\times4\) panel at \(n=2{,}500\),
 Expanded Welch's power rises from 11.14\% for the 0.005-nat gap to
 78.74\% for the 0.02-nat gap. Increasing \(I(Q)\) also increases
 \(V(Q)\), but in these populations the MI gap grows faster than the
-first-order sampling standard deviation of the difference. The population
-difference is therefore more strongly separated from zero relative to its sampling spread.
+first-order sampling standard deviation of the difference. The true MI gap
+is therefore larger relative to the sampling spread of the estimated difference.
 
 Expanded Welch's power is no higher than Wald's for any gap, with the largest
 separation for the 0.01-nat gap occurring at the smallest sample size in the
