@@ -14,51 +14,62 @@ variability determine the degrees of freedom, which control the rejection
 cutoff.
 
 Across the tested populations, Expanded Welch brings some excessive
-false-positive rates closer to the 5\% target, but can also lower rejection
+false-positive rates closer to the 5\% target, but lowers rejection further
 where Wald already rejects too rarely. Its larger cutoff can reduce power,
 the probability of detecting a real MI difference, while leaving errors in
-the shared estimated MI difference and standard error unchanged.
+the estimated MI difference and standard error used by both tests unchanged.
+In the online-shopping application, both tests give evidence of a stronger
+month--purchase association among returning visitors than new visitors,
+including after adjustment for the six exploratory comparisons. Neither
+test rejects equal weekend--purchase MI, although this non-rejection does
+not establish equality.
 
 \subsection{RQ1: Accuracy of variance approximations}
 
-The degrees-of-freedom approximation depends on both the mean and the
-sampling variability of the estimated variances used in the standard
-error. The experiments show that understating their mean can give degrees
-of freedom below the value obtained from the mean and variability measured
-across repeated samples, even when the variability is predicted accurately.
-Substituting sample
-proportions can introduce further error into the predicted variability of
-these variance estimates.
+In the tested populations, the moment approximations improve as samples
+grow, although larger tables require more observations. The population
+first-order formula squares the predicted mean of each pointwise-MI
+variance estimate, so underestimating this mean magnifies the downward
+error in the numerator. In the experiments, the resulting degrees of
+freedom fall below the target calculated from repeated samples even where
+the sampling variance of these estimates is predicted fairly accurately.
+Replacing population probabilities with sample
+proportions introduces further error into this variance prediction.
 
-When the two variables are nearly independent, sampling noise can create
+When the two variables are nearly independent, sampling noise creates
 apparent association in the observed tables, producing substantial variation
-that the first-order approximation can miss. This apparent association also
-enters the sample-based degrees-of-freedom calculation, so the mean estimated
-degrees of freedom for each population at fixed sample size need not shrink
-towards zero with the population first-order prediction. The calculation
-in Appendix~\ref{sec:independence-boundary} includes the additional
-sampling variation and explains this separation.
+that the first-order approximation misses. The sample-based calculation
+retains this apparent association, so the average estimated component
+degrees of freedom remain several units above zero in the \(4\times4\)
+experiment with 1,000 observations per population. The population
+first-order prediction instead approaches zero as MI decreases at this
+fixed sample size. The calculation in
+Appendix~\ref{sec:independence-boundary} includes the additional sampling
+variation and explains this separation.
 
 \subsection{RQ2: False-positive rates under equal MI}
 
-The equal-MI comparisons assess whether observed false-positive rates are
-close to the intended 5\%. An underestimated standard error makes a given
-estimated difference appear larger relative to its uncertainty, so the
-larger cutoff can offset some excessive rejection. When the standard error
-is too large and bias in the estimated MI difference is small, rejection
-can already be too rare, and the larger cutoff reduces it further. The diagnostic comparison
-in Table~\ref{tab:balanced-null-diagnostics} illustrates these effects and
-shows how bias can move the estimated difference away from zero even when
-the population MI values are equal.
+In the uniform \(4\times4\) setting in
+Table~\ref{tab:balanced-null-diagnostics}, an underestimated standard error
+makes a given estimated difference appear too large relative to its
+uncertainty, and Expanded Welch's larger cutoff brings rejection closer to
+5\%. In the same-skew \(16\times16\) setting, the standard error is too
+large and bias in the estimated MI difference is small, so Wald already
+rejects too rarely and the larger cutoff reduces rejection further. The
+different-skew \(16\times16\) setting instead shows how bias moves the
+estimated difference away from zero even when the population MI values are
+equal.
 
-One sparse-table setting in Section~\ref{sec:null-rejection-patterns}
-gives false-positive rates of 36.38\% with Wald and 34.38\% with Expanded
-Welch, far above the 5\% target. Both methods return usable results in every
-repetition, so these high rates reflect inaccurate inference rather than
-failed calculations. Both methods also remain below the 5\% target in some
-weak-association settings even at the largest tested sample size. Similar
-rejection rates at larger samples therefore do not by themselves establish
-accurate false-positive rates.
+Under different-skew \(16\times16\) margins at common MI 0.005 nats
+and 1,000 observations per population, false-positive rates are 36.38\%
+with Wald and 34.38\% with Expanded Welch, far above the 5\% target.
+Both methods return usable results in every repetition, so these high
+rates reflect inaccurate inference rather than failed calculations. At
+the same common MI, both methods remain below the
+5\% target in all three \(16\times16\) margin regimes even with
+50,000 observations per population. Similar rejection rates at larger
+samples therefore do not by themselves establish accurate false-positive
+rates.
 
 \subsection{RQ3: Power across MI differences}
 
@@ -114,7 +125,17 @@ the population MI values are known, whereas the online-shopping application
 has unknown population MI values and therefore illustrates interpretation
 on observed data without assessing false-positive accuracy.
 
+The empirical comparison is restricted to Normal Wald, so it does not
+establish how Expanded Welch performs against resampling procedures or
+tests using other MI estimators.
+
 \section{Future work}
+
+Future work should first examine whether improved estimates of the MI
+difference and standard error reduce the departures observed here.
+Changing one estimator at a time would help distinguish their effects on
+false-positive rates, power and the estimated direction of the MI
+difference.
 
 Retaining terms omitted by the first-order approximation could improve the
 predicted average of the variance estimates used in the degrees-of-freedom
@@ -127,15 +148,15 @@ sampling noise that the first-order approximation misses. Any resulting
 test must preserve the equal-MI hypothesis even when the populations have
 different probability tables.
 
-Changing the reference distribution alone leaves the estimated MI difference
-and standard error unchanged, so improving those estimators is a separate
-priority. Their effects could be distinguished by changing one estimator
-at a time and comparing false-positive rates, power and the estimated
-direction of the MI difference.
-
 Broader experiments could test whether the findings persist across other
 starting MI values, either population having greater MI, unequal sample
 sizes, and other patterns of category frequencies and association. Within
 these comparisons, simulations based on plausible application populations
 could also examine sensitivity to rare category combinations and behaviour
 when distinct populations have equal MI.
+
+The derived degrees of freedom bring some excessive false-positive rates
+closer to 5\%, at the cost of reduced power. The remaining failures show
+why changing the cutoff alone is insufficient: reliable MI comparisons in
+the affected sparse settings also require better estimates of the
+difference and its standard error.

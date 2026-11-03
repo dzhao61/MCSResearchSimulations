@@ -11,22 +11,23 @@ combinations are rarely observed.
 The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
 Wald's estimated MI difference and standard error, but uses a Student
 \(t\) distribution to decide whether the difference is statistically
-significant. We derive a first-order approximation to how the variance
-estimates underlying the standard error change between samples and use it
-to calculate the distribution's degrees of freedom. The resulting
-rejection cutoff is larger than Wald's.
+significant. Its degrees of freedom reflect how much the variance estimates
+underlying the standard error vary between samples relative to their
+magnitudes. We derive a first-order approximation to this sampling variation
+and use it to calculate the degrees of freedom, giving a larger rejection
+cutoff than Wald's.
 
 Simulations vary sample size, table size and category frequencies under
 equal and unequal population MI, while an online-shopping example
-illustrates the tests on observed data. These simulations show that, when
-the two variables are nearly independent, sampling noise creates apparent
-association in their observed tables, and the first-order approximation can
-miss substantial sampling variation.
-Expanded Welch brings some excessive false-positive rates closer to the
-5\% target, but lowers them further where Wald already rejects too rarely.
-Its larger cutoff can also reduce power, the probability of detecting a real
+illustrates the tests on observed data. Expanded Welch brings some excessive
+false-positive rates closer to the 5\% target, but lowers them further
+where Wald already rejects too rarely.
+Its larger cutoff also reduces power, the probability of detecting a real
 MI difference, although the power difference between methods becomes small
-with larger samples. Changing the cutoff leaves bias in the shared MI
-difference and errors in its estimated standard error unchanged. In sparse
-settings, this remaining bias can even make the estimated difference point
-to the wrong population as having greater MI.
+with larger samples. When the two variables are nearly independent,
+sampling noise creates apparent association in their observed tables, and
+the first-order approximation can miss substantial sampling variation.
+In sparse settings, bias can even make the estimated difference point to
+the wrong population as having greater MI. The larger cutoff therefore
+improves some false-positive rates, but cannot correct bias in the MI
+difference or errors in its estimated standard error.
