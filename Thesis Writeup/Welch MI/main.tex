@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,oneside,openany]{book}
+\documentclass{usydthesis}
 
 \input{preamble}
 \input{metadata}
@@ -9,7 +9,8 @@
 \hypersetup{pageanchor=false}
 \input{frontmatter/titlepage}
 \hypersetup{pageanchor=true}
-\setcounter{page}{1}
+\thesisbodyformat
+\input{frontmatter/plagiarism}
 \input{frontmatter/abstract}
 \input{frontmatter/acknowledgements}
 
@@ -29,7 +30,7 @@
 \include{appendices_rewrite/B_population_construction}
 
 \backmatter
-\bibliographystyle{plainnat}
+\bibliographystyle{style/mybibstyle}
 \bibliography{references}
 
 \end{document}

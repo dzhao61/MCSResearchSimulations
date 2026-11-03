@@ -66,8 +66,11 @@ def write_zip(path: Path, files: list[tuple[Path, Path]]) -> None:
 
 def source_files() -> list[tuple[Path, Path]]:
     files: list[tuple[Path, Path]] = []
-    root_names = ["main.tex", "preamble.tex", "metadata.tex", "references.bib", "README.md"]
+    root_names = ["main.tex", "preamble.tex", "metadata.tex", "references.bib", "README.md",
+                  "usydthesis.cls"]
     files.extend((THESIS / name, Path(name)) for name in root_names)
+    for source in clean_files(THESIS / "style", suffixes={".sty", ".bst", ".pdf"}):
+        files.append((source, source.relative_to(THESIS)))
     for directory in ("frontmatter", "chapters_rewrite", "appendices_rewrite"):
         for source in clean_files(THESIS / directory, suffixes={".tex"}):
             files.append((source, source.relative_to(THESIS)))

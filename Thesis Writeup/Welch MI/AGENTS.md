@@ -95,6 +95,17 @@ On 30 October 2026 the user requested formatting to match the three sample
 theses: 11pt Times-style body text, a 19.5pt line baseline, half a line of
 extra paragraph space and the sample text margins. This supersedes the
 previous 12pt Latin Modern / 0.25em paragraph-spacing settings.
+On 3 November 2026 the user authorised migration to the supplied
+`Thesis Writeup/Example Thesis/thesis_2024/` Sydney template. Use the local
+`usydthesis.cls`, its native AMS chapter headings, page layout and captions,
+the supplied university logo, and `style/mybibstyle.bst`. The bibliography
+style has a small local addition to retain visible DOI and URL fields.
+`\thesisbodyformat` in `preamble.tex` applies the existing body paragraph
+and line spacing after the template's single-spaced title page.
+`\raggedbottom` keeps natural paragraph gaps around fixed-position figures.
+The title-page SID is 510546500 and its date is 3 November 2026.
+The template compliance statement has blank signature and date fields.
+Keep all template assets in the source archive so it builds independently.
 Contents and figure/table lists use the grouped `\thesisfrontlists` command
 in `preamble.tex`: no extra paragraph gap for contents entries and 3pt for
 figure/table list entries. The body spacing is restored after those lists.

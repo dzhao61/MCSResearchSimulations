@@ -1,5 +1,23 @@
 # Main Welch MI thesis deliverable
 
+Sydney template migration, 3 November 2026: the thesis now uses the supplied
+`thesis_2024/usydthesis.cls`, university logo, native AMS headings, captions
+and page layout. The rebuilt manuscript contains **100 pages**, compared
+with 103 in the preceding delivery. Its title page includes SID 510546500
+and the date 3 November 2026. The template compliance statement is included
+with blank signature and date fields. Existing body line and paragraph
+spacing are retained, and the bibliography preserves visible DOI and URL
+fields alongside the template's author-year style.
+
+All 104 scientific source, bibliography and display inputs are unchanged
+from the start of this migration, including the three previously approved
+source edits. Abstract and acknowledgement prose is also preserved. All
+100 rendered pages have been visually reviewed. The main and independent
+exported-source builds have no LaTeX warnings or overfull/underfull boxes;
+their extracted text and page breaks match exactly. All 136 existing
+numbered labels and all 46 cited entries are retained. See
+`notes/USYD_TEMPLATE_MIGRATION_2026-11-03.md` for the migration record.
+
 Interim rebuild on 1 November 2026: the main and named thesis PDFs now
 contain **103 pages**, down from 104. This build includes the refined
 abstract, shortened Appendix B, matching Chapter 5 uncertainty description

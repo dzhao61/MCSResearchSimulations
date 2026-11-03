@@ -51,9 +51,10 @@ variation and explains this separation.
 
 In the uniform \(4\times4\) setting in
 Table~\ref{tab:balanced-null-diagnostics}, an underestimated standard error
-makes a given estimated difference appear too large relative to its
-uncertainty, and Expanded Welch's larger cutoff brings rejection closer to
-5\%. In the same-skew \(16\times16\) setting, the standard error is too
+contributes to excessive rejection, as in the regression examples reviewed
+in Section~\ref{sec:welch-background} \citep{bell2002,kauermann2001}.
+Expanded Welch's larger cutoff brings rejection closer to 5\%.
+In the same-skew \(16\times16\) setting, however, the standard error is too
 large and bias in the estimated MI difference is small, so Wald already
 rejects too rarely and the larger cutoff reduces rejection further. The
 different-skew \(16\times16\) setting instead shows how bias moves the

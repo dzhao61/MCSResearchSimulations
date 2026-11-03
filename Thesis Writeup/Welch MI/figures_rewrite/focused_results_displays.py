@@ -92,7 +92,7 @@ def near_independence_figure(data, detailed=False):
         ax=axes[2,col]
         if detailed:ax.fill_between(d.mi,d.df_p05,d.df_p95,color='#a53648',alpha=.12)
         ax.plot(d.mi,d.df_mean,'o-',color='#a53648',label='Mean estimated df')
-        ax.plot(d.mi,d.a4_df_mean,'--',color='#a53648',label='Near-independence prediction of mean df')
+        ax.plot(d.mi,d.a4_df_mean,'--',color='#b46c14',label='Near-independence prediction of mean df')
         ax.plot(d.mi,d.nu_mom,'o-',color='#34866f',label='Moment target')
         ax.plot(d.mi,d.nu_fo,':',color='black',label='Population first-order df')
         if detailed:
