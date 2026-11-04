@@ -1,5 +1,20 @@
 # Main Welch MI thesis deliverable
 
+Final-version rebuild, 4 November 2026: the manuscript remains **100 pages**
+and includes the three approved Chapter 7 wording clarifications and the
+numerical evidence for once-observed cells in Section 6.1.1. The 88% and
+92% contributions were checked by reconstructing the existing 10,000
+diagnostic repetitions. No scientific displays, figure settings or
+experimental outputs were changed.
+
+Compilation, references and paragraph-style checks pass without LaTeX
+warnings or overfull/underfull boxes. All 100 pages were rendered; 96 are
+pixel-identical to the previously reviewed Sydney-template build. The four
+changed pages were reread and inspected at full size, with no layout
+corrections needed. The title-page date remains the agreed 3 November 2026.
+The final delivery and independent source-build verification record is in
+`notes/FINAL_BUILD_VERIFICATION_2026-11-04.md`.
+
 Sydney template migration, 3 November 2026: the thesis now uses the supplied
 `thesis_2024/usydthesis.cls`, university logo, native AMS headings, captions
 and page layout. The rebuilt manuscript contains **100 pages**, compared

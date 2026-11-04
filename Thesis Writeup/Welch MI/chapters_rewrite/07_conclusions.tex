@@ -65,10 +65,10 @@ Under different-skew \(16\times16\) margins at common MI 0.005 nats
 and 1,000 observations per population, false-positive rates are 36.38\%
 with Wald and 34.38\% with Expanded Welch, far above the 5\% target.
 Both methods return usable results in every repetition, so these high
-rates reflect inaccurate inference rather than failed calculations. At
-the same common MI, both methods remain below the
-5\% target in all three \(16\times16\) margin regimes even with
-50,000 observations per population. Similar rejection rates at larger
+rates reflect inaccurate inference rather than failed calculations. With
+50,000 observations per population at the same common MI, both methods
+have rejection rates below 5\% in all three \(16\times16\) margin
+regimes. Similar rejection rates at larger
 samples therefore do not by themselves establish accurate false-positive
 rates.
 
@@ -95,9 +95,9 @@ set of categories, positive probability for every category combination,
 and nonzero population variance terms in the degrees-of-freedom
 calculation. Paired samples would require accounting for dependence between
 them, while continuous variables or a growing number of categories would
-require extending the present derivation. Independence between the two
-variables within a population also requires separate treatment, using the
-additional sampling approximation in
+require extending the present derivation. At exact independence between
+the two variables, the first-order sampling term vanishes, leaving the
+quadratic sampling variation examined in
 Appendix~\ref{sec:independence-boundary}.
 
 The experiments use one population construction, which increases the
@@ -158,6 +158,6 @@ when distinct populations have equal MI.
 
 The derived degrees of freedom bring some excessive false-positive rates
 closer to 5\%, at the cost of reduced power. The remaining failures show
-why changing the cutoff alone is insufficient: reliable MI comparisons in
-the affected sparse settings also require better estimates of the
-difference and its standard error.
+the limits of Expanded Welch's cutoff adjustment and motivate improving
+the estimates of the MI difference and its standard error in sparse
+settings.

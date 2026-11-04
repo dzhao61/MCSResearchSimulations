@@ -72,9 +72,10 @@ unobserved begin to appear in sampled tables. Cells observed only once
 can have estimated pointwise MI far from the table's plug-in MI,
 producing large squared deviations in \(\Vhat\). For example, if a
 cell and its row and column each contain one observation, its empirical
-pointwise MI is \(\log n\). A cell-contribution decomposition for the
-\(16\times16\) populations shows that once-observed cells contribute
-most of the mean of \(\Vhat\) around the peak in both populations
+pointwise MI is \(\log n\). A cell-contribution decomposition using
+10,000 repetitions for the \(16\times16\) populations shows that, at
+\(n=50\), once-observed cells account for about 88\% of the mean of
+\(\Vhat\) in \(P\) and 92\% in \(Q\)
 (Appendix~\ref{sec:estimation-diagnostics}).
 Their contribution falls as repeated counts give better estimates of
 the cell probabilities. Larger tables spread probability over more rare
