@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-05",
+  "approved_scope": [
+    "old isolated delivery-test copy",
+    "unreachable Git objects"
+  ],
+  "claude_worktree_retained": true,
+  "all_protected_files_sha256_unchanged": 6963,
+  "removed_isolated_delivery_bytes": 7413652187,
+  "unique_isolated_files_retained": 165,
+  "unique_isolated_bytes_retained": 5346395,
+  "full_directory_restoration_test_passed": true,
+  "git_reachable_objects_retained": 10497,
+  "git_refs_and_reflogs_unchanged": true,
+  "git_full_fsck_passed": true,
+  "estimated_git_object_store_reduction_GiB": 15.844,
+  "estimated_gross_removal_GiB": 22.748,
+  "estimate_note": "The pre-cleanup Git size was recorded rounded by git count-objects -vH. Filesystem reclamation may be delayed by open files and snapshots.",
+  "current_available_bytes": 115916800000,
+  "no_thesis_or_presentation_build": true,
+  "no_commit_or_push": true
+}

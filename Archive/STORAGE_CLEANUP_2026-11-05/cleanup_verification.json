@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-05",
+  "removed_logical_bytes": 27671168691,
+  "removed_logical_GiB": 25.771,
+  "working_draft_original_members_restorable": 24907,
+  "unique_members_preserved": 16,
+  "unique_bytes_preserved": 172853,
+  "protected_active_files_sha256_verified_unchanged": 383,
+  "git_connectivity_check_passed": true,
+  "git_refs_and_objects_unchanged": true,
+  "git_temporary_garbage_count": 0,
+  "git_head": "f6e369c2f1827cd3fb4634b7211c706230ebffe4",
+  "measured_available_bytes_before": 94208000000,
+  "measured_available_bytes_after": 101990400000,
+  "reclamation_note": "Three deleted Git temporary files, about 13.44 GiB, remain open by an existing macOS virtualisation process. One other removed temporary path had another hard link. Removing paths therefore does not guarantee immediate release of all logical bytes.",
+  "thesis_or_presentation_build_run": false,
+  "commit_or_push_performed": false
+}

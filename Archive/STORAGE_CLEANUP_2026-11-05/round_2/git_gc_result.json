@@ -1,0 +1,29 @@
+{
+  "command": [
+    "git",
+    "-c",
+    "gc.reflogExpire=never",
+    "-c",
+    "gc.reflogExpireUnreachable=never",
+    "-c",
+    "gc.worktreePruneExpire=never",
+    "-c",
+    "pack.threads=2",
+    "-c",
+    "pack.windowMemory=64m",
+    "gc",
+    "--prune=now",
+    "--no-detach",
+    "--no-keep-largest-pack"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 10.09,
+  "active_git_processes_before": [],
+  "refs_unchanged": true,
+  "reflogs_unchanged": true,
+  "registered_worktrees_unchanged": true,
+  "reachable_object_set_unchanged": true,
+  "reachable_object_count": 10497,
+  "full_fsck_passed": true,
+  "count_objects_after": "count: 0\nsize: 0 bytes\nin-pack: 10497\npacks: 1\nsize-pack: 1.77 GiB\nprune-packable: 0\ngarbage: 0\nsize-garbage: 0 bytes\n"
+}

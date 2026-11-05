@@ -1,0 +1,22 @@
+{
+  "head": "f6e369c2f1827cd3fb4634b7211c706230ebffe4",
+  "refs": "aba935cf49f6f3eeffd3f23c1f4c7ca3fb782b98 refs/codex/turn-diffs/captures/1793879059199/295f7d3d-be15-4005-be76-6c7b1e8d13c7/base\naba935cf49f6f3eeffd3f23c1f4c7ca3fb782b98 refs/codex/turn-diffs/checkpoints/0489ac9868e8139d9a9caa805c859ad1/3e33524366d150d94fc8be73e7986aa4/1793878962913/36c5bdb4-e8fa-46b3-819b-781ecc8717dd\n032f856a50fcf8b14e311386588d775df262a60e refs/codex/turn-diffs/checkpoints/312fbdffa341373c85a336ec29c5a4ae/b47b5512d7e2914963fbe7dc4dd7f7a9/1793623143335/cd31d250-158e-40be-80a2-ae1a187d0e7d\n91344c3a1909a34275038f390eb6b94a715cb335 refs/codex/turn-diffs/checkpoints/55eb36b7de7c0343494aae922bb257a5/1f59839a668ddc06d81d407930b734d2/1793410389616/03d23e70-c648-46ee-9bcd-880d76741e64\ncf00c2ef294a5e0b9202eea247cd36780b07f542 refs/codex/turn-diffs/checkpoints/96108b1590d90aca7c1c28548ba9c070/abe61e5468dbe0c2293554dd21e8627c/1793410207440/8b37e3c8-fe4d-43fd-b028-a78fa56394f6\n368f937af04557b52b473332869b423fc1e216b1 refs/heads/TempBranch\n17c2ab4948bb6839477dc2d937b1dfb391859ae2 refs/heads/backup/push-repair-20261011\n6890b48ebe19f26e3384b4bf1fc51d46652e41c5 refs/heads/claude/codebase-overview-001052\n8fc5bea2404de7d30fc3a10fb3fd933eaa0649d0 refs/heads/deprecated/post-baseline-experiments\nfca3d8e5833a099735f1e2645440a2ef4af9997b refs/heads/good-baseline\nf6e369c2f1827cd3fb4634b7211c706230ebffe4 refs/heads/main\nf6e369c2f1827cd3fb4634b7211c706230ebffe4 refs/remotes/origin/HEAD\n8cf085ca91be33cb1c49ab83db40ea53b8cf2021 refs/remotes/origin/Stage4Simple\n8fc5bea2404de7d30fc3a10fb3fd933eaa0649d0 refs/remotes/origin/deprecated/post-baseline-experiments\nf6e369c2f1827cd3fb4634b7211c706230ebffe4 refs/remotes/origin/main\n",
+  "worktrees": "worktree /Users/danielzhao/MyMac/Masters Degree/Research/Simulations\nHEAD f6e369c2f1827cd3fb4634b7211c706230ebffe4\nbranch refs/heads/main\n\nworktree /Users/danielzhao/MyMac/Masters Degree/Research/Simulations/.claude/worktrees/codebase-overview-001052\nHEAD 6890b48ebe19f26e3384b4bf1fc51d46652e41c5\nbranch refs/heads/claude/codebase-overview-001052\n\n",
+  "count_objects": "count: 2744\nsize: 189.08 MiB\nin-pack: 20031\npacks: 13\nsize-pack: 17.43 GiB\nprune-packable: 0\ngarbage: 0\nsize-garbage: 0 bytes\n",
+  "protected_file_count": 6963,
+  "disk_available_bytes": 102809600000,
+  "reflog_sha256": {
+    ".git/logs/HEAD": "5d5ded86250993dc409575a594884fb9975219d3edf4775bf548bb5d4b9763d3",
+    ".git/logs/refs/heads/TempBranch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/heads/good-baseline": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/heads/main": "5d5ded86250993dc409575a594884fb9975219d3edf4775bf548bb5d4b9763d3",
+    ".git/logs/refs/remotes/origin/Stage4Simple": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/remotes/origin/HEAD": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/remotes/origin/main": "e0b0fc1b9c97827a24e0d9d8dbc1c4812c25ade3bde7c32eac0dbc0e79df6653",
+    ".git/logs/refs/remotes/origin/deprecated/post-baseline-experiments": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/heads/claude/codebase-overview-001052": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/logs/refs/heads/backup/push-repair-20261011": "060c927263e9ad5a0fe57b20f7cf0bbbc725ec6630b93bff8d3f183b91d0e102",
+    ".git/logs/refs/heads/deprecated/post-baseline-experiments": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".git/worktrees/codebase-overview-001052/logs/HEAD": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

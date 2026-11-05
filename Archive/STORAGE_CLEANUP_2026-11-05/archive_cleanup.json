@@ -1,0 +1,16 @@
+{
+  "authorised_date": "2026-11-05",
+  "removed_generated_packages": [
+    {
+      "path": "Thesis Writeup/Welch MI/archive/before_main_deliverable_2026-10-24/deliverables/Working Draft v3 Experiment Supplement.zip",
+      "bytes": 7560579845,
+      "sha256": "6962f0461689fa475a02b2f3f7badea1632f513ec5d39eb3ea7a3de8d4156c07"
+    },
+    {
+      "path": "Thesis Writeup/Welch MI/archive/before_main_deliverable_2026-10-24/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip",
+      "bytes": 799619978,
+      "sha256": "214d1403c75961061c372c184002f915698085720c6869d16ba701d873985680"
+    }
+  ],
+  "original_member_contents_retained": true
+}

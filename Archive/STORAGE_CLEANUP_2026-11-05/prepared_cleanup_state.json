@@ -1,0 +1,29 @@
+{
+  "root": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations",
+  "head": "f6e369c2f1827cd3fb4634b7211c706230ebffe4",
+  "disk_available_bytes": 94208000000,
+  "original_files": {
+    "Thesis Writeup/Welch MI/archive/before_main_deliverable_2026-10-24/deliverables/Working Draft v3 Experiment Supplement.zip": {
+      "bytes": 7560579845,
+      "mtime_ns": 1792811830213277193,
+      "sha256": "6962f0461689fa475a02b2f3f7badea1632f513ec5d39eb3ea7a3de8d4156c07"
+    },
+    "Thesis Writeup/Welch MI/archive/before_main_deliverable_2026-10-24/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip": {
+      "bytes": 799619978,
+      "mtime_ns": 1792583476854890901,
+      "sha256": "214d1403c75961061c372c184002f915698085720c6869d16ba701d873985680"
+    },
+    "Archive/Welch MI baseline 2026-10-24/Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip": {
+      "bytes": 799619978,
+      "mtime_ns": 1792583476854890901,
+      "sha256": "214d1403c75961061c372c184002f915698085720c6869d16ba701d873985680"
+    }
+  },
+  "working_draft_summary": {
+    "members": 24907,
+    "matching_existing_members": 24891,
+    "matching_existing_bytes": 7558508161,
+    "unique_members_retained": 16,
+    "unique_bytes_retained": 172853
+  }
+}

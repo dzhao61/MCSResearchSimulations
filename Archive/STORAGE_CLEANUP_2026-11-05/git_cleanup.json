@@ -1,0 +1,36 @@
+{
+  "authorised_date": "2026-11-05",
+  "removed_temporary_files": [
+    {
+      "path": ".git/objects/pack/tmp_pack_Gwf1t8",
+      "bytes": 7374241804,
+      "hard_links_before": 1,
+      "mtime_utc": "2026-10-21T13:43:11.112852+00:00"
+    },
+    {
+      "path": ".git/objects/pack/tmp_pack_rJJF79",
+      "bytes": 7056523276,
+      "hard_links_before": 1,
+      "mtime_utc": "2026-10-21T13:29:49.521945+00:00"
+    },
+    {
+      "path": ".git/objects/pack/tmp_pack_mpt2LY",
+      "bytes": 4879941644,
+      "hard_links_before": 2,
+      "mtime_utc": "2026-10-22T11:27:33.762264+00:00"
+    },
+    {
+      "path": ".git/objects/ca/tmp_obj_n3EKza",
+      "bytes": 262144,
+      "hard_links_before": 1,
+      "mtime_utc": "2026-10-21T13:44:56.112978+00:00"
+    }
+  ],
+  "removed_bytes": 19310968868,
+  "head_unchanged": "f6e369c2f1827cd3fb4634b7211c706230ebffe4",
+  "refs_unchanged": true,
+  "all_other_git_objects_unchanged": true,
+  "active_git_processes_at_deletion": [],
+  "count_objects_after": "count: 2730\nsize: 187.70 MiB\nin-pack: 20031\npacks: 13\nsize-pack: 17.43 GiB\nprune-packable: 0\ngarbage: 0\nsize-garbage: 0 bytes\n",
+  "storage_note": "Unlinking a hard-linked or open file may not immediately release all of its allocated bytes."
+}
