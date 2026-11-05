@@ -7,10 +7,12 @@ for the existing IDE link. This revision replaces the 16-main-slide plan.
 
 ## 1. Execution brief and sources
 
-Create **14 main slides and 14 backup slides**, 28 slides in total. The
+Create **14 main slides, one appendix title slide and 14 backup slides**,
+29 slides in total. The
 main talk targets **18:50**, leaving 70 seconds before the university's
 20-minute limit. Keep Slide 14 visible during questions. Backups begin at
-physical Slide 15 and are outside the timed talk.
+physical Slide 16, after the appendix title on Slide 15. The appendix title
+and backups are outside the timed talk.
 
 This is a substantive replan of the argument, figures and speech. Follow
 the preferred deck's concrete opening, visible derivation chain and
@@ -18,11 +20,16 @@ results that place evidence beside its explanation. Use the current
 thesis's balanced null and MI-gap power studies. Do not restore calibrated
 power or discarded experiments.
 
-This request authorises planning. Do not edit or rebuild the thesis, run
-experiments, regenerate thesis figures or change existing presentations.
-An earlier implementation already exists in `presentation/`; preserve it.
-When subsequently asked to execute, build in the separate directory
-`Thesis Writeup/Welch MI/presentation/replanned_2026-11-05/`.
+**Editing boundary (confirmed 5 November 2026):** Daniel will edit the
+presentation separately. Update this plan only; do not edit presentation
+files, preview PDFs, speaker-note files, authoring code, evidence manifests
+or presentation snapshots. The slide specifications below describe changes
+for Daniel to make, not permission to implement them. Do not edit or rebuild
+the thesis, run experiments or regenerate thesis figures. Preserve the
+existing presentations in `presentation/`, including the implementation in
+`presentation/replanned_2026-11-05/` and its revisions
+`replanned_2026-11-05_v2/` (appendix title) and `replanned_2026-11-05_v3/`
+(lighter formatting).
 
 All project paths are relative to:
 `/Users/danielzhao/MyMac/Masters Degree/Research/Simulations`.
@@ -94,34 +101,49 @@ or preparatory sampling-uncertainty slide would interrupt this sequence.
 
 ## 4. Design, evidence and language
 
-Use the preferred 25-page deck's white backgrounds, large black headings,
-orange emphasis, navy/orange section headings and pale explanation panels.
-A short factual lead sentence establishes each page's point. Matrices,
-diagrams and plots vary with their purpose. Explanation panels contain
-complete causal or comparative relationships, not lists of technical nouns.
+Use the preferred 25-page deck's white backgrounds, black headings, orange
+emphasis and pale explanation panels, with the lighter formatting adopted on
+5 November. Each slide should look uncluttered: modest type sizes, generous
+white space and few boxes. A short factual lead sentence establishes each
+page's point. Matrices, diagrams and plots vary with their purpose.
+Explanation panels contain complete causal or comparative relationships,
+not lists of technical nouns. The deck in
+`presentation/replanned_2026-11-05_v3/` implements this specification.
 
 | Element | Specification |
 | --- | --- |
 | Canvas | 16:9, 13.3333 × 7.5 inches; donor size 12,192,000 × 6,858,000 EMU. |
-| Title | Lato Bold, normally 34–36 pt, left aligned around x=0.8, y=0.4. Retain the titles below and sentence case. |
-| Lead | Lato 20–22 pt, one or two lines; highlight one meaningful phrase in orange. |
-| Main text | Lato 22–24 pt where possible; table cells 20–22 pt. |
-| Maths | Editable Cambria Math, normally 24–28 pt, with definitions beside first use. |
-| Charts | Main labels 20–24 pt; backup grids normally 18–20 pt. Reduce repeated labels before shrinking evidence. |
-| Sources | Quiet 14–16 pt footer; reference entries 16–18 pt across two pages, with full citations in notes. |
-| Cover | Curved white/chalkboard composition; orange Aptos Display title about 28–32 pt; Aptos details about 18 pt. |
+| Title | Lato Bold 28 pt, black, left aligned at x=0.6, y≈0.3. Retain the titles below and sentence case. |
+| Lead | Lato 17 pt regular in `#555555`, one or two lines at y≈1.0; set one meaningful phrase in bold orange. Backups use one 15 pt regular introduction line. |
+| Setting line | Lato 13 pt bold orange, one line under the lead or at the top of the right-hand column. |
+| Section labels | Lato 14 pt bold navy or orange, with a 1 pt hairline beneath in `#B8C5D6` or `#F5C7AA`. |
+| Main text | Panel headings Lato 14.5–15 pt bold; panel and body text 13.5–15 pt; table cells 14.5–16 pt under 12.5–14 pt bold headers. |
+| Maths | Editable Cambria Math, 20–22 pt for display equations, with definitions beside first use. |
+| Charts | Labels and annotations 12–13 pt; lines about 2 pt (1.4 pt in backup grids); markers 5–6 pt; light grey axes and gridlines. Draw each chart at its placed size. |
+| Sources | Footer 10.5 pt italic `#8C8C8C` at y≈7.05; slide numbers 10.5 pt `#A0A0A0`; reference entries 14.5 pt across two pages, with full citations in notes. |
+| Cover | Curved white/chalkboard composition; orange Aptos Display title about 29 pt; italic question about 15.5 pt; Aptos details about 13.5 pt, kept inside the white area. |
 
-Use white `#FFFFFF`, black `#000000`, secondary text `#333333`, navy
-`#1F3A5C` and orange `#E97132`. The donor's `#ED7D31` may remain in reused
-headers. Pale fills are blue `#E8EFF7`/`#E8F0F7` and peach
-`#FFF1E8`/`#FFF3E8`, with light outlines `#C8D8EA`/`#F5C6A7` and modest
-rounding. Keep longer explanations black. White-on-colour headings must be
-large and legible. Avoid extra badges, symbols and logo/footer banners.
+Use white `#FFFFFF`, body text `#262626`, secondary text `#555555`, navy
+`#1F3A5C` and orange `#E97132`. Use the darker orange `#B4501A` for
+Expanded Welch labels on pale fills. The donor's `#ED7D31` may remain in
+reused elements. Pale fills are peach `#FDF3EC` and blue `#EDF2F8`, with
+modest rounding and no outline. A 1 pt `#F5C7AA` outline may mark a block
+that needs emphasis, such as the project's own steps on Slide 5. Avoid
+extra badges, symbols and logo/footer banners.
 
-Reserve roughly the top 1.8 inches for title/introduction, the centre for
-evidence and explanation, and y≈7.1 for sources. Let plots extend higher
-when the introduction is short. Do not force every slide into identical
-cards. Give scientific content room before reducing font size.
+Use light components throughout. Section labels with hairlines take the
+place of solid header bars. A callout is plain text beside a thin orange or
+navy bar at its left edge, with no dashed box. Table headers are small bold
+text above a 1 pt orange rule, with no filled header row. Number circles
+are about 0.32–0.36 inches across, and arrows are small and light orange.
+
+Use a 0.6-inch side margin. Reserve roughly the top 1.8 inches for title,
+lead and setting line, the centre for evidence and explanation, and y≈7.05
+for sources. Main charts sit at left, about 6.3–6.5 inches wide, with
+explanation panels and callouts in a right-hand column about 5.3 inches
+wide. Backup figures span about 12.1 inches. Leave white space between
+elements. Do not enlarge text or panels to fill a slide, and do not force
+every slide into identical cards.
 
 Actual donor content runs use Lato although its generic Office theme says
 Aptos. Check font availability in both authoring and rendering; embedded
@@ -289,7 +311,8 @@ degrees of freedom.
 
 **Layout and evidence:** Use preferred-reference page 3's three-column
 matrix, orange labels and light rules. Keep citations secondary to the
-ideas. Put the contribution in one orange strip. Avoid an unverified
+ideas. Put the contribution in one pale peach strip, with "Contribution:"
+in bold orange. Avoid an unverified
 claim that no equivalent formula has appeared anywhere.
 
 **Speaker script:**
@@ -334,8 +357,9 @@ bias correction.
 illustration; cutoff about ±2.57.
 
 **Layout and evidence:** Follow preferred-reference page 4. Put shared
-equations/definition at left above navy Wald and orange Expanded Welch
-panels. At right use a shared-axis density plot with direct labels and
+equations/definition at left above pale-blue Wald and pale-peach Expanded
+Welch panels with navy and orange headings. At right use a shared-axis
+density plot with direct labels and
 marked cutoffs. The illustrative df are 5, not an experimental estimate.
 Additional validity rules are introduced on Slide 6 and specified in B3.
 
@@ -740,7 +764,8 @@ zero, so rejection initially falls before recovering.
 **Layout and evidence:** Use evidence beside an explanation, as on
 preferred-reference pages 10–12. At left plot the two .01-gap method curves,
 log sample size, y=0–100% and saved intervals. At right align true and mean
-estimated differences in a pale panel. Place the conditional direction
+estimated differences under a navy "At n = 1,000" label. Place the
+conditional direction
 statement immediately beneath the 9.66% rejection rate. Add the short
 mechanism explaining the curve and mark n=1,000 unambiguously. Navy/orange
 identify methods. No calibration procedure or fitted thresholds appear.
@@ -856,9 +881,10 @@ universal superiority or validated independence-specific replacement test.
 
 ## 7. Backup specifications and navigation
 
-There are 14 backups, physical Slides 15–28. They are question material,
+The appendix begins with a title page on physical Slide 15, followed by
+14 backups on physical Slides 16–29. They are question material,
 not another section to narrate. Keep the index below in Slide 14's notes;
-add no projected divider or extra index page. Jump by physical slide number
+do not add a projected index page. Jump by physical slide number
 and return to Slide 14. Preserve the same fonts, equation/panel styles and
 readability. Full grid backups retain their explicit parameter legends and
 compact validity strips; their colours differ in meaning from main method
@@ -866,22 +892,35 @@ comparisons, which must be stated when opening one.
 
 | Backup | Physical slide | Question addressed |
 | --- | --- | --- |
-| B1 | 15 | Variance sensitivity |
-| B2 | 16 | Moment matching and combined degrees of freedom |
-| B3 | 17 | Population construction, grid and validity |
-| B4 | 18 | Approximation ratios across table sizes |
-| B5 | 19 | Near-independence noise calculation |
-| B6 | 20 | Full null results: uniform margins |
-| B7 | 21 | Full null results: same-skew margins |
-| B8 | 22 | Full null results: different-skew margins |
-| B9 | 23 | Full power results: uniform margins |
-| B10 | 24 | Full power results: same-skew margins |
-| B11 | 25 | Full power results: different-skew margins |
-| B12 | 26 | Application details and comparison family |
-| B13 | 27 | References: MI and testing foundations |
-| B14 | 28 | References: related methods and evaluation |
+| B1 | 16 | Variance sensitivity |
+| B2 | 17 | Moment matching and combined degrees of freedom |
+| B3 | 18 | Population construction, grid and validity |
+| B4 | 19 | Approximation ratios across table sizes |
+| B5 | 20 | Near-independence noise calculation |
+| B6 | 21 | Full null results: uniform margins |
+| B7 | 22 | Full null results: same-skew margins |
+| B8 | 23 | Full null results: different-skew margins |
+| B9 | 24 | Full power results: uniform margins |
+| B10 | 25 | Full power results: same-skew margins |
+| B11 | 26 | Full power results: different-skew margins |
+| B12 | 27 | Application details and comparison family |
+| B13 | 28 | References: MI and testing foundations |
+| B14 | 29 | References: related methods and evaluation |
 
-### B1 / Slide 15 — Variance sensitivity
+### Appendix divider — physical Slide 15
+
+**Purpose:** Mark the beginning of the supporting material clearly in the
+slide deck and PDF.
+
+**On screen:** Only the word **Appendix**, in bold Lato (48 pt),
+centred on a white background in the deck's navy colour. Retain the small
+slide number. Do not add an index, explanatory paragraph, figures or data.
+
+**Delivery:** No timed speech. Keep the conclusion on Slide 14 visible when
+questions begin, then open the relevant backup when needed and return to
+Slide 14 afterwards. The divider adds no time to the 18:50 main talk.
+
+### B1 / Slide 16 — Variance sensitivity
 
 **Question answered:** What exactly did you differentiate, and where do
 the margin terms enter?
@@ -902,7 +941,8 @@ Below it, define \(\ell_P(i,j)=\log\{p_{ij}/(p_{i+}p_{+j})\}\)
 and \(\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}\).
 Use two aligned verbal labels: “Changing probability weights” for the
 first line and “Changing pointwise-MI values and margins” for the bracket.
-Use at least 24–26 pt for the main equation. Do not replace conditional
+Use about 22 pt for the main equation and 15 pt orange labels. Do not
+replace conditional
 means by undefined short symbols.
 
 **Answer to give:** “I differentiate the pointwise-MI variance along a
@@ -920,7 +960,7 @@ positive population cell probabilities, and positive V and tau-squared
 for the first-order df construction. Positive MI alone does not guarantee
 positive tau-squared. Do not treat a zero component as ordinary finite df.
 
-### B2 / Slide 16 — Moment matching and combined degrees of freedom
+### B2 / Slide 17 — Moment matching and combined degrees of freedom
 
 **Question answered:** Where do the component and combined df formulas
 come from, and why is the Student t reference approximate?
@@ -965,7 +1005,7 @@ For the Slide 7 example at n=1,000, first-order component df are 15.30
 against the moment target 21.03: approximately (1/1.19)²/0.97=0.73.
 This explains the squared-mean effect without another main-slide formula.
 
-### B3 / Slide 17 — Population construction, grid and validity
+### B3 / Slide 18 — Population construction, grid and validity
 
 **Question:** How are known-MI populations generated and degenerate
 calculations handled?
@@ -1010,7 +1050,7 @@ and is one association family, not all categorical distributions.
 **Source:** Chapter 5 and Appendix B.1–B.5; current grid CSVs. No
 calibration or four-cell study.
 
-### B4 / Slide 18 — Approximation ratios across table sizes
+### B4 / Slide 19 — Approximation ratios across table sizes
 
 **Question:** Is the 4×4 example representative of other sizes and both
 populations?
@@ -1020,7 +1060,7 @@ curves, P and Q columns, and three rows: mean_ratio, variance_ratio,
 plugin_variance_ratio. Filter to different-skew null-display IDs at common
 MI .02. Use log sample size, the original logarithmic y-axes and a line
 at one. Keep each quantity's ratio direction. Supply shared legends and
-outer labels to preserve readable 18–20 pt text.
+outer labels, with chart text at about 13 pt.
 
 **Answer:** “The larger tables generally have higher mean peaks, deeper
 population-variance troughs and slower recovery in this family. Sample
@@ -1037,7 +1077,7 @@ df by inserting mean inputs into a nonlinear ratio. Full current Figure
 **Source:** Sections 6.1.1–6.1.2, Figures 6.1–6.2 and current moments.csv;
 expected 80 rows: 4 sizes × 10 sample sizes × 2 populations.
 
-### B5 / Slide 19 — Near-independence noise calculation
+### B5 / Slide 20 — Near-independence noise calculation
 
 **Question answered:** Why do the mean estimated df remain near five?
 
@@ -1075,14 +1115,14 @@ approximations, which explains their separation.”
 local approximations under fixed dimensions and positive limiting cell
 probabilities, not exact finite-sample distribution identities.
 
-### B6 / Slide 20 — Full null results: uniform margins
+### B6 / Slide 21 — Full null results: uniform margins
 
 **Question answered:** What happens outside the highlighted different-skew
 16×16 example?
 
 **Show/layout:** Replot all four table-size panels of Figure 6.4 in a
 readable 2×2 grid, with all three MI levels and both methods. Share the
-method and MI legends. Use at least 18–20 pt labels and fewer ticks where
+method and MI legends. Use about 13 pt labels and fewer ticks where
 necessary. Preserve the original y-axis range for each table size and keep
 those ranges identical in B6–B8. Retain the compact validity strips.
 Use shared labels and a few ticks to keep the four-panel view readable. State the all-repetitions denominator
@@ -1097,7 +1137,7 @@ common MI changes those patterns.”
 **Source:** Final Figure 6.4 and balanced-null combined rates, uniform
 profile. This page contains all 120 settings for that profile.
 
-### B7 / Slide 21 — Full null results: same-skew margins
+### B7 / Slide 22 — Full null results: same-skew margins
 
 **Question answered:** What changes when both populations have the same
 uneven category frequencies?
@@ -1115,7 +1155,7 @@ Expanded Welch lowers those already-low rates further.”
 **Source:** Final Figure 6.5 and balanced-null combined rates, same-skew
 profile. This page contains all 120 settings for that profile.
 
-### B8 / Slide 22 — Full null results: different-skew margins
+### B8 / Slide 23 — Full null results: different-skew margins
 
 **Question answered:** Are the severe failures restricted to the largest
 table, and what is visible over the complete margin-specific grid?
@@ -1138,7 +1178,7 @@ different-skew profile. This page contains all 120 settings for that profile.
 and Expanded Welch 34.38%, both 100% valid. This is a different common-MI
 level from the diagnostic table's .02; do not interchange the numbers.
 
-### B9 / Slide 23 — Full power results: uniform margins
+### B9 / Slide 24 — Full power results: uniform margins
 
 **Question:** Do the gap and sample-size patterns hold outside the
 single curve and snapshot?
@@ -1159,7 +1199,7 @@ sample sizes.”
 denominator=all. At n=10,000 and gap=.01, EW is 89.44% for 2×2 and 71.12%
 for 16×16. These values describe the stated population family.
 
-### B10 / Slide 24 — Full power results: same-skew margins
+### B10 / Slide 25 — Full power results: same-skew margins
 
 **Question answered:** Do the power patterns also occur when both groups
 have the same uneven margins?
@@ -1179,7 +1219,7 @@ smaller than these gap and setting effects at larger sample sizes.”
 **Source:** Final Figure 6.8; Section 6.3.2; MI-gap combined rates,
 same-skew profile. This page contains all 120 settings for that profile.
 
-### B11 / Slide 25 — Full power results: different-skew margins
+### B11 / Slide 26 — Full power results: different-skew margins
 
 **Question:** How does the bias-related failure vary with gap and table
 size?
@@ -1203,7 +1243,7 @@ Do not apply that conditional percentage to the entire grid or all
 **Source:** Section 6.3.3, Figure 6.9 and current power CSVs,
 profile=different_skew, denominator=all.
 
-### B12 / Slide 26 — Application details and comparison family
+### B12 / Slide 27 — Application details and comparison family
 
 **Question answered:** Why were six comparisons adjusted, and what else
 was tested?
@@ -1231,11 +1271,11 @@ it does not establish that the approximate underlying p-values are calibrated.�
 **Source:** Thesis Section 6.4 and Appendix B.7; source application CSV
 and its six-comparison protocol. Cite the relevant datasets and Holm (1979).
 
-### B13 / Slide 27 — References: MI and testing foundations
+### B13 / Slide 28 — References: MI and testing foundations
 
 **Show/layout:** Follow preferred-reference page 25 and donor Slide 11's two-column bibliography,
-using three entries per column, but give them larger Lato text at 16–18 pt
-and comfortable paragraph spacing. Keep the common 36 pt black title and
+using three entries per column, in Lato 14.5 pt with comfortable
+paragraph spacing. Keep the common 28 pt black title and
 white background. Use author, year, title, venue and DOI/URL where supplied.
 Do not use a screenshot of a bibliography page. Retain published spelling
 and names. Exact bibliographic text comes from the thesis `references.bib`.
@@ -1246,7 +1286,7 @@ Include these keys: `bossomaier2016`, `moddemeijer1989`, `paninski2003`,
 **Speech:** No prepared narration. Use this page if a source is requested.
 It is not part of the 20-minute talk.
 
-### B14 / Slide 28 — References: related methods and evaluation
+### B14 / Slide 29 — References: related methods and evaluation
 
 **Show/layout:** Five entries in the same style and at the same readable
 size as B13. Include `hutcheson1970`, `panwall2002`, `morris2019`,
@@ -1408,15 +1448,15 @@ Timing remains provisional until a complete timed rehearsal.
 
 Under `Thesis Writeup/Welch MI/presentation/replanned_2026-11-05/`:
 
-- `Daniel_Zhao_Welch_MI_Presentation.pptx`: 14 main plus 14 backup slides,
+- `Daniel_Zhao_Welch_MI_Presentation.pptx`: 14 main slides, one appendix title slide and 14 backup slides,
   editable text/equations/tables, complete notes.
-- `Daniel_Zhao_Welch_MI_Presentation.pdf`: matching 28-page PDF, including
+- `Daniel_Zhao_Welch_MI_Presentation.pdf`: matching 29-page PDF, including
   backups and references, suitable for upload.
 - `Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md`: final speech,
   timings, cues and short route, synchronised after rehearsal.
 - `assets/`: selected data, scientific plots and authoring sources.
 
-These are future outputs. The present task updates planning files only,
+These are outputs for Daniel to update separately. This task updates this plan only,
 without building slides, changing the thesis or committing/pushing git.
 
 ### Final review criteria
@@ -1439,7 +1479,10 @@ proposal content. Compare the cover with preferred page 1, the method with
 pages 4–5 and explanatory result layouts with pages 7–10. The new deck
 should share their explanatory clarity, while using current evidence.
 Check native text/equation editability, font substitution, complete PDF
-export and agreement between PDF and PowerPoint. Add actual scheduling or
+export and agreement between PDF and PowerPoint. Check that the smallest
+text (12–13 pt chart labels and 10.5 pt footers) stays legible in the room
+and on the uploaded PDF; raise panel text to 15–16 pt if it does not. Add
+actual scheduling or
 mandatory Canvas details only when known.
 
 Full product-rule algebra, all grid panels, numerical validity details
@@ -1448,6 +1491,13 @@ removed calibration and four-cell studies stay excluded. No new analysis
 is needed for this replan: its figures select existing results.
 
 ## 11. Revision and verification record
+
+**Formatting revision (5 November, evening):** Section 4 now specifies
+smaller type, lighter components and more white space, replacing the
+earlier 34–36 pt titles, 20–22 pt leads, 22–24 pt body text, solid header
+bars and dashed callouts. The slide-level sizes for the appendix title, B1,
+B4, B6–B8 and B13–B14 follow it. This revision changes no wording, numbers,
+speaker notes, timings or evidence.
 
 The 5 November replan combines the opening material, replaces the main
 expanded derivative display with a derivation chain, uses the 4×4 moment
