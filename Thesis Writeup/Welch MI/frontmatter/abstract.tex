@@ -11,9 +11,10 @@ for comparing MI between two populations. It retains Wald's estimated MI
 difference and standard error but replaces its standard normal reference
 distribution with a Student \(t\) distribution.
 The standard error depends on variance estimates that change between
-samples. We derive a first-order approximation to their sampling variability
-and use it to estimate degrees of freedom for the Student \(t\) distribution,
-giving a larger rejection cutoff than Wald's. Simulations under equal and
+samples. We derive a first-order approximation to how much these estimates
+vary and use it to estimate the degrees of freedom. The resulting Student
+\(t\) distribution gives a larger rejection cutoff than Wald's.
+Simulations under equal and
 unequal population MI assess approximation accuracy, false-positive rates
 and power across sample sizes, numbers of categories and category
 frequencies. An online-shopping example illustrates the tests on observed
@@ -23,10 +24,9 @@ In the simulations, Expanded Welch brings some excessive false-positive
 rates closer to the 5\% target, but lowers rejection further where Wald
 already rejects too rarely. Its larger cutoff can reduce power, the
 probability of detecting a real MI difference, although the power difference
-between methods becomes small with larger samples. Near independence between
-the variables, sampling noise creates apparent association, adding variation
-in the variance estimates that the first-order calculation using population
-probabilities misses. In sparse settings, bias can reverse which population
+between methods becomes small with larger samples. The first-order
+approximation also becomes less accurate when the variables are nearly
+independent. In sparse settings, bias can reverse which population
 appears to have greater MI. The larger cutoff therefore improves some
 false-positive rates but cannot correct bias in the estimated MI difference
 or errors in its standard error.
