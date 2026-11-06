@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import io
+import os
 import shutil
 import subprocess
 import tempfile
@@ -78,7 +79,9 @@ class DeliveryTests(unittest.TestCase):
         self.assertIn("-outdir=build", args[0])
         self.assertIn("$success_cmd = '';", args[0])
         self.assertEqual(args[0][-1], "main.tex")
-        self.assertEqual(kwargs, {"cwd": self.thesis, "check": True})
+        self.assertEqual(kwargs["cwd"], self.thesis)
+        self.assertTrue(kwargs["check"])
+        self.assertEqual(kwargs["env"]["PATH"], "/" + os.pathsep + os.environ.get("PATH", ""))
         self.assertEqual((self.thesis / "main.pdf").read_bytes(), b"%PDF-fresh build")
         self.assertTrue((self.thesis / "build/chapters_rewrite").is_dir())
 
@@ -143,7 +146,7 @@ class DeliveryTests(unittest.TestCase):
                               str(hook), str(self.source), "build/main.pdf"],
                              cwd=self.thesis, capture_output=True, text=True)
         self.assertNotEqual(run.returncode, 0)
-        self.assertIn("Delivery refresh failed", run.stderr)
+        self.assertIn("Delivery publication or automatic push failed", run.stderr)
 
     def test_failed_build_leaves_previous_delivery_untouched(self):
         self.publish()
@@ -190,6 +193,56 @@ class DeliveryTests(unittest.TestCase):
             with self.assertRaises(OSError):
                 package.publish_deliverables()
         self.assertEqual(before, {p.name: p.read_bytes() for p in self.delivery.iterdir()})
+
+    def test_unchanged_supplement_is_verified_and_reused_without_copying(self):
+        self.publish()
+        supplement = self.delivery / package.SUPPLEMENT_NAME
+        before = supplement.stat()
+        with patch.object(package, "write_zip", wraps=package.write_zip) as write:
+            self.publish()
+        self.assertEqual([call.args[0].name for call in write.call_args_list],
+                         [package.SOURCE_NAME])
+        self.assertEqual((before.st_ino, before.st_mtime_ns),
+                         (supplement.stat().st_ino, supplement.stat().st_mtime_ns))
+        package.check_deliverables()
+
+    def test_changed_experiment_input_rebuilds_the_supplement(self):
+        self.publish()
+        self.evidence.write_text("updated evidence")
+        with patch.object(package, "write_zip", wraps=package.write_zip) as write:
+            self.publish()
+        self.assertEqual([call.args[0].name for call in write.call_args_list],
+                         [package.SOURCE_NAME, package.SUPPLEMENT_NAME])
+        package.check_deliverables()
+
+    def test_cli_pushes_only_after_successful_build_or_publication(self):
+        for arguments in ([], ["--publish-built", "build/main.pdf"]):
+            with self.subTest(arguments=arguments):
+                events = []
+                with patch("sys.argv", [str(SCRIPT), *arguments]), \
+                     patch.object(package, "publish_deliverables", side_effect=lambda **kw: events.append("publish")), \
+                     patch.object(package, "push_build", side_effect=lambda: events.append("push")):
+                    package.main()
+                self.assertEqual(events, ["publish", "push"])
+        with patch("sys.argv", [str(SCRIPT)]), \
+             patch.object(package, "publish_deliverables", side_effect=RuntimeError("build failed")), \
+             patch.object(package, "push_build") as push:
+            with self.assertRaisesRegex(RuntimeError, "build failed"):
+                package.main()
+        push.assert_not_called()
+
+    def test_read_only_checks_and_local_build_never_push(self):
+        for arguments in (["--check"], ["--check-style"], ["--no-push"],
+                          ["--publish-built", "build/main.pdf", "--no-push"]):
+            with self.subTest(arguments=arguments), \
+                 patch("sys.argv", [str(SCRIPT), *arguments]), \
+                 patch.object(package, "check_deliverables"), \
+                 patch.object(package, "check_paragraph_style"), \
+                 patch.object(package, "publish_deliverables"), \
+                 patch.object(package, "push_build") as push, \
+                 contextlib.redirect_stdout(io.StringIO()):
+                package.main()
+            push.assert_not_called()
 
     def test_check_rejects_stale_pdf_source_evidence_or_checksums(self):
         self.publish()

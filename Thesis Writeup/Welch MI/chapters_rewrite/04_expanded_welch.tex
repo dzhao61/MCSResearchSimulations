@@ -39,32 +39,35 @@ degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
 \medskip
 The role of the variance estimate follows from the standard construction
 of a variable with a Student \(t\) distribution. If \(Z\) has a standard normal distribution
-and \(U\) independently has a chi-squared distribution with \(\nu\)
+and \(U\), independently of \(Z\), has a chi-squared distribution with \(\nu\)
 degrees of freedom, the scaled ratio follows a Student \(t\) distribution:
 \begin{equation}
  \frac{Z}{\sqrt{U/\nu}}\sim t_\nu.
  \label{eq:t-reference-construction}
 \end{equation}
-Dividing by the independent scaled chi-squared term gives the heavier
-tails of the Student \(t\) distribution. For MI, we approximate this
-construction by modelling the
-estimated variance with a scaled chi-squared variable whose mean and
-variance match its sampling moments. The exact identity assumes the stated
-normal distribution and independence; the MI reference is an approximation.
+The variable \(U/\nu\) has a scaled chi-squared distribution.
+Dividing \(Z\) by its square root gives the heavier tails of the Student
+\(t\) distribution. For MI, we approximate this construction by modelling
+the estimated variance with a variable that has a scaled chi-squared
+distribution and the same sampling mean and variance as the estimate.
+The exact identity assumes the stated distributions of \(Z\) and \(U\) and
+independence between them; the reference distribution for the MI test is
+an approximation.
 
 \medskip
 \thesisminiheading{Moment matching for one pointwise-MI variance estimate.}
 
 To obtain the component target \(\nu_{P,\mathrm{mom}}\), Satterthwaite
 matches the mean and variance of the nonnegative estimate \(\Vhat(P)\)
-with those of the scaled chi-squared variable
+with those of a variable following a scaled chi-squared distribution:
 \begin{equation}
   \E\{\Vhat(P)\}
   \frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}.
   \label{eq:scaled-chi-working}
 \end{equation}
 
-For a chi-squared variable with \(\nu_{P,\mathrm{mom}}\) degrees of freedom,
+A chi-squared distribution with \(\nu_{P,\mathrm{mom}}\) degrees of freedom
+has moments:
 \begin{equation}
   \E(\chi^2_{\nu_{P,\mathrm{mom}}})=\nu_{P,\mathrm{mom}},
   \qquad
@@ -78,7 +81,7 @@ mean automatically:
   \right]
   =\E\{\Vhat(P)\}.
 \end{equation}
-The variance of the scaled chi-squared variable is
+The variance of the approximating variable is
 \begin{align}
   \Var\left[
   \E\{\Vhat(P)\}\frac{\chi^2_{\nu_{P,\mathrm{mom}}}}{\nu_{P,\mathrm{mom}}}
@@ -89,15 +92,15 @@ The variance of the scaled chi-squared variable is
   &=
   \frac{2[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}}.
 \end{align}
-We now choose \(\nu_{P,\mathrm{mom}}\) so that the scaled chi-squared
-variable also has the same variance as \(\Vhat(P)\). Equating its variance,
+We now choose \(\nu_{P,\mathrm{mom}}\) so that the approximating variable
+also has the same variance as \(\Vhat(P)\). Equating its variance,
 calculated above, to the sampling variance of \(\Vhat(P)\) requires
 \begin{equation*}
   \frac{2[\E\{\Vhat(P)\}]^2}{\nu_{P,\mathrm{mom}}}
   =\Var\{\Vhat(P)\}.
 \end{equation*}
-This condition determines the degrees of freedom within the scaled
-chi-squared approximation. Solving for \(\nu_{P,\mathrm{mom}}\) gives
+This condition determines the degrees of freedom for the approximating
+distribution. Solving for \(\nu_{P,\mathrm{mom}}\) gives
 \begin{equation}
   \boxed{
   \nu_{P,\mathrm{mom}}
@@ -466,7 +469,7 @@ Thus \(\tau^2(P)\) measures variation in the sensitivities around zero.
 We next use these sensitivities to approximate how much \(\Vhat(P)\)
 changes between samples.
 
-\begin{assumption}[Regular variance sensitivity]
+\begin{assumption}[Positive variances of observation-level sensitivities]
 For the first-order Expanded Welch construction,
 \(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
 \end{assumption}
@@ -717,14 +720,15 @@ Student \(t\) distribution with \(\nu\) degrees of freedom, evaluated at \(x\).
 
 For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
 p-value at least as large as the standard normal distribution used by Wald.
-Under the implemented validity rules, every valid Expanded Welch result is
-also Wald-valid. At a common p-value threshold, every Expanded Welch
-rejection is therefore also a Wald rejection, including when invalid
-outputs count as non-rejections in the reported rates. At the nominal
-threshold, Expanded Welch cannot raise rejection where Wald is already
-conservative.
-Appendix~\ref{sec:validity-rules} specifies the componentwise validity
-rule, including the exclusion of a zero variance component.
+We call a test calculation successful when all required quantities satisfy
+the numerical conditions in Appendix~\ref{sec:validity-rules}. Every
+successful Expanded Welch calculation also satisfies Wald's calculation
+requirements. At the same p-value threshold, every Expanded Welch rejection
+is therefore also a Wald rejection, including when unsuccessful calculations
+count as non-rejections in the reported rates. At the stated significance
+level, Expanded Welch cannot raise rejection where Wald is already
+conservative. The calculation requirements exclude an Expanded Welch
+comparison with a zero variance component.
 
 \section{Worked example and implementation}
 
@@ -776,7 +780,7 @@ Summing over all cells gives \(\Vhat(P)=0.27189\) and
   \qquad
   T=-1.44898.
 \end{equation}
-Normal Wald gives \(p=0.14734\).
+Wald gives \(p=0.14734\).
 
 For Expanded Welch, the same cell illustrates the sensitivity calculation.
 The first row's pointwise-MI values are 0.38526, \(-0.51083\) and
@@ -836,7 +840,7 @@ Table~\ref{tab:expanded-algorithm} summarises one comparison.
 \addlinespace[0.4em]
 6 & Combine the components using Equation~\eqref{eq:expanded-df}. \\
 \addlinespace[0.4em]
-7 & Return the p-value from the Student \(t\) distribution, effective degrees of freedom, and validity diagnostics. \\
+7 & Return the p-value from the Student \(t\) distribution, effective degrees of freedom, and results of the calculation checks. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -900,35 +904,37 @@ terms and derives their contribution to the estimated degrees of freedom.
 
 \begin{samepage}
 \medskip
-\thesisminiheading{Theoretical status and validity conditions.}
+\thesisminiheading{Theoretical status and calculation requirements.}
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
 derivatives for positive population tables. Using these derivatives to
 describe finite sampling errors gives first-order approximations for the
 MI estimate and the estimated pointwise-MI variance. Moment matching then
-approximates each variance contribution by a scaled chi-squared variable,
-as in Equation~\eqref{eq:scaled-chi-working}. The exact Student \(t\)
-construction in Section~\ref{sec:component-df-choice} also requires a
-standard normal numerator independent of its scaled chi-squared
-denominator. Here, the corrected MI difference and its estimated standard
-error come from the same tables, so an observation can change both
-quantities. Matching the variance moments does not establish the required
-normality or independence, and the Student \(t\) distribution for \(T\)
-therefore remains a finite-sample approximation.
+approximates each variance contribution by a variable with a scaled
+chi-squared distribution, as in Equation~\eqref{eq:scaled-chi-working}.
+The exact construction for a Student \(t\) distribution in
+Section~\ref{sec:component-df-choice} also requires a numerator with a
+standard normal distribution, independent of the squared denominator,
+which has a scaled chi-squared distribution. Here, the corrected MI
+difference and its estimated standard error come from the same tables, so
+an observation can change both quantities. Matching the variance moments
+does not establish the required
+distributional or independence conditions, and the Student \(t\) distribution
+for \(T\) therefore remains a finite-sample approximation.
 
-For fixed population tables with positive \(V\) and \(\tau^2\), increasing
-the sample sizes under regular conditions increases the estimated degrees
-of freedom, bringing the Student \(t\) distribution closer to the standard
-normal distribution used by Wald. This large-sample behaviour holds the
+For fixed population tables satisfying the stated assumptions, including
+positive \(V\) and \(\tau^2\), the estimated degrees of freedom grow as
+the sample sizes tend to infinity, bringing the Student \(t\) distribution
+closer to the standard normal distribution used by Wald. This large-sample behaviour holds the
 populations fixed, whereas the near-independence comparison above reduces
 population MI at a fixed sample size.
 \par\nopagebreak[4]
 
 Both tests need a finite corrected MI difference and a positive, finite
 estimated standard error, while Expanded Welch also needs positive, finite component
-and combined degrees of freedom. A failed requirement gives an invalid
-calculation, not evidence for the null.
-The experiment applies the numerical validity criteria in
+and combined degrees of freedom. If a requirement is not met, the calculation
+is unsuccessful and provides no evidence for the null.
+The experiment applies the numerical calculation requirements in
 Appendix~\ref{sec:validity-rules} and assesses whether false-positive rates
 are close to 5\%.
 \par

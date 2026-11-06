@@ -1,4 +1,4 @@
-# Successful main-thesis builds always refresh the named delivery set.
+# Successful main-thesis builds refresh the delivery set, commit and push.
 # Historical drafts and explicitly different TeX targets are left alone.
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
@@ -22,7 +22,7 @@ sub welch_publish_delivery {
     $python = 'python3' unless -x $python;
     my $script = File::Spec->catfile($welch_thesis_root, 'package_deliverables.py');
     my $status = system($python, $script, '--publish-built', $pdf);
-    die "Delivery refresh failed; previous delivery files were preserved.\n" if $status != 0;
+    die "Delivery publication or automatic push failed; inspect the error above.\n" if $status != 0;
     return 0;
 }
 

@@ -11,7 +11,8 @@ quadratic sampling variation needed at independence and very small MI.
 \section{Fixed-margin behaviour near independence}
 \label{sec:fixed-margin-local-derivation}
 
-Let \(P_0=(q_{ij})\) be independent, with positive cells
+Let \(P_0=(q_{ij})\) be a joint distribution in which \(X\) and \(Y\)
+are independent, with positive cells
 \(q_{ij}=a_i b_j\). Consider \(P_t=P_0+tH\), where every row and column
 sum of \(H\) is zero. For sufficiently small \(t\), all cells remain
 positive and the margins remain \(a\) and \(b\). We expand around
@@ -117,8 +118,9 @@ pointwise-MI value is \(\pmi_P(i,j)=\log 1=0\). Consequently,
 still produce positive estimated MI, but its leading variation comes from
 second-order cell errors.
 
-To calculate this variation, fix a strictly positive independent table
-\(P\) and let \(h=(h_{ij})\) describe a redistribution of probability,
+To calculate this variation, fix a strictly positive population table
+\(P\) in which \(X\) and \(Y\) are independent, and let \(h=(h_{ij})\)
+describe a redistribution of probability,
 with \(\sum_{i,j}h_{ij}=0\). Define
 \begin{equation}
  P_\varepsilon=P+\varepsilon h,
@@ -164,7 +166,7 @@ contributions due to changed margins, leaving the change in association.
 The remainder is negligible relative to \(\varepsilon^2\) as
 \(\varepsilon\) approaches zero.
 
-For a multinomial sample, take \(\varepsilon h=\widehat P-P\).
+For a sample from a multinomial distribution, take \(\varepsilon h=\widehat P-P\).
 Since cell-probability errors typically have size proportional to \(n^{-1/2}\),
 squaring them makes \(\Ihat(P)\) proportional to \(n^{-1}\) under
 independence. Under fixed table dimensions and positive cell probabilities,
@@ -175,7 +177,7 @@ the likelihood-ratio result is
 \end{equation}
 \citep{wilks1938,brillinger2004}. This is the usual one-table likelihood-ratio,
 or \(G\), test of independence. Its chi-squared distribution comes from
-quadratic cell errors, whereas Normal Wald and Expanded Welch use the
+quadratic cell errors, whereas Wald and Expanded Welch use the
 first-order MI error. The two-sample first-order approximation therefore
 does not apply unchanged at exact independence.
 
@@ -185,25 +187,27 @@ does not apply unchanged at exact independence.
 The quadratic approximation also explains why estimated degrees of freedom
 remain several units when population MI is almost zero. Keep \(r\) and
 \(c\) fixed and let a positive population table approach independence with
-cell departures proportional to \(n^{-1/2}\). The normal sampling errors
-and the population departure then contribute on the same scale. In regular
-models, the likelihood-ratio statistic has a noncentral chi-squared limit
-under local alternatives \citep{banerjee2005}. For the multinomial model
-here, assume strictly positive limiting cell probabilities. The local
-approximation is
+cell departures proportional to \(n^{-1/2}\). The sampling errors, approximated
+by a multivariate normal distribution, and the population departure then
+contribute on the same scale. For this model based on a multinomial
+distribution, also assume strictly positive limiting cell probabilities.
+Under these conditions, the likelihood-ratio
+statistic has a limiting noncentral chi-squared distribution under the stated
+local alternatives \citep{banerjee2005}. The local approximation is
 \begin{equation}
  G=2n\Ihat(P)\ \dot\sim\ \chi^2_d(\kappa),
  \qquad d=(r-1)(c-1),\qquad \kappa\simeq2nI(P),
  \label{eq:local-noncentral-mi}
 \end{equation}
 where \(\dot\sim\) denotes an approximate distribution. The noncentral
-chi-squared distribution describes a sum of squared normal errors with a
-nonzero mean departure; \(\kappa\) measures that departure. At independence,
+chi-squared distribution describes a sum of squares of independent random
+variables with normal distributions of unit variance and possibly nonzero means;
+\(\kappa\) measures their combined departure from zero. At independence,
 \(\kappa=0\), recovering Equation~\eqref{eq:independence-chi-squared}.
 
-For a sampled table close to independence, the expansions in
-Appendix~\ref{sec:fixed-margin-local-derivation}, applied around its own
-independent margins, give
+For a sampled table close to independence, apply the expansions in
+Appendix~\ref{sec:fixed-margin-local-derivation} around the product of its
+empirical row and column probabilities. This gives
 \begin{equation}
  \Vhat(P)\approx2\Ihat(P)=\frac{G}{n},
  \qquad \widehat\tau^2(P)\approx4\Vhat(P)\approx\frac{4G}{n}.
@@ -219,8 +223,8 @@ Thus sampling noise contributes to the estimated degrees of freedom even
 when the population first-order approximation \(nI(P)\) is very small.
 
 The same approximation separates that plug-in calculation from matching
-the actual sampling moments. Under the noncentral chi-squared
-approximation, \(\E(G)\approx d+\kappa\) and
+the actual sampling moments. Under the approximation using a noncentral
+chi-squared distribution, \(\E(G)\approx d+\kappa\) and
 \(\Var(G)\approx2(d+2\kappa)\), giving
 \begin{equation}
  \E\{\Vhat(P)\}\approx\frac{d+\kappa}{n},

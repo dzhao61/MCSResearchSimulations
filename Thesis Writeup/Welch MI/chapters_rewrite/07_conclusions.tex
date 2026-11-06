@@ -6,8 +6,9 @@
 This thesis develops and evaluates a test for comparing mutual information
 (MI) between two categorical variables using independent samples from two
 populations. The proposed Expanded Welch--Satterthwaite test (Expanded
-Welch) retains Normal Wald's estimated MI difference and standard error but
-uses a Student \(t\) reference distribution. The mathematical contribution
+Welch) retains Wald's estimated MI difference and standard error but
+replaces its standard normal reference distribution with a Student \(t\)
+distribution. The mathematical contribution
 is a first-order approximation to how the variance estimates underlying
 the standard error change between samples. Their mean and sampling
 variability determine the degrees of freedom, which control the rejection
@@ -61,12 +62,12 @@ different-skew \(16\times16\) setting instead shows how bias moves the
 estimated difference away from zero even when the population MI values are
 equal.
 
-Under different-skew \(16\times16\) margins at common MI 0.005 nats
+Under different-skew \(16\times16\) margins at shared MI 0.005 nats
 and 1,000 observations per population, false-positive rates are 36.38\%
 with Wald and 34.38\% with Expanded Welch, far above the 5\% target.
-Both methods return usable results in every repetition, so these high
+Both methods' calculations succeed in every repetition, so these high
 rates reflect inaccurate inference rather than failed calculations. With
-50,000 observations per population at the same common MI, both methods
+50,000 observations per population at the same MI level, both methods
 have rejection rates below 5\% in all three \(16\times16\) margin
 regimes. Similar rejection rates at larger
 samples therefore do not by themselves establish accurate false-positive
@@ -120,13 +121,13 @@ Both tests are evaluated at the usual 5\% significance level, with
 confidence intervals quantifying simulation uncertainty at individual
 population and sample-size settings. Because the tests' actual
 false-positive rates can differ, the power comparison describes detection
-under these usual testing rules rather than at a common observed
+under these usual testing rules rather than at the same observed
 false-positive rate. These rates can be assessed in the simulations because
 the population MI values are known, whereas the online-shopping application
 has unknown population MI values and therefore illustrates interpretation
 on observed data without assessing false-positive accuracy.
 
-The main empirical comparison uses Normal Wald, with ordinary Welch
+The main empirical comparison uses Wald, with ordinary Welch
 degrees of freedom examined at three illustrative null settings. These
 comparisons do not establish how Expanded Welch performs against
 resampling procedures or tests using other MI estimators.
@@ -154,8 +155,8 @@ Broader experiments could test whether the findings persist across other
 starting MI values, either population having greater MI, unequal sample
 sizes, and other patterns of category frequencies and association. Within
 these comparisons, simulations based on plausible application populations
-could also examine sensitivity to rare category combinations and behaviour
-when distinct populations have equal MI.
+could also examine how rare category combinations affect the results and
+how the tests behave when distinct populations have equal MI.
 
 The derived degrees of freedom bring some excessive false-positive rates
 closer to 5\%, at the cost of reduced power. The remaining failures show

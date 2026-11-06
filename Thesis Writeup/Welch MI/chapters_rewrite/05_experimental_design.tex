@@ -7,7 +7,7 @@ standard error, and to count false positives when the population MI
 values are equal. The evaluation addresses the three research questions in
 Section~\ref{sec:research-questions} by checking Expanded Welch's variance
 approximations and comparing its false-positive rates and power with those
-of Normal Wald. The design follows the simulation
+of Wald. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
 being estimated, methods and performance measures.
 
@@ -146,6 +146,8 @@ uneven frequencies in both populations, whereas the different-skew regime
 uses a first-category probability of 0.7 in \(P\) and 0.8 in \(Q\).
 Thus the row and column margins agree within each population, while the
 margins can differ between populations.
+Here, ``skew'' describes uneven category probabilities, with no numerical
+ordering assumed for the category labels.
 
 \begin{table}[htbp]
 \centering
@@ -219,7 +221,7 @@ Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
 
 The approximation checks in Table~\ref{tab:design-primary-grids} use two grids:
 the first varies
-sample size at common MI 0.02 nats, while the second includes very small
+sample size at shared MI 0.02 nats, while the second includes very small
 positive MI to examine behaviour near independence. In this latter range,
 the predicted sampling variance of \(\Vhat(P)\) becomes small and
 quadratic sampling terms can matter. Both grids use all
@@ -268,7 +270,7 @@ sets
  \label{eq:design-balanced-null}
 \end{equation}
 These levels cover weaker association, the baseline MI used for the power
-study, and stronger association. For each common MI, we use all four
+study, and stronger association. For each shared MI, we use all four
 table sizes, three margin regimes and ten sample sizes in
 Tables~\ref{tab:design-primary-grids} and \ref{tab:margin-profiles}.
 The resulting 360 settings test whether the methods' behaviour changes
@@ -277,8 +279,8 @@ across those four experimental parameters.
 At each setting, we draw 100,000 independent pairs of count tables and
 apply both tests to the same pair using their usual two-sided p-value
 threshold of 0.05. The false-positive rate is the fraction of all
-repetitions that reject equal MI, with invalid calculations counted as
-non-rejections. We report the valid-result fraction separately so
+repetitions that reject equal MI, with unsuccessful calculations counted as
+non-rejections. We report the calculation success rate separately so
 calculation failures can be distinguished from conservative decisions.
 
 A rejection rate above 5\% indicates excessive rejection, while a rate
@@ -310,14 +312,14 @@ MI gap stay fixed as sample size increases; comparing curves changes
 For each setting, we generate 100,000 independent pairs of count tables
 and apply both tests to each pair using their usual p-value threshold of
 0.05. Power is the fraction of all repetitions that reject equal MI,
-with invalid calculations counted as non-rejections and the valid-result
-fraction reported separately. Power includes rejections in either direction
+with unsuccessful calculations counted as non-rejections and the calculation
+success rate reported separately. Power includes rejections in either direction
 because the tests are two-sided. The sample sizes and margin profiles
 are specified in Tables~\ref{tab:design-primary-grids} and
 \ref{tab:margin-profiles}.
 
-Expanded Welch uses the same statistic as Normal Wald with a larger
-rejection cutoff, so it cannot have higher power at this common threshold.
+Expanded Welch uses the same statistic as Wald with a larger
+rejection cutoff, so it cannot have higher power at the same threshold.
 We measure the reduction in detection probability across the grid and
 interpret it alongside the false-positive rates in
 Section~\ref{sec:null-design}, because a higher rejection rate under an
@@ -355,10 +357,10 @@ evaluation setting.
 \midrule
 \addlinespace[0.35em]
 Rejection rate &
-\(\dfrac{\text{number of valid rejections}}{\text{number of simulation repetitions}}\)\\
+\(\dfrac{\text{number of rejections}}{\text{number of simulation repetitions}}\)\\
 \addlinespace[0.85em]
-Valid-result fraction &
-\(\dfrac{\text{number of valid outputs}}{\text{number of simulation repetitions}}\)\\
+Calculation success rate &
+\(\dfrac{\text{number of successful calculations}}{\text{number of simulation repetitions}}\)\\
 \addlinespace[0.85em]
 Bias in the estimated MI difference &
 \(\operatorname{mean}(\Deltahat)-\Delta\)\\
@@ -370,8 +372,9 @@ Variance ratio &
 \end{tabularx}
 \end{table}
 
-Bias uses finite MI differences even when a test is invalid. The variance ratio uses repetitions with both finite \(\Deltahat\)
-and finite \(\SEhat^2\), with one indicating agreement. Ratios below
+Bias uses finite MI differences even when the test calculation is
+unsuccessful. The variance ratio uses repetitions with both finite
+\(\Deltahat\) and finite \(\SEhat^2\), with one indicating agreement. Ratios below
 one mean that the squared standard error understates the observed sampling
 variance of the estimated MI difference on average, while ratios above one
 indicate overstatement.

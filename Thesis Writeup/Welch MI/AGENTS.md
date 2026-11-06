@@ -28,6 +28,29 @@ figure, formatting or experiment changes that warrant it. An explicit rebuild
 request is still required. This interim preference takes precedence over
 the otherwise mandatory full-package refresh described below.
 
+On 6 November 2026 the user authorised a commit and push after every
+requested PDF rebuild. The normal packaging command and the direct
+`latexmk` main-thesis hook now publish verified delivery files, commit
+active manuscript/build inputs and current outputs, and push the current
+branch to its configured upstream (or establish the matching origin branch
+when it has no upstream). They preserve unrelated staged changes and do
+not force-push. Historical drafts, presentations and unrelated notes are
+outside the automatic commit scope. Include explicitly reviewed build
+records separately when they form part of the requested work.
+
+For an agent-led build requiring visual review, use
+`python3 package_deliverables.py --no-push`, finish the review, then call
+`push_build()` from the packaging module to commit and push as the final
+step of the same task. This is standing authorisation; do not request
+confirmation again. Read-only `--check` and `--check-style` never push.
+Builds remain explicitly requested operations. A failed push must be
+reported: verified files and the local commit remain available for retry.
+
+Packaging verifies the existing experiment supplement against every current
+input before reusing it. If its inventory or contents differ, it rebuilds
+the supplement. Reuse leaves the existing large archive in place and
+refreshes the source archive, PDF and checksums together.
+
 Current delivery files belong in `deliverables/`. After any manuscript,
 figure, bibliography, source or evidence change, run `python3
 package_deliverables.py` from this folder. It builds `main.tex`, keeps
@@ -40,8 +63,9 @@ The local `.latexmkrc` hooks successful direct builds of `main.tex` into
 `package_deliverables.py --publish-built`, which validates the completed
 PDF/log and refreshes the named PDF, archives and checksums without
 compiling again. Other TeX targets, including historical drafts, do not
-trigger it. The normal packaging command suppresses this hook internally
-so it publishes only once. Always link the named PDF in `deliverables/`
+trigger it. Successful publication also runs the commit-and-push step.
+The normal packaging command suppresses the inner latexmk hook so it
+publishes and pushes only once. Always link the named PDF in `deliverables/`
 when returning a rebuilt thesis to the user.
 
 Internal plans and review records are under `notes/`. Superseded loose

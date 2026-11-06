@@ -4,11 +4,11 @@
 
 This chapter checks the approximations used to choose Expanded Welch's
 degrees of freedom, then compares its false-positive rates and power with
-Normal Wald. The online-shopping application illustrates how to interpret
+Wald. The online-shopping application illustrates how to interpret
 the test outputs.
 
 Each evaluation setting uses 100,000 independent repetitions, each drawing
-one count table from \(P\) and one independently from \(Q\). Normal Wald
+one count table from \(P\) and one independently from \(Q\). Wald
 and Expanded Welch are both applied to the same two sampled tables in
 each repetition.
 
@@ -40,7 +40,7 @@ corresponding moment observed across repetitions, and repeat the checks
 for \(Q\).
 
 Figure~\ref{fig:redesign-moments} shows the different-skew populations
-at common MI 0.02 nats, with row and column margins \(m_k(0.7)\) for
+at shared MI 0.02 nats, with row and column margins \(m_k(0.7)\) for
 \(P\) and \(m_k(0.8)\) for \(Q\).
 The top row divides the simulated mean of
 \(\Vhat(P)\) by the population benchmark \(V(P)\), and likewise for \(Q\).
@@ -159,7 +159,7 @@ each sampled table before averaging these estimates.
 
 
 Figure~\ref{fig:redesign-component-df} uses the different-skew populations
-at common MI 0.02 nats, with margins \(m_k(0.7)\) for \(P\) and
+at shared MI 0.02 nats, with margins \(m_k(0.7)\) for \(P\) and
 \(m_k(0.8)\) for \(Q\). Sample size increases along the horizontal axis,
 and the lines represent table sizes. The top row divides
 \(\nu_{P,\mathrm{FO}}\) by \(\nu_{P,\mathrm{mom}}\); the bottom row divides
@@ -237,9 +237,9 @@ repetitions, rather than zero degrees of freedom.
 
 \subsection{Behaviour near independence}
 
-Near independence, the pointwise-MI weights in the linear sampling error
-become small, so products of cell-probability errors can contribute
-substantially to sampling variation. These quadratic terms allow sampled
+When \(X\) and \(Y\) are nearly independent within each population, the
+pointwise-MI weights in the linear sampling error become small, so products
+of cell-probability errors can contribute substantially to sampling variation. These quadratic terms allow sampled
 tables to show apparent association even when population MI is almost
 zero. The near-independence calculation in
 Appendix~\ref{sec:independence-boundary} retains them to predict the mean
@@ -247,7 +247,7 @@ and sampling variance of \(\Vhat\) and the mean estimated component
 degrees of freedom.
 
 Figure~\ref{fig:redesign-a4} holds the sample size at \(n=1{,}000\) and
-the table size at \(4\times4\), and increases the common population MI
+the table size at \(4\times4\), and increases the shared population MI
 along the horizontal axis. The margins are \(m_k(0.7)\) for \(P\) and
 \(m_k(0.8)\) for \(Q\). The top row multiplies the observed sampling
 mean of \(\Vhat\) by \(n\); the middle row multiplies its observed
@@ -255,7 +255,7 @@ sampling variance by \(n^2\). These scalings cancel the sample-size
 denominators in the near-independence moment formulas in
 Appendix~\ref{sec:independence-boundary}. The dashed near-independence
 predictions
-use the same scalings and depend on the common table size, sample size
+use the same scalings and depend on the shared table size, sample size
 and MI, so they are identical in the two columns. The bottom row compares
 the mean estimated degrees of freedom, its near-independence prediction,
 the sampling-moment target and the population first-order value. Across the simulation repetitions, we calculate the observed means and
@@ -282,12 +282,12 @@ on the sampled tables show that \(2\Ihat\) then increasingly understates
 \(\Vhat\). The observed means also separate between the columns, with
 \(Q\) higher at the larger MI values. The identical local predictions
 cannot capture this margin dependence because they retain only the
-common table size, sample size and MI.
+shared table size, sample size and MI.
 
 In the middle row, the observed scaled sampling variance also starts
 close to the near-independence prediction, but their separation grows
 more strongly as MI increases. For the same \(4\times4\), different-skew
-comparisons at \(n=1{,}000\), checks across increasing common MI values
+comparisons at \(n=1{,}000\), checks across increasing shared MI values
 trace this underprediction through the two steps of the local calculation.
 The calculation first
 represents \(\Vhat\) by \(2\Ihat\), then predicts the sampling variance
@@ -355,28 +355,29 @@ values, which still use \(V\) in place of the enlarged sampling mean.
 \section{RQ2: False-positive rates under equal MI}
 \label{sec:null-rejection-patterns}
 
-The null study uses common population MI values of 0.005, 0.02 and 0.30
+The null study uses shared population MI values of 0.005, 0.02 and 0.30
 nats, with all four table sizes, three margin regimes and ten sample
 sizes at each level. Every population pair has \(\Delta=0\), so each
-rejection is a false positive. Each plotted rate divides valid rejections
-by all 100,000 repetitions, including invalid calculations as non-rejections.
+rejection is a false positive. Each plotted rate divides the number of
+rejections by all 100,000 repetitions, with unsuccessful calculations
+counted as non-rejections.
 Shading gives pointwise 95\% intervals, and the lower strips show the
-fraction of valid results.
+calculation success rates.
 
-Expanded Welch uses the same statistic as Normal Wald with a larger
+Expanded Welch uses the same statistic as Wald with a larger
 rejection cutoff, so its rejection rate is always lower or equal at the
-common p-value threshold of 0.05. The comparison asks whether that
+same p-value threshold of 0.05. The comparison asks whether that
 reduction brings rejection closer to 5\% or deepens conservatism. The
 three figures below follow the same margin order as the power study and
-show the effects of sample size, table size and common MI together.
+show the effects of sample size, table size and shared MI together.
 
 \subsection{Uniform margins}
 
 Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
-populations, giving identical population tables at each common MI.
+populations, giving identical population tables at each shared MI.
 Each panel increases sample size along the logarithmic horizontal axis,
-with colour identifying common MI. Solid lines with filled circles show Normal
-Wald, and dashed lines with open squares show Expanded Welch. Where the
+with colour identifying shared MI. Solid lines with filled circles show Wald,
+and dashed lines with open squares show Expanded Welch. Where the
 method curves overlap, their observed false-positive rates are equal or
 too close to distinguish on the plotted scale. The dotted line marks 5\%.
 For a given table size, the vertical scale is the same
@@ -386,15 +387,15 @@ different scales.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{balanced_null_uniform.pdf}
-\caption{False-positive rates across common MI values under uniform margins.}
+\caption{False-positive rates across shared MI values under uniform margins.}
 \label{fig:balanced-null-uniform}
 \end{figure}
 
-At common MI 0.005 and 0.02, both tests have ranges of conservative
+At shared MI 0.005 and 0.02, both tests have ranges of conservative
 rejection before recovering towards 5\%, with later recovery for larger
-tables. At common MI 0.30, the curves instead show substantial excessive
+tables. At shared MI 0.30, the curves instead show substantial excessive
 rejection over parts of the smaller-sample range before settling near the
-target. Increasing common MI therefore changes the rejection pattern,
+target. Increasing shared MI therefore changes the rejection pattern,
 even though the population difference remains zero. The biases in the two
 MI estimates cancel because the population tables and sample sizes are
 identical, so the departures from 5\% arise through the estimated standard error and
@@ -402,10 +403,10 @@ the sampling distribution of the shared statistic.
 
 Expanded Welch lowers both the excessive and conservative parts of these
 curves. In \(4\times4\) at \(n=20\), its rate of 4.90\% is closer
-to 5\% than Wald's 8.35\% at common MI 0.02. At common MI 0.30,
+to 5\% than Wald's 8.35\% at shared MI 0.02. At shared MI 0.30,
 however, Expanded Welch still rejects in 13.11\% of repetitions at the
 same dimensions and sample size. The larger cutoff can correct some
-excess rejection without making the method uniformly accurate as common
+excess rejection without making the method uniformly accurate as shared
 MI changes. Conversely, where Wald is already below 5\%, the reduction
 moves rejection farther from the target.
 
@@ -413,32 +414,33 @@ moves rejection farther from the target.
 
 Figure~\ref{fig:balanced-null-same-skew} assigns both populations the
 row and column profile \(m_k(0.8)\), again giving identical tables
-under equal MI. This comparison retains the same common MI values and
+under equal MI. This comparison retains the same MI levels and
 sample-size grid while concentrating more probability in the first category.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{balanced_null_same_skew.pdf}
-\caption{False-positive rates across common MI values under same-skew margins.}
+\caption{False-positive rates across shared MI values under same-skew margins.}
 \label{fig:balanced-null-same-skew}
 \end{figure}
 
-The weaker common MI values produce deep conservative ranges, with the
+The weaker shared MI values produce deep conservative ranges, with the
 trough occurring later as table size increases. Uneven margins leave
 more category combinations rarely observed, prolonging errors in the
 estimated cell probabilities and standard error. With identical population
 tables, the expected bias of the MI difference still cancels, so it cannot
 explain these departures. The diagnostic comparison below shows how an
 oversized standard error can shrink the statistic and suppress rejection.
-At common MI 0.30, both methods instead over-reject at several small
+At shared MI 0.30, both methods instead over-reject at several small
 sample sizes before approaching 5\% with more observations.
 
-At the smallest sample sizes, the validity strips show that Expanded
-Welch can return fewer valid outputs than Wald, so failed calculations
-also lower its rejection rate when all repetitions are counted.
-The conservative troughs persist even when both tests return usable results
-in every repetition, however,
-so calculation failure is not their sole explanation. At larger samples,
+At the smallest sample sizes, the lower strips show that Expanded Welch
+calculations can succeed less often than Wald calculations, so failed
+calculations also lower Expanded Welch's rejection rate when all repetitions
+are counted.
+However, the conservative troughs persist even when both tests' calculations
+succeed in every repetition, so calculation failure is not their sole
+explanation. At larger samples,
 the methods' curves become close as the estimated degrees of freedom
 increase, but both can remain below 5\% in the weak-association,
 larger-table settings.
@@ -454,26 +456,26 @@ under the null.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{balanced_null_different_skew.pdf}
-\caption{False-positive rates across common MI values under different-skew margins.}
+\caption{False-positive rates across shared MI values under different-skew margins.}
 \label{fig:balanced-null-different-skew}
 \end{figure}
 
 The two smaller tables retain the conservative ranges at weaker MI and
 the excessive rejection at stronger MI seen in the other margin regimes.
-The \(16\times16\) panel shows a more severe failure: at common MI
+The \(16\times16\) panel shows a more severe failure: at shared MI
 0.005 and \(n=1{,}000\), Wald rejects in 36.38\% of repetitions and
 Expanded Welch in 34.38\%. The larger cutoff reduces rejection but
-leaves it far above 5\%. These high rates occur after both methods return
-valid results in every repetition, so they reflect inaccurate inference
-rather than calculation failures.
+leaves it far above 5\%. Both methods' calculations succeed in every
+repetition, so these high rates reflect inaccurate inference rather than
+calculation failures.
 
-The contrast across common MI depends on the bias relative to sampling
+The contrast across shared MI depends on the bias relative to sampling
 spread. At \(16\times16\) and \(n=1{,}000\), the bias in the estimated
 MI difference is about 0.03 nats at all three MI levels, but the sampling
 standard deviation is larger at stronger association. The shift therefore
 has a greater effect relative to the spread at weaker MI, accompanying the
 much higher rejection there.
-With more observations, the bias diminishes and rejection falls. At common
+With more observations, the bias diminishes and rejection falls. At shared
 MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
 \(16\times16\) case eventually falls below the target. Increasing
 sample size can therefore pass through excessive and conservative ranges
@@ -483,15 +485,15 @@ as the shared estimates recover.
 \label{sec:null-estimator-accuracy}
 
 Table~\ref{tab:balanced-null-diagnostics} contrasts three settings with a
-common MI of 0.02 nats to illustrate different estimation errors. Because the
+shared MI of 0.02 nats to illustrate different estimation errors. Because the
 population MI difference \(\Delta\) is zero, ``Bias / SD'' equals the
 sampling mean of \(\Deltahat\) divided by its observed sampling standard
 deviation. The variance ratio divides the average \(\SEhat^2\) by the
 observed variance of \(\Deltahat\) about
 its sampling mean, so it measures uncertainty estimation separately from
 bias. Ratios below one indicate underestimation and ratios above one
-indicate overestimation. Both methods are valid in every repetition in
-these three settings; rates are percentages of all 100,000 repetitions.
+indicate overestimation. Both methods' calculations succeed in every
+repetition in these three settings. Rates are percentages of all 100,000 repetitions.
 
 \begin{table}[H]
 \centering
@@ -521,7 +523,7 @@ error is oversized.
 
 Across the grid, the methods become close with larger samples, but their
 agreement does not itself establish accurate rejection. For example, at
-common MI 0.005 and \(n=50{,}000\), both tests remain below 4\% in
+shared MI 0.005 and \(n=50{,}000\), both tests remain below 4\% in
 every \(16\times16\) margin regime, with the shared estimated variance
 still exceeding the observed sampling variance of the estimated MI
 difference. Expanded Welch improves calibration where its lower rejection
@@ -531,7 +533,8 @@ conservatism where Wald already rejects too rarely.
 \subsection{Comparison with ordinary Welch degrees of freedom}
 
 To check whether MI-specific degrees of freedom make a difference, we also
-apply an ordinary Welch reference to three illustrative null settings.
+use a reference distribution with ordinary Welch degrees of freedom at three
+illustrative null settings.
 This comparison keeps the same estimated MI difference, standard error and
 statistic, but substitutes component degrees of freedom \(n_P-1\) and
 \(n_Q-1\) into Equation~\eqref{eq:ws-general}. These sample-size-based
@@ -541,8 +544,8 @@ variation. Expanded Welch instead uses the component degrees of freedom
 derived in Chapter~\ref{chap:expanded}.
 
 The comparison reuses the same 100,000 sampled pairs per setting as the
-main null study, with common MI 0.02 nats and equal sample sizes
-\(n_P=n_Q=n\). All three methods return valid results in every repetition.
+main null study, with shared MI 0.02 nats and equal sample sizes
+\(n_P=n_Q=n\). All three methods' calculations succeed in every repetition.
 
 \begin{table}[H]
 \centering
@@ -551,7 +554,7 @@ main null study, with common MI 0.02 nats and equal sample sizes
 \thesistableformat
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrr@{}}
 \toprule
-Setting & \shortstack{Normal Wald\\(\%)} & \shortstack{Ordinary Welch\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\
+Setting & \shortstack{Wald\\(\%)} & \shortstack{Ordinary Welch\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\
 \midrule
 Uniform \(4\times4\), \(n=20\) & 8.35 & 7.35 & 4.90\\
 Uniform \(4\times4\), \(n=50\) & 4.87 & 4.57 & 3.24\\
@@ -577,9 +580,9 @@ ten sample sizes of the broad null comparison at three MI-gap magnitudes:
 \(|\Delta|=0.005,0.01,0.02\) nats. Population \(P\) has MI 0.02 nats,
 while \(Q\) has MI 0.025, 0.03 or 0.04 nats, respectively, so each
 signed difference \(\Delta=I(P)-I(Q)\) is negative. Each plotted rate
-divides valid rejections by all 100,000 repetitions at that setting, with
-invalid calculations counted as non-rejections. Shading gives pointwise
-95\% intervals, and the lower strips show the fraction of valid results.
+divides the number of rejections by all 100,000 repetitions at that setting,
+with unsuccessful calculations counted as non-rejections. Shading gives
+pointwise 95\% intervals, and the lower strips show the calculation success rates.
 
 At the usual p-value threshold of 0.05, Expanded Welch's larger cutoff
 makes its rejections a subset of Wald's, so the comparison
@@ -593,9 +596,9 @@ population difference.
 \subsection{Uniform margins}
 
 Figure~\ref{fig:mi-gap-power-uniform} uses uniform row and column
-margins in both populations. Each panel increases the common sample size
+margins in both populations. Each panel increases the shared sample size
 along the logarithmic horizontal axis, while colour identifies the MI-gap
-magnitude. Solid lines with filled circles show Normal Wald, and dashed
+magnitude. Solid lines with filled circles show Wald, and dashed
 lines with open squares show Expanded Welch. The same colour and line
 conventions apply to all three power figures, with overlapping method
 curves indicating equal or visually indistinguishable power. Curves for
@@ -638,7 +641,7 @@ is therefore larger relative to the sampling spread of the estimated difference.
 
 Expanded Welch's power is no higher than Wald's for any gap, with the largest
 separation for the 0.01-nat gap occurring at the smallest sample size in the
-\(16\times16\) panel. Expanded Welch's valid-result fraction at that
+\(16\times16\) panel. Expanded Welch's calculation success rate at that
 setting is above 99\%, so most of that separation comes from the larger
 cutoff rather than failed calculations. The difference in power between the
 tests becomes small in the larger-sample range as increasing degrees of freedom bring the
@@ -664,7 +667,7 @@ with the trough occurring later for larger tables. Relative to uniform
 margins, the uneven frequencies leave more combinations rarely observed,
 and the population pointwise-MI variances are also larger. Both features
 make a given gap harder to detect. At the smallest sample sizes, the
-validity strips show that failed Expanded Welch calculations also reduce
+lower strips show that failed Expanded Welch calculations also reduce
 its power when all repetitions are counted, so the larger cutoff is not
 the only reason for its lower power. For the 0.01-nat gap in the
 \(16\times16\) case at \(n=1{,}000\), the average squared standard error is 1.81 times the
@@ -742,7 +745,7 @@ larger-sample range.
 \section{Example application to online shopping data}
 \label{sec:shoppers-application}
 
-This example illustrates how Normal Wald and Expanded Welch are applied
+This example illustrates how Wald and Expanded Welch are applied
 and interpreted in practice by comparing month--purchase and
 weekend--purchase associations between new and returning visitors.
 The Online Shoppers Purchasing Intention dataset records website sessions
@@ -817,7 +820,7 @@ estimated standard error:
   T\approx\frac{-0.013563}{0.003333}\approx-4.069.
   \label{eq:shoppers-month-statistic}
 \end{equation}
-Both tests use this statistic, but Normal Wald compares it with the
+Both tests use this statistic, but Wald compares it with the
 standard normal distribution, whereas Expanded Welch uses a Student
 \(t\) distribution with estimated degrees of freedom.
 Table~\ref{tab:shoppers-test-results} gives Expanded Welch's degrees
@@ -834,7 +837,7 @@ the usual p-value threshold of 0.05.
  & & \multicolumn{2}{c}{\textbf{p-value}}\\
 \cmidrule(lr){3-4}
 \textbf{Predictor} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{degrees of freedom}}
- & \textbf{Normal Wald} & \textbf{Expanded Welch}\\
+ & \textbf{Wald} & \textbf{Expanded Welch}\\
 \midrule
 Month & 26.79 & \(4.71\times10^{-5}\) & \(3.73\times10^{-4}\)\\
 \addlinespace[0.35em]
@@ -849,7 +852,7 @@ are below 0.05. Expanded Welch gives a larger p-value because the Student
 \(t\) distribution with 26.79 degrees of freedom assigns more probability
 to statistics at least this far from zero than the standard normal
 distribution. The Holm-adjusted month p-values remain below 0.05 at
-0.000189 for Normal Wald and 0.00149 for Expanded~Welch, so the evidence
+0.000189 for Wald and 0.00149 for Expanded~Welch, so the evidence
 of a difference persists after accounting for the six comparisons.
 
 For weekend, both corrected MI estimates are approximately 0.0007 nats,
@@ -871,9 +874,9 @@ sampling-moment target or measure false-positive rates.
 \section{Discussion}
 \label{sec:results-discussion}
 
-Expanded Welch improves on Normal Wald where its larger cutoff corrects
+Expanded Welch improves on Wald where its larger cutoff corrects
 excessive false-positive rates. For uniform \(4\times4\) tables at
-common MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
+shared MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
 Expanded Welch gives 4.90\%
 (Table~\ref{tab:balanced-null-diagnostics}). This reduction towards 5\%
 supports the motivation of \citet{panwall2002}: accounting for variability

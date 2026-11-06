@@ -2,8 +2,8 @@
 \label{chap:baselines}
 
 This chapter defines the estimated MI difference, standard error and test
-statistic shared by Normal Wald and Expanded Welch, then calculates the
-Normal Wald p-value using the standard normal distribution.
+statistic shared by Wald and Expanded Welch, then calculates the
+Wald p-value using the standard normal distribution.
 
 \section{Problem setup and bias-corrected estimator}
 
@@ -176,7 +176,7 @@ that \(\SEhat^2\) estimates.\\
 \end{tabularx}
 \end{table}
 
-The common standardised statistic is
+The shared standardised statistic is
 \begin{equation}
   T=\frac{\Deltahat}{\SEhat}.
   \label{eq:shared-t}
@@ -189,7 +189,7 @@ Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t}, but
 compare \(T\) with different reference distributions centred at zero
 under \(H_0\).
 
-\section[Normal Wald test and motivation for Expanded Welch]{Normal Wald test and motivation for\\Expanded Welch}
+\section[Wald test and motivation for Expanded Welch]{Wald test and motivation for\\Expanded Welch}
 
 When both sample sizes grow while the table dimensions and positive
 population probabilities stay fixed, the statistic approaches a standard
@@ -199,7 +199,7 @@ normal distribution under equal population MI
   T\xrightarrow{d}N(0,1)
   \qquad\text{under }H_0.
 \end{equation}
-The two-sided Normal Wald p-value is
+The two-sided Wald p-value is
 \begin{equation}
   p_{\mathrm{Wald}}
   =2\{1-\Phi(|T|)\},

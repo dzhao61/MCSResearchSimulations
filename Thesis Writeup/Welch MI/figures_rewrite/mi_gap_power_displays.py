@@ -15,7 +15,7 @@ import pandas as pd
 HERE=Path(__file__).resolve().parent
 RESULTS=HERE.parents[2]/"WelchSatterthwaiteMI/results/mi_gap_power_2026-11-01"
 GAPS={.005:"#0072b2", .01:"#e69f00", .02:"#009e73"}
-METHODS={"normal_wald":("Normal Wald","-","o"),
+METHODS={"normal_wald":("Wald","-","o"),
          "expanded_welch":("Expanded Welch","--","s")}
 
 
@@ -55,7 +55,7 @@ def generate(results=RESULTS,destination=HERE):
             ax.tick_params(labelbottom=False)
             valid.set(ylim=(-.05,1.07),yticks=[0,1],xlabel="Sample size per population")
             valid.tick_params(labelsize=8);valid.xaxis.label.set_size(9)
-            valid.set_ylabel("Valid fraction",fontsize=9,rotation=0,ha="left",va="bottom")
+            valid.set_ylabel("Calculation success rate",fontsize=9,rotation=0,ha="left",va="bottom")
             valid.yaxis.set_label_coords(.02,.13)
         gap_handles=[Line2D([],[],color=colour,lw=1.5,label=f'{gap:g}') for gap,colour in GAPS.items()]
         method_handles=[Line2D([],[],color="black",ls=style,marker=marker,

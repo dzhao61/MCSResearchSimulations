@@ -113,9 +113,9 @@ the sum. When a positive-probability cell is unobserved, the empirical
 table assigns it zero probability, contributing to sparse-sample estimation
 error.
 
-Under multinomial sampling, the cell counts vary between samples but must
-sum to \(n\), so an extra observation in one cell leaves fewer observations
-for the others. For a fixed set of categories, the plug-in
+When the counts follow a multinomial distribution, they vary between samples
+but must sum to \(n\), so an extra observation in one cell leaves fewer
+observations for the others. For a fixed set of categories, the plug-in
 estimate approaches population MI as the sample grows, but its finite-sample
 bias and sampling variance depend on the complete probability table.
 Changing the probabilities of rare cells can change both the bias and the
@@ -173,9 +173,9 @@ observed proportions as the complete population.
 The Nemenman--Shafee--Bialek (NSB) estimator combines priors, or probability
 weights on possible populations, to avoid favouring a narrow range of
 entropy values before observing the data \citep{nemenman2002}.
-More recently, \citet{piga2024} use the observed counts to estimate a
-Dirichlet prior's strength, which controls how much the probability
-estimates are drawn towards a uniform distribution, including for
+More recently, \citet{piga2024} use the observed counts to estimate the
+strength of a Dirichlet prior distribution, which controls how much the
+probability estimates are drawn towards a uniform distribution, including for
 unobserved categories.
 
 Entropy estimators can also be combined to estimate MI through
@@ -464,9 +464,9 @@ When \(V(P)>0\), the central limit theorem also gives
   \xrightarrow{d}N(0,1).
   \label{eq:mi-clt-background}
 \end{equation}
-This gives a large-sample normal approximation for a fixed table with
-positive population cell probabilities. The \(1/n\) leading bias from
-Section~\ref{sec:background-mi-bias} decreases faster than the
+This gives a large-sample approximation using a standard normal distribution
+for a fixed table with positive population cell probabilities. The \(1/n\)
+leading bias from Section~\ref{sec:background-mi-bias} decreases faster than the
 \(1/\sqrt n\) sampling error, so it does not change this limiting
 distribution.
 
@@ -482,8 +482,8 @@ A finite sample can still have positive MI. Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
 produces the usual chi-squared limiting distribution
 \citep{brillinger2004,marinescu2025}. Testing independence therefore uses a
-chi-squared distribution rather than the normal approximation for comparing
-positive MI values.
+chi-squared distribution rather than an approximation using a normal
+distribution for comparing positive MI values.
 
 \section{Approaches to testing MI differences}
 \allowdisplaybreaks
@@ -494,11 +494,11 @@ preceding section add to approximate the sampling variance of the MI
 difference. Estimating this sum and taking its square root gives the
 standard error, which estimates the difference's standard deviation across
 repeated samples. This section
-reviews the Normal Wald test, the Welch--Satterthwaite principle and other
+reviews the Wald test, the Welch--Satterthwaite principle and other
 approaches to that comparison. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\), even when their cell probabilities differ.
 
-\thesisminiheading{The Normal Wald test.}
+\thesisminiheading{The Wald test.}
 
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with a standard normal distribution
@@ -521,14 +521,14 @@ the population variances by estimates gives the standardisation
   \label{eq:background-wald-standardisation}
 \end{equation}
 Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
-\(V(P)\) and \(V(Q)\). The normal limit assumes positive population cell
-probabilities, positive pointwise-MI variances and increasing sample
-sizes. With smaller samples, the MI difference may not follow the normal
-approximation closely, and the estimated standard error can vary between
-samples. The Wald test still uses the same standard normal distribution
+\(V(P)\) and \(V(Q)\). The approximation using a standard normal distribution
+assumes positive population cell probabilities, positive pointwise-MI
+variances and increasing sample sizes. With smaller samples, a normal
+distribution may approximate the MI difference poorly, and the estimated
+standard error can vary between samples. The Wald test still uses the same standard normal distribution
 cutoff, regardless of how much the estimated standard error varies.
 Chapter~\ref{chap:baselines} applies the leading bias correction to the
-numerator and specifies the full Normal Wald test.
+numerator and specifies the full Wald test.
 
 \medskip
 \thesisminiheading{The Welch--Satterthwaite principle.}
@@ -555,10 +555,12 @@ testing equal population means and the effective degrees of freedom are
 
 The denominator contains one estimated variance contribution from each
 sample, with component degrees of freedom \(n_P-1\) and \(n_Q-1\) under
-normal sampling. If \(s_P^2/n_P\) dominates, the formula makes the
-combined \(\nu\) close to \(n_P-1\); when both contributions matter, both
-samples' degrees of freedom affect \(\nu\). Satterthwaite obtains this form
-by matching the mean and variance of their sum to a scaled chi-squared variable
+sampling from populations with normal distributions. If \(s_P^2/n_P\)
+dominates, the formula makes the combined \(\nu\) close to \(n_P-1\);
+when both contributions matter, both samples' degrees of freedom affect
+\(\nu\). Satterthwaite obtains this form
+by matching the mean and variance of their sum to those of a variable with a
+scaled chi-squared distribution
 \citep{satterthwaite1946}.
 
 \begin{figure}[H]
@@ -577,8 +579,9 @@ standard normal distribution, and their rejection cutoffs become closer.
 
 For MI, the estimated variance contributions are \(\Vhat(P)/n_P\) and
 \(\Vhat(Q)/n_Q\). The ordinary \(n_P-1\) and \(n_Q-1\) values follow
-from the scaled chi-squared distribution of a sample variance under normal
-sampling; they do not automatically apply to an estimated pointwise-MI variance.
+from the scaled chi-squared distribution of a sample variance when each
+population has a normal distribution; they do not automatically apply to an
+estimated pointwise-MI variance.
 Chapter~\ref{chap:expanded} therefore derives the component degrees of
 freedom from the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\),
 using the same moment-matching principle.
@@ -595,7 +598,7 @@ to differences in this relative variability between probability tables.
 The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
-\citet{panwall2002} use Student \(t\) and \(F\) distributions with
+\citet{panwall2002} use Student \(t\) distributions and \(F\) distributions with
 approximate degrees of freedom that account for the sampling variability
 of a regression variance estimate to reduce excessive Wald rejection.
 \citet{bell2002} examine both
@@ -626,7 +629,7 @@ In a Bayesian approach to uncertainty about population MI,
 \citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
 probabilities and calculate the variance and shape of the resulting MI
 distribution conditional on the observed table. Our repeated-sampling
-comparison instead asks how often Normal Wald and Expanded Welch reject
+comparison instead asks how often Wald and Expanded Welch reject
 equal MI when new samples are drawn from fixed populations \(P\) and \(Q\).
 
 Hutcheson's test compares two estimates of Shannon diversity, or entropy,
@@ -659,9 +662,10 @@ weights and the pointwise-MI values whose weighted variance is being
 estimated. The resulting cell and margin derivatives supply the MI-specific
 inputs to the Welch--Satterthwaite calculation.
 
-In a segregation application, \citet{mora2009} derive a normal approximation
-for comparing positive population MI between populations and time periods,
-providing a direct precedent for the Normal Wald baseline. Their later
+In a segregation application, \citet{mora2009} derive an approximation using
+a normal distribution for comparing positive population MI between
+populations and time periods, providing a direct precedent for the Wald
+baseline. Their later
 peer-reviewed account places the MI index within the segregation literature
 \citep{mora2011}.
 
@@ -724,7 +728,7 @@ the estimated pointwise-MI variance. Expanded Welch uses this approximation
 to obtain component degrees of freedom, then combines them using the
 Welch--Satterthwaite rule.
 
-Retaining Normal Wald's estimated MI difference and standard error isolates
+Retaining Wald's estimated MI difference and standard error isolates
 the effect of changing the reference distribution.
 The estimation problems identified by \citet{paninski2003} remain relevant:
 residual bias can shift the estimated difference, while an inaccurate

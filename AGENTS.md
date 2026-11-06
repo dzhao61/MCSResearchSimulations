@@ -12,6 +12,14 @@ Working Draft v3 are preserved under the thesis folder's
 `archive/before_main_deliverable_2026-10-24/`. The working-draft naming rule
 below applies only to explicitly requested working drafts, not main builds.
 
+The user authorised automatic commit and push after each requested main
+thesis PDF rebuild on 6 November 2026. Use the active thesis packaging hook
+and its scoped commit rules. When visual review is needed, build with
+`--no-push`, complete the review, then run the packaging module's
+`push_build()` step. A build request includes permission to push; another
+confirmation is unnecessary. Read-only checks and failed builds must not
+push, and unrelated staged work and historical drafts must be preserved.
+
 # Research Writing Preference
 
 Use Australian English throughout the thesis and related research writing,
@@ -55,6 +63,19 @@ Use complete names for statistical objects when the noun matters: write
 "Student t distribution" or "cutoff from the Student t distribution", not
 "Student" or "Student cutoff" alone. Do the same for normal and chi-squared
 distributions instead of relying on the reader to supply "distribution".
+Name the baseline "Wald test" in prose and "Wald" in compact table and
+figure labels, defining its standard normal reference distribution explicitly.
+Avoid "Normal Wald", which can suggest an ordinary or regular Wald test.
+When describing an approximation, sampling assumption or random variable,
+include the distribution's complete name rather than shorthand such as
+"normal approximation" or "chi-squared variable".
+Distinguish calculation success (meeting numerical requirements) from
+statistical validity. Name the objects whose independence is assumed.
+Use shared for quantities equal between populations or methods, retaining
+common for frequently occurring categories and common algebraic factors.
+Explain conservative at first use as a false-positive rate below the stated
+significance level. State the actual mathematical conditions instead of
+calling them regular when that description could be ambiguous.
 
 Construct sentences around a complete explanatory relationship: keep a result
 with its immediate cause, consequence, condition or qualification when that

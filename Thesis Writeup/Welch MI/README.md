@@ -1,5 +1,24 @@
 # Main Welch MI thesis deliverable
 
+Terminology revision and build automation, 6 November 2026: the manuscript
+uses Wald test and complete distribution names, distinguishes calculation
+success from statistical validity, and clarifies shared quantities,
+independence, conservatism and the relevant mathematical conditions.
+The six null/power figures use matching labels. Statistical calculations,
+experimental results and the existing regime names are preserved.
+
+In this working repository, `python3 package_deliverables.py`, `make` and
+successful direct `latexmk` builds of `main.tex` now refresh the verified
+delivery set, commit the active thesis/build inputs and current outputs,
+and push the current branch. Historical drafts, presentations, unrelated
+notes and unrelated staged files are excluded. Use `--no-push` for a local
+verification build; read-only checks never commit or push. Failed pushes
+retain the local commit and report the error without force-pushing.
+The existing large experiment supplement is reused only after its complete
+inventory and contents have been checked against current inputs.
+
+The dated entries below describe earlier builds.
+
 Final-version rebuild, 4 November 2026: the manuscript remains **100 pages**
 and includes the three approved Chapter 7 wording clarifications and the
 numerical evidence for once-observed cells in Section 6.1.1. The 88% and

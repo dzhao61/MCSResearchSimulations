@@ -1,9 +1,10 @@
-"""Build the current thesis before publishing verified delivery files."""
+"""Build, verify and publish the current thesis, then commit and push it."""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import re
 import shutil
 import subprocess
@@ -35,7 +36,12 @@ From the thesis folder, run `python3 package_deliverables.py` (or
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.
 Direct `latexmk` builds of `main.tex` also refresh this delivery set through
-the project's post-build hook. Failed builds do not publish delivery files.
+the project's post-build hook. Successful publication commits the active
+thesis inputs and current outputs, then pushes the current branch. Historical
+drafts and unrelated files are excluded. Failed builds do not push.
+Use `python3 package_deliverables.py --no-push` for a local verification build.
+Read-only checks never commit or push. A failed push leaves the local commit
+and verified files available for retry; the hook never force-pushes.
 """
 
 
@@ -221,10 +227,12 @@ def build_main() -> None:
     build = THESIS / "build"
     for directory in ("", "chapters_rewrite", "appendices_rewrite"):
         (build / directory).mkdir(parents=True, exist_ok=True)
+    environment = os.environ.copy()
+    environment["PATH"] = str(Path(latexmk).parent) + os.pathsep + environment.get("PATH", "")
     # This command publishes once below; suppress the direct-latexmk hook here.
     subprocess.run([latexmk, "-e", "$success_cmd = '';", "-pdf",
                     "-interaction=nonstopmode", "-halt-on-error",
-                    "-outdir=build", "main.tex"], cwd=THESIS, check=True)
+                    "-outdir=build", "main.tex"], cwd=THESIS, check=True, env=environment)
     sync_main_pdf(build / "main.pdf")
 
 
@@ -285,22 +293,99 @@ def publish_deliverables(*, compiled: Path | None = None) -> None:
         sync_main_pdf(compiled)
     DELIVERABLES.mkdir(exist_ok=True)
     sources, supplement = source_files(), supplement_files()
+    existing_supplement = DELIVERABLES / SUPPLEMENT_NAME
+    reuse_supplement = False
+    if existing_supplement.is_file():
+        print("Checking the existing experiment supplement for reuse...", flush=True)
+        try:
+            check_archive(existing_supplement, supplement)
+        except (AssertionError, zipfile.BadZipFile):
+            print("Experiment inputs changed; rebuilding the supplement.", flush=True)
+        else:
+            reuse_supplement = True
+            print("Verified experiment supplement is unchanged; reusing it.", flush=True)
     # Prepare and verify everything before replacing the previous delivery set.
     with tempfile.TemporaryDirectory(prefix=".refresh-", dir=DELIVERABLES) as temporary:
         staging = Path(temporary)
         shutil.copyfile(THESIS / "main.pdf", staging / PDF_NAME)
         write_zip(staging / SOURCE_NAME, sources)
-        write_zip(staging / SUPPLEMENT_NAME, supplement)
+        if not reuse_supplement:
+            write_zip(staging / SUPPLEMENT_NAME, supplement)
         check_archive(staging / SOURCE_NAME, sources)
-        check_archive(staging / SUPPLEMENT_NAME, supplement)
+        if not reuse_supplement:
+            check_archive(staging / SUPPLEMENT_NAME, supplement)
         (staging / "README.md").write_text(DELIVERY_README)
-        checksums = "".join(f"{sha256(staging / name)}  {name}\n"
+        checksums = "".join(f"{sha256(existing_supplement if reuse_supplement and name == SUPPLEMENT_NAME else staging / name)}  {name}\n"
                             for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME))
         (staging / "SHA256SUMS.txt").write_text(checksums)
         for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME, "README.md", "SHA256SUMS.txt"):
+            if reuse_supplement and name == SUPPLEMENT_NAME:
+                continue
             (staging / name).replace(DELIVERABLES / name)
     for name in (PDF_NAME, SOURCE_NAME, SUPPLEMENT_NAME):
         print(f"{name}: {(DELIVERABLES / name).stat().st_size} bytes")
+
+
+def build_git_paths() -> list[Path]:
+    """Limit automatic commits to the active thesis and its build support."""
+    names = [
+        "main.tex", "preamble.tex", "metadata.tex", "references.bib", "usydthesis.cls",
+        "README.md", "AGENTS.md", ".latexmkrc", "Makefile", "package_deliverables.py",
+        "frontmatter", "chapters_rewrite", "appendices_rewrite", "figures_rewrite", "style",
+        "tests/test_package_deliverables.py", "tests/test_build_push.py", "main.pdf",
+        *(f"deliverables/{name}" for name in (PDF_NAME, SOURCE_NAME, "README.md", "SHA256SUMS.txt")),
+    ]
+    return [WORKSPACE / "AGENTS.md", *(THESIS / name for name in names)]
+
+
+def push_build(*, extra_paths: tuple[Path, ...] = (),
+               message: str = "Rebuild Welch MI thesis") -> None:
+    """Commit only build-related paths, preserving unrelated staged work."""
+    def git(*arguments: str, **kwargs):
+        return subprocess.run(["git", "-C", str(WORKSPACE), "--literal-pathspecs",
+                               *arguments], check=True, **kwargs)
+
+    branch = git("symbolic-ref", "--quiet", "--short", "HEAD",
+                 capture_output=True, text=True).stdout.strip()
+    remote = subprocess.run(["git", "-C", str(WORKSPACE), "config", "--get",
+                             f"branch.{branch}.remote"], capture_output=True, text=True)
+    merge = subprocess.run(["git", "-C", str(WORKSPACE), "config", "--get",
+                            f"branch.{branch}.merge"], capture_output=True, text=True)
+    new_upstream = remote.returncode == 1 and merge.returncode == 1
+    if new_upstream:
+        destination, target = "origin", f"refs/heads/{branch}"
+        git("remote", "get-url", destination, capture_output=True)
+    elif remote.returncode == 0 and merge.returncode == 0:
+        destination, target = remote.stdout.strip(), merge.stdout.strip()
+        if not target.startswith("refs/heads/"):
+            raise RuntimeError("The current branch's upstream must be a branch.")
+    else:
+        raise RuntimeError("The current branch's upstream configuration is incomplete.")
+
+    paths = [path.relative_to(WORKSPACE).as_posix()
+             for path in (*build_git_paths(), *extra_paths)]
+    # ls-files includes tracked deletions and excludes ignored experiment data.
+    selected = git("ls-files", "--cached", "--others", "--exclude-standard", "-z",
+                   "--", *paths, capture_output=True).stdout
+    if selected:
+        git("add", "--all", "--pathspec-from-file=-", "--pathspec-file-nul", input=selected)
+        names = [os.fsdecode(name) for name in selected.split(b"\0") if name]
+        changes = git("diff", "--cached", "--name-only", "-z", "--", *names,
+                      capture_output=True).stdout
+        if changes:
+            git("commit", "--only", "--pathspec-from-file=-", "--pathspec-file-nul",
+                "-m", message, input=changes)
+        else:
+            print("No new build-related changes to commit.", flush=True)
+    print(f"Pushing {branch} to {destination}/{target.removeprefix('refs/heads/')}...",
+          flush=True)
+    options = ["--set-upstream"] if new_upstream else []
+    try:
+        git("push", *options, "--", destination, f"HEAD:{target}")
+    except subprocess.CalledProcessError as error:
+        raise RuntimeError("Automatic push failed. The verified files and local commit "
+                           "are preserved; resolve the Git/network error and retry. "
+                           "No force-push was attempted.") from error
 
 
 def main() -> None:
@@ -311,6 +396,8 @@ def main() -> None:
                         help="Check paragraph-style sources without building or refreshing files.")
     checks.add_argument("--publish-built", type=Path, metavar="PDF",
                         help="Post-build hook: publish a completed main PDF without compiling again.")
+    parser.add_argument("--no-push", action="store_true",
+                        help="Build and publish locally without committing or pushing.")
     args = parser.parse_args()
     if args.publish_built is not None:
         compiled = args.publish_built
@@ -325,6 +412,8 @@ def main() -> None:
         print("All delivery files match the current PDF, source and evidence.")
     else:
         publish_deliverables()
+    if not args.check and not args.check_style and not args.no_push:
+        push_build()
 
 
 if __name__ == "__main__":

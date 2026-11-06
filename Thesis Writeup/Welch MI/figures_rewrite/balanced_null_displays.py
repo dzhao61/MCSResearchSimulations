@@ -1,4 +1,4 @@
-"""Render the balanced common-MI null grid and its compact mechanism table."""
+"""Render the balanced shared-MI null grid and its compact mechanism table."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -15,7 +15,7 @@ import pandas as pd
 HERE=Path(__file__).resolve().parent
 RESULTS=HERE.parents[2]/"WelchSatterthwaiteMI/results/balanced_null_2026-11-01"
 LEVELS={.005:"#0072b2",.02:"#e69f00",.30:"#009e73"}
-METHODS={"normal_wald":("Normal Wald","-","o"),
+METHODS={"normal_wald":("Wald","-","o"),
          "expanded_welch":("Expanded Welch","--","s")}
 CASES=[(4,"uniform",20),(16,"same_skew",1000),(16,"different_skew",1000)]
 
@@ -60,7 +60,7 @@ def generate(results=RESULTS,destination=HERE):
             ax.tick_params(labelbottom=False)
             valid.set(ylim=(-.05,1.07),yticks=[0,1],xlabel="Sample size per population")
             valid.tick_params(labelsize=8);valid.xaxis.label.set_size(9)
-            valid.set_ylabel("Valid fraction",fontsize=9,rotation=0,ha="left",va="bottom")
+            valid.set_ylabel("Calculation success rate",fontsize=9,rotation=0,ha="left",va="bottom")
             valid.yaxis.set_label_coords(.02,.13)
         common_handles=[Line2D([],[],color=colour,lw=1.5,label=f'{value:g}') for value,colour in LEVELS.items()]
         method_handles=[Line2D([],[],color="black",ls=style,marker=marker,
@@ -69,7 +69,7 @@ def generate(results=RESULTS,destination=HERE):
             for method,(label,style,marker) in METHODS.items()]
         method_handles.append(Line2D([],[],color="black",ls=":",lw=.9,label="Nominal 5%"))
         fig.legend(handles=common_handles,loc="lower center",bbox_to_anchor=(.5,.075),ncol=3,
-            title="Common population MI (nats)",title_fontsize=9)
+            title="Shared population MI (nats)",title_fontsize=9)
         fig.legend(handles=method_handles,loc="lower center",bbox_to_anchor=(.5,.015),ncol=3)
         name=f'balanced_null_{profile}.pdf';fig.savefig(destination/name,bbox_inches="tight");plt.close(fig)
         evidence["figures"][name]=dict(configurations=sorted(ids),common_mi=list(LEVELS),
@@ -90,7 +90,7 @@ def generate(results=RESULTS,destination=HERE):
             f'{100*case.loc["normal_wald","rejection_rate"]:.2f}',
             f'{100*case.loc["expanded_welch","rejection_rate"]:.2f}'])
     table=[r'\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}',r'\toprule',
-           r'\textbf{Setting} & \textbf{Bias / SD} & \shortstack[r]{\textbf{Variance}\\\textbf{ratio}} & \shortstack[r]{\textbf{Normal Wald}\\\textbf{(\%)}} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{(\%)}}\\',r'\midrule']
+           r'\textbf{Setting} & \textbf{Bias / SD} & \shortstack[r]{\textbf{Variance}\\\textbf{ratio}} & \shortstack[r]{\textbf{Wald}\\\textbf{(\%)}} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{(\%)}}\\',r'\midrule']
     for index, row in enumerate(rows):
         if index:
             table.append(r'\addlinespace[0.35em]')

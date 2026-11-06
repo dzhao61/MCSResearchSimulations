@@ -15,4 +15,9 @@ From the thesis folder, run `python3 package_deliverables.py` (or
 Run `python3 package_deliverables.py --check` (or `make check`) to verify
 that they still match the current source, main PDF and experimental evidence.
 Direct `latexmk` builds of `main.tex` also refresh this delivery set through
-the project's post-build hook. Failed builds do not publish delivery files.
+the project's post-build hook. Successful publication commits the active
+thesis inputs and current outputs, then pushes the current branch. Historical
+drafts and unrelated files are excluded. Failed builds do not push.
+Use `python3 package_deliverables.py --no-push` for a local verification build.
+Read-only checks never commit or push. A failed push leaves the local commit
+and verified files available for retry; the hook never force-pushes.
