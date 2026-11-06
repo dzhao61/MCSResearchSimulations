@@ -595,14 +595,17 @@ to differences in this relative variability between probability tables.
 The same principle has been used in regression to account for
 uncertainty in estimated variances
 \citep{panwall2002,bell2002,kauermann2001,fay2001,imbens2016}.
-For example, \citet{panwall2002} calculate approximate degrees of freedom
-from the sampling variability of a regression variance estimate, while
-Expanded Welch uses the sampling variability of the pointwise-MI variance estimate.
-These regression precedents address variance estimates that are too small
-or confidence intervals that cover too rarely
-\citep{bell2002,kauermann2001}. A larger cutoff from the Student \(t\)
-distribution can widen the intervals and reduce excessive rejection in such
-settings.
+\citet{panwall2002} use Student \(t\) and \(F\) distributions with
+approximate degrees of freedom that account for the sampling variability
+of a regression variance estimate to reduce excessive Wald rejection.
+\citet{bell2002} examine both
+bias reduction in the variance estimator and Satterthwaite degrees of
+freedom, finding that each contributes to improved inference. Their
+experiments also show that using Satterthwaite degrees of freedom with a
+positively biased variance estimator can produce very conservative tests.
+The distinction matters for MI: a larger cutoff can compensate for some
+excessive rejection, but it does not change the estimated variance or
+remove bias in the estimated MI difference.
 
 \medskip
 \thesisminiheading{Previous work on MI uncertainty and comparisons.}
@@ -700,24 +703,24 @@ for equal MI would need to be established.
 
 \section{Previous work and this thesis's contribution}
 
-Existing work provides the leading bias and sampling variance of MI
+Existing work provides the leading bias and sampling variance of MI,
+supporting a standard error for the difference between two independent
+MI estimates
 \citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
-Hutcheson's entropy comparison assigns degrees of freedom from sample sizes
-\citep{hutcheson1970}, while \citet{panwall2002} use the variability of a
-regression variance estimate to choose degrees of freedom. Applying this
-approach to MI requires calculating how the estimated pointwise-MI variance changes
-with the observed table, including changes to the cell probabilities,
-row and column totals, and pointwise MI values.
+Welch--Satterthwaite degrees of freedom additionally require the sampling
+mean and variance of the variance estimate itself. Hutcheson's entropy
+test uses a Student \(t\) distribution with degrees of freedom based on
+sample sizes \citep{hutcheson1970}.
 
-This thesis derives how changes in the observed count table affect the
-estimated pointwise-MI variance and uses that result to calculate MI-specific degrees
-of freedom for Expanded Welch. The resulting test retains Normal Wald's MI
-difference and standard error but compares the statistic with a Student
-\(t\) distribution rather than a standard normal distribution.
+This thesis follows the variance-moment approach used in regression by
+\citet{panwall2002} and derives its MI-specific inputs. Changing a cell
+count changes both its probability weight and the pointwise-MI values
+calculated from the joint and marginal probabilities. Tracking these
+changes gives a first-order approximation to the sampling variability of
+the estimated pointwise-MI variance. Expanded Welch uses this approximation
+to obtain component degrees of freedom, then combines them using the
+Welch--Satterthwaite rule.
 
-\citet{paninski2003} shows that finite-sample information estimates can
-retain substantial bias after a leading correction. Such bias or an
-inaccurate first-order variance approximation can undermine both tests,
-even when Expanded Welch lowers rejection. The experiment therefore
-measures errors in the shared MI difference and standard error alongside
-false-positive rates and power.
+Retaining Normal Wald's estimated MI difference and standard error isolates
+the effect of changing the reference distribution. The experiments evaluate
+the variance-moment approximations alongside false-positive rates and power.

@@ -526,8 +526,48 @@ every \(16\times16\) margin regime, with the shared estimated variance
 still exceeding the observed sampling variance of the estimated MI
 difference. Expanded Welch improves calibration where its lower rejection
 corrects an excess, while increasing
-conservatism where Wald already rejects too rarely. The power comparison
-measures the accompanying reduction in detection probability.
+conservatism where Wald already rejects too rarely.
+
+\subsection{Comparison with ordinary Welch degrees of freedom}
+
+To check whether MI-specific degrees of freedom make a difference, we also
+apply an ordinary Welch reference to three illustrative null settings.
+This comparison keeps the same estimated MI difference, standard error and
+statistic, but substitutes component degrees of freedom \(n_P-1\) and
+\(n_Q-1\) into Equation~\eqref{eq:ws-general}. These sample-size-based
+values come from the comparison of sample means; for MI they serve as a
+benchmark rather than a derivation of the variance estimate's sampling
+variation. Expanded Welch instead uses the component degrees of freedom
+derived in Chapter~\ref{chap:expanded}.
+
+The comparison reuses the same 100,000 sampled pairs per setting as the
+main null study, with common MI 0.02 nats and equal sample sizes
+\(n_P=n_Q=n\). All three methods return valid results in every repetition.
+
+\begin{table}[H]
+\centering
+\caption{False-positive rates with ordinary and MI-specific Welch degrees of freedom.}
+\label{tab:ordinary-welch-comparison}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrr@{}}
+\toprule
+Setting & \shortstack{Normal Wald\\(\%)} & \shortstack{Ordinary Welch\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\
+\midrule
+Uniform \(4\times4\), \(n=20\) & 8.35 & 7.35 & 4.90\\
+Uniform \(4\times4\), \(n=50\) & 4.87 & 4.57 & 3.24\\
+Different skew \(16\times16\), \(n=1{,}000\) & 26.01 & 25.95 & 24.84\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+At \(n=20\), ordinary Welch reduces excessive rejection less than Expanded
+Welch. At \(n=50\), Wald is already close to 5\%, and Expanded Welch
+instead produces the most conservative rate. In the different-skew
+\(16\times16\) case, neither correction removes the excessive rejection
+associated with bias in the shared MI difference. The MI-specific
+calculation therefore changes the results beyond merely replacing the
+normal distribution with a Student \(t\) distribution, but the larger
+reduction in rejection does not consistently improve calibration.
 
 \section{RQ3: Power across MI differences}
 \label{sec:mi-gap-power-results}
@@ -827,3 +867,44 @@ Figure~\ref{fig:redesign-a4}.
 Because the population tables are unknown,
 we cannot directly check the estimated degrees of freedom against the
 sampling-moment target or measure false-positive rates.
+
+\section{Discussion}
+\label{sec:results-discussion}
+
+Expanded Welch improves on Normal Wald where its larger cutoff corrects
+excessive false-positive rates. For uniform \(4\times4\) tables at
+common MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
+Expanded Welch gives 4.90\%
+(Table~\ref{tab:balanced-null-diagnostics}). This reduction towards 5\%
+supports the motivation of \citet{panwall2002}: accounting for variability
+in an estimated variance can reduce excessive Wald rejection. However,
+where Wald already rejects too rarely, Expanded Welch lowers rejection
+further. The accompanying loss of power must therefore
+be interpreted alongside whether the reduction in false positives improves
+calibration.
+
+The approximation checks distinguish the variability of an estimated
+variance from its average size. Predicting the sampling variance of \(\Vhat\)
+accurately does not ensure that its sampling mean is close to the
+population variance \(V\). Separately,
+Table~\ref{tab:balanced-null-diagnostics} shows that, under same-skew
+\(16\times16\) margins, the average squared standard error is about
+1.93 times the observed variance of the MI difference. With negligible
+difference bias in that setting, a larger cutoff compounds the suppression
+of rejection. This agrees with \citet{bell2002}, who find that
+Satterthwaite degrees of freedom can make tests particularly conservative
+when the variance estimator has positive bias.
+
+Bias in the MI difference connects the null failures to the misleading
+power patterns. With identical population tables and sample sizes, the
+biases of the two MI estimates cancel; with different margins, they can
+leave a shifted difference under equal MI or reverse its estimated sign
+under an alternative. The residual information-estimation bias discussed
+by \citet{paninski2003} thus affects both false-positive rates and the
+estimated direction of a difference. These findings explain why high
+rejection under an alternative need not identify the population with greater MI reliably,
+and why agreement between Wald and Expanded Welch on observed data does
+not establish accurate inference. Within the tested settings, the larger
+cutoff corrects some excessive rejection, but reliable comparisons also
+require an estimated MI difference with small bias relative to its
+sampling spread and a standard error that describes that spread.
