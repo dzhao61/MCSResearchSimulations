@@ -483,7 +483,9 @@ With more observations, the bias diminishes and rejection falls. At shared
 MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
 \(16\times16\) case eventually falls below the target. Increasing
 sample size can therefore pass through excessive and conservative ranges
-as the shared estimates recover.
+as bias in the estimated MI difference diminishes and the estimated
+standard error changes relative to the sampling standard deviation of
+that difference.
 
 \subsection{Explaining the main departures from 5\%}
 \label{sec:null-estimator-accuracy}
@@ -528,8 +530,8 @@ error is oversized.
 Across the grid, the methods become close with larger samples, but their
 agreement does not itself establish accurate rejection. For example, at
 shared MI 0.005 and \(n=50{,}000\), both tests remain below 4\% in
-every \(16\times16\) margin regime, with the shared estimated variance
-still exceeding the observed sampling variance of the estimated MI
+every \(16\times16\) margin regime, with the average squared standard
+error still exceeding the observed sampling variance of the estimated MI
 difference. Expanded Welch improves calibration where its lower rejection
 corrects an excess, while increasing
 conservatism where Wald already rejects too rarely.
@@ -776,7 +778,8 @@ January and April have no recorded sessions, so each month table has
 for no purchase or purchase. All ten months occur in both visitor groups,
 although the new-visitor February row contains only one session and no
 purchase. Both groups use the same categories, retaining zero cells
-without smoothing. Replacing month with the Boolean \texttt{Weekend}
+without adding artificial counts to empty cells. Replacing month with the
+Boolean \texttt{Weekend}
 variable gives a \(2\times2\) table for each group, with weekday and
 weekend rows and all four cells observed.
 
@@ -879,8 +882,8 @@ sampling-moment target or measure false-positive rates.
 \label{sec:results-discussion}
 
 Expanded Welch improves on Wald where its larger cutoff corrects
-excessive false-positive rates. For uniform \(4\times4\) tables at
-shared MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
+excessive false-positive rates. For \(4\times4\) tables with uniform margins
+at shared MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
 Expanded Welch gives 4.90\%
 (Table~\ref{tab:balanced-null-diagnostics}). This reduction towards 5\%
 supports the motivation of \citet{panwall2002}: accounting for variability
