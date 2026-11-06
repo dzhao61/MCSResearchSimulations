@@ -707,10 +707,13 @@ Existing work provides the leading bias and sampling variance of MI,
 supporting a standard error for the difference between two independent
 MI estimates
 \citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
-Welch--Satterthwaite degrees of freedom additionally require the sampling
-mean and variance of the variance estimate itself. Hutcheson's entropy
-test uses a Student \(t\) distribution with degrees of freedom based on
-sample sizes \citep{hutcheson1970}.
+These sampling-variance results describe variation in the MI estimate,
+whereas choosing Welch--Satterthwaite degrees of freedom additionally
+requires the sampling mean and variance of the variance estimate itself.
+Hutcheson's entropy test uses a Student \(t\) distribution with degrees of
+freedom based on sample sizes \citep{hutcheson1970}. For MI, this assignment
+does not account for how estimated pointwise-MI values change with the
+observed table.
 
 This thesis follows the variance-moment approach used in regression by
 \citet{panwall2002} and derives its MI-specific inputs. Changing a cell
@@ -722,5 +725,9 @@ to obtain component degrees of freedom, then combines them using the
 Welch--Satterthwaite rule.
 
 Retaining Normal Wald's estimated MI difference and standard error isolates
-the effect of changing the reference distribution. The experiments evaluate
-the variance-moment approximations alongside false-positive rates and power.
+the effect of changing the reference distribution.
+The estimation problems identified by \citet{paninski2003} remain relevant:
+residual bias can shift the estimated difference, while an inaccurate
+standard error can distort its standardisation. The evaluation therefore
+checks the variance-moment approximations separately from false-positive
+rates and power.
