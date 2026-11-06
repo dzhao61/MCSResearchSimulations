@@ -1,32 +1,32 @@
 \chapter*{Abstract}
 
-Mutual information (MI) measures the average reduction in uncertainty about
-one variable obtained by observing another. This thesis develops and
-evaluates a test for comparing MI between two categorical variables using
-independent samples from two populations. The Wald test uses a standard
-normal reference distribution and can give inaccurate false-positive rates
-when samples are small or many category combinations are rarely observed.
+For two categorical variables, mutual information (MI) measures how much
+observing one reduces uncertainty about the other, on average. Independent
+samples from two populations can give different MI estimates even when the
+populations have equal MI. With small samples or rarely observed category
+combinations, the Wald test can reject equal MI too often or too rarely.
 
-The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
-Wald's estimated MI difference and standard error, but uses a Student
-\(t\) distribution to decide whether the difference is statistically
-significant. Its degrees of freedom reflect how much the variance estimates
-underlying the standard error vary between samples relative to their
-magnitudes. We derive a first-order approximation to this sampling variation
-and use it to calculate the degrees of freedom, giving a larger rejection
-cutoff than Wald's.
+This thesis develops the Expanded Welch--Satterthwaite test (Expanded Welch)
+for comparing MI between two populations. It retains Wald's estimated MI
+difference and standard error but replaces its standard normal reference
+distribution with a Student \(t\) distribution.
+The standard error depends on variance estimates that change between
+samples. We derive a first-order approximation to their sampling variability
+and use it to estimate degrees of freedom for the Student \(t\) distribution,
+giving a larger rejection cutoff than Wald's. Simulations under equal and
+unequal population MI assess approximation accuracy, false-positive rates
+and power across sample sizes, numbers of categories and category
+frequencies. An online-shopping example illustrates the tests on observed
+data.
 
-Simulations vary sample size, table size and category frequencies under
-equal and unequal population MI, while an online-shopping example
-illustrates the tests on observed data. Expanded Welch brings some excessive
-false-positive rates closer to the 5\% target, but lowers them further
-where Wald already rejects too rarely.
-Its larger cutoff also reduces power, the probability of detecting a real
-MI difference, although the power difference between methods becomes small
-with larger samples. When the two variables are nearly independent,
-sampling noise creates apparent association in their observed tables, and
-the first-order approximation can miss substantial sampling variation.
-In sparse settings, bias can even make the estimated difference point to
-the wrong population as having greater MI. The larger cutoff therefore
-improves some false-positive rates, but cannot correct bias in the MI
-difference or errors in its estimated standard error.
+In the simulations, Expanded Welch brings some excessive false-positive
+rates closer to the 5\% target, but lowers rejection further where Wald
+already rejects too rarely. Its larger cutoff can reduce power, the
+probability of detecting a real MI difference, although the power difference
+between methods becomes small with larger samples. Near independence between
+the variables, sampling noise creates apparent association, adding variation
+in the variance estimates that the first-order calculation using population
+probabilities misses. In sparse settings, bias can reverse which population
+appears to have greater MI. The larger cutoff therefore improves some
+false-positive rates but cannot correct bias in the estimated MI difference
+or errors in its standard error.
