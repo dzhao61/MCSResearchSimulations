@@ -155,11 +155,50 @@ MI 0.02 nats and sample sizes
 \(n\in\{10,20,50,100,250,1000,10000\}\).
 Contributions to \(\Vhat\) and \(\widehat\tau^2\) are separated into
 once-observed cells whose row and column totals also equal one, other
-once-observed cells and cells observed more than once. To assess the
-linear approximation, subtract the
-first-order change from \(\Vhat-V\) and include the covariance between
-that change and the remainder when comparing their contributions to the
-observed variance.
+once-observed cells and cells observed more than once.
+
+For the linear-approximation check, calculate the first-order change in
+each repetition using the population sensitivity from
+Equation~\eqref{eq:g-final}:
+\begin{equation}
+ L_s(P)=\sum_{i,j}\{\widehat p_{s,ij}-p_{ij}\}g_P(i,j),
+ \qquad
+ R_s(P)=\widehat V_s(P)-V(P)-L_s(P).
+ \label{eq:variance-linear-remainder}
+\end{equation}
+Here \(\widehat p_{s,ij}\) is the empirical probability in repetition
+\(s\), \(L_s(P)\) is the linear contribution, and \(R_s(P)\) contains
+the remaining change. Since \(\sum_{i,j}p_{ij}g_P(i,j)=0\), the linear
+contribution is also the sample average of \(g_P\) in
+Equation~\eqref{eq:vhat-linearization}. Its sampling variance is therefore
+\(\tau^2(P)/n_P\). The decomposition
+\(\widehat V_s(P)-V(P)=L_s(P)+R_s(P)\) is exact by definition of the
+remainder, even when the linear approximation is poor.
+
+Taking variances and expanding the variance of this sum gives
+\begin{equation}
+\begin{aligned}
+ \Var\{\widehat V_s(P)\}
+ ={}&\Var\{L_s(P)\}+\Var\{R_s(P)\}\\
+    &+2\operatorname{Cov}\{L_s(P),R_s(P)\}.
+\end{aligned}
+ \label{eq:linear-remainder-variance-decomposition}
+\end{equation}
+Subtracting \(V(P)\) does not change the variance because the population
+table is fixed. The linear contribution and remainder come from the same
+sample, so their covariance must be included. In particular, the
+difference between the full variance and the linear prediction is
+\(\Var(R_s)+2\operatorname{Cov}(L_s,R_s)\), which can be smaller than
+\(\Var(R_s)\) when the covariance is negative.
+
+Estimate the three terms from the same \(M=10{,}000\) repetitions using sample
+variances and covariance with denominator \(M-1\). Their sum equals the
+observed sample variance of \(\widehat V_s\). For example, at \(n=50\)
+in population \(P\), the linear variance, remainder variance and twice
+their covariance are respectively 18.7\%, 87.3\% and \(-6.0\%\) of
+the observed variance. The covariance partly offsets the remainder, but
+the linear variance is still only about one fifth of the observed
+variance. The same decomposition is calculated separately for \(Q\).
 
 \section{Simulation uncertainty}
 \label{sec:simulation-uncertainty}
@@ -209,29 +248,110 @@ are undefined. From \(M\) repetitions, calculate
 For \(S_X^2>0\), the estimated moment target is \(2\bar X^2/S_X^2\).
 The diagnostic decomposition uses these evaluation moments.
 
-The delta method uses a first-order Taylor expansion of
-\(f(\mu,v)=2\mu^2/v\), where \(\mu\) and \(v\) are the sampling
-mean and variance of \(\Vhat(P)\). Its derivatives are
+The Monte Carlo standard error measures how much this estimated target
+would change if the whole set of \(M\) repetitions were repeated.
+Write \(\mu=\E(X_s)\) and \(v=\Var(X_s)>0\), so the population
+moment target is \(f(\mu,v)=2\mu^2/v\). The delta method propagates
+the errors in \(\bar X\) and \(S_X^2\) through a first-order Taylor
+expansion. For changes \(h_\mu\) and \(h_v\), the general formula is
+\begin{equation}
+ f(\mu+h_\mu,v+h_v)
+ \approx f(\mu,v)
+ +\frac{\partial f}{\partial\mu}h_\mu
+ +\frac{\partial f}{\partial v}h_v.
+\end{equation}
+The expansion point is \((\mu,v)\), the new values are
+\((\bar X,S_X^2)\), and the changes are
+\(h_\mu=\bar X-\mu\) and \(h_v=S_X^2-v\). Since
 \(\partial f/\partial\mu=4\mu/v\) and
-\(\partial f/\partial v=-2\mu^2/v^2\). Evaluating them at
-\(\bar X,S_X^2\) gives the two coefficients below. The mean and variance
-errors are propagated jointly because both estimates use the same
-repetitions. Define
+\(\partial f/\partial v=-2\mu^2/v^2\), substitution gives
+\begin{equation}
+ \frac{2\bar X^2}{S_X^2}-\frac{2\mu^2}{v}
+ \approx\frac{4\mu}{v}(\bar X-\mu)
+       -\frac{2\mu^2}{v^2}(S_X^2-v).
+ \label{eq:moment-target-taylor}
+\end{equation}
+Both errors must be propagated jointly because the same repetitions
+estimate the mean and variance.
+
+The mean error is exactly the average of \(X_s-\mu\). To express the
+variance error in a similar form, expand
+\(X_s-\bar X=(X_s-\mu)-(\bar X-\mu)\), square and sum. The cross
+term uses \(\sum_s(X_s-\mu)=M(\bar X-\mu)\), leaving
+\begin{equation}
+ \frac{M-1}{M}S_X^2
+ =\frac1M\sum_{s=1}^M(X_s-\mu)^2-(\bar X-\mu)^2.
+ \label{eq:moment-variance-centring}
+\end{equation}
+The squared mean error has size proportional to \(M^{-1}\), as does
+the correction from \((M-1)/M\). Both are smaller than the
+\(M^{-1/2}\) sampling errors retained at first order. Thus
+\begin{equation}
+ S_X^2-v\approx\frac1M\sum_{s=1}^M\{(X_s-\mu)^2-v\}.
+\end{equation}
+Substituting this expression and
+\(\bar X-\mu=M^{-1}\sum_s(X_s-\mu)\) into
+Equation~\eqref{eq:moment-target-taylor} gives
+\begin{equation}
+ \frac{2\bar X^2}{S_X^2}-\frac{2\mu^2}{v}
+ \approx\frac1M\sum_{s=1}^M
+ \left[\frac{4\mu}{v}(X_s-\mu)
+       -\frac{2\mu^2}{v^2}\{(X_s-\mu)^2-v\}\right].
+ \label{eq:moment-target-average-error}
+\end{equation}
+The first term in brackets carries the mean error and the second carries
+the variance error. Replacing the unknown \(\mu,v\) by
+\(\bar X,S_X^2\) gives the estimated contribution from each repetition.
+Define
 \begin{equation}
  U_s=X_s-\bar X,\qquad W_s=(X_s-\bar X)^2-S_X^2.
 \end{equation}
-The first-order contribution to the target's estimation error is
+The estimated contribution is
 \begin{equation}
  Z_s=\frac{4\bar X}{S_X^2}U_s
        -\frac{2\bar X^2}{(S_X^2)^2}W_s.
  \label{eq:moment-df-mc-contribution}
 \end{equation}
-Its sample standard deviation divided by \(\sqrt M\) estimates the Monte
-Carlo standard error. Calculating the standard deviation after combining
-the two terms retains the mean--variance covariance.
+Equation~\eqref{eq:moment-target-average-error} represents the target error
+as an average of independent repetition-level contributions. The standard
+deviation of their average is their individual standard deviation divided
+by \(\sqrt M\). With \(\bar Z=M^{-1}\sum_s Z_s\), its estimate is
+\begin{equation}
+ \widehat{\mathrm{MCSE}}
+ =\left\{\frac{1}{M(M-1)}\sum_{s=1}^M(Z_s-\bar Z)^2\right\}^{1/2}.
+ \label{eq:moment-df-mcse}
+\end{equation}
+The two terms within \(Z_s\) need not be independent: an unusually
+large \(X_s\) can affect both the estimated mean and variance.
+Calculating the standard deviation after combining the terms retains
+their covariance.
 
-Mean and variance ratios use the same joint delta-method calculation,
-keeping the plug-in prediction and observed variance paired.
+For the other diagnostic ratios, apply the same Taylor formula to
+\(h(a,b)=a/b\), with derivatives \(1/b\) and \(-a/b^2\):
+\begin{equation}
+ \frac{\widehat a}{\widehat b}-\frac{a}{b}
+ \approx\frac{1}{b}(\widehat a-a)
+       -\frac{a}{b^2}(\widehat b-b).
+ \label{eq:diagnostic-ratio-taylor}
+\end{equation}
+The mean ratio \(\bar X/V(P)\) has a known denominator, so only the
+numerator error contributes. The population variance-prediction ratio
+\(\{\tau^2(P)/n_P\}/S_X^2\) has a known numerator, so only the
+denominator error contributes. For the sample-based variance prediction,
+let \(Y_s=\widehat\tau_s^2(P)/n_P\) and
+\(\bar Y=M^{-1}\sum_sY_s\). Both inputs to \(\bar Y/S_X^2\) are
+estimated from the same repetitions, giving estimated contributions
+\begin{equation}
+ Z_{s,\mathrm{ratio}}
+ =\frac{Y_s-\bar Y}{S_X^2}
+  -\frac{\bar Y}{(S_X^2)^2}W_s.
+ \label{eq:plugin-variance-ratio-mc-contribution}
+\end{equation}
+Use their sample standard deviation divided by \(\sqrt M\), retaining
+the pairing between the numerator prediction and the squared deviation
+in each repetition. The ratio \(\nu_{P,\mathrm{FO}}/\nu_{P,\mathrm{mom}}\)
+also has a known numerator, so its error follows by propagating only
+the estimated target's error through Equation~\eqref{eq:diagnostic-ratio-taylor}.
 
 \section{Application comparison family and Holm adjustment}
 \label{sec:application-holm-family}

@@ -107,8 +107,12 @@ population table. The observed variance can therefore
 initially rise, or fall more slowly than \(1/n\), while the predicted variance decreases, so the ratio then falls. In the same \(16\times16\)
 repetitions, subtracting the linear change from \(\Vhat-V\) leaves
 a remainder whose variance exceeds that of the linear change around the
-trough. Including their covariance in the total variance confirms that
-the linear change alone misses much of the observed variation.
+trough. The difference between the variances of the full error and the
+linear change equals the remainder's variance plus twice its covariance
+with the linear change (Appendix~\ref{sec:estimation-diagnostics},
+Equation~\eqref{eq:linear-remainder-variance-decomposition}). Around the
+trough, this combined contribution remains large and positive, so the
+linear change alone misses much of the observed variation.
 With larger samples, repeated
 counts make the estimated cell probabilities and their log ratios more
 stable. The variation missed by the linear approximation becomes smaller

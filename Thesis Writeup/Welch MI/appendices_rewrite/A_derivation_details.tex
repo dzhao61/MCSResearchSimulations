@@ -6,6 +6,8 @@ Chapter~\ref{chap:expanded} and their interpretation in
 Chapter~\ref{chap:results}. The first calculation varies population
 association while keeping the margins fixed. The second retains the
 quadratic sampling variation needed at independence and very small MI.
+The final section explains why positive MI and positive pointwise-MI
+variance are equivalent when every population cell has positive probability.
 
 \begin{samepage}
 \section{Fixed-margin behaviour near independence}
@@ -169,8 +171,24 @@ The remainder is negligible relative to \(\varepsilon^2\) as
 For a sample from a multinomial distribution, take \(\varepsilon h=\widehat P-P\).
 Since cell-probability errors typically have size proportional to \(n^{-1/2}\),
 squaring them makes \(\Ihat(P)\) proportional to \(n^{-1}\) under
-independence. Under fixed table dimensions and positive cell probabilities,
-the likelihood-ratio result is
+independence. The quadratic form above measures the part of these errors
+that changes association after accounting for the margins. An unrestricted
+joint table has \(rc-1\) free probabilities because its cells sum to one.
+An independent table is determined by \(r-1\) row probabilities and
+\(c-1\) column probabilities. The number of remaining association
+directions is therefore
+\begin{equation}
+ d=(rc-1)-\{(r-1)+(c-1)\}=(r-1)(c-1).
+ \label{eq:independence-association-dimension}
+\end{equation}
+Under fixed table dimensions and positive cell probabilities, the
+multinomial central limit theorem approximates the scaled cell errors by
+a multivariate normal distribution. Linear combinations of these
+standardised errors separate changes in the margins from changes in
+association. After removing the margin changes, the remaining
+\(d\) association coordinates can be chosen to have independent standard
+normal limiting distributions. The quadratic form for \(2n\Ihat(P)\)
+is then their sum of squares, giving the likelihood-ratio result
 \begin{equation}
  2n\Ihat(P)\xrightarrow{d}\chi^2_{(r-1)(c-1)}
  \label{eq:independence-chi-squared}
@@ -191,18 +209,43 @@ cell departures proportional to \(n^{-1/2}\). The sampling errors, approximated
 by a multivariate normal distribution, and the population departure then
 contribute on the same scale. For this model based on a multinomial
 distribution, also assume strictly positive limiting cell probabilities.
-Under these conditions, the likelihood-ratio
-statistic has a limiting noncentral chi-squared distribution under the stated
-local alternatives \citep{banerjee2005}. The local approximation is
+The association coordinates now include both sampling noise and the
+scaled population departure. Write \(Z_1,\ldots,Z_d\) for independent
+variables with standard normal distributions and
+\(\eta_1,\ldots,\eta_d\) for the population shifts in those coordinates.
+The quadratic statistic is approximated by
+\begin{equation}
+ \sum_{\ell=1}^d(Z_\ell+\eta_\ell)^2,
+ \qquad \kappa=\sum_{\ell=1}^d\eta_\ell^2.
+ \label{eq:local-association-squares}
+\end{equation}
+This sum has a noncentral chi-squared distribution, whose noncentrality
+\(\kappa\) is the squared size of the population shift. The limiting
+likelihood-ratio result under these local alternatives is given by
+\citet{banerjee2005}.
+
+To relate the population shift to MI, consider the approaching population
+\(P\). Its difference from independence with the same margins is
+\(p_{ij}-p_{i+}p_{+j}\), with zero row and column sums. Substituting
+this difference into Equation~\eqref{eq:appendix-mi-second-order} makes
+the two marginal terms vanish and gives
+\begin{equation}
+ 2nI(P)\approx n\sum_{i,j}
+       \frac{(p_{ij}-p_{i+}p_{+j})^2}{p_{i+}p_{+j}}
+       \approx\kappa.
+ \label{eq:local-mi-noncentrality}
+\end{equation}
+The weighted sum is the squared size of the scaled population association
+departure, explaining the approximation \(\kappa\simeq2nI(P)\).
+The MI in this local argument changes with \(n\) as the population
+approaches independence. Combining the noise and population shift gives
+the local approximation
 \begin{equation}
  G=2n\Ihat(P)\ \dot\sim\ \chi^2_d(\kappa),
  \qquad d=(r-1)(c-1),\qquad \kappa\simeq2nI(P),
  \label{eq:local-noncentral-mi}
 \end{equation}
-where \(\dot\sim\) denotes an approximate distribution. The noncentral
-chi-squared distribution describes a sum of squares of independent random
-variables with normal distributions of unit variance and possibly nonzero means;
-\(\kappa\) measures their combined departure from zero. At independence,
+where \(\dot\sim\) denotes an approximate distribution. At independence,
 \(\kappa=0\), recovering Equation~\eqref{eq:independence-chi-squared}.
 
 For a sampled table close to independence, apply the expansions in
@@ -261,3 +304,144 @@ variance overprediction discussed alongside it.
 The population formula alone omits the quadratic sampling contribution
 responsible for both effects.
 
+\section{Positive MI and pointwise-MI variance}
+\label{sec:mi-variance-equivalence}
+
+Assumption~4 in Chapter~\ref{chap:baselines} states that positive MI is
+equivalent to positive pointwise-MI variance when every population cell
+has positive probability. For such a table \(P=(p_{ij})\), the result is
+\begin{equation}
+ I(P)>0\quad\Longleftrightarrow\quad V(P)>0.
+ \label{eq:positive-mi-variance-equivalence}
+\end{equation}
+We establish this result by showing that zero variance forces zero MI,
+then considering the reverse direction. A probability-table example
+illustrates the two quantities, followed by a table showing why the
+positive-cell condition matters.
+
+\medskip
+\thesisminiheading{MI is an average; pointwise-MI variance measures spread.}
+
+Each cell has a pointwise-MI value that compares its probability with
+the probability under independence. MI averages these values, whereas
+\(V(P)\) averages their squared departures from that average:
+\begin{align}
+ I(P)&=\sum_{i,j}p_{ij}\pmi_P(i,j),\\
+ V(P)&=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
+ \label{eq:appendix-pointwise-variance}
+\end{align}
+Zero variance means that the values do not differ across possible
+outcomes. In general, equal values can have a nonzero average, so
+constancy alone does not show that MI is zero. The additional restriction
+here comes from the cell probabilities having to sum to one.
+
+\medskip
+\thesisminiheading{From zero variance to zero MI.}
+
+Suppose \(V(P)=0\). Every term in
+Equation~\eqref{eq:appendix-pointwise-variance} is nonnegative. Because
+\(p_{ij}>0\) in every cell, a nonzero squared departure in even one
+cell would make the sum positive. The zero sum therefore requires
+\begin{equation}
+ \pmi_P(i,j)=I(P)\qquad\text{for every }(i,j).
+\end{equation}
+Thus every cell has the same pointwise-MI value. To determine that value,
+substitute the definition of pointwise MI and exponentiate:
+\begin{align}
+ \log\left(\frac{p_{ij}}{p_{i+}p_{+j}}\right)&=I(P),\\*
+ \frac{p_{ij}}{p_{i+}p_{+j}}&=e^{I(P)}=K,\\*
+ p_{ij}&=Kp_{i+}p_{+j}.
+ \label{eq:constant-pointwise-mi-ratio}
+\end{align}
+The number \(K\) is the same in every cell because \(I(P)\) is a
+single number for the whole table. It says that every actual cell
+probability is the same multiple of its probability under independence.
+
+The products \(p_{i+}p_{+j}\) form an independence table with the same
+margins as \(P\). They already have total probability one:
+\begin{align}
+ \sum_i\sum_jp_{i+}p_{+j}
+ &=\sum_i p_{i+}\left(\sum_jp_{+j}\right)\\
+ &=\sum_i p_{i+}(1)=1.
+\end{align}
+The first step takes \(p_{i+}\) outside the inner sum because it does
+not depend on the column \(j\). The column probabilities sum to one,
+and the remaining row probabilities also sum to one. Multiplying every
+entry of this reference table by \(K\) therefore multiplies its total
+probability by \(K\). Since the actual table must also sum to one,
+Equation~\eqref{eq:constant-pointwise-mi-ratio} gives
+\begin{equation}
+ 1=\sum_{i,j}p_{ij}
+  =K\sum_{i,j}p_{i+}p_{+j}=K.
+\end{equation}
+Consequently \(K=1\), every cell satisfies
+\(p_{ij}=p_{i+}p_{+j}\), and every pointwise-MI value is \(\log1=0\).
+Their weighted average is therefore \(I(P)=0\).
+
+\medskip
+\thesisminiheading{From zero MI to zero variance.}
+
+For the reverse direction, use the characterisation of zero MI in
+Chapter~\ref{chap:background}: \(I(P)=0\) implies independence, so
+\(p_{ij}=p_{i+}p_{+j}\) in every cell. Each pointwise-MI value is
+then zero, giving
+\begin{equation}
+ V(P)=\sum_{i,j}p_{ij}\{0-0\}^2=0.
+\end{equation}
+The two directions establish \(I(P)=0\) if and only if \(V(P)=0\).
+MI is nonnegative and variance is nonnegative, so their positive cases
+are also equivalent, as stated in
+Equation~\eqref{eq:positive-mi-variance-equivalence}.
+
+\medskip
+\thesisminiheading{A worked \(2\times2\) example.}
+
+Consider the population table \(P\) and the independence table formed
+from its margins:
+\begin{equation}
+ P=\begin{pmatrix}0.4&0.1\\0.1&0.4\end{pmatrix},
+ \qquad
+ P_{\mathrm{ind}}=\begin{pmatrix}0.25&0.25\\0.25&0.25\end{pmatrix}.
+\end{equation}
+Every row and column totals 0.5, so each independence probability is
+\(0.5(0.5)=0.25\). A diagonal cell has actual-to-independence ratio
+\(0.4/0.25=1.6\), giving pointwise MI \(\log1.6\simeq0.47000\).
+An off-diagonal cell has ratio \(0.1/0.25=0.4\), giving pointwise MI
+\(\log0.4\simeq-0.91629\). The two diagonal cells together have
+probability 0.8, and the other two have probability 0.2. Hence
+\begin{align}
+ I(P)&=0.8\log1.6+0.2\log0.4\simeq0.19274,\\
+ V(P)&=0.8\{\log1.6-I(P)\}^2
+       +0.2\{\log0.4-I(P)\}^2\simeq0.30749.
+\end{align}
+MI is positive, and the differing pointwise-MI values give positive
+variance. The diagonal probabilities are larger than independence
+predicts, while the off-diagonal probabilities are smaller, preserving
+total probability one. For \(P_{\mathrm{ind}}\) itself, every ratio
+is one, so every pointwise-MI value is zero and both MI and the
+pointwise-MI variance are zero.
+
+\medskip
+\thesisminiheading{Why positive cell probabilities are required.}
+
+Now consider a population in which only the matching pairs can occur:
+\begin{equation}
+ P=\begin{pmatrix}0.5&0\\0&0.5\end{pmatrix}.
+\end{equation}
+The margins are still 0.5 and 0.5. Each possible outcome has pointwise
+MI \(\log(0.5/0.25)=\log2\), so
+\begin{equation}
+ I(P)=\log2>0,
+ \qquad
+ V(P)=0.5\{\log2-\log2\}^2
+      +0.5\{\log2-\log2\}^2=0.
+\end{equation}
+The zero-probability cells contribute no term to the variance, so the
+zero-variance condition constrains only the two possible outcomes. The
+ratio of two holds only for the diagonal cells, whose independence probabilities sum
+to 0.5. Doubling those probabilities gives total probability one without
+requiring a ratio of one in every cell. This table therefore shows that
+positive MI can coexist with zero pointwise-MI variance when some
+population cells are impossible. The positive-cell assumption concerns
+population probabilities, so an unobserved cell in a finite sample does
+not by itself violate the assumption.
