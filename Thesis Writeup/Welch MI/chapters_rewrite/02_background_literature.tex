@@ -731,7 +731,9 @@ Welch--Satterthwaite rule.
 Retaining Wald's estimated MI difference and standard error isolates
 the effect of changing the reference distribution.
 The estimation problems identified by \citet{paninski2003} remain relevant:
-residual bias can shift the estimated difference, while an inaccurate
-standard error can distort its standardisation. The evaluation therefore
+residual bias can shift the estimated difference. For a fixed estimated
+difference, an underestimated standard error can make the absolute test
+statistic too large, while an overestimated standard error can make it
+too small. The evaluation therefore
 checks the variance-moment approximations separately from false-positive
 rates and power.

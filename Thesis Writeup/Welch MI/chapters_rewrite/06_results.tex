@@ -194,10 +194,12 @@ reduction from the squared mean outweighs the upward effect of an
 underestimated denominator. The larger tables have greater mean errors in
 Figure~\ref{fig:redesign-moments}, so their first-order degrees of freedom
 remain farther below the target. As the moment approximations improve,
-both effects diminish and the ratios approach one. Although the same table-size ordering appears in \(P\) and \(Q\),
-the larger-table ratios are generally closer to one in \(Q\), whose
-smaller normalised mean
-overshoot produces a smaller downward error in the squared numerator.
+both effects diminish and the ratios approach one. Although the same
+table-size ordering appears in \(P\) and \(Q\), the larger-table ratios
+are generally closer to one in \(Q\). In \(Q\), the sampling mean of
+\(\Vhat(Q)\) exceeds \(V(Q)\) by a smaller percentage than in \(P\), so
+substituting \(V(Q)\) for that mean causes a smaller proportional reduction
+in the squared numerator.
 
 A numerical example shows why a fairly accurate variance prediction can
 still give degrees of freedom below the target. For different-skew
@@ -316,10 +318,11 @@ formula gives
 \(\widehat\nu_P\approx n_P\Ihat(P)\), whose average stays positive at
 fixed sample size even when \(I(P)\) is almost zero. The population
 first-order value instead approaches \(n_PI(P)\), which becomes very
-small. The moment target has a shallow initial dip because its observed
-sampling variance initially grows faster in proportion than its squared
-sampling mean. Their relative growth later reverses and the target rises,
-with the mean estimated degrees of freedom approaching it. At stronger
+small. The moment target has a shallow initial dip because the observed
+sampling variance of \(\Vhat\) initially grows proportionally faster than
+the squared sampling mean of \(\Vhat\). Their relative growth later reverses
+and the target rises, with the mean estimated degrees of freedom approaching
+it. At stronger
 association, the dashed near-independence prediction rises above the
 observed mean estimated degrees of freedom, while the population
 first-order curve remains below the moment target. The near-independence
@@ -335,9 +338,10 @@ underpredicts the moments in the upper rows. Both populations show this progress
 but the observed mean estimated degrees of freedom and the moment target
 are lower in \(Q\).
 
-Using the same repetitions, we also compare the population first-order
-and average sample-based variance predictions defined for the middle and
-bottom rows of Figure~\ref{fig:redesign-moments}. At the smallest MI target,
+The population first-order and average sample-based variance predictions
+err in opposite directions at the smallest MI values. We compare the
+predictions defined for the middle and bottom rows of
+Figure~\ref{fig:redesign-moments} using the same repetitions. At the smallest MI target,
 0.0001, the population first-order predictions are only about
 5\% of the observed sampling variances, while the sample-based predictions
 average roughly twice those variances. The local relation
@@ -346,10 +350,10 @@ variance prediction, explaining the sample-based prediction's upward error
 in this range
 (Appendix~\ref{sec:independence-boundary}). At MI 0.02, the population
 first-order variance predictions are much more accurate, although the
-sample-based ratios remain above one. The population calculation improves
-as the linear sampling term becomes more informative, while the local
-near-independence calculation loses accuracy as association grows. At MI
-0.05, the observed means of \(\Vhat\) remain roughly 6\% above \(V\)
+sample-based ratios remain above one. As MI increases, the variance of the
+linear sampling term better approximates the observed sampling variance of
+\(\Vhat\), while the local near-independence calculation loses accuracy.
+At MI 0.05, the observed means of \(\Vhat\) remain roughly 6\% above \(V\)
 in both populations, while the population first-order and average
 sample-based variance predictions are close to the observed sampling
 variances. The mean estimated degrees of
@@ -479,13 +483,12 @@ MI difference is about 0.03 nats at all three MI levels, but the sampling
 standard deviation is larger at stronger association. The shift therefore
 has a greater effect relative to the spread at weaker MI, accompanying the
 much higher rejection there.
-With more observations, the bias diminishes and rejection falls. At shared
+
+As sample size increases, the bias diminishes and rejection falls. At shared
 MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
-\(16\times16\) case eventually falls below the target. Increasing
-sample size can therefore pass through excessive and conservative ranges
-as bias in the estimated MI difference diminishes and the estimated
-standard error changes relative to the sampling standard deviation of
-that difference.
+\(16\times16\) case eventually falls below the target. An oversized
+standard error can still suppress rejection after the bias has diminished,
+taking the rate below the target.
 
 \subsection{Explaining the main departures from 5\%}
 \label{sec:null-estimator-accuracy}
@@ -736,8 +739,8 @@ sampling mean close to zero, and Expanded Welch's power falls to 2.48\%.
 With still more observations, the bias diminishes further and the
 sampling centre approaches the negative population difference, while
 sampling variance decreases. Negative-tail rejection then rises and
-power becomes high. Changing the cutoff lowers both parts of this
-nonmonotonic curve without removing the biased movement of its centre.
+power becomes high. Changing the cutoff lowers rejection on both sides
+of the trough without changing the bias in the estimated MI difference.
 
 Across all three margin regimes, both methods exceed 99.9\% power at
 \(n=50{,}000\) for gaps of 0.01 and 0.02 nats, whereas power for the
@@ -893,10 +896,11 @@ further. The accompanying loss of power must therefore
 be interpreted alongside whether the reduction in false positives improves
 calibration.
 
-The approximation checks distinguish the variability of an estimated
-variance from its average size. Predicting the sampling variance of \(\Vhat\)
-accurately does not ensure that its sampling mean is close to the
-population variance \(V\). Separately,
+Errors in variance estimation affect both the chosen degrees of freedom
+and the size of the test statistic. Using \(V\) in place of a larger
+sampling mean of \(\Vhat\) can put the population first-order degrees of
+freedom below the moment target even when the sampling variance of
+\(\Vhat\) is predicted accurately.
 Table~\ref{tab:balanced-null-diagnostics} shows that, under same-skew
 \(16\times16\) margins, the average squared standard error is about
 1.93 times the observed variance of the MI difference. With negligible

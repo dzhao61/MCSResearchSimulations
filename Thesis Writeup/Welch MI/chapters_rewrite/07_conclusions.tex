@@ -27,13 +27,15 @@ not establish equality.
 
 \subsection{RQ1: Accuracy of variance approximations}
 
-In the tested populations, the moment approximations improve as samples
-grow, although larger tables require more observations. The population
-first-order formula squares the predicted mean of each pointwise-MI
-variance estimate, so underestimating this mean magnifies the downward
-error in the numerator. In the experiments, the resulting degrees of
-freedom fall below the target calculated from repeated samples even where
+In the tested populations, the population first-order calculation gives
+degrees of freedom below the target calculated from repeated samples over
+much of the sample-size range. The calculation uses the population
+pointwise-MI variance in place of the larger average of the variance
+estimates from repeated samples.
+Squaring this smaller value contributes to the downward error even where
 the sampling variance of these estimates is predicted fairly accurately.
+The moment approximations improve as samples grow, although larger tables
+require more observations.
 Replacing population probabilities with sample
 proportions introduces further error into this variance prediction.
 
@@ -148,8 +150,8 @@ should account for the population table and be evaluated through its effects
 on false-positive rates and power. Near independence, the reference
 distribution for the MI difference could also retain the variation from
 sampling noise that the first-order approximation misses. Any resulting
-test must preserve the equal-MI hypothesis even when the populations have
-different probability tables.
+test must allow populations with different probability tables to satisfy
+the null hypothesis when their MI values are equal.
 
 Broader experiments could test whether the findings persist across other
 starting MI values, either population having greater MI, unequal sample

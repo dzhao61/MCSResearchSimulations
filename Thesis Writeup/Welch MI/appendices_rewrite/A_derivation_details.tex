@@ -181,9 +181,41 @@ directions is therefore
  d=(rc-1)-\{(r-1)+(c-1)\}=(r-1)(c-1).
  \label{eq:independence-association-dimension}
 \end{equation}
-Under fixed table dimensions and positive cell probabilities, the
-multinomial central limit theorem approximates the scaled cell errors by
-a multivariate normal distribution. Linear combinations of these
+For example, start with a \(2\times2\) independence table whose four cell
+probabilities are all \(1/4\). Keeping every row and column probability
+equal to \(1/2\) allows tables of the form
+\begin{equation*}
+ \begin{pmatrix}
+  1/4+\varepsilon&1/4-\varepsilon\\
+  1/4-\varepsilon&1/4+\varepsilon
+ \end{pmatrix},
+ \qquad |\varepsilon|<1/4.
+\end{equation*}
+The diagonal cells gain \(\varepsilon\), while the off-diagonal cells
+lose \(\varepsilon\), so every row and column total is unchanged.
+Conversely, once the change in the first cell is chosen, preserving its
+row total forces the opposite change in the second cell. Preserving the
+first column total and the second row total then determines the other
+two changes. There is therefore only one free amount of association
+change, illustrating \(d=1\).
+
+For this uniform independence table, one standardised sampling coordinate is
+\begin{equation*}
+ \sqrt n\left(\widehat p_{11}-\widehat p_{12}
+                   -\widehat p_{21}+\widehat p_{22}\right).
+\end{equation*}
+The corresponding contrast of population probabilities equals
+\(4\varepsilon\) for the table above, so it records the
+diagonal-versus-off-diagonal change. In a sample, this contrast
+is the average of observation contributions that equal \(+1\) when the
+categories match and \(-1\) when they differ. Under uniform independence,
+these two outcomes each have probability \(1/2\), giving mean zero and
+variance one. The central limit theorem therefore gives the scaled
+contrast a standard normal limiting distribution.
+
+For general \(r\times c\) tables with fixed dimensions and positive cell
+probabilities, the multinomial central limit theorem approximates the scaled
+cell errors by a multivariate normal distribution. Linear combinations of these
 standardised errors separate changes in the margins from changes in
 association. After removing the margin changes, the remaining
 \(d\) association coordinates can be chosen to have independent standard
@@ -327,7 +359,7 @@ Each cell has a pointwise-MI value that compares its probability with
 the probability under independence. MI averages these values, whereas
 \(V(P)\) averages their squared departures from that average:
 \begin{align}
- I(P)&=\sum_{i,j}p_{ij}\pmi_P(i,j),\\
+ I(P)&=\sum_{i,j}p_{ij}\pmi_P(i,j),\\*
  V(P)&=\sum_{i,j}p_{ij}\{\pmi_P(i,j)-I(P)\}^2.
  \label{eq:appendix-pointwise-variance}
 \end{align}

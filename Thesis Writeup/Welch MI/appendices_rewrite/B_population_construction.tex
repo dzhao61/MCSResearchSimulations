@@ -247,7 +247,9 @@ are undefined. From \(M\) repetitions, calculate
  S_X^2=\frac1{M-1}\sum_{s=1}^M(X_s-\bar X)^2.
 \end{equation}
 For \(S_X^2>0\), the estimated moment target is \(2\bar X^2/S_X^2\).
-The diagnostic decomposition uses these evaluation moments.
+To evaluate Equation~\eqref{eq:redesign-df-decomposition} for \(P\),
+substitute \(\bar X\) for \(\E\{\Vhat(P)\}\) and \(S_X^2\) for
+\(\Var\{\Vhat(P)\}\).
 
 The Monte Carlo standard error measures how much this estimated target
 would change if the whole set of \(M\) repetitions were repeated.
@@ -284,9 +286,25 @@ term uses \(\sum_s(X_s-\mu)=M(\bar X-\mu)\), leaving
  =\frac1M\sum_{s=1}^M(X_s-\mu)^2-(\bar X-\mu)^2.
  \label{eq:moment-variance-centring}
 \end{equation}
-The squared mean error has size proportional to \(M^{-1}\), as does
-the correction from \((M-1)/M\). Both are smaller than the
-\(M^{-1/2}\) sampling errors retained at first order. Thus
+Subtracting \(v\) and rearranging this identity separates the leading
+average from the two corrections:
+\begin{equation*}
+ S_X^2-v
+ =\frac1M\sum_{s=1}^M\{(X_s-\mu)^2-v\}
+   -(\bar X-\mu)^2+\frac{S_X^2}{M}.
+\end{equation*}
+Since the repetitions are independent, \(\Var(\bar X)=v/M\), so the
+standard deviation of the mean error \(\bar X-\mu\) is
+\(\sqrt{v/M}\). Its typical size therefore decreases as
+\(M^{-1/2}\), and squaring it gives size \(M^{-1}\). As \(M\) grows
+at fixed sample size, \(S_X^2\) estimates the finite variance \(v\),
+so the last term \(S_X^2/M\) also has size \(M^{-1}\).
+Only finitely many count tables are possible at fixed sample size, so the
+centred squared deviations also have finite variance. Averaging these
+independent contributions gives the first term a standard deviation
+proportional to \(M^{-1/2}\). The two corrections therefore become smaller
+relative to this leading sampling error.
+Omitting them at first order gives
 \begin{equation}
  S_X^2-v\approx\frac1M\sum_{s=1}^M\{(X_s-\mu)^2-v\}.
 \end{equation}
