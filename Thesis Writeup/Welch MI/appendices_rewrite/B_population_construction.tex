@@ -6,8 +6,6 @@ settings underlying the main results, sampling procedure and outcome
 calculations. Together with the test formulas in
 Chapters~\ref{chap:baselines}--\ref{chap:design},
 these details define the statistical experiment.
-The final section records the application comparison family used for
-multiple-testing adjustment.
 
 \section{Copying construction and target selection}
 
@@ -371,48 +369,3 @@ the pairing between the numerator prediction and the squared deviation
 in each repetition. The ratio \(\nu_{P,\mathrm{FO}}/\nu_{P,\mathrm{mom}}\)
 also has a known numerator, so its error follows by propagating only
 the estimated target's error through Equation~\eqref{eq:diagnostic-ratio-taylor}.
-
-\section{Application comparison family and Holm adjustment}
-\label{sec:application-holm-family}
-
-The shopping comparisons in Section~\ref{sec:shoppers-application} were
-selected from the six comparisons in Table~\ref{tab:application-holm-family}.
-For Adult, the comparisons use education or occupation versus an indicator
-of annual income above \$50{,}000, comparing female and male records
-\citep{becker1996}. For Student Performance, they use study time or maternal
-education versus an indicator of final grade at least 10 in the Portuguese
-course, comparing records from schools labelled GP and MS
-\citep{cortez2008}. The shopping variables and visitor groups are defined
-in Section~\ref{sec:shoppers-application}.
-
-% Keep the table and its short Holm-adjustment explanation on one page.
-\Needspace{16\baselineskip}
-\begin{table}[H]
-\centering
-\caption{Unadjusted p-values in the six-comparison application family.}
-\label{tab:application-holm-family}
-\thesistableformat
-\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}Xrr@{}}
-\toprule
-\textbf{Dataset} & \textbf{Predictor} & \textbf{Wald} & \textbf{Expanded Welch}\\
-\midrule
-Adult & Occupation & \(1.184\times10^{-44}\) & \(1.635\times10^{-42}\)\\
-\addlinespace[0.3em]
-Adult & Education & \(1.890\times10^{-34}\) & \(4.930\times10^{-33}\)\\
-\addlinespace[0.3em]
-Online Shoppers & Month & \(4.714\times10^{-5}\) & \(3.726\times10^{-4}\)\\
-\addlinespace[0.3em]
-Student Performance & Study time & 0.1982 & 0.2339\\
-\addlinespace[0.3em]
-Student Performance & Maternal education & 0.8361 & 0.8468\\
-\addlinespace[0.3em]
-Online Shoppers & Weekend & 0.9554 & 0.9601\\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Holm's adjustment is applied separately to each method's six p-values
-\citep{holm1979}. Order them from smallest to largest and multiply them
-by 6, 5, 4, 3, 2 and 1, respectively, then take the cumulative maximum and
-cap the adjusted values at one. This calculation gives the adjusted month
-p-values reported in Section~\ref{sec:shoppers-application}.

@@ -19,9 +19,8 @@ false-positive rates closer to the 5\% target, but lowers rejection further
 where Wald already rejects too rarely. Its larger cutoff can reduce power,
 the probability of detecting a real MI difference, while leaving errors in
 the estimated MI difference and standard error used by both tests unchanged.
-In the online-shopping application, both tests give evidence of a stronger
-month--purchase association among returning visitors than new visitors,
-including after adjustment for the six exploratory comparisons. Neither
+In the online-shopping application, both tests reject equal month--purchase
+MI, with the higher corrected MI estimate among returning visitors. Neither
 test rejects equal weekend--purchase MI, although this non-rejection does
 not establish equality.
 
@@ -112,8 +111,8 @@ further restricts the comparisons by fixing one population's MI and only
 increasing the other's, so other starting MI values and the reverse
 direction of change remain untested.
 
-Because all simulations use equally sized samples, the same leading bias
-correction is subtracted from each MI estimate and cancels from their
+Because the simulations reported here use equally sized samples, the same
+leading bias correction is subtracted from each MI estimate and cancels from their
 difference, leaving the correction's performance with unequal sample sizes
 untested. The two MI estimates can nevertheless have different remaining
 biases, so their difference can still be biased even when sample sizes are

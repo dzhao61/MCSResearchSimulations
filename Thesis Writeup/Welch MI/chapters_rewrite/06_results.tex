@@ -484,7 +484,8 @@ standard deviation is larger at stronger association. The shift therefore
 has a greater effect relative to the spread at weaker MI, accompanying the
 much higher rejection there.
 
-As sample size increases, the bias diminishes and rejection falls. At shared
+With sufficiently large samples, bias becomes small relative to the sampling
+spread and excessive rejection subsides. At shared
 MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
 \(16\times16\) case eventually falls below the target. An oversized
 standard error can still suppress rejection after the bias has diminished,
@@ -786,15 +787,6 @@ Boolean \texttt{Weekend}
 variable gives a \(2\times2\) table for each group, with weekday and
 weekend rows and all four cells observed.
 
-These two shopping comparisons were selected from six comparisons across
-three public datasets. The other four concern occupation and education
-in Adult \citep{becker1996}, and study time and maternal education in
-Student Performance \citep{cortez2008}. To account for this exploratory
-family, we apply Holm's adjustment separately to each method's six
-p-values \citep{holm1979}.
-Table~\ref{tab:application-holm-family} in Appendix~\ref{sec:application-holm-family}
-lists the complete family and the unadjusted p-values used in the calculation.
-
 The corrected difference \(\Deltahat\) is new-visitor MI minus
 returning-visitor MI, so a negative value indicates higher estimated MI
 among returning visitors. The leading MI bias correction subtracts
@@ -844,7 +836,7 @@ the usual p-value threshold of 0.05.
 \thesistableformat
 \begin{tabular*}{0.92\textwidth}{@{\extracolsep{\fill}}lrrr@{}}
 \toprule
- & & \multicolumn{2}{c}{\textbf{p-value}}\\
+ & & \multicolumn{2}{c}{\textbf{Unadjusted p-value}}\\
 \cmidrule(lr){3-4}
 \textbf{Predictor} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{degrees of freedom}}
  & \textbf{Wald} & \textbf{Expanded Welch}\\
@@ -861,9 +853,7 @@ Both methods reject equal month--purchase MI because their p-values
 are below 0.05. Expanded Welch gives a larger p-value because the Student
 \(t\) distribution with 26.79 degrees of freedom assigns more probability
 to statistics at least this far from zero than the standard normal
-distribution. The Holm-adjusted month p-values remain below 0.05 at
-0.000189 for Wald and 0.00149 for Expanded~Welch, so the evidence
-of a difference persists after accounting for the six comparisons.
+distribution.
 
 For weekend, both corrected MI estimates are approximately 0.0007 nats,
 and their difference is only about 0.056 times its estimated standard
