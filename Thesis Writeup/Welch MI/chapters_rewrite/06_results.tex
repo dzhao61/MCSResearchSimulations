@@ -104,15 +104,15 @@ proportion can be large relative to its true probability, so its effect
 on \(\Vhat\) can be poorly represented by linearisation around the
 population table. The observed variance can therefore initially rise or fall more slowly than
 \(1/n\), even though the predicted variance decreases as \(1/n\). The
-ratio of predicted to observed variance therefore falls. In the same \(16\times16\)
-repetitions, subtracting the linear change from \(\Vhat-V\) leaves
-a remainder whose variance exceeds that of the linear change around the
-trough. The difference between the variances of the full error and the
-linear change equals the remainder's variance plus twice its covariance
-with the linear change (Appendix~\ref{sec:estimation-diagnostics},
-Equation~\eqref{eq:linear-remainder-variance-decomposition}). Around the
-trough, this combined contribution remains large and positive, so the
-linear change alone misses much of the observed variation.
+ratio of predicted to observed variance therefore falls.
+To check how much variation the linear approximation misses, we separate
+\(\Vhat-V\) into the predicted linear change and the remaining error.
+In the same \(16\times16\) repetitions, this remaining error has greater
+variance than the linear change around the trough. After accounting for
+the covariance between the two parts, the observed variance still
+substantially exceeds the linear prediction
+(Appendix~\ref{sec:estimation-diagnostics},
+Equation~\eqref{eq:linear-remainder-variance-decomposition}).
 With larger samples, repeated
 counts make the estimated cell probabilities and their log ratios more
 stable. The variation missed by the linear approximation becomes smaller
@@ -247,20 +247,24 @@ When \(X\) and \(Y\) are nearly independent within each population, the
 pointwise-MI weights in the linear sampling error become small, so products
 of cell-probability errors can contribute substantially to sampling variation. These quadratic terms allow sampled
 tables to show apparent association even when population MI is almost
-zero. The near-independence calculation in
-Appendix~\ref{sec:independence-boundary} retains them to predict the mean
-and sampling variance of \(\Vhat\) and the mean estimated component
-degrees of freedom.
+zero. Appendix~\ref{sec:independence-boundary} retains these quadratic terms
+and approximates the scaled MI estimate \(2n\Ihat\) using a noncentral
+chi-squared distribution, which accounts for both sampling noise and a
+small population association. Together with the near-independence relation
+\(\Vhat\approx2\Ihat\), this approximation predicts the mean and
+sampling variance of \(\Vhat\). Applying the local approximations to the
+component formula also predicts the mean estimated component degrees of
+freedom.
 
 Figure~\ref{fig:redesign-a4} holds the sample size at \(n=1{,}000\) and
 the table size at \(4\times4\), and increases the shared population MI
 along the horizontal axis. The margins are \(m_k(0.7)\) for \(P\) and
-\(m_k(0.8)\) for \(Q\). The top row multiplies the observed sampling
-mean of \(\Vhat\) by \(n\); the middle row multiplies its observed
-sampling variance by \(n^2\). These scalings cancel the sample-size
-denominators in the near-independence moment formulas in
-Appendix~\ref{sec:independence-boundary}. The dashed near-independence
-predictions
+\(m_k(0.8)\) for \(Q\). At independence, the approximation predicts a
+sampling mean of \(\Vhat\) proportional to \(1/n\) and a sampling
+variance proportional to \(1/n^2\). The top row therefore multiplies the
+observed sampling mean of \(\Vhat\) by \(n\), while the middle row
+multiplies its observed sampling variance by \(n^2\), cancelling these
+sample-size factors. The dashed near-independence predictions
 use the same scalings and depend on the shared table size, sample size
 and MI, so they are identical in the two columns. The bottom row compares
 the mean estimated degrees of freedom, its near-independence prediction,
@@ -280,8 +284,7 @@ and its near-independence prediction nearly coincide at the smallest MI
 values, then both rise as association strengthens, with the observed mean
 eventually exceeding the prediction. The positive starting level occurs because
 sampling noise produces positive plug-in MI and \(\Vhat\) even when
-population association is almost absent. The local calculation includes
-this noise contribution through \(\Vhat\approx2\Ihat\). As MI increases,
+population association is almost absent. As MI increases,
 the cell log ratios move farther from their values at independence, and
 the omitted terms in the local expansion become more important. Checks
 on the sampled tables show that \(2\Ihat\) then increasingly understates
@@ -297,7 +300,8 @@ comparisons at \(n=1{,}000\), checks across increasing shared MI values
 trace this underprediction through the two steps of the local calculation.
 The calculation first
 represents \(\Vhat\) by \(2\Ihat\), then predicts the sampling variance
-of that quantity using a noncentral chi-squared distribution. At stronger association,
+of that quantity using the noncentral chi-squared distribution introduced
+above. At stronger association,
 \(2\Ihat\) varies less between samples than \(\Vhat\), while the local
 distribution also understates the observed variation in \(2\Ihat\)
 itself. Both errors therefore lower the predicted sampling variance
@@ -848,7 +852,9 @@ Weekend & 2.18 & 0.9554 & 0.9601\\
 \endgroup
 
 Both methods reject equal month--purchase MI because their p-values
-are below 0.05. The Expanded Welch test gives a larger p-value because the Student
+are below 0.05. The estimates suggest that month provides more information
+about the purchase outcome among returning visitors than among new visitors.
+The Expanded Welch test gives a larger p-value because the Student
 \(t\) distribution with 26.79 degrees of freedom assigns more probability
 to statistics at least this far from zero than the standard normal
 distribution.
@@ -883,11 +889,15 @@ further. The accompanying loss of power must therefore
 be interpreted alongside whether the reduction in false positives improves
 calibration.
 
-Errors in variance estimation affect both the chosen degrees of freedom
-and the size of the test statistic. Using \(V\) in place of a larger
-sampling mean of \(\Vhat\) can put the population first-order degrees of
+Choosing the degrees of freedom requires approximations to the sampling
+mean and variance of the pointwise-MI variance estimates. Using \(V\) in
+place of a larger sampling mean of \(\Vhat\) can put the population first-order degrees of
 freedom below the moment target even when the sampling variance of
 \(\Vhat\) is predicted accurately.
+
+The standard error is calculated from the variance estimates in each
+observed pair of tables. For a given estimated MI difference, an
+oversized standard error reduces \(|T|\).
 Table~\ref{tab:balanced-null-diagnostics} shows that, under same-skew
 \(16\times16\) margins, the average squared standard error is about
 1.93 times the observed variance of the MI difference. With negligible

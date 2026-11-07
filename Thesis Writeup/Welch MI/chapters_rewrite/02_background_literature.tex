@@ -9,6 +9,10 @@ derives its variance and reviews tests for equal population MI.
 
 \subsection{Entropy and information content}
 
+Entropy measures uncertainty about a variable's value, and MI measures how
+much that uncertainty is reduced, on average, by observing another variable
+\citep{shannon1948}.
+
 For a discrete random variable \(X\) with probability mass function
 \(p_X(x)\), the information content of outcome \(x\) is
 \(-\log p_X(x)\).
@@ -19,8 +23,6 @@ nats using natural logarithms:
   H(X)=-\sum_x p_X(x)\log p_X(x).
   \label{eq:entropy}
 \end{equation}
-Entropy summarises the uncertainty of one random variable before its value is
-observed \citep{shannon1948}.
 
 For a pair \((X,Y)\), the joint entropy \(H(X,Y)\) is defined from the joint
 probabilities in the same way. The conditional entropy
@@ -125,6 +127,10 @@ sampling variance even when the categories and sample size are unchanged
 Bias is the difference between the average estimate across repeated samples
 and the population value:
 \(\Bias\{\Ihat(P)\}=\E\{\Ihat(P)\}-I(P)\).
+Even when the population variables are independent, sampling fluctuations
+can produce a table with apparent association and positive plug-in MI.
+These estimates cannot be offset by negative plug-in MI values, so their
+average can exceed the true value of zero.
 For a fixed \(r\times c\) table with positive population cell probabilities,
 the large-sample expansion has a positive leading term:
 \begin{equation}
