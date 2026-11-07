@@ -510,13 +510,13 @@ table.
 At fixed \(P\), the first derivative is linear in the direction of the
 table change \citep[Chapter~20]{vanderVaart1998}. Substituting the
 empirical-table identity above therefore gives
-\begin{align*}
-  &\left.\frac{\mathrm d}{\mathrm dt}
-    V\{P+t(\widehat P-P)\}\right|_{t=0}\\
-  &\quad=\frac{1}{n_P}\sum_{a=1}^{n_P}
+\begin{equation*}
+  \left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\widehat P-P)\}\right|_{t=0}
+  =\frac{1}{n_P}\sum_{a=1}^{n_P}
     \left.\frac{\mathrm d}{\mathrm dt}
     V\{P+t(\delta_{Z_a^{(P)}}-P)\}\right|_{t=0}.
-\end{align*}
+\end{equation*}
 Each term follows the one-observation perturbation
 \(P+t(\delta_{Z_a^{(P)}}-P)=(1-t)P+t\delta_{Z_a^{(P)}}\), so its
 derivative is \(g_P(Z_a^{(P)})\) by Equation~\eqref{eq:g-definition}.
