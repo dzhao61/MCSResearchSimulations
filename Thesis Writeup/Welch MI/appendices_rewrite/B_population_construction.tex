@@ -78,19 +78,19 @@ using Chapter~\ref{chap:expanded}.
 \section{Calculation requirements and rejection rates}
 \label{sec:validity-rules}
 
-A Wald calculation succeeds when it has a finite corrected difference, a
+A calculation for the Wald test succeeds when it has a finite corrected difference, a
 finite positive standard error, \(\Vhat(P)+\Vhat(Q)>10^{-14}\), and a finite p-value.
 The threshold treats variances extremely close to zero as numerically
-unusable. Expanded Welch additionally requires positive finite degrees
+unusable. The Expanded Welch test additionally requires positive finite degrees
 of freedom for both components and their combination, and a finite
-p-value for Expanded Welch. If either component's degrees of freedom are
-not positive and finite, the Expanded Welch calculation is unsuccessful.
+p-value for that test. If either component's degrees of freedom are
+not positive and finite, the calculation for the Expanded Welch test is unsuccessful.
 
 The componentwise algorithm requires positive, finite degrees of freedom
 for both populations. If a sampled table has
 \(\Vhat=\widehat\tau^2=0\), the component formula in
-Equation~\eqref{eq:nu-p-hat} requires \(0/0\). Expanded Welch records the
-comparison as unsuccessful even if the other table makes the shared standard
+Equation~\eqref{eq:nu-p-hat} requires \(0/0\). The calculation for the Expanded
+Welch test is unsuccessful even if the other table makes the shared standard
 error positive and finite.
 
 The primary rejection rate divides rejections from successful calculations

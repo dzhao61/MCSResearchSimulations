@@ -42,22 +42,23 @@ few times or not at all, the resulting probability estimates can distort
 both the MI difference and its estimated uncertainty.
 
 The proposed Expanded Welch--Satterthwaite test (Expanded Welch) retains
-Wald's estimated MI difference and standard error but uses a Student
+the estimated MI difference and standard error used by the Wald test but uses a Student
 \(t\) distribution instead of the standard normal distribution. Its degrees
 of freedom depend on how the variance estimates underlying the standard
 error change between samples. This thesis derives a first-order
 approximation to that sampling variation, accounting for changes in cell
 probabilities and their row and column totals, and uses the result to obtain
-degrees of freedom for Expanded Welch.
+degrees of freedom for the Expanded Welch test.
 
-The Student \(t\) distribution gives Expanded Welch a larger rejection
-cutoff than Wald, so its rejection rate cannot exceed Wald's.
+The cutoff from the Student \(t\) distribution is larger than the Wald test's
+cutoff, so the Expanded Welch test's rejection rate cannot exceed that of
+the Wald test.
 A lower rejection rate can reduce false positives but can also reduce
 statistical power, the probability of
 rejecting equal MI when the population MI values genuinely differ.
 The evaluation compares false-positive rates across MI values shared by the
-two populations and power across MI differences, varying table sizes, category frequencies
-and sample sizes in both studies to show where reduced false positives
+two populations and power across MI differences. Both studies vary table sizes,
+category frequencies and sample sizes to show where reduced false-positive rates
 accompany a loss of detection probability.
 
 \section{Research questions}
@@ -68,10 +69,12 @@ The thesis addresses three research questions:
  \item How accurately do the derived approximations predict the mean and
  sampling variance of the estimated pointwise-MI variance, and what degrees of
  freedom do they imply near and away from independence between \(X\) and \(Y\)?
- \item How do Expanded Welch's false-positive rates compare with Wald's
+ \item How do the false-positive rates of the Expanded Welch test compare with
+ those of the Wald test
  as shared population MI, sample size, table size and category frequencies
  change?
- \item How does Expanded Welch's power compare with Wald's as the
+ \item How does the power of the Expanded Welch test compare with that of
+ the Wald test as the
  population MI difference, sample size, table size and category
  frequencies change?
 \end{enumerate}
@@ -85,7 +88,7 @@ The thesis addresses three research questions:
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Methodological contribution.} Expanded Welch uses
+  \item \begin{samepage}\textbf{Methodological contribution.} The Expanded Welch test uses
   the derived effect of an observation on the pointwise-MI variance to choose
   the degrees of freedom for a two-sample test using a Student \(t\) distribution.
   \par
@@ -99,7 +102,7 @@ The thesis addresses three research questions:
   \end{samepage}
 
   \item \textbf{Practical contribution.} The evaluation identifies where
-  Expanded Welch brings false-positive rates closer to 5\% and where it
+  the Expanded Welch test brings false-positive rates closer to 5\% and where it
   increases conservatism by lowering rates that are already below 5\%.
   It quantifies the accompanying reduction in power and identifies estimation
   errors that make both tests unreliable.
@@ -114,12 +117,12 @@ are independent, and observations within each sample are also independent.
 For the main derivation, both populations are assumed to have positive MI
 and a positive probability in every cell. The case of zero MI, where
 \(X\) and \(Y\) are independent, is considered separately.
-The main simulations compare Wald and Expanded Welch using
+The main simulations compare the Wald test and the Expanded Welch test using
 two-sided tests at the 5\% significance level.
 
 Chapter~\ref{chap:background} reviews the background and literature.
 Chapters~\ref{chap:baselines} and~\ref{chap:expanded} define the statistic
-and derive Expanded Welch. Chapters~\ref{chap:design} and~\ref{chap:results}
+and derive the Expanded Welch test. Chapters~\ref{chap:design} and~\ref{chap:results}
 present the experiment, results and online-shopping application.
 Chapter~\ref{chap:conclusion} brings together the findings, limitations
 and future work. Appendix~\ref{app:derivation-details} gives supporting

@@ -6,17 +6,17 @@
 This thesis develops and evaluates a test for comparing mutual information
 (MI) between two categorical variables using independent samples from two
 populations. The proposed Expanded Welch--Satterthwaite test (Expanded
-Welch) retains Wald's estimated MI difference and standard error but
-replaces its standard normal reference distribution with a Student \(t\)
-distribution. The mathematical contribution
+Welch) retains the estimated MI difference and standard error used by the
+Wald test but replaces the standard normal reference distribution with a
+Student \(t\) distribution. The mathematical contribution
 is a first-order approximation to how the variance estimates underlying
 the standard error change between samples. Their mean and sampling
 variability determine the degrees of freedom, which control the rejection
 cutoff.
 
-Across the tested populations, Expanded Welch brings some excessive
+Across the tested populations, the Expanded Welch test brings some excessive
 false-positive rates closer to the 5\% target, but lowers rejection further
-where Wald already rejects too rarely. Its larger cutoff can reduce power,
+where the Wald test already rejects too rarely. The larger cutoff can reduce power,
 the probability of detecting a real MI difference, while leaving errors in
 the estimated MI difference and standard error used by both tests unchanged.
 In the online-shopping application, both tests reject equal month--purchase
@@ -55,9 +55,9 @@ In the uniform \(4\times4\) setting in
 Table~\ref{tab:balanced-null-diagnostics}, an underestimated standard error
 contributes to excessive rejection, as in the regression examples reviewed
 in Section~\ref{sec:welch-background} \citep{bell2002,kauermann2001}.
-Expanded Welch's larger cutoff brings rejection closer to 5\%.
+The Expanded Welch test's larger cutoff brings the false-positive rate closer to 5\%.
 In the same-skew \(16\times16\) setting, however, the standard error is too
-large and bias in the estimated MI difference is small, so Wald already
+large and bias in the estimated MI difference is small, so the Wald test already
 rejects too rarely and the larger cutoff reduces rejection further. The
 different-skew \(16\times16\) setting instead shows how bias moves the
 estimated difference away from zero even when the population MI values are
@@ -65,23 +65,22 @@ equal.
 
 Under different-skew \(16\times16\) margins at shared MI 0.005 nats
 and 1,000 observations per population, false-positive rates are 36.38\%
-with Wald and 34.38\% with Expanded Welch, far above the 5\% target.
+with the Wald test and 34.38\% with the Expanded Welch test, far above the 5\% target.
 Both methods' calculations succeed in every repetition, so these high
 rates reflect inaccurate inference rather than failed calculations. With
 50,000 observations per population at the same MI level, both methods
 have rejection rates below 5\% in all three \(16\times16\) margin
-regimes. Similar rejection rates at larger
-samples therefore do not by themselves establish accurate false-positive
-rates.
+regimes. Agreement between the two tests' rejection rates at larger sample
+sizes therefore does not establish that either rate is close to 5\%.
 
 \subsection{RQ3: Power across MI differences}
 
-At the usual 5\% significance level, Expanded Welch cannot reject where
-Wald would not, so it cannot have higher power under these same testing
-rules. At the smallest samples, some Expanded Welch calculations also fail,
-contributing to its lower reported power, whereas with 10,000 observations
-per population the power difference is below 0.32 percentage points across
-all tested settings.
+At the usual 5\% significance level, the Expanded Welch test cannot reject where
+the Wald test would not, so it cannot have higher power under these same testing
+rules. At the smallest samples, some calculations for the Expanded Welch test
+also fail, contributing to its lower reported power. With 10,000 observations
+per population, the power difference between the two tests is below
+0.32 percentage points across all tested settings.
 
 In sparse tables, bias can make the estimated difference point to the wrong
 population as having greater MI, even when the test rejects equality.
@@ -93,9 +92,10 @@ MI gaps become easier to detect.
 \section{Limitations}
 
 The main derivation assumes independent categorical observations, a fixed
-set of categories, positive probability for every category combination,
-and nonzero population variance terms in the degrees-of-freedom
-calculation. Paired samples would require accounting for dependence between
+set of categories and positive probability for every category combination.
+The degrees-of-freedom calculation also requires positive pointwise-MI variances
+and positive variances of the observation-level sensitivities in both populations.
+Paired samples would require accounting for dependence between
 them, while continuous variables or a growing number of categories would
 require extending the present derivation. At exact independence between
 the two variables, the first-order sampling term vanishes, leaving the
@@ -123,14 +123,14 @@ confidence intervals quantifying simulation uncertainty at individual
 population and sample-size settings. Because the tests' actual
 false-positive rates can differ, the power comparison describes detection
 under these usual testing rules rather than at the same observed
-false-positive rate. These rates can be assessed in the simulations because
-the population MI values are known, whereas the online-shopping application
-has unknown population MI values and therefore illustrates interpretation
-on observed data without assessing false-positive accuracy.
+false-positive rate. False-positive rates can be assessed in the simulations
+because the population MI values are known. In the online-shopping application,
+the population MI values are unknown, so the example illustrates interpretation
+on observed data without assessing the tests' false-positive rates.
 
-The main empirical comparison uses Wald, with ordinary Welch
+The main empirical comparison uses the Wald test, with ordinary Welch
 degrees of freedom examined at three illustrative null settings. These
-comparisons do not establish how Expanded Welch performs against
+comparisons do not establish how the Expanded Welch test performs against
 resampling procedures or tests using other MI estimators.
 
 \section{Future work}
@@ -161,6 +161,6 @@ how the tests behave when distinct populations have equal MI.
 
 The derived degrees of freedom bring some excessive false-positive rates
 closer to 5\%, at the cost of reduced power. The remaining failures show
-the limits of Expanded Welch's cutoff adjustment and motivate improving
+the limits of the Expanded Welch test's cutoff adjustment and motivate improving
 the estimates of the MI difference and its standard error in sparse
 settings.

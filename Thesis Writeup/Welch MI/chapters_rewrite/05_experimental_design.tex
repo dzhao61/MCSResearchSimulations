@@ -5,9 +5,9 @@ The simulations draw count tables from populations with known MI,
 allowing us to measure errors in the estimated MI difference and its
 standard error, and to count false positives when the population MI
 values are equal. The evaluation addresses the three research questions in
-Section~\ref{sec:research-questions} by checking Expanded Welch's variance
+Section~\ref{sec:research-questions} by checking the Expanded Welch test's variance
 approximations and comparing its false-positive rates and power with those
-of Wald. The design follows the simulation
+of the Wald test. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
 being estimated, methods and performance measures.
 
@@ -313,12 +313,13 @@ For each setting, we generate 100,000 independent pairs of count tables
 and apply both tests to each pair using their usual p-value threshold of
 0.05. Power is the fraction of all repetitions that reject equal MI,
 with unsuccessful calculations counted as non-rejections and the calculation
-success rate reported separately. Power includes rejections in either direction
-because the tests are two-sided. The sample sizes and margin profiles
+success rate reported separately. Because the tests are two-sided, power counts
+rejections with either a positive or a negative estimated MI difference.
+The sample sizes and margin profiles
 are specified in Tables~\ref{tab:design-primary-grids} and
 \ref{tab:margin-profiles}.
 
-Expanded Welch uses the same statistic as Wald with a larger
+The Expanded Welch test uses the same statistic as the Wald test but has a larger
 rejection cutoff, so it cannot have higher power at the same p-value
 threshold of 0.05.
 We measure the reduction in detection probability across the grid and

@@ -478,7 +478,8 @@ At exact independence, \(p_{ij}=p_{i+}p_{+j}\), so
 \(\pmi_P(i,j)=\log 1=0\) in every cell. Hence \(I(P)=0\), \(V(P)=0\), and the
 first-order average in Equation~\eqref{eq:mi-error-as-average-background}
 vanishes.
-A finite sample can still have positive MI. Its leading variation comes from
+The plug-in MI estimate can still be positive when population MI is zero.
+Its leading variation comes from
 the squared cell-probability errors in a second-order Taylor expansion, which
 produces the usual chi-squared limiting distribution
 \citep{brillinger2004,marinescu2025}. Testing independence therefore uses a
@@ -620,7 +621,7 @@ comparison of two estimates.
 The first-order results of \citet{moddemeijer1989} and
 \citet{brillinger2004} give this uncertainty as \(V(P)/n_P\), with
 \(V(P)\) determined by the population table. Replacing its probabilities by observed proportions produces the variance
-estimate used by Wald to calculate the standard error of the MI difference.
+estimate used by the Wald test to calculate the standard error of the MI difference.
 Choosing a Welch--Satterthwaite cutoff additionally requires the sampling
 variance of that variance estimate, which describes how much it changes
 when a new sample produces a different table.
@@ -629,7 +630,7 @@ In a Bayesian approach to uncertainty about population MI,
 \citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
 probabilities and calculate the variance and shape of the resulting MI
 distribution conditional on the observed table. Our repeated-sampling
-comparison instead asks how often Wald and Expanded Welch reject
+comparison instead asks how often the Wald test and the Expanded Welch test reject
 equal MI when new samples are drawn from fixed populations \(P\) and \(Q\).
 
 Hutcheson's test compares two estimates of Shannon diversity, or entropy,
@@ -645,7 +646,7 @@ degrees of freedom
 \(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
 corresponding entropy estimator \(\widehat H\), and each variance component
 is assigned its sample size, not \(n_i-1\).
-Expanded Welch instead calculates its degrees of freedom from how the
+The Expanded Welch test instead calculates its degrees of freedom from how the
 estimated pointwise-MI variance changes with the table, including the effects of a
 cell change on its row and column totals.
 
@@ -657,7 +658,7 @@ observations, so their estimation errors are connected through the cell
 counts contributing to all three.
 The MI sampling-variance formulas in Section~\ref{sec:first-order-mi-background}
 account for these connected estimation errors. To obtain degrees of freedom,
-Expanded Welch also tracks how a cell change alters both the probability
+the Expanded Welch test also tracks how a cell change alters both the probability
 weights and the pointwise-MI values whose weighted variance is being
 estimated. The resulting cell and margin derivatives supply the MI-specific
 inputs to the Welch--Satterthwaite calculation.
@@ -665,7 +666,7 @@ inputs to the Welch--Satterthwaite calculation.
 In a segregation application, \citet{mora2009} derive an approximation using
 a normal distribution for comparing positive population MI between
 populations and time periods, providing a direct precedent for the Wald
-baseline. Their later
+test used as the baseline. Their later
 peer-reviewed account places the MI index within the segregation literature
 \citep{mora2011}.
 
@@ -724,11 +725,11 @@ This thesis follows the variance-moment approach used in regression by
 count changes both its probability weight and the pointwise-MI values
 calculated from the joint and marginal probabilities. Tracking these
 changes gives a first-order approximation to the sampling variability of
-the estimated pointwise-MI variance. Expanded Welch uses this approximation
+the estimated pointwise-MI variance. The Expanded Welch test uses this approximation
 to obtain component degrees of freedom, then combines them using the
 Welch--Satterthwaite rule.
 
-Retaining Wald's estimated MI difference and standard error isolates
+Retaining the estimated MI difference and standard error used by the Wald test isolates
 the effect of changing the reference distribution.
 The estimation problems identified by \citet{paninski2003} remain relevant:
 residual bias can shift the estimated difference. For a fixed estimated

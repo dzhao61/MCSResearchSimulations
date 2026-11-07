@@ -7,22 +7,23 @@ populations have equal MI. With small samples or rarely observed category
 combinations, the Wald test can reject equal MI too often or too rarely.
 
 This thesis develops the Expanded Welch--Satterthwaite test (Expanded Welch)
-for comparing MI between two populations. It retains Wald's estimated MI
-difference and standard error but replaces its standard normal reference
-distribution with a Student \(t\) distribution.
+for comparing MI between two populations. It retains the estimated MI
+difference and standard error used by the Wald test but replaces the standard
+normal reference distribution with a Student \(t\) distribution.
 The standard error depends on variance estimates that change between
 samples. We derive a first-order approximation to how much these estimates
 vary and use it to estimate the degrees of freedom. The resulting Student
-\(t\) distribution gives a larger rejection cutoff than Wald's.
+\(t\) distribution gives the Expanded Welch test a larger rejection cutoff
+than that of the Wald test.
 Simulations under equal and
 unequal population MI assess approximation accuracy, false-positive rates
 and power across sample sizes, numbers of categories and category
 frequencies. An online-shopping example illustrates the tests on observed
 data.
 
-In the simulations, Expanded Welch brings some excessive false-positive
-rates closer to the 5\% target, but lowers rejection further where Wald
-already rejects too rarely. Its larger cutoff can reduce power, the
+In the simulations, the Expanded Welch test brings some excessive false-positive
+rates closer to the 5\% target, but lowers rejection further where the Wald test
+already rejects too rarely. The larger cutoff can reduce power, the
 probability of detecting a real MI difference, although the power difference
 between methods becomes small with larger samples. The first-order
 approximation also becomes less accurate when the variables are nearly

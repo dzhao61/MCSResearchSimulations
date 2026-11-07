@@ -2,14 +2,13 @@
 \label{chap:results}
 \input{figures_rewrite/focused_redesign_reporting_values}
 
-This chapter checks the approximations used to choose Expanded Welch's
+This chapter checks the approximations used to choose the Expanded Welch test's
 degrees of freedom, then compares its false-positive rates and power with
-Wald. The online-shopping application illustrates how to interpret
+those of the Wald test. The online-shopping application illustrates how to interpret
 the test outputs.
 
 Each evaluation setting uses 100,000 independent repetitions, each drawing
-one count table from \(P\) and one independently from \(Q\). Wald
-and Expanded Welch are both applied to the same two sampled tables in
+one count table from \(P\) and one independently from \(Q\). The Wald test and the Expanded Welch test are both applied to the same two sampled tables in
 each repetition.
 
 \section{RQ1: Accuracy of variance approximations}
@@ -103,8 +102,9 @@ whereas a single observation can give a large squared deviation of its
 pointwise MI from the table's plug-in MI. The \(1/n\) change in a cell
 proportion can be large relative to its true probability, so its effect
 on \(\Vhat\) can be poorly represented by linearisation around the
-population table. The observed variance can therefore
-initially rise, or fall more slowly than \(1/n\), while the predicted variance decreases, so the ratio then falls. In the same \(16\times16\)
+population table. The observed variance can therefore initially rise or fall more slowly than
+\(1/n\), even though the predicted variance decreases as \(1/n\). The
+ratio of predicted to observed variance therefore falls. In the same \(16\times16\)
 repetitions, subtracting the linear change from \(\Vhat-V\) leaves
 a remainder whose variance exceeds that of the linear change around the
 trough. The difference between the variances of the full error and the
@@ -372,9 +372,9 @@ counted as non-rejections.
 Shading gives pointwise 95\% intervals, and the lower strips show the
 calculation success rates.
 
-Expanded Welch uses the same statistic as Wald with a larger
-rejection cutoff, so its rejection rate is always lower or equal at the
-same p-value threshold of 0.05. The comparison asks whether that
+The two tests use the same statistic, but the Expanded Welch test has a larger
+rejection cutoff. At the same p-value threshold of 0.05, its rejection rate
+cannot exceed that of the Wald test. The comparison asks whether that
 reduction brings rejection closer to 5\% or deepens conservatism. The
 three figures below follow the same margin order as the power study and
 show the effects of sample size, table size and shared MI together.
@@ -384,8 +384,8 @@ show the effects of sample size, table size and shared MI together.
 Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
 populations, giving identical population tables at each shared MI.
 Each panel increases sample size along the logarithmic horizontal axis,
-with colour identifying shared MI. Solid lines with filled circles show Wald,
-and dashed lines with open squares show Expanded Welch. Where the
+with colour identifying shared MI. Solid lines with filled circles show the Wald test's false-positive rates,
+and dashed lines with open squares show those of the Expanded Welch test. Where the
 method curves overlap, their observed false-positive rates are equal or
 too close to distinguish on the plotted scale. The dotted line marks 5\%.
 For a given table size, the vertical scale is the same
@@ -409,13 +409,12 @@ MI estimates cancel because the population tables and sample sizes are
 identical, so the departures from 5\% arise through the estimated standard error and
 the sampling distribution of the shared statistic.
 
-Expanded Welch lowers both the excessive and conservative parts of these
-curves. In \(4\times4\) at \(n=20\), its rate of 4.90\% is closer
-to 5\% than Wald's 8.35\% at shared MI 0.02. At shared MI 0.30,
-however, Expanded Welch still rejects in 13.11\% of repetitions at the
+The Expanded Welch test lowers both the excessive and conservative parts of these
+curves. In \(4\times4\) at \(n=20\), its false-positive rate of 4.90\% is closer to 5\% than the Wald test's rate of 8.35\% at shared MI 0.02. At shared MI 0.30,
+however, the Expanded Welch test still rejects in 13.11\% of repetitions at the
 same dimensions and sample size. The larger cutoff can correct some
 excess rejection without making the method uniformly accurate as shared
-MI changes. Conversely, where Wald is already below 5\%, the reduction
+MI changes. Conversely, where the Wald test's false-positive rate is already below 5\%, the reduction
 moves rejection farther from the target.
 
 \subsection{Same-skew margins}
@@ -442,15 +441,15 @@ oversized standard error can shrink the statistic and suppress rejection.
 At shared MI 0.30, both methods instead over-reject at several small
 sample sizes before approaching 5\% with more observations.
 
-At the smallest sample sizes, the lower strips show that Expanded Welch
-calculations can succeed less often than Wald calculations, so failed
-calculations also lower Expanded Welch's rejection rate when all repetitions
+At the smallest sample sizes, the lower strips show that calculations for the
+Expanded Welch test can succeed less often than those for the Wald test, so
+failed calculations also lower the Expanded Welch test's rejection rate when all repetitions
 are counted.
 However, the conservative troughs persist even when both tests' calculations
 succeed in every repetition, so calculation failure is not their sole
 explanation. At larger samples,
 the methods' curves become close as the estimated degrees of freedom
-increase, but both can remain below 5\% in the weak-association,
+increase, but both false-positive rates can remain below 5\% in the weak-association,
 larger-table settings.
 
 \subsection{Different-skew margins}
@@ -471,8 +470,8 @@ under the null.
 The two smaller tables retain the conservative ranges at weaker MI and
 the excessive rejection at stronger MI seen in the other margin regimes.
 The \(16\times16\) panel shows a more severe failure: at shared MI
-0.005 and \(n=1{,}000\), Wald rejects in 36.38\% of repetitions and
-Expanded Welch in 34.38\%. The larger cutoff reduces rejection but
+0.005 and \(n=1{,}000\), the Wald test rejects in 36.38\% of repetitions and
+the Expanded Welch test rejects in 34.38\%. The larger cutoff reduces rejection but
 leaves it far above 5\%. Both methods' calculations succeed in every
 repetition, so these high rates reflect inaccurate inference rather than
 calculation failures.
@@ -516,29 +515,29 @@ repetition in these three settings. Rates are percentages of all 100,000 repetit
 In the uniform \(4\times4\) setting, bias in the estimated MI difference
 is negligible, but the average squared standard error understates the observed sampling
 variance. For a given estimated difference, a smaller denominator enlarges
-\(|T|\) and tends to increase rejection. Expanded Welch's larger cutoff
-reduces that excess and brings the rate close to 5\%, showing how the
+\(|T|\) and tends to increase rejection. The Expanded Welch test's larger cutoff reduces that excess and brings the rate close to 5\%, showing how the
 cutoff can offset an error in the shared standard error at a
 particular population pair.
 
 The two \(16\times16\) settings have almost the same variance ratio
 but opposite rejection behaviour. Under same-skew margins, the biases in
 the two MI estimates cancel and the oversized standard error suppresses
-rejection, which Expanded Welch lowers further. Under different-skew
+rejection, which the Expanded Welch test lowers further. Under different-skew
 margins, the positive bias places the sampling mean of the estimated
 difference more than two sampling standard deviations above zero. Changing the cutoff
 leaves that bias in the estimated MI difference unchanged, helping explain
 why both methods reject far too often even though the estimated standard
 error is oversized.
 
-Across the grid, the methods become close with larger samples, but their
-agreement does not itself establish accurate rejection. For example, at
-shared MI 0.005 and \(n=50{,}000\), both tests remain below 4\% in
+Across the grid, the two tests' false-positive rates become close to one
+another with larger samples, but agreement does not establish that either
+rate is close to 5\%. For example, at
+shared MI 0.005 and \(n=50{,}000\), both tests have false-positive rates below 4\% in
 every \(16\times16\) margin regime, with the average squared standard
 error still exceeding the observed sampling variance of the estimated MI
-difference. Expanded Welch improves calibration where its lower rejection
+difference. The Expanded Welch test improves calibration where its lower rejection
 corrects an excess, while increasing
-conservatism where Wald already rejects too rarely.
+conservatism where the Wald test already rejects too rarely.
 
 \subsection{Comparison with ordinary Welch degrees of freedom}
 
@@ -550,7 +549,7 @@ statistic, but substitutes component degrees of freedom \(n_P-1\) and
 \(n_Q-1\) into Equation~\eqref{eq:ws-general}. These sample-size-based
 values come from the comparison of sample means; for MI they serve as a
 benchmark rather than a derivation of the variance estimate's sampling
-variation. Expanded Welch instead uses the component degrees of freedom
+variation. The Expanded Welch test instead uses the component degrees of freedom
 derived in Chapter~\ref{chap:expanded}.
 
 The comparison reuses the same 100,000 sampled pairs per setting as the
@@ -573,10 +572,11 @@ Different skew \(16\times16\), \(n=1{,}000\) & 26.01 & 25.95 & 24.84\\
 \end{tabularx}
 \end{table}
 
-At \(n=20\), ordinary Welch reduces excessive rejection less than Expanded
-Welch. At \(n=50\), Wald is already close to 5\%, and Expanded Welch
-instead produces the most conservative rate. In the different-skew
-\(16\times16\) case, neither correction removes the excessive rejection
+At \(n=20\), using ordinary Welch degrees of freedom reduces excessive
+rejection less than the Expanded Welch test does. At \(n=50\), the Wald
+test's false-positive rate is already close to 5\%, and the Expanded Welch
+test instead produces the most conservative rate. In the different-skew
+\(16\times16\) case, neither degrees-of-freedom choice removes the excessive rejection
 associated with bias in the shared MI difference. The MI-specific
 calculation therefore changes the results beyond merely replacing the
 normal distribution with a Student \(t\) distribution, but the larger
@@ -594,8 +594,8 @@ divides the number of rejections by all 100,000 repetitions at that setting,
 with unsuccessful calculations counted as non-rejections. Shading gives
 pointwise 95\% intervals, and the lower strips show the calculation success rates.
 
-At the usual p-value threshold of 0.05, Expanded Welch's larger cutoff
-makes its rejections a subset of Wald's, so the comparison
+At the usual p-value threshold of 0.05, the Expanded Welch test's larger cutoff
+makes its rejections a subset of those from the Wald test, so the comparison
 quantifies how much detection probability is lost. These rates are read
 alongside the false-positive results in Section~\ref{sec:null-rejection-patterns}:
 high rejection under an alternative can coexist with excessive rejection
@@ -608,8 +608,8 @@ population difference.
 Figure~\ref{fig:mi-gap-power-uniform} uses uniform row and column
 margins in both populations. Each panel increases the shared sample size
 along the logarithmic horizontal axis, while colour identifies the MI-gap
-magnitude. Solid lines with filled circles show Wald, and dashed
-lines with open squares show Expanded Welch. The same colour and line
+magnitude. Solid lines with filled circles show the Wald test's power, and dashed
+lines with open squares show that of the Expanded Welch test. The same colour and line
 conventions apply to all three power figures, with overlapping method
 curves indicating equal or visually indistinguishable power. Curves for
 different MI gaps also meet near 100\% once almost every repetition
@@ -631,7 +631,7 @@ conservative rejection. Consequently, the early high points
 are not evidence that fewer observations reliably identify the MI difference.
 
 Larger tables require more observations before power becomes high. For the 0.01-nat
-gap at \(n=10{,}000\), Expanded Welch detects the difference in 89.44\% of
+gap at \(n=10{,}000\), the Expanded Welch test detects the difference in 89.44\% of
 \(2\times2\) repetitions and 71.12\% of \(16\times16\) repetitions.
 This ordering reflects both the sparse-table estimation errors discussed
 in Section~\ref{sec:null-estimator-accuracy} and the population variances:
@@ -643,16 +643,16 @@ difference becomes more consistently separated from zero and power rises.
 
 Once samples are sufficiently large, increasing the MI gap shifts the
 power curves upwards. In the \(4\times4\) panel at \(n=2{,}500\),
-Expanded Welch's power rises from 11.14\% for the 0.005-nat gap to
+the Expanded Welch test's power rises from 11.14\% for the 0.005-nat gap to
 78.74\% for the 0.02-nat gap. Increasing \(I(Q)\) also increases
 \(V(Q)\), but in these populations the MI gap grows faster than the
 first-order sampling standard deviation of the difference. The true MI gap
 is therefore larger relative to the sampling spread of the estimated difference.
 
-Expanded Welch's power is no higher than Wald's for any gap, with the largest
-separation for the 0.01-nat gap occurring at the smallest sample size in the
-\(16\times16\) panel. Expanded Welch's calculation success rate at that
-setting is above 99\%, so most of that separation comes from the larger
+For every MI gap, power is no higher for the Expanded Welch test than for
+the Wald test. For the 0.01-nat gap, the largest power difference occurs at
+the smallest sample size in the
+\(16\times16\) panel. The Expanded Welch test's calculation success rate at that setting is above 99\%, so most of that separation comes from the larger
 cutoff rather than failed calculations. The difference in power between the
 tests becomes small in the larger-sample range as increasing degrees of freedom bring the
 Student \(t\) distribution close to the standard normal distribution.
@@ -677,19 +677,18 @@ with the trough occurring later for larger tables. Relative to uniform
 margins, the uneven frequencies leave more combinations rarely observed,
 and the population pointwise-MI variances are also larger. Both features
 make a given gap harder to detect. At the smallest sample sizes, the
-lower strips show that failed Expanded Welch calculations also reduce
-its power when all repetitions are counted, so the larger cutoff is not
+lower strips show that failed calculations for the Expanded Welch test also reduce its power when all repetitions are counted, so the larger cutoff is not
 the only reason for its lower power. For the 0.01-nat gap in the
 \(16\times16\) case at \(n=1{,}000\), the average squared standard error is 1.81 times the
 observed variance of the difference, while bias in the estimated MI
 difference is small relative to the true gap. The oversized denominator suppresses \(|T|\),
-contributing to Expanded Welch's power of only 1.64\% at that setting.
+contributing to the Expanded Welch test's power of only 1.64\% at that setting.
 
 Both methods gain power once larger samples improve the cell estimates
 and reduce the spread of the MI difference. For the 0.01-nat gap,
-Expanded Welch reaches 60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
+the Expanded Welch test's power reaches 60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
 under uniform margins. The smaller 0.005-nat gap remains harder to
-detect even at \(n=50{,}000\), where Expanded Welch reaches 79.87\%
+detect even at \(n=50{,}000\), where the Expanded Welch test's power reaches 79.87\%
 in \(16\times16\), compared with over 99.9\% for both larger gaps.
 The differences between methods become much smaller than these differences
 between table sizes and margin regimes.
@@ -714,8 +713,7 @@ early rejection before falling and recovering. The \(16\times16\)
 curve shows why this early rejection needs careful interpretation.
 For the 0.01-nat gap at \(n=1{,}000\), the estimated MI difference has
 positive bias of approximately 0.0307 nats, moving its sampling mean from
-the true \(-0.01\) to approximately \(+0.0207\) nats. Expanded Welch
-rejects in 9.66\% of repetitions,
+the true \(-0.01\) to approximately \(+0.0207\) nats. The Expanded Welch test rejects in 9.66\% of repetitions,
 but more than 99.9\% of those rejections have a positive estimated
 difference, opposite to the true direction. The shared biased numerator
 therefore produces rejection without reliably identifying which population
@@ -724,23 +722,24 @@ Section~\ref{sec:null-estimator-accuracy}.
 
 This positive bias also explains why a larger MI gap can give lower
 rejection at the same sample size. In \(16\times16\) at
-\(n=1{,}000\), Expanded Welch's power falls from 16.11\% for
+\(n=1{,}000\), the Expanded Welch test's power falls from 16.11\% for
 \(|\Delta|=0.005\) to 3.39\% for \(|\Delta|=0.02\). The positive
 bias remains about 0.03 nats across these gaps, so making the true
 difference more negative moves the sampling centre closer to zero.
-The resulting loss of positive-tail rejections outweighs the increase in
-negative-tail rejections over this range. The ordering reverses at larger
-samples, once bias is small enough for the negative population difference
-to determine the direction of most rejections.
+Over this range, the decrease in rejections with positive estimated MI
+differences outweighs the increase in rejections with negative estimated
+MI differences. The ordering reverses at larger
+samples, once bias is small enough for most rejections to have an estimated MI difference with the same negative
+sign as the population difference.
 
 Along the 0.01-nat curve, increasing sample size reduces the positive
 bias and moves the sampling centre back towards zero. At \(n=2{,}500\), the remaining positive
 bias nearly cancels the negative population difference, leaving the
-sampling mean close to zero, and Expanded Welch's power falls to 2.48\%.
+sampling mean close to zero, and the Expanded Welch test's power falls to 2.48\%.
 With still more observations, the bias diminishes further and the
 sampling centre approaches the negative population difference, while
-sampling variance decreases. Negative-tail rejection then rises and
-power becomes high. Changing the cutoff lowers rejection on both sides
+sampling variance decreases. Rejections with negative estimated MI differences then become more frequent
+and power becomes high. Changing the cutoff lowers rejection on both sides
 of the trough without changing the bias in the estimated MI difference.
 
 Across all three margin regimes, both methods exceed 99.9\% power at
@@ -748,14 +747,14 @@ Across all three margin regimes, both methods exceed 99.9\% power at
 0.005-nat gap ranges from 79.87\% to 96.47\%. At \(n=10{,}000\),
 the method power differences are below 0.32 percentage points across all
 three gaps, table sizes and margin regimes. Thus the gap magnitude strongly
-affects detection once the estimates become accurate, while Expanded
-Welch's larger cutoff gives a smaller loss relative to Wald in this
+affects detection once the estimates become accurate, while the Expanded Welch test's larger cutoff gives a smaller power loss
+relative to the Wald test in this
 larger-sample range.
 
 \section{Example application to online shopping data}
 \label{sec:shoppers-application}
 
-This example illustrates how Wald and Expanded Welch are applied
+This example illustrates how the Wald test and the Expanded Welch test are applied
 and interpreted in practice by comparing month--purchase and
 weekend--purchase associations between new and returning visitors.
 The Online Shoppers Purchasing Intention dataset records website sessions
@@ -822,11 +821,10 @@ estimated standard error:
   T\approx\frac{-0.013563}{0.003333}\approx-4.069.
   \label{eq:shoppers-month-statistic}
 \end{equation}
-Both tests use this statistic, but Wald compares it with the
-standard normal distribution, whereas Expanded Welch uses a Student
+Both tests use this statistic, but the Wald test compares it with the
+standard normal distribution, whereas the Expanded Welch test uses a Student
 \(t\) distribution with estimated degrees of freedom.
-Table~\ref{tab:shoppers-test-results} gives Expanded Welch's degrees
-of freedom and the unadjusted two-sided p-values, which we compare with
+Table~\ref{tab:shoppers-test-results} gives the Expanded Welch test's degrees of freedom and the unadjusted two-sided p-values, which we compare with
 the usual p-value threshold of 0.05.
 
 \begin{table}[H]
@@ -850,7 +848,7 @@ Weekend & 2.18 & 0.9554 & 0.9601\\
 \endgroup
 
 Both methods reject equal month--purchase MI because their p-values
-are below 0.05. Expanded Welch gives a larger p-value because the Student
+are below 0.05. The Expanded Welch test gives a larger p-value because the Student
 \(t\) distribution with 26.79 degrees of freedom assigns more probability
 to statistics at least this far from zero than the standard normal
 distribution.
@@ -859,8 +857,7 @@ For weekend, both corrected MI estimates are approximately 0.0007 nats,
 and their difference is only about 0.056 times its estimated standard
 error. The statistic therefore lies close to zero under either reference
 distribution, so both p-values are near one and neither test rejects
-equal weekend--purchase MI. This non-rejection does not establish equality. Expanded Welch's 2.18 degrees of freedom
-remain small despite the large samples because \(\Vhat(P)\) and
+equal weekend--purchase MI. This non-rejection does not establish equality. The Expanded Welch test's 2.18 degrees of freedom remain small despite the large samples because \(\Vhat(P)\) and
 \(\Vhat(Q)\) have substantial estimated fluctuations relative to
 their magnitudes. Equation~\eqref{eq:nu-p-hat} compares each squared estimate with its
 estimated sampling variance, so greater relative uncertainty gives fewer
@@ -874,14 +871,14 @@ sampling-moment target or measure false-positive rates.
 \section{Discussion}
 \label{sec:results-discussion}
 
-Expanded Welch improves on Wald where its larger cutoff corrects
+The Expanded Welch test improves on the Wald test where its larger cutoff corrects
 excessive false-positive rates. For \(4\times4\) tables with uniform margins
-at shared MI 0.02 nats and \(n=20\), Wald gives 8.35\% rejection and
-Expanded Welch gives 4.90\%
+at shared MI 0.02 nats and \(n=20\), false-positive rates are 8.35\% for the
+Wald test and 4.90\% for the Expanded Welch test
 (Table~\ref{tab:balanced-null-diagnostics}). This reduction towards 5\%
 supports the motivation of \citet{panwall2002}: accounting for variability
 in an estimated variance can reduce excessive Wald rejection. However,
-where Wald already rejects too rarely, Expanded Welch lowers rejection
+where the Wald test already rejects too rarely, the Expanded Welch test lowers rejection
 further. The accompanying loss of power must therefore
 be interpreted alongside whether the reduction in false positives improves
 calibration.
@@ -900,14 +897,15 @@ Satterthwaite degrees of freedom can make tests particularly conservative
 when the variance estimator has positive bias.
 
 Bias in the MI difference connects the null failures to the misleading
-power patterns. With identical population tables and sample sizes, the
-biases of the two MI estimates cancel; with different margins, they can
-leave a shifted difference under equal MI or reverse its estimated sign
-under an alternative. The residual information-estimation bias discussed
+power patterns. With identical population tables and sample sizes, the biases of the two
+MI estimates cancel in their difference. With different margins, unequal
+biases can shift the estimated difference away from zero under equal MI.
+When population MI values differ, those biases can also give the estimated
+difference the opposite sign to the population difference. The residual information-estimation bias discussed
 by \citet{paninski2003} thus affects both false-positive rates and the
 estimated direction of a difference. These findings explain why high
 rejection under an alternative need not identify the population with greater MI reliably,
-and why agreement between Wald and Expanded Welch on observed data does
+and why agreement between the Wald test and the Expanded Welch test on observed data does
 not establish accurate inference. Within the tested settings, the larger
 cutoff corrects some excessive rejection, but reliable comparisons also
 require an estimated MI difference with small bias relative to its

@@ -1,7 +1,7 @@
 \chapter{Detailed Derivation of the Expanded Welch--Satterthwaite Test for MI}
 \label{chap:expanded}
 
-Expanded Welch keeps the estimated MI difference, standard error and test
+The Expanded Welch test keeps the estimated MI difference, standard error and test
 statistic from Chapter~\ref{chap:baselines}, but changes the distribution used
 to judge that statistic from the standard normal distribution to a Student
 \(t\) distribution. To choose its degrees of freedom, this chapter calculates
@@ -9,8 +9,8 @@ how much the estimated pointwise-MI variance changes between samples. The name
 Expanded Welch refers to this expansion of the pointwise-MI variance as the table
 probabilities change.
 
-\section[Choosing degrees of freedom for Expanded Welch]{Choosing degrees of
-freedom for\\Expanded Welch}
+\section[Choosing degrees of freedom for the Expanded Welch test]{Choosing degrees of
+freedom for\\the Expanded Welch test}
 \label{sec:component-df-choice}
 
 The squared standard error contains two estimated variance contributions,
@@ -470,7 +470,7 @@ We next use these sensitivities to approximate how much \(\Vhat(P)\)
 changes between samples.
 
 \begin{assumption}[Positive variances of observation-level sensitivities]
-For the first-order Expanded Welch construction,
+For the first-order construction of the Expanded Welch test,
 \(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
 \end{assumption}
 
@@ -709,7 +709,7 @@ These substitutions give the estimated combined degrees of freedom:
   }.
   \label{eq:expanded-df}
 \end{equation}
-The two-sided p-value for Expanded Welch is
+The two-sided p-value for the Expanded Welch test is
 \begin{equation}
   p_{\mathrm{expanded}}
   =2\left\{1-F_t(|T|;\widehat\nu_{\mathrm{expanded}})\right\},
@@ -718,17 +718,18 @@ The two-sided p-value for Expanded Welch is
 where \(F_t(x;\nu)\) denotes the cumulative distribution function of a
 Student \(t\) distribution with \(\nu\) degrees of freedom, evaluated at \(x\).
 
-For a fixed finite \(T\), the Student \(t\) distribution gives a two-sided
-p-value at least as large as the standard normal distribution used by Wald.
+For a fixed finite \(T\), the two-sided p-value from the Student \(t\)
+distribution is at least as large as the Wald p-value from the standard
+normal distribution.
 We call a test calculation successful when all required quantities satisfy
 the numerical conditions in Appendix~\ref{sec:validity-rules}. Every
-successful Expanded Welch calculation also satisfies Wald's calculation
-requirements. At the same p-value threshold, every Expanded Welch rejection
-is therefore also a Wald rejection, including when unsuccessful calculations
+successful calculation for the Expanded Welch test also satisfies the Wald test's
+calculation requirements. At the same p-value threshold, every rejection by the
+Expanded Welch test is therefore also a rejection by the Wald test, including when unsuccessful calculations
 count as non-rejections in the reported rates. At the stated significance
-level, Expanded Welch cannot raise rejection where Wald is already
-conservative. The calculation requirements exclude an Expanded Welch
-comparison with a zero variance component.
+level, the Expanded Welch test cannot raise rejection where the Wald test is already
+conservative. The calculation requirements exclude comparisons using the
+Expanded Welch test when a variance component is zero.
 
 \section{Worked example and implementation}
 
@@ -780,9 +781,9 @@ Summing over all cells gives \(\Vhat(P)=0.27189\) and
   \qquad
   T=-1.44898.
 \end{equation}
-Wald gives \(p=0.14734\).
+The Wald test gives \(p=0.14734\).
 
-For Expanded Welch, the same cell illustrates the sensitivity calculation.
+For the Expanded Welch test, the same cell illustrates the sensitivity calculation.
 The first row's pointwise-MI values are 0.38526, \(-0.51083\) and
 \(-0.64436\), weighted by its counts 35, 10 and 5. Its conditional mean is
 \begin{equation*}
@@ -914,8 +915,9 @@ approximates each variance contribution by a variable with a scaled
 chi-squared distribution, as in Equation~\eqref{eq:scaled-chi-working}.
 The exact construction for a Student \(t\) distribution in
 Section~\ref{sec:component-df-choice} also requires a numerator with a
-standard normal distribution, independent of the squared denominator,
-which has a scaled chi-squared distribution. Here, the corrected MI
+standard normal distribution and a squared denominator with a scaled
+chi-squared distribution. The numerator and squared denominator must be
+independent. Here, the corrected MI
 difference and its estimated standard error come from the same tables, so
 an observation can change both quantities. Matching the variance moments
 does not establish the required
@@ -925,13 +927,13 @@ for \(T\) therefore remains a finite-sample approximation.
 For fixed population tables satisfying the stated assumptions, including
 positive \(V\) and \(\tau^2\), the estimated degrees of freedom grow as
 the sample sizes tend to infinity, bringing the Student \(t\) distribution
-closer to the standard normal distribution used by Wald. This large-sample behaviour holds the
+closer to the standard normal distribution used by the Wald test. This large-sample behaviour holds the
 populations fixed, whereas the near-independence comparison above reduces
 population MI at a fixed sample size.
 \par\nopagebreak[4]
 
 Both tests need a finite corrected MI difference and a positive, finite
-estimated standard error, while Expanded Welch also needs positive, finite component
+estimated standard error, while the Expanded Welch test also needs positive, finite component
 and combined degrees of freedom. If a requirement is not met, the calculation
 is unsuccessful and cannot be used to draw a test conclusion.
 The experiment applies the numerical calculation requirements in

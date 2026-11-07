@@ -2,7 +2,7 @@
 \label{chap:baselines}
 
 This chapter defines the estimated MI difference, standard error and test
-statistic shared by Wald and Expanded Welch, then calculates the
+statistic shared by the Wald test and the Expanded Welch test, then calculates the
 Wald p-value using the standard normal distribution.
 
 \section{Problem setup and bias-corrected estimator}
@@ -192,7 +192,7 @@ Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t}, but
 compare \(T\) with different reference distributions centred at zero
 under \(H_0\).
 
-\section[Wald test and motivation for Expanded Welch]{Wald test and motivation for\\Expanded Welch}
+\section[Wald test and motivation for the Expanded Welch test]{Wald test and motivation for\\the Expanded Welch test}
 
 When both sample sizes grow while the table dimensions and positive
 population probabilities stay fixed, the statistic approaches a standard
@@ -219,13 +219,13 @@ At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 \medskip
 \thesisminiheading{Why use a Student \(t\) distribution?}
 
-Wald uses the standard normal distribution at every sample size, even
+The Wald test uses the standard normal distribution at every sample size, even
 though its standard error is estimated from the observed tables.
 Hutcheson's entropy test assigns each variance component \(n_i\)
 degrees of freedom \citep{hutcheson1970}, while ordinary Welch's test
 assigns \(n_i-1\) \citep{welch1947}. For MI, these sample-size assignments
 do not measure how cell probabilities and margins make the estimated
-pointwise-MI variance change between samples. Expanded Welch therefore
+pointwise-MI variance change between samples. The Expanded Welch test therefore
 uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\) to choose
 the degrees of freedom of a Student \(t\) distribution.
 
