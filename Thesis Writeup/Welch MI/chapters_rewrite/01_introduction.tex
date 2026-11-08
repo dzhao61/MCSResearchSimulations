@@ -86,30 +86,30 @@ The thesis addresses three research questions:
 \section{Contributions to the field}
 
 \begin{enumerate}
-  \item \begin{samepage}\textbf{Mathematical contribution.} The thesis derives how changing
-  one observation affects the estimated pointwise-MI variance, including the resulting
-  changes in the row and column totals and in pointwise MI.
+  \item \begin{samepage}\textbf{Mathematical derivation.} The thesis derives a first-order
+  approximation to the sampling variability of the estimated pointwise-MI
+  variance, accounting for changes in cell probabilities and their row and
+  column totals.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Methodological contribution.} The Expanded Welch test uses
-  the derived effect of an observation on the pointwise-MI variance to choose
-  the degrees of freedom for a two-sample test using a Student \(t\) distribution.
+  \item \begin{samepage}\textbf{Test construction.} The Expanded Welch test uses this
+  approximation to estimate the degrees of freedom of a Student \(t\)
+  reference distribution while retaining the estimated MI difference and
+  standard error used by the Wald test.
   \par
   \end{samepage}
 
-  \item \begin{samepage}\textbf{Empirical contribution.} Controlled simulations check
-  the variance approximations and compare false-positive rates, power and
-  the fraction of successful test calculations as sample size, table size,
-  category frequencies and MI change.
+  \item \begin{samepage}\textbf{Empirical evaluation.} Controlled simulations assess
+  approximation accuracy and compare the tests' false-positive rates, power
+  and calculation success across sample sizes, table sizes, category
+  frequencies and MI values. The results identify where the larger cutoff
+  brings false-positive rates closer to 5\% or lowers rates already below
+  5\%, and quantify the accompanying loss of power. The evaluation also
+  shows how bias can reverse which population appears to have greater MI
+  and how inaccurate standard errors can inflate or suppress rejection.
   \par
   \end{samepage}
-
-  \item \textbf{Practical contribution.} The evaluation identifies where
-  the Expanded Welch test brings false-positive rates closer to 5\% and where it
-  increases conservatism by lowering rates that are already below 5\%.
-  It quantifies the accompanying reduction in power and identifies estimation
-  errors that make both tests unreliable.
 \end{enumerate}
 
 \section{Scope and organisation}
