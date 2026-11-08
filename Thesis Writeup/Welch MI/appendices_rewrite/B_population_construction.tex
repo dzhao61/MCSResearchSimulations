@@ -2,7 +2,7 @@
 \label{app:construction}
 
 This appendix specifies the population construction, target-MI search,
-settings underlying the main results, sampling procedure and outcome
+settings underlying the main results, sampling procedure, and outcome
 calculations. Together with the test formulas in
 Chapters~\ref{chap:baselines}--\ref{chap:design},
 these details define the statistical experiment.
@@ -97,7 +97,7 @@ The primary rejection rate divides rejections from successful calculations
 by all repetitions, with unsuccessful calculations counted as non-rejections.
 The study applies no minimum expected-count filter.
 
-\section{Bias, variance and degrees of freedom}
+\section{Bias, variance, and degrees of freedom}
 \label{sec:estimation-diagnostics}
 
 Let \(\widehat\Delta_s\) be the corrected difference in repetition
@@ -154,7 +154,7 @@ MI 0.02 nats and sample sizes
 \(n\in\{10,20,50,100,250,1000,10000\}\).
 Contributions to \(\Vhat\) and \(\widehat\tau^2\) are separated into
 once-observed cells whose row and column totals also equal one, other
-once-observed cells and cells observed more than once.
+once-observed cells, and cells observed more than once.
 
 For the linear-approximation check, calculate the first-order change in
 each repetition using the population sensitivity from
@@ -193,8 +193,8 @@ difference between the full variance and the linear prediction is
 Estimate the three terms from the same \(M=10{,}000\) repetitions using sample
 variances and covariance with denominator \(M-1\). Their sum equals the
 observed sample variance of \(\widehat V_s\). For example, at \(n=50\)
-in population \(P\), the linear variance, remainder variance and twice
-their covariance are respectively 18.7\%, 87.3\% and \(-6.0\%\) of
+in population \(P\), the linear variance, remainder variance, and twice
+their covariance are respectively 18.7\%, 87.3\%, and \(-6.0\%\) of
 the observed variance. The covariance partly offsets the remainder, but
 the linear variance is still only about one fifth of the observed
 variance. The same decomposition is calculated separately for \(Q\).
@@ -219,7 +219,7 @@ approximate the sampling-moment target \(\nu_{P,\mathrm{mom}}\) in
 Equation~\eqref{eq:component-df-moments}. The target uses the actual
 sampling mean and variance of \(\Vhat(P)\), measured over repeated
 samples from the same population at fixed sample size. Assuming positive
-\(V(P)\), \(\tau^2(P)\) and sampling variance, divide the two
+\(V(P)\), \(\tau^2(P)\), and sampling variance, divide the two
 definitions and rearrange to obtain the exact identity
 \begin{equation}
  \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
@@ -277,7 +277,7 @@ estimate the mean and variance.
 
 The mean error is exactly the average of \(X_s-\mu\). To express the
 variance error in a similar form, expand
-\(X_s-\bar X=(X_s-\mu)-(\bar X-\mu)\), square and sum. The cross
+\(X_s-\bar X=(X_s-\mu)-(\bar X-\mu)\), square, and sum. The cross
 term uses \(\sum_s(X_s-\mu)=M(\bar X-\mu)\), leaving
 \begin{equation}
  \frac{M-1}{M}S_X^2

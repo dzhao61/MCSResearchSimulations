@@ -27,6 +27,12 @@ dataset field names, URLs, paths, citation keys, code and LaTeX identifiers.
 Spelling corrections must preserve the scientific claims, numerical results,
 equations and references. An already consistent passage needs no change.
 
+Use Oxford (serial) commas before the final "and" or "or" in lists of
+three or more items, including headings, captions, and tables. Leave
+two-item phrases unchanged, and preserve original punctuation in published
+titles and direct quotations. Apply this preference through contextual
+review rather than inserting commas before every conjunction.
+
 The 1 November 2026 fixed-gap revision replaces the submitted calibrated-
 power experiment with a direct counterpart to the null grid. Earlier
 calibration examples in this guide remain historical writing examples.

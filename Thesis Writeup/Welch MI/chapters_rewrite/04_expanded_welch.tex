@@ -1,7 +1,7 @@
 \chapter{Detailed Derivation of the Expanded Welch--Satterthwaite Test for MI}
 \label{chap:expanded}
 
-The Expanded Welch test keeps the estimated MI difference, standard error and test
+The Expanded Welch test keeps the estimated MI difference, standard error, and test
 statistic from Chapter~\ref{chap:baselines}, but changes the distribution used
 to judge that statistic from the standard normal distribution to a Student
 \(t\) distribution. To choose its degrees of freedom, this chapter calculates
@@ -348,7 +348,7 @@ probability-weighted row and column means
 To evaluate the sum multiplied by \(2\) in
 Equation~\eqref{eq:m2-product-rule}, substitute the pointwise-MI derivative
 from Equation~\eqref{eq:pmi-derivative}. The sum has four terms. The
-indicators in the first three select the chosen cell, its row and its column:
+indicators in the first three select the chosen cell, its row, and its column:
 \begin{align*}
   \sum_{i,j}p_{ij}\pmi_P(i,j)
   \frac{\mathbf 1\{i=x,j=y\}}{p_{ij}}
@@ -623,7 +623,7 @@ Repeating the same calculation for the second table gives
 
 \medskip
 Table~\ref{tab:component-df-roles} distinguishes the sampling-moment target,
-its population first-order approximation and the sample-based estimate.
+its population first-order approximation, and the sample-based estimate.
 The target and population approximation are fixed for a population and
 sample size, whereas \(\widehat\nu_P\) changes with each sampled table.
 
@@ -640,10 +640,10 @@ sample size, whereas \(\widehat\nu_P\) changes with each sampled table.
 \(\E\{\Vhat(P)\}\) and \(\Var\{\Vhat(P)\}\) at fixed \(P,n_P\)\\
 \addlinespace
 \(\nu_{P,\mathrm{FO}}\) & Population first-order approximation to the target &
-Population \(V(P)\), \(\tau^2(P)\) and \(n_P\)\\
+Population \(V(P)\), \(\tau^2(P)\), and \(n_P\)\\
 \addlinespace
 \(\widehat\nu_P\) & Component estimate used by Expanded Welch &
-\(\Vhat(P)\), \(\widehat\tau^2(P)\) and \(n_P\) from one sample\\
+\(\Vhat(P)\), \(\widehat\tau^2(P)\), and \(n_P\) from one sample\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -783,8 +783,8 @@ Summing over all cells gives \(\Vhat(P)=0.27189\) and
 The Wald test gives \(p=0.14734\).
 
 For the Expanded Welch test, the same cell illustrates the sensitivity calculation.
-The first row's pointwise-MI values are 0.38526, \(-0.51083\) and
-\(-0.64436\), weighted by its counts 35, 10 and 5. Its conditional mean is
+The first row's pointwise-MI values are 0.38526, \(-0.51083\), and
+\(-0.64436\), weighted by its counts 35, 10, and 5. Its conditional mean is
 \begin{equation*}
  \frac{35(0.38526)+10(-0.51083)+5(-0.64436)}{50}
  \simeq0.10308.

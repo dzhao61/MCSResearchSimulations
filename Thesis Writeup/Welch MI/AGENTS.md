@@ -85,6 +85,9 @@ Longer sentences are useful when they keep a claim with its reason,
 consequence, qualification or comparison. Keep a clear main clause and avoid
 stacking unrelated ideas, numerical cases or nested qualifications. Use
 conjunctions to express genuine relationships, not to decorate the prose.
+Use Oxford (serial) commas before the final "and" or "or" in lists of
+three or more items, including headings, captions, and tables. Preserve
+original punctuation in published titles and direct quotations.
 Retain short sentences for new definitions, key results and distinct
 derivation steps. Keep each paragraph focused and link paragraphs through
 the argument itself. Do not restore removed tangents or technical previews.

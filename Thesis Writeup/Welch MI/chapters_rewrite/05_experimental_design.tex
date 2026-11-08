@@ -9,7 +9,7 @@ Section~\ref{sec:research-questions} by checking the Expanded Welch test's varia
 approximations and comparing its false-positive rates and power with those
 of the Wald test. The design follows the simulation
 framework of \citet{morris2019}, specifying the populations, quantities
-being estimated, methods and performance measures.
+being estimated, methods, and performance measures.
 
 One observation records an \((X,Y)\) outcome. One simulation repetition
 draws a sample of observations from each population, producing two count
@@ -77,7 +77,7 @@ on the category frequencies \(a\). To construct a table with the desired
 MI, we hold \(a\) fixed and search numerically for \(\lambda\),
 calculating MI from the population table at each candidate value.
 Appendix~\ref{app:construction} gives the available MI range, the numerical
-search and the fixed-margin calculation.
+search, and the fixed-margin calculation.
 
 \medskip
 \thesisminiheading{Constructing a \(2\times2\) joint distribution with positive MI.}
@@ -121,8 +121,8 @@ probability separately.
 \thesisminiheading{Table sizes and margin regimes.}
 
 The experiment repeats this construction for square tables of sizes
-\(2\times2,4\times4,8\times8\) and \(16\times16\), containing
-4, 16, 64 and 256 cells. Each doubling of the number of categories multiplies the number of
+\(2\times2,4\times4,8\times8\), and \(16\times16\), containing
+4, 16, 64, and 256 cells. Each doubling of the number of categories multiplies the number of
 cells by four, so a fixed sample must be distributed over more possible
 cells.
 
@@ -226,11 +226,11 @@ positive MI to examine behaviour near independence. In this latter range,
 the predicted sampling variance of \(\Vhat(P)\) becomes small and
 quadratic sampling terms can matter. Both grids use all
 three margin regimes and equal sample sizes \(n_P=n_Q=n\). Each row
-combines every listed table size, MI value and sample size.
+combines every listed table size, MI value, and sample size.
 
 \begin{table}[!htbp]
 \centering
-\caption{Settings for the approximation checks, broad null comparison and power study.}
+\caption{Settings for the approximation checks, broad null comparison, and power study.}
 \label{tab:design-primary-grids}
 \thesistableformat
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.24\textwidth}>{\raggedright\arraybackslash}X@{}}
@@ -271,7 +271,7 @@ sets
 \end{equation}
 These levels cover weaker association, the baseline MI used for the power
 study, and stronger association. For each shared MI, we use all four
-table sizes, three margin regimes and ten sample sizes in
+table sizes, three margin regimes, and ten sample sizes in
 Tables~\ref{tab:design-primary-grids} and \ref{tab:margin-profiles}.
 The resulting 360 settings test whether the methods' behaviour changes
 across those four experimental parameters.
@@ -292,7 +292,7 @@ below 5\% indicates conservatism. We assess calibration by closeness to
 
 To measure power, we draw samples from populations with different MI, so
 rejection detects a genuine difference. The power study uses the same
-four table sizes, three margin regimes and ten sample sizes as the broad
+four table sizes, three margin regimes, and ten sample sizes as the broad
 null comparison in Section~\ref{sec:null-design}. We repeat that grid for
 three MI gaps by holding \(I(P)=0.02\) nats and changing \(I(Q)\):
 \begin{equation}
@@ -304,7 +304,7 @@ three MI gaps by holding \(I(P)=0.02\) nats and changing \(I(Q)\):
 \end{equation}
 Thus \(Q\) has greater MI in each alternative, with gap magnitudes
 \(|\Delta|\in\{0.005,0.01,0.02\}\) nats. Each magnitude uses all
-120 combinations of table size, margin regime and sample size, giving
+120 combinations of table size, margin regime, and sample size, giving
 360 power settings. Within each curve, the two population tables and
 MI gap stay fixed as sample size increases; comparing curves changes
 \(Q\)'s association while retaining its margins.

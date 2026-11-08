@@ -3,7 +3,7 @@
 
 Testing for equal MI in two populations requires an estimate from each
 sample and its sampling variance. This chapter develops the MI estimator,
-derives its variance and reviews tests for equal population MI.
+derives its variance, and reviews tests for equal population MI.
 
 \section{Information-theoretic foundations}
 
@@ -320,7 +320,7 @@ the same way.
 
 After this rearrangement, the same cell error \(\widehat p_{ij}-p_{ij}\)
 appears in the joint term, its
-row-margin term and its column-margin term. Its combined coefficient is
+row-margin term, and its column-margin term. Its combined coefficient is
 \begin{align}
   &(\log p_{ij}+1)
   -(\log p_{i+}+1)
@@ -501,7 +501,7 @@ preceding section add to approximate the sampling variance of the MI
 difference. Estimating this sum and taking its square root gives the
 standard error, which estimates the difference's standard deviation across
 repeated samples. This section
-reviews the Wald test, the Welch--Satterthwaite principle and other
+reviews the Wald test, the Welch--Satterthwaite principle, and other
 approaches to that comparison. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\).
 
@@ -530,7 +530,7 @@ the population variances by estimates gives the standardisation
 Here \(\Vhat(P)\) and \(\Vhat(Q)\) estimate the pointwise-MI variances
 \(V(P)\) and \(V(Q)\). The approximation using a standard normal distribution
 assumes positive population cell probabilities, positive pointwise-MI
-variances and increasing sample sizes. With smaller samples, a normal
+variances, and increasing sample sizes. With smaller samples, a normal
 distribution may approximate the MI difference poorly, and the estimated
 standard error can vary between samples. The Wald test still uses the same standard normal distribution
 cutoff, regardless of how much the estimated standard error varies.
@@ -573,7 +573,7 @@ scaled chi-squared distribution
 \begin{figure}[H]
   \centering
   \includegraphics{focused_reference_distributions.pdf}
-  \caption{Standard normal distribution and Student \(t\) distributions with 3, 10 and 30 degrees of freedom.}
+  \caption{Standard normal distribution and Student \(t\) distributions with 3, 10, and 30 degrees of freedom.}
   \label{fig:normal-student-t}
 \end{figure}
 
@@ -659,7 +659,7 @@ cell change on its row and column totals.
 The entropy comparison provides a precedent for using a Student \(t\)
 distribution as an approximate reference when comparing estimated
 information quantities, but MI requires more than substituting a different
-numerator. The row, column and joint entropies in MI are calculated from the same
+numerator. The row, column, and joint entropies in MI are calculated from the same
 observations, so their estimation errors are connected through the cell
 counts contributing to all three.
 The MI sampling-variance formulas in Section~\ref{sec:first-order-mi-background}

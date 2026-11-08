@@ -29,6 +29,11 @@ check when drafting or reviewing prose. Preserve original spelling in
 published titles, direct quotations, proper names, dataset fields, code,
 URLs, paths and LaTeX identifiers.
 
+Use Oxford (serial) commas before the final "and" or "or" in lists of
+three or more items, including headings, captions, and tables. Do not add
+serial commas to two-item phrases. Preserve original punctuation in
+published titles and direct quotations.
+
 For the Welch MI thesis and related research writing, use Section 2.3 of
 `Thesis Writeup/Welch MI/chapters_rewrite/02_background_literature.tex` as the
 model for the depth of important derivations. Assume the reader knows basic
