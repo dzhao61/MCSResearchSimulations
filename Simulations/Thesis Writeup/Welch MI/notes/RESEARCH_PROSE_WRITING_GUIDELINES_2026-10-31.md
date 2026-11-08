@@ -216,6 +216,29 @@ limitation, or make the next question necessary. It need not repeat the
 opening claim. Remove a generic closing sentence if the paragraph already
 finishes its explanation; retain a specific consequence the reader needs.
 
+### Choose headings by their role in the argument
+
+Use numbered subsections for substantial topics, methods, or derivation
+stages that a reader should be able to locate in the contents. Use
+unnumbered bold headings for local divisions within one topic, such as a
+proof direction, worked illustration, or brief qualification. Judge the
+role of the passage rather than its word count: a displayed calculation
+may be an important stage even when its explanation is short.
+
+Apply the same distinction across chapters and appendices. Do not use
+subsubsections. Where a numbered subsection contains a local division,
+use the existing `\thesisminiheading` command. Avoid consecutive headings
+that merely repeat the same topic, and do not add a single subsection
+that labels an entire section without dividing it. Give sibling
+subsections comparable scope and descriptive titles. Let the subsection
+command control its spacing rather than adding `\medskip` before it;
+retain the established spacing around local bold headings.
+
+The 8 November 2026 heading review applies this hierarchy without changing
+the surrounding prose or mathematics. Its decisions and preservation
+checks are recorded in
+[the heading review](HEADING_HIERARCHY_REVIEW_2026-11-08.md).
+
 ## 3. Complete relationships within sentences where that helps
 
 Keep a statement with its immediate cause, consequence, condition,

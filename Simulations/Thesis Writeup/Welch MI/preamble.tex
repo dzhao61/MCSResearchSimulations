@@ -22,6 +22,7 @@
 \usepackage[round,authoryear]{natbib}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{etoolbox}
 
 % Apply the template's body spacing after its single-spaced title page.
 % The AMS class has 13pt base leading: 1.5 gives a 19.5pt baseline.
@@ -62,6 +63,9 @@
   \renewcommand{\arraystretch}{1.25}%
 }
 \makeatletter
+% Anchor AMS front-list entries after their page break, before writing the contents.
+\patchcmd{\@starttoc}{\let\@secnumber\@empty}{\let\@secnumber\@empty\phantomsection}
+  {}{\PackageError{welch-thesis}{Unable to anchor front lists}{Check the AMS starttoc definition.}}
 % Reserve a clear page-number column for the thesis's long contents titles.
 \renewcommand{\@pnumwidth}{2.5em}
 \setlength{\@fptop}{0pt}

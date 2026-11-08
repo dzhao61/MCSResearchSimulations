@@ -140,6 +140,12 @@ not force four sentences or a generic linking sentence into every paragraph.
 Treat a displayed equation and its surrounding explanation as one connected
 unit. Make transitions show how the next idea follows from the previous one,
 rather than merely announcing the next section.
+Use numbered subsections for substantial topics, methods, and derivation
+stages, and unnumbered bold headings for local proof steps, worked
+illustrations, and brief qualifications within one topic. Apply this
+distinction consistently across the main chapters and appendices. Do not
+use subsubsections or add a sole subsection that merely repeats its parent
+section. Choose the level by the passage's role rather than its length.
 Keep figure captions short and descriptive. Put detailed experiment settings
 and interpretation in ordinary body paragraphs beside each figure, rather
 than in long captions or separate small-text interpretation blocks.

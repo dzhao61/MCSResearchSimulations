@@ -92,6 +92,8 @@ therefore identical in either unit.
 \section{Estimating discrete mutual information}
 \label{sec:background-mi-bias}
 
+\subsection{Plug-in estimation and leading bias correction}
+
 Suppose a sample of size \(n\) produces counts \(N_{ij}\). The empirical cell
 probabilities are
 \begin{equation}
@@ -158,8 +160,7 @@ For a \(2\times2\) table with \(n_P=50\) and \(n_Q=100\), Equation
 \ref{chap:baselines} corrects this sample-size effect by subtracting
 \((r-1)(c-1)/(2n)\) from each estimate.
 
-\medskip
-\thesisminiheading{Estimation beyond the leading bias correction.}
+\subsection{Estimation beyond the leading bias correction}
 
 Data are undersampled when too few observations are available to estimate
 the joint probabilities reliably, which can leave rare category combinations
@@ -229,8 +230,7 @@ cell probabilities. Second, a first-order Taylor expansion translates those
 probability errors into an MI error. Third, that error can be written as a
 sample average, whose variance is straightforward to calculate.
 
-\medskip
-\thesisminiheading{Step 1: From probability errors to MI error.}
+\subsection{From probability errors to MI error}
 
 Using the entropy identity in Equation~\eqref{eq:mi-entropy-form}, MI can be
 written directly in terms of the joint and marginal probabilities:
@@ -365,8 +365,7 @@ The complicated changes in the joint table and its two margins have therefore
 reduced to a weighted sum of cell-probability errors. The weight for a cell is
 its population pointwise MI.
 
-\medskip
-\thesisminiheading{Step 2: From cell errors to observation-level errors.}
+\subsection{From cell errors to observation-level errors}
 
 Let \(Z_a=(X_a,Y_a)\) be observation \(a\). An empirical cell probability is
 the proportion of observations in that cell, so
@@ -429,8 +428,7 @@ The centred function \(\pmi_P(i,j)-I(P)\) is called the influence function
 of MI\@. Equation~\eqref{eq:mi-error-as-average-background} uses it to
 approximate the sampling error \citep{hampel1974,vanderVaart1998,kandasamy2015}.
 
-\medskip
-\thesisminiheading{Step 3: Calculate the sampling variance.}
+\subsection{Calculating the sampling variance}
 
 Define the population variance of these centred contributions by
 \begin{equation}
@@ -505,7 +503,7 @@ reviews the Wald test, the Welch--Satterthwaite principle, and resampling
 alternatives. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\).
 
-\thesisminiheading{The Wald test.}
+\subsection{The Wald test}
 
 A Wald test estimates a parameter difference, divides it by an estimated
 standard error, and compares the result with a standard normal distribution
@@ -537,8 +535,7 @@ cutoff, regardless of how much the estimated standard error varies.
 Chapter~\ref{chap:baselines} applies the leading bias correction to the
 numerator and specifies the full Wald test.
 
-\medskip
-\thesisminiheading{The Welch--Satterthwaite principle.}
+\subsection{The Welch--Satterthwaite principle}
 
 This thesis adapts the Welch--Satterthwaite principle from comparing population
 means to comparing population MI values. Welch's test allows the population
@@ -617,8 +614,7 @@ The distinction matters for MI: a larger cutoff can compensate for some
 excessive rejection, but it does not change the estimated variance or
 remove bias in the estimated MI difference.
 
-\medskip
-\thesisminiheading{Resampling alternatives.}
+\subsection{Resampling alternatives}
 
 A bootstrap approximates sampling variation by repeatedly drawing samples
 with replacement from the observed data \citep{efron1979}. For this

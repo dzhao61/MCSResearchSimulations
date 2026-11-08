@@ -7,6 +7,8 @@ Wald p-value using the standard normal distribution.
 
 \section{Problem setup and bias-corrected estimator}
 
+\subsection{Problem setup and assumptions}
+
 Let
 \begin{equation}
   N^P=(N^P_{ij}),
@@ -70,8 +72,7 @@ why positive cell probabilities are required.
 All logarithms in this thesis are natural, so MI differences and standard
 errors are reported in nats.
 
-\medskip
-\thesisminiheading{Bias-corrected estimator.}
+\subsection{Bias-corrected estimator}
 
 For the first table, define empirical pointwise MI by
 \begin{equation}
@@ -192,6 +193,8 @@ under \(H_0\).
 
 \section[Wald test and motivation for the Expanded Welch test]{Wald test and motivation for\\the Expanded Welch test}
 
+\subsection{Wald p-value}
+
 When both sample sizes grow while the table dimensions and positive
 population probabilities stay fixed, the statistic approaches a standard
 normal distribution under equal population MI
@@ -214,8 +217,7 @@ two-sided calculation doubles the upper-tail probability
 lower tail.
 At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 
-\medskip
-\thesisminiheading{Why use a Student \(t\) distribution?}
+\subsection{Motivation for the Student \texorpdfstring{\(t\)}{t} distribution}
 
 The large-sample limit above relies on \(\SEhat\) estimating the
 sampling standard deviation of \(\Deltahat\) with decreasing relative

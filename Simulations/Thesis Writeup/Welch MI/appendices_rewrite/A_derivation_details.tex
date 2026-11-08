@@ -114,6 +114,8 @@ Appendix~\ref{sec:independence-boundary} treats that case separately.
 \section{The independence boundary}
 \label{sec:independence-boundary}
 
+\subsection{Quadratic sampling error at independence}
+
 At independence, \(p_{ij}=p_{i+}p_{+j}\), so every population
 pointwise-MI value is \(\pmi_P(i,j)=\log 1=0\). Consequently,
 \(I(P)=V(P)=0\), and the first-order change in MI is zero. Sampling can
@@ -231,8 +233,7 @@ quadratic cell errors, whereas the Wald test and the Expanded Welch test use the
 first-order MI error. The two-sample first-order approximation therefore
 does not apply unchanged at exact independence.
 
-\medskip
-\thesisminiheading{Sampling variation at small positive MI.}
+\subsection{Sampling variation at small positive MI}
 
 The quadratic approximation also explains why estimated degrees of freedom
 remain several units when population MI is almost zero. Keep \(r\) and
@@ -352,8 +353,7 @@ then considering the reverse direction. A probability-table example
 illustrates the two quantities, followed by a table showing why the
 positive-cell condition matters.
 
-\medskip
-\thesisminiheading{MI is an average; pointwise-MI variance measures spread.}
+\subsection{Equivalence for positive probability tables}
 
 Each cell has a pointwise-MI value that compares its probability with
 the probability under independence. MI averages these values, whereas
@@ -454,8 +454,7 @@ total probability one. For \(P_{\mathrm{ind}}\) itself, every ratio
 is one, so every pointwise-MI value is zero and both MI and the
 pointwise-MI variance are zero.
 
-\medskip
-\thesisminiheading{Why positive cell probabilities are required.}
+\subsection{Why positive cell probabilities are required}
 
 Now consider a population in which only the matching pairs can occur:
 \begin{equation}

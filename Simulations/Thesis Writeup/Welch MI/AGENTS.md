@@ -131,6 +131,16 @@ When editing prose, preserve equations, scientific qualifications, numerical
 evidence, citations, figure dimensions and typography. Keep Section 2.3 as the
 derivation benchmark and do not revise it without a specific request.
 
+Use numbered subsections for substantial topics, methods, and derivation
+stages. Use unnumbered bold headings through `\thesisminiheading` for local
+proof steps, worked illustrations, and brief qualifications within a topic.
+Apply this distinction consistently across the main chapters and appendices,
+judging the passage's role rather than its length. Do not use subsubsections
+or add a sole subsection that simply repeats its parent section. Avoid
+stacking redundant headings. Let subsection commands supply their spacing.
+The heading guidance in the consolidated prose guide records this preference,
+confirmed by the user on 8 November 2026.
+
 The main build is a deliverable build. Only an explicitly requested
 working-draft rebuild uses a separate `Working Draft v3` source/output
 target. Preserve all archived and historical sources and PDFs.

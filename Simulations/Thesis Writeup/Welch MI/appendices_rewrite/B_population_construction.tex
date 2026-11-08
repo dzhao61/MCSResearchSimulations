@@ -100,6 +100,8 @@ The study applies no minimum expected-count filter.
 \section{Bias, variance, and degrees of freedom}
 \label{sec:estimation-diagnostics}
 
+\subsection{MI-difference diagnostics and component degrees of freedom}
+
 Let \(\widehat\Delta_s\) be the corrected difference in repetition
 \(s\). Its bias estimate is the mean of the finite-valued MI difference
 estimates minus the known \(\Delta\). Its observed sampling variance is
@@ -125,8 +127,7 @@ Finite zero variance estimates remain in moment calculations even when
 component degrees of freedom are undefined. These diagnostics do not isolate
 each estimation error's causal contribution to rejection.
 
-\medskip
-\thesisminiheading{Sampling variability of the estimated pointwise-MI variance.}
+\subsection{Sampling variability of the estimated pointwise-MI variance}
 
 For each selected population, measure the observed variability of
 \(\Vhat(P)\) by replacing \(\widehat\Delta_s\) with
@@ -213,6 +214,8 @@ populations, not simultaneous coverage over every setting.
 \label{sec:moment-target-details}
 \label{sec:moment-uncertainty}
 
+\subsection{First-order approximation and moment target}
+
 The population first-order degrees of freedom
 \(\nu_{P,\mathrm{FO}}\) in Equation~\eqref{eq:population-component-df}
 approximate the sampling-moment target \(\nu_{P,\mathrm{mom}}\) in
@@ -234,8 +237,7 @@ degrees of freedom relative to the moment target when the variance
 prediction is otherwise accurate. The same calculations are made
 separately for \(Q\).
 
-\medskip
-\thesisminiheading{Estimating the targets and their uncertainty.}
+\subsection{Estimating the targets and their uncertainty}
 
 For a component, let \(X_s=\widehat V_s\) in repetition \(s\). Use
 all finite values, including zeros, even if component degrees of freedom

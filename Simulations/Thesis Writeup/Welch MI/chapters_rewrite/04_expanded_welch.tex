@@ -19,6 +19,8 @@ contributions, and take the variance of that average.
 freedom for\\the Expanded Welch test}
 \label{sec:component-df-choice}
 
+\subsection{Connecting the statistic to the Student \texorpdfstring{\(t\)}{t} distribution}
+
 To connect the estimated standard error to the reference distribution,
 divide both the estimated MI difference and its standard error by the
 population sampling standard deviation of \(\Deltahat\). This rewrites
@@ -55,8 +57,7 @@ matching does not establish independence between the MI numerator and
 the variance estimates, we use the Student \(t\) distribution as an
 approximate reference.
 
-\medskip
-\thesisminiheading{Moment matching for one pointwise-MI variance estimate.}
+\subsection{Moment matching for component degrees of freedom}
 
 The squared standard error adds \(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\).
 We first match moments for \(\Vhat(P)\), then show why dividing by
@@ -826,6 +827,8 @@ conservative.
 
 \section{Worked example and implementation}
 
+\subsection{Worked comparison}
+
 Consider the two observed \(3\times3\) tables
 \begin{equation}
   N^P=
@@ -907,8 +910,7 @@ Combining them with Equation~\eqref{eq:expanded-df} gives
 Neither method rejects at the 5\% level.
 
 \pagebreak[3]
-\medskip
-\thesisminiheading{Operational algorithm and complexity.}
+\subsection{Operational algorithm and complexity}
 \label{sec:expanded-complexity}
 
 Table~\ref{tab:expanded-algorithm} summarises one comparison.
@@ -947,7 +949,7 @@ time complexity is therefore \(O(rc)\), and the working memory is also
 \section{Behaviour and limitations}
 \label{sec:near-independence-mechanism}
 
-\thesisminiheading{Near independence.}
+\subsection{Near independence}
 
 Consider a population table that approaches independence while its row
 and column margins stay fixed. At independence, every pointwise-MI value
@@ -997,8 +999,7 @@ Appendix~\ref{sec:independence-boundary} retains the quadratic sampling
 terms and derives their contribution to the estimated degrees of freedom.
 
 \begin{samepage}
-\medskip
-\thesisminiheading{Theoretical status and calculation requirements.}
+\subsection{Theoretical status and calculation requirements}
 
 Equations~\eqref{eq:mi-derivative} and \eqref{eq:g-final} are exact
 derivatives for positive population tables. Using these derivatives to
