@@ -1,0 +1,1235 @@
+{
+  "version": 1,
+  "prepared_date": "2026-11-04",
+  "workspace_root": "/Users/danielzhao/MyMac/Masters Degree/Research/Simulations",
+  "purpose": "Planning/evidence specification only. No slide deck or new experiment was created.",
+  "plan": "Thesis Writeup/Welch MI/notes/PRESENTATION_EXECUTION_PLAN_2026-11-04.md",
+  "presentation_rules": {
+    "main_slides": 16,
+    "backup_slides": 12,
+    "total_slides": 28,
+    "talk_max_seconds": 1200,
+    "question_max_seconds": 600,
+    "planned_talk_seconds": 1130,
+    "short_route_seconds": 1005,
+    "planned_margin_seconds": 70,
+    "rubric_weights_percent": {
+      "coverage": 30,
+      "understanding_and_questions": 20,
+      "pace_and_time": 20,
+      "engagement": 20,
+      "slide_readability": 10
+    },
+    "presentation_share_of_project_percent": 20,
+    "required_upload_format": "PDF"
+  },
+  "university_sources": [
+    {
+      "path": "/Users/danielzhao/MyMac/Masters Degree/Research/Example Thesis/Presentation Marking Criteria.pdf",
+      "sha256": "c45e7dee97a74d03afc9408eb1f1640e71c30c51e00992d7b33abc00eda91b14"
+    },
+    {
+      "path": "/Users/danielzhao/MyMac/Masters Degree/Research/Example Thesis/18cp Research Path deliverables.pdf",
+      "sha256": "f9748fa0c8b92b5eddc9fa45899c7f0eea69ea6449f21ff0b087b796f9b380f9"
+    },
+    {
+      "path": "/Users/danielzhao/MyMac/Masters Degree/Research/Example Thesis/18CP Research Pathway Project Marking Rubric V3.pdf",
+      "sha256": "2f53a5f49910bc65c450de2c2bd7238d16ef35b3d85ad4ec8e13be2f23f7737a"
+    }
+  ],
+  "sources": {
+    "final_thesis": {
+      "path": "Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis.pdf",
+      "sha256": "6a3442e9732f29daace007433b7ee3c575d984ab1a3196a7a8555c0863b91a94"
+    },
+    "moments": {
+      "path": "WelchSatterthwaiteMI/results/approximation_redesign/moments.csv",
+      "sha256": "419d20dda26c4b5c293f326366d3564867ea2de7518810e3feb90ec1a0e5e0f6"
+    },
+    "displays": {
+      "path": "WelchSatterthwaiteMI/results/approximation_redesign/displays.csv",
+      "sha256": "a65686f710d2a1984870b050ef4b34cd00dcef5b2d325101a7a144ee25ea6ab0"
+    },
+    "configurations": {
+      "path": "WelchSatterthwaiteMI/results/approximation_redesign/configurations.csv",
+      "sha256": "e57959184297f21e6ab1b8075104a67dab2b36f2a59dc24a9c92ad4ed26bc4a8"
+    },
+    "null_rates": {
+      "path": "WelchSatterthwaiteMI/results/balanced_null_2026-11-01/combined_rates.csv",
+      "sha256": "c01fb2e46ddac7a64cd062ea7e1dd49342d3a32f16f2f1ed8d3fce9a7c916933"
+    },
+    "null_diagnostics": {
+      "path": "WelchSatterthwaiteMI/results/balanced_null_2026-11-01/combined_diagnostics.csv",
+      "sha256": "a7f8b1c97a301b2d265e3b661ddea92f3d36a9a0fe22e8cbe37f4a491c352a8f"
+    },
+    "null_paired": {
+      "path": "WelchSatterthwaiteMI/results/balanced_null_2026-11-01/combined_paired.csv",
+      "sha256": "7fd10d0dd396cc0604aa5009051e73336db269c076296e622caf6114381cec85"
+    },
+    "null_evidence": {
+      "path": "Thesis Writeup/Welch MI/figures_rewrite/balanced_null_evidence.json",
+      "sha256": "74ebb7f06add086a4eb82db4bf8fbc32557576688f42c83d0b98c7e1e1aab756"
+    },
+    "power_rates": {
+      "path": "WelchSatterthwaiteMI/results/mi_gap_power_2026-11-01/combined_rates.csv",
+      "sha256": "223b067f594903c29c7351cf4d43748234c117e51b84b4ab569bdbfb051e29f6"
+    },
+    "power_diagnostics": {
+      "path": "WelchSatterthwaiteMI/results/mi_gap_power_2026-11-01/combined_diagnostics.csv",
+      "sha256": "1c64e4294f4614206128280b31d97364b3c473582ed5c09fb6a6c37cfe4e7328"
+    },
+    "power_paired": {
+      "path": "WelchSatterthwaiteMI/results/mi_gap_power_2026-11-01/combined_paired.csv",
+      "sha256": "45552f1f8acf2ff86e8b25b83311c70091ff2bb6e5b7f924035b2022bec8cc3b"
+    },
+    "application": {
+      "path": "PracticalMIExploration/thesis_application/full_data_results.csv",
+      "sha256": "5b8c145ad17fe0457bc5083e283feaa2527ea142644a95eab35f52c9e853af45"
+    },
+    "application_protocol": {
+      "path": "PracticalMIExploration/PROTOCOL.md",
+      "sha256": "5ef4b7ce07a643685dcb7e65fcbeb21ac7a0dbeb2a10328e7a76337d2f12aefe"
+    },
+    "bibliography": {
+      "path": "Thesis Writeup/Welch MI/references.bib",
+      "sha256": "1da325af2387552a3220bb22eae5dfa988a5eacd4004a7a057c2d1dffed9ea76"
+    },
+    "reference_distributions": {
+      "path": "Thesis Writeup/Welch MI/figures_rewrite/focused_reference_distributions.pdf",
+      "sha256": "9cb8d99c9505e99d81c26617fbb30ecd240d3e10c827cdcde6254c129dd96f6f"
+    },
+    "university_logo": {
+      "path": "Thesis Writeup/Welch MI/style/usyd-primary-colour.pdf",
+      "sha256": "8f36248537afb302068a24e33e5e9495651dc9c62d1259a7426f9ba0e36b67ce"
+    }
+  },
+  "main_slide_schedule": [
+    {
+      "slide": 1,
+      "title": "Comparing Mutual Information in Finite Samples",
+      "duration_seconds": 25,
+      "finish_seconds": 25,
+      "finish_mmss": "0:25"
+    },
+    {
+      "slide": 2,
+      "title": "Comparing association across populations",
+      "duration_seconds": 65,
+      "finish_seconds": 90,
+      "finish_mmss": "1:30"
+    },
+    {
+      "slide": 3,
+      "title": "Sampling uncertainty in the MI comparison",
+      "duration_seconds": 60,
+      "finish_seconds": 150,
+      "finish_mmss": "2:30"
+    },
+    {
+      "slide": 4,
+      "title": "Existing foundations and the MI-specific contribution",
+      "duration_seconds": 55,
+      "finish_seconds": 205,
+      "finish_mmss": "3:25"
+    },
+    {
+      "slide": 5,
+      "title": "Normal Wald and Expanded Welch",
+      "duration_seconds": 70,
+      "finish_seconds": 275,
+      "finish_mmss": "4:35"
+    },
+    {
+      "slide": 6,
+      "title": "Deriving the degrees of freedom",
+      "duration_seconds": 120,
+      "finish_seconds": 395,
+      "finish_mmss": "6:35"
+    },
+    {
+      "slide": 7,
+      "title": "Evaluation from known populations",
+      "duration_seconds": 75,
+      "finish_seconds": 470,
+      "finish_mmss": "7:50"
+    },
+    {
+      "slide": 8,
+      "title": "Sparse samples distort the variance inputs",
+      "duration_seconds": 80,
+      "finish_seconds": 550,
+      "finish_mmss": "9:10"
+    },
+    {
+      "slide": 9,
+      "title": "Sampling noise matters near independence",
+      "duration_seconds": 90,
+      "finish_seconds": 640,
+      "finish_mmss": "10:40"
+    },
+    {
+      "slide": 10,
+      "title": "The benefit depends on Wald's false-positive rate",
+      "duration_seconds": 80,
+      "finish_seconds": 720,
+      "finish_mmss": "12:00"
+    },
+    {
+      "slide": 11,
+      "title": "False-positive rates across common MI values",
+      "duration_seconds": 70,
+      "finish_seconds": 790,
+      "finish_mmss": "13:10"
+    },
+    {
+      "slide": 12,
+      "title": "Power across three MI differences",
+      "duration_seconds": 65,
+      "finish_seconds": 855,
+      "finish_mmss": "14:15"
+    },
+    {
+      "slide": 13,
+      "title": "Bias can reverse the estimated direction",
+      "duration_seconds": 90,
+      "finish_seconds": 945,
+      "finish_mmss": "15:45"
+    },
+    {
+      "slide": 14,
+      "title": "An application to online shopping",
+      "duration_seconds": 75,
+      "finish_seconds": 1020,
+      "finish_mmss": "17:00"
+    },
+    {
+      "slide": 15,
+      "title": "Limitations and future work",
+      "duration_seconds": 60,
+      "finish_seconds": 1080,
+      "finish_mmss": "18:00"
+    },
+    {
+      "slide": 16,
+      "title": "Contributions and conclusions",
+      "duration_seconds": 50,
+      "finish_seconds": 1130,
+      "finish_mmss": "18:50"
+    }
+  ],
+  "sample_sizes": [
+    10,
+    20,
+    50,
+    100,
+    250,
+    500,
+    1000,
+    2500,
+    10000,
+    50000
+  ],
+  "shared_grid": {
+    "table_sizes": [
+      2,
+      4,
+      8,
+      16
+    ],
+    "profiles": [
+      "uniform",
+      "same_skew",
+      "different_skew"
+    ],
+    "n_p_equals_n_q": true,
+    "repetitions": 100000,
+    "alpha": 0.05,
+    "null_common_mi": [
+      0.005,
+      0.02,
+      0.3
+    ],
+    "power_mi_p": 0.02,
+    "power_mi_q": [
+      0.025,
+      0.03,
+      0.04
+    ],
+    "power_gap_magnitudes": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "null_settings": 360,
+    "power_settings": 360
+  },
+  "common_filters": {
+    "primary_rates": "denominator == all",
+    "normal_method": "normal_wald",
+    "expanded_method": "expanded_welch",
+    "proportions_to_percent": "multiply saved proportions by 100 exactly once",
+    "numeric_filters": "use isclose with absolute tolerance 1e-12 and relative tolerance 0",
+    "displays_csv_loading": "Preserve the literal study value null: pandas.read_csv(path, keep_default_na=False) for displays.csv. The default pandas NA parser converts null to missing. Numeric result files may use normal CSV parsing."
+  },
+  "slide_5": {
+    "type": "illustrative reference distributions, not experimental df",
+    "student_df": 3,
+    "two_sided_alpha": 0.05,
+    "normal_cutoff": 1.959963984540054,
+    "student_cutoff": 3.1824463052837078
+  },
+  "slide_8": {
+    "source": "moments",
+    "configuration_ids": [
+      "setting_4259754fa1f8db07",
+      "setting_7057d5df404b73a6",
+      "setting_587f3c5905347046",
+      "setting_9b2325a6ddd8e174",
+      "setting_41c6a16554b06d81",
+      "setting_86034f68792798df",
+      "setting_9bdd689bf556c0d0",
+      "setting_033532b01166c677",
+      "setting_f5f1e38301329d37",
+      "setting_4eaf7ce980304116"
+    ],
+    "join_filter": "configuration_id must be in displays.csv rows with study == null",
+    "filters": {
+      "side": "p",
+      "k": 16,
+      "profile": "different_skew",
+      "mi": 0.02
+    },
+    "expected_rows": 10,
+    "x": "n",
+    "x_scale": "log",
+    "mean_series": "mean_ratio",
+    "mean_mcse": "mean_ratio_mcse",
+    "variance_series": [
+      "variance_ratio",
+      "plugin_variance_ratio"
+    ],
+    "variance_mcse": [
+      "variance_ratio_mcse",
+      "plugin_variance_ratio_mcse"
+    ],
+    "y_scales": "log",
+    "reference": 1,
+    "intervals": "point estimate +/- 1.96 times saved MCSE",
+    "ratio_definitions": {
+      "mean_ratio": "E(Vhat)/population_V",
+      "variance_ratio": "(population_tau2/n)/observed_Var(Vhat)",
+      "plugin_variance_ratio": "(mean_sample_tau2/n)/observed_Var(Vhat)"
+    },
+    "checkpoint_n_50": {
+      "mean_ratio": 12.709119363203984,
+      "variance_ratio": 0.1862837474058447,
+      "plugin_variance_ratio": 0.5526659456140404
+    }
+  },
+  "slide_9": {
+    "source": "moments",
+    "configuration_ids": [
+      "setting_af9ce7dc1b51fa77",
+      "setting_6a2565006cd8add8",
+      "setting_84e43c8590acba13",
+      "setting_5ba6b7fbac43cea9",
+      "setting_c9e76bac57e75b3b",
+      "setting_3015072b24080ed1",
+      "setting_99d13121735437ab"
+    ],
+    "join_filter": "configuration_id must be in displays.csv rows with study == association",
+    "filters": {
+      "side": "p",
+      "k": 4,
+      "profile": "different_skew",
+      "n": 1000
+    },
+    "expected_rows": 7,
+    "x": "mi",
+    "x_scale": "log",
+    "series": [
+      "df_mean",
+      "nu_mom",
+      "nu_fo"
+    ],
+    "y_scale": "log",
+    "all_component_estimates_valid": true,
+    "smallest_mi_checkpoint": {
+      "mi": 0.0001,
+      "df_mean": 4.85978716999042,
+      "nu_mom": 9.124807968487897,
+      "nu_fo": 0.0964000042894677,
+      "a4_df_mean": 4.600000000000019,
+      "plugin_variance_ratio": 1.965405591167243
+    },
+    "guardrail": "component moment target is not a proven true Student t df"
+  },
+  "slide_10": {
+    "source": "null_rates",
+    "denominator": "all",
+    "rows": [
+      {
+        "k": 4,
+        "profile": "uniform",
+        "n_p": 20,
+        "n_q": 20,
+        "common_mi": 0.02,
+        "configuration_id": "setting_c1d939c2103eb6d7",
+        "percent": {
+          "normal_wald": 8.352,
+          "expanded_welch": 4.897
+        },
+        "display_percent": {
+          "normal_wald": "8.35%",
+          "expanded_welch": "4.90%"
+        },
+        "all_valid": true,
+        "bias_over_sd": 0.002743671557190161,
+        "variance_ratio": 0.8265093155521722
+      },
+      {
+        "k": 16,
+        "profile": "same_skew",
+        "n_p": 1000,
+        "n_q": 1000,
+        "common_mi": 0.02,
+        "configuration_id": "setting_1363c7043554941c",
+        "percent": {
+          "normal_wald": 0.604,
+          "expanded_welch": 0.525
+        },
+        "display_percent": {
+          "normal_wald": "0.60%",
+          "expanded_welch": "0.53%"
+        },
+        "all_valid": true,
+        "bias_over_sd": -0.0027192541260095786,
+        "variance_ratio": 1.9286941072647668
+      },
+      {
+        "k": 16,
+        "profile": "different_skew",
+        "n_p": 1000,
+        "n_q": 1000,
+        "common_mi": 0.02,
+        "configuration_id": "setting_9bdd689bf556c0d0",
+        "percent": {
+          "normal_wald": 26.011,
+          "expanded_welch": 24.836
+        },
+        "display_percent": {
+          "normal_wald": "26.01%",
+          "expanded_welch": "24.84%"
+        },
+        "all_valid": true,
+        "bias_over_sd": 2.0579206373676495,
+        "variance_ratio": 1.9381042896284049
+      }
+    ]
+  },
+  "slide_11": {
+    "source": "null_rates",
+    "filters": {
+      "denominator": "all",
+      "k": 16,
+      "profile": "different_skew"
+    },
+    "expected_rows": 60,
+    "x": "n_p",
+    "x_scale": "log",
+    "series_by": [
+      "common_mi",
+      "method"
+    ],
+    "main_y": [
+      "rejection_rate",
+      "rejection_low",
+      "rejection_high"
+    ],
+    "validity_y": [
+      "valid_rate",
+      "valid_low",
+      "valid_high"
+    ],
+    "main_y_range_percent": [
+      0,
+      40
+    ],
+    "highlight": {
+      "common_mi": 0.005,
+      "n_p": 1000,
+      "percent": {
+        "expanded_welch": 34.382000000000005,
+        "normal_wald": 36.381
+      },
+      "display_percent": {
+        "expanded_welch": "34.38%",
+        "normal_wald": "36.38%"
+      },
+      "all_valid": true
+    }
+  },
+  "slide_12": {
+    "source": "power_rates",
+    "filters": {
+      "denominator": "all",
+      "k": 4,
+      "profile": "uniform"
+    },
+    "expected_rows": 60,
+    "x": "n_p",
+    "x_scale": "log",
+    "series_by": [
+      "gap",
+      "method"
+    ],
+    "main_y": [
+      "rejection_rate",
+      "rejection_low",
+      "rejection_high"
+    ],
+    "validity_y": [
+      "valid_rate",
+      "valid_low",
+      "valid_high"
+    ],
+    "main_y_range_percent": [
+      0,
+      100
+    ]
+  },
+  "slide_13": {
+    "source": "power_rates",
+    "diagnostic_source": "power_diagnostics",
+    "filters": {
+      "denominator": "all",
+      "k": 16,
+      "profile": "different_skew",
+      "gap": 0.01
+    },
+    "expected_rows": 20,
+    "x": "n_p",
+    "x_scale": "log",
+    "series_by": [
+      "method"
+    ],
+    "main_y_range_percent": [
+      0,
+      100
+    ],
+    "highlight": {
+      "n_p": 1000,
+      "true_delta": -0.01,
+      "bias": 0.0306714189759277,
+      "mean_delta": 0.020671418975927697,
+      "expanded_rejections": 9662,
+      "expanded_rate_percent": 9.661999999999999,
+      "expanded_positive_rejections": 9659,
+      "expanded_negative_rejections": 3,
+      "wrong_direction_among_expanded_rejections_percent": 99.96895052784103,
+      "all_valid": true
+    },
+    "guardrail": "wrong-direction percentage conditions on Expanded Welch rejection, not all repetitions"
+  },
+  "slide_14": {
+    "source": "application",
+    "row_id": "shoppers_month",
+    "point_estimates": {
+      "n_p": 1694.0,
+      "n_q": 10551.0,
+      "corrected_mi_p": 0.0043163111573871,
+      "corrected_mi_q": 0.0178797492702181,
+      "delta_corrected": -0.013563438112832,
+      "standard_error": 0.0033330545101089,
+      "statistic": -4.06937182446155,
+      "expanded_welch_degrees_of_freedom": 26.79107994648318,
+      "normal_p_value": 4.714006473710156e-05,
+      "expanded_welch_p_value": 0.0003726269575143,
+      "wald_holm_p": 0.0001885602589484,
+      "expanded_holm_p": 0.0014905078300573
+    },
+    "guardrail": "group bars are corrected point estimates, not true population MI or a causal effect"
+  },
+  "backup_5": {
+    "source": "moments",
+    "filters": {
+      "side": "p",
+      "k": 4,
+      "profile": "different_skew",
+      "n": 1000,
+      "mi": 0.0001
+    },
+    "local_d": 9,
+    "local_kappa": 0.2,
+    "local_mean_df": 4.6,
+    "observed_mean_df": 4.85978716999042,
+    "local_moment_target": 9.004255319148934,
+    "observed_moment_target": 9.124807968487897,
+    "local_sample_variance_prediction_ratio": 1.957446808510638,
+    "observed_sample_variance_prediction_ratio": 1.965405591167243
+  },
+  "backup_6_to_8": {
+    "source": "null_rates",
+    "profiles_in_order": [
+      "uniform",
+      "same_skew",
+      "different_skew"
+    ],
+    "denominator": "all",
+    "rows_per_profile": 240,
+    "settings_per_profile": 120,
+    "main_ymax_by_k_proportion": {
+      "2": 0.25,
+      "4": 0.25,
+      "8": 0.30000000000000004,
+      "16": 0.4
+    },
+    "note": "240 rows = 120 settings times two methods. Preserve each table-size scale across the three margin pages."
+  },
+  "backup_9": {
+    "source": "power_rates",
+    "filters": {
+      "denominator": "all",
+      "profile": "same_skew"
+    },
+    "expected_rows": 240,
+    "settings": 120,
+    "main_y_range_percent": [
+      0,
+      100
+    ]
+  },
+  "backup_10": {
+    "source": "application",
+    "ids_in_order": [
+      "adult_occupation",
+      "adult_education",
+      "shoppers_month",
+      "students_studytime",
+      "students_maternal_education",
+      "shoppers_weekend"
+    ],
+    "p_columns": [
+      "normal_p_value",
+      "expanded_welch_p_value"
+    ],
+    "adjusted_month_columns": [
+      "wald_holm_p",
+      "expanded_holm_p"
+    ],
+    "rows": [
+      {
+        "id": "adult_education",
+        "dataset": "Adult",
+        "predictor": "education",
+        "outcome": "income_above_50k",
+        "group_variable": "sex",
+        "group_p": "Female",
+        "group_q": "Male",
+        "source_rows": 48842,
+        "excluded_group_rows": 0,
+        "excluded_missing_predictor": 0,
+        "identical_source_rows": 52,
+        "rows": 16,
+        "columns": 2,
+        "n_p": 16192,
+        "n_q": 32650,
+        "plugin_mi_p": 0.039483764431833,
+        "plugin_mi_q": 0.0763856466084139,
+        "corrected_mi_p": 0.0390205727322283,
+        "corrected_mi_q": 0.0761559375731919,
+        "empty_cells_p": 2,
+        "empty_cells_q": 0,
+        "empty_rows_p": 0,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.1092514822134387,
+        "positive_outcome_fraction_q": 0.3037672281776417,
+        "delta_corrected": -0.0371353648409629,
+        "influence_variance_p": 0.0810565088969577,
+        "influence_variance_q": 0.1370686289622522,
+        "standard_error": 0.0030338227730733,
+        "statistic": -12.240452926439108,
+        "variance_influence_variance_p": 0.3937577516757511,
+        "variance_influence_variance_q": 0.3569209146887023,
+        "expanded_component_degrees_of_freedom_p": 540.3524982865185,
+        "expanded_component_degrees_of_freedom_q": 3437.299077155938,
+        "expanded_welch_degrees_of_freedom": 1644.8317711525967,
+        "normal_p_value": 1.8897512016301734e-34,
+        "expanded_welch_p_value": 4.9297905690549205e-33,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": true,
+        "expanded_reject": true,
+        "wald_ci_low": -0.043081548211664,
+        "wald_ci_high": -0.0311891814702617,
+        "expanded_ci_low": -0.0430859269326101,
+        "expanded_ci_high": -0.0311848027493157,
+        "wald_holm_p": 9.448756008150866e-34,
+        "expanded_holm_p": 2.4648952845274607e-32
+      },
+      {
+        "id": "adult_occupation",
+        "dataset": "Adult",
+        "predictor": "occupation",
+        "outcome": "income_above_50k",
+        "group_variable": "sex",
+        "group_p": "Female",
+        "group_q": "Male",
+        "source_rows": 48842,
+        "excluded_group_rows": 0,
+        "excluded_missing_predictor": 2809,
+        "identical_source_rows": 52,
+        "rows": 14,
+        "columns": 2,
+        "n_p": 14919,
+        "n_q": 31114,
+        "plugin_mi_p": 0.0358529735031304,
+        "plugin_mi_q": 0.0774537660322018,
+        "corrected_mi_p": 0.0354172874651922,
+        "corrected_mi_q": 0.0772448568594821,
+        "empty_cells_p": 2,
+        "empty_cells_q": 1,
+        "empty_rows_p": 1,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.1135464843488169,
+        "positive_outcome_fraction_q": 0.3126566818795397,
+        "delta_corrected": -0.041827569394289,
+        "influence_variance_p": 0.068910499405311,
+        "influence_variance_q": 0.1332437838683686,
+        "standard_error": 0.002983523758558,
+        "statistic": -14.019519460607327,
+        "variance_influence_variance_p": 0.2481688480674275,
+        "variance_influence_variance_q": 0.3289989495464785,
+        "expanded_component_degrees_of_freedom_p": 570.9436399035902,
+        "expanded_component_degrees_of_freedom_q": 3358.035216616692,
+        "expanded_welch_degrees_of_freedom": 1850.0284748807344,
+        "normal_p_value": 1.1841372900795622e-44,
+        "expanded_welch_p_value": 1.6354307917429738e-42,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": true,
+        "expanded_reject": true,
+        "wald_ci_low": -0.0476751685080824,
+        "wald_ci_high": -0.0359799702804957,
+        "expanded_ci_low": -0.0476789967094964,
+        "expanded_ci_high": -0.0359761420790817,
+        "wald_holm_p": 7.104823740477374e-44,
+        "expanded_holm_p": 9.81258475045784e-42
+      },
+      {
+        "id": "shoppers_month",
+        "dataset": "Online Shoppers",
+        "predictor": "Month",
+        "outcome": "Revenue",
+        "group_variable": "VisitorType",
+        "group_p": "New_Visitor",
+        "group_q": "Returning_Visitor",
+        "source_rows": 12330,
+        "excluded_group_rows": 85,
+        "excluded_missing_predictor": 0,
+        "identical_source_rows": 125,
+        "rows": 10,
+        "columns": 2,
+        "n_p": 1694,
+        "n_q": 10551,
+        "plugin_mi_p": 0.0069727456320034,
+        "plugin_mi_q": 0.0183062491280515,
+        "corrected_mi_p": 0.0043163111573871,
+        "corrected_mi_q": 0.0178797492702181,
+        "empty_cells_p": 1,
+        "empty_cells_q": 0,
+        "empty_rows_p": 0,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.2491145218417945,
+        "positive_outcome_fraction_q": 0.1393232868922377,
+        "delta_corrected": -0.013563438112832,
+        "influence_variance_p": 0.0129854513175604,
+        "influence_variance_q": 0.0363344437754664,
+        "standard_error": 0.0033330545101089,
+        "statistic": -4.06937182446155,
+        "variance_influence_variance_p": 0.0441732396146323,
+        "variance_influence_variance_q": 0.1482417766851981,
+        "expanded_component_degrees_of_freedom_p": 12.93296932177464,
+        "expanded_component_degrees_of_freedom_q": 187.92737162843963,
+        "expanded_welch_degrees_of_freedom": 26.79107994648318,
+        "normal_p_value": 4.714006473710156e-05,
+        "expanded_welch_p_value": 0.0003726269575143,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": true,
+        "expanded_reject": true,
+        "wald_ci_low": -0.0200961049111544,
+        "wald_ci_high": -0.0070307713145096,
+        "expanded_ci_low": -0.0204047973131398,
+        "expanded_ci_high": -0.0067220789125242,
+        "wald_holm_p": 0.0001885602589484,
+        "expanded_holm_p": 0.0014905078300573
+      },
+      {
+        "id": "shoppers_weekend",
+        "dataset": "Online Shoppers",
+        "predictor": "Weekend",
+        "outcome": "Revenue",
+        "group_variable": "VisitorType",
+        "group_p": "New_Visitor",
+        "group_q": "Returning_Visitor",
+        "source_rows": 12330,
+        "excluded_group_rows": 85,
+        "excluded_missing_predictor": 0,
+        "identical_source_rows": 125,
+        "rows": 2,
+        "columns": 2,
+        "n_p": 1694,
+        "n_q": 10551,
+        "plugin_mi_p": 0.0009593016960248,
+        "plugin_mi_q": 0.0007744306839348,
+        "corrected_mi_p": 0.0006641423099563,
+        "corrected_mi_q": 0.0007270418108422,
+        "empty_cells_p": 0,
+        "empty_cells_q": 0,
+        "empty_rows_p": 0,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.2491145218417945,
+        "positive_outcome_fraction_q": 0.1393232868922377,
+        "delta_corrected": -6.289950088579711e-05,
+        "influence_variance_p": 0.001882776426741,
+        "influence_variance_q": 0.0015983975318614,
+        "standard_error": 0.0011238019327354,
+        "statistic": -0.0559702729222854,
+        "variance_influence_variance_p": 0.0070981229036805,
+        "variance_influence_variance_q": 0.0069960969658852,
+        "expanded_component_degrees_of_freedom_p": 1.6919884378739365,
+        "expanded_component_degrees_of_freedom_q": 7.706148949378173,
+        "expanded_welch_degrees_of_freedom": 2.1757943291062305,
+        "normal_p_value": 0.9553654887969572,
+        "expanded_welch_p_value": 0.9600859421773488,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": false,
+        "expanded_reject": false,
+        "wald_ci_low": -0.0022655108148038,
+        "wald_ci_high": 0.0021397118130322,
+        "expanded_ci_low": -0.0045424864267766,
+        "expanded_ci_high": 0.004416687425005,
+        "wald_holm_p": 1.0,
+        "expanded_holm_p": 1.0
+      },
+      {
+        "id": "students_studytime",
+        "dataset": "Student Performance",
+        "predictor": "studytime",
+        "outcome": "grade_at_least_10",
+        "group_variable": "school",
+        "group_p": "GP",
+        "group_q": "MS",
+        "source_rows": 649,
+        "excluded_group_rows": 0,
+        "excluded_missing_predictor": 0,
+        "identical_source_rows": 0,
+        "rows": 4,
+        "columns": 2,
+        "n_p": 423,
+        "n_q": 226,
+        "plugin_mi_p": 0.0205243813993384,
+        "plugin_mi_q": 0.0081005991788799,
+        "corrected_mi_p": 0.0169782821085582,
+        "corrected_mi_q": 0.001463431037287,
+        "empty_cells_p": 1,
+        "empty_cells_q": 0,
+        "empty_rows_p": 0,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.9243498817966904,
+        "positive_outcome_fraction_q": 0.6991150442477876,
+        "delta_corrected": 0.0155148510712709,
+        "influence_variance_p": 0.0348299221499154,
+        "influence_variance_q": 0.0142503499507944,
+        "standard_error": 0.0120579802325736,
+        "statistic": 1.286687386446265,
+        "variance_influence_variance_p": 0.1560577515836173,
+        "variance_influence_variance_q": 0.0366569504619562,
+        "expanded_component_degrees_of_freedom_p": 6.576427323227296,
+        "expanded_component_degrees_of_freedom_q": 2.5039932936251623,
+        "expanded_welch_degrees_of_freedom": 8.072394627256934,
+        "normal_p_value": 0.1982032712670912,
+        "expanded_welch_p_value": 0.2338734786764128,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": false,
+        "expanded_reject": false,
+        "wald_ci_low": -0.0081183559108693,
+        "wald_ci_high": 0.0391480580534112,
+        "expanded_ci_low": -0.0122475553156196,
+        "expanded_ci_high": 0.0432772574581614,
+        "wald_holm_p": 0.5946098138012738,
+        "expanded_holm_p": 0.7016204360292386
+      },
+      {
+        "id": "students_maternal_education",
+        "dataset": "Student Performance",
+        "predictor": "Medu",
+        "outcome": "grade_at_least_10",
+        "group_variable": "school",
+        "group_p": "GP",
+        "group_q": "MS",
+        "source_rows": 649,
+        "excluded_group_rows": 0,
+        "excluded_missing_predictor": 0,
+        "identical_source_rows": 0,
+        "rows": 5,
+        "columns": 2,
+        "n_p": 423,
+        "n_q": 226,
+        "plugin_mi_p": 0.0078989907936015,
+        "plugin_mi_q": 0.0100989592059684,
+        "corrected_mi_p": 0.0031708584058947,
+        "corrected_mi_q": 0.0012494016838445,
+        "empty_cells_p": 1,
+        "empty_cells_q": 1,
+        "empty_rows_p": 0,
+        "empty_rows_q": 0,
+        "positive_outcome_fraction_p": 0.9243498817966904,
+        "positive_outcome_fraction_q": 0.6991150442477876,
+        "delta_corrected": 0.0019214567220497,
+        "influence_variance_p": 0.0137345515922016,
+        "influence_variance_q": 0.0121561617561058,
+        "standard_error": 0.0092875031876877,
+        "statistic": 0.2068862516889384,
+        "variance_influence_variance_p": 0.0435685792456987,
+        "variance_influence_variance_q": 0.0389839781737822,
+        "expanded_component_degrees_of_freedom_p": 3.6629073625121937,
+        "expanded_component_degrees_of_freedom_q": 1.7133465735027642,
+        "expanded_welch_degrees_of_freedom": 3.7645494223708433,
+        "normal_p_value": 0.8360986938018332,
+        "expanded_welch_p_value": 0.8468024279402876,
+        "wald_valid": true,
+        "expanded_valid": true,
+        "wald_reject": false,
+        "expanded_reject": false,
+        "wald_ci_low": -0.0162817150321191,
+        "wald_ci_high": 0.0201246284762187,
+        "expanded_ci_low": -0.0245134589978563,
+        "expanded_ci_high": 0.0283563724419559,
+        "wald_holm_p": 1.0,
+        "expanded_holm_p": 1.0
+      }
+    ]
+  },
+  "reference_keys": [
+    "bossomaier2016",
+    "moddemeijer1989",
+    "paninski2003",
+    "mora2009",
+    "satterthwaite1946",
+    "welch1947",
+    "hutcheson1970",
+    "panwall2002",
+    "morris2019",
+    "sakar2018",
+    "holm1979"
+  ],
+  "prohibited_sources_or_claims": [
+    "old calibrated-power plots or fitted thresholds",
+    "A/B/C favourable-case narrative",
+    "four-cell construction experiment",
+    "claim of higher nominal Expanded Welch power",
+    "claim that all permutation tests are invalid",
+    "claim of exact Student t distribution from two-moment matching",
+    "unverified global priority claim",
+    "unlabelled direction percentage denominator",
+    "inference calibration validated by unknown-truth application"
+  ],
+  "implementation_boundary": {
+    "permitted_future_output_directory": "Thesis Writeup/Welch MI/presentation/",
+    "preserve_existing_presentation": "Thesis Writeup/Welch MI/deliverables/Comparing MI in Finite Samples.pdf",
+    "do_not_run_thesis_generators_into_default_destinations": true,
+    "do_not_modify_thesis_or_delivery_files": true
+  },
+  "planning_verification": {
+    "date": "2026-11-04",
+    "source_hashes_verified": 19,
+    "main_slide_count": 16,
+    "backup_slide_count": 12,
+    "main_data_rows_verified": {
+      "slide_8": 10,
+      "slide_9": 7,
+      "slide_11": 60,
+      "slide_12": 60,
+      "slide_13": 20
+    },
+    "primary_settings_verified": {
+      "null": 360,
+      "power": 360
+    },
+    "all_primary_repetitions_per_setting": 100000,
+    "all_primary_expanded_rejection_rates_at_or_below_wald": true,
+    "slide_10_rates_and_diagnostic_variance_ratios_verified": true,
+    "slide_13_directional_counts_verified": [
+      9659,
+      3
+    ],
+    "slide_14_point_estimates_and_p_values_verified": true,
+    "reference_keys_present": 11,
+    "regional_spelling_check": "No listed American variants found in planning prose; identifiers and published titles retain source spelling.",
+    "script_word_count_method": "Whitespace-independent regex tokens; contractions and hyphenated compounds count as one; approximate spoken counts.",
+    "scripts_and_transitions_words": 2053,
+    "words_by_slide": [
+      {
+        "slide": 1,
+        "speaker_script_words": 38,
+        "transition_words": 11
+      },
+      {
+        "slide": 2,
+        "speaker_script_words": 103,
+        "transition_words": 14
+      },
+      {
+        "slide": 3,
+        "speaker_script_words": 107,
+        "transition_words": 16
+      },
+      {
+        "slide": 4,
+        "speaker_script_words": 92,
+        "transition_words": 18
+      },
+      {
+        "slide": 5,
+        "speaker_script_words": 121,
+        "transition_words": 15
+      },
+      {
+        "slide": 6,
+        "speaker_script_words": 164,
+        "transition_words": 19
+      },
+      {
+        "slide": 7,
+        "speaker_script_words": 121,
+        "transition_words": 17
+      },
+      {
+        "slide": 8,
+        "speaker_script_words": 123,
+        "transition_words": 16
+      },
+      {
+        "slide": 9,
+        "speaker_script_words": 149,
+        "transition_words": 18
+      },
+      {
+        "slide": 10,
+        "speaker_script_words": 120,
+        "transition_words": 15
+      },
+      {
+        "slide": 11,
+        "speaker_script_words": 114,
+        "transition_words": 14
+      },
+      {
+        "slide": 12,
+        "speaker_script_words": 114,
+        "transition_words": 18
+      },
+      {
+        "slide": 13,
+        "speaker_script_words": 134,
+        "transition_words": 18
+      },
+      {
+        "slide": 14,
+        "speaker_script_words": 120,
+        "transition_words": 20
+      },
+      {
+        "slide": 15,
+        "speaker_script_words": 98,
+        "transition_words": 18
+      },
+      {
+        "slide": 16,
+        "speaker_script_words": 88,
+        "transition_words": 0
+      }
+    ],
+    "timing_boundary": "Planning targets only. Counts do not substitute for timed rehearsal with graph-reading pauses.",
+    "thesis_and_delivery_files_modified_by_planning_task": false,
+    "style_reference_files_verified": 2,
+    "style_revision": "Updated plan design and layouts only, following the supplied reference. No deck or thesis files edited."
+  },
+  "visual_style_reference": {
+    "revision_date": "2026-11-04",
+    "request": "Follow Daniel's supplied earlier presentation style; preserve the current thesis content and talk sequence.",
+    "files": {
+      "pdf": {
+        "path": "/Users/danielzhao/MyMac/Masters Degree/INFO5993/A4/Zhao_Daniel_Presentation_vF2.pdf",
+        "sha256": "612c13c2f64a6013fa933893d5e8d6c8dcac4af8f8000fc732850929c822659d"
+      },
+      "pptx": {
+        "path": "/Users/danielzhao/MyMac/Masters Degree/INFO5993/A4/Zhao_Daniel_Presentation_vF2.pptx",
+        "sha256": "1a11df0bc394c7363b2a4f7d95a4f569419a909bbd0720dc6a6e73ad20594de0"
+      }
+    },
+    "source_slide_count": 11,
+    "visual_review": "All 11 PDF pages inspected; PowerPoint XML used for dimensions, actual text runs, themes, colours, title positions and cover asset.",
+    "role": "Visual authority only. The final thesis remains scientific authority.",
+    "canvas_inches": {
+      "width": 13.333333333333334,
+      "height": 7.5
+    },
+    "canvas_emu": {
+      "cx": 12192000,
+      "cy": 6858000
+    },
+    "fonts": {
+      "content_title": {
+        "family": "Lato",
+        "weight": "bold",
+        "pt": 36
+      },
+      "content_body": {
+        "family": "Lato",
+        "target_pt": [
+          22,
+          24
+        ],
+        "source_observation": "Many original body runs are 11–16 pt; retain the style with larger main-talk text."
+      },
+      "main_table_cells_pt": [
+        20,
+        22
+      ],
+      "intro_pt": [
+        20,
+        22
+      ],
+      "maths": {
+        "family": "Cambria Math",
+        "target_pt": [
+          24,
+          28
+        ]
+      },
+      "cover_title": {
+        "family": "Aptos Display",
+        "source_pt": 26,
+        "target_pt": [
+          28,
+          32
+        ]
+      },
+      "cover_details": {
+        "family": "Aptos",
+        "source_pt": 16,
+        "target_pt": [
+          18,
+          20
+        ]
+      },
+      "font_check": "Use the actual Lato runs, not the generic Aptos theme font. Verify Lato is available to the authoring and rendering tools."
+    },
+    "content_title_inches": {
+      "x": 0.8486,
+      "y": 0.4063,
+      "width": 11.5,
+      "height": 0.8074
+    },
+    "palette": {
+      "background": "#FFFFFF",
+      "title": "#000000",
+      "body_secondary": "#333333",
+      "orange": "#ED7D31",
+      "cover_orange": "#E97132",
+      "navy": "#1F3A5C",
+      "source_navy_variant": "#1E3A5C",
+      "pale_orange": "#FFF1E8",
+      "stronger_peach": "#FBE5D6",
+      "pale_blue": "#E8EFF7",
+      "source_pale_blue_variant": "#E8F0F7",
+      "orange_outline": "#F5C6A7",
+      "blue_outline": "#C8D8EA",
+      "divider": "#DDDDDD"
+    },
+    "cover": {
+      "source_slide": 1,
+      "source_asset_part": "ppt/media/image1.png",
+      "source_picture_name": "Picture 4",
+      "reuse": [
+        "chalkboard image",
+        "curved white mask",
+        "small orange mark",
+        "light divider"
+      ],
+      "replacement_text_editable": true,
+      "no_automatic_university_logo": true
+    },
+    "reference_layout_map": {
+      "1": [
+        1
+      ],
+      "2-3": [
+        2,
+        5
+      ],
+      "4": [
+        7
+      ],
+      "5": [
+        3
+      ],
+      "6": [
+        8,
+        10
+      ],
+      "7": [
+        9
+      ],
+      "8": [
+        4
+      ],
+      "9": [
+        9
+      ],
+      "10": [
+        7,
+        9
+      ],
+      "11-12": [
+        4
+      ],
+      "13-14": [
+        3,
+        9
+      ],
+      "15": [
+        7
+      ],
+      "16": [
+        8
+      ],
+      "B1-B10": [
+        2,
+        4,
+        7,
+        9
+      ],
+      "B11-B12": [
+        11
+      ]
+    },
+    "data_colour_boundary": "Decorative orange/navy styling does not replace the existing common-MI, MI-gap or approximation-quantity chart encodings. Only the illustrative distributions on Slide 5 use orange/navy as method colours.",
+    "obsolete_reference_content_excluded": [
+      "corrected independence-null proposal",
+      "chi-squared baseline comparison",
+      "resampled-null benchmark",
+      "45-configuration grid",
+      "milestone timeline",
+      "JIDT integration promise",
+      "old title and notes"
+    ],
+    "preserve_original_reference_files": true,
+    "scientific_copy_scripts_equations_evidence_schedule_unchanged": true
+  }
+}

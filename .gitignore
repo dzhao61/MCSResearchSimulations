@@ -1,47 +1,20 @@
-# macOS Finder metadata.
-.DS_Store
+# The current repository covers the simulation workspace and presentation.
+# Other Research folders remain local until explicitly added to this scope.
+/*
+!/.gitignore
+!/AGENTS.md
+!/README.md
+!/Simulations/
+!/Thesis Presentation/
 
-# Python runtime artifacts.
+# Local metadata, environments, and caches.
+.DS_Store
 __pycache__/
 *.py[cod]
+.venv/
+.claude/
+.mplcache/
 
-# Large reproducible simulation output is not versioned.
-WelchSatterthwaiteMI/results/decisive/null_replicates.csv.gz
-
-# The smoke profile is an intermediate pipeline check; keep only full results.
-WelchSatterthwaiteMI/results/supervisor_smoke/
-
-# Focused-study scalar checkpoints are reproducible; retain the compact summaries.
-WelchSatterthwaiteMI/results/focused_study/records/
-WelchSatterthwaiteMI/results/focused_study/pilot/
-WelchSatterthwaiteMI/results/unequal_sample_check/records/
-WelchSatterthwaiteMI/results/unequal_sample_check/pilot/
-WelchSatterthwaiteMI/results/large_table_construction_check/records/
-WelchSatterthwaiteMI/results/large_table_construction_check/pilot/
-WelchSatterthwaiteMI/results/same_skew_extension/records/
-WelchSatterthwaiteMI/results/same_skew_extension/pilot/
-
-# Keep the generated experiment supplement local; it exceeds GitHub's file limit.
-/Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Experiment_Supplement.zip
-
-# Preserve pre-correction raw evidence locally without adding duplicate checkpoints.
-/WelchSatterthwaiteMI/results/archive_before_numerical_fix_20261017/
-/PracticalMIExploration/results_before_numerical_fix_20261017/
-
-# The promoted Welch MI project retains reproducible evidence locally.
-/WelchSatterthwaiteMI/results/
-/DifferentialMI/results/
-/PracticalMIExploration/results/
-/PracticalMIExploration/initial_run/
-/PracticalMIExploration/thesis_application/
-/WelchSatterthwaiteMI/docs/experiments/figures/
-/WelchSatterthwaiteMI/supplementary_displays/
-/Thesis Writeup/Welch MI/build/
-/Thesis Writeup/Welch MI/build_v3/
-/Thesis Writeup/Welch MI/archive/
-/Thesis Writeup/Welch MI/deliverables/*Experiment*Supplement.zip
-
-# Older experiment projects are preserved in a verified local archive.
-/Archive/Past experiments 2026-10-25/
-/Archive/Past experiments 2026-10-25.zip
-/Archive/.Past experiments 2026-10-25.zip.partial
+# Office and preview temporary files.
+~$*
+.~lock.*#

@@ -1,0 +1,166 @@
+# Active Welch MI project
+
+The Git repository root is the parent `Research/` directory as of
+8 November 2026. This `Simulations/` directory remains the scientific
+workspace: project paths described as root or workspace paths below are
+relative to `Simulations/`. Keep the current presentation in the sibling
+`Research/Thesis Presentation/` folder. Run the scientific commands and
+thesis packaging from their existing locations inside `Simulations/`.
+
+The redesign was promoted to the main workspace on 24 October 2026.
+Use `Thesis Writeup/Welch MI/main.tex`, `main.pdf` and the named
+Daniel_Zhao_Welch_MI delivery files, with the root `WelchSatterthwaiteMI`, `DifferentialMI`
+and `PracticalMIExploration` folders. The previous baseline is archived
+under `Archive/Welch MI baseline 2026-10-24/`; preserve its contents.
+The old `Welch MI Redesign 2026-10-21/` project paths are compatibility
+symlinks to these main folders. Use canonical root paths for future work.
+The reviewed thesis is now a main deliverable. Previous main files and
+Working Draft v3 are preserved under the thesis folder's
+`archive/before_main_deliverable_2026-10-24/`. The working-draft naming rule
+below applies only to explicitly requested working drafts, not main builds.
+
+The user authorised automatic commit and push after each requested main
+thesis PDF rebuild on 6 November 2026. Use the active thesis packaging hook
+and its scoped commit rules. When visual review is needed, build with
+`--no-push`, complete the review, then run the packaging module's
+`push_build()` step. A build request includes permission to push; another
+confirmation is unnecessary. Read-only checks and failed builds must not
+push, and unrelated staged work and historical drafts must be preserved.
+
+# Research Writing Preference
+
+Use Australian English throughout the thesis and related research writing,
+with consistent British-style spelling such as analyse, behaviour, centre,
+colour, labelled, modelling and standardise. Include a regional-spelling
+check when drafting or reviewing prose. Preserve original spelling in
+published titles, direct quotations, proper names, dataset fields, code,
+URLs, paths and LaTeX identifiers.
+
+Use Oxford (serial) commas before the final "and" or "or" in lists of
+three or more items, including headings, captions, and tables. Do not add
+serial commas to two-item phrases. Preserve original punctuation in
+published titles and direct quotations.
+
+For the Welch MI thesis and related research writing, use Section 2.3 of
+`Thesis Writeup/Welch MI/chapters_rewrite/02_background_literature.tex` as the
+model for the depth of important derivations. Assume the reader knows basic
+calculus and probability but is new to this particular MI argument.
+
+- State the target result, its purpose, assumptions, and a short roadmap.
+- For Taylor expansions, show the general formula and explicitly map the
+  function, expansion point, new value, and difference before substituting.
+- Display non-obvious intermediate algebra. Make nested sums, reindexing,
+  product-rule terms, cancellations, and independence assumptions explicit.
+- Explain in words what each key equation does and distinguish approximations
+  from exact equalities. End with the result's meaning or intuition.
+- Avoid notation introduced only to shorten an equation, skipped steps that a
+  first-time reader must reconstruct, and repetitive or irrelevant detail.
+
+For prose throughout the thesis, explain the mechanism rather than merely
+name it. Identify what quantity changes, why, and what that change does;
+anchor the explanation to the equation or comparison at hand. Avoid vague
+technical shorthand and false contrasts between methods (for example, calling
+one denominator random when both methods estimate it). Use formal, direct,
+confident language at an honours/master's level. Define necessary jargon,
+state real approximations or limitations once where they matter, and avoid
+repeated defensive caveats. Simpler wording must remain statistically precise.
+State the scientific question or result directly. Avoid abstract commentary
+about how a method must be assessed when the actual comparison can be stated
+plainly. Use concrete subjects and verbs instead of making the reader infer
+the point from a description of the reasoning process.
+Delete framing or restatement that adds neither explanation nor evidence.
+Keep intermediate derivation steps that help the reader, but do not add
+sentences merely to complete a paragraph template or increase its length.
+Use complete names for statistical objects when the noun matters: write
+"Student t distribution" or "cutoff from the Student t distribution", not
+"Student" or "Student cutoff" alone. Do the same for normal and chi-squared
+distributions instead of relying on the reader to supply "distribution".
+Name the baseline "Wald test" in prose and "Wald" in compact table and
+figure labels, defining its standard normal reference distribution explicitly.
+Avoid "Normal Wald", which can suggest an ordinary or regular Wald test.
+When describing an approximation, sampling assumption or random variable,
+include the distribution's complete name rather than shorthand such as
+"normal approximation" or "chi-squared variable".
+Distinguish calculation success (meeting numerical requirements) from
+statistical validity. Name the objects whose independence is assumed.
+Use shared for quantities equal between populations or methods, retaining
+common for frequently occurring categories and common algebraic factors.
+Explain conservative at first use as a false-positive rate below the stated
+significance level. State the actual mathematical conditions instead of
+calling them regular when that description could be ambiguous.
+
+Construct sentences around a complete explanatory relationship: keep a result
+with its immediate cause, consequence, condition or qualification when that
+relationship is easier to follow within one sentence. Carry a specific quantity
+or finding from one sentence into the next, naming the referent rather than
+relying on a vague "this". Use conjunctions to state genuine relationships;
+do not merely concatenate independent observations or join sentences to meet
+a length target. Retain short sentences for important definitions, distinct
+findings and derivation steps. Review clusters of short reminders and detached
+consequences, preserving approximation conditions and the strength of causal
+claims when revising. Use
+`Thesis Writeup/Welch MI/notes/RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md`
+for the consolidated lessons from Chapters 5–7, sentence-review decisions
+and adaptation to different chapter roles. The Chapter 6 results guide
+retains the detailed figure and interpretation examples. These principles
+apply throughout research prose. The user authorised the Chapters 1–4
+revision on 31 October 2026; its completed source changes and preservation
+checks are recorded in
+`Thesis Writeup/Welch MI/notes/CHAPTERS_1_4_PROSE_REVISION_2026-10-31.md`.
+
+Use colons to introduce lists, equations or explanations that benefit from
+an explicit introduction. Reserve semicolons for closely related parallel
+statements or lists whose items contain commas. Recast sentences when a
+semicolon merely appends a reminder or cross-reference, and use a full stop
+when the next statement needs independent emphasis. Do not use punctuation
+to disguise short sentences or force unrelated statements into a longer one.
+
+Keep each passage focused on the question it is answering. Detailed explanation
+belongs where it advances the argument; omit or relocate short technical
+digressions that interrupt the transition to the next idea. When describing a
+connection, comparison or change, explicitly name both quantities or methods
+so the reader does not have to infer the missing subject.
+Use TEEL as a flexible paragraph guide: establish one main idea, support it
+with evidence or an equation, explain its meaning, and link it to the argument
+or next question. Split paragraphs that introduce a second main idea, but do
+not force four sentences or a generic linking sentence into every paragraph.
+Treat a displayed equation and its surrounding explanation as one connected
+unit. Make transitions show how the next idea follows from the previous one,
+rather than merely announcing the next section.
+Keep figure captions short and descriptive. Put detailed experiment settings
+and interpretation in ordinary body paragraphs beside each figure, rather
+than in long captions or separate small-text interpretation blocks.
+Keep figures within the text margins and proportional to the surrounding
+prose. Size plots for readability, not page count; single-panel plots can be
+narrower than multi-panel comparisons. Do not shrink dense plots until their
+labels become difficult to read.
+
+The thesis must be understandable as a standalone manuscript without access
+to the codebase. Keep scientific construction details, parameter settings and
+validity rules in the text or appendices. Treat the submitted thesis PDF as
+the examiner's reading set: do not direct the reader to an unsubmitted
+experimental supplement, companion report or internal archive. Include
+essential evidence within the thesis or remove a claim that depends on
+unavailable material; omit promises of secondary analyses that are not
+presented. This does not restrict ordinary citations to published literature
+or public data sources. Omit file inventories, local paths,
+configuration identifiers, build commands, version-control history and
+protocol-freeze administration from the manuscript; internal project records
+can retain them.
+Avoid incidental editorial notes about presentation, obvious workflow
+properties, and assurances about rounding or numerical housekeeping. Keep a
+numerical detail when it affects the calculation, reproduction or
+interpretation. Describe an approximation positively by what it does and its
+conditions, instead of adding disclaimers about stronger claims not being
+made.
+
+Keep ordinary chat answers as concise as the user's question warrants; this
+preference chiefly governs substantial derivations and thesis exposition.
+
+# Working Draft Preservation
+
+Any future working-draft rebuild must be named "Working Draft v3". Preserve
+"Working Draft.pdf", "Working Draft v2.pdf" and the existing unversioned
+working-draft source and PDF unchanged as historical artifacts. Build v3
+from a separate versioned source/output target, not by overwriting an older
+draft. This naming instruction does not itself request a rebuild.
