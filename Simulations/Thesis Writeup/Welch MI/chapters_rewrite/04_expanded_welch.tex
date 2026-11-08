@@ -208,23 +208,23 @@ sensitivity and is defined by
   \label{eq:g-definition}
 \end{equation}
 This derivative measures the change in \(V\) per unit increase in the
-mixture weight \(\varepsilon\) at zero. An observation enters the
-empirical table with weight \(1/n_P\), so its first-order contribution
-to the variance-estimation error is \(g_P(x,y)/n_P\), as derived in
-Section~\ref{sec:component-df}.
+mixture weight \(\varepsilon\) at zero. The empirical table averages the
+one-observation tables, and the first derivative is linear in the table
+change, so averaging their sensitivities approximates the error in
+\(\Vhat(P)\) at first order. Each observation contributes
+\(g_P(x,y)/n_P\) to this error.
 
-The empirical table averages the one-observation tables, and the first
-derivative is linear in the table change. Averaging the corresponding
-sensitivities therefore gives a first-order approximation to the error
-in \(\Vhat(P)\). For independent observations,
-Section~\ref{sec:component-df} will show that the variance of this average
-gives
+\begin{samepage}
+For independent observations, the variance of the average gives the approximation derived in
+Section~\ref{sec:component-df}:
 \begin{equation*}
   \Var\{\Vhat(P)\}
   \approx\frac{\Var_P\{g_P(X,Y)\}}{n_P}.
 \end{equation*}
 To evaluate the right-hand side, we first need an explicit expression
 for \(g_P(x,y)\).
+\par
+\end{samepage}
 
 Differentiating Equation~\eqref{eq:v-second-moment} separates this
 expression into the changes in the second moment and squared MI:
@@ -262,8 +262,13 @@ are
   \right|_{0}
   &=\mathbf 1\{j=y\}-p_{+j}.
 \end{align}
-The derivatives of the joint probabilities sum to zero because
+The total probability remains one along the path, so summing the
+joint-probability derivatives over all cells must give zero:
 \begin{equation}
+  \sum_{i,j}
+  \left.\frac{\mathrm d p_{ij}(\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}
+  =
   \sum_{i,j}
   \{\mathbf 1(i=x,j=y)-p_{ij}\}
   =1-1=0.
@@ -427,10 +432,9 @@ the minus signs on the row and column terms gives
 \par
 \end{samepage}
 
-Combining Equations~\eqref{eq:mi-derivative},
-\eqref{eq:g-decomposition}, \eqref{eq:m2-weight-term}, and
-\eqref{eq:m2-score-term} gives the variance sensitivity. To see how its
-squared term arises, combine the weight-change term in
+Subtracting the derivative of squared MI from the second-moment derivative
+gives \(g_P(x,y)\), as in Equation~\eqref{eq:g-decomposition}.
+First combine the probability-weight change in
 Equation~\eqref{eq:m2-weight-term} with the derivative of \(-I(P)^2\):
 \begin{align*}
  &\pmi_P(x,y)^2-\E_P\{\pmi_P(X,Y)^2\}
