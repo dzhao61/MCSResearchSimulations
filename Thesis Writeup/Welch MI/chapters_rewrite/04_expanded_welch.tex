@@ -50,9 +50,6 @@ Dividing \(Z\) by its square root gives the heavier tails of the Student
 \(t\) distribution. For MI, we approximate this construction by modelling
 the estimated variance with a variable that has a scaled chi-squared
 distribution and the same sampling mean and variance as the estimate.
-The exact identity assumes the stated distributions of \(Z\) and \(U\) and
-independence between them; the reference distribution for the MI test is
-an approximation.
 
 \medskip
 \thesisminiheading{Moment matching for one pointwise-MI variance estimate.}
@@ -728,8 +725,7 @@ calculation requirements. At the same p-value threshold, every rejection by the
 Expanded Welch test is therefore also a rejection by the Wald test, including when unsuccessful calculations
 count as non-rejections in the reported rates. At the stated significance
 level, the Expanded Welch test cannot raise rejection where the Wald test is already
-conservative. The calculation requirements exclude comparisons using the
-Expanded Welch test when a variance component is zero.
+conservative.
 
 \section{Worked example and implementation}
 

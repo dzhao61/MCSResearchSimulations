@@ -534,8 +534,8 @@ why both methods reject far too often even though the estimated standard
 error is oversized.
 
 Across the grid, the two tests' false-positive rates become close to one
-another with larger samples, but agreement does not establish that either
-rate is close to 5\%. For example, at
+another with larger samples, but both can remain below the 5\% target.
+For example, at
 shared MI 0.005 and \(n=50{,}000\), both tests have false-positive rates below 4\% in
 every \(16\times16\) margin regime, with the average squared standard
 error still exceeding the observed sampling variance of the estimated MI
@@ -869,10 +869,6 @@ their magnitudes. Equation~\eqref{eq:nu-p-hat} compares each squared estimate wi
 estimated sampling variance, so greater relative uncertainty gives fewer
 component degrees of freedom, as illustrated near independence in
 Figure~\ref{fig:redesign-a4}.
-
-Because the population tables are unknown,
-we cannot directly check the estimated degrees of freedom against the
-sampling-moment target or measure false-positive rates.
 
 \section{Discussion}
 \label{sec:results-discussion}
