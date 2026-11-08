@@ -158,6 +158,8 @@ whole sampled tables.
 
 \section{How pointwise-MI variance changes with the table}
 
+\subsection{Perturbation and variance sensitivity}
+
 To find the contribution of one observation, we calculate how a small
 change in the probability table affects
 \begin{equation}
@@ -266,8 +268,7 @@ The derivatives of the joint probabilities sum to zero because
   =1-1=0.
 \end{equation}
 
-\medskip
-\thesisminiheading{Effect of the perturbation on pointwise MI and MI.}
+\subsection{Changes in pointwise MI and MI}
 
 The joint and marginal derivatives now determine the change in
 pointwise MI. Along the perturbation path,
@@ -340,8 +341,7 @@ contributions cancel. Hence
 This is the centred pointwise-MI influence function from
 Section~\ref{sec:first-order-mi-background}.
 
-\medskip
-\thesisminiheading{Assembling the derivative of the pointwise-MI variance.}
+\subsection{Derivative of the pointwise-MI variance}
 
 The MI derivative supplies the second part of
 Equation~\eqref{eq:g-decomposition}. To obtain the first part, it remains
@@ -471,7 +471,7 @@ to describe how the estimated variance varies across samples.
 \section{Component degrees of freedom and final test}
 \label{sec:component-df}
 
-\thesisminiheading{From individual observations to the error in the variance estimate.}
+\subsection{Sampling error of the variance estimate}
 
 We now express \(\Vhat(P)-V(P)\) as an average of the sensitivities
 derived in the preceding section. The sampling mean and variance of
@@ -544,8 +544,7 @@ The variance-estimation error now has the same sample-average form as the
 MI error in Equation~\eqref{eq:mi-error-as-average-background}, with
 \(g_P\) supplying the observation-level contribution.
 
-\medskip
-\thesisminiheading{Sampling mean and variance of the estimate.}
+\subsection{Sampling mean and variance of the estimate}
 
 The linearised variance-estimation error averages the sensitivities
 \(g_P\), so its mean is zero if their mean is zero. We verify this
@@ -609,8 +608,7 @@ in the following first-order sampling-variance approximation:
   \label{eq:vhat-sampling-variance}
 \end{align}
 
-\medskip
-\thesisminiheading{Population component degrees of freedom.}
+\subsection{Population and estimated component degrees of freedom}
 
 The mean and variance approximations now supply both inputs to
 Equation~\eqref{eq:component-df-moments}. To obtain positive, finite
@@ -730,8 +728,7 @@ Population \(V(P)\), \(\tau^2(P)\), and \(n_P\)\\
 \end{tabularx}
 \end{table}
 
-\medskip
-\thesisminiheading{Combining the two samples' degrees of freedom.}
+\subsection{Combined degrees of freedom and p-value}
 
 The two component degrees of freedom must now be combined to choose one
 reference distribution for \(T\). For component inputs \(\nu_P\) and

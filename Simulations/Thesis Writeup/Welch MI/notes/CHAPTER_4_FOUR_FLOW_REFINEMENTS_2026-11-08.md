@@ -95,3 +95,50 @@ Unsigned PDF SHA-256:
 
 Signed PDF SHA-256:
 `94bcd77d80427f420a7c878d60cb47b0aeca32f42a132e4d7daf58359532ad40`
+
+## Subsequent subsection organisation
+
+The user subsequently authorised more subsections where they improve
+navigation. Section 4.2 now has three numbered subsections covering the
+perturbation and sensitivity definition, changes in pointwise MI and MI,
+and the variance derivative. Section 4.3 has four numbered subsections
+covering sampling error, sampling moments, population and estimated
+component degrees of freedom, and the combined test. The table-based
+calculation retains its internal miniheading within the component
+subsection; the redundant population miniheading was removed.
+
+The shorter Sections 4.1, 4.4, and 4.5 retain their existing structure.
+Removing heading commands and their associated spacing gives identical
+body text before and after this change. All displayed mathematics and
+labels are unchanged, and paragraph-style and source-diff checks pass.
+This subsection change was initially left as a source-only edit pending
+the user's subsequent explicit rebuild request.
+
+## Verified rebuild with numbered subsections
+
+The subsequently requested rebuild remains 109 pages. The final LaTeX
+log contains no warnings, undefined references, or box warnings. Rendered
+physical pages 4–8 and 32–50 were inspected, covering the contents,
+revised Chapter 4, and its transition to Chapter 5. The seven numbered
+subsections appear in the contents and have working destinations.
+
+The read-only delivery check passes, the unchanged experiment supplement
+was verified and reused, and the 117-entry source archive contains the
+current Chapter 4 exactly. All body text and mathematical content remain
+unchanged from the preceding verified derivation revision.
+
+The signed PDF preserves all unsigned page contents and navigation. Its
+compliance page is pixel-identical to the previous signed copy, with the
+existing signature and 07/11/2026 date. All 423 named destinations and
+453 internal links resolve; the PDF has 77 bookmarks and 98 external
+links. The seven additional bookmarks correspond to the new subsections.
+
+The signed deliverable and FINAL SUBMISSION PDF are byte-identical. The
+previous submission thesis was backed up in Archive; the separate consent
+declaration and AI acknowledgement files are unchanged.
+
+Unsigned PDF SHA-256:
+`ac46374e91423268cfdfd5aac4b0d32b8628eb6d2dff4a94023979885beef0f5`
+
+Signed PDF SHA-256:
+`e9f09fbaf65ea36fdf22cc9ea7af65828142f41fce1498dc9819b9f742c13423`
