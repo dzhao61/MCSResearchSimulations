@@ -27,6 +27,19 @@ and its scoped commit rules. When visual review is needed, build with
 confirmation is unnecessary. Read-only checks and failed builds must not
 push, and unrelated staged work and historical drafts must be preserved.
 
+On 8 November 2026 the user also required every main-thesis PDF rebuild to
+refresh the signed submission copy at
+`Research/FINAL SUBMISSION/Daniel_Zhao_Welch_MI_Thesis.pdf`, with `Research/`
+being the parent Git root. Before finishing
+the rebuild, preserve the existing authorised signature and date in the
+current signed deliverable, visually verify the signed compliance page,
+and check that the signed deliverable and FINAL SUBMISSION copy are
+identical and contain the rebuilt manuscript. Back up the previous
+submission PDF before replacing it when its contents differ. Preserve the
+separate consent declaration and AI acknowledgement files. Do not replace
+the submission copy after a failed build. Follow the thesis directory's
+instructions for the publication sequence.
+
 # Research Writing Preference
 
 Use Australian English throughout the thesis and related research writing,

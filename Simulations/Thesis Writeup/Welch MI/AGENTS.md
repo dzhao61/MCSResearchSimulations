@@ -46,6 +46,25 @@ confirmation again. Read-only `--check` and `--check-style` never push.
 Builds remain explicitly requested operations. A failed push must be
 reported: verified files and the local commit remain available for retry.
 
+On 8 November 2026 the user required the submission PDF to be refreshed
+after every main-thesis rebuild. A rebuild is complete only after the
+verified manuscript is available as the signed
+`deliverables/Daniel_Zhao_Welch_MI_Thesis_Signed.pdf` and as
+`Research/FINAL SUBMISSION/Daniel_Zhao_Welch_MI_Thesis.pdf`, where
+`Research/` is the Git root above the scientific workspace. Preserve the
+existing authorised signature and date from the current signed copy;
+do not create a new signature or change its date without instructions.
+Visually check the signed compliance page and verify that the signed
+deliverable and FINAL SUBMISSION PDF are byte-identical and preserve the
+rebuilt manuscript's page contents and navigation. Back up a differing
+previous submission PDF in `Research/Archive/` before replacement, and
+leave the separate consent declaration and AI acknowledgement unchanged.
+For an agent-led build, finish these checks after `--no-push` publication
+and before `push_build()`. Include the refreshed signed deliverable in
+that scoped commit, using `extra_paths` when needed. Failed builds must
+preserve the previous submission copy. If publication is blocked, report
+the blocker explicitly rather than describing the rebuild as complete.
+
 Packaging verifies the existing experiment supplement against every current
 input before reusing it. If its inventory or contents differ, it rebuilds
 the supplement. Reuse leaves the existing large archive in place and

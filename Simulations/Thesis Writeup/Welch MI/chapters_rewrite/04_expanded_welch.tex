@@ -9,37 +9,33 @@ how much the estimated pointwise-MI variance changes between samples. The name
 Expanded Welch refers to this expansion of the pointwise-MI variance as the table
 probabilities change.
 
+The derivation first expresses the degrees of freedom in terms of the
+sampling mean and variance of the estimated variance contributions. To
+approximate those moments, we calculate how one observation changes the
+variance estimate, express the sampling error as an average of these
+contributions, and take the variance of that average.
+
 \section[Choosing degrees of freedom for the Expanded Welch test]{Choosing degrees of
 freedom for\\the Expanded Welch test}
 \label{sec:component-df-choice}
 
-The squared standard error contains two estimated variance contributions,
-\(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\). We assign component degrees of
-freedom to each contribution, then combine them to choose the test's
-Student \(t\) distribution. For component inputs \(\nu_P\) and
-\(\nu_Q\), the Welch--Satterthwaite equation is
-\citep{satterthwaite1946,welch1947}:
-\begin{equation}
-  \nu
-  =
-  \frac{
-  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
-  }{
-  \left\{\Vhat(P)/n_P\right\}^2/\nu_P
-  +\left\{\Vhat(Q)/n_Q\right\}^2/\nu_Q
-  }.
-  \label{eq:ws-general}
-\end{equation}
-The derivation has four steps. First, we relate the degrees of freedom to the
-average and across-sample variation of \(\Vhat(P)\). Second, we calculate how \(V(P)\)
-changes when a small amount of probability moves into one cell. Third, that
-change tells us how variable \(\Vhat(P)\) is. Finally, we combine the
-degrees of freedom from \(P\) and \(Q\) using Equation~\eqref{eq:ws-general}.
+To connect the estimated standard error to the reference distribution,
+divide both the estimated MI difference and its standard error by the
+population sampling standard deviation of \(\Deltahat\). This rewrites
+the shared statistic without changing its value:
+\begin{equation*}
+  T
+  =\frac{\Deltahat/\sqrt{\Var(\Deltahat)}}
+         {\sqrt{\SEhat^2/\Var(\Deltahat)}}.
+\end{equation*}
+The squared denominator is the estimated sampling variance divided by
+the population sampling variance. This ratio is the variance term that
+the Student \(t\) construction below models.
 
 \begin{samepage}
 \medskip
-The role of the variance estimate follows from the standard construction
-of a variable with a Student \(t\) distribution. If \(Z\) has a standard normal distribution
+The exact construction uses a numerator with a standard normal
+distribution and an independent variance term. If \(Z\) has a standard normal distribution
 and \(U\), independently of \(Z\), has a chi-squared distribution with \(\nu\)
 degrees of freedom, the scaled ratio follows a Student \(t\) distribution:
 \begin{equation}
@@ -48,15 +44,23 @@ degrees of freedom, the scaled ratio follows a Student \(t\) distribution:
 \end{equation}
 \par
 \end{samepage}
-The variable \(U/\nu\) has a scaled chi-squared distribution.
-Dividing \(Z\) by its square root gives the heavier tails of the Student
-\(t\) distribution. For MI, we approximate this construction by modelling
-the estimated variance with a variable that has a scaled chi-squared
-distribution and the same sampling mean and variance as the estimate.
+Under equal MI, \(\Deltahat/\sqrt{\Var(\Deltahat)}\) approaches a standard
+normal distribution, as described in Chapter~\ref{chap:baselines}, so it
+plays the role of \(Z\) in the approximation. The normalised
+squared standard error \(\SEhat^2/\Var(\Deltahat)\) plays the role of
+\(U/\nu\), which has a scaled chi-squared distribution. For MI, we model
+the estimated variance contributions using scaled chi-squared
+distributions with matching sampling means and variances. Because moment
+matching does not establish independence between the MI numerator and
+the variance estimates, we use the Student \(t\) distribution as an
+approximate reference.
 
 \medskip
 \thesisminiheading{Moment matching for one pointwise-MI variance estimate.}
 
+The squared standard error adds \(\Vhat(P)/n_P\) and \(\Vhat(Q)/n_Q\).
+We first match moments for \(\Vhat(P)\), then show why dividing by
+\(n_P\) leaves its component degrees of freedom unchanged.
 To obtain the component target \(\nu_{P,\mathrm{mom}}\), Satterthwaite
 matches the mean and variance of the nonnegative estimate \(\Vhat(P)\)
 with those of a variable following a scaled chi-squared distribution:
@@ -128,6 +132,25 @@ therefore gives
 The factors \(1/n_P^2\) cancel, so dividing the estimate by \(n_P\)
 leaves its moment-matched degrees of freedom unchanged.
 
+The same calculation applies to the contribution from \(Q\). Once both
+component inputs are available, they must be combined to choose one
+reference distribution for \(T\). For component inputs \(\nu_P\) and
+\(\nu_Q\), the Welch--Satterthwaite equation is
+\citep{satterthwaite1946,welch1947}:
+\begin{equation}
+  \nu
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \left\{\Vhat(P)/n_P\right\}^2/\nu_P
+  +\left\{\Vhat(Q)/n_Q\right\}^2/\nu_Q
+  }.
+  \label{eq:ws-general}
+\end{equation}
+Section~\ref{sec:component-df} derives this rule by matching the mean and
+variance of the sum of the two independent variance contributions.
+
 To evaluate Equation~\eqref{eq:component-df-moments}, we need the mean and
 variance of \(\Vhat(P)\) across repeated samples from \(P\). The first-order
 expansion derived in Section~\ref{sec:component-df} gives
@@ -141,13 +164,34 @@ contribution have mean zero. Any bias therefore arises from terms beyond
 this linear approximation.
 
 With the mean approximated by \(V(P)\), the remaining task is to
-calculate \(\Var\{\Vhat(P)\}\). Because sampling changes the empirical
-cell probabilities and hence the plug-in variance estimate, we first
-calculate how \(V(P)\) responds to small changes in those probabilities.
+calculate \(\Var\{\Vhat(P)\}\). Section~\ref{sec:first-order-mi-background}
+obtained the sampling variance of MI by writing its estimation error as
+an average of observation-level contributions. We use the same strategy
+for the pointwise-MI variance estimate: calculate the contribution of one
+observation to its error, then find the variance of the average. The next
+section derives that contribution, and Section~\ref{sec:component-df}
+shows how averaging it approximates the error in \(\Vhat(P)\) across
+whole sampled tables.
 
-\begin{samepage}
 \section{How pointwise-MI variance changes with the table}
 
+To find the contribution of one observation, we calculate how a small
+change in the probability table affects
+\begin{equation}
+  V(P)
+  =\Var_P\{\pmi_P(X,Y)\}.
+\end{equation}
+Writing this variance in second-moment form identifies the quantities
+whose changes we must calculate:
+\begin{equation}
+  V(P)=\E_P\{\pmi_P(X,Y)^2\}-I(P)^2.
+  \label{eq:v-second-moment}
+\end{equation}
+The first term changes when either the probability weights or the
+pointwise-MI values change, and the second changes with MI. We will
+differentiate these terms along a path representing one observation.
+
+\begin{samepage}
 Fix a cell \((x,y)\) and define a distribution that moves a small amount
 of probability toward this cell \citep{hampel1974,vanderVaart1998}:
 \begin{equation}
@@ -158,16 +202,52 @@ of probability toward this cell \citep{hampel1974,vanderVaart1998}:
 where \(\delta_{(x,y)}\) places probability one on cell \((x,y)\). At
 \(\varepsilon=0\), the distribution is \(P\). Increasing \(\varepsilon\)
 moves a small amount of probability toward the selected cell while preserving
-total probability one. This direction represents the table error contributed
-by an observation in cell \((x,y)\). The empirical table averages such
-one-observation tables, so averaging their first-order effects will give
-a first-order approximation to the sampling error of \(\Vhat(P)\).
-Section~\ref{sec:component-df} shows that averaging step after we calculate
-the effect for one cell.
+total probability one. The direction \(\delta_{(x,y)}-P\) is the
+difference between the table representing one observation and the
+population table, so it describes that observation's contribution to
+the empirical-table error.
 \par
 \end{samepage}
 
-For an arbitrary cell \((i,j)\),
+The influence function of \(V(P)\) measures its observation-level
+sensitivity and is defined by
+\begin{equation}
+  g_P(x,y)
+  =
+  \left.
+  \frac{\mathrm d V(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}.
+  \label{eq:g-definition}
+\end{equation}
+The empirical table averages the one-observation tables, and the first
+derivative is linear in the table change. Averaging the corresponding
+sensitivities therefore gives a first-order approximation to the error
+in \(\Vhat(P)\). For independent observations,
+Section~\ref{sec:component-df} will show that the variance of this average
+gives
+\begin{equation*}
+  \Var\{\Vhat(P)\}
+  \approx\frac{\Var_P\{g_P(X,Y)\}}{n_P}.
+\end{equation*}
+To evaluate the right-hand side, we first need an explicit expression
+for \(g_P(x,y)\).
+
+Differentiating Equation~\eqref{eq:v-second-moment} separates this
+expression into the changes in the second moment and squared MI:
+\begin{equation}
+  g_P(x,y)
+  =
+  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
+  \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
+  \right|_{0}
+  -2I(P)
+  \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
+  \right|_{0}.
+  \label{eq:g-decomposition}
+\end{equation}
+Both terms depend on how pointwise MI changes, which in turn depends on
+the joint and marginal probabilities. Along the chosen path, an arbitrary
+cell \((i,j)\) has probability
 \begin{equation}
   p_{ij}(\varepsilon)
   =(1-\varepsilon)p_{ij}
@@ -197,10 +277,8 @@ The derivatives of the joint probabilities sum to zero because
 \medskip
 \thesisminiheading{Effect of the perturbation on pointwise MI and MI.}
 
-Because the pointwise-MI variance depends on both the squared pointwise-MI
-values and the square of MI, we first calculate how these quantities change
-under the perturbation.
-Along the perturbation path, pointwise MI is
+The joint and marginal derivatives now determine the change in
+pointwise MI. Along the perturbation path,
 \begin{equation}
   \pmi_{P_\varepsilon}(i,j)
   =\log p_{ij}(\varepsilon)
@@ -271,43 +349,11 @@ This is the centred pointwise-MI influence function from
 Section~\ref{sec:first-order-mi-background}.
 
 \medskip
-\thesisminiheading{Effect of the perturbation on the pointwise-MI variance.}
+\thesisminiheading{Assembling the derivative of the pointwise-MI variance.}
 
-The target is the first-order change in
-\begin{equation}
-  V(P)
-  =\Var_P\{\pmi_P(X,Y)\}.
-\end{equation}
-Write this variance in second-moment form:
-\begin{equation}
-  V(P)=\E_P\{\pmi_P(X,Y)^2\}-I(P)^2.
-  \label{eq:v-second-moment}
-\end{equation}
-The influence function of \(V(P)\) measures its observation-level
-sensitivity and is defined by
-\begin{equation}
-  g_P(x,y)
-  =
-  \left.
-  \frac{\mathrm d V(P_\varepsilon)}{\mathrm d\varepsilon}
-  \right|_{0}.
-  \label{eq:g-definition}
-\end{equation}
-Differentiating Equation~\eqref{eq:v-second-moment} gives
-\begin{equation}
-  g_P(x,y)
-  =
-  \left.\frac{\mathrm d}{\mathrm d\varepsilon}
-  \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
-  \right|_{0}
-  -2I(P)
-  \left.\frac{\mathrm d I(P_\varepsilon)}{\mathrm d\varepsilon}
-  \right|_{0}.
-  \label{eq:g-decomposition}
-\end{equation}
-
-With the MI derivative established, it remains to differentiate the second
-moment,
+The MI derivative supplies the second part of
+Equation~\eqref{eq:g-decomposition}. To obtain the first part, it remains
+to differentiate the second moment,
 \begin{equation}
   \E_{P_\varepsilon}\{\pmi_{P_\varepsilon}(X,Y)^2\}
   =\sum_{i,j}p_{ij}(\varepsilon)
@@ -361,6 +407,7 @@ indicators in the first three select the chosen cell, its row, and its column:
   &=\frac{\sum_i p_{iy}\pmi_P(i,y)}{p_{+y}},\\
   \sum_{i,j}p_{ij}\pmi_P(i,j)&=I(P).
 \end{align*}
+\begin{samepage}%
 The row indicator fixes \(i=x\) while leaving the sum over columns, so
 dividing by \(p_{x+}\) gives the conditional mean within row \(x\). The column
 term works in the same way. The final term comes from the constant \(+1\)
@@ -384,6 +431,8 @@ the minus signs on the row and column terms gives
   +I(P).
   \label{eq:m2-score-term}
 \end{align}
+\par
+\end{samepage}
 
 Combining Equations~\eqref{eq:mi-derivative},
 \eqref{eq:g-decomposition}, \eqref{eq:m2-weight-term}, and
@@ -430,16 +479,86 @@ to describe how the estimated variance varies across samples.
 \section{Component degrees of freedom and final test}
 \label{sec:component-df}
 
-\thesisminiheading{Population component degrees of freedom.}
+\thesisminiheading{From individual observations to the error in the variance estimate.}
 
-Define the population variability of the observation-level sensitivities by
+We now express \(\Vhat(P)-V(P)\) as an average of the sensitivities
+derived in the preceding section. The sampling mean and variance of
+this average will supply the two inputs to the component degrees of
+freedom.
+
+Let \(Z_a^{(P)}\) denote observation \(a\) from population \(P\). It can
+be represented by a table that places probability one in its cell,
+denoted \(\delta_{Z_a^{(P)}}\). Relative to
+\(P\), that observation contributes the table change
+\(\delta_{Z_a^{(P)}}-P\). The empirical table averages these one-observation
+tables, so its difference from \(P\) is
 \begin{equation}
-  \tau^2(P)=\Var_P\{g_P(X,Y)\}.
-  \label{eq:tau-definition}
+  \widehat P-P
+  =\frac{1}{n_P}\sum_{a=1}^{n_P}
+  \left\{\delta_{Z_a^{(P)}}-P\right\}.
 \end{equation}
-Averaging the two parts of Equation~\eqref{eq:g-final} shows that the
-observation-level sensitivities \(g_P(x,y)\) have a probability-weighted
-mean of zero. The first part has mean
+The plug-in estimate \(\Vhat(P)\) evaluates \(V\) at the empirical table,
+so \(\Vhat(P)=V(\widehat P)\). Near a positive population table, \(V\)
+is smooth, so we approximate its change by a first-order Taylor
+expansion. For a differentiable scalar function
+expanded at zero, the general formula is
+\begin{equation*}
+  f(t)\approx f(0)+t f'(0).
+\end{equation*}
+Here set \(f(t)=V\{P+t(\widehat P-P)\}\). As the scalar \(t\) increases,
+the table moves along the straight line from the population table \(P\) at
+\(t=0\) to the empirical table \(\widehat P\) at \(t=1\). Thus \(V\) is expanded at \(P\), the
+new table is \(\widehat P\), and the table difference is
+\(\widehat P-P\). The size of this change is determined by the
+cell-probability errors \(\widehat P-P\), while \(t\) specifies a
+position along the path. The approximation requires these probability
+errors to be small. Since \(f(0)=V(P)\) and \(f(1)=\Vhat(P)\), evaluating
+the Taylor formula at \(t=1\) and subtracting \(f(0)\) gives
+\begin{equation*}
+  \Vhat(P)-V(P)
+  \approx f'(0)
+  =\left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\widehat P-P)\}\right|_{t=0}.
+\end{equation*}
+The omitted terms are quadratic or higher order in the cell-probability
+errors, so the approximation can be useful at \(t=1\) when these errors
+are small.
+
+At fixed \(P\), the linear Taylor term is a weighted sum of the
+cell-probability changes, with coefficients evaluated at \(P\). These
+coefficients stay fixed when the direction of perturbation changes, so
+the derivative of an average table change is the average of the
+individual derivatives \citep[Chapter~20]{vanderVaart1998}. Substituting
+the empirical-table identity above therefore gives
+\begin{equation*}
+  \left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\widehat P-P)\}\right|_{t=0}
+  =\frac{1}{n_P}\sum_{a=1}^{n_P}
+    \left.\frac{\mathrm d}{\mathrm dt}
+    V\{P+t(\delta_{Z_a^{(P)}}-P)\}\right|_{t=0}.
+\end{equation*}
+Each term follows the one-observation perturbation
+\(P+t(\delta_{Z_a^{(P)}}-P)=(1-t)P+t\delta_{Z_a^{(P)}}\), so its
+derivative is \(g_P(Z_a^{(P)})\) by Equation~\eqref{eq:g-definition}.
+Combining this derivative identity with the Taylor approximation gives
+\begin{equation}
+  \Vhat(P)-V(P)
+  \approx
+  \frac{1}{n_P}
+  \sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
+  \label{eq:vhat-linearization}
+\end{equation}
+The variance-estimation error now has the same sample-average form as the
+MI error in Equation~\eqref{eq:mi-error-as-average-background}, with
+\(g_P\) supplying the observation-level contribution.
+
+\medskip
+\thesisminiheading{Sampling mean and variance of the estimate.}
+
+The linearised variance-estimation error averages the sensitivities
+\(g_P\), so its mean is zero if their mean is zero. We verify this
+property by averaging the two parts of Equation~\eqref{eq:g-final}.
+The first part has mean
 \begin{equation}
   \E_P\left[\{\pmi_P(X,Y)-I(P)\}^2-V(P)\right]
   =V(P)-V(P)=0.
@@ -465,69 +584,7 @@ also has mean zero, and the full sensitivity satisfies
   \E_P\{g_P(X,Y)\}
   =0+2\{I(P)-I(P)-I(P)+I(P)\}=0.
 \end{equation}
-Thus \(\tau^2(P)\) measures variation in the sensitivities around zero.
-We next use these sensitivities to approximate how much \(\Vhat(P)\)
-changes between samples.
-
-\begin{assumption}[Positive variances of observation-level sensitivities]
-For the first-order construction of the Expanded Welch test,
-\(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
-\end{assumption}
-
-An observation in cell \(Z_a^{(P)}\) can be represented by a table that places
-probability one in that cell, denoted \(\delta_{Z_a^{(P)}}\). Relative to
-\(P\), that observation contributes the table change
-\(\delta_{Z_a^{(P)}}-P\). The empirical table averages these one-observation
-tables, so its difference from \(P\) is
-\begin{equation}
-  \widehat P-P
-  =\frac{1}{n_P}\sum_{a=1}^{n_P}
-  \left\{\delta_{Z_a^{(P)}}-P\right\}.
-\end{equation}
-The plug-in estimate \(\Vhat(P)\) evaluates \(V\) at the empirical table,
-so \(\Vhat(P)=V(\widehat P)\). We approximate its difference from \(V(P)\)
-by a first-order Taylor expansion. For a differentiable scalar function
-expanded at zero, the general formula is
-\begin{equation*}
-  f(t)\approx f(0)+t f'(0).
-\end{equation*}
-Here set \(f(t)=V\{P+t(\widehat P-P)\}\). As the scalar \(t\) increases,
-the table moves along the straight line from the population table \(P\) at
-\(t=0\) to the empirical table \(\widehat P\) at \(t=1\). Thus \(V\) is expanded at \(P\), the
-new table is \(\widehat P\), and the table difference is
-\(\widehat P-P\). Since \(f(0)=V(P)\) and \(f(1)=\Vhat(P)\), evaluating
-the Taylor formula at \(t=1\) and subtracting \(f(0)\) gives
-\begin{equation*}
-  \Vhat(P)-V(P)
-  \approx f'(0)
-  =\left.\frac{\mathrm d}{\mathrm dt}
-    V\{P+t(\widehat P-P)\}\right|_{t=0}.
-\end{equation*}
-This approximation retains the terms linear in the cell-probability errors
-and applies when the empirical table is close to the positive population
-table.
-
-At fixed \(P\), the first derivative is linear in the direction of the
-table change \citep[Chapter~20]{vanderVaart1998}. Substituting the
-empirical-table identity above therefore gives
-\begin{equation*}
-  \left.\frac{\mathrm d}{\mathrm dt}
-    V\{P+t(\widehat P-P)\}\right|_{t=0}
-  =\frac{1}{n_P}\sum_{a=1}^{n_P}
-    \left.\frac{\mathrm d}{\mathrm dt}
-    V\{P+t(\delta_{Z_a^{(P)}}-P)\}\right|_{t=0}.
-\end{equation*}
-Each term follows the one-observation perturbation
-\(P+t(\delta_{Z_a^{(P)}}-P)=(1-t)P+t\delta_{Z_a^{(P)}}\), so its
-derivative is \(g_P(Z_a^{(P)})\) by Equation~\eqref{eq:g-definition}.
-Combining this derivative identity with the Taylor approximation gives
-\begin{equation}
-  \Vhat(P)-V(P)
-  \approx
-  \frac{1}{n_P}
-  \sum_{a=1}^{n_P}g_P(Z_a^{(P)}).
-  \label{eq:vhat-linearization}
-\end{equation}
+\begin{samepage}%
 Taking expectations in Equation~\eqref{eq:vhat-linearization} and using
 the zero mean of \(g_P\) gives
 \begin{align*}
@@ -536,8 +593,18 @@ the zero mean of \(g_P\) gives
     \E_P\{g_P(Z_a^{(P)})\}\\
   &=0.
 \end{align*}
+\par
+\end{samepage}
 This establishes the first-order mean approximation used in
-Section~\ref{sec:component-df-choice}. The independent observations give
+Section~\ref{sec:component-df-choice}. The other required moment depends
+on the variation of \(g_P\) across possible observations. Define this
+population variance by
+\begin{equation}
+  \tau^2(P)=\Var_P\{g_P(X,Y)\}.
+  \label{eq:tau-definition}
+\end{equation}
+Since \(g_P\) has mean zero, \(\tau^2(P)\) measures variation in the
+sensitivities around zero. The independent observations give
 independent sensitivity contributions, so their covariance terms vanish
 in the following first-order sampling-variance approximation:
 \begin{align}
@@ -549,6 +616,17 @@ in the following first-order sampling-variance approximation:
   &=\frac{\tau^2(P)}{n_P}.
   \label{eq:vhat-sampling-variance}
 \end{align}
+
+\medskip
+\thesisminiheading{Population component degrees of freedom.}
+
+The mean and variance approximations now supply both inputs to
+Equation~\eqref{eq:component-df-moments}. To obtain positive, finite
+component degrees of freedom, we require positive sensitivity variances:
+\begin{assumption}[Positive variances of observation-level sensitivities]
+For the first-order construction of the Expanded Welch test,
+\(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
+\end{assumption}
 Substituting the first-order mean and variance approximations into
 Equation~\eqref{eq:component-df-moments} gives the population first-order
 approximation to \(\nu_{P,\mathrm{mom}}\), defined by
@@ -580,8 +658,9 @@ sampling variation of \(\Vhat(P)\) requires a higher-order approximation.
 \medskip
 \thesisminiheading{Table-based component degrees of freedom.}
 
-For the observed table, we replace every population quantity in
-Equation~\eqref{eq:g-final} by its empirical counterpart and sum over
+The population inputs \(V(P)\) and \(\tau^2(P)\) are unknown, so the
+test estimates them from the observed table. We replace every population
+quantity in Equation~\eqref{eq:g-final} by its empirical counterpart and sum over
 occupied cells, since pointwise MI is undefined at an empirical zero.
 For each occupied cell,
 \begin{equation}
