@@ -132,24 +132,7 @@ therefore gives
 The factors \(1/n_P^2\) cancel, so dividing the estimate by \(n_P\)
 leaves its moment-matched degrees of freedom unchanged.
 
-The same calculation applies to the contribution from \(Q\). Once both
-component inputs are available, they must be combined to choose one
-reference distribution for \(T\). For component inputs \(\nu_P\) and
-\(\nu_Q\), the Welch--Satterthwaite equation is
-\citep{satterthwaite1946,welch1947}:
-\begin{equation}
-  \nu
-  =
-  \frac{
-  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
-  }{
-  \left\{\Vhat(P)/n_P\right\}^2/\nu_P
-  +\left\{\Vhat(Q)/n_Q\right\}^2/\nu_Q
-  }.
-  \label{eq:ws-general}
-\end{equation}
-Section~\ref{sec:component-df} derives this rule by matching the mean and
-variance of the sum of the two independent variance contributions.
+The same calculation applies to the contribution from \(Q\).
 
 To evaluate Equation~\eqref{eq:component-df-moments}, we need the mean and
 variance of \(\Vhat(P)\) across repeated samples from \(P\). The first-order
@@ -200,9 +183,11 @@ of probability toward this cell \citep{hampel1974,vanderVaart1998}:
   \label{eq:contamination-path}
 \end{equation}
 where \(\delta_{(x,y)}\) places probability one on cell \((x,y)\). At
-\(\varepsilon=0\), the distribution is \(P\). Increasing \(\varepsilon\)
-moves a small amount of probability toward the selected cell while preserving
-total probability one. The direction \(\delta_{(x,y)}-P\) is the
+\(\varepsilon=0\), the distribution is \(P\). Multiplying \(P\) by
+\(1-\varepsilon\) reduces every original cell probability proportionally,
+and adding probability \(\varepsilon\) at \((x,y)\) keeps the total at
+one. The selected cell gains probability overall, while all other cells
+lose probability. The direction \(\delta_{(x,y)}-P\) is the
 difference between the table representing one observation and the
 population table, so it describes that observation's contribution to
 the empirical-table error.
@@ -219,6 +204,12 @@ sensitivity and is defined by
   \right|_{0}.
   \label{eq:g-definition}
 \end{equation}
+This derivative measures the change in \(V\) per unit increase in the
+mixture weight \(\varepsilon\) at zero. An observation enters the
+empirical table with weight \(1/n_P\), so its first-order contribution
+to the variance-estimation error is \(g_P(x,y)/n_P\), as derived in
+Section~\ref{sec:component-df}.
+
 The empirical table averages the one-observation tables, and the first
 derivative is linear in the table change. Averaging the corresponding
 sensitivities therefore gives a first-order approximation to the error
@@ -246,8 +237,9 @@ expression into the changes in the second moment and squared MI:
   \label{eq:g-decomposition}
 \end{equation}
 Both terms depend on how pointwise MI changes, which in turn depends on
-the joint and marginal probabilities. Along the chosen path, an arbitrary
-cell \((i,j)\) has probability
+the joint and marginal probabilities. The selected cell \((x,y)\)
+remains fixed, while \((i,j)\) indexes any cell whose probability or
+pointwise MI is being evaluated. Along the chosen path,
 \begin{equation}
   p_{ij}(\varepsilon)
   =(1-\varepsilon)p_{ij}
@@ -628,8 +620,13 @@ For the first-order construction of the Expanded Welch test,
 \(\tau^2(P)>0\) and \(\tau^2(Q)>0\).
 \end{assumption}
 Substituting the first-order mean and variance approximations into
-Equation~\eqref{eq:component-df-moments} gives the population first-order
-approximation to \(\nu_{P,\mathrm{mom}}\), defined by
+Equation~\eqref{eq:component-df-moments} gives
+\begin{equation*}
+  \nu_{P,\mathrm{mom}}
+  \approx\frac{2V(P)^2}{\tau^2(P)/n_P}
+  =\frac{2n_PV(P)^2}{\tau^2(P)}.
+\end{equation*}
+We define this population first-order approximation by
 \begin{equation}
   \boxed{
   \nu_{P,\mathrm{FO}}
@@ -689,7 +686,13 @@ is centred explicitly:
   -\sum_{k,l}\widehat p_{kl}\widehat g_P(k,l)\right\}^2.
   \label{eq:tau-hat}
 \end{equation}
-The estimated component degrees of freedom are
+The weighted variance \(\widehat\tau^2(P)\) estimates the population
+variance of the observation-level sensitivities. By
+Equation~\eqref{eq:vhat-sampling-variance}, \(\widehat\tau^2(P)/n_P\)
+then estimates the sampling variance of \(\Vhat(P)\). Replacing \(V(P)\) and
+\(\tau^2(P)\) by their estimates in
+Equation~\eqref{eq:population-component-df} gives the estimated component
+degrees of freedom:
 \begin{equation}
   \boxed{
   \widehat\nu_P
@@ -730,8 +733,23 @@ Population \(V(P)\), \(\tau^2(P)\), and \(n_P\)\\
 \medskip
 \thesisminiheading{Combining the two samples' degrees of freedom.}
 
-The combining rule follows by applying moment matching to the full
-estimated variance,
+The two component degrees of freedom must now be combined to choose one
+reference distribution for \(T\). For component inputs \(\nu_P\) and
+\(\nu_Q\), the Welch--Satterthwaite equation is
+\citep{satterthwaite1946,welch1947}:
+\begin{equation}
+  \nu
+  =
+  \frac{
+  \left\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\right\}^2
+  }{
+  \left\{\Vhat(P)/n_P\right\}^2/\nu_P
+  +\left\{\Vhat(Q)/n_Q\right\}^2/\nu_Q
+  }.
+  \label{eq:ws-general}
+\end{equation}
+To derive this rule, we apply moment matching to the full estimated
+variance,
 \begin{equation*}
   \SEhat^2=\frac{\Vhat(P)}{n_P}+\frac{\Vhat(Q)}{n_Q}.
 \end{equation*}
@@ -750,7 +768,7 @@ freedom. Applying this identity to both components gives
 \begin{align*}
   \Var(\SEhat^2)
   &=\frac{\Var\{\Vhat(P)\}}{n_P^2}
-    +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}\\
+    +\frac{\Var\{\Vhat(Q)\}}{n_Q^2}\\*
   &=2\left\{
     \frac{[\E\{\Vhat(P)\}/n_P]^2}{\nu_{P,\mathrm{mom}}}
     +\frac{[\E\{\Vhat(Q)\}/n_Q]^2}{\nu_{Q,\mathrm{mom}}}
