@@ -501,8 +501,8 @@ preceding section add to approximate the sampling variance of the MI
 difference. Estimating this sum and taking its square root gives the
 standard error, which estimates the difference's standard deviation across
 repeated samples. This section
-reviews the Wald test, the Welch--Satterthwaite principle, and other
-approaches to that comparison. The hypothesis is that the populations
+reviews the Wald test, the Welch--Satterthwaite principle, and resampling
+alternatives. The hypothesis is that the populations
 have the same MI, \(I(P)=I(Q)\).
 
 \thesisminiheading{The Wald test.}
@@ -618,71 +618,6 @@ excessive rejection, but it does not change the estimated variance or
 remove bias in the estimated MI difference.
 
 \medskip
-\thesisminiheading{Previous work on MI uncertainty and comparisons.}
-
-\citet{roulston1999} derives entropy and MI error estimates
-using error propagation and examines them numerically. These calculations
-describe the uncertainty of an individual estimate, a necessary input to a
-comparison of two estimates.
-The first-order results of \citet{moddemeijer1989} and
-\citet{brillinger2004} give this uncertainty as \(V(P)/n_P\), with
-\(V(P)\) determined by the population table. Replacing its probabilities by observed proportions produces the variance
-estimate used by the Wald test to calculate the standard error of the MI difference.
-Choosing a Welch--Satterthwaite cutoff additionally requires the sampling
-variance of that variance estimate, which describes how much it changes
-when a new sample produces a different table.
-
-In a Bayesian approach to uncertainty about population MI,
-\citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
-probabilities and calculate the variance and shape of the resulting MI
-distribution conditional on the observed table. Our repeated-sampling
-comparison instead asks how often the Wald test and the Expanded Welch test reject
-equal MI when new samples are drawn from fixed populations \(P\) and \(Q\).
-
-Hutcheson's test compares two estimates of Shannon diversity, or entropy,
-using a Welch-type statistic and a Student \(t\) distribution with effective
-degrees of freedom
-\begin{equation}
-  \nu_H=
-  \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
-       {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
-  \label{eq:hutcheson-df}
-\end{equation}
-\citep{hutcheson1970}. Here each of
-\(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
-corresponding entropy estimator \(\widehat H\), and each variance component
-is assigned its sample size, not \(n_i-1\).
-The Expanded Welch test instead calculates its degrees of freedom from how the
-estimated pointwise-MI variance changes with the table, including the effects of a
-cell change on its row and column totals.
-
-The entropy comparison provides a precedent for using a Student \(t\)
-distribution as an approximate reference when comparing estimated
-information quantities, but MI requires more than substituting a different
-numerator. The row, column, and joint entropies in MI are calculated from the same
-observations, so their estimation errors are connected through the cell
-counts contributing to all three.
-The MI sampling-variance formulas in Section~\ref{sec:first-order-mi-background}
-account for these connected estimation errors. To obtain degrees of freedom,
-the Expanded Welch test also tracks how a cell change alters both the probability
-weights and the pointwise-MI values whose weighted variance is being
-estimated. The resulting cell and margin derivatives supply the MI-specific
-inputs to the Welch--Satterthwaite calculation.
-
-In a segregation application, \citet{mora2009} derive an approximation using
-a normal distribution for comparing positive population MI between
-populations and time periods, providing a direct precedent for the Wald
-test used as the baseline. Their later
-peer-reviewed account places the MI index within the segregation literature
-\citep{mora2011}.
-
-By contrast, \citet{guha2014} test whether two continuous distributions are identical
-using MI between pooled observations and their sample labels.
-For discrete data, \citet{drake2014} develop an MI-based \(k\)-sample test
-for equality of distributions. These tests compare complete distributions,
-not the MI of two variables within each population.
-
-\medskip
 \thesisminiheading{Resampling alternatives.}
 
 A bootstrap approximates sampling variation by repeatedly drawing samples
@@ -714,29 +649,76 @@ for equal MI would need to be established.
 
 \section{Previous work and this thesis's contribution}
 
-Existing work provides the leading bias and sampling variance of MI,
-supporting a standard error for the difference between two independent
-MI estimates
-\citep{miller1955,moddemeijer1989,brillinger2004,paninski2003}.
-These sampling-variance results describe variation in the MI estimate,
-whereas choosing Welch--Satterthwaite degrees of freedom additionally
-requires the sampling mean and variance of the variance estimate itself.
-Hutcheson's entropy test uses a Student \(t\) distribution with degrees of
-freedom based on sample sizes \citep{hutcheson1970}. For MI, this assignment
-does not account for how estimated pointwise-MI values change with the
-observed table.
+Existing uncertainty calculations describe how much an MI estimate varies
+between samples. \citet{roulston1999} derives entropy and MI error estimates
+using error propagation and examines them numerically. The first-order
+results of \citet{moddemeijer1989} and \citet{brillinger2004} give the MI
+sampling variance as approximately \(V(P)/n_P\), as developed in
+Section~\ref{sec:first-order-mi-background}.
 
-This thesis follows the variance-moment approach used in regression by
-\citet{panwall2002} and derives its MI-specific inputs. Changing a cell
-count changes both its probability weight and the pointwise-MI values
-calculated from the joint and marginal probabilities. Tracking these
-changes gives a first-order approximation to the sampling variability of
-the estimated pointwise-MI variance. The Expanded Welch test uses this approximation
-to obtain component degrees of freedom, then combines them using the
+In a segregation application, \citet{mora2009} derive an approximation using
+a normal distribution for comparing positive population MI between
+populations and time periods, providing a direct precedent for the Wald
+test used as the baseline. Their later
+peer-reviewed account places the MI index within the segregation literature
+\citep{mora2011}.
+
+Hutcheson's test provides a related precedent for comparing estimated
+information quantities using a Student \(t\) distribution as an approximate
+reference. It compares two estimates of Shannon diversity, or entropy,
+using a Welch-type statistic with effective degrees of freedom
+\begin{equation}
+  \nu_H=
+  \frac{(s_{H,P}^2+s_{H,Q}^2)^2}
+       {(s_{H,P}^2)^2/n_P+(s_{H,Q}^2)^2/n_Q}
+  \label{eq:hutcheson-df}
+\end{equation}
+\citep{hutcheson1970}. Here each of
+\(s_{H,P}^2\) and \(s_{H,Q}^2\) is the estimated sampling variance of the
+corresponding entropy estimator \(\widehat H\). The formula assigns the
+two variance components degrees of freedom \(n_P\) and \(n_Q\), rather
+than the \(n_P-1\) and \(n_Q-1\) values used in the ordinary Welch test.
+
+For MI, the row, column, and joint entropies are calculated from the same
+observations, so their estimation errors are connected through the cell
+counts contributing to all three. The MI sampling-variance formulas in
+Section~\ref{sec:first-order-mi-background} account for this dependence
+when estimating uncertainty in MI.
+
+In a Bayesian approach to uncertainty about population MI,
+\citet{hutter2002} and \citet{hutterzaffalon2005} model the unknown cell
+probabilities and calculate the variance and shape of the resulting MI
+distribution conditional on the observed table. Our repeated-sampling
+comparison instead asks how often the Wald test and the Expanded Welch
+test reject equal MI when new samples are drawn from fixed populations
+\(P\) and \(Q\).
+
+MI has also been used to test whether complete population distributions
+are equal. \citet{guha2014} compare two continuous distributions using MI
+between pooled observations and their sample labels, while
+\citet{drake2014} develop an MI-based \(k\)-sample test for discrete data.
+This thesis compares the MI of two variables within each population,
+testing \(I(P)=I(Q)\).
+
+The additional calculation needed by the Expanded Welch test concerns how
+much the estimated pointwise-MI variance changes between samples. The
+moment-matching rule in Section~\ref{sec:welch-background} requires both
+the sampling mean and variance of this estimate to obtain component
+degrees of freedom.
+
+This thesis derives a first-order approximation to that sampling variance
+by tracking how changes in observed counts affect the estimated
+pointwise-MI variance. A change in a cell count alters both the estimated
+probability weights and the pointwise-MI values calculated from the joint
+and marginal probabilities. Following the moment-matching approach used
+in regression by \citet{panwall2002}, the Expanded Welch test uses this
+sampling-variance approximation to obtain component degrees of freedom.
+The component degrees of freedom are then combined using the
 Welch--Satterthwaite rule.
 
-Retaining the estimated MI difference and standard error used by the Wald test isolates
-the effect of changing the reference distribution.
+The Wald test and the Expanded Welch test use the same estimated MI
+difference and standard error, so their comparison isolates the effect of
+changing the reference distribution.
 The estimation problems identified by \citet{paninski2003} remain relevant:
 residual bias can shift the estimated difference. For a fixed estimated
 difference, an underestimated standard error can make the absolute test

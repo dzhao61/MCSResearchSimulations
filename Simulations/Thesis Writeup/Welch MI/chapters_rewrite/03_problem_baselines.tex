@@ -217,19 +217,27 @@ At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
 \medskip
 \thesisminiheading{Why use a Student \(t\) distribution?}
 
-The Wald test uses the standard normal distribution at every sample size, even
-though its standard error is estimated from the observed tables.
-Hutcheson's entropy test assigns each variance component \(n_i\)
-degrees of freedom \citep{hutcheson1970}, while ordinary Welch's test
-assigns \(n_i-1\) \citep{welch1947}. For MI, these sample-size assignments
-do not measure how cell probabilities and margins make the estimated
-pointwise-MI variance change between samples. The Expanded Welch test therefore
-uses the sampling variability of \(\Vhat(P)\) and \(\Vhat(Q)\) to choose
-the degrees of freedom of a Student \(t\) distribution.
+The large-sample limit above relies on \(\SEhat\) estimating the
+sampling standard deviation of \(\Deltahat\) with decreasing relative
+error as sample sizes increase. With smaller samples, variation in
+\(\SEhat\) can affect the distribution of the ratio \(T\). For a fixed
+estimated MI difference, a smaller \(\SEhat\) gives a larger \(|T|\)
+and can move it beyond the rejection cutoff. The Wald test uses the same
+cutoff from the standard normal distribution regardless of how much
+\(\Vhat(P)\) and \(\Vhat(Q)\) vary between samples.
 
-To choose the degrees of freedom, we need the average value of each estimated
-pointwise-MI variance and how much that estimate varies across samples
-\citep{satterthwaite1946}. For \(P\), to first order,
+The Expanded Welch test uses a Student \(t\) distribution as an approximate
+reference for \(T\). Its heavier tails give a larger rejection cutoff
+than the cutoff from the standard normal distribution at the same
+significance level, with fewer degrees of freedom giving a larger
+adjustment. Under the Welch--Satterthwaite moment-matching rule, an
+estimated variance contribution with greater sampling variance relative to its squared
+sampling mean receives fewer component degrees of freedom
+\citep{satterthwaite1946}.
+
+We therefore need the average value of each estimated pointwise-MI
+variance and how much that estimate varies across samples. For \(P\),
+to first order,
 \begin{equation}
   \E\{\Vhat(P)\}\approx V(P).
 \end{equation}
