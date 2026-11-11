@@ -1,0 +1,108 @@
+% Use the supplied Sydney class and its native AMS page layout.
+% The template entry point sets one-inch side margins on A4 paper.
+\oddsidemargin=0cm
+\evensidemargin=0cm
+\textwidth=6.2677165in
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage[section]{placeins}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[round,authoryear]{natbib}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+
+% Apply the template's body spacing after its single-spaced title page.
+% The AMS class has 13pt base leading: 1.5 gives a 19.5pt baseline.
+\newcommand{\thesisbodyformat}{%
+  \setstretch{1.5}%
+  \setlength{\parindent}{0pt}%
+  \setlength{\parskip}{0.5\baselineskip}%
+}
+% Fixed-position displays retain natural paragraph gaps on shorter pages.
+\raggedbottom
+\widowpenalty=10000
+\clubpenalty=10000
+\setlength{\emergencystretch}{2em}
+\AddToHook{env/thebibliography/begin}{\raggedright}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+\allowdisplaybreaks
+
+% Front lists use the samples' compact entry spacing, independently of body prose.
+\newcommand{\thesisfrontlists}{%
+  \begingroup
+  \setlength{\parskip}{0pt}%
+  \tableofcontents
+  \setlength{\parskip}{3pt}%
+  \listoffigures
+  \listoftables
+  \clearpage
+  \endgroup
+}
+
+\pagestyle{headings}
+\setlist{itemsep=0.25em,topsep=0.5em}
+\renewcommand{\arraystretch}{1.16}
+% Keep table leading consistent for both fixed and floating placement.
+% Row gaps in the sources separate entries without changing body spacing.
+\newcommand{\thesistableformat}{%
+  \setstretch{1}%
+  \renewcommand{\arraystretch}{1.25}%
+}
+\makeatletter
+% Anchor AMS front-list entries after their page break, before writing the contents.
+\patchcmd{\@starttoc}{\let\@secnumber\@empty}{\let\@secnumber\@empty\phantomsection}
+  {}{\PackageError{welch-thesis}{Unable to anchor front lists}{Check the AMS starttoc definition.}}
+% Reserve a clear page-number column for the thesis's long contents titles.
+\renewcommand{\@pnumwidth}{2.5em}
+\setlength{\@fptop}{0pt}
+% Keep the small heading and its opening body paragraph flush left.
+\newcommand{\thesisminiheading}[1]{%
+  \par\noindent\textbf{#1}\par
+  \nobreak
+  \@afterindenttrue
+  \@afterheading
+}
+\makeatother
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bias}{Bias}
+\newcommand{\pmi}{\ell}
+\newcommand{\Ihat}{\widehat I}
+\newcommand{\Vhat}{\widehat V}
+\newcommand{\SEhat}{\widehat{\operatorname{SE}}}
+\newcommand{\Deltahat}{\widehat\Delta_{\mathrm{BC}}}
+
+\graphicspath{
+  {figures_rewrite/}
+}
+
+\input{figures_rewrite/evidence_values.tex}
+
+\hypersetup{
+  colorlinks=false,
+  plainpages=false,
+  pdfborder={0 0 0},
+  pdfauthor={Daniel Zhao},
+  pdfsubject={Master of Computer Science research thesis},
+  pdfkeywords={mutual information, finite samples, Welch-Satterthwaite, hypothesis testing},
+  pdftitle={Comparing Mutual Information in Finite Samples: Wald and Expanded Welch-Satterthwaite Tests}
+}

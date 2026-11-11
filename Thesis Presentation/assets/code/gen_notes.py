@@ -65,16 +65,17 @@ for sl in prs.slides:
 titles[0] = "Comparing Mutual Information in Finite Samples"
 
 md = ["# Comparing Mutual Information in Finite Samples: speaker notes", "",
-      "Daniel Zhao. Talk target 18:50 for Slides 1–14; Slide 14 stays up for questions. Slide 15 is the appendix "
-      "title and the backups are Slides 16–30.",
+      "Daniel Zhao. Talk target 18:50 for Slides 1–13; Slide 13 stays up for questions. Slide 14 is the appendix "
+      f"title and the backups are Slides 15–{len(prs.slides)}.",
       "Scripts, transitions, delivery cues, sources, and backup answers are copied from the presentation execution "
-      "plan, as updated on 8 November 2026.", "", "## Main talk", ""]
-for i in range(14):
+      "plan, as updated on 11 November 2026.", "", "## Main talk", ""]
+for i in range(13):
     md += [f"### Slide {i + 1}: {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text), ""]
-md += ["## Appendix", "", "### Slide 15: Appendix title", "", to_md(prs.slides[14].notes_slide.notes_text_frame.text),
+md += ["## Appendix", "", "### Slide 14: Appendix title", "", to_md(prs.slides[13].notes_slide.notes_text_frame.text),
        ""]
-for i in range(15, len(prs.slides)):
-    md += [f"### Slide {i + 1} (B{i - 14}): {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text),
+for i in range(14, len(prs.slides)):
+    tag = next(sh.text_frame.text for sh in prs.slides[i].shapes if sh.name == "Backup label").replace("Backup ", "")
+    md += [f"### Slide {i + 1} ({tag}): {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text),
            ""]
 md += [fix_sections(plan_section("## 8. Question preparation", "## 9. Rehearsal and timing control")
                     + "\n" + plan_section("## 9. Rehearsal and timing control",

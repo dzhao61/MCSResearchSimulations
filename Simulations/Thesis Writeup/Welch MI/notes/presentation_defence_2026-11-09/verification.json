@@ -1,0 +1,64 @@
+{
+  "pages": 13,
+  "words": 4854,
+  "latex_issues": [],
+  "deck_modified_by_this_task": false,
+  "latest_presentation_hashes": {
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/README.md": "8bf16e6394708ca8e6335cf091beb8756ea254e45822fbc33d8fa0d51a56b73e",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md": "60bdbd93b1ea010a5f5df117088133d07075d89e41e087dbb8f3b80482108359",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/Daniel_Zhao_Welch_MI_Presentation_preview.pdf": "1d6ab831ee002cf48309f279354657d864df1eb0e5d966ee719d6ad3a42e564d",
+    "/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/Daniel_Zhao_Welch_MI_Presentation.pptx": "9248b21bd9367ab31b2a9b0788ec75677d03394db483a153033dcbafb10f35a9"
+  },
+  "external_revision_adopted": "Slides 7-8 population-based labels; Slide 8 charcoal target, orange mean sample-based estimates, dotted navy population-based values.",
+  "data_verification": {
+    "matched_files": [
+      "B_null_uniform.csv",
+      "slide11_snapshot_n2500.csv",
+      "slide08_B5_near_independence_df.csv",
+      "slide07_variance_inputs_4x4.csv",
+      "B_null_same_skew.csv",
+      "slide09_null_uniform_4x4_n20.csv",
+      "B_power_uniform.csv",
+      "slide02_13_B12_application_results.csv",
+      "slide11_power_uniform_4x4_gap001.csv",
+      "B4_approximation_ratios.csv",
+      "slide10_bias_contrast.csv",
+      "B_power_same_skew.csv",
+      "B_power_different_skew.csv",
+      "B_null_different_skew.csv",
+      "slide12_power_16x16_different_skew_gap001.csv"
+    ],
+    "byte_identical_files": [
+      "B_null_uniform.csv",
+      "slide11_snapshot_n2500.csv",
+      "slide08_B5_near_independence_df.csv",
+      "slide07_variance_inputs_4x4.csv",
+      "B_null_same_skew.csv",
+      "slide09_null_uniform_4x4_n20.csv",
+      "B_power_uniform.csv",
+      "slide11_power_uniform_4x4_gap001.csv",
+      "slide10_bias_contrast.csv",
+      "B_power_different_skew.csv",
+      "B_null_different_skew.csv",
+      "slide12_power_16x16_different_skew_gap001.csv"
+    ],
+    "source_assertions_passed": true,
+    "numeric_tolerance": 1e-12
+  },
+  "checked_calculations": {
+    "student_t_5_df_cutoff": 2.5705818356363146,
+    "standard_normal_cutoff": 1.959963984540054,
+    "slide7_df_ratio": 0.7272790275679377,
+    "B5_local_mean": 4.6,
+    "B5_local_moment_target": 9.004255319148934,
+    "wrong_direction_conditional_percent": 99.96895052784103,
+    "monte_carlo_standard_error_at_five_percent_pp": 0.06892024376045111
+  },
+  "visual_review": {
+    "all_slide_previews_reviewed": 28,
+    "latest_slides_7_8_reviewed": true,
+    "all_guide_pages_rendered": 13,
+    "layout_status": "No clipping, overlaps, or isolated continuation pages."
+  },
+  "pdf_sha256": "f304a12496a3c4dc43de2559350224193879082526e35a208233f820948e7dd8"
+}

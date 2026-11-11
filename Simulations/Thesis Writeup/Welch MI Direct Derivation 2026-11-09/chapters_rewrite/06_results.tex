@@ -1,0 +1,918 @@
+\chapter{Results}
+\label{chap:results}
+\input{figures_rewrite/focused_redesign_reporting_values}
+
+This chapter checks the approximations used to choose the Expanded Welch test's
+degrees of freedom, then compares its false-positive rates and power with
+those of the Wald test. The online-shopping application illustrates how to interpret
+the test outputs.
+
+Each evaluation setting uses 100,000 independent repetitions, each drawing
+one count table from \(P\) and one independently from \(Q\). The Wald test and the Expanded Welch test are both applied to the same two sampled tables in
+each repetition.
+
+\section{RQ1: Accuracy of variance approximations}
+
+For a fixed population table \(P\) and sample size \(n_P\), each
+repetition produces an estimate \(\Vhat(P)\) of the pointwise-MI variance
+\(V(P)\). We first check predictions for its sampling mean,
+\(\E\{\Vhat(P)\}\), and its variation between repetitions,
+\(\Var\{\Vhat(P)\}\), because both moments enter the component
+degrees-of-freedom calculation. We then examine how errors in these
+moments affect the degrees of freedom, before checking the approximations
+as the populations approach independence.
+Table~\ref{tab:results-variance-quantities} in
+Chapter~\ref{chap:baselines} distinguishes these quantities from the
+sampling variance of the MI difference.
+The figures focus on populations with equal MI but different margins,
+allowing approximation accuracy to be compared between distinct population
+tables.
+
+\subsection{Mean and sampling-variance predictions}
+
+Equation~\eqref{eq:redesign-moment-approximations} predicts
+\(\E\{\Vhat(P)\}\approx V(P)\) and
+\(\Var\{\Vhat(P)\}\approx\tau^2(P)/n_P\), where \(\tau^2(P)\)
+measures the variability of the observation-level sensitivities derived
+in Chapter~\ref{chap:expanded}. We compare each prediction with the
+corresponding moment observed across repetitions, and repeat the checks
+for \(Q\).
+
+Figure~\ref{fig:redesign-moments} shows the different-skew populations
+at shared MI 0.02 nats, with row and column margins \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\).
+The top row divides the simulated mean of
+\(\Vhat(P)\) by the population benchmark \(V(P)\), and likewise for \(Q\).
+The middle row divides \(\tau^2(P)/n_P\) by the observed
+\(\Var\{\Vhat(P)\}\). The bottom row uses the average
+\(\widehat\tau^2(P)/n_P\) as its numerator and the same observed
+variance as its denominator. Both variance rows use the same vertical
+scale, so their differences show the effect of substituting sample
+proportions. A ratio of one indicates agreement. Shading in the first
+two rows shows approximate 95\% Monte Carlo
+intervals from 100,000 repetitions. Their half-widths are below 1.3\%
+of the plotted values, making the bands barely visible on this scale.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_moment_predictions_different_skew.pdf}
+\caption{Mean and sampling-variance ratios under different-skew margins.}
+\label{fig:redesign-moments}
+\end{figure}
+
+In the top row of Figure~\ref{fig:redesign-moments}, larger tables have
+higher peaks in the mean ratio and take more observations to approach
+one. The \(2\times2\) curve falls towards one without a
+pronounced peak, whereas the \(4\times4\), \(8\times8\), and
+\(16\times16\) curves first rise and then fall. The \(4\times4\)
+peak is smaller and earlier than those for the two larger tables.
+The rise in these curves occurs as rare combinations that were initially
+unobserved begin to appear in sampled tables. Cells observed only once
+can have estimated pointwise MI far from the table's plug-in MI,
+producing large squared deviations in \(\Vhat\). For example, if a
+cell and its row and column each contain one observation, its empirical
+pointwise MI is \(\log n\). A cell-contribution decomposition using
+10,000 repetitions for the \(16\times16\) populations shows that, at
+\(n=50\), once-observed cells account for about 88\% of the mean of
+\(\Vhat\) in \(P\) and 92\% in \(Q\)
+(Appendix~\ref{sec:estimation-diagnostics}).
+Their contribution falls as repeated counts give better estimates of
+the cell probabilities. Larger tables spread probability over more rare
+combinations under these margin rules, so this distortion persists to
+larger sample sizes. Both populations show these patterns, but the
+larger-table peaks are higher in \(P\) than in \(Q\), and the
+\(16\times16\) peak occurs later in \(Q\). For each of these larger
+table sizes, the peak mean of \(\Vhat\) is greater in \(P\) than in
+\(Q\), while \(V(P)<V(Q)\). Both the larger numerator and the smaller
+denominator therefore raise \(P\)'s peak ratio. Equal MI fixes the population mean of pointwise MI, whereas its variance
+\(V\) also depends on the cell-specific pointwise-MI values and their
+probability weights, which change with the margins.
+
+In the middle row, the \(2\times2\) curves have shallow troughs,
+while the larger tables have progressively deeper troughs and take
+longer to approach one. Ratios below one mean that \(\tau^2(P)/n_P\)
+understates the observed \(\Var\{\Vhat(P)\}\), with the same
+interpretation for \(Q\). The dip develops because, for a fixed
+population, the predicted variance decreases exactly as \(1/n\), while
+the observed sampling variance does not initially follow that decrease.
+At small sample sizes, many rare combinations remain unobserved. As
+\(n\) increases, some sampled tables contain a given rare cell while
+others still miss it. An unobserved cell contributes zero to \(\Vhat\),
+whereas a single observation can give a large squared deviation of its
+pointwise MI from the table's plug-in MI. The \(1/n\) change in a cell
+proportion can be large relative to its true probability, so its effect
+on \(\Vhat\) can be poorly represented by linearisation around the
+population table. The observed variance can therefore initially rise or fall more slowly than
+\(1/n\), even though the predicted variance decreases as \(1/n\). The
+ratio of predicted to observed variance therefore falls.
+To check how much variation the linear approximation misses, we separate
+\(\Vhat-V\) into the predicted linear change and the remaining error.
+In the same \(16\times16\) repetitions, this remaining error has greater
+variance than the linear change around the trough. After accounting for
+the covariance between the two parts, the observed variance still
+substantially exceeds the linear prediction
+(Appendix~\ref{sec:estimation-diagnostics},
+Equation~\eqref{eq:linear-remainder-variance-decomposition}).
+With larger samples, repeated
+counts make the estimated cell probabilities and their log ratios more
+stable. The variation missed by the linear approximation becomes smaller
+relative to \(\tau^2(P)/n_P\), and the observed variance approaches
+this prediction, so the ratio rises back towards one. Under these margin
+rules, larger tables contain more rare combinations and require more
+observations before this approximation becomes accurate. The observed
+variance measures spread about the sampling mean, so it can be predicted
+accurately while that mean remains above the population benchmark, as
+in the top row. The same ordering by table size appears in \(P\) and
+\(Q\), but the \(16\times16\) trough occurs later in \(Q\), where the
+rarer row and column categories have lower probabilities and accumulate
+observations more slowly.
+
+In the bottom row, the \(4\times4\), \(8\times8\), and
+\(16\times16\) sample-based predictions first underestimate the
+observed sampling variance, then overestimate it before approaching
+agreement. Their ratios begin below one, rise through one to a peak,
+and then fall towards one, although the \(16\times16\) curves initially
+dip further before rising. The \(4\times4\) overshoot is smaller and
+earlier than those for the two larger tables, while \(16\times16\)
+has the largest overshoot and takes longest to settle near one.
+The \(2\times2\) curves begin above one and settle near it sooner.
+Substituting sample proportions changes the sensitivities used to
+estimate \(\tau^2\). Around the overshoot, cells observed only once
+contribute strongly to \(\widehat\tau^2\) as well as to \(\Vhat\),
+so the averaged sample-based prediction can exceed the observed
+sampling variance even while the middle-row population prediction
+remains below it. Sample substitution can therefore reverse the
+direction of the prediction error. Both populations show this
+progression, but for the three larger table sizes the initial
+underprediction is stronger in \(Q\), and the crossing above one
+occurs later than in \(P\). The subsequent peaks are higher in \(P\)
+than in \(Q\).
+
+\FloatBarrier
+\subsection{How moment errors affect degrees of freedom}
+
+We now examine how the moment errors in Figure~\ref{fig:redesign-moments}
+affect the component degrees of freedom for \(P\) and \(Q\), using the
+three quantities and inputs distinguished in Table~\ref{tab:component-df-roles}. At each setting, the observed
+mean and sampling variance of \(\Vhat(P)\) across 100,000 repetitions
+give the moment target \(\nu_{P,\mathrm{mom}}\) in
+Equation~\eqref{eq:design-moment-target}. The population first-order value
+\(\nu_{P,\mathrm{FO}}\) instead uses \(V(P)\) and \(\tau^2(P)/n_P\),
+while the sample-based comparison calculates \(\widehat\nu_P\) from
+each sampled table before averaging these estimates.
+
+
+Figure~\ref{fig:redesign-component-df} uses the different-skew populations
+at shared MI 0.02 nats, with margins \(m_k(0.7)\) for \(P\) and
+\(m_k(0.8)\) for \(Q\). Sample size increases along the horizontal axis,
+and the lines represent table sizes. The top row divides
+\(\nu_{P,\mathrm{FO}}\) by \(\nu_{P,\mathrm{mom}}\); the bottom row divides
+\(\E(\widehat\nu_P)\) by the same target, and likewise for \(Q\).
+On the shared vertical scale, one indicates agreement, while values below
+or above one indicate fewer or more degrees of freedom than the target. A bottom-row value is shown only when all 100,000 component
+estimates are positive and finite. Shading in the top row gives approximate
+95\% Monte Carlo intervals.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{focused_redesign_component_df_different_skew.pdf}
+\caption{Component degrees-of-freedom approximations relative to their moment targets.}
+\label{fig:redesign-component-df}
+\end{figure}
+
+In the top row of Figure~\ref{fig:redesign-component-df}, the first-order
+values remain below the moment targets over most of the sample-size range.
+The \(2\times2\) curves approach one first, followed by \(4\times4\);
+the \(8\times8\) and \(16\times16\) curves remain lower for longer.
+This pattern arises because the two moment errors enter different parts
+of the degrees-of-freedom calculation. Replacing the enlarged sampling
+mean of \(\Vhat(P)\) by the smaller \(V(P)\) lowers the squared numerator.
+A variance prediction below the observed sampling variance lowers the
+denominator and raises the resulting degrees of freedom; a prediction
+above the observed variance lowers them. Over most of the range, the
+reduction from the squared mean outweighs the upward effect of an
+underestimated denominator. The larger tables have greater mean errors in
+Figure~\ref{fig:redesign-moments}, so their first-order degrees of freedom
+remain farther below the target. As the moment approximations improve,
+both effects diminish and the ratios approach one. Although the same
+table-size ordering appears in \(P\) and \(Q\), the larger-table ratios
+are generally closer to one in \(Q\). In \(Q\), the sampling mean of
+\(\Vhat(Q)\) exceeds \(V(Q)\) by a smaller percentage than in \(P\), so
+substituting \(V(Q)\) for that mean causes a smaller proportional reduction
+in the squared numerator.
+
+A numerical example shows why a fairly accurate variance prediction can
+still give degrees of freedom below the target. For different-skew
+\(4\times4\) population \(P\) at \(n=1{,}000\) and MI 0.02, the
+sampling mean of \(\Vhat(P)\) is about 19\% above \(V(P)\), whereas
+\(\tau^2(P)/n_P\) is only about 3\% below the observed sampling variance.
+The first-order calculation uses \(V(P)\) in place of the larger sampling
+mean and squares their ratio, giving approximately
+\begin{equation*}
+  \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
+  \approx\frac{(1/1.19)^2}{0.97}
+  \approx0.73.
+\end{equation*}
+The squared mean ratio therefore dominates the modest variance error,
+consistent with first-order degrees of freedom of 15.30 compared with a
+moment target of 21.03.
+
+In the bottom row, the \(16\times16\) curves first appear above the target,
+fall below it, and then recover towards one. The \(4\times4\) and
+\(8\times8\) curves have smaller excursions, while the \(2\times2\)
+curves are already close to one when they become visible. This change
+from the top row occurs because each sampled table supplies both the
+squared numerator \(\Vhat(P)^2\) and the variance prediction
+\(\widehat\tau^2(P)/n_P\). At the first shown \(16\times16\) points, the variance prediction is
+too small on average, tending to raise the estimated degrees of freedom.
+As the prediction subsequently becomes too large, it tends to lower
+the estimated degrees of freedom before the variance prediction returns
+towards the observed sampling variance. The two inputs come from the same table, so their joint variation also
+affects the mean degrees of freedom when we average the sampled ratios
+rather than insert average inputs into a single ratio.
+With larger samples, both inputs become more stable and the mean estimated
+degrees of freedom approach the target. They can recover sooner than the
+population first-order values because their numerators use the sampled
+\(\Vhat\), rather than the smaller fixed \(V\). For the three larger
+tables, the curves appear later in \(Q\) because positive, finite component
+degrees of freedom in every repetition require more observations than in \(P\).
+Missing earlier points indicate failed component calculations in some
+repetitions, rather than zero degrees of freedom.
+
+\FloatBarrier
+
+\subsection{Behaviour near independence}
+
+When \(X\) and \(Y\) are nearly independent within each population, the
+pointwise-MI weights in the linear sampling error become small, so products
+of cell-probability errors can contribute substantially to sampling variation. These quadratic terms allow sampled
+tables to show apparent association even when population MI is almost
+zero. Appendix~\ref{sec:independence-boundary} retains these quadratic terms
+and approximates the scaled MI estimate \(2n\Ihat\) using a noncentral
+chi-squared distribution, which accounts for both sampling noise and a
+small population association. Together with the near-independence relation
+\(\Vhat\approx2\Ihat\), this approximation predicts the mean and
+sampling variance of \(\Vhat\). Applying the local approximations to the
+component formula also predicts the mean estimated component degrees of
+freedom.
+
+Figure~\ref{fig:redesign-a4} holds the sample size at \(n=1{,}000\) and
+the table size at \(4\times4\), and increases the shared population MI
+along the horizontal axis. The margins are \(m_k(0.7)\) for \(P\) and
+\(m_k(0.8)\) for \(Q\). At independence, the approximation predicts a
+sampling mean of \(\Vhat\) proportional to \(1/n\) and a sampling
+variance proportional to \(1/n^2\). The top row therefore multiplies the
+observed sampling mean of \(\Vhat\) by \(n\), while the middle row
+multiplies its observed sampling variance by \(n^2\), cancelling these
+sample-size factors. The dashed near-independence predictions
+use the same scalings and depend on the shared table size, sample size,
+and MI, so they are identical in the two columns. The bottom row compares
+the mean estimated degrees of freedom, its near-independence prediction,
+the sampling-moment target, and the population first-order value. Across the simulation repetitions, we calculate the observed means and
+variances and average the degrees of freedom estimated separately from
+each sampled table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=.78\textheight,keepaspectratio]{focused_redesign_near_independence_different_skew_1000.pdf}
+\caption{Component moments and degrees of freedom near independence.}
+\label{fig:redesign-a4}
+\end{figure}
+
+In the top row of Figure~\ref{fig:redesign-a4}, the observed scaled mean
+and its near-independence prediction nearly coincide at the smallest MI
+values, then both rise as association strengthens, with the observed mean
+eventually exceeding the prediction. The positive starting level occurs because
+sampling noise produces positive plug-in MI and \(\Vhat\) even when
+population association is almost absent. As MI increases,
+the cell log ratios move farther from their values at independence, and
+the omitted terms in the local expansion become more important. Checks
+on the sampled tables show that \(2\Ihat\) then increasingly understates
+\(\Vhat\). The observed means also separate between the columns, with
+\(Q\) higher at the larger MI values. The identical local predictions
+cannot capture this margin dependence because they retain only the
+shared table size, sample size, and MI.
+
+In the middle row, the observed scaled sampling variance also starts
+close to the near-independence prediction, but their separation grows
+more strongly as MI increases. For the same \(4\times4\), different-skew
+comparisons at \(n=1{,}000\), checks across increasing shared MI values
+trace this underprediction through the two steps of the local calculation.
+The calculation first
+represents \(\Vhat\) by \(2\Ihat\), then predicts the sampling variance
+of that quantity using the noncentral chi-squared distribution introduced
+above. At stronger association,
+\(2\Ihat\) varies less between samples than \(\Vhat\), while the local
+distribution also understates the observed variation in \(2\Ihat\)
+itself. Both errors therefore lower the predicted sampling variance
+relative to the observed \(\Var\{\Vhat\}\).
+The gap is larger than in the mean row in both columns, and the observed
+sampling variance is greater in \(Q\) than in \(P\) at the larger MI
+values.
+Thus the different margins affect sampling variation beyond the terms
+retained by the shared local prediction.
+
+In the bottom row, the mean estimated degrees of freedom remain several
+units at the smallest MI values, around half the sampling-moment target,
+while the population first-order value approaches zero. This separation
+arises because the sample-based calculation retains apparent association
+from sampling noise. Substituting \(\Vhat\approx2\Ihat\) and
+\(\widehat\tau^2\approx4\Vhat\) into the component degrees-of-freedom
+formula gives
+\(\widehat\nu_P\approx n_P\Ihat(P)\), whose average stays positive at
+fixed sample size even when \(I(P)\) is almost zero. The population
+first-order value instead approaches \(n_PI(P)\), which becomes very
+small. The moment target has a shallow initial dip because the observed
+sampling variance of \(\Vhat\) initially grows proportionally faster than
+the squared sampling mean of \(\Vhat\). Their relative growth later reverses
+and the target rises, with the mean estimated degrees of freedom approaching
+it. At stronger
+association, the dashed near-independence prediction rises above the
+observed mean estimated degrees of freedom, while the population
+first-order curve remains below the moment target. The near-independence
+calculation approximates a ratio with \(\Vhat\) squared in the numerator
+and \(\widehat\tau^2\) in the denominator. In this range, replacing
+\(\widehat\tau^2\) by \(4\Vhat\) generally reduces the denominator
+and raises the mean estimated degrees of freedom. The subsequent
+substitution \(\Vhat\approx2\Ihat\) lowers that mean because
+\(2\Ihat\) understates \(\Vhat\), partly offsetting the first
+increase. The denominator effect is larger, so the local calculation
+overpredicts the mean estimated degrees of freedom even though it
+underpredicts the moments in the upper rows. Both populations show this progression,
+but the observed mean estimated degrees of freedom and the moment target
+are lower in \(Q\).
+
+The population first-order and average sample-based variance predictions
+err in opposite directions at the smallest MI values. We compare the
+predictions defined for the middle and bottom rows of
+Figure~\ref{fig:redesign-moments} using the same repetitions. At the smallest MI target,
+0.0001, the population first-order predictions are only about
+5\% of the observed sampling variances, while the sample-based predictions
+average roughly twice those variances. The local relation
+\(\widehat\tau^2\approx4\Vhat\) carries sampling noise into the estimated
+variance prediction, explaining the sample-based prediction's upward error
+in this range
+(Appendix~\ref{sec:independence-boundary}). At MI 0.02, the population
+first-order variance predictions are much more accurate, although the
+sample-based ratios remain above one. As MI increases, the variance of the
+linear sampling term better approximates the observed sampling variance of
+\(\Vhat\), while the local near-independence calculation loses accuracy.
+At MI 0.05, the observed means of \(\Vhat\) remain roughly 6\% above \(V\)
+in both populations, while the population first-order and average
+sample-based variance predictions are close to the observed sampling
+variances. The mean estimated degrees of
+freedom are closer to the moment target than the population first-order
+values, which still use \(V\) in place of the enlarged sampling mean.
+
+\section{RQ2: False-positive rates under equal MI}
+\label{sec:null-rejection-patterns}
+
+The null study uses shared population MI values of 0.005, 0.02, and 0.30
+nats, with all four table sizes, three margin regimes, and ten sample
+sizes at each level. Every population pair has \(\Delta=0\), so each
+rejection is a false positive. Each plotted rate divides the number of
+rejections by all 100,000 repetitions, with unsuccessful calculations
+counted as non-rejections.
+Shading gives pointwise 95\% intervals, and the lower strips show the
+calculation success rates.
+
+The two tests use the same statistic, but the Expanded Welch test has a larger
+rejection cutoff. At the same p-value threshold of 0.05, its rejection rate
+cannot exceed that of the Wald test. The comparison asks whether that
+reduction brings rejection closer to 5\% or deepens conservatism. The
+three figures below follow the same margin order as the power study and
+show the effects of sample size, table size, and shared MI together.
+
+\subsection{Uniform margins}
+
+Figure~\ref{fig:balanced-null-uniform} uses uniform margins in both
+populations, giving identical population tables at each shared MI.
+Each panel increases sample size along the logarithmic horizontal axis,
+with colour identifying shared MI. Solid lines with filled circles show the Wald test's false-positive rates,
+and dashed lines with open squares show those of the Expanded Welch test. Where the
+method curves overlap, their observed false-positive rates are equal or
+too close to distinguish on the plotted scale. The dotted line marks 5\%.
+For a given table size, the vertical scale is the same
+across the three margin figures, while different table sizes can use
+different scales.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{balanced_null_uniform.pdf}
+\caption{False-positive rates across shared MI values under uniform margins.}
+\label{fig:balanced-null-uniform}
+\end{figure}
+
+At shared MI 0.005 and 0.02, both tests have ranges of conservative
+rejection before recovering towards 5\%, with later recovery for larger
+tables. At shared MI 0.30, the curves instead show substantial excessive
+rejection over parts of the smaller-sample range before settling near the
+target. Increasing shared MI therefore changes the rejection pattern,
+even though the population difference remains zero. The biases in the two
+MI estimates cancel because the population tables and sample sizes are
+identical, so the departures from 5\% arise through the estimated standard error and
+the sampling distribution of the shared statistic.
+
+The Expanded Welch test lowers both the excessive and conservative parts of these
+curves. In \(4\times4\) at \(n=20\), its false-positive rate of 4.90\% is closer to 5\% than the Wald test's rate of 8.35\% at shared MI 0.02. At shared MI 0.30,
+however, the Expanded Welch test still rejects in 13.11\% of repetitions at the
+same dimensions and sample size. The larger cutoff can correct some
+excess rejection without making the method uniformly accurate as shared
+MI changes. Conversely, where the Wald test's false-positive rate is already below 5\%, the reduction
+moves rejection farther from the target.
+
+\subsection{Same-skew margins}
+
+Figure~\ref{fig:balanced-null-same-skew} assigns both populations the
+row and column profile \(m_k(0.8)\), again giving identical tables
+under equal MI. This comparison retains the same MI levels and
+sample-size grid while concentrating more probability in the first category.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{balanced_null_same_skew.pdf}
+\caption{False-positive rates across shared MI values under same-skew margins.}
+\label{fig:balanced-null-same-skew}
+\end{figure}
+
+The weaker shared MI values produce deep conservative ranges, with the
+trough occurring later as table size increases. Uneven margins leave
+more category combinations rarely observed, prolonging errors in the
+estimated cell probabilities and standard error. With identical population
+tables, the expected bias of the MI difference still cancels, so it cannot
+explain these departures. The diagnostic comparison below shows how an
+oversized standard error can shrink the statistic and suppress rejection.
+At shared MI 0.30, both methods instead over-reject at several small
+sample sizes before approaching 5\% with more observations.
+
+At the smallest sample sizes, the lower strips show that calculations for the
+Expanded Welch test can succeed less often than those for the Wald test, so
+failed calculations also lower the Expanded Welch test's rejection rate when all repetitions
+are counted.
+However, the conservative troughs persist even when both tests' calculations
+succeed in every repetition, so calculation failure is not their sole
+explanation. At larger samples,
+the methods' curves become close as the estimated degrees of freedom
+increase, but both false-positive rates can remain below 5\% in the weak-association,
+larger-table settings.
+
+\subsection{Different-skew margins}
+
+Figure~\ref{fig:balanced-null-different-skew} uses \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\). The population MI values are equal,
+but the tables differ, allowing their MI estimates to have different
+residual biases that can shift the shared statistic away from zero
+under the null.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{balanced_null_different_skew.pdf}
+\caption{False-positive rates across shared MI values under different-skew margins.}
+\label{fig:balanced-null-different-skew}
+\end{figure}
+
+The two smaller tables retain the conservative ranges at weaker MI and
+the excessive rejection at stronger MI seen in the other margin regimes.
+The \(16\times16\) panel shows a more severe failure: at shared MI
+0.005 and \(n=1{,}000\), the Wald test rejects in 36.38\% of repetitions and
+the Expanded Welch test rejects in 34.38\%. The larger cutoff reduces rejection but
+leaves it far above 5\%. Both methods' calculations succeed in every
+repetition, so these high rates reflect inaccurate inference rather than
+calculation failures.
+
+The contrast across shared MI depends on the bias relative to sampling
+spread. At \(16\times16\) and \(n=1{,}000\), the bias in the estimated
+MI difference is about 0.03 nats at all three MI levels, but the sampling
+standard deviation is larger at stronger association. The shift therefore
+has a greater effect relative to the spread at weaker MI, accompanying the
+much higher rejection there.
+
+With sufficiently large samples, bias becomes small relative to the sampling
+spread and excessive rejection subsides. At shared
+MI 0.30, the large-sample curves settle near 5\%, whereas the weakest-MI
+\(16\times16\) case eventually falls below the target. An oversized
+standard error can still suppress rejection after the bias has diminished,
+taking the rate below the target.
+
+\subsection{Explaining the main departures from 5\%}
+\label{sec:null-estimator-accuracy}
+
+Table~\ref{tab:balanced-null-diagnostics} contrasts three settings with a
+shared MI of 0.02 nats to illustrate different estimation errors. Because the
+population MI difference \(\Delta\) is zero, ``Bias / SD'' equals the
+sampling mean of \(\Deltahat\) divided by its observed sampling standard
+deviation. The variance ratio divides the average \(\SEhat^2\) by the
+observed variance of \(\Deltahat\) about
+its sampling mean, so it measures uncertainty estimation separately from
+bias. Ratios below one indicate underestimation and ratios above one
+indicate overestimation. Both methods' calculations succeed in every
+repetition in these three settings. Rates are percentages of all 100,000 repetitions.
+
+\begin{table}[H]
+\centering
+\caption{Estimation errors and false-positive rates at three illustrative null settings.}
+\label{tab:balanced-null-diagnostics}
+\thesistableformat
+\input{figures_rewrite/balanced_null_diagnostics}
+\end{table}
+
+In the uniform \(4\times4\) setting, bias in the estimated MI difference
+is negligible, but the average squared standard error understates the observed sampling
+variance. For a given estimated difference, a smaller denominator enlarges
+\(|T|\) and tends to increase rejection. The Expanded Welch test's larger cutoff reduces that excess and brings the rate close to 5\%, showing how the
+cutoff can offset an error in the shared standard error at a
+particular population pair.
+
+The two \(16\times16\) settings have almost the same variance ratio
+but opposite rejection behaviour. Under same-skew margins, the biases in
+the two MI estimates cancel and the oversized standard error suppresses
+rejection, which the Expanded Welch test lowers further. Under different-skew
+margins, the positive bias places the sampling mean of the estimated
+difference more than two sampling standard deviations above zero. Changing the cutoff
+leaves that bias in the estimated MI difference unchanged, helping explain
+why both methods reject far too often even though the estimated standard
+error is oversized.
+
+Across the grid, the two tests' false-positive rates become close to one
+another with larger samples, but both can remain below the 5\% target.
+For example, at
+shared MI 0.005 and \(n=50{,}000\), both tests have false-positive rates below 4\% in
+every \(16\times16\) margin regime, with the average squared standard
+error still exceeding the observed sampling variance of the estimated MI
+difference. The Expanded Welch test improves calibration where its lower rejection
+corrects an excess, while increasing
+conservatism where the Wald test already rejects too rarely.
+
+\subsection{Comparison with ordinary Welch degrees of freedom}
+
+To check whether MI-specific degrees of freedom make a difference, we also
+use a reference distribution with ordinary Welch degrees of freedom at three
+illustrative null settings.
+This comparison keeps the same estimated MI difference, standard error, and
+statistic, but substitutes component degrees of freedom \(n_P-1\) and
+\(n_Q-1\) into Equation~\eqref{eq:ws-general}. These sample-size-based
+values come from the comparison of sample means; for MI they serve as a
+benchmark rather than a derivation of the variance estimate's sampling
+variation. The Expanded Welch test instead uses the component degrees of freedom
+derived in Chapter~\ref{chap:expanded}.
+
+The comparison reuses the same 100,000 sampled pairs per setting as the
+main null study, with shared MI 0.02 nats and equal sample sizes
+\(n_P=n_Q=n\). All three methods' calculations succeed in every repetition.
+
+\begin{table}[H]
+\centering
+\caption{False-positive rates with ordinary and MI-specific Welch degrees of freedom.}
+\label{tab:ordinary-welch-comparison}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrr@{}}
+\toprule
+Setting & \shortstack{Wald\\(\%)} & \shortstack{Ordinary Welch\\(\%)} & \shortstack{Expanded Welch\\(\%)}\\
+\midrule
+Uniform \(4\times4\), \(n=20\) & 8.35 & 7.35 & 4.90\\
+Uniform \(4\times4\), \(n=50\) & 4.87 & 4.57 & 3.24\\
+Different skew \(16\times16\), \(n=1{,}000\) & 26.01 & 25.95 & 24.84\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+At \(n=20\), using ordinary Welch degrees of freedom reduces excessive
+rejection less than the Expanded Welch test does. At \(n=50\), the Wald
+test's false-positive rate is already close to 5\%, and the Expanded Welch
+test instead produces the most conservative rate. In the different-skew
+\(16\times16\) case, neither degrees-of-freedom choice removes the excessive rejection
+associated with bias in the shared MI difference. The MI-specific
+calculation therefore changes the results beyond merely replacing the
+normal distribution with a Student \(t\) distribution, but the larger
+reduction in rejection does not consistently improve calibration.
+
+\section{RQ3: Power across MI differences}
+\label{sec:mi-gap-power-results}
+
+The power study repeats the four table sizes, three margin regimes, and
+ten sample sizes of the broad null comparison at three MI-gap magnitudes:
+\(|\Delta|=0.005,0.01,0.02\) nats. Population \(P\) has MI 0.02 nats,
+while \(Q\) has MI 0.025, 0.03, or 0.04 nats, respectively, so each
+signed difference \(\Delta=I(P)-I(Q)\) is negative. Each plotted rate
+divides the number of rejections by all 100,000 repetitions at that setting,
+with unsuccessful calculations counted as non-rejections. Shading gives
+pointwise 95\% intervals, and the lower strips show the calculation success rates.
+
+At the usual p-value threshold of 0.05, the Expanded Welch test's larger cutoff
+makes its rejections a subset of those from the Wald test, so the comparison
+quantifies how much detection probability is lost. These rates are read
+alongside the false-positive results in Section~\ref{sec:null-rejection-patterns}:
+high rejection under an alternative can coexist with excessive rejection
+under equal MI. Because the tests are two-sided, power also includes
+rejections whose estimated MI difference has the opposite sign to the
+population difference.
+
+\subsection{Uniform margins}
+
+Figure~\ref{fig:mi-gap-power-uniform} uses uniform row and column
+margins in both populations. Each panel increases the shared sample size
+along the logarithmic horizontal axis, while colour identifies the MI-gap
+magnitude. Solid lines with filled circles show the Wald test's power, and dashed
+lines with open squares show that of the Expanded Welch test. The same colour and line
+conventions apply to all three power figures, with overlapping method
+curves indicating equal or visually indistinguishable power. Curves for
+different MI gaps also meet near 100\% once almost every repetition
+rejects the null hypothesis.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{mi_gap_power_uniform.pdf}
+\caption{Power across three MI differences under uniform margins.}
+\label{fig:mi-gap-power-uniform}
+\end{figure}
+
+For each MI gap, all four panels show low detection over part of the small-sample range,
+followed by a sustained rise with more observations. The early shoulders
+and troughs also occur in the null rejection curves, where errors in the
+estimated standard error and a poor fit between the sampling distribution
+of \(T\) and its reference distribution can produce excessive or
+conservative rejection. Consequently, the early high points
+are not evidence that fewer observations reliably identify the MI difference.
+
+Larger tables require more observations before power becomes high. For the 0.01-nat
+gap at \(n=10{,}000\), the Expanded Welch test detects the difference in 89.44\% of
+\(2\times2\) repetitions and 71.12\% of \(16\times16\) repetitions.
+This ordering reflects both the sparse-table estimation errors discussed
+in Section~\ref{sec:null-estimator-accuracy} and the population variances:
+in this copying family, increasing table size also increases \(V(P)\)
+and \(V(Q)\). Their contributions \(V(P)/n+V(Q)/n\) therefore give a
+larger first-order sampling variance for the same MI gap and sample size.
+As the variance decreases with more observations, the estimated
+difference becomes more consistently separated from zero and power rises.
+
+Once samples are sufficiently large, increasing the MI gap shifts the
+power curves upwards. In the \(4\times4\) panel at \(n=2{,}500\),
+the Expanded Welch test's power rises from 11.14\% for the 0.005-nat gap to
+78.74\% for the 0.02-nat gap. Increasing \(I(Q)\) also increases
+\(V(Q)\), but in these populations the MI gap grows faster than the
+first-order sampling standard deviation of the difference. The true MI gap
+is therefore larger relative to the sampling spread of the estimated difference.
+
+For every MI gap, power is no higher for the Expanded Welch test than for
+the Wald test. For the 0.01-nat gap, the largest power difference occurs at
+the smallest sample size in the
+\(16\times16\) panel. The Expanded Welch test's calculation success rate at that setting is above 99\%, so most of that separation comes from the larger
+cutoff rather than failed calculations. The difference in power between the
+tests becomes small in the larger-sample range as increasing degrees of freedom bring the
+Student \(t\) distribution close to the standard normal distribution.
+
+\subsection{Same-skew margins}
+
+Figure~\ref{fig:mi-gap-power-same-skew} assigns both populations the
+row and column profile \(m_k(0.8)\), retaining the same three MI gaps and
+sample sizes. The margins agree between populations, but their different
+MI values require different copying probabilities and hence different
+population tables.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{mi_gap_power_same_skew.pdf}
+\caption{Power across three MI differences under same-skew margins.}
+\label{fig:mi-gap-power-same-skew}
+\end{figure}
+
+The curves again have an early low-power range followed by recovery,
+with the trough occurring later for larger tables. Relative to uniform
+margins, the uneven frequencies leave more combinations rarely observed,
+and the population pointwise-MI variances are also larger. Both features
+make a given gap harder to detect. At the smallest sample sizes, the
+lower strips show that failed calculations for the Expanded Welch test also reduce its power when all repetitions are counted, so the larger cutoff is not
+the only reason for its lower power. For the 0.01-nat gap in the
+\(16\times16\) case at \(n=1{,}000\), the average squared standard error is 1.81 times the
+observed variance of the difference, while bias in the estimated MI
+difference is small relative to the true gap. The oversized denominator suppresses \(|T|\),
+contributing to the Expanded Welch test's power of only 1.64\% at that setting.
+
+Both methods gain power once larger samples improve the cell estimates
+and reduce the spread of the MI difference. For the 0.01-nat gap,
+the Expanded Welch test's power reaches 60.99\% in \(16\times16\) at \(n=10{,}000\), compared with 71.12\%
+under uniform margins. The smaller 0.005-nat gap remains harder to
+detect even at \(n=50{,}000\), where the Expanded Welch test's power reaches 79.87\%
+in \(16\times16\), compared with over 99.9\% for both larger gaps.
+The differences between methods become much smaller than these differences
+between table sizes and margin regimes.
+
+\subsection{Different-skew margins}
+
+Figure~\ref{fig:mi-gap-power-different-skew} uses \(m_k(0.7)\) for
+\(P\) and \(m_k(0.8)\) for \(Q\). Each true difference is negative,
+but the unequal margins can give the MI estimates
+different residual biases, shifting the centre of their difference.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{mi_gap_power_different_skew.pdf}
+\caption{Power across three MI differences under different-skew margins.}
+\label{fig:mi-gap-power-different-skew}
+\end{figure}
+
+The \(2\times2\) and \(4\times4\) panels retain the low-power range
+and subsequent rise, while the two larger tables have more pronounced
+early rejection before falling and recovering. The \(16\times16\)
+curve shows why this early rejection needs careful interpretation.
+For the 0.01-nat gap at \(n=1{,}000\), the estimated MI difference has
+positive bias of approximately 0.0307 nats, moving its sampling mean from
+the true \(-0.01\) to approximately \(+0.0207\) nats. The Expanded Welch test rejects in 9.66\% of repetitions,
+but more than 99.9\% of those rejections have a positive estimated
+difference, opposite to the true direction. The shared biased numerator
+therefore produces rejection without reliably identifying which population
+has greater MI, as in the displaced null comparison in
+Section~\ref{sec:null-estimator-accuracy}.
+
+This positive bias also explains why a larger MI gap can give lower
+rejection at the same sample size. In \(16\times16\) at
+\(n=1{,}000\), the Expanded Welch test's power falls from 16.11\% for
+\(|\Delta|=0.005\) to 3.39\% for \(|\Delta|=0.02\). The positive
+bias remains about 0.03 nats across these gaps, so making the true
+difference more negative moves the sampling centre closer to zero.
+Over this range, the decrease in rejections with positive estimated MI
+differences outweighs the increase in rejections with negative estimated
+MI differences. The ordering reverses at larger
+samples, once bias is small enough for most rejections to have an estimated MI difference with the same negative
+sign as the population difference.
+
+Along the 0.01-nat curve, increasing sample size reduces the positive
+bias and moves the sampling centre back towards zero. At \(n=2{,}500\), the remaining positive
+bias nearly cancels the negative population difference, leaving the
+sampling mean close to zero, and the Expanded Welch test's power falls to 2.48\%.
+With still more observations, the bias diminishes further and the
+sampling centre approaches the negative population difference, while
+sampling variance decreases. Rejections with negative estimated MI differences then become more frequent
+and power becomes high. Changing the cutoff lowers rejection on both sides
+of the trough without changing the bias in the estimated MI difference.
+
+Across all three margin regimes, both methods exceed 99.9\% power at
+\(n=50{,}000\) for gaps of 0.01 and 0.02 nats, whereas power for the
+0.005-nat gap ranges from 79.87\% to 96.47\%. At \(n=10{,}000\),
+the method power differences are below 0.32 percentage points across all
+three gaps, table sizes, and margin regimes. Thus the gap magnitude strongly
+affects detection once the estimates become accurate, while the Expanded Welch test's larger cutoff gives a smaller power loss
+relative to the Wald test in this
+larger-sample range.
+
+\section{Example application to online shopping data}
+\label{sec:shoppers-application}
+
+This example illustrates how the Wald test and the Expanded Welch test are applied
+and interpreted in practice by comparing month--purchase and
+weekend--purchase associations between new and returning visitors.
+The Online Shoppers Purchasing Intention dataset records website sessions
+and whether each session ends in a purchase \citep{sakar2018}. For each predictor,
+\(X\) is month or weekend status and \(Y\) is the purchase outcome,
+giving joint distributions \(P\) and \(Q\) of \((X,Y)\) among new
+and returning visitors, respectively. Each comparison therefore tests
+\(H_0:I(P)=I(Q)\) for that predictor and purchase outcome.
+
+The dataset contains 12,330 sessions, each belonging to a different user
+according to the source documentation \citep{sakar2018}. We retain all
+1,694 sessions labelled \texttt{New\_Visitor} and 10,551 labelled
+\texttt{Returning\_Visitor}, excluding the 85 \texttt{Other} sessions.
+The outcome is the original Boolean \texttt{Revenue} variable, which is
+true when a purchase occurs and false otherwise. We treat the two visitor
+groups as independent samples and the sessions within each group as
+independent observations.
+
+\begingroup
+\setlength{\intextsep}{4pt}
+\setlength{\abovecaptionskip}{4pt}
+January and April have no recorded sessions, so each month table has
+\(10\times2\) cells, with rows for the ten recorded months and columns
+for no purchase or purchase. All ten months occur in both visitor groups,
+although the new-visitor February row contains only one session and no
+purchase. Both groups use the same categories, retaining zero cells
+without adding artificial counts to empty cells. Replacing month with the
+Boolean \texttt{Weekend}
+variable gives a \(2\times2\) table for each group, with weekday and
+weekend rows and all four cells observed.
+
+The corrected difference \(\Deltahat\) is new-visitor MI minus
+returning-visitor MI, so a negative value indicates higher estimated MI
+among returning visitors. The leading MI bias correction subtracts
+\((10-1)(2-1)/(2n)=9/(2n)\) from each month plug-in estimate
+\citep{miller1955,moddemeijer1989}, and \(1/(2n)\) from each weekend
+estimate, where \(n\) is the relevant group size.
+Table~\ref{tab:shoppers-application} gives the corrected MI estimates,
+their differences, and shared standard errors, \(\SEhat\), all in nats,
+alongside the resulting \(T=\Deltahat/\SEhat\).
+
+\begin{table}[H]
+\centering
+\caption{Corrected MI estimates and uncertainty of their differences.}
+\label{tab:shoppers-application}
+\thesistableformat
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Corrected MI}} & & & \\
+\cmidrule(lr){2-3}
+\textbf{Predictor} & \textbf{New} & \textbf{Returning} & \(\Deltahat\) & \(\SEhat\) & \(T\)\\
+\midrule
+Month & 0.004316 & 0.017880 & -0.013563 & 0.003333 & -4.069\\
+\addlinespace[0.35em]
+Weekend & 0.000664 & 0.000727 & -0.000063 & 0.001124 & -0.056\\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+For month, returning visitors have the higher corrected MI estimate,
+giving a negative difference whose magnitude is about 4.07 times its
+estimated standard error:
+\begin{equation}
+  T\approx\frac{-0.013563}{0.003333}\approx-4.069.
+  \label{eq:shoppers-month-statistic}
+\end{equation}
+Both tests use this statistic, but the Wald test compares it with the
+standard normal distribution, whereas the Expanded Welch test uses a Student
+\(t\) distribution with estimated degrees of freedom.
+Table~\ref{tab:shoppers-test-results} gives the Expanded Welch test's degrees of freedom and the unadjusted two-sided p-values, which we compare with
+the usual p-value threshold of 0.05.
+
+\begin{table}[H]
+\centering
+\caption{Two-sample test results for online shopping sessions.}
+\label{tab:shoppers-test-results}
+\thesistableformat
+\begin{tabular*}{0.92\textwidth}{@{\extracolsep{\fill}}lrrr@{}}
+\toprule
+ & & \multicolumn{2}{c}{\textbf{Unadjusted p-value}}\\
+\cmidrule(lr){3-4}
+\textbf{Predictor} & \shortstack[r]{\textbf{Expanded Welch}\\\textbf{degrees of freedom}}
+ & \textbf{Wald} & \textbf{Expanded Welch}\\
+\midrule
+Month & 26.79 & \(4.71\times10^{-5}\) & \(3.73\times10^{-4}\)\\
+\addlinespace[0.35em]
+Weekend & 2.18 & 0.9554 & 0.9601\\
+\bottomrule
+\end{tabular*}
+\end{table}
+\endgroup
+
+Both methods reject equal month--purchase MI because their p-values
+are below 0.05. The estimates suggest that month provides more information
+about the purchase outcome among returning visitors than among new visitors.
+The Expanded Welch test gives a larger p-value because the Student
+\(t\) distribution with 26.79 degrees of freedom assigns more probability
+to statistics at least this far from zero than the standard normal
+distribution.
+
+For weekend, both corrected MI estimates are approximately 0.0007 nats,
+and their difference is only about 0.056 times its estimated standard
+error. The statistic therefore lies close to zero under either reference
+distribution, so both p-values are near one and neither test rejects
+equal weekend--purchase MI. This non-rejection does not establish equality. The Expanded Welch test's 2.18 degrees of freedom remain small despite the large samples because \(\Vhat(P)\) and
+\(\Vhat(Q)\) have substantial estimated fluctuations relative to
+their magnitudes. Equation~\eqref{eq:nu-p-hat} compares each squared estimate with its
+estimated sampling variance, so greater relative uncertainty gives fewer
+component degrees of freedom, as illustrated near independence in
+Figure~\ref{fig:redesign-a4}.
+
+\section{Discussion}
+\label{sec:results-discussion}
+
+The Expanded Welch test improves on the Wald test where its larger cutoff corrects
+excessive false-positive rates. For \(4\times4\) tables with uniform margins
+at shared MI 0.02 nats and \(n=20\), false-positive rates are 8.35\% for the
+Wald test and 4.90\% for the Expanded Welch test
+(Table~\ref{tab:balanced-null-diagnostics}). This reduction towards 5\%
+supports the motivation of \citet{panwall2002}: accounting for variability
+in an estimated variance can reduce excessive Wald rejection. However,
+where the Wald test already rejects too rarely, the Expanded Welch test lowers rejection
+further. The accompanying loss of power must therefore
+be interpreted alongside whether the reduction in false positives improves
+calibration.
+
+Choosing the degrees of freedom requires approximations to the sampling
+mean and variance of the pointwise-MI variance estimates. Using \(V\) in
+place of a larger sampling mean of \(\Vhat\) can put the population first-order degrees of
+freedom below the moment target even when the sampling variance of
+\(\Vhat\) is predicted accurately.
+
+The standard error is calculated from the variance estimates in each
+observed pair of tables. For a given estimated MI difference, an
+oversized standard error reduces \(|T|\).
+Table~\ref{tab:balanced-null-diagnostics} shows that, under same-skew
+\(16\times16\) margins, the average squared standard error is about
+1.93 times the observed variance of the MI difference. With negligible
+difference bias in that setting, a larger cutoff compounds the suppression
+of rejection. This agrees with \citet{bell2002}, who find that
+Satterthwaite degrees of freedom can make tests particularly conservative
+when the variance estimator has positive bias.
+
+Bias in the MI difference connects the null failures to the misleading
+power patterns. With identical population tables and sample sizes, the biases of the two
+MI estimates cancel in their difference. With different margins, unequal
+biases can shift the estimated difference away from zero under equal MI.
+When population MI values differ, those biases can also give the estimated
+difference the opposite sign to the population difference. The residual information-estimation bias discussed
+by \citet{paninski2003} thus affects both false-positive rates and the
+estimated direction of a difference. These findings explain why high
+rejection under an alternative need not identify the population with greater MI reliably,
+and why agreement between the Wald test and the Expanded Welch test on observed data does
+not establish accurate inference. Within the tested settings, the larger
+cutoff corrects some excessive rejection, but reliable comparisons also
+require an estimated MI difference with small bias relative to its
+sampling spread and a standard error that describes that spread.

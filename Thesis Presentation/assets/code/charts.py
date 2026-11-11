@@ -152,7 +152,7 @@ def slide07():
     grid_y(ax)
     ax.set_xlabel("Observations per population, n (log scale)")
     ax.text(115, 1.6, "sample-based inputs", color=ORANGE, fontsize=13, fontweight="bold", va="center")
-    ax.text(26, 0.55, "population inputs", color=NAVY, fontsize=13, fontweight="bold", va="center")
+    ax.text(26, 0.55, "population-based inputs", color=NAVY, fontsize=13, fontweight="bold", va="center")
     ax.annotate("n = 1,000: −3%", xy=(1000, c.variance_ratio), xytext=(1900, 0.62), fontsize=13, fontweight="bold",
                 color=NAVY, arrowprops=dict(arrowstyle="-", color=NAVY, lw=0.9, shrinkA=2, shrinkB=4))
     save(fig, "slide07_variance_ratio")
@@ -164,12 +164,13 @@ def slide08():
     assert len(d) == 7
     fig, ax = plt.subplots(figsize=(6.4, 4.3))
     fig.subplots_adjust(left=0.11, right=0.97, top=0.97, bottom=0.14)
-    ax.fill_between(d.mi, d.nu_mom - 1.96 * d.nu_mom_mcse, d.nu_mom + 1.96 * d.nu_mom_mcse, color=NAVY, alpha=0.18, lw=0)
+    ax.fill_between(d.mi, d.nu_mom - 1.96 * d.nu_mom_mcse, d.nu_mom + 1.96 * d.nu_mom_mcse, color=CHARCOAL, alpha=0.15,
+                    lw=0)
     ax.fill_between(d.mi, d.df_mean - 1.96 * d.df_mean_mcse, d.df_mean + 1.96 * d.df_mean_mcse, color=ORANGE,
                     alpha=0.18, lw=0)
-    ax.plot(d.mi, d.nu_mom, color=NAVY, lw=2.0, marker="s", ms=6, mfc="white", mec=NAVY, mew=1.3)
+    ax.plot(d.mi, d.nu_mom, color=CHARCOAL, lw=2.0, marker="s", ms=6, mfc="white", mec=CHARCOAL, mew=1.3)
     ax.plot(d.mi, d.df_mean, color=ORANGE, lw=2.0, marker="o", ms=6)
-    ax.plot(d.mi, d.nu_fo, color=GREY, lw=1.8, ls=":", marker="^", ms=6, mfc="white", mec=GREY)
+    ax.plot(d.mi, d.nu_fo, color=NAVY, lw=1.8, ls=":", marker="^", ms=6, mfc="white", mec=NAVY)
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xlim(6e-5, 0.09)
@@ -182,93 +183,132 @@ def slide08():
     ax.yaxis.set_minor_locator(NullLocator())
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _p: f"{v:g}"))
     ax.set_xlabel("Population MI, nats (log scale)")
-    ax.set_ylabel("Component degrees of freedom")
+    ax.set_ylabel("Component degrees of freedom (log scale)")
     grid_y(ax)
-    ax.text(1.15e-4, 14.0, "sampling-moment target", color=NAVY, fontsize=13, fontweight="bold")
-    ax.text(1.15e-4, 3.6, "mean estimated component df", color=ORANGE, fontsize=13, fontweight="bold", va="top")
-    ax.text(1.6e-3, 0.11, "population first-order value", color="#777777", fontsize=13, fontweight="bold")
+    ax.text(1.15e-4, 23.0, "target (measured from 100,000 samples)", color=CHARCOAL, fontsize=13, fontweight="bold")
+    ax.text(1.15e-4, 3.6, "mean sample-based estimate", color=ORANGE, fontsize=13, fontweight="bold", va="top")
+    ax.text(1.6e-3, 0.11, "population-based value", color=NAVY, fontsize=13, fontweight="bold")
+    lo, hi = d.df_mean.iloc[0], d.nu_mom.iloc[0]
+    ax.annotate("", xy=(1.45e-4, lo * 1.07), xytext=(1.45e-4, hi / 1.07),
+                arrowprops=dict(arrowstyle="|-|,widthA=0.25,widthB=0.25", color=CHARCOAL, lw=1.0))
+    ax.text(1.65e-4, (lo * hi) ** 0.5 * 1.05, "about half the target", color=CHARCOAL, fontsize=10.5, va="center")
     save(fig, "slide08_near_independence_df")
 
 
-# ---------------------------------------------------------------- Slide 9
+# ---------------------------------------------------------------- Slide 9: all 360 null settings
+def paired(prefix):
+    d = pd.concat([pd.read_csv(os.path.join(DATA, f"B_{prefix}_{p}.csv"))
+                   for p in ["uniform", "same_skew", "different_skew"]])
+    w = d[d.method == "normal_wald"].set_index("configuration_id")
+    e = d[d.method == "expanded_welch"].set_index("configuration_id")
+    x = w.join(e[["rejection_rate"]], rsuffix="_ew").rename(columns={"rejection_rate": "wald", "rejection_rate_ew": "ew"})
+    assert len(x) == 360 and (x.ew <= x.wald + 1e-12).all()
+    return x
+
+
 def slide09():
-    d = pd.read_csv(os.path.join(DATA, "slide09_null_uniform_4x4_n20.csv"))
-    fig, ax = plt.subplots(figsize=(6.3, 3.95))
-    fig.subplots_adjust(left=0.12, right=0.98, top=0.88, bottom=0.14)
-    groups = [0.005, 0.02, 0.3]
-    w = 0.3
-    for gi, g in enumerate(groups):
-        for j, method in enumerate(["normal_wald", "expanded_welch"]):
-            r = d[np.isclose(d.common_mi, g) & (d.method == method)].iloc[0]
-            x = gi + (j - 0.5) * (w + 0.1)
-            v = r.rejection_rate * 100
-            ax.bar(x, v, width=w, color=METHOD[method]["c"], zorder=2)
-            ax.errorbar(x, v, yerr=[[v - r.rejection_low * 100], [r.rejection_high * 100 - v]], fmt="none",
-                        ecolor="#444444", elinewidth=1.0, capsize=3.5, zorder=3)
-            ax.text(x, r.rejection_high * 100 + 0.4, f"{v:.2f}%", ha="center", va="bottom", fontsize=12.5,
-                    fontweight="bold", color=METHOD[method]["c"] if method == "normal_wald" else "#B4501A",
-                    bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"), zorder=4)
-    ax.axhline(5, color="#555555", lw=1.1, ls=(0, (4, 3)), zorder=1)
-    ax.set_xticks(range(3))
-    ax.set_xticklabels(["0.005", "0.02", "0.30"])
-    ax.set_xlabel("Shared population MI (nats)")
-    ax.set_ylim(0, 20)
-    ax.set_yticks([0, 5, 10, 15, 20])
-    ax.yaxis.set_major_formatter(FuncFormatter(pct))
-    ax.set_ylabel("False-positive rate")
-    grid_y(ax)
-    hs = [plt.Rectangle((0, 0), 1, 1, color=METHOD[m]["c"]) for m in METHOD]
-    hs.append(Line2D([], [], color="#555555", lw=1.1, ls=(0, (4, 3))))
-    fig.legend(hs, [METHOD[m]["label"] for m in METHOD] + ["5% target"], loc="upper left",
-               bbox_to_anchor=(0.09, 1.0), ncol=3, frameon=False, fontsize=12.5, handlelength=1.2, columnspacing=1.4,
-               handletextpad=0.5)
-    save(fig, "slide09_null_bars")
+    x = paired("null")
+    fig, ax = plt.subplots(figsize=(6.4, 4.3))
+    fig.subplots_adjust(left=0.18, right=0.97, top=0.97, bottom=0.14)
+    lo, hi = 0.0005, 0.5
+    assert x.wald.min() > lo and x.ew.min() > lo and x.wald.max() < hi
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(lo, hi)
+    ax.axvspan(0.05, hi, color=ORANGE, alpha=0.07, lw=0, zorder=0)
+    ax.axvspan(lo, 0.05, color=NAVY, alpha=0.06, lw=0, zorder=0)
+    ax.plot([lo, hi], [lo, hi], color="#9A9A9A", lw=1.0, zorder=1)
+    ax.axvline(0.05, color="#555555", lw=1.0, ls=(0, (4, 3)), zorder=1)
+    ax.axhline(0.05, color="#555555", lw=1.0, ls=(0, (4, 3)), zorder=1)
+    ax.scatter(x.wald, x.ew, s=14, color=CHARCOAL, alpha=0.55, lw=0, zorder=2)
+    ex = x[(x.k == 4) & (x.profile == "uniform") & (x.n_p == 20) & np.isclose(x.common_mi, 0.02)].iloc[0]
+    bias = x[(x.k == 16) & (x.profile == "different_skew") & (x.n_p == 1000) & np.isclose(x.common_mi, 0.005)].iloc[0]
+    assert round(ex.wald, 4) == 0.0835 and round(ex.ew, 4) == 0.049
+    assert round(bias.wald, 4) == 0.3638 and round(bias.ew, 4) == 0.3438
+    ax.scatter([ex.wald, bias.wald], [ex.ew, bias.ew], s=70, facecolors="none", edgecolors=ORANGE, lw=2.0, zorder=3)
+    ax.annotate("8.35% to 4.90%", xy=(ex.wald, ex.ew), xytext=(0.0105, 0.0024), fontsize=11.5, color=CHARCOAL,
+                arrowprops=dict(arrowstyle="-", color=CHARCOAL, lw=0.8, shrinkB=5))
+    ax.annotate("36.38% to 34.38%", xy=(bias.wald, bias.ew), xytext=(0.06, 0.0033), fontsize=11.5, color=CHARCOAL,
+                arrowprops=dict(arrowstyle="-", color=CHARCOAL, lw=0.8, shrinkB=5))
+    pct_ticks = FuncFormatter(lambda v, _p: f"{v * 100:g}%")
+    for a in (ax.xaxis, ax.yaxis):
+        a.set_major_locator(FixedLocator([0.001, 0.01, 0.05, 0.2]))
+        a.set_major_formatter(pct_ticks)
+        a.set_minor_locator(NullLocator())
+    ax.set_xlabel("Wald false-positive rate (log scale)")
+    ax.set_ylabel("Expanded Welch false-positive rate\n(log scale)", linespacing=1.1)
+    ax.text(0.0007, 0.25, "Wald too low", color=NAVY, fontsize=13, fontweight="bold", va="center")
+    ax.text(0.47, 0.00075, "Wald too high", color="#B4501A", fontsize=13, fontweight="bold", ha="right")
+    ax.text(0.0011, 0.00155, "no change", color="#8A8A8A", fontsize=10.5, rotation=40, rotation_mode="anchor")
+    save(fig, "slide09_null_all_settings")
 
 
-# ---------------------------------------------------------------- Slides 11-12
-def method_curves(path, name, mark_n, w, h, label_pos, note=None):
-    d = pd.read_csv(os.path.join(DATA, path))
-    fig, ax = plt.subplots(figsize=(w, h))
-    fig.subplots_adjust(left=0.12, right=0.97, top=0.97, bottom=0.15)
-    for method, st in METHOD.items():
-        m = d[d.method == method].sort_values("n_p")
-        assert list(m.n_p) == NS
-        line(ax, m.n_p, m.rejection_rate * 100, st["c"], st["ls"], st["marker"], st["filled"],
-             m.rejection_low * 100, m.rejection_high * 100)
-    ax.axvline(mark_n, color="#AAAAAA", lw=1.0, ls=(0, (3, 3)), zorder=0)
-    ax.text(mark_n * 1.12, 97, f"n = {mark_n:,}", fontsize=12, color="#777777", va="top")
-    ax.set_ylim(0, 100)
-    ax.set_yticks([0, 25, 50, 75, 100])
-    ax.yaxis.set_major_formatter(FuncFormatter(pct))
-    ax.set_ylabel("Power")
-    n_axis(ax)
-    ax.set_xlabel("Observations per population, n (log scale)")
-    grid_y(ax)
-    for method, (x, y) in label_pos.items():
-        ax.text(x, y, METHOD[method]["label"], color=METHOD[method]["c"], fontsize=13, fontweight="bold")
-    if note:
-        note(ax)
-    save(fig, name)
-
-
+# ---------------------------------------------------------------- Slide 11: power lost across all settings
 def slide11():
-    method_curves("slide11_power_uniform_4x4_gap001.csv", "slide11_power_gap001", 2500, 6.5, 4.0,
-                  {"normal_wald": (12, 17), "expanded_welch": (2900, 18)})
+    x = paired("power")
+    x["loss"] = (x.wald - x.ew) * 100
+    g = x.groupby("n_p").loss
+    med, mn, mx = g.median(), g.min(), g.max()
+    assert list(med.index) == NS and (g.size() == 36).all()
+    assert mx.loc[10000] < 0.32
+    fig, ax = plt.subplots(figsize=(6.4, 4.3))
+    fig.subplots_adjust(left=0.12, right=0.97, top=0.97, bottom=0.14)
+    ax.fill_between(med.index, mn, mx, color=ORANGE, alpha=0.16, lw=0)
+    line(ax, med.index, med, ORANGE, "-", "o", True)
+    ax.set_ylim(0, 14.5)
+    ax.set_yticks([0, 5, 10])
+    n_axis(ax)
+    grid_y(ax)
+    ax.set_xlabel("Observations per population, n (log scale)")
+    ax.set_ylabel("Power lost (percentage points)")
+    ax.text(14, 12.6, "range across the 36 settings at each n", color="#B4501A", fontsize=11.5)
+    ax.text(26, 0.35, "median", color=ORANGE, fontsize=12.5, fontweight="bold")
+    ax.annotate("n = 10,000: under 0.32\npoints in every setting", xy=(10000, mx.loc[10000]), xytext=(1300, 5.2),
+                fontsize=12, color=CHARCOAL, arrowprops=dict(arrowstyle="-", color=CHARCOAL, lw=0.9, shrinkB=4))
+    save(fig, "slide11_power_loss_all_settings")
 
 
+# ---------------------------------------------------------------- Slide 12: wrong-direction rejections
 def slide12():
-    method_curves("slide12_power_16x16_different_skew_gap001.csv", "slide12_direction_power", 1000, 6.5, 4.0,
-                  {"normal_wald": (11, 30), "expanded_welch": (28, 4)})
+    from matplotlib.colors import LinearSegmentedColormap
+    d = pd.read_csv(os.path.join(DATA, "slide12_wrong_direction_all.csv"))
+    assert len(d) == 360
+    s = d[(d.profile == "different_skew") & np.isclose(d.gap, 0.01)].copy()
+    s["share"] = s.expanded_positive_rejections / (s.expanded_positive_rejections + s.expanded_negative_rejections)
+    z = s.pivot_table(index="k", columns="n_p", values="share")
+    cell = s[(s.k == 16) & (s.n_p == 1000)].iloc[0]
+    assert int(cell.expanded_positive_rejections) == 9659 and int(cell.expanded_negative_rejections) == 3
+    ks = [16, 8, 4, 2]
+    fig, ax = plt.subplots(figsize=(6.4, 4.3))
+    fig.subplots_adjust(left=0.12, right=0.98, top=0.97, bottom=0.17)
+    cmap = LinearSegmentedColormap.from_list("wrong", ["#FFFFFF", "#F8DCCB", ORANGE, "#8A3A10"])
+    ax.imshow(z.loc[ks, NS].values, aspect="auto", cmap=cmap, vmin=0, vmax=1)
+    for i, k in enumerate(ks):
+        for j, n in enumerate(NS):
+            v = z.loc[k, n]
+            ax.text(j, i, f"{v * 100:.0f}", ha="center", va="center", fontsize=11.5,
+                    color="white" if v > 0.6 else CHARCOAL)
+    ax.add_patch(plt.Rectangle((NS.index(1000) - 0.5, -0.5), 1, 1, fill=False, ec=NAVY, lw=2.6))
+    ax.set_xticks(range(len(NS)))
+    ax.set_xticklabels([thousands(n) for n in NS], rotation=40, ha="right", rotation_mode="anchor")
+    ax.set_yticks(range(len(ks)))
+    ax.set_yticklabels([f"{k}×{k}" for k in ks])
+    ax.tick_params(length=0)
+    ax.grid(False)
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.set_xlabel("Observations per population, n")
+    save(fig, "slide12_wrong_direction_heatmap")
 
 
-# ---------------------------------------------------------------- B4
 def backup04():
     d = pd.read_csv(os.path.join(DATA, "B4_approximation_ratios.csv"))
     fs = 13
     fig, axes = plt.subplots(3, 2, figsize=(12.1, 5.3), sharex=True)
     fig.subplots_adjust(left=0.12, right=0.985, top=1 - 0.8 / 5.3, bottom=0.55 / 5.3, hspace=0.22, wspace=0.07)
     rows = [("mean_ratio", r"$E(\hat{V})\,/\,V$", (0.8, 15), [1, 2, 5, 10]),
-            ("variance_ratio", "population\ninputs", (0.1, 2.6), [0.2, 0.5, 1, 2]),
+            ("variance_ratio", "population-\nbased\ninputs", (0.1, 2.6), [0.2, 0.5, 1, 2]),
             ("plugin_variance_ratio", "sample-\nbased\ninputs", (0.1, 2.6), [0.2, 0.5, 1, 2])]
     for ri, (col, lab, ylim, yt) in enumerate(rows):
         for ci, side in enumerate(["p", "q"]):

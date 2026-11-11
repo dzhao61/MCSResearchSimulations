@@ -1,0 +1,335 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm,headheight=14pt,headsep=7mm,footskip=10mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype,amsmath,booktabs,tabularx,array,enumitem,xcolor,fancyhdr,lastpage}
+\usepackage[colorlinks=true,linkcolor=navy,urlcolor=navy]{hyperref}
+\definecolor{navy}{HTML}{193B55}
+\definecolor{muted}{HTML}{566574}
+\definecolor{pale}{HTML}{F0F5F8}
+\hypersetup{pdftitle={Welch MI: Compact Study Guide},pdfauthor={Daniel Zhao},
+ pdfsubject={Thesis familiarisation and presentation preparation}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.5pt}
+\setlength{\emergencystretch}{1em}
+\renewcommand{\arraystretch}{1.17}
+\setlist[itemize]{leftmargin=1.3em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.4em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{navy}\textbf{WELCH MI}\enspace\textbar\enspace Study guide}
+\fancyhead[R]{\small\color{muted}Presentation preparation}
+\fancyfoot[L]{\small\color{muted}Daniel Zhao\enspace\textbar\enspace 9 November 2026}
+\fancyfoot[R]{\small\color{muted}\thepage\,/\,\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\newcommand{\topic}[2]{\pdfbookmark[0]{#1}{topic\thepage}%
+ {\Large\bfseries\color{navy}#1\par}\vspace{2pt}%
+ {\small\color{muted}#2\par}\vspace{5pt}}
+\newcommand{\step}[1]{\par\vspace{4pt}{\bfseries\color{navy}#1}\par}
+\newcommand{\takeaway}[1]{\par\vspace{4pt}\begingroup\setlength{\fboxsep}{7pt}%
+ \colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Remember:} #1}}\endgroup\par}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\SE}{\widehat{\mathrm{SE}}}
+\newcommand{\Ihat}{\widehat I}
+\newcommand{\Vhat}{\widehat V}
+\newcommand{\Dhat}{\widehat\Delta}
+\begin{document}
+
+\topic{1. The question and background}{Chapters 1--2 \textbar\ thesis pp.\ 1--17. References use printed thesis pages.}
+
+\takeaway{The thesis asks whether accounting for uncertainty in the estimated standard error improves a test comparing mutual information between two populations.}
+
+\step{What is being compared?}
+The variables \(X\) and \(Y\) are categorical. Each observation falls in one cell of a count table, with rows for \(X\) and columns for \(Y\). The population probability tables are \(P\) and \(Q\); their sample estimates are \(\widehat P\) and \(\widehat Q\). The question is
+\[
+\Delta=I(P)-I(Q),\qquad H_0:\Delta=0\quad\text{against}\quad H_1:\Delta\ne0.
+\]
+Equal MI allows different probability tables. For example, the month--purchase relationship can have the same MI in two visitor groups even when their category frequencies differ. MI measures association, not causation.
+
+\step{Entropy, pointwise MI, and average MI}
+Entropy \(H(X)=-\sum_x p_X(x)\log p_X(x)\) measures uncertainty. MI is the average reduction in uncertainty obtained from observing the other variable:
+\[
+\ell_P(i,j)=\log\frac{p_{ij}}{p_{i+}p_{+j}},\qquad
+I(P)=\sum_{i,j}p_{ij}\ell_P(i,j)=H(X)+H(Y)-H(X,Y).
+\]
+The margins \(p_{i+}\) and \(p_{+j}\) are row and column probabilities. A cell's pointwise MI, \(\ell_P(i,j)\), can be positive or negative. Its probability-weighted average, \(I(P)\), is nonnegative and is zero exactly at independence. Natural logarithms give nats.
+
+\step{Why estimating MI is difficult}
+The plug-in estimate replaces probabilities with sample proportions. Unobserved cells contribute zero to its sum. Sparse counts can distort estimated probabilities, their log ratios, and the resulting MI. The leading bias for a fixed positive \(r\times c\) population table is
+\[
+\E\{\Ihat(P)\}-I(P)\approx\frac{(r-1)(c-1)}{2n_P}.
+\]
+Subtracting this term does not remove all sparse-sample bias. Chapter 2 also derives
+\[
+V(P)=\Var_P\{\ell_P(X,Y)\},\qquad
+\Var\{\Ihat(P)\}\approx V(P)/n_P.
+\]
+Here \(V(P)\) is the spread of pointwise MI across possible outcomes. The variance result follows by approximating the MI error as an average:
+\[
+\Ihat(P)-I(P)\approx\frac{1}{n_P}\sum_{a=1}^{n_P}
+\{\ell_P(X_a,Y_a)-I(P)\}.
+\]
+Independent contributions each have variance \(V(P)\), so their average has variance \(V(P)/n_P\). Chapter 4 repeats this strategy for the variance estimate itself.
+
+\step{Where the thesis sits in the literature}
+Moddemeijer and Brillinger supply MI variance results; Mora and co-authors provide a direct Wald-test precedent. Welch and Satterthwaite supply moment matching, with Pan and Wall motivating variance-uncertainty adjustments in regression. Paninski explains information-estimation bias; Hutcheson's entropy test is a related comparison.
+
+Bayesian approaches describe uncertainty about population MI conditional on observed data. Other MI-based tests compare complete distributions. This thesis instead studies repeated-sampling tests of equal MI between fixed populations.
+
+A bootstrap can miss unobserved cells. Simple pooled label permutation assumes the stronger condition \(P=Q\), which equal MI alone does not imply. The thesis therefore needs an evaluation specific to its own null hypothesis.
+
+\newpage
+\topic{2. The shared statistic and the proposed change}{Chapter 3 \textbar\ thesis pp.\ 18--22; implementation in Section 4.4.}
+
+\step{From observed counts to a test statistic}
+For each population, calculate empirical probabilities and pointwise MI, then estimate the population quantities:
+\begin{align*}
+\widehat p_{ij}&=N^P_{ij}/n_P,\qquad
+\Ihat(P)=\sum_{\widehat p_{ij}>0}\widehat p_{ij}\widehat\ell_P(i,j),\\
+\Ihat_{\mathrm{corr}}(P)&=\Ihat(P)-\frac{(r-1)(c-1)}{2n_P},\\
+\Vhat(P)&=\sum_{\widehat p_{ij}>0}\widehat p_{ij}
+             \{\widehat\ell_P(i,j)-\Ihat(P)\}^{2}.
+\end{align*}
+Repeat for \(Q\), then form
+\[
+\Dhat=\Ihat_{\mathrm{corr}}(P)-\Ihat_{\mathrm{corr}}(Q),\qquad
+\SE^2=\frac{\Vhat(P)}{n_P}+\frac{\Vhat(Q)}{n_Q},\qquad
+T=\frac{\Dhat}{\SE}.
+\]
+Independence between samples makes their variance contributions add. A large \(|T|\) means the estimated difference is large relative to its estimated sampling uncertainty. The sign of \(\Dhat\) indicates which population has higher estimated MI.
+
+\step{What is shared, and what changes?}
+\begin{tabularx}{\linewidth}{@{}p{0.22\linewidth}XX@{}}
+\toprule
+ & \textbf{Wald test} & \textbf{Expanded Welch test}\\
+\midrule
+Difference and SE & Same \(\Dhat\) and \(\SE\) & Same \(\Dhat\) and \(\SE\)\\
+Statistic & \(T=\Dhat/\SE\) & The same \(T\)\\
+Reference & Standard normal distribution & Student \(t\) distribution with estimated degrees of freedom\\
+Two-sided 5\% cutoff & Approximately 1.96 & Larger for finite degrees of freedom\\
+\bottomrule
+\end{tabularx}
+
+Both tests estimate the standard error. Expanded Welch changes how the reference distribution accounts for uncertainty in that estimate. Fewer degrees of freedom mean heavier tails and a larger cutoff. With increasing degrees of freedom, the cutoff approaches the Wald cutoff.
+
+\step{Why not use ordinary Welch degrees of freedom?}
+The familiar \(n-1\) component degrees of freedom arise for a sample variance under sampling from a population with a normal distribution. Here the pointwise-MI values are estimated from the same counts as their probability weights. We therefore need to calculate how their variance estimate changes between samples. That calculation is the main task of Chapter 4.
+
+\step{Assumptions and calculation requirements}
+The main argument uses independent, identically distributed observations within each population, independent samples between populations, fixed shared categories, positive population cells, and positive MI. The component calculation additionally needs positive \(\tau^2\). Samples may contain empty cells; no artificial counts are added. Standard errors and degrees of freedom must be positive and finite for the calculation to succeed. The algorithm uses table-wide sums, giving \(O(rc)\) work per comparison.
+
+\takeaway{At the same nominal threshold, Expanded Welch cannot reject where the Wald test would not. Its larger cutoff can lower false positives, but also lowers power and leaves errors in the shared estimates unchanged.}
+
+\newpage
+\topic{3. Understanding the observation-level quantity g}{Chapter 4, Sections 4.1--4.2 \textbar\ thesis pp.\ 23--30.}
+
+\step{The extra question Chapter 4 must answer}
+The standard error uses \(\Vhat(P)\), which changes from sample to sample. To choose degrees of freedom, we need its sampling mean and variance. The new calculation concerns \(\Var\{\Vhat(P)\}\), distinct from the MI sampling variance \(V(P)/n_P\).
+
+\step{What does \(g_P(x,y)\) measure?}
+Move a small fraction \(\varepsilon\) of the distribution towards a selected outcome \((x,y)\):
+\[
+P_\varepsilon=(1-\varepsilon)P+\varepsilon\delta_{(x,y)},\qquad
+g_P(x,y)=\left.\frac{\mathrm d V(P_\varepsilon)}{\mathrm d\varepsilon}\right|_{0}.
+\]
+The table \(\delta_{(x,y)}\) places probability one in that cell. Thus
+\[
+V(P_\varepsilon)\approx V(P)+\varepsilon g_P(x,y).
+\]
+A positive \(g_P(x,y)\) means this movement initially increases \(V\); a negative value means it decreases \(V\). Its magnitude measures sensitivity. It is a local rate of change, not the exact finite change caused by adding an observation.
+
+\step{Why are there two parts to the answer?}
+The original proof writes \(V(P)=\E_P\{\ell_P(X,Y)^2\}-I(P)^2\), differentiates the second moment and squared MI, and combines the results. The final expression is
+\[
+\begin{aligned}
+g_P(x,y)={}&\{\ell_P(x,y)-I(P)\}^2-V(P)\\
+&+2\bigl[\ell_P(x,y)
+-\E_P\{\ell_P(X,Y)\mid X=x\}\\
+&\hspace{13mm}-\E_P\{\ell_P(X,Y)\mid Y=y\}+I(P)\bigr].
+\end{aligned}
+\]
+\begin{itemize}
+\item \textbf{First line: changing probability weights.} This is the variance sensitivity if the pointwise-MI values were held fixed.
+\item \textbf{Bracket: changing pointwise-MI values.} The cell probabilities and their margins also change the log ratios. The row and column conditional means account for those marginal effects.
+\end{itemize}
+For example, \(\E_P\{\ell_P(X,Y)\mid X=x\}\) is the probability-weighted average of pointwise MI within row \(x\). It is not an average of the category labels.
+
+\step{From a cell to an entire sample}
+At fixed \(P\), \(g_P(x,y)\) is a number for each cell. It becomes the random quantity \(g_P(X,Y)\) when the observed outcome is random. Its probability-weighted mean is zero. A first-order Taylor expansion gives
+\[
+\boxed{\quad\Vhat(P)-V(P)\approx
+\frac{1}{n_P}\sum_{a=1}^{n_P}g_P(X_a,Y_a).\quad}
+\]
+\emph{First-order} means retaining the linear term in the probability errors. The approximation can miss important higher-order effects when rare-cell errors are large relative to their probabilities.
+
+\takeaway{\(g_P\) converts a change in the table into a contribution to the variance estimate's error. The expansion accounts for changes in both the weights and the pointwise-MI values.}
+
+\newpage
+\topic{4. Understanding tau and the degrees of freedom}{Chapter 4, Sections 4.3--4.5 \textbar\ thesis pp.\ 31--40.}
+
+\step{What does \(\tau(P)\) measure?}
+The possible observations can have very different \(g_P\) values. Their variance is
+\[
+\tau^2(P)=\Var_P\{g_P(X,Y)\}
+=\sum_{i,j}p_{ij}g_P(i,j)^2,
+\]
+where the last equality uses \(\E_P(g_P)=0\). \textbf{\(\tau(P)\) is the standard deviation; \(\tau^2(P)\) is the variance.} Since independent observations' variances add,
+\[
+\E\{\Vhat(P)\}\approx V(P),\qquad
+\Var\{\Vhat(P)\}\approx\frac{\tau^2(P)}{n_P},\qquad
+\operatorname{SD}\{\Vhat(P)\}\approx\frac{\tau(P)}{\sqrt{n_P}}.
+\]
+The zero mean of \(g_P\) removes bias only at first order; higher-order bias can remain. At fixed \(P\), \(V(P)\) and \(\tau(P)\) are population quantities. Their hatted estimates change with the sample.
+
+\step{A numerical illustration of g and tau}
+For \(P=\left(\begin{smallmatrix}.4&.1\\.1&.4\end{smallmatrix}\right)\),
+\(I(P)\approx.193\) and \(V(P)\approx.307\). These are illustrative values, separate from the reported experiments.
+\begin{center}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Outcome type} & \textbf{Combined probability} & \(g_P\)\\
+\midrule
+Diagonal & 0.8 & \(\phantom{-}0.324\)\\
+Off-diagonal & 0.2 & \(-1.296\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+The weighted mean is zero, but
+\(\tau^2(P)\approx.8(.324)^2+.2(-1.296)^2\approx.420\).
+Thus \(\tau(P)\approx.648\), and at \(n_P=100\) the predicted standard deviation of \(\Vhat(P)\) is about \(.065\).
+
+\step{Why do these moments determine degrees of freedom?}
+For a scaled chi-squared distribution, variance is twice the squared mean divided by degrees of freedom. Matching the mean and variance therefore gives
+\[
+\nu_{P,\mathrm{mom}}=
+\frac{2[\E\{\Vhat(P)\}]^2}{\Var\{\Vhat(P)\}},\qquad
+\nu_{P,\mathrm{FO}}=\frac{2n_PV(P)^2}{\tau^2(P)},\qquad
+\widehat\nu_P=\frac{2n_P\Vhat(P)^2}{\widehat\tau^2(P)}.
+\]
+These are three distinct objects: the repeated-sampling moment target, its population first-order approximation, and the estimate from one sample. An average of the sample estimates need not equal the moment target because the sample formula is a nonlinear ratio. \(\widehat\tau^2(P)\) is calculated by replacing population probabilities in the sensitivity calculation with sample proportions and taking their empirical variance.
+
+The Welch--Satterthwaite rule combines the two independent contributions:
+\[
+\widehat\nu=
+\frac{\{\Vhat(P)/n_P+\Vhat(Q)/n_Q\}^{2}}
+{\{\Vhat(P)/n_P\}^{2}/\widehat\nu_P
++\{\Vhat(Q)/n_Q\}^{2}/\widehat\nu_Q},\qquad
+p_{\mathrm E}=2\{1-F_{t_{\widehat\nu}}(|T|)\}.
+\]
+Here \(F_{t_{\widehat\nu}}\) is the cumulative distribution function of the Student \(t\) distribution. Greater variance-estimate uncertainty relative to its squared mean gives fewer degrees of freedom and a larger cutoff. Moment matching does not prove independence between numerator and denominator, so the Student \(t\) reference distribution remains approximate.
+
+\newpage
+\topic{5. The experiments and approximation findings}{Chapter 5 and Section 6.1 \textbar\ thesis pp.\ 41--57.}
+
+\step{How are populations with known MI constructed?}
+Draw \(X\) from category frequencies \(a\). With probability \(\lambda\), let \(Y=X\); otherwise draw \(Y\) independently from \(a\). This gives
+\[
+p_{ij}(\lambda)=(1-\lambda)a_i a_j+\lambda a_i\mathbf1\{i=j\}.
+\]
+Increasing copying increases association while preserving the row and column frequency profiles. A numerical search selects \(\lambda\) to achieve the target MI. Keeping \(\lambda<1\) preserves positive population cells. The profiles match within each population but may differ between populations.
+
+\begin{tabularx}{\linewidth}{@{}p{0.24\linewidth}X@{}}
+\toprule
+\textbf{Design choice} & \textbf{Values and purpose}\\
+\midrule
+Table size & \(k=2,4,8,16\), giving \(k^2\) cells.\\
+Margin regimes & Uniform; same skew with first-category probability .8 in both populations; different skew with .7 in \(P\) and .8 in \(Q\). Remaining probability is shared equally.\\
+Sample size & \(n_P=n_Q=n\): 10, 20, 50, 100, 250, 500, 1,000, 2,500, 10,000, and 50,000.\\
+Null study & Shared MI .005, .02, or .30 nats; 360 settings.\\
+Power study & \(I(P)=.02\), \(I(Q)=.025,.03,.04\); gaps .005, .01, and .02 nats; 360 settings.\\
+Approximation checks & Shared MI .02 across sample sizes; near independence uses \(4\times4\), \(n=1{,}000\), and MI from .0001 to .05.\\
+\bottomrule
+\end{tabularx}
+
+Each main setting uses \textbf{100,000 repetitions}; one repetition draws two tables, and both tests analyse that same pair. Repetition count controls simulation precision, not the sample size used by a test. Unsuccessful calculations count as non-rejections in the main rates, with success reported separately. Wilson intervals quantify uncertainty in rejection proportions; moment ratios and targets use delta-method Monte Carlo uncertainty calculations.
+
+\step{RQ1: Do the approximations describe repeated samples?}
+The study separately checks the average \(\Vhat\), its variation across repetitions, and the degrees of freedom these moments imply. Larger tables have more rare combinations. Once-observed cells can contribute large deviations in pointwise MI, making both moments poorly represented by the first-order expansion. Population predictions and predictions calculated from sampled proportions can err in opposite directions. With more observations, the approximations generally improve for fixed populations with positive MI.
+
+\step{Why is near independence special?}
+Along the fixed-margin path examined in Appendix A,
+\[
+V(P)\approx2I(P),\qquad\tau^2(P)\approx4V(P),\qquad
+\nu_{P,\mathrm{FO}}\approx n_PI(P).
+\]
+As population MI approaches zero at fixed sample size, the last expression approaches zero. Sampled tables still show apparent association, so sample-based degrees of freedom stay positive on average. At exact independence the linear term vanishes, but quadratic sampling noise remains. Appendix A retains that noise using a local approximation with a chi-squared distribution, explaining why the moment target, population approximation, and average sample estimate separate.
+
+\takeaway{An accurate formula with known population inputs need not give an accurate estimate after sample substitution. RQ1 checks both stages.}
+
+\newpage
+\topic{6. False positives, power, and the application}{Sections 6.2--6.5 \textbar\ thesis pp.\ 58--75.}
+
+\step{RQ2: Does the adjustment improve false-positive rates?}
+A false-positive rate is the rejection probability when MI is truly equal. The target is 5\%; below 5\% is conservative. Shared MI, table size, margins, and sample size all change the patterns. A larger cutoff lowers both excessive rejection and already conservative rejection. The following settings illustrate improvement and remaining failure; they do not summarise how frequently each occurs across the grid.
+
+\begin{tabularx}{\linewidth}{@{}Xrr@{}}
+\toprule
+\textbf{Equal-MI setting, observations per population} & \textbf{Wald} & \textbf{Expanded}\\
+\midrule
+Uniform \(4\times4\), MI .02, \(n=20\) & 8.35\% & 4.90\%\\
+Different-skew \(16\times16\), MI .005, \(n=1{,}000\) & 36.38\% & 34.38\%\\
+\bottomrule
+\end{tabularx}
+
+The first comparison is close to the target after adjustment; the second remains far above it despite every calculation succeeding. Diagnostic evidence separates three mechanisms: a small SE inflates \(|T|\), a large SE suppresses \(|T|\), and bias shifts the estimated difference away from the null. With large samples the methods become close, although both can remain conservative in weak-association, larger-table settings.
+
+\step{RQ3: What happens to power and estimated direction?}
+Power counts rejection when population MI differs. At the same nominal 5\% threshold, Expanded Welch cannot have higher power because its rejection set is contained in the Wald test's. At \(n=10{,}000\), the power difference is below .32 percentage points across all tested settings. This is not a comparison at matched actual false-positive rates.
+
+In different-skew \(16\times16\) tables with \(n=1{,}000\) and a .01-nat gap,
+\[
+\Delta=-.01,\qquad \operatorname{Bias}(\Dhat)\approx+.0307,
+\qquad \E(\Dhat)\approx+.0207.
+\]
+Expanded Welch rejects in 9.66\% of repetitions, but more than 99.9\% of these rejections have the wrong estimated sign. Increasing the true negative gap can initially cancel the positive bias, moving estimates towards zero and reducing rejection. High rejection under an alternative therefore need not mean reliable identification of the population with greater MI.
+
+\step{Online shopping: how are the outputs interpreted?}
+Compare 1,694 new visitors with 10,551 returning visitors. \(\Dhat\) is new minus returning. Month gives \(10\times2\) tables; weekend gives \(2\times2\) tables. The group sizes differ, so the bias corrections do not cancel.
+\begin{tabularx}{\linewidth}{@{}lrrrX@{}}
+\toprule
+\textbf{Predictor} & \(T\) & \(\widehat\nu\) & \(p_{\mathrm E}\) & \textbf{Interpretation at 5\%}\\
+\midrule
+Month & \(-4.069\) & 26.79 & \(3.73\!\times\!10^{-4}\) & Both tests reject; higher corrected MI among returning visitors.\\
+Weekend & \(-.056\) & 2.18 & .9601 & Neither test rejects; this does not prove equality.\\
+\bottomrule
+\end{tabularx}
+
+For month, corrected MI is .004316 versus .017880 nats, with difference \(-.013563\) and SE .003333. Weekend illustrates that large sample sizes can still give low degrees of freedom when the variance contributions are uncertain relative to their small magnitudes. The unadjusted comparisons illustrate application; agreement between tests does not establish their shared estimates' accuracy.
+
+\newpage
+\topic{7. The overall judgement and presentation answers}{Chapter 7 and Appendices A--B \textbar\ thesis pp.\ 76--97.}
+
+\takeaway{The thesis derives an adjustment and identifies its benefits and limits. A larger cutoff can improve some false-positive rates, but reliable MI comparisons also require an accurate estimated difference and standard error.}
+
+\step{What limits the conclusions?}
+The simulations use one copying construction, matching row and column profiles within each table, selected MI levels, and equal sample sizes. The leading bias corrections cancel in those differences, but unequal residual biases can remain. The power study fixes one starting MI and increases the other. These choices limit generalisation to other association patterns and unequal sample sizes. The principal benchmark is the Wald test; ordinary Welch is examined at only three illustrative null settings. Resampling procedures and alternative MI estimators are not fully benchmarked.
+
+Future work should prioritise the MI-difference and standard-error estimates, investigate higher-order terms near independence, and broaden populations and benchmarks. No particular alternative estimator is established here as the solution.
+
+\step{What do the appendices contribute?}
+\textbf{Appendix A} derives the near-independence relations, retains quadratic sampling noise using central and noncentral chi-squared distributions, and proves \(I(P)>0\iff V(P)>0\) when every cell is positive. The positive-cell condition matters; positive \(V\) also does not automatically guarantee positive \(\tau^2\).
+
+\textbf{Appendix B} supplies construction and search details, parameter grids, calculation-success rules, bias and variance diagnostics, and simulation uncertainty calculations. It distinguishes the sampling-moment target from population and sample-based degrees of freedom. These details support reproducibility and interpretation.
+
+\step{Questions you should be able to answer aloud}
+\begin{tabularx}{\linewidth}{@{}p{0.29\linewidth}X@{}}
+\toprule
+\textbf{Question} & \textbf{Short answer}\\
+\midrule
+What is new? & The variance-sensitivity derivation for MI, its use in component degrees of freedom, and a controlled evaluation of the resulting test.\\
+What is \(g_P\)? & The local change in pointwise-MI variance when the distribution moves towards one observation outcome. Its sample average approximates the variance estimate's error.\\
+What is \(\tau(P)\)? & The standard deviation of those observation-level sensitivities; \(\tau^2(P)/n_P\) approximates the sampling variance of \(\Vhat(P)\).\\
+Are degrees of freedom category counts? & No. They reflect the variance estimate's uncertainty relative to its average. Fewer degrees of freedom give heavier tails in the Student t distribution.\\
+Is the Student \(t\) result exact? & No. The moment calculation motivates an approximate reference distribution; it does not prove numerator--denominator independence.\\
+Why does power fall? & The statistic is unchanged and the cutoff is larger; calculation failures can further reduce reported rejection.\\
+Does non-rejection prove equality? & No. It means insufficient evidence of a difference under the test. A p-value is not the probability that the null is true.\\
+What is the main practical lesson? & A cutoff change cannot repair biased estimates or standard errors that misrepresent the sampling spread.\\
+\bottomrule
+\end{tabularx}
+
+\step{A presentation summary you can practise}
+\emph{I derive a test for comparing mutual information between populations, using uncertainty in the estimated standard error to choose a Student t reference distribution. Simulations show improved false-positive rates in some settings, but also deeper conservatism and lower power. Bias and inaccurate standard errors remain unresolved.}
+
+\end{document}

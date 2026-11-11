@@ -1,0 +1,66 @@
+{
+  "mathematics": {
+    "population_tables": 48,
+    "cell_perturbations": 456,
+    "maximum_absolute_errors": {
+      "mean_cancellation": 3.469446951953614e-17,
+      "weight_contribution": 2.220446049250313e-16,
+      "score_contribution": 2.220446049250313e-16,
+      "full_sensitivity": 6.661338147750939e-16,
+      "finite_difference": 4.1320791233090404e-10
+    },
+    "preserved_core_equations": [
+      "eq:g-final",
+      "eq:population-component-df",
+      "eq:g-hat",
+      "eq:tau-hat",
+      "eq:nu-p-hat",
+      "eq:ws-general",
+      "eq:expanded-df",
+      "eq:expanded-p",
+      "eq:worked-tables",
+      "eq:near-independent-moments",
+      "eq:near-independent-df"
+    ],
+    "all_pass": true
+  },
+  "pdf_review": {
+    "pages": 108,
+    "original_pages": 111,
+    "chapter4_physical_pages": [
+      33,
+      47
+    ],
+    "chapter4_pages": 15,
+    "original_chapter4_pages": 18,
+    "bookmarks": 103,
+    "destinations": 432,
+    "links": {
+      "/GoTo": 462,
+      "/URI": 98
+    },
+    "all_internal_destinations_resolve": true,
+    "log_issues": [],
+    "protected_files_unchanged": 534,
+    "changed_manuscript_inputs": [
+      "chapters_rewrite/04_expanded_welch.tex"
+    ],
+    "source_zip_entries": 120,
+    "source_zip_matches_current_copy": true,
+    "all_pages_rendered": true,
+    "comparison_pdf_sha256": "2952960efe7b24b495b986275b018dff12beca21a360df2ff0f616de2338a3ab"
+  },
+  "independent_source_build": {
+    "independent_export_build": "passed",
+    "pages": 108,
+    "all_page_contents_match": true,
+    "all_named_destinations_and_targets_match": true,
+    "export_does_not_read_active_thesis": true
+  },
+  "visual_review": "All 108 pages inspected in contact sheets; direct-proof pages 36\u201338 and combined-df page43 inspected at full size. No clipping, overlap, or split central proof equations found.",
+  "regional_spelling_and_distribution_names": "passed",
+  "all_fonts_embedded": true,
+  "signature_status": "Unsigned comparison copy; original signed deliverable and FINAL SUBMISSION PDFs preserved.",
+  "preserved_files": 534,
+  "original_main_thesis_and_submission_unchanged": true
+}

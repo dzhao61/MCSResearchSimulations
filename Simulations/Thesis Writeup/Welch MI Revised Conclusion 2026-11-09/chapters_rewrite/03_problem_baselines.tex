@@ -1,0 +1,248 @@
+\chapter{Overview of the Two-Sample MI Test and Wald Baseline}
+\label{chap:baselines}
+
+This chapter defines the estimated MI difference, standard error, and test
+statistic shared by the Wald test and the Expanded Welch test, then calculates the
+Wald p-value using the standard normal distribution.
+
+\section{Problem setup and bias-corrected estimator}
+
+\subsection{Problem setup and assumptions}
+
+Let
+\begin{equation}
+  N^P=(N^P_{ij}),
+  \qquad
+  N^Q=(N^Q_{ij})
+\end{equation}
+be independent \(r\times c\) count tables with totals \(n_P\) and \(n_Q\).
+The rows and columns represent the same categorical variables \(X\) and
+\(Y\) in both populations, with the same category definitions.
+The empirical probabilities are
+\begin{equation}
+  \widehat p_{ij}=\frac{N^P_{ij}}{n_P},
+  \qquad
+  \widehat q_{ij}=\frac{N^Q_{ij}}{n_Q}.
+\end{equation}
+
+The population parameter is the signed difference
+\begin{equation}
+  \Delta=I(P)-I(Q).
+  \label{eq:delta-population}
+\end{equation}
+The principal test is two-sided:
+\begin{equation}
+  H_0:\Delta=0
+  \quad\text{against}\quad
+  H_1:\Delta\ne0.
+  \label{eq:two-sample-null}
+\end{equation}
+
+The large-sample argument uses the following assumptions.
+
+\begin{samepage}
+\begin{assumption}[Sampling]
+Observations are independent and identically distributed within each
+population, and the two population samples are independent.
+\end{assumption}
+\end{samepage}
+
+\begin{assumption}[Fixed categories shared by both tables]
+The row and column categories are fixed in advance and aligned between the two
+tables.
+\end{assumption}
+
+\begin{assumption}[Positive cell probabilities]
+Every cell in the population table has a probability greater than zero. A
+sample can still contain no observations in a cell, especially when that cell
+is rare, and we retain such samples.
+\end{assumption}
+
+\begin{assumption}[Positive MI]
+Both populations have positive MI: \(I(P)>0\) and \(I(Q)>0\). With the positive
+cell probabilities in Assumption~3, this is equivalent to requiring positive
+pointwise-MI variances \(V(P)>0\) and \(V(Q)>0\). The positive-MI
+assumption excludes exact independence, where the first-order approximation
+breaks down.
+\end{assumption}
+
+Appendix~\ref{sec:mi-variance-equivalence} explains this equivalence and
+why positive cell probabilities are required.
+
+All logarithms in this thesis are natural, so MI differences and standard
+errors are reported in nats.
+
+\subsection{Bias-corrected estimator}
+
+For the first table, define empirical pointwise MI by
+\begin{equation}
+  \widehat\pmi_P(i,j)
+  =\log\left(
+  \frac{\widehat p_{ij}}
+       {\widehat p_{i+}\widehat p_{+j}}
+  \right)
+  \qquad\text{when }\widehat p_{ij}>0.
+  \label{eq:empirical-pmi}
+\end{equation}
+The plug-in MI estimate is
+\begin{equation}
+  \Ihat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}\widehat\pmi_P(i,j).
+  \label{eq:plugin-mi}
+\end{equation}
+The same calculation gives \(\Ihat(Q)\).
+
+For a fixed set of row and column categories, subtracting the leading MI bias in
+Equation~\eqref{eq:mi-leading-bias} \citep{miller1955,moddemeijer1989}
+from each plug-in estimate gives the bias-corrected MI difference:
+\begin{equation}
+  \Deltahat
+  =\left\{\Ihat(P)-\frac{(r-1)(c-1)}{2n_P}\right\}
+  -\left\{\Ihat(Q)-\frac{(r-1)(c-1)}{2n_Q}\right\}.
+  \label{eq:bias-corrected-difference}
+\end{equation}
+The two terms in braces are the bias-corrected MI estimates for the
+separate populations. Their corrections use the declared row and column
+categories because every population cell has positive probability under
+the model, even when some cells are unobserved in a sample. We retain
+negative corrected estimates when calculating the difference.
+When \(n_P=n_Q\), the two corrections cancel, so \(\Deltahat\) is exactly
+the raw plug-in MI difference. With unequal sample sizes, the difference
+between the two corrections removes the leading unequal-sample bias described in
+Section~\ref{sec:background-mi-bias}.
+
+\section{Shared standard error and test statistic}
+
+Section~\ref{sec:first-order-mi-background} showed that the first-order
+sampling variance of \(\Ihat(P)\) is \(V(P)/n_P\), where \(V(P)\) is the
+population variance of pointwise MI \citep{moddemeijer1989,brillinger2004}.
+Subtracting the fixed leading bias term
+in Equation~\eqref{eq:bias-corrected-difference} does not change this
+variance.
+
+The observed table estimates the pointwise-MI variance \(V(P)\) by
+\begin{equation}
+  \Vhat(P)
+  =\sum_{i,j:\widehat p_{ij}>0}
+  \widehat p_{ij}
+  \{\widehat\pmi_P(i,j)-\Ihat(P)\}^2.
+  \label{eq:estimated-mi-variance}
+\end{equation}
+Define \(\Vhat(Q)\) analogously.
+These estimates describe variation in pointwise MI across observation
+outcomes, and dividing each by its sample size estimates the sampling variance
+of the corresponding MI estimate.
+
+Independence of the two samples makes the covariance between their MI
+estimates zero, so we estimate the sampling variance of their difference
+by adding the two estimated variance contributions:
+\begin{equation}
+  \SEhat^2
+  =\frac{\Vhat(P)}{n_P}
+  +\frac{\Vhat(Q)}{n_Q}.
+  \label{eq:shared-se}
+\end{equation}
+Taking the positive square root gives \(\SEhat\), which estimates the
+standard deviation of \(\Deltahat\) across repeated samples.
+Table~\ref{tab:results-variance-quantities} distinguishes the variation of
+pointwise MI across observation outcomes from the sampling variation of
+the estimates calculated from whole tables.
+
+\begin{table}[H]
+\centering
+\caption{Variance quantities in the two-sample MI test.}
+\label{tab:results-variance-quantities}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Quantity} & \textbf{Meaning}\\
+\midrule
+\(V(P)\) & Population variance of pointwise MI; \(V(P)/n_P\)
+approximates \(\Var\{\Ihat(P)\}\).\\
+\addlinespace
+\(\Vhat(P)\) & Estimate of \(V(P)\) from one sampled count table.\\
+\addlinespace
+\(\Vhat(P)/n_P\) & Estimated sampling variance of \(\Ihat(P)\);
+one contribution to \(\SEhat^2\).\\
+\addlinespace
+\(\Var\{\Vhat(P)\}\) & Sampling variance of \(\Vhat(P)\) across repeated samples;
+used to choose the component degrees of freedom.\\
+\addlinespace
+\(\SEhat^2\) & Estimate of \(\Var(\Deltahat)\), calculated as
+\(\Vhat(P)/n_P+\Vhat(Q)/n_Q\).\\
+\addlinespace
+\(\Var(\Deltahat)\) & Sampling variance of \(\Deltahat\); the quantity
+that \(\SEhat^2\) estimates.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The shared standardised statistic is
+\begin{equation}
+  T=\frac{\Deltahat}{\SEhat}.
+  \label{eq:shared-t}
+\end{equation}
+The sign of \(T\) indicates whether \(P\) or \(Q\) has the larger
+corrected MI estimate, while its magnitude measures the difference relative
+to its estimated standard error. Both tests use the same effect estimate
+and plug-in standard error in
+Equations~\eqref{eq:bias-corrected-difference}--\eqref{eq:shared-t}, but
+compare \(T\) with different reference distributions centred at zero
+under \(H_0\).
+
+\section[Wald test and motivation for the Expanded Welch test]{Wald test and motivation for\\the Expanded Welch test}
+
+\subsection{Wald p-value}
+
+When both sample sizes grow while the table dimensions and positive
+population probabilities stay fixed, the statistic approaches a standard
+normal distribution under equal population MI
+\citep{wald1943,vanderVaart1998}:
+\begin{equation}
+  T\xrightarrow{d}N(0,1)
+  \qquad\text{under }H_0.
+\end{equation}
+The two-sided Wald p-value is
+\begin{equation}
+  p_{\mathrm{Wald}}
+  =2\{1-\Phi(|T|)\},
+  \label{eq:wald-pvalue}
+\end{equation}
+where \(\Phi\) is the standard normal distribution function. Under this
+reference distribution for equal MI, the p-value is the probability of a
+statistic at least as far from zero as the observed \(T\). The
+two-sided calculation doubles the upper-tail probability
+\(1-\Phi(|T|)\) because symmetry gives the same probability in the
+lower tail.
+At the nominal 5\% level, the test rejects when \(p_{\mathrm{Wald}}\leq0.05\).
+
+\subsection{Motivation for the Student \texorpdfstring{\(t\)}{t} distribution}
+
+The large-sample limit above relies on \(\SEhat\) estimating the
+sampling standard deviation of \(\Deltahat\) with decreasing relative
+error as sample sizes increase. With smaller samples, variation in
+\(\SEhat\) can affect the distribution of the ratio \(T\). For a fixed
+estimated MI difference, a smaller \(\SEhat\) gives a larger \(|T|\)
+and can move it beyond the rejection cutoff. The Wald test uses the same
+cutoff from the standard normal distribution regardless of how much
+\(\Vhat(P)\) and \(\Vhat(Q)\) vary between samples.
+
+The Expanded Welch test uses a Student \(t\) distribution as an approximate
+reference for \(T\). Its heavier tails give a larger rejection cutoff
+than the cutoff from the standard normal distribution at the same
+significance level, with fewer degrees of freedom giving a larger
+adjustment. Under the Welch--Satterthwaite moment-matching rule, an
+estimated variance contribution with greater sampling variance relative to its squared
+sampling mean receives fewer component degrees of freedom
+\citep{satterthwaite1946}.
+
+We therefore need the average value of each estimated pointwise-MI
+variance and how much that estimate varies across samples. For \(P\),
+to first order,
+\begin{equation}
+  \E\{\Vhat(P)\}\approx V(P).
+\end{equation}
+For the remaining input, Chapter~\ref{chap:expanded} derives a first-order
+approximation to \(\Var\{\Vhat(P)\}\) by tracking how the estimated
+pointwise-MI variance changes when one observation changes the joint table.

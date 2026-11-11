@@ -9,6 +9,7 @@
 
 # Local metadata, environments, and caches.
 .DS_Store
+.Rhistory
 __pycache__/
 *.py[cod]
 .venv/

@@ -1,0 +1,373 @@
+\chapter{Experimental Details}
+\label{app:construction}
+
+This appendix specifies the population construction, target-MI search,
+settings underlying the main results, sampling procedure, and outcome
+calculations. Together with the test formulas in
+Chapters~\ref{chap:baselines}--\ref{chap:design},
+these details define the statistical experiment.
+
+\section{Copying construction and target selection}
+
+For the copying construction in Equation~\eqref{eq:copying-construction},
+summing a row gives
+\begin{equation}
+ \sum_jp_{ij}(\lambda)
+ =(1-\lambda)a_i\sum_ja_j+\lambda a_i=a_i.
+\end{equation}
+Summing a column similarly gives \(a_j\), so both margins are preserved.
+All cells are positive for \(0\leq\lambda<1\).
+
+MI increases continuously from zero to the entropy of \(a\).
+With the margins fixed, differentiating the joint terms gives
+\begin{equation}
+ \frac{\mathrm d^2 I\{P(\lambda)\}}{\mathrm d\lambda^2}
+ =\sum_{i,j}\frac{(a_i\mathbf{1}_{\{i=j\}}-a_i a_j)^2}
+                     {p_{ij}(\lambda)}>0.
+\end{equation}
+The first derivative at zero is zero, because the change in probabilities
+sums to zero and all pointwise MI values are zero there. The positive
+second derivative makes the first derivative positive for
+\(\lambda>0\). At the endpoint, \(Y=X\), so
+\begin{equation}
+ I\{P(1)\}=-\sum_i a_i\log a_i.
+\end{equation}
+These facts give a unique copying probability for each positive target
+below the entropy endpoint.
+
+For each population, calculate this endpoint and solve
+\(I\{P(\lambda)\}-I_{\rm target}=0\) on \([0,1]\) using Brent's
+method \citep{brent1973}. Absolute and relative root tolerances are
+\(10^{-15}\) and \(10^{-14}\). The endpoint brackets the search;
+sampled populations use the interior solution. Accept a table only when
+every cell is positive, its total and marginal errors are at most
+\(10^{-12}\), and its MI error is at most
+\(10^{-12}+10^{-8}I_{\rm target}\). Every target is checked against its own population entropy endpoint.
+
+\section{Parameter grids and sampling}
+
+Table~\ref{tab:design-primary-grids} specifies the parameter grids, with
+the null and power MI values given in
+Equations~\eqref{eq:design-balanced-null} and
+\eqref{eq:design-mi-gap-populations}. Solve separately for each
+population's copying probability, since different margins can require
+different copying probabilities even under equal MI.
+
+For one repetition, draw the counts from a multinomial distribution:
+\begin{equation}
+ (N_{P,11},\ldots,N_{P,kk})\sim\operatorname{Multinomial}
+      (n_P;p_{11},\ldots,p_{kk}),
+\end{equation}
+and draw the corresponding \(Q\) counts independently. Apply both tests
+to each sampled pair of \(k\times k\) tables, using 100,000 independent
+repetitions per distinct setting. The simulations use the PCG64
+pseudo-random generator with master seed 20261021 for the approximation
+checks and null settings with a shared MI of 0.02 nats, and 20261101 for
+the other null settings and the power study. Separate streams distinguish settings and
+the two populations, while repeated settings share the same repetitions
+across displays.
+
+All samples retain their declared table dimensions, including empty rows
+and columns. Use natural logarithms and \(0\log0=0\), without adding
+artificial counts to empty cells.
+The bias correction for each plug-in MI is \((k-1)^2/(2n)\); do not truncate
+negative corrected estimates. Calculate the standard error using
+Equation~\eqref{eq:shared-se} and the component and combined degrees of freedom
+using Chapter~\ref{chap:expanded}.
+
+\section{Calculation requirements and rejection rates}
+\label{sec:validity-rules}
+
+A calculation for the Wald test succeeds when it has a finite corrected difference, a
+finite positive standard error, \(\Vhat(P)+\Vhat(Q)>10^{-14}\), and a finite p-value.
+The threshold treats variances extremely close to zero as numerically
+unusable. The Expanded Welch test additionally requires positive finite degrees
+of freedom for both components and their combination, and a finite
+p-value for that test. If either component's degrees of freedom are
+not positive and finite, the calculation for the Expanded Welch test is unsuccessful.
+
+The componentwise algorithm requires positive, finite degrees of freedom
+for both populations. If a sampled table has
+\(\Vhat=\widehat\tau^2=0\), the component formula in
+Equation~\eqref{eq:nu-p-hat} requires \(0/0\). The calculation for the Expanded
+Welch test is unsuccessful even if the other table makes the shared standard
+error positive and finite.
+
+The primary rejection rate divides rejections from successful calculations
+by all repetitions, with unsuccessful calculations counted as non-rejections.
+The study applies no minimum expected-count filter.
+
+\section{Bias, variance, and degrees of freedom}
+\label{sec:estimation-diagnostics}
+
+\subsection{MI-difference diagnostics and component degrees of freedom}
+
+Let \(\widehat\Delta_s\) be the corrected difference in repetition
+\(s\). Its bias estimate is the mean of the finite-valued MI difference
+estimates minus the known \(\Delta\). Its observed sampling variance is
+\begin{equation}
+ \frac{1}{M-1}\sum_{s=1}^M
+ \left(\widehat\Delta_s-\frac{1}{M}\sum_{u=1}^M\widehat\Delta_u\right)^2,
+ \label{eq:observed-sampling-variance}
+\end{equation}
+where \(M\) counts the finite-valued differences, including those whose
+test calculation is unsuccessful. Centring at their sample mean separates
+variance from bias.
+
+For the estimated / observed variance ratio, restrict the calculations to
+the same repetitions with a finite difference and finite squared
+standard error. Retain finite zero variance estimates. Divide the mean
+squared standard error by the observed variance on this matched subset.
+The ratio is defined only when the observed variance is positive.
+
+Degrees-of-freedom summaries retain positive finite estimates.
+The mean-to-target ratios in Figure~\ref{fig:redesign-component-df}
+are shown only when every component estimate is positive and finite.
+Finite zero variance estimates remain in moment calculations even when
+component degrees of freedom are undefined. These diagnostics do not isolate
+each estimation error's causal contribution to rejection.
+
+\subsection{Sampling variability of the estimated pointwise-MI variance}
+
+For each selected population, measure the observed variability of
+\(\Vhat(P)\) by replacing \(\widehat\Delta_s\) with
+\(\widehat V_s(P)\) in Equation~\eqref{eq:observed-sampling-variance}.
+Compare the observed value with
+\begin{equation}
+\begin{aligned}
+ \text{population prediction}&=\frac{\tau^2(P)}{n_P},\\
+ \text{mean plug-in prediction}&=
+ \frac{1}{M}\sum_{s=1}^{M}\frac{\widehat\tau_s^2(P)}{n_P}.
+\end{aligned}
+ \label{eq:variance-stability-predictions}
+\end{equation}
+The population prediction uses the known probabilities, whereas the mean
+plug-in prediction uses the empirical probabilities in each repetition.
+Repeat both for \(Q\). For each population, use the same repetitions with finite
+\(\widehat V_s\) and \(\widehat\tau_s^2\), including finite zeros
+and outputs whose test calculation is unsuccessful. Divide both predictions
+by the same observed variability, which must be positive.
+
+The checks of cell contributions and the linear approximation accompanying
+Figure~\ref{fig:redesign-moments} use 10,000 of the approximation-study
+repetitions for each \(16\times16\) different-skew population at shared
+MI 0.02 nats and sample sizes
+\(n\in\{10,20,50,100,250,1000,10000\}\).
+Contributions to \(\Vhat\) and \(\widehat\tau^2\) are separated into
+once-observed cells whose row and column totals also equal one, other
+once-observed cells, and cells observed more than once.
+
+For the linear-approximation check, calculate the first-order change in
+each repetition using the population sensitivity from
+Equation~\eqref{eq:g-final}:
+\begin{equation}
+ L_s(P)=\sum_{i,j}\{\widehat p_{s,ij}-p_{ij}\}g_P(i,j),
+ \qquad
+ R_s(P)=\widehat V_s(P)-V(P)-L_s(P).
+ \label{eq:variance-linear-remainder}
+\end{equation}
+Here \(\widehat p_{s,ij}\) is the empirical probability in repetition
+\(s\), \(L_s(P)\) is the linear contribution, and \(R_s(P)\) contains
+the remaining change. Since \(\sum_{i,j}p_{ij}g_P(i,j)=0\), the linear
+contribution is also the sample average of \(g_P\) in
+Equation~\eqref{eq:vhat-linearization}. Its sampling variance is therefore
+\(\tau^2(P)/n_P\). The decomposition
+\(\widehat V_s(P)-V(P)=L_s(P)+R_s(P)\) is exact by definition of the
+remainder, even when the linear approximation is poor.
+
+Taking variances and expanding the variance of this sum gives
+\begin{equation}
+\begin{aligned}
+ \Var\{\widehat V_s(P)\}
+ ={}&\Var\{L_s(P)\}+\Var\{R_s(P)\}\\
+    &+2\operatorname{Cov}\{L_s(P),R_s(P)\}.
+\end{aligned}
+ \label{eq:linear-remainder-variance-decomposition}
+\end{equation}
+Subtracting \(V(P)\) does not change the variance because the population
+table is fixed. The linear contribution and remainder come from the same
+sample, so their covariance must be included. In particular, the
+difference between the full variance and the linear prediction is
+\(\Var(R_s)+2\operatorname{Cov}(L_s,R_s)\), which can be smaller than
+\(\Var(R_s)\) when the covariance is negative.
+
+Estimate the three terms from the same \(M=10{,}000\) repetitions using sample
+variances and covariance with denominator \(M-1\). Their sum equals the
+observed sample variance of \(\widehat V_s\). For example, at \(n=50\)
+in population \(P\), the linear variance, remainder variance, and twice
+their covariance are respectively 18.7\%, 87.3\%, and \(-6.0\%\) of
+the observed variance. The covariance partly offsets the remainder, but
+the linear variance is still only about one fifth of the observed
+variance. The same decomposition is calculated separately for \(Q\).
+
+\section{Simulation uncertainty}
+\label{sec:simulation-uncertainty}
+
+For a rate estimate \(\widehat r\) from \(M\) independent repetitions,
+its approximate Monte Carlo standard error is
+\(\{\widehat r(1-\widehat r)/M\}^{1/2}\).
+Rejection and calculation success rates use pointwise 95\% Wilson intervals
+\citep{wilson1927}. These intervals describe simulation uncertainty at fixed
+populations, not simultaneous coverage over every setting.
+
+\section{Component moment targets and uncertainty}
+\label{sec:moment-target-details}
+\label{sec:moment-uncertainty}
+
+\subsection{First-order approximation and moment target}
+
+The population first-order degrees of freedom
+\(\nu_{P,\mathrm{FO}}\) in Equation~\eqref{eq:population-component-df}
+approximate the sampling-moment target \(\nu_{P,\mathrm{mom}}\) in
+Equation~\eqref{eq:component-df-moments}. The target uses the actual
+sampling mean and variance of \(\Vhat(P)\), measured over repeated
+samples from the same population at fixed sample size. Assuming positive
+\(V(P)\), \(\tau^2(P)\), and sampling variance, divide the two
+definitions and rearrange to obtain the exact identity
+\begin{equation}
+ \frac{\nu_{P,\mathrm{FO}}}{\nu_{P,\mathrm{mom}}}
+ =\frac{\left\{V(P)/\E\Vhat(P)\right\}^{2}}
+        {\{\tau^2(P)/n_P\}/\Var\{\Vhat(P)\}}.
+ \label{eq:redesign-df-decomposition}
+\end{equation}
+The numerator is the reciprocal of the squared mean ratio in
+Figure~\ref{fig:redesign-moments}; the denominator is the middle-row
+predicted / observed sampling-variance ratio. A sampling mean \(\E\{\Vhat(P)\}\) above \(V(P)\) lowers the first-order
+degrees of freedom relative to the moment target when the variance
+prediction is otherwise accurate. The same calculations are made
+separately for \(Q\).
+
+\subsection{Estimating the targets and their uncertainty}
+
+For a component, let \(X_s=\widehat V_s\) in repetition \(s\). Use
+all finite values, including zeros, even if component degrees of freedom
+are undefined. From \(M\) repetitions, calculate
+\begin{equation}
+ \bar X=\frac1M\sum_{s=1}^M X_s,\qquad
+ S_X^2=\frac1{M-1}\sum_{s=1}^M(X_s-\bar X)^2.
+\end{equation}
+For \(S_X^2>0\), the estimated moment target is \(2\bar X^2/S_X^2\).
+To evaluate Equation~\eqref{eq:redesign-df-decomposition} for \(P\),
+substitute \(\bar X\) for \(\E\{\Vhat(P)\}\) and \(S_X^2\) for
+\(\Var\{\Vhat(P)\}\).
+
+The Monte Carlo standard error measures how much this estimated target
+would change if the whole set of \(M\) repetitions were repeated.
+Write \(\mu=\E(X_s)\) and \(v=\Var(X_s)>0\), so the population
+moment target is \(f(\mu,v)=2\mu^2/v\). The delta method propagates
+the errors in \(\bar X\) and \(S_X^2\) through a first-order Taylor
+expansion. For changes \(h_\mu\) and \(h_v\), the general formula is
+\begin{equation}
+ f(\mu+h_\mu,v+h_v)
+ \approx f(\mu,v)
+ +\frac{\partial f}{\partial\mu}h_\mu
+ +\frac{\partial f}{\partial v}h_v.
+\end{equation}
+The expansion point is \((\mu,v)\), the new values are
+\((\bar X,S_X^2)\), and the changes are
+\(h_\mu=\bar X-\mu\) and \(h_v=S_X^2-v\). Since
+\(\partial f/\partial\mu=4\mu/v\) and
+\(\partial f/\partial v=-2\mu^2/v^2\), substitution gives
+\begin{equation}
+ \frac{2\bar X^2}{S_X^2}-\frac{2\mu^2}{v}
+ \approx\frac{4\mu}{v}(\bar X-\mu)
+       -\frac{2\mu^2}{v^2}(S_X^2-v).
+ \label{eq:moment-target-taylor}
+\end{equation}
+Both errors must be propagated jointly because the same repetitions
+estimate the mean and variance.
+
+The mean error is exactly the average of \(X_s-\mu\). To express the
+variance error in a similar form, expand
+\(X_s-\bar X=(X_s-\mu)-(\bar X-\mu)\), square, and sum. The cross
+term uses \(\sum_s(X_s-\mu)=M(\bar X-\mu)\), leaving
+\begin{equation}
+ \frac{M-1}{M}S_X^2
+ =\frac1M\sum_{s=1}^M(X_s-\mu)^2-(\bar X-\mu)^2.
+ \label{eq:moment-variance-centring}
+\end{equation}
+Subtracting \(v\) and rearranging this identity separates the leading
+average from the two corrections:
+\begin{equation*}
+ S_X^2-v
+ =\frac1M\sum_{s=1}^M\{(X_s-\mu)^2-v\}
+   -(\bar X-\mu)^2+\frac{S_X^2}{M}.
+\end{equation*}
+Since the repetitions are independent, \(\Var(\bar X)=v/M\), so the
+standard deviation of the mean error \(\bar X-\mu\) is
+\(\sqrt{v/M}\). Its typical size therefore decreases as
+\(M^{-1/2}\), and squaring it gives size \(M^{-1}\). As \(M\) grows
+at fixed sample size, \(S_X^2\) estimates the finite variance \(v\),
+so the last term \(S_X^2/M\) also has size \(M^{-1}\).
+Only finitely many count tables are possible at fixed sample size, so the
+centred squared deviations also have finite variance. Averaging these
+independent contributions gives the first term a standard deviation
+proportional to \(M^{-1/2}\). The two corrections therefore become smaller
+relative to this leading sampling error.
+Omitting them at first order gives
+\begin{equation}
+ S_X^2-v\approx\frac1M\sum_{s=1}^M\{(X_s-\mu)^2-v\}.
+\end{equation}
+Substituting this expression and
+\(\bar X-\mu=M^{-1}\sum_s(X_s-\mu)\) into
+Equation~\eqref{eq:moment-target-taylor} gives
+\begin{equation}
+ \frac{2\bar X^2}{S_X^2}-\frac{2\mu^2}{v}
+ \approx\frac1M\sum_{s=1}^M
+ \left[\frac{4\mu}{v}(X_s-\mu)
+       -\frac{2\mu^2}{v^2}\{(X_s-\mu)^2-v\}\right].
+ \label{eq:moment-target-average-error}
+\end{equation}
+The first term in brackets carries the mean error and the second carries
+the variance error. Replacing the unknown \(\mu,v\) by
+\(\bar X,S_X^2\) gives the estimated contribution from each repetition.
+Define
+\begin{equation}
+ U_s=X_s-\bar X,\qquad W_s=(X_s-\bar X)^2-S_X^2.
+\end{equation}
+The estimated contribution is
+\begin{equation}
+ Z_s=\frac{4\bar X}{S_X^2}U_s
+       -\frac{2\bar X^2}{(S_X^2)^2}W_s.
+ \label{eq:moment-df-mc-contribution}
+\end{equation}
+Equation~\eqref{eq:moment-target-average-error} represents the target error
+as an average of independent repetition-level contributions. The standard
+deviation of their average is their individual standard deviation divided
+by \(\sqrt M\). With \(\bar Z=M^{-1}\sum_s Z_s\), its estimate is
+\begin{equation}
+ \widehat{\mathrm{MCSE}}
+ =\left\{\frac{1}{M(M-1)}\sum_{s=1}^M(Z_s-\bar Z)^2\right\}^{1/2}.
+ \label{eq:moment-df-mcse}
+\end{equation}
+The two terms within \(Z_s\) need not be independent: an unusually
+large \(X_s\) can affect both the estimated mean and variance.
+Calculating the standard deviation after combining the terms retains
+their covariance.
+
+For the other diagnostic ratios, apply the same Taylor formula to
+\(h(a,b)=a/b\), with derivatives \(1/b\) and \(-a/b^2\):
+\begin{equation}
+ \frac{\widehat a}{\widehat b}-\frac{a}{b}
+ \approx\frac{1}{b}(\widehat a-a)
+       -\frac{a}{b^2}(\widehat b-b).
+ \label{eq:diagnostic-ratio-taylor}
+\end{equation}
+The mean ratio \(\bar X/V(P)\) has a known denominator, so only the
+numerator error contributes. The population variance-prediction ratio
+\(\{\tau^2(P)/n_P\}/S_X^2\) has a known numerator, so only the
+denominator error contributes. For the sample-based variance prediction,
+let \(Y_s=\widehat\tau_s^2(P)/n_P\) and
+\(\bar Y=M^{-1}\sum_sY_s\). Both inputs to \(\bar Y/S_X^2\) are
+estimated from the same repetitions, giving estimated contributions
+\begin{equation}
+ Z_{s,\mathrm{ratio}}
+ =\frac{Y_s-\bar Y}{S_X^2}
+  -\frac{\bar Y}{(S_X^2)^2}W_s.
+ \label{eq:plugin-variance-ratio-mc-contribution}
+\end{equation}
+Use their sample standard deviation divided by \(\sqrt M\), retaining
+the pairing between the numerator prediction and the squared deviation
+in each repetition. The ratio \(\nu_{P,\mathrm{FO}}/\nu_{P,\mathrm{mom}}\)
+also has a known numerator, so its error follows by propagating only
+the estimated target's error through Equation~\eqref{eq:diagnostic-ratio-taylor}.

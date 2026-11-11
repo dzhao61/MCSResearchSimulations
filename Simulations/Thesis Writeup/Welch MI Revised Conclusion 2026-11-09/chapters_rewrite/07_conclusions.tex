@@ -1,0 +1,165 @@
+\chapter{Conclusions}
+\label{chap:conclusion}
+
+\section{Contributions and main findings}
+
+Accounting for uncertainty in the estimated standard error can improve
+tests of equal mutual information (MI), but does not by itself ensure
+accurate false-positive rates. Across the populations studied, the proposed
+Expanded Welch--Satterthwaite test (Expanded Welch) brings some excessive
+false-positive rates closer to the 5\% target, while lowering rates already
+below that target. Its benefit therefore depends on the errors present in
+the estimated MI difference and standard error, as well as the rejection
+cutoff.
+
+The thesis derives the adjustment by calculating how changes in a
+probability table affect its estimated pointwise-MI variance, including
+changes in the cell probabilities and their row and column totals. The
+result gives a first-order approximation to the sampling variability of
+that variance estimate, which is used to estimate degrees of freedom for
+a Student \(t\) reference distribution. The Expanded Welch test retains
+the MI difference and standard error used by the Wald test, so the two
+methods share any errors in those estimates. The simulations examine both
+the approximations underlying the adjustment and its consequences for
+false-positive rates and power.
+
+The online-shopping application illustrates the comparison on observed
+data. Both tests reject equal month--purchase MI between new and returning
+visitors, with a higher corrected MI estimate among returning visitors.
+Neither test provides evidence of a difference in weekend--purchase MI.
+
+\subsection{RQ1: Accuracy of variance approximations}
+
+The first-order approximations become more accurate as samples grow in
+the studied populations, but larger tables require more observations.
+At smaller sample sizes, the population pointwise-MI variance can
+substantially understate the average of its estimates across repeated
+samples. This error can lower the predicted degrees of freedom even when
+the variation of those estimates around their average is predicted fairly
+accurately. Substituting sample proportions for population probabilities
+introduces further error and can reverse the direction of the sampling-variance
+prediction error. Accurate degrees of freedom therefore require adequate
+predictions of both the average variance estimate and its variation between
+samples.
+
+Near independence between the two variables, sampling noise produces
+apparent association that the first-order approximation does not fully
+capture. At fixed sample size, the population first-order degrees of
+freedom approach zero as MI decreases, while the average sample-based
+degrees of freedom remain positive in the experiment. These are different
+predictions because the sample-based calculation retains the apparent
+association in the observed tables. The additional sampling variation
+examined in Appendix~\ref{sec:independence-boundary} explains this
+separation and shows why the population first-order degrees of freedom
+alone give an inadequate account of behaviour near independence.
+
+\subsection{RQ2: False-positive rates under equal MI}
+
+False-positive behaviour changes with shared MI, table size, category
+frequencies, and sample size. Across the null grid, both tests exhibit
+ranges of excessive rejection and ranges of conservative rejection, where
+false-positive rates fall below 5\%. The Expanded Welch test lowers
+rejection in both types of range, so a lower rate does not consistently
+mean a more accurate test. The diagnostic comparisons identify different
+causes of these departures: an underestimated standard error can inflate
+rejection, an oversized standard error can suppress it, and unequal biases
+in the two MI estimates can shift their difference away from zero.
+At larger sample sizes, the methods become close, although both can remain
+conservative in the weak-association, larger-table settings.
+
+Selected settings illustrate the extent of both improvement and remaining
+failure. For uniform \(4\times4\) tables at shared MI 0.02 nats and
+20 observations per population, the false-positive rate falls from 8.35\%
+with the Wald test to 4.90\% with the Expanded Welch test. For
+different-skew \(16\times16\) tables at shared MI 0.005 nats and
+1,000 observations per population, it falls only from 36.38\% to 34.38\%.
+The latter failure persists when every test calculation succeeds. Together
+with the conservative ranges, these results show that the larger cutoff
+can correct some excessive rejection but cannot generally compensate for
+inaccurate estimates of the MI difference or standard error.
+
+\subsection{RQ3: Power across MI differences}
+
+At the same 5\% significance level, the Expanded Welch test cannot reject
+where the Wald test would not, because it uses the same statistic with a
+larger cutoff. Its power therefore cannot exceed the Wald test's power
+under these testing rules. Unsuccessful Expanded Welch calculations also
+reduce reported power at some of the smallest sample sizes. The power
+comparison must be read alongside the null results: reducing rejection is
+beneficial where false positives are excessive, but can also make genuine
+differences harder to detect. The experiments do not compare power after
+matching the tests' actual false-positive rates.
+
+The methods become closer with larger samples: at 10,000 observations per
+population, their power difference is below 0.32 percentage points across
+all tested settings. A separate difficulty in sparse settings is
+that bias can reverse which population appears to have greater MI, even
+when a test rejects equality. Bias can also oppose the true difference,
+so increasing the population MI gap initially moves the average estimated
+difference towards zero and reduces rejection. Detecting unequal MI and
+estimating the direction of that difference must therefore be considered
+together.
+
+\section{Limitations}
+
+The derivation assumes independent categorical observations within each
+population, independent samples between populations, a fixed set of
+categories, and positive probability in every cell. The degrees-of-freedom
+calculation also requires positive pointwise-MI variances and positive
+variances of the observation-level sensitivities. Exact independence is
+treated separately because the first-order sampling term vanishes there.
+Paired observations, continuous variables, and a growing number of
+categories require extensions to the present method.
+
+The experiments use one population construction, which increases the
+probability of matching categories while preserving category frequencies,
+with matching row and column frequency profiles within each table. The tested table sizes, MI values, and
+margin regimes therefore cover a restricted range of association patterns.
+The power study fixes one population's MI and increases the other's, while
+all main simulations use equally sized samples. With equal sample sizes,
+the leading bias corrections cancel from the MI difference, leaving their
+performance with unequal sample sizes untested. Different residual biases
+can still remain in the two MI estimates.
+
+The main empirical benchmark is the Wald test, with ordinary Welch
+degrees of freedom examined at three illustrative null settings. The
+results therefore do not establish the relative performance of Expanded
+Welch against resampling procedures or tests based on other MI estimators.
+Likewise, the sample sizes at which the methods become close in these
+experiments do not establish a threshold that guarantees accurate
+inference across populations.
+
+\section{Future work}
+
+The remaining failures make improving the estimated MI difference and
+standard error a priority. Evaluating changes to these estimates
+separately would help determine which errors are reduced and how the
+changes affect false-positive rates, power, and the estimated direction of
+the MI difference. Comparisons with alternative MI estimators and
+resampling procedures would also show whether those methods address the
+failures observed here.
+
+Retaining terms omitted by the first-order approximation could improve
+predictions of the average variance estimate and its sampling variability,
+and hence the degrees-of-freedom calculation. The near-independence
+analysis provides a starting point for retaining variation from sampling
+noise when association is weak. Any resulting test must still allow
+populations with different probability tables to satisfy the null
+hypothesis when their MI values are equal.
+
+Broader experiments should examine other association patterns, different
+row and column frequency profiles, unequal sample sizes, and other starting MI
+values and directions of change. These comparisons would help establish
+how widely the present findings apply, particularly when rare category
+combinations remain poorly observed.
+
+\section{Overall conclusion}
+
+The thesis provides a derived adjustment for uncertainty in the estimated
+standard error and explains why its benefit varies across the tested
+populations. The adjustment reduces some excessive false-positive rates,
+but does not provide a general improvement over the Wald test in small or
+sparse samples. Reliable MI comparisons also require a difference estimate
+with small bias relative to its sampling spread and a standard error that
+describes that spread. Improving these estimates is the main priority
+emerging from the remaining failures.

@@ -109,6 +109,21 @@ def _rpr(parent, sz, color, b=False, i=False, font=FONT, baseline=None, tag="rPr
     return rpr
 
 
+FALLBACK_RUNS = {}
+
+
+def _add_run(p, text, o, rsz, pcol, pb, font):
+    r = etree.SubElement(p, qn("a:r"))
+    baseline = -25000 if o.get("sub") else (30000 if o.get("sup") else None)
+    _rpr(r, rsz, o.get("c", pcol), b=o.get("b", pb), i=o.get("i", False),
+         font=o.get("font", font), baseline=baseline)
+    t = etree.SubElement(r, qn("a:t"))
+    t.text = text
+    if text != text.strip():
+        t.set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+    return r
+
+
 def fill_text_body(txBody, paras, sz=22, color=BLACK, align="l", font=FONT, line=None,
                    space_after=0, bullet=False, space_before=0):
     """Fill a txBody with paragraphs.
@@ -163,20 +178,25 @@ def fill_text_body(txBody, paras, sz=22, color=BLACK, align="l", font=FONT, line
             rsz = o.get("sz", psz)
             if o.get("math") is not None:
                 has_math = True
-                p.append(omml(o["math"], rsz, display=False, color=o.get("c", pcol)))
+                m = omml(o["math"], rsz, display=False, color=o.get("c", pcol), bold=o.get("b", pb))
+                fb = o.get("fb")
+                if isinstance(fb, list):
+                    # Fallback runs (with real subscripts) for renderers without Office maths.
+                    holder = etree.Element(qn("a:p"))
+                    for ft, fo in fb:
+                        _add_run(holder, ft, fo, fo.get("sz", psz), pcol, pb, font)
+                    key = "fb%d" % len(FALLBACK_RUNS)
+                    FALLBACK_RUNS[key] = list(holder)
+                    m.set("fb", key)
+                elif fb:
+                    m.set("fb", fb)
+                p.append(m)
                 continue
             if o.get("br"):
                 br = etree.SubElement(p, qn("a:br"))
                 _rpr(br, rsz, pcol)
                 continue
-            r = etree.SubElement(p, qn("a:r"))
-            baseline = -25000 if o.get("sub") else (30000 if o.get("sup") else None)
-            _rpr(r, rsz, o.get("c", pcol), b=o.get("b", pb), i=o.get("i", False),
-                 font=o.get("font", font), baseline=baseline)
-            t = etree.SubElement(r, qn("a:t"))
-            t.text = text
-            if text != text.strip():
-                t.set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+            _add_run(p, text, o, rsz, pcol, pb, font)
         _rpr(p, psz, pcol, tag="endParaRPr")
     return has_math
 
@@ -204,15 +224,26 @@ def wrap_alternate(shape, fallback_text):
     parent = sp.getparent()
     idx = parent.index(sp)
     fb = copy.deepcopy(sp)
-    for m in fb.iter("{%s}m" % A14_NS):
-        pass
     for p in fb.iter(qn("a:p")):
         for m in list(p.findall("{%s}m" % A14_NS)):
+            if m.get("fb") in FALLBACK_RUNS:
+                idx_m = p.index(m)
+                p.remove(m)
+                for k, fr in enumerate(FALLBACK_RUNS[m.get("fb")]):
+                    p.insert(idx_m + k, copy.deepcopy(fr))
+                continue
+            # The fallback run keeps the maths run's size and colour, and its own text when given.
+            mr = m.find(".//" + qn("a:rPr"))
+            sz = int(mr.get("sz")) / 100 if mr is not None else 18
+            clr = mr.find(qn("a:solidFill") + "/" + qn("a:srgbClr")) if mr is not None else None
             r = etree.Element(qn("a:r"))
-            _rpr(r, 18, BLACK)
+            _rpr(r, sz, clr.get("val") if clr is not None else BLACK, b=mr is not None and mr.get("b") == "1",
+                 font=MATH_FONT if m.get("fb") else FONT)
             t = etree.SubElement(r, qn("a:t"))
-            t.text = fallback_text
+            t.text = m.get("fb") or fallback_text
             p.replace(m, r)
+    for m in sp.iter("{%s}m" % A14_NS):
+        m.attrib.pop("fb", None)
     ac = etree.Element("{%s}AlternateContent" % MC_NS, nsmap={"mc": MC_NS, "a14": A14_NS})
     ch = etree.SubElement(ac, "{%s}Choice" % MC_NS, Requires="a14")
     fbk = etree.SubElement(ac, "{%s}Fallback" % MC_NS)
@@ -332,7 +363,8 @@ def rect(slide, x, y, w, h, fill=None, line=None, line_w=1.0, rounded=None, name
 def panel_text(shape, paras, sz=22, color=BLACK, align="l", anchor="t", margins=(0.2, 0.2, 0.12, 0.12), **kw):
     tb = shape.text_frame._txBody
     _body_pr(tb, anchor=anchor, margins=margins)
-    fill_text_body(tb, paras, sz=sz, color=color, align=align, **kw)
+    if fill_text_body(tb, paras, sz=sz, color=color, align=align, **kw):
+        wrap_alternate(shape, "equation")
 
 
 def header_bar(slide, x, y, w, h, label, fill, sz=22, align="ctr", name=None):

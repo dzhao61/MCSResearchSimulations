@@ -1,0 +1,37 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm,headheight=14pt,headsep=7mm,footskip=10mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype,amsmath,booktabs,tabularx,array,enumitem,xcolor,fancyhdr,lastpage}
+\usepackage[colorlinks=true,linkcolor=navy,urlcolor=navy]{hyperref}
+\definecolor{navy}{HTML}{193B55}
+\definecolor{muted}{HTML}{566574}
+\definecolor{pale}{HTML}{F0F5F8}
+\hypersetup{pdftitle={Welch MI: Presentation Defence Guide},pdfauthor={Daniel Zhao},
+ pdfsubject={Slide-by-slide explanations and oral examination preparation}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.5pt}
+\setlength{\emergencystretch}{1em}
+\renewcommand{\arraystretch}{1.17}
+\setlist[itemize]{leftmargin=1.3em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.4em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{navy}\textbf{WELCH MI}\enspace\textbar\enspace Defence guide}
+\fancyhead[R]{\small\color{muted}Presentation preparation}
+\fancyfoot[L]{\small\color{muted}Daniel Zhao\enspace\textbar\enspace 9 November 2026}
+\fancyfoot[R]{\small\color{muted}\thepage\,/\,\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\newcommand{\topic}[2]{\pdfbookmark[0]{#1}{topic\thepage}%
+ {\Large\bfseries\color{navy}#1\par}\vspace{2pt}%
+ {\small\color{muted}#2\par}\vspace{5pt}}
+\newcommand{\step}[1]{\par\vspace{4pt}{\bfseries\color{navy}#1}\par}
+\newcommand{\takeaway}[1]{\par\vspace{4pt}\begingroup\setlength{\fboxsep}{7pt}%
+ \colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Remember:} #1}}\endgroup\par}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\SE}{\widehat{\mathrm{SE}}}
+\newcommand{\Ihat}{\widehat I}
+\newcommand{\Vhat}{\widehat V}
+\newcommand{\Dhat}{\widehat\Delta}

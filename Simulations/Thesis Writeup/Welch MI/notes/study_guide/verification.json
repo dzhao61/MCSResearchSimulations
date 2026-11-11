@@ -1,0 +1,32 @@
+{
+  "pages": 7,
+  "words": 2707,
+  "latex_issues": [],
+  "population_illustration": {
+    "I": 0.19274475702175753,
+    "V": 0.307489928907649,
+    "g": [
+      [
+        0.32390029776721946,
+        -1.2956011910688783
+      ],
+      [
+        -1.2956011910688783,
+        0.32390029776721946
+      ]
+    ],
+    "tau2": 0.419645611574774,
+    "tau": 0.6478005955344391
+  },
+  "null_anchors_checked": 4,
+  "maximum_power_gap_at_n10000_pp": 0.3129999999999966,
+  "original_files_preserved": 5,
+  "pdf_sha256": "45b43de434ffcdda94c977ef810ea91b2964c83171de955d0c4be58bad9ff6e4",
+  "visual_review": {
+    "all_seven_pages_rendered": true,
+    "all_page_layouts_inspected": true,
+    "equations_and_tables_inspected": true,
+    "final_page_numbering": "1/7 to 7/7",
+    "status": "Passed; no clipping, overlaps, or isolated continuation page."
+  }
+}

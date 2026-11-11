@@ -46,12 +46,12 @@ def _script(sec):
 def load(path):
     lines = open(path, encoding="utf-8").read().split("\n")
     main = {}
-    for n in range(1, 15):
+    for n in range(1, 14):
         sec = _section(lines, rf"### Slide {n} — ")
         main[n] = dict(script=_script(sec), cue=_field(sec, ["Delivery cue"]),
                        transition=_field(sec, ["Transition"]), source=_field(sec, ["Source"]))
     backups = {}
-    for k in range(1, 16):
+    for k in range(1, 15):
         sec = _section(lines, rf"### B{k} / Slide \d+ — ")
         backups[k] = dict(question=_field(sec, ["Question answered", "Question"]),
                           answer=_field(sec, ["Answer to give", "Answer"]),

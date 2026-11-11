@@ -1,0 +1,145 @@
+{
+  "changed_manuscript_files": [
+    "chapters_rewrite/07_conclusions.tex"
+  ],
+  "protected_files_unchanged": 129,
+  "null_anchors": [
+    {
+      "configuration_id": "setting_c1d939c2103eb6d7",
+      "k": "4",
+      "profile": "uniform",
+      "n_p": "20",
+      "n_q": "20",
+      "mi_p": "0.02",
+      "mi_q": "0.02",
+      "method": "normal_wald",
+      "denominator": "all",
+      "replicates": "100000",
+      "rejections": "8352",
+      "valid_replicates": "100000",
+      "rejection_rate": "0.08352",
+      "rejection_low": "0.0818211907328029",
+      "rejection_high": "0.08525080585345428",
+      "rejection_mcse": "0.0008748966201786357",
+      "valid_rate": "1.0",
+      "valid_low": "0.999961586887417",
+      "valid_high": "1.0",
+      "common_mi": "0.02",
+      "record_source": "original"
+    },
+    {
+      "configuration_id": "setting_c1d939c2103eb6d7",
+      "k": "4",
+      "profile": "uniform",
+      "n_p": "20",
+      "n_q": "20",
+      "mi_p": "0.02",
+      "mi_q": "0.02",
+      "method": "expanded_welch",
+      "denominator": "all",
+      "replicates": "100000",
+      "rejections": "4897",
+      "valid_replicates": "100000",
+      "rejection_rate": "0.04897",
+      "rejection_low": "0.047649688253903096",
+      "rejection_high": "0.05032496267843357",
+      "rejection_mcse": "0.0006824363640662769",
+      "valid_rate": "1.0",
+      "valid_low": "0.999961586887417",
+      "valid_high": "1.0",
+      "common_mi": "0.02",
+      "record_source": "original"
+    },
+    {
+      "configuration_id": "setting_7423b9fb2b9dd740",
+      "k": "16",
+      "profile": "different_skew",
+      "n_p": "1000",
+      "n_q": "1000",
+      "mi_p": "0.005",
+      "mi_q": "0.005",
+      "method": "normal_wald",
+      "denominator": "all",
+      "replicates": "100000",
+      "rejections": "36381",
+      "valid_replicates": "100000",
+      "rejection_rate": "0.36381",
+      "rejection_low": "0.3608334819940935",
+      "rejection_high": "0.3667969809695119",
+      "rejection_mcse": "0.0015213555925555",
+      "valid_rate": "1.0",
+      "valid_low": "0.999961586887417",
+      "valid_high": "1.0",
+      "common_mi": "0.005",
+      "record_source": "extension"
+    },
+    {
+      "configuration_id": "setting_7423b9fb2b9dd740",
+      "k": "16",
+      "profile": "different_skew",
+      "n_p": "1000",
+      "n_q": "1000",
+      "mi_p": "0.005",
+      "mi_q": "0.005",
+      "method": "expanded_welch",
+      "denominator": "all",
+      "replicates": "100000",
+      "rejections": "34382",
+      "valid_replicates": "100000",
+      "rejection_rate": "0.34382",
+      "rejection_low": "0.3408821355544337",
+      "rejection_high": "0.3467698631654127",
+      "rejection_mcse": "0.0015020246589187",
+      "valid_rate": "1.0",
+      "valid_low": "0.999961586887417",
+      "valid_high": "1.0",
+      "common_mi": "0.005",
+      "record_source": "extension"
+    }
+  ],
+  "conclusion_start_page": 86,
+  "conclusion_pages": [
+    86,
+    87,
+    88,
+    89
+  ],
+  "pages": 111,
+  "maximum_power_difference_at_n10000_pp": 0.3129999999999966,
+  "changed_pdf_text_pages": [
+    7,
+    8,
+    86,
+    87,
+    88,
+    89
+  ],
+  "original_and_revised_page_counts": 111,
+  "source_archive_files": 121,
+  "navigation": {
+    "bookmarks": 106,
+    "named_destinations": 457,
+    "links": {
+      "/GoTo": 469,
+      "/URI": 98
+    }
+  },
+  "date": "07/11/2026",
+  "all_page_contents_preserved": true,
+  "original_signature_and_date_appearances_preserved": true,
+  "visual_review": {
+    "conclusion_pages": [
+      86,
+      87,
+      88,
+      89
+    ],
+    "contents_pages": [
+      7,
+      8
+    ],
+    "signed_compliance_page": 2,
+    "result": "No clipping, overlap, missing text, or isolated closing lines."
+  },
+  "signed_pdf_sha256": "03e16c675e087bbe72b087d6f3474571896fc501caccc038ffd14d25c11bee74"
+}

@@ -78,18 +78,20 @@ for _, r in s9.iterrows():
     assert close(r.rejection_rate * 100, exp9[(round(r.common_mi, 3), r.method)], 0.0005), (r.common_mi, r.method)
 s9.to_csv(f"{OUT}/slide09_null_uniform_4x4_n20.csv", index=False)
 
-# Slide 10: 16x16, n=1,000, MI 0.02, same vs different skew
+# Slide 10: the three illustrative null settings of thesis Table 6.1 (MI 0.02)
 rows10 = []
-for prof, wald, ew, vr, bsd in [("same_skew", 0.604, 0.525, 1.9286941072647668, -0.0027192541260095786),
-                                ("different_skew", 26.011, 24.836, 1.9381042896284049, 2.0579206373676495)]:
-    r = sel(null_all, k=16, profile=prof, n_p=1000, common_mi=0.02)
+for prof, k_, n_, wald, ew, vr, bsd in [
+        ("uniform", 4, 20, 8.352, 4.897, 0.826509, 0.002744),
+        ("same_skew", 16, 1000, 0.604, 0.525, 1.9286941072647668, -0.0027192541260095786),
+        ("different_skew", 16, 1000, 26.011, 24.836, 1.9381042896284049, 2.0579206373676495)]:
+    r = sel(null_all, k=k_, profile=prof, n_p=n_, common_mi=0.02)
     got = dict(zip(r.method, r.rejection_rate * 100))
     assert close(got["normal_wald"], wald, 1e-9) and close(got["expanded_welch"], ew, 1e-9)
     assert (r.valid_rate == 1.0).all()
-    d = sel(ndiag, k=16, profile=prof, n_p=1000, common_mi=0.02).iloc[0]
-    assert close(d.estimated_observed_ratio, vr, 1e-12)
-    assert close(d.difference_bias / np.sqrt(d.observed_variance), bsd, 1e-9)
-    rows10.append(dict(profile=prof, normal_wald=got["normal_wald"], expanded_welch=got["expanded_welch"],
+    d = sel(ndiag, k=k_, profile=prof, n_p=n_, common_mi=0.02).iloc[0]
+    assert close(d.estimated_observed_ratio, vr, 1e-6)
+    assert close(d.difference_bias / np.sqrt(d.observed_variance), bsd, 1e-6)
+    rows10.append(dict(profile=prof, k=k_, n=n_, normal_wald=got["normal_wald"], expanded_welch=got["expanded_welch"],
                        variance_ratio=d.estimated_observed_ratio, bias=d.difference_bias,
                        bias_over_sd=d.difference_bias / np.sqrt(d.observed_variance)))
 pd.DataFrame(rows10).to_csv(f"{OUT}/slide10_bias_contrast.csv", index=False)
@@ -116,6 +118,13 @@ ew = sel(s12, method="expanded_welch", n_p=1000).iloc[0]
 assert int(ew.rejections) == 9662 and ew.valid_rate == 1.0
 assert (sel(s12, n_p=1000).valid_rate == 1.0).all()
 s12.to_csv(f"{OUT}/slide12_power_16x16_different_skew_gap001.csv", index=False)
+# Slide 12 heat map: signed rejections in all 360 power settings
+dirn = pdiag[["configuration_id", "k", "profile", "n_p", "n_q", "mi_p", "mi_q", "gap", "replicates",
+              "wald_positive_rejections", "wald_negative_rejections", "expanded_positive_rejections",
+              "expanded_negative_rejections"]]
+dirn = dirn[dirn.configuration_id.isin(power_all.configuration_id)]
+assert len(dirn) == 360
+dirn.to_csv(f"{OUT}/slide12_wrong_direction_all.csv", index=False)
 
 # B4: six-panel ratios
 b4 = sel(moments, profile="different_skew", mi=0.02)

@@ -1,0 +1,391 @@
+\chapter{Experimental Design}
+\label{chap:design}
+
+The simulations draw count tables from populations with known MI,
+allowing us to measure errors in the estimated MI difference and its
+standard error, and to count false positives when the population MI
+values are equal. The evaluation addresses the three research questions in
+Section~\ref{sec:research-questions} by checking the Expanded Welch test's variance
+approximations and comparing its false-positive rates and power with those
+of the Wald test. The design follows the simulation
+framework of \citet{morris2019}, specifying the populations, quantities
+being estimated, methods, and performance measures.
+
+One observation records an \((X,Y)\) outcome. One simulation repetition
+draws a sample of observations from each population, producing two count
+tables to which both tests are applied.
+
+\section{Setup: Constructing joint distributions with known MI}
+
+Before drawing samples, we construct population probability tables with
+specified MI values, using equal values to measure false-positive rates
+and different values to measure power. For each table,
+we first choose how frequently the categories occur, then change the
+association between \(X\) and \(Y\) while keeping those frequencies fixed.
+
+\subsection{Population construction}
+
+The main simulations use square tables in which both variables have
+\(k\) categories, labelled \(1,\ldots,k\), giving \(k\times k\) cells
+in the joint distribution. Let \(a=(a_1,\ldots,a_k)\) specify the category
+frequencies: \(a_i\) is the probability of category \(i\), with
+\(a_i>0\) and \(\sum_i a_i=1\). Within one population, we use the same vector for both variables,
+so \(a\) specifies the row margins for \(X\) and the column margins
+for \(Y\).
+
+To obtain independent variables, we could draw \(X\) using \(a\), then
+draw \(Y\) independently using \(a\). Cell \((i,j)\) would have
+probability \(a_i a_j\), and MI would be zero. We introduce dependence by allowing \(Y\) to copy the category drawn
+for \(X\) with probability \(\lambda\). For each
+observation, first draw \(X\) using \(a\), then choose between two ways
+of generating \(Y\), independently of the value of \(X\):
+\begin{itemize}
+ \item With probability \(\lambda\), set \(Y=X\).
+ \item With probability \(1-\lambda\), draw \(Y\) independently using \(a\).
+\end{itemize}
+Because copying guarantees a match whereas an independent draw matches
+\(X\) only by chance, increasing \(\lambda\) makes matching categories
+occur more often.
+
+Both choices preserve the category frequencies of \(Y\): copying
+inherits the probabilities \(a\) used to draw \(X\), while an
+independent draw of \(Y\) uses \(a\) directly. Consequently, changing how
+often we copy changes which categories occur together while preserving the
+population row and column margins. Sample row and column proportions
+nevertheless fluctuate around these fixed probabilities.
+
+Each cell probability is the sum of the contributions from these two
+choices. The independent choice, made with probability \(1-\lambda\),
+produces \(X=i,Y=j\) with probability \(a_i a_j\) and therefore
+contributes \((1-\lambda)a_i a_j\). The copying choice contributes only to diagonal
+cells, where the categories match. Reaching cell \((i,i)\) requires both
+copying and \(X=i\), so its contribution is \(\lambda a_i\).
+Write \(\mathbf{1}_{\{i=j\}}\) for an indicator that equals one when
+\(i=j\) and zero otherwise. Adding the two contributions gives
+\begin{equation}
+ p_{ij}(\lambda)=(1-\lambda)a_i a_j
+                  +\lambda a_i\mathbf{1}_{\{i=j\}},
+ \qquad 0\leq\lambda<1,
+ \label{eq:copying-construction}
+\end{equation}
+where the restriction \(\lambda<1\) keeps the independent choice possible
+and therefore gives every cell positive probability. This copying
+construction is a special case of the mixture model described by
+\citet{bocci2010}.
+
+MI is zero at \(\lambda=0\) and increases with \(\lambda\),
+although the copying probability needed to reach a particular MI depends
+on the category frequencies \(a\). To construct a table with the desired
+MI, we hold \(a\) fixed and search numerically for \(\lambda\),
+calculating MI from the population table at each candidate value.
+Appendix~\ref{app:construction} gives the available MI range, the numerical
+search, and the fixed-margin calculation.
+
+\medskip
+\thesisminiheading{Constructing a \(2\times2\) joint distribution with positive MI.}
+
+For population \(P\), take \(a=(0.7,0.3)\), so each variable has
+probability 0.7 of taking category 1 and probability 0.3 of taking
+category 2. With a target MI of 0.02 nats, the numerical search gives
+a copying probability of approximately 0.20347.
+
+Cell \((1,1)\) requires \(X=1\), which has probability 0.7. Given
+\(X=1\), copying always gives \(Y=1\), while an independent draw gives
+\(Y=1\) with probability 0.7. Cell \((1,2)\) also requires \(X=1\),
+but copying cannot give \(Y=2\). It therefore requires the independent
+choice followed by a draw of category 2, which has probability 0.3.
+Multiplying these conditional probabilities by the probability of
+\(X=1\) gives
+\begin{align*}
+ p_{11}&\simeq0.7\{0.20347+(1-0.20347)(0.7)\}=0.53273,\\
+ p_{12}&\simeq0.7(1-0.20347)(0.3)=0.16727.
+\end{align*}
+Both off-diagonal cells have probability \((1-\lambda)(0.7)(0.3)\), so
+\(p_{21}=p_{12}\). The second row totals 0.3, giving
+\(p_{22}\simeq0.3-0.16727=0.13273\).
+
+For population \(Q\), using \(a=(0.8,0.2)\) and a target MI of 0.03 nats
+gives a copying probability of approximately 0.26091. The resulting
+tables are
+\begin{equation}
+ P\simeq\begin{pmatrix}0.53273&0.16727\\0.16727&0.13273\end{pmatrix},
+ \qquad
+ Q\simeq\begin{pmatrix}0.68175&0.11825\\0.11825&0.08175\end{pmatrix}.
+ \label{eq:design-example-pair}
+\end{equation}
+These tables have \(I(P)=0.02\) and \(I(Q)=0.03\) nats, so the true
+signed difference is \(\Delta=I(P)-I(Q)=-0.01\) nats. To construct an
+equal-MI comparison, we instead choose the
+same target MI for both populations and search for each copying
+probability separately.
+
+\subsection{Table sizes and margin regimes}
+
+The experiment repeats this construction for square tables of sizes
+\(2\times2,4\times4,8\times8\), and \(16\times16\), containing
+4, 16, 64, and 256 cells. Each doubling of the number of categories multiplies the number of
+cells by four, so a fixed sample must be distributed over more possible
+cells.
+
+At each table size, we compare three patterns of category frequencies,
+called margin regimes. Uniform margins assign probability \(1/k\) to
+every category, whereas uneven margins assign probability \(\rho\) to
+the first category and share the remaining probability \(1-\rho\) equally
+among the other \(k-1\) categories. We write this vector as
+\begin{equation}
+ m_k(\rho)=\left(\rho,\frac{1-\rho}{k-1},\ldots,
+                   \frac{1-\rho}{k-1}\right).
+ \label{eq:skew-margin}
+\end{equation}
+For example, assigning probability 0.8 to the first of four categories gives
+\begin{equation*}
+ m_4(0.8)=\left(0.8,\frac{0.2}{3},\frac{0.2}{3},\frac{0.2}{3}\right).
+\end{equation*}
+
+In Table~\ref{tab:margin-profiles}, the same-skew regime uses the same
+uneven frequencies in both populations, whereas the different-skew regime
+uses a first-category probability of 0.7 in \(P\) and 0.8 in \(Q\).
+Thus the row and column margins agree within each population, while the
+margins can differ between populations.
+Here, ``skew'' describes uneven category probabilities, with no numerical
+ordering assumed for the category labels.
+
+\begin{table}[htbp]
+\centering
+\caption{Row and column margins for each population.}
+\label{tab:margin-profiles}
+\thesistableformat
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Regime} & \(P\): \textbf{rows and columns} & \(Q\): \textbf{rows and columns}\\
+\midrule
+Uniform & \((1/k,\ldots,1/k)\) & \((1/k,\ldots,1/k)\)\\
+\addlinespace[0.3em]
+Same skew & \(m_k(0.8)\) & \(m_k(0.8)\)\\
+\addlinespace[0.3em]
+Different skew & \(m_k(0.7)\) & \(m_k(0.8)\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under equal MI, the uniform and same-skew regimes give identical joint
+probability tables, \(P=Q\): both populations have the same margins and
+the same copying probability. The different-skew regime instead gives
+different tables with equal MI because the category frequencies differ.
+Comparing the regimes therefore measures false positives under both
+identical tables and distinct tables with equal MI.
+
+\section{RQ1: Checking the variance approximations}
+
+The component moment target depends on the sampling mean
+\(\E\{\Vhat(P)\}\) and variance \(\Var\{\Vhat(P)\}\), with analogous
+quantities for \(Q\). To estimate these moments, we hold the population
+table \(P\) and sample size \(n_P\) fixed, then draw repeated count tables
+and calculate \(\Vhat(P)\) from each. The average of these estimates
+measures their sampling mean, and their sample variance measures their
+variation between samples.
+
+The observation-level sensitivity derived in Chapter~\ref{chap:expanded}
+has population variance \(\tau^2(P)\) and describes how the estimated
+pointwise-MI variance responds to changes in the table. The first-order predictions are
+\begin{equation}
+ \E\{\Vhat(P)\}\approx V(P),\qquad
+ \Var\{\Vhat(P)\}\approx\frac{\tau^2(P)}{n_P}.
+ \label{eq:redesign-moment-approximations}
+\end{equation}
+We compare \(V(P)\) with the observed mean of \(\Vhat(P)\), and
+\(\tau^2(P)/n_P\) with its observed sampling variance. To examine the effect of estimating the sensitivity from each sample,
+we also average the sample-based prediction \(\widehat\tau^2(P)/n_P\)
+across the repeated tables and compare this average with the same observed
+sampling variance.
+
+We next compare the component degrees of freedom with the sampling-moment
+target from Chapter~\ref{chap:expanded}:
+\begin{equation}
+ \nu_{P,\mathrm{mom}}
+ =\frac{2\{\E\Vhat(P)\}^{2}}{\Var\{\Vhat(P)\}}.
+ \label{eq:design-moment-target}
+\end{equation}
+Using the repeated samples to estimate the mean and variance in this
+target, we compare it with \(\nu_{P,\mathrm{FO}}\), calculated from
+the population probabilities, and the average of the sampled
+\(\widehat\nu_P\) values. Averaging \(\widehat\nu_P\) need not recover
+\(\nu_{P,\mathrm{mom}}\) because each estimate is a nonlinear ratio of
+sample-based quantities, whereas the target uses the sampling mean and
+variance of \(\Vhat(P)\). For the sampled estimates, the ratio
+\(\operatorname{mean}(\widehat\nu_P)/\nu_{P,\mathrm{mom}}\) equals one
+when the average estimate matches the target; a ratio below one means
+that the estimated degrees of freedom are lower on average. We make the
+same checks for \(Q\) and report the fraction of repetitions retained
+whenever a summary uses only positive finite degrees of freedom.
+Appendix~\ref{sec:moment-target-details} gives the definitions and algebra.
+
+The approximation checks in Table~\ref{tab:design-primary-grids} use two grids:
+the first varies
+sample size at shared MI 0.02 nats, while the second includes very small
+positive MI to examine behaviour near independence. In this latter range,
+the predicted sampling variance of \(\Vhat(P)\) becomes small and
+quadratic sampling terms can matter. Both grids use all
+three margin regimes and equal sample sizes \(n_P=n_Q=n\). Each row
+combines every listed table size, MI value, and sample size.
+
+\begin{table}[!htbp]
+\centering
+\caption{Settings for the approximation checks, broad null comparison, and power study.}
+\label{tab:design-primary-grids}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.24\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Check} & \textbf{Parameter values}\\
+\midrule
+Across sample sizes &
+\(k\in\{2,4,8,16\}\), \(I(P)=I(Q)=0.02\) nats.\newline
+\(n\in\{10,20,50,100,250,500,1000,2500,10000,50000\}\).\\
+\addlinespace
+Near independence &
+\(k=4\), \(n=1{,}000\).\newline
+\(I(P)=I(Q)\) takes the values (nats)\newline
+\(0.0001,0.0003,0.001,0.003,0.01,0.02,0.05\).\\
+\addlinespace
+False-positive rates &
+\(k\in\{2,4,8,16\}\), \(I(P)=I(Q)\in\{0.005,0.02,0.30\}\) nats.\newline
+The same ten sample sizes as the across-sample-size checks.\\
+\addlinespace
+Power at three MI gaps &
+\(k\in\{2,4,8,16\}\), \(I(P)=0.02\) nats,\newline
+\(I(Q)\in\{0.025,0.03,0.04\}\) nats.\newline
+The same ten sample sizes as the across-sample-size checks.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{RQ2: False-positive rates under equal MI}
+\label{sec:null-design}
+
+To measure false positives, we draw samples from populations with equal
+MI, so every rejection is a false positive. The copying construction
+sets
+\begin{equation}
+ I(P)=I(Q)\in\{0.005,0.02,0.30\}\text{ nats},
+ \qquad \Delta=0.
+ \label{eq:design-balanced-null}
+\end{equation}
+These levels cover weaker association, the baseline MI used for the power
+study, and stronger association. For each shared MI, we use all four
+table sizes, three margin regimes, and ten sample sizes in
+Tables~\ref{tab:design-primary-grids} and \ref{tab:margin-profiles}.
+The resulting 360 settings test whether the methods' behaviour changes
+across those four experimental parameters.
+
+At each setting, we draw 100,000 independent pairs of count tables and
+apply both tests to the same pair using their usual two-sided p-value
+threshold of 0.05. The false-positive rate is the fraction of all
+repetitions that reject equal MI, with unsuccessful calculations counted as
+non-rejections. We report the calculation success rate separately so
+calculation failures can be distinguished from conservative decisions.
+
+A rejection rate above 5\% indicates excessive rejection, while a rate
+below 5\% indicates conservatism. We assess calibration by closeness to
+5\%, rather than treating every reduction in rejection as an improvement.
+
+\section{RQ3: Power across MI differences}
+\label{sec:mi-gap-power-design}
+
+To measure power, we draw samples from populations with different MI, so
+rejection detects a genuine difference. The power study uses the same
+four table sizes, three margin regimes, and ten sample sizes as the broad
+null comparison in Section~\ref{sec:null-design}. We repeat that grid for
+three MI gaps by holding \(I(P)=0.02\) nats and changing \(I(Q)\):
+\begin{equation}
+\begin{aligned}
+ I(P)&=0.02,\qquad I(Q)\in\{0.025,0.03,0.04\},\\
+ \Delta&=I(P)-I(Q)\in\{-0.005,-0.01,-0.02\}\text{ nats}.
+\end{aligned}
+ \label{eq:design-mi-gap-populations}
+\end{equation}
+Thus \(Q\) has greater MI in each alternative, with gap magnitudes
+\(|\Delta|\in\{0.005,0.01,0.02\}\) nats. Each magnitude uses all
+120 combinations of table size, margin regime, and sample size, giving
+360 power settings. Within each curve, the two population tables and
+MI gap stay fixed as sample size increases; comparing curves changes
+\(Q\)'s association while retaining its margins.
+
+For each setting, we generate 100,000 independent pairs of count tables
+and apply both tests to each pair using their usual p-value threshold of
+0.05. Power is the fraction of all repetitions that reject equal MI,
+with unsuccessful calculations counted as non-rejections and the calculation
+success rate reported separately. Because the tests are two-sided, power counts
+rejections with either a positive or a negative estimated MI difference.
+The sample sizes and margin profiles
+are specified in Tables~\ref{tab:design-primary-grids} and
+\ref{tab:margin-profiles}.
+
+The Expanded Welch test uses the same statistic as the Wald test but has a larger
+rejection cutoff, so it cannot have higher power at the same p-value
+threshold of 0.05.
+We measure the reduction in detection probability across the grid and
+interpret it alongside the false-positive rates in
+Section~\ref{sec:null-design}, because a higher rejection rate under an
+alternative can accompany excessive rejection under equal MI.
+
+\section{Shared evaluation: Sampling and uncertainty}
+
+At one evaluation setting, each repetition draws a count table from
+\(P\) and an independent count table from \(Q\). Both tests use these
+same two tables, so their rejection decisions
+can be compared on the same sampled data. Each setting has 100,000
+independent repetitions, which determine the precision of the reported
+rates, whereas each test uses only \(n_P\) and \(n_Q\) observations within
+a repetition. Each distinct setting uses separate random streams for the
+two populations. Repeated settings use the same repetitions wherever they
+appear, whereas different MI-gap settings use independent simulation streams.
+
+All reported simulation comparisons use equal sample sizes, so the two
+leading MI bias corrections cancel from \(\Deltahat\), leaving the raw
+plug-in MI difference. Residual biases can still differ between distinct
+population tables, shifting the estimated difference away from its true
+value even under equal population MI.
+
+Table~\ref{tab:design-performance-measures} defines the measures for each
+evaluation setting.
+
+\begin{table}[H]
+\centering
+\caption{Performance measures calculated from repeated samples.}
+\label{tab:design-performance-measures}
+\thesistableformat
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.28\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Measure} & \textbf{Calculation}\\
+\midrule
+\addlinespace[0.35em]
+Rejection rate &
+\(\dfrac{\text{number of rejections}}{\text{number of simulation repetitions}}\)\\
+\addlinespace[0.85em]
+Calculation success rate &
+\(\dfrac{\text{number of successful calculations}}{\text{number of simulation repetitions}}\)\\
+\addlinespace[0.85em]
+Bias in the estimated MI difference &
+\(\operatorname{mean}(\Deltahat)-\Delta\)\\
+\addlinespace[0.85em]
+Variance ratio &
+\(\dfrac{\operatorname{mean}(\SEhat^2)}{\text{observed variance of }\Deltahat}\)\\
+\addlinespace[0.35em]
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Bias uses finite MI differences even when the test calculation is
+unsuccessful. The variance ratio uses repetitions with both finite
+\(\Deltahat\) and finite \(\SEhat^2\), with one indicating agreement. Ratios below
+one mean that the squared standard error understates the observed sampling
+variance of the estimated MI difference on average, while ratios above one
+indicate overstatement.
+Appendix~\ref{sec:estimation-diagnostics} specifies the inclusion rules
+and complete calculations.
+
+Rejection rates have pointwise Wilson 95\% confidence intervals
+\citep{wilson1927}, which describe uncertainty from the finite number of
+simulation repetitions at each specified population and sample size.
+Appendix~\ref{sec:simulation-uncertainty} gives the corresponding Monte
+Carlo standard error.
