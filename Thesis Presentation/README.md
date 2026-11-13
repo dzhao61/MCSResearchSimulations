@@ -18,6 +18,13 @@ The plan in `Planning/` was updated at the same time (Sections 1, 3–6, 8–11)
 - **Slide 11, “RQ3 results: the power cost of the larger cutoff”:** power lost by Expanded Welch across all 360 power settings, by sample size (median and range). Expanded Welch never has more power; the loss is about 6 points at n = 10, about 1 point from n = 50 to 1,000, and under 0.32 points at n = 10,000.
 - **Slide 12:** a heat map of the share of Expanded Welch rejections pointing the wrong way, across every table size and sample size under different-skew margins (0.01 gap), with the thesis example (16×16, n = 1,000) outlined. At least 90% of rejections point the wrong way in 28 of the 360 power settings, all different-skew.
 - **Slide 10, “RQ2 results: why the cutoff helps, hurts, or cannot fix it”:** restores the uniform 4×4, n = 20 row of thesis Table 6.1, so its three rows (standard error too small, standard error too big, bias) explain the three patterns on Slide 9. Three mechanism panels replace the two, and the settings are labelled as illustrative.
+- **Appendix reorganised, with three derivation slides (13 November):** the backups now follow the order of the talk: Method (Slides 15–21, supporting Slides 4–5), Evaluation design (Slide 22, for Slide 6), RQ1 (Slides 23–24), RQ2 (Slides 25–28), RQ3 (Slides 29–31), and References (Slides 32–33). B numbers are gone: every pointer uses the slide number you type to jump, and each backup has a top-right breadcrumb such as “Appendix · Method · for Slide 5, step 2”. Slides 16–18 are new and derive Slide 5’s three equations step by step, with thesis equation numbers: Derivation 1, Var{V-hat(P)} ≈ tau-squared(P)/n_P (navy, matching step 2); Derivation 2, moment matching and the df rule; and Derivation 3, the estimated and combined degrees of freedom (both green, matching step 3). The old “Moment matching and combined degrees of freedom” backup is absorbed into Derivations 2 and 3. The exact derivative, the cell-probability grid, and the worked example now follow the derivations (Slides 19–21). Slide 14’s index, Slide 13’s notes index, the source lines on Slides 3–11, the speaker notes, and the plan all use the new numbers. Earlier entries below keep the B numbers of their time.
+- **Slide 5 redesign (13 November):** Slide 5 now shows three steps in the order of its script: V-hat(P) varies between samples (a schematic, not data), measuring that variation, and turning it into degrees of freedom. Each step has its own colour, as on Slide 10: orange, navy, and green. Steps 2 and 3 carry Contribution 1 and 2 tags and name the approximation each step makes; a strip below covers combining P and Q. The script and timing are unchanged. It was reviewed as a draft on Slide 32, which is now removed.
+- **Bias-correction backup (13 November):** a new B4, “Bias correction” (Slide 20, in the Method group), shows the plug-in estimate, its leading bias (Miller, 1955), and the bias-corrected difference (thesis Equations 2.7–2.9 and 3.7). Three cards give the size of the leading term, why it cancels in these equal-sample simulations, and the higher-order bias that remains. Slides 4 and 10 point to it. The former B4–B14 are now B5–B15 on Slides 21–31; the slide labels, footers, Slide 14’s index, Slide 13’s notes index, and the speaker notes match. The references add Miller (1955), Panzeri and Treves (1996), Chao and Shen (2003), and Nemenman et al. (2002). Earlier entries below keep the B numbers of their time.
+- **Slide 10 colours (13 November):** the three mechanisms now have three colours (orange, navy, green), on both the table markers and the panels below.
+- **Hats in the preview (13 November):** inline hatted symbols (V̂, V̂(P), Î(P), p̂, Δ̂) now sit centred in the preview PDF and other viewers that cannot show PowerPoint's own equations. PowerPoint itself is unchanged.
+- **Supervisor feedback on Slide 2 (13 November):** Slide 2 now shows each population as n observed pairs (X, Y), says in the heading and in one line below the diagram that the two variables are discrete (categorical), and gives a one-sentence illustrative example (mid-semester and final exam grades, before and after generative AI). The example is not thesis data.
+- **Review fixes (12 November):** Slide 10's rows and explanation panels have matching numbered markers. Slide 14 shows the backup index with slide numbers. The captions on Slides 9 and 12 no longer leave a word alone, and Slide 12's caption sits clear of the axis label. Slide 3's strip names all three contributions, matching Slide 13, and Slide 5 is titled “Approach and contributions”.
 - **Conclusion slide (11 November):** Slide 13 now separates contributions from findings. “Contributions” shows the thesis's three contributions (derivation, test construction, and empirical evaluation) as the highlight, in stronger peach cards with large orange numerals. “Findings by research question” gives one pale-blue card each for RQ1–RQ3, with navy RQ tags. The next steps are now two arrow items. The script names the three contributions, then gives one finding per research question.
 - **Cell-probability backups (11 November):** two new backups follow B1. “Backup B1, continued” (Slide 16) is a grid that gives each quantity as an expectation, variance, or derivative beside its sum over cell probabilities: pointwise MI, MI, V, the row and column means of pointwise MI, g, tau-squared, and the component degrees of freedom. “Backup B1, worked example” (Slide 17) works through thesis Section 4.4.1 (table N^P): cell (1, 1) step by step, the sensitivities of all nine cells, tau-squared 0.932, and 16.65 component degrees of freedom. Slide 5’s source line points to Slides 16–17. B2–B14 move to Slides 18–30; their B numbers are unchanged, and Slide 13’s backup index is updated.
 - **Hats (11 November):** inline hatted symbols (𝑉̂, 𝐼̂, 𝜈̂, and Δ̂BC) are now native PowerPoint equations instead of a letter plus a combining hat, so PowerPoint places each hat correctly. The preview PDF still shows them as plain text.
@@ -35,8 +42,8 @@ The counts on Slides 9, 11, and 12 are tallies of the thesis simulation results 
 
 | File | Purpose |
 | --- | --- |
-| `Daniel_Zhao_Welch_MI_Presentation.pptx` | The deck: 13 main slides, an appendix title (Slide 14) and 16 backups (Slides 15–30: B1–B14, with two B1 continuation slides after B1), with editable text, tables and native equations, and full speaker notes. |
-| `Daniel_Zhao_Welch_MI_Presentation_preview.pdf` | A 30-page preview rendered outside PowerPoint. Use it for checking only. |
+| `Daniel_Zhao_Welch_MI_Presentation.pptx` | The deck: 13 main slides, an appendix title and index (Slide 14) and 19 backups (Slides 15–33, in the order of the talk), with editable text, tables and native equations, and full speaker notes. |
+| `Daniel_Zhao_Welch_MI_Presentation_preview.pdf` | A 33-page preview rendered outside PowerPoint. Use it for checking only. |
 | `Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md` | Scripts, timings, transitions, cues, and backup answers, then plan Sections 8 (question preparation) and 9 (rehearsal and timing control). |
 | `assets/charts/` | Chart images (PNG at 300 dpi, plus SVG), each drawn at its size on the slide. |
 | `assets/data/` | The filtered rows behind every chart and table. The application file is kept for reference; the deck no longer uses it. |
@@ -46,9 +53,9 @@ The counts on Slides 9, 11, and 12 are tallies of the thesis simulation results 
 
 ## Before submitting
 
-1. Open the .pptx in PowerPoint on the Mac. Check the following, including the inline hatted symbols on Slides 4, 6, 7, and 8, B4, and B5:
-   - the equations on Slides 2, 4 and 5 and Backups B1, both B1 continuation slides, B2, B3, and B5;
-   - the inline "n − 1" on B9;
+1. Open the .pptx in PowerPoint on the Mac. Check the following, including the inline hatted symbols on Slides 4–8, 15–18, 21, 23, and 24:
+   - the equations on Slides 2, 4 and 5 (including the df rule in words), the derivations on Slides 16–18, and Slides 15 and 19–24;
+   - the inline "n − 1" on Slides 17 and 28;
    - the cover title, which uses Aptos Display.
 2. Export the upload PDF from PowerPoint as `Daniel_Zhao_Welch_MI_Presentation.pdf`, the name the plan gives it.
 
@@ -60,14 +67,17 @@ The preview shows each equation through its fallback image, because the preview 
 - **Slide 11:** the denominator footnote sits under the power definition, so the footer stays one line.
 - **Slide 12:** the true and mean estimated differences sit on two aligned rows, with the 9.66% rejection rate and the direction statement directly beneath.
 - **Appendix title:** the word "Appendix" in 48 pt bold navy Lato, centred, with the slide number. Its notes carry the plan's delivery line.
-- **Backups:** each carries a small orange "Backup B1"–"Backup B14" label at top right; the two cell-probability slides are labelled "Backup B1, continued" and "Backup B1, worked example". The colour key for the grid backups is in each figure's legend and in the notes for opening that slide.
+- **Backups:** each carries a small orange breadcrumb at top right naming its appendix group and the main slide it supports, for example "Appendix · RQ2 · for Slide 9". The derivation slides (16–18) are deliberately denser: numbered steps, each with the step in words, the equation, and the thesis equation number. The colour key for the grid backups is in each figure's legend and in the notes for opening that slide.
 
 ## Checks run
 
 - **Comparison with the application-removed version:** slide text, shape positions, images, and speaker notes were compared slide by slide. Only Slides 2, 6, 9–13, B3–B5, and B6’s notes differ.
 - **Tallies:** every count was recomputed from the saved rates, and Slide 10’s three rows were checked against thesis Table 6.1 and the null diagnostics; the circled and outlined examples were checked against the thesis values (8.35%, 4.90%, 36.38%, 34.38%, 9.66%, and 9,659 of 9,662 positive rejections). The signed counts add up to the saved rejection counts for all 360 power settings.
-- **Rendering:** all 30 slides were rendered and inspected.
-- **Worked example:** g, tau-squared, and the component degrees of freedom for N^P were recomputed from the counts and match thesis Section 4.4.1 (0.4218, 0.93212, and 16.65). The thesis prints only cell (1, 1)’s sensitivity; the other eight on Slide 17 come from thesis Equation 4.41.
+- **Comparison for the bias-correction backup (13 November):** apart from the new Slide 20, only the source lines on Slides 3, 4 and 7–11, Slide 14’s index, Slide 13’s notes index, the backup labels and slide numbers, and the two references slides differ from the previous build.
+- **Comparison for the appendix reorganisation (13 November):** every moved backup matches its previous version apart from its slide number, breadcrumb, and pointers; the exact-derivative and worked-example slides also have new titles. Main slides differ only in the source lines on Slides 3–11, Slide 14’s index, and the notes on Slides 5, 7 and 13.
+- **Derivations:** each step on Slides 16–18 was checked against thesis Sections 4.1.2 and 4.3 (Equations 4.2–4.7, 4.10–4.11, 4.30–4.31, and 4.35–4.44).
+- **Rendering:** all 33 slides were rendered and inspected.
+- **Worked example:** g, tau-squared, and the component degrees of freedom for N^P were recomputed from the counts and match thesis Section 4.4.1 (0.4218, 0.93212, and 16.65). The thesis prints only cell (1, 1)’s sensitivity; the other eight on Slide 21 come from thesis Equation 4.41.
 - **Validation:** the file passed OOXML validation.
 - **Science source:** unchanged. The submitted thesis is 111 pages, MD5 `bbd73bada062b1a7e4113c13211c438a`.
 

@@ -52,9 +52,9 @@ The third box defines the combined sensitivity, g. For a fixed population and ce
 
 The fourth box uses the spread of those sensitivities. I call their variance tau-squared; greater spread means a different mix of sampled outcomes can make V-hat less stable.
 
-The first equation below approximates the sampling variance of V-hat by tau-squared divided by sample size. The second substitutes the observed V-hat and estimated tau-squared into the component degrees-of-freedom formula. We repeat the calculation for Q and combine the components using Welch–Satterthwaite.
+The first equation below approximates the sampling variance of V-hat by tau-squared divided by sample size. The second uses the observed V-hat and estimated tau-squared to calculate the component degrees of freedom for P. A component is the value for one population, so we repeat the calculation for Q. We then combine the two values using Welch–Satterthwaite to obtain the test's degrees of freedom.
 
-The panel on the right identifies two approximations behind those equations. First, the sampling expansion approximates V-hat's error by the average of the observation-level sensitivities. Their mean is zero, so V-hat's first-order sampling mean is V. Independence gives the variance of their average as tau-squared divided by sample size.
+The panel on the right identifies two approximations behind those equations. First, we use a first-order sampling expansion, meaning that we keep the linear effect of changes in cell probabilities. This approximates V-hat's error by the average of the observation-level sensitivities. Their mean is zero, so V-hat's first-order sampling mean is V. Independence gives the variance of their average as tau-squared divided by sample size.
 
 Second, moment matching fits a scaled chi-squared distribution to the approximated mean and variance. Greater variability relative to the mean gives fewer degrees of freedom. The derivative defining g is exact for positive population tables, but these sampling and distributional approximations require evaluation.
 
@@ -126,7 +126,7 @@ The table gives three settings with equal MI of 0.02 nats, and every calculation
 
 The first row is uniform four-by-four tables with 20 observations per population. Bias is near zero because the two estimators' expected biases cancel. The variance ratio is about 0.83, indicating underestimated uncertainty. For a given difference, a smaller denominator inflates the absolute statistic, and the larger cutoff brings rejection from 8.35% to 4.90%. That is the first explanation box: a cutoff can offset a standard error that is too small.
 
-The second row is same-skew sixteen-by-sixteen tables with 1,000 observations. Bias again cancels, but the variance ratio is about 1.93. The oversized uncertainty estimate reduces the statistic's magnitude, so Wald already rejects only 0.60% of the time. Expanded Welch lowers that to 0.53%, making the test more conservative by pushing its false-positive rate further below 5%, as the middle box explains.
+The second row is same-skew sixteen-by-sixteen tables with 1,000 observations. Bias again cancels, but the variance ratio is about 1.93. The oversized uncertainty estimate reduces the statistic's magnitude, so Wald already rejects only about 0.6% of the time. Expanded Welch lowers that to about 0.5%, making the test more conservative by pushing its false-positive rate further below 5%, as the middle box explains.
 
 The third row uses different-skew sixteen-by-sixteen tables at the same sample size. The estimated difference is centred about 2.06 sampling standard deviations above zero, despite a variance ratio of about 1.94. Rejection remains high, moving from 26.01% to 24.84%. The final box explains that a larger cutoff cannot remove the shift in the estimated difference.
 

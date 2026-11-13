@@ -52,7 +52,8 @@ def to_md(note):
         if label.startswith("Script"):
             out.append("\n\n".join(f"> {p}" for p in paras))
         elif label.startswith("Backup index"):
-            out.append("\n".join(f"- {l}" for l in "\n".join(paras).split("\n")))
+            out.append("\n".join(f"- {l}" if l[:1].isdigit() else f"- **{l}**"
+                                  for l in "\n".join(paras).split("\n")))
         else:
             out.append("\n\n".join(p.replace("\n", "\n\n") for p in paras))
     return "\n\n".join(out)
@@ -64,19 +65,33 @@ for sl in prs.slides:
     titles.append(t.replace("\n", " ").replace("\v", " "))
 titles[0] = "Comparing Mutual Information in Finite Samples"
 
+
+def tag_of(slide):
+    return next(sh.text_frame.text for sh in slide.shapes if sh.name == "Backup label")
+
+
+# Draft slides for review sit after the backups and are listed separately.
+drafts = [i for i in range(14, len(prs.slides)) if tag_of(prs.slides[i]).startswith("Draft")]
+last_backup = min(drafts) if drafts else len(prs.slides)
+
 md = ["# Comparing Mutual Information in Finite Samples: speaker notes", "",
       "Daniel Zhao. Talk target 18:50 for Slides 1–13; Slide 13 stays up for questions. Slide 14 is the appendix "
-      f"title and the backups are Slides 15–{len(prs.slides)}.",
+      f"title and the backups are Slides 15–{last_backup}.",
       "Scripts, transitions, delivery cues, sources, and backup answers are copied from the presentation execution "
-      "plan, as updated on 11 November 2026.", "", "## Main talk", ""]
+      "plan, as updated on 13 November 2026.", "", "## Main talk", ""]
 for i in range(13):
     md += [f"### Slide {i + 1}: {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text), ""]
 md += ["## Appendix", "", "### Slide 14: Appendix title", "", to_md(prs.slides[13].notes_slide.notes_text_frame.text),
        ""]
-for i in range(14, len(prs.slides)):
-    tag = next(sh.text_frame.text for sh in prs.slides[i].shapes if sh.name == "Backup label").replace("Backup ", "")
+for i in range(14, last_backup):
+    tag = tag_of(prs.slides[i]).replace("Appendix · ", "")
     md += [f"### Slide {i + 1} ({tag}): {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text),
            ""]
+if drafts:
+    md += ["## Draft for review", ""]
+    for i in drafts:
+        md += [f"### Slide {i + 1} ({tag_of(prs.slides[i])}): {titles[i]}", "",
+               to_md(prs.slides[i].notes_slide.notes_text_frame.text), ""]
 md += [fix_sections(plan_section("## 8. Question preparation", "## 9. Rehearsal and timing control")
                     + "\n" + plan_section("## 9. Rehearsal and timing control",
                                           "## 10. Implementation and acceptance"))]

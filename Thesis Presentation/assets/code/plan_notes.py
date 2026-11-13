@@ -50,9 +50,9 @@ def load(path):
         sec = _section(lines, rf"### Slide {n} — ")
         main[n] = dict(script=_script(sec), cue=_field(sec, ["Delivery cue"]),
                        transition=_field(sec, ["Transition"]), source=_field(sec, ["Source"]))
-    backups = {}
-    for k in range(1, 15):
-        sec = _section(lines, rf"### B{k} / Slide \d+ — ")
+    backups = {}   # keyed by physical slide number
+    for k in sorted(int(m.group(1)) for l in lines if (m := re.match(r"### Backup Slide (\d+) — ", l))):
+        sec = _section(lines, rf"### Backup Slide {k} — ")
         backups[k] = dict(question=_field(sec, ["Question answered", "Question"]),
                           answer=_field(sec, ["Answer to give", "Answer"]),
                           notes=_field(sec, ["Notes to include", "Notes"]),
@@ -71,6 +71,6 @@ if __name__ == "__main__":
         for k, v in d.items():
             print(f"[{k}] {v}")
     for n, d in b.items():
-        print(f"=== B{n}")
+        print(f"=== Backup Slide {n}")
         for k, v in d.items():
             print(f"[{k}] {v}")

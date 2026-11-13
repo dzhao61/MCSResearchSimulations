@@ -1,7 +1,7 @@
 # Comparing Mutual Information in Finite Samples: speaker notes
 
-Daniel Zhao. Talk target 18:50 for Slides 1–13; Slide 13 stays up for questions. Slide 14 is the appendix title and the backups are Slides 15–30.
-Scripts, transitions, delivery cues, sources, and backup answers are copied from the presentation execution plan, as updated on 11 November 2026.
+Daniel Zhao. Talk target 18:50 for Slides 1–13; Slide 13 stays up for questions. Slide 14 is the appendix title and the backups are Slides 15–33.
+Scripts, transitions, delivery cues, sources, and backup answers are copied from the presentation execution plan, as updated on 13 November 2026.
 
 ## Main talk
 
@@ -31,7 +31,9 @@ Time: 1:15 (finish by 1:40)
 
 **Script**
 
-> Mutual information measures the average reduction in uncertainty about one variable when we observe another. I compare that association between two populations, whose probability tables I call P and Q.
+> Mutual information measures the average reduction in uncertainty about one variable when we observe another. I study two discrete variables, X and Y, recorded for each individual in two populations. P and Q are the joint probability tables of X and Y in those populations.
+
+> For example, X could be a student's mid-semester test grade and Y their final exam grade. P is the students before generative AI and Q is the students after. The question is whether the mid-semester grade tells us as much about the final grade in both groups.
 
 > We observe a sample from each population, summarise it in a count table, and estimate MI from each table. Different samples can produce different estimates even when population MI is equal. The null hypothesis therefore equates the two population MI values, against the two-sided alternative that they differ. It allows different probability tables. We need to account for sampling uncertainty before interpreting an observed difference.
 
@@ -41,7 +43,7 @@ Time: 1:15 (finish by 1:40)
 
 **Delivery cue**
 
-Trace each population into its estimate, then point to the null.
+Say “discrete” clearly. Give the example in one breath, then trace each population into its estimate and point to the null.
 
 **Source**
 
@@ -55,7 +57,7 @@ Time: 1:00 (finish by 2:40)
 
 > The project builds on three established strands. Work on MI supplies the estimator, its leading bias correction, and its first-order sampling variance. The Wald test uses those estimates with the standard normal distribution as its reference. Welch and Satterthwaite instead use variance moments to choose degrees of freedom, with related applications in entropy and other statistical comparisons.
 
-> For this MI comparison, the additional calculation is how much the pointwise-MI variance estimate changes when the sampled table changes. Its probability weights, row and column margins, and pointwise-MI values all change together. I derive that sensitivity and evaluate the resulting approximation.
+> For this MI comparison, the additional calculation is how much the pointwise-MI variance estimate changes when the sampled table changes. Its probability weights, row and column margins, and pointwise-MI values all change together. I derive that sensitivity, construct the Expanded Welch test from it, and evaluate both.
 
 **Transition**
 
@@ -93,7 +95,7 @@ Point to the shared standard error, explain why its sampling variation matters, 
 
 Thesis Chapters 3–4 and Figure 2.1; quantiles of the standard normal distribution and the Student t distribution with 5 degrees of freedom.
 
-### Slide 5: Approach and contribution
+### Slide 5: Approach and contributions
 
 Time: 2:05 (finish by 6:05)
 
@@ -117,7 +119,7 @@ Pause between the two levels of variation. Define g and tau-squared before the f
 
 **Source**
 
-Thesis Sections 4.1–4.3; eq:g-final, eq:vhat-sampling-variance, eq:nu-p-hat, and eq:expanded-df. B1–B2 retain the full derivative and moment-matching argument. The source line also points to Slides 16–17 for g and tau-squared in cell probabilities, with a worked example.
+Thesis Sections 4.1–4.3; eq:g-final, eq:vhat-sampling-variance, eq:nu-p-hat, and eq:expanded-df. The source line points to Slides 16–18 for the derivations of these equations, and to Slides 19–21 for g and tau-squared in full, with a worked example.
 
 ### Slide 6: Evaluation design
 
@@ -165,7 +167,7 @@ Pause when the graphs appear. Explain the top graph before the bottom. Say “sa
 
 **Source**
 
-Thesis Sections 6.1.1–6.1.2, Figures 6.1–6.2; null-display IDs, side=p, k=4, profile=different_skew, MI=.02. B2 retains the numerical df consequence of this same example.
+Thesis Sections 6.1.1–6.1.2, Figures 6.1–6.2; null-display IDs, side=p, k=4, profile=different_skew, MI=.02. Slide 18's notes retain the numerical df consequence of this same example.
 
 ### Slide 8: RQ1 results: near independence
 
@@ -315,23 +317,32 @@ Final abstract; thesis Sections 1.3 (three contributions) and 7.1–7.3 (finding
 
 **Backup index (type the slide number, press Enter, then return to 13)**
 
-- 14  Appendix title
-- 15  B1  Variance sensitivity
-- 16  B1 continued  Variance sensitivity in cell probabilities
-- 17  B1 example    Variance sensitivity: a worked example
-- 18  B2  Moment matching and combined degrees of freedom
-- 19  B3  Population construction, grid, and calculation requirements
-- 20  B4  Approximation ratios across table sizes
-- 21  B5  Near-independence noise calculation
-- 22  B6  Full null results: uniform margins
-- 23  B7  Full null results: same-skew margins
-- 24  B8  Full null results: different-skew margins
-- 25  B9  Ordinary Welch degrees of freedom
-- 26  B10 Full power results: uniform margins
-- 27  B11 Full power results: same-skew margins
-- 28  B12 Full power results: different-skew margins
-- 29  B13 References: MI and testing foundations
-- 30  B14 References: related methods and evaluation
+- 14  Appendix title and index
+- **Method (supports Slides 4–5)**
+- 15  Bias correction
+- 16  Derivation 1 of 3: how much the variance estimate varies
+- 17  Derivation 2 of 3: moment matching gives the df rule
+- 18  Derivation 3 of 3: estimated and combined degrees of freedom
+- 19  Variance sensitivity in full
+- 20  Variance sensitivity in cell probabilities
+- 21  Worked example: sensitivities and degrees of freedom
+- **Evaluation design (supports Slide 6)**
+- 22  Population construction, grid, and calculation requirements
+- **RQ1: approximation accuracy (supports Slides 7–8)**
+- 23  Approximation ratios across table sizes
+- 24  Near-independence noise calculation
+- **RQ2: full null results (supports Slides 9–10)**
+- 25  Full null results: uniform margins
+- 26  Full null results: same-skew margins
+- 27  Full null results: different-skew margins
+- 28  Ordinary Welch degrees of freedom
+- **RQ3: full power results (supports Slides 11–12)**
+- 29  Full power results: uniform margins
+- 30  Full power results: same-skew margins
+- 31  Full power results: different-skew margins
+- **References**
+- 32  References: MI and testing foundations
+- 33  References: related methods and evaluation
 
 ## Appendix
 
@@ -343,7 +354,87 @@ Appendix title. Not part of the timed talk.
 
 No timed speech. Keep the conclusion on Slide 13 visible when questions begin, then open the relevant backup when needed and return to Slide 13 afterwards. The divider adds no time to the 18:50 main talk.
 
-### Slide 15 (B1): Variance sensitivity
+### Slide 15 (Method · for Slide 4): Bias correction
+
+Not part of the timed talk. Return to Slide 13 afterwards.
+
+**Question answered**
+
+Which bias correction do you use, and why does it not remove the bias seen on Slides 10 and 12?
+
+**Answer to give**
+
+“Each MI estimate subtracts the leading bias, (r − 1)(c − 1) over 2n, which is Miller's correction. In every simulation the two samples have the same size and table dimensions, so the two corrections are equal and cancel from the difference. What remains is higher-order bias, which depends on the whole probability table. Distinct tables with equal MI can have different remaining biases, and that shifts the estimated difference, as on Slides 10 and 12. Reducing that bias is my first next step.”
+
+**Notes**
+
+The leading term is 0.1125 nats per estimate for 16×16 at n = 1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes, the correction removes the leading unequal-sample bias; its performance there is untested (thesis Section 7.2). Corrected estimates can be negative and are retained. Empty sampled cells contribute nothing to the plug-in sum.
+
+**Source**
+
+Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.5 and 7.2; Miller (1955); Panzeri and Treves (1996); Paninski (2003); Chao and Shen (2003); Nemenman et al. (2002).
+
+### Slide 16 (Method · for Slide 5, step 2): Derivation 1 of 3: how much the variance estimate varies
+
+Not part of the timed talk. Return to Slide 13 afterwards.
+
+**Question answered**
+
+Where does Var{V-hat(P)} ≈ tau-squared(P)/n_P come from?
+
+**Answer to give**
+
+“V-hat is V evaluated at the sample table, and the sample table is an average of one-observation tables. A first-order expansion is linear in the table change, so the error in V-hat becomes an average of one sensitivity per observation. The sensitivities average to zero, so V-hat is centred on V to first order. Because the observations are independent, the variance of that average is the variance of one sensitivity, tau-squared, divided by n.”
+
+**Notes**
+
+The expansion follows the straight line P + t(P-hat − P) from t = 0 to t = 1; the omitted terms are quadratic or higher in the cell-probability errors. The derivative of an average table change is the average of the one-observation derivatives because the linear term has fixed coefficients at P (thesis Section 4.3.1, citing van der Vaart, 1998, Chapter 20). Any bias in V-hat comes from terms beyond this linear approximation. Slide 7 shows both checks: the mean of V-hat over V, and the predicted over the observed variance.
+
+**Source**
+
+Thesis Sections 4.2.1, 4.3.1 and 4.3.2; Equations 4.10, 4.11, 4.30, 4.31 and 4.35–4.38.
+
+### Slide 17 (Method · for Slide 5, step 3): Derivation 2 of 3: moment matching gives the df rule
+
+Not part of the timed talk. Return to Slide 13 afterwards.
+
+**Question answered**
+
+Why are the component df twice the squared mean over the variance, and why does dividing by n_P not change them?
+
+**Answer to give**
+
+“A variable with a scaled chi-squared distribution has variance twice its squared mean divided by its degrees of freedom. Matching those two moments to V-hat gives the target. Dividing V-hat by the fixed sample size rescales the squared mean and the variance equally, so the target is unchanged. For a normal sample variance the same rule gives n minus one, which is ordinary Welch. The resulting Student t distribution is still an approximation that needs empirical checking.”
+
+**Notes**
+
+For a generic variance estimate U modelled as c times a variable with a chi-squared distribution on ν degrees of freedom, E(U) = cν and Var(U) = 2c²ν, giving ν = 2[E(U)]²/Var(U). Scaling by fixed n leaves this ratio unchanged.
+
+**Source**
+
+Thesis Section 4.1.2, Equations 4.2–4.7; Satterthwaite (1946).
+
+### Slide 18 (Method · for Slide 5, step 3): Derivation 3 of 3: estimated and combined degrees of freedom
+
+Not part of the timed talk. Return to Slide 13 afterwards.
+
+**Question answered**
+
+How do the moments become the formula used in the test, and how are P and Q combined?
+
+**Answer to give**
+
+“Putting the first-order mean and variance into the moment-matching rule gives two n V-squared over tau-squared. That is two divided by the relative variance of V-hat, so more relative variation gives fewer degrees of freedom. The test replaces V and tau-squared by their table estimates, which gives nu-hat for P, and the same for Q. To combine them, I apply moment matching once more to the squared standard error. The samples are independent, so the variances add, which gives the Welch–Satterthwaite formula.”
+
+**Notes**
+
+For the Slide 7 example at n = 1,000, the first-order component df are 15.30 against the moment target 21.03: approximately (1/1.19)²/0.97 = 0.73. The squared mean enters the target, so the mean ratio matters twice. Positive V does not guarantee positive tau-squared; a zero component is not an ordinary finite df.
+
+**Source**
+
+Thesis Sections 4.3.3–4.3.4, Equations 4.39–4.44 and Table 4.1; Satterthwaite (1946); Welch (1947).
+
+### Slide 19 (Method · detail for Slide 16): Variance sensitivity in full
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -363,7 +454,7 @@ Assumptions: fixed categories, independent observations within each sample, inde
 
 Thesis Chapter 4: perturbation path (eq:contamination-path), final form of g (eq:g-final), and definition of tau-squared (eq:tau-definition). This derivative is exact for positive population tables. Its use for sampling errors is first order.
 
-### Slide 16 (B1, continued): Variance sensitivity in cell probabilities
+### Slide 20 (Method · detail for Slide 16): Variance sensitivity in cell probabilities
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -383,7 +474,7 @@ The sensitivities have probability-weighted mean zero, so the weighted average o
 
 Thesis Equations 2.3 and 2.4 (pointwise MI and MI), 4.7 (moment matching), 4.9–4.11 (V, the perturbation, and g), 4.29 (final form of g), 4.36 (tau-squared) and 4.41–4.43 (estimates).
 
-### Slide 17 (B1, worked example): Variance sensitivity: a worked example
+### Slide 21 (Method · example for Slides 16–20): Worked example: sensitivities and degrees of freedom
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -403,27 +494,7 @@ Rounded thesis values: 0.38526, 0.13693, 0.27189, 0.10308, 0.4218, 0.93212 and 1
 
 Thesis Section 4.4.1, Equations 4.41–4.43 and 4.47.
 
-### Slide 18 (B2): Moment matching and combined degrees of freedom
-
-Not part of the timed talk. Return to Slide 13 afterwards.
-
-**Question answered**
-
-Where do the component and combined df formulas come from, and why is the Student t distribution approximate?
-
-**Answer to give**
-
-“A variable with a scaled chi-squared distribution has variance twice its squared mean divided by its degrees of freedom. Matching those two moments gives the target. Dividing V-hat by fixed sample size rescales the squared mean and variance equally, so it leaves the component target unchanged. Independence between the two samples lets their variance contributions add. The resulting Student t distribution still requires empirical assessment.”
-
-**Notes**
-
-For a generic variance estimate U modelled as c times a variable with a chi-squared distribution on ν degrees of freedom, E(U)=cν and Var(U)=2c²ν, giving ν=2[E(U)]²/Var(U). Scaling by fixed n leaves this ratio unchanged. For the Slide 7 example at n=1,000, first-order component df are 15.30 against the moment target 21.03: approximately (1/1.19)²/0.97=0.73. This explains the squared-mean effect without another main-slide formula.
-
-**Source**
-
-Thesis Sections 4.1 and 4.3, pp. 23–36; Satterthwaite (1946).
-
-### Slide 19 (B3): Population construction, grid, and calculation requirements
+### Slide 22 (Evaluation design · for Slide 6): Population construction, grid, and calculation requirements
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -445,7 +516,7 @@ Sampling is independent within and between populations, and both methods receive
 
 Thesis Chapter 5 and Appendix B.1–B.5; current grid results.
 
-### Slide 20 (B4): Approximation ratios across table sizes
+### Slide 23 (RQ1 · for Slide 7): Approximation ratios across table sizes
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -463,13 +534,13 @@ Is the 4×4 example representative of other sizes and both populations?
 
 **Notes**
 
-Figure 6.2 separately checks how those moment errors affect df. In the worked 4×4/n=1,000 case, FO/target is about 0.73 and the exact values are 15.30/21.03; B2 explains why. Do not infer the mean of estimated df by inserting mean inputs into a nonlinear ratio. Full current Figure 6.2 remains in the thesis; it is not needed as another timed slide.
+Figure 6.2 separately checks how those moment errors affect df. In the worked 4×4/n=1,000 case, FO/target is about 0.73 and the exact values are 15.30/21.03; Slide 18's notes explain why. Do not infer the mean of estimated df by inserting mean inputs into a nonlinear ratio. Full current Figure 6.2 remains in the thesis; it is not needed as another timed slide.
 
 **Source**
 
 Sections 6.1.1–6.1.2, Figures 6.1–6.2, and current moments.csv; expected 80 rows: 4 sizes × 10 sample sizes × 2 populations.
 
-### Slide 21 (B5): Near-independence noise calculation
+### Slide 24 (RQ1 · for Slide 8): Near-independence noise calculation
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -489,7 +560,7 @@ Formulas: mean estimated component df (d + kappa)/2 = 4.60; sampling-moment targ
 
 Thesis Appendix A.2 and Section 6.1.3; Figure 6.3. These are local approximations under fixed dimensions and positive limiting cell probabilities, not exact finite-sample distribution identities.
 
-### Slide 22 (B6): Full null results: uniform margins
+### Slide 25 (RQ2 · for Slide 9): Full null results: uniform margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -513,7 +584,7 @@ All 120 settings for the uniform profile. Slide 9 plots each setting here as one
 
 Final Figure 6.4 and balanced-null combined rates, uniform profile. This page contains all 120 settings for that profile.
 
-### Slide 23 (B7): Full null results: same-skew margins
+### Slide 26 (RQ2 · for Slide 9): Full null results: same-skew margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -537,7 +608,7 @@ All 120 settings for the same-skew profile.
 
 Final Figure 6.5 and balanced-null combined rates, same-skew profile. This page contains all 120 settings for that profile.
 
-### Slide 24 (B8): Full null results: different-skew margins
+### Slide 27 (RQ2 · for Slide 9): Full null results: different-skew margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -563,7 +634,7 @@ Additional anchor: At MI .005, n=1,000, and 16×16, Wald is 36.38% and Expanded 
 
 Final Figure 6.6 and balanced-null combined rates, different-skew profile. This page contains all 120 settings for that profile.
 
-### Slide 25 (B9): Ordinary Welch degrees of freedom
+### Slide 28 (RQ2 · for Slide 10): Ordinary Welch degrees of freedom
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -583,7 +654,7 @@ The three settings reuse the main null study's 100,000 sampled pairs per setting
 
 Thesis Section 6.2.5, Table 6.2; Section 7.2.
 
-### Slide 26 (B10): Full power results: uniform margins
+### Slide 29 (RQ3 · for Slides 11–12): Full power results: uniform margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -607,7 +678,7 @@ How does absolute power change with MI gap, sample size, and table size under un
 
 Section 6.3.1, Figure 6.7; power rates, profile=uniform, denominator=all. At n=10,000 and gap=.01, EW is 89.44% for 2×2 and 71.12% for 16×16. These values describe the stated population family.
 
-### Slide 27 (B11): Full power results: same-skew margins
+### Slide 30 (RQ3 · for Slides 11–12): Full power results: same-skew margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -631,7 +702,7 @@ All 120 settings for the same-skew power profile.
 
 Final Figure 6.8; Section 6.3.2; MI-gap combined rates, same-skew profile. This page contains all 120 settings for that profile.
 
-### Slide 28 (B12): Full power results: different-skew margins
+### Slide 31 (RQ3 · for Slides 11–12): Full power results: different-skew margins
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
@@ -657,11 +728,11 @@ At the main point the mean estimate is +.0206714 for true −.01. Of 9,662 EW re
 
 Section 6.3.3, Figure 6.9, and current power CSVs, profile=different_skew, denominator=all.
 
-### Slide 29 (B13): References: MI and testing foundations
+### Slide 32 (References): References: MI and testing foundations
 
 Not part of the timed talk. Use this page if a source is requested. Entries follow the thesis bibliography.
 
-### Slide 30 (B14): References: related methods and evaluation
+### Slide 33 (References): References: related methods and evaluation
 
 Not part of the timed talk. Use this page if a source is requested. Entries follow the thesis bibliography.
 
@@ -674,26 +745,28 @@ a proposed extension.
 
 | Likely question | Suggested answer and boundary | Destination |
 | --- | --- | --- |
-| What exactly is new here? | “The MI first-order variance and the general Satterthwaite principle are established. I derive the MI variance sensitivity including the changing margins, use it for component df, and evaluate where the resulting approximation succeeds or fails.” Avoid a claim of global priority beyond the literature review. | B1–B2 |
-| Why not just use sample size minus one? | “That assignment follows from the ordinary sample-variance distribution under normal sampling. An estimated pointwise-MI variance depends on changing probabilities and log ratios, so I calculate its sampling variability instead.” | B1–B2, B9 |
-| Why does moment matching imply a Student t test? | “It motivates an approximate reference distribution. Matching a variance component to a scaled chi-squared distribution does not establish the standard normal numerator, or its independence from the variance estimates, that an exact Student t distribution requires.” | B2 |
-| How is equal MI different from equal distributions? | “Distinct tables can have the same probability-weighted MI average. The different-skew null settings explicitly test that weaker hypothesis, allowing the tables and remaining estimation biases to differ.” | B3, B8 |
-| Would a label-permutation test solve this? | “A simple pooled label permutation is exact under identical distributions. Equal MI alone does not give that exchangeability. A specialised parameter-valid permutation procedure would need its own justification.” Do not claim every permutation method is invalid. | B3; thesis Section 2.4 |
+| What exactly is new here? | “The MI first-order variance and the general Satterthwaite principle are established. I derive the MI variance sensitivity including the changing margins, use it for component df, and evaluate where the resulting approximation succeeds or fails.” Avoid a claim of global priority beyond the literature review. | Slides 16–20 |
+| Why not just use sample size minus one? | “That assignment follows from the ordinary sample-variance distribution under normal sampling. An estimated pointwise-MI variance depends on changing probabilities and log ratios, so I calculate its sampling variability instead.” | Slides 17 and 28 |
+| Why does moment matching imply a Student t test? | “It motivates an approximate reference distribution. Matching a variance component to a scaled chi-squared distribution does not establish the standard normal numerator, or its independence from the variance estimates, that an exact Student t distribution requires.” | Slide 17 |
+| Where does the variance of V-hat come from? | “V-hat is V at the sample table, which is an average of one-observation tables. A first-order expansion turns its error into an average of one sensitivity per observation, so its variance is tau-squared over n.” | Slide 16 |
+| How are the two component df combined? | “By moment matching once more, now on the squared standard error. The samples are independent, so the variances add, which gives the Welch–Satterthwaite formula.” | Slide 18 |
+| How is equal MI different from equal distributions? | “Distinct tables can have the same probability-weighted MI average. The different-skew null settings explicitly test that weaker hypothesis, allowing the tables and remaining estimation biases to differ.” | Slides 22 and 27 |
+| Would a label-permutation test solve this? | “A simple pooled label permutation is exact under identical distributions. Equal MI alone does not give that exchangeability. A specialised parameter-valid permutation procedure would need its own justification.” Do not claim every permutation method is invalid. | Slide 22; thesis Section 2.4 |
 | Why use only Wald as the comparator? | “It isolates the effect of changing the reference cutoff while sharing the same estimates and statistic. The study does not establish superiority over bootstrap methods or other MI estimators.” | Slide 13 |
 | Why evaluate power when its ordering is already known? | “The ordering follows from the testing rules, but its magnitude and dependence on sample size, gap, and margins require evaluation. The biased examples also show why rejection can fail to identify the true direction.” | Slides 11–12 |
 | Is this a fair power comparison if actual false-positive rates differ? | “It compares the methods under their usual nominal testing rules. It is not a comparison at a common achieved false-positive rate, and I interpret it alongside the null results.” Do not describe an abandoned fitted-threshold experiment. | Slide 11 |
-| Why does stronger population separation sometimes lower power? | “A persistent positive bias can oppose the negative true difference. Making that true difference more negative initially moves the sampling centre closer to zero, reducing positive-tail rejection before negative-tail rejection recovers.” | B12; Section 6.3.3 |
+| Why does stronger population separation sometimes lower power? | “A persistent positive bias can oppose the negative true difference. Making that true difference more negative initially moves the sampling centre closer to zero, reducing positive-tail rejection before negative-tail rejection recovers.” | Slide 31; Section 6.3.3 |
 | Are wrong-direction rejections excluded from power? | “No. The tests are two-sided, so both directions count. I report the sign separately to show that detecting some difference does not necessarily identify which population has greater MI.” | Slide 12 |
-| Why do estimated df stay near five at almost zero MI? | “Sampling creates apparent association. The quadratic approximation retains it and gives approximately G/2 for the component df, rather than n times population MI alone.” | B5 |
-| Is the moment target the correct t df? | “It is the target defined by matching the actual first two moments of the variance estimate. It is not a guarantee that the statistic follows a Student t distribution.” | B2, B5 |
-| Could unsuccessful calculations explain the low rejection? | “They contribute at some small sample sizes. I report calculation success separately. Important conservative ranges and the highlighted excessive-rejection cases persist when every calculation succeeds.” | B3; Slides 9–10 and B6–B8 |
-| Why count unsuccessful calculations as non-rejections? | “That reports the full implemented procedure's ability to reject. Restricting to successful calculations would condition on a selected subset. Reporting calculation success separately makes the distinction visible.” | B3 |
-| Does the leading bias correction matter with equal sample sizes? | “For the shared fixed table dimensions, the corrections cancel exactly. Residual biases can still differ. The general method allows unequal sample sizes, but the simulations do not assess the correction's unequal-sample performance.” | B3; thesis Section 5.5 |
-| Why one construction and equal row/column margins? | “They give a controlled family where I can vary MI and sparsity while preserving chosen margins. The balanced grid is broad within that family, but other association patterns and unequal margins remain a limitation.” | B3, B6–B12 |
+| Why do estimated df stay near five at almost zero MI? | “Sampling creates apparent association. The quadratic approximation retains it and gives approximately G/2 for the component df, rather than n times population MI alone.” | Slide 24 |
+| Is the moment target the correct t df? | “It is the target defined by matching the actual first two moments of the variance estimate. It is not a guarantee that the statistic follows a Student t distribution.” | Slides 17 and 24 |
+| Could unsuccessful calculations explain the low rejection? | “They contribute at some small sample sizes. I report calculation success separately. Important conservative ranges and the highlighted excessive-rejection cases persist when every calculation succeeds.” | Slides 9–10, 22 and 25–27 |
+| Why count unsuccessful calculations as non-rejections? | “That reports the full implemented procedure's ability to reject. Restricting to successful calculations would condition on a selected subset. Reporting calculation success separately makes the distinction visible.” | Slide 22 |
+| Does the leading bias correction matter with equal sample sizes? | “For the shared fixed table dimensions, the corrections cancel exactly. Residual biases can still differ. The general method allows unequal sample sizes, but the simulations do not assess the correction's unequal-sample performance.” | Slide 15; thesis Section 5.5 |
+| Why one construction and equal row/column margins? | “They give a controlled family where I can vary MI and sparsity while preserving chosen margins. The balanced grid is broad within that family, but other association patterns and unequal margins remain a limitation.” | Slides 22 and 25–31 |
 | Can you recommend Expanded Welch for a new dataset? | “The evidence supports conditional improvements rather than a universal choice. In sparse settings, both methods can be inaccurate even when every calculation succeeds.” | Slides 9–13 |
 | Why judge accuracy with a 4–6% band? | “The band is only descriptive: 4–6% gives 130 settings for Wald and 136 for Expanded Welch, but 4.5–5.5% gives 105 and 98. The answer rests on the pattern on Slide 9 and the mechanisms on Slide 10, not on a band.” | Slides 9–10 |
 | Did you apply the tests to real data? | “Yes. Thesis Section 6.4 compares month–purchase and weekend–purchase MI between new and returning visitors in the Online Shoppers data. I left it out of this talk because unknown population tables cannot show which test is accurate; the known-population simulations carry that evidence.” | Thesis Section 6.4 |
-| How much computation does one test require? | “The calculations use a fixed number of scans of an r-by-c table, so time and working memory are O(rc). I have not used this presentation to claim a measured runtime advantage over resampling.” | B1–B2; thesis Section 4.4 |
+| How much computation does one test require? | “The calculations use a fixed number of scans of an r-by-c table, so time and working memory are O(rc). I have not used this presentation to claim a measured runtime advantage over resampling.” | Slides 16–20; thesis Section 4.4 |
 
 If a requested comparison was not performed, name that limitation and the
 specific result established here. Do not invent a broader conclusion.

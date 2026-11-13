@@ -12,8 +12,8 @@ changes.
 
 ## 1. Execution brief and sources
 
-Create **13 main slides, one appendix title slide and 16 backup slides**
-(B1–B14, plus two B1 continuation slides), 30 slides in total. The
+Create **13 main slides, one appendix title slide and 19 backup slides**
+(Slides 15–33, grouped in the order of the talk), 33 slides in total. The
 main talk targets **18:50**, leaving 70 seconds before the university's
 20-minute limit. Keep Slide 13 visible during questions. Backups begin at
 physical Slide 15, after the appendix title on Slide 14. The appendix title
@@ -52,7 +52,7 @@ Other project paths are relative to:
 | Science | `/Users/danielzhao/MyMac/Masters Degree/Research/FINAL SUBMISSION/Daniel_Zhao_Welch_MI_Thesis.pdf`: submitted 111-page thesis, last built on 8 November 2026, SHA-256 `163f34b602bed9f868398a7175e0653a1882ea7658ca3b641a60c71141b54a59`. It is identical to `Thesis Writeup/Welch MI/deliverables/Daniel_Zhao_Welch_MI_Thesis_Signed.pdf`. |
 | Primary presentation reference | `/Users/danielzhao/MyMac/Masters Degree/Research/Example Thesis/Comparing MI in Finite Samples.pdf`, 25 pages: 14 main slides, an index and 10 supporting pages. Follow its explanatory approach and visual hierarchy. |
 | Editable design donor | `/Users/danielzhao/MyMac/Masters Degree/INFO5993/A4/Zhao_Daniel_Presentation_vF2.pptx` and matching PDF, 11 slides. Reuse original cover artwork and suitable editable styling. |
-| Numerical evidence | `PRESENTATION_EVIDENCE_MANIFEST_2026-11-04.json`, version 2. Its filters, row counts and simulation values still apply. It predates the final thesis: its thesis hash is the 4 November build, its `backup_9_to_11` entries are now B10–B12, and its `backup_12` application entry, Holm values and six-comparison application rows are no longer used. B9 uses final Table 6.2. The deck no longer presents the application. |
+| Numerical evidence | `PRESENTATION_EVIDENCE_MANIFEST_2026-11-04.json`, version 2. Its filters, row counts and simulation values still apply. It predates the final thesis: its thesis hash is the 4 November build, its `backup_9_to_11` entries are now Slides 29–31, and its `backup_12` application entry, Holm values and six-comparison application rows are no longer used. Slide 28 uses final Table 6.2. The deck no longer presents the application. |
 | University requirements | `Presentation Marking Criteria.pdf`, `18cp Research Path deliverables.pdf` and `18CP Research Pathway Project Marking Rubric V3.pdf`, all under `/Users/danielzhao/MyMac/Masters Degree/Research/Example Thesis/`. |
 | Scientific source | `Thesis Writeup/Welch MI/chapters_rewrite/`, `appendices_rewrite/`, `references.bib`. |
 | Writing | `Thesis Writeup/Welch MI/notes/RESEARCH_PROSE_WRITING_GUIDELINES_2026-10-31.md` and `CHAPTER_6_RESULTS_WRITING_GUIDELINES_2026-10-30.md` in the same folder. Use Australian English. |
@@ -94,7 +94,8 @@ or revision date.
 2. Make the literature explain what the method needs. Identify the
    MI-specific calculation without an unverified global priority claim.
 3. Show relationships in the derivation before its final formula. Keep
-   the expanded derivative in B1.
+   the expanded derivative on Slide 19 and the derivations on Slides
+   16–18.
 4. Give each result a complete explanatory point: setting, observation,
    mechanism and implication together. Necessary explanation stays visible.
 5. Keep numbers beside their plotted point or table row. Avoid requiring
@@ -180,7 +181,7 @@ into a background. No university logo is added by default.
 - Mark the ten observed sample sizes. Use logarithmic sample-size axes
   where specified. Lines guide the eye between tested points.
 - Rates divide rejections by **all 100,000 repetitions**. Unsuccessful
-  calculations count as non-rejections. B3 states the calculation
+  calculations count as non-rejections. Slide 22 states the calculation
   requirements, and full grid figures retain calculation-success strips.
   Every calculation succeeds in the key main null examples and at the
   highlighted wrong-direction point.
@@ -214,7 +215,7 @@ close the current slide's allocation. Actual timing requires rehearsal.
 | 2 | Motivation: comparing MI across populations | 1:15 | 1:40 |
 | 3 | Literature review: foundations and the MI-specific step | 1:00 | 2:40 |
 | 4 | Method: one statistic, two reference distributions | 1:20 | 4:00 |
-| 5 | Approach and contribution | 2:05 | 6:05 |
+| 5 | Approach and contributions | 2:05 | 6:05 |
 | 6 | Evaluation design | 1:20 | 7:25 |
 | 7 | RQ1 results: approximation accuracy | 1:40 | 9:05 |
 | 8 | RQ1 results: near independence | 2:00 | 11:05 |
@@ -278,13 +279,15 @@ can arise from sampling noise.
 H_0:I(P)=I(Q)\quad\text{against}\quad H_1:I(P)\neq I(Q)
 \]
 
-**Two populations**
+**Two populations, the same two discrete variables**
 
-- Population P: a sample of size n_P, summarised in a count table, gives
-  the MI estimate Î(P).
-- Population Q: a sample of size n_Q gives Î(Q).
-- Variables: the same two categorical variables, X and Y, in each
-  population.
+- Population P: n_P observed pairs (X, Y), summarised in a count table,
+  give the MI estimate Î(P).
+- Population Q: n_Q observed pairs (X, Y) give Î(Q).
+- Both variables are discrete (categorical), giving count tables.
+
+**Example:** X = mid-semester test grade, Y = final exam grade; P =
+students before generative AI, Q = students after.
 
 **Statistical task:** Summarise a sample from each population in a count
 table. Estimate MI from each table. Assess whether sampling noise can explain the difference.
@@ -296,16 +299,23 @@ hypotheses, as in thesis Equation 1.1, on one line in a shallow peach
 area labelled “Hypotheses”. At left align the two populations,
 generic table icons and their MI estimates; at right use three connected
 task steps. The icons are schematic and encode no counts. Show no dataset,
-sample sizes or estimated values.
+sample sizes or estimated values. Each population box reads “n observed
+pairs (X, Y)”, and the heading says the variables are discrete. One line
+beneath the diagram reads “Both variables are discrete (categorical),
+giving count tables.”, with “discrete” in bold. Put the one-sentence example in a navy-bar line across the slide,
+above the question. The example is illustrative and is not thesis data;
+the footer says so.
 
 **Speaker script:**
 
-> Mutual information measures the average reduction in uncertainty about one variable when we observe another. I compare that association between two populations, whose probability tables I call P and Q.
+> Mutual information measures the average reduction in uncertainty about one variable when we observe another. I study two discrete variables, X and Y, recorded for each individual in two populations. P and Q are the joint probability tables of X and Y in those populations.
+
+> For example, X could be a student's mid-semester test grade and Y their final exam grade. P is the students before generative AI and Q is the students after. The question is whether the mid-semester grade tells us as much about the final grade in both groups.
 
 > We observe a sample from each population, summarise it in a count table, and estimate MI from each table. Different samples can produce different estimates even when population MI is equal. The null hypothesis therefore equates the two population MI values, against the two-sided alternative that they differ. It allows different probability tables. We need to account for sampling uncertainty before interpreting an observed difference.
 
-**Delivery cue:** Trace each population into its estimate, then point to
-the null.
+**Delivery cue:** Say “discrete” clearly. Give the example in one breath,
+then trace each population into its estimate and point to the null.
 
 **Transition:** “The literature supplies several parts of that comparison, with one additional MI-specific calculation needed.”
 
@@ -327,20 +337,21 @@ MI variance sensitivity needed for its degrees of freedom.
 | Key work | Moddemeijer (1989); Paninski (2003) | Wald (1943); Mora and Ruiz-Castillo (2009) | Satterthwaite (1946); Welch (1947); Hutcheson (1970); Pan and Wall (2002) |
 | Required step | Track variation in the variance estimate itself | Assess the fixed cutoff from the standard normal distribution in finite samples | Calculate the MI-specific variance sensitivity |
 
-**Contribution:** Derive that sensitivity and evaluate the resulting
-degrees of freedom.
+**Contributions:** Derive that sensitivity, construct the Expanded Welch
+test from it, and evaluate both empirically. This matches the three
+contributions on Slide 13 (thesis Section 1.3).
 
 **Layout and evidence:** Use preferred-reference page 3's three-column
 matrix, orange labels and light rules. Keep citations secondary to the
-ideas. Put the contribution in one pale peach strip, with "Contribution:"
-in bold orange. Avoid an unverified
+ideas. Put the contributions in one pale peach strip, with
+"Contributions:" in bold orange. Avoid an unverified
 claim that no equivalent formula has appeared anywhere.
 
 **Speaker script:**
 
 > The project builds on three established strands. Work on MI supplies the estimator, its leading bias correction, and its first-order sampling variance. The Wald test uses those estimates with the standard normal distribution as its reference. Welch and Satterthwaite instead use variance moments to choose degrees of freedom, with related applications in entropy and other statistical comparisons.
 
-> For this MI comparison, the additional calculation is how much the pointwise-MI variance estimate changes when the sampled table changes. Its probability weights, row and column margins, and pointwise-MI values all change together. I derive that sensitivity and evaluate the resulting approximation.
+> For this MI comparison, the additional calculation is how much the pointwise-MI variance estimate changes when the sampled table changes. Its probability weights, row and column margins, and pointwise-MI values all change together. I derive that sensitivity, construct the Expanded Welch test from it, and evaluate both.
 
 **Delivery cue:** Move across the columns once. Emphasise the required
 calculation rather than reciting authors.
@@ -385,7 +396,7 @@ equations/definitions at left above pale-blue Wald and pale-peach Expanded
 Welch panels with navy and orange headings. At right use a shared-axis
 density plot with direct labels and
 marked cutoffs. The illustrative df are 5, not an experimental estimate.
-Calculation requirements are introduced on Slide 6 and specified in B3.
+Calculation requirements are introduced on Slide 6 and specified on Slide 22.
 
 **Speaker script:**
 
@@ -402,7 +413,7 @@ Calculation requirements are introduced on Slide 6 and specified in B3.
 **Source:** Thesis Chapters 3–4 and Figure 2.1; quantiles of the standard
 normal distribution and the Student t distribution with 5 degrees of freedom.
 
-### Slide 5 — Approach and contribution
+### Slide 5 — Approach and contributions
 
 **Purpose:** Explain a connected calculation before its final formula.
 
@@ -411,33 +422,37 @@ normal distribution and the Student t distribution with 5 degrees of freedom.
 **Lead:** The estimated pointwise-MI variance changes between samples. We
 approximate that variation and use it to choose the degrees of freedom.
 
-**Derivation chain**
+**Three steps, left to right:**
 
-1. Cell probabilities change: move a small amount of probability towards
-   one cell.
-2. Margins and pointwise MI change: track their joint effect.
-3. Variance sensitivity, derived here: \(g_P(x,y)\) describes the change
-   in \(V(P)\).
-4. Degrees of freedom: use the spread of those sensitivities.
+1. \(\widehat V(P)\) varies between samples: a schematic of the spread of
+   \(\widehat V(P)\) around \(V(P)\), one dot per sample, marked “Schematic,
+   not data”. Each new sample gives a new table, and so a new
+   \(\widehat V(P)\).
+2. Measure that variation:
+   \(\operatorname{Var}\{\widehat V(P)\}\approx\tau^2(P)/n_P\).
+   \(g_P(x,y)\): how much \(V(P)\) changes when a little probability
+   moves to cell \((x,y)\). \(\tau^2(P)\): the variance of
+   \(g_P(X,Y)\). Tags: “Contribution 1: derivation”; “Approximation:
+   first-order expansion”.
+3. Turn it into degrees of freedom: the rule in words,
+   df = 2 × (mean of \(\widehat V\))² / variance of \(\widehat V\), above
+   \(\widehat\nu_P=2n_P\widehat V(P)^2/\widehat\tau^2(P)\), then “More
+   variation → fewer df → larger cutoff”. Tags: “Contribution 2: test
+   construction”; “Approximation: moment matching”.
 
-\[
-\operatorname{Var}\{\widehat V(P)\}\approx\frac{\tau^2(P)}{n_P}
-\quad\Longrightarrow\quad
-\widehat\nu_P=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}.
-\]
+**Bottom strip:** Then: repeat for Q and combine using Welch–Satterthwaite
+into one \(\widehat\nu\) for the Student t cutoff. RQ1 checks both
+approximations (Slides 7–8).
 
-\(\tau^2(P)\) is the variance of \(g_P(X,Y)\). Repeat for Q and combine
-using Welch–Satterthwaite.
-
-**Two approximations evaluated:** first-order sampling expansion; matching a
-scaled chi-squared distribution.
-
-**Layout and evidence:** Follow preferred-reference page 5. Use four short
-connected blocks above, identifying the sensitivity and df as the project's
-calculation. Below, put the result in a pale-blue area with the two
-approximation labels beside it. Define tau-squared locally. Keep the
-expanded derivative in B1. Each block explains a relationship rather than
-merely naming a technical object.
+**Layout and evidence:** Three equal panels joined by arrows, in the deck's
+three-category colours (as on Slide 10): orange on peach for step 1, navy
+on pale blue for step 2, green on pale green for step 3. Each panel has a
+numbered marker and a heading in its colour; the contribution and
+approximation tags use the same colour. The strip below uses the navy
+callout bar. The steps follow the first three paragraphs of the speaker
+script, and the strip follows the fourth. The three derivations are on
+Slides 16–18, and g and tau-squared in full, with a worked example, on
+Slides 19–21. The sketch is schematic and draws on no simulation data.
 
 **Speaker script:**
 
@@ -454,9 +469,9 @@ merely naming a technical object.
 **Transition:** “Known population tables let me check those approximations before assessing test decisions.”
 
 **Source:** Thesis Sections 4.1–4.3; eq:g-final,
-eq:vhat-sampling-variance, eq:nu-p-hat, and eq:expanded-df. B1–B2 retain the
-full derivative and moment-matching argument. The source line also points
-to Slides 16–17 for g and tau-squared in cell probabilities, with a worked example.
+eq:vhat-sampling-variance, eq:nu-p-hat, and eq:expanded-df. The source line
+points to Slides 16–18 for the derivations of these equations, and to
+Slides 19–21 for g and tau-squared in full, with a worked example.
 
 ### Slide 6 — Evaluation design
 
@@ -493,7 +508,7 @@ count as non-rejections; calculation success is reported separately.
 in a navy-headed area at left and settings in an orange-headed area at
 right. Keep sample size and repetition count distinct. Put reporting below.
 State 360 settings each for null and power in speech/notes, without another
-counter. Exact vectors, sample sizes, and requirements are in B3.
+counter. Exact vectors, sample sizes, and requirements are on Slide 22.
 
 **Speaker script:**
 
@@ -545,7 +560,8 @@ a reference at one. The bottom plot uses navy population-based inputs and
 orange sample-based inputs, directly labelled as quantities with parallel
 names. At n=1,000 label the top +19% and the population-based curve −3%. Retain narrow approximate 95%
 Monte Carlo bands. Do not call the sample-based prediction 3% low.
-B4 supplies wider table-size/P/Q context.
+Slide 23 supplies wider table-size/P/Q context; Slide 16 derives both
+approximations.
 
 **Speaker script:**
 
@@ -561,7 +577,7 @@ before the bottom. Say “sampling variance of V-hat”. Tie both annotations to
 **Transition:** “Near independence, an additional separation appears because sampling noise creates apparent association.”
 
 **Source:** Thesis Sections 6.1.1–6.1.2, Figures 6.1–6.2; null-display IDs,
-side=p, k=4, profile=different_skew, MI=.02. B2 retains the numerical df
+side=p, k=4, profile=different_skew, MI=.02. Slide 18's notes retain the numerical df
 consequence of this same example.
 
 ### Slide 8 — RQ1 results: near independence
@@ -601,7 +617,7 @@ colours, with direct labels: “target (measured from 100,000 samples)”,
 MI 0.0001 with a small bracket labelled “about half the target”. The footer
 names the thesis symbols ν_P,mom, mean ν̂_P and ν_P,FO. These are
 quantities, not methods.
-Preserve all seven MI values. The target is not “true t df”. B5 explains
+Preserve all seven MI values. The target is not “true t df”. Slide 24 explains
 the local prediction and compares it with observations.
 
 **Speaker script:**
@@ -712,12 +728,15 @@ small, but it cannot fix bias in the estimated MI difference.
 
 **Layout and evidence:** Native three-row table with the driver in each
 row in bold (0.83, 1.93, 2.06), the definitions immediately below, three
-aligned mechanism panels beneath, and the conclusion at the bottom. Label
+aligned mechanism panels beneath, and the conclusion at the bottom. Tie each
+row to its panel with matching numbered markers at the start of the row
+and beside the panel heading. Each mechanism has its own colour: 1 orange
+(peach panel), 2 navy (blue panel), 3 green (#2E7D5B, pale mint panel). Label
 the settings as illustrative; Slide 9 carries the whole grid. Explain
 average uncertainty misestimation rather than claiming every standard error
 is too small or too big. The comparison supports a diagnostic explanation
 without proving these are the only distributional differences. The footer
-points to B6–B8 for the full grids and B9 for the ordinary Welch
+points to Slides 25–27 for the full grids and Slide 28 for the ordinary Welch
 comparison.
 
 **Speaker script:**
@@ -910,48 +929,224 @@ universal superiority or validated independence-specific replacement test.
 
 ## 7. Backup specifications and navigation
 
-The appendix begins with a title page on physical Slide 14, followed by
-16 backups on physical Slides 15–30: B1–B14, with “B1 continued” and “B1 worked example” straight after B1. They are question material,
-not another section to narrate. Keep the index below in Slide 13's notes;
-do not add a projected index page. Jump by physical slide number
-and return to Slide 13. Preserve the same fonts, equation/panel styles and
+The appendix begins with a title page and index on physical Slide 14,
+followed by 19 backups on physical Slides 15–33. They are question
+material, not another section to narrate. The backups follow the order of
+the talk: Method (supporting Slides 4–5), Evaluation design (Slide 6), RQ1
+(Slides 7–8), RQ2 (Slides 9–10), RQ3 (Slides 11–12), then References.
+Backups have no separate numbers: every reference uses the physical slide
+number, which is also what is typed to jump. Each backup carries a
+top-right breadcrumb naming its group and the main slide it supports, for
+example “Appendix · Method · for Slide 5, step 2”. The index appears on
+Slide 14 and in Slide 13's notes. Jump by physical slide number and return
+to Slide 13. Preserve the same fonts, equation/panel styles and
 readability. Full grid backups retain their explicit parameter legends and
-compact calculation-success strips; their colours differ in meaning from main method
-comparisons, which must be stated when opening one.
+compact calculation-success strips; their colours differ in meaning from
+main method comparisons, which must be stated when opening one.
 
-| Backup | Physical slide | Question addressed |
-| --- | --- | --- |
-| B1 | 15 | Variance sensitivity |
-| B1 continued | 16 | Variance sensitivity in cell probabilities |
-| B1 worked example | 17 | Variance sensitivity: a worked example |
-| B2 | 18 | Moment matching and combined degrees of freedom |
-| B3 | 19 | Population construction, grid, and calculation requirements |
-| B4 | 20 | Approximation ratios across table sizes |
-| B5 | 21 | Near-independence noise calculation |
-| B6 | 22 | Full null results: uniform margins |
-| B7 | 23 | Full null results: same-skew margins |
-| B8 | 24 | Full null results: different-skew margins |
-| B9 | 25 | Ordinary Welch degrees of freedom |
-| B10 | 26 | Full power results: uniform margins |
-| B11 | 27 | Full power results: same-skew margins |
-| B12 | 28 | Full power results: different-skew margins |
-| B13 | 29 | References: MI and testing foundations |
-| B14 | 30 | References: related methods and evaluation |
+Slides 16–18 derive the three equations on Slide 5 at a high level. They
+may be denser than other slides because supervisors may read them through.
+Each is a ladder of numbered steps: the step in words, the equation, and
+the thesis equation number at the right. Derivation 1 uses navy, matching
+Slide 5's step 2; Derivations 2 and 3 use green, matching step 3.
+
+| Slide | Group | Title | Supports |
+| --- | --- | --- | --- |
+| 15 | Method | Bias correction | Slide 4 |
+| 16 | Method | Derivation 1 of 3: how much the variance estimate varies | Slide 5, step 2 |
+| 17 | Method | Derivation 2 of 3: moment matching gives the df rule | Slide 5, step 3 |
+| 18 | Method | Derivation 3 of 3: estimated and combined degrees of freedom | Slide 5, step 3 |
+| 19 | Method | Variance sensitivity in full | Slide 16 |
+| 20 | Method | Variance sensitivity in cell probabilities | Slide 16 |
+| 21 | Method | Worked example: sensitivities and degrees of freedom | Slides 16–20 |
+| 22 | Evaluation design | Population construction, grid, and calculation requirements | Slide 6 |
+| 23 | RQ1 | Approximation ratios across table sizes | Slide 7 |
+| 24 | RQ1 | Near-independence noise calculation | Slide 8 |
+| 25 | RQ2 | Full null results: uniform margins | Slide 9 |
+| 26 | RQ2 | Full null results: same-skew margins | Slide 9 |
+| 27 | RQ2 | Full null results: different-skew margins | Slide 9 |
+| 28 | RQ2 | Ordinary Welch degrees of freedom | Slide 10 |
+| 29 | RQ3 | Full power results: uniform margins | Slides 11–12 |
+| 30 | RQ3 | Full power results: same-skew margins | Slides 11–12 |
+| 31 | RQ3 | Full power results: different-skew margins | Slides 11–12 |
+| 32 | References | References: MI and testing foundations | |
+| 33 | References | References: related methods and evaluation | |
 
 ### Appendix divider — physical Slide 14
 
 **Purpose:** Mark the beginning of the supporting material clearly in the
-slide deck and PDF.
+slide deck and PDF, and index it.
 
-**On screen:** Only the word **Appendix**, in bold Lato (48 pt),
-centred on a white background in the deck's navy colour. Retain the small
-slide number. Do not add an index, explanatory paragraph, figures or data.
+**On screen:** On the left, **Appendix** in bold navy Lato (44 pt), the
+subtitle “Backup slides for questions”, and a quiet hint (“Grouped in the
+order of the talk. To jump, type the slide number and press Enter. Type 13
+to return to the conclusion.”). On the right, beside a light vertical rule,
+the index in two columns. Left column: Method (Slides 4–5), Evaluation
+design (Slide 6) and References, with orange headings. Right column: RQ1
+accuracy (Slides 7–8), RQ2 null results (Slides 9–10) and RQ3 power
+results (Slides 11–12), with navy headings. Each line gives the physical
+slide number in orange and a short title. Retain the small slide number.
+No figures or data.
 
 **Delivery:** No timed speech. Keep the conclusion on Slide 13 visible when
 questions begin, then open the relevant backup when needed and return to
 Slide 13 afterwards. The divider adds no time to the 18:50 main talk.
 
-### B1 / Slide 15 — Variance sensitivity
+### Backup Slide 15 — Bias correction
+
+**Question answered:** Which bias correction do you use, and why does it
+not remove the bias seen on Slides 10 and 12?
+
+**Show:** On the left, the plug-in estimator (thesis Equation 2.7), its
+leading bias (Equation 2.8, Miller 1955), and the bias-corrected
+difference (Equation 3.7), with a note that unequal sample sizes give the
+uncorrected difference a leading bias (Equation 2.9: 2×2, n_P = 50,
+n_Q = 100 gives 0.005 nats). On the right, three cards: the size of the
+leading term (16×16 at n = 1,000: 225/2,000 ≈ 0.11 nats per estimate, over
+five times the MI of 0.02); its cancellation in these simulations (n_P =
+n_Q with equal table sizes, so the corrected difference equals the raw
+plug-in difference); and what remains (higher-order bias that differs
+between distinct tables, as in the different-skew 16×16, n = 1,000 setting:
+true difference −0.01 nats, mean estimate +0.0207). The third card uses
+the green of Slide 10's bias mechanism. A bottom line names estimators
+beyond the leading term: Panzeri–Treves, the jackknife, Chao–Shen
+coverage, and NSB.
+
+**Answer to give:** “Each MI estimate subtracts the leading bias,
+(r − 1)(c − 1) over 2n, which is Miller's correction. In every simulation
+the two samples have the same size and table dimensions, so the two
+corrections are equal and cancel from the difference. What remains is
+higher-order bias, which depends on the whole probability table. Distinct
+tables with equal MI can have different remaining biases, and that shifts
+the estimated difference, as on Slides 10 and 12. Reducing that bias is my
+first next step.”
+
+**Notes:** The leading term is 0.1125 nats per estimate for 16×16 at
+n = 1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes,
+the correction removes the leading unequal-sample bias; its performance
+there is untested (thesis Section 7.2). Corrected estimates can be negative
+and are retained. Empty sampled cells contribute nothing to the plug-in
+sum.
+
+**Source:** Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.5 and
+7.2; Miller (1955); Panzeri and Treves (1996); Paninski (2003); Chao and
+Shen (2003); Nemenman et al. (2002).
+
+### Backup Slide 16 — Derivation 1 of 3: how much the variance estimate varies
+
+**Question answered:** Where does Var{V-hat(P)} ≈ tau-squared(P)/n_P come
+from?
+
+**Show:** A ladder of five numbered steps, each with the step in words,
+the equation, and its thesis reference at the right: (1) the sample table
+as an average of one-observation tables,
+\(\widehat P-P=n_P^{-1}\sum_a(\delta_{Z_a}-P)\) (Equation 4.30); (2) a
+first-order Taylor expansion of V along the line from P to
+\(\widehat P\) (Section 4.3.1); (3) the derivative is linear in the table
+change, so it splits into one term per observation,
+\(\widehat V(P)-V(P)\approx n_P^{-1}\sum_a g_P(Z_a)\), with g the
+derivative along \(P_\varepsilon\) (Equations 4.10, 4.11 and 4.31); (4)
+the sensitivities have mean zero, so
+\(\mathbb E\{\widehat V(P)\}\approx V(P)\) (Equation 4.35); (5)
+independent observations give
+\(\operatorname{Var}\{\widehat V(P)\}\approx\tau^2(P)/n_P\) (Equations
+4.36–4.38). A pale-blue result box repeats both approximations as Slide 5,
+step 2; the step markers are navy to match that step. A note says the
+expansion drops terms quadratic in the cell errors and needs positive cell
+probabilities, that Slide 7 checks both approximations, and that g is
+given in full on Slides 19–20.
+
+**Answer to give:** “V-hat is V evaluated at the sample table, and the
+sample table is an average of one-observation tables. A first-order
+expansion is linear in the table change, so the error in V-hat becomes an
+average of one sensitivity per observation. The sensitivities average to
+zero, so V-hat is centred on V to first order. Because the observations
+are independent, the variance of that average is the variance of one
+sensitivity, tau-squared, divided by n.”
+
+**Notes:** The expansion follows the straight line P + t(P-hat − P) from
+t = 0 to t = 1; the omitted terms are quadratic or higher in the
+cell-probability errors. The derivative of an average table change is the
+average of the one-observation derivatives because the linear term has
+fixed coefficients at P (thesis Section 4.3.1, citing van der Vaart, 1998,
+Chapter 20). Any bias in V-hat comes from terms beyond this linear
+approximation. Slide 7 shows both checks: the mean of V-hat over V, and
+the predicted over the observed variance.
+
+**Source:** Thesis Sections 4.2.1, 4.3.1 and 4.3.2; Equations 4.10, 4.11,
+4.30, 4.31 and 4.35–4.38.
+
+### Backup Slide 17 — Derivation 2 of 3: moment matching gives the df rule
+
+**Question answered:** Why are the component df twice the squared mean
+over the variance, and why does dividing by n_P not change them?
+
+**Show:** Five numbered steps (Equations 4.2–4.7 and the n_P cancellation
+in Section 4.1.2): model V-hat(P) as E{V-hat(P)} times a chi-squared
+variable divided by its df; the chi-squared mean ν and variance 2ν, so the
+model's mean matches for any ν; the model's variance,
+2[E{V-hat(P)}]²/ν; equate it with Var{V-hat(P)} and solve for
+ν_P,mom; and the fixed n_P cancels. A pale-green result box links the
+result to Slide 5's rule in words; the step markers are green to match
+step 3. Two notes: for normal data, s² is exactly σ²χ²_(n−1)/(n − 1), so
+the rule gives ordinary Welch's n − 1 (Slide 28); and moment matching
+motivates the Student t reference but does not establish the standard
+normal numerator, or its independence from the variance estimates.
+
+**Answer to give:** “A variable with a scaled chi-squared distribution has
+variance twice its squared mean divided by its degrees of freedom.
+Matching those two moments to V-hat gives the target. Dividing V-hat by the
+fixed sample size rescales the squared mean and the variance equally, so
+the target is unchanged. For a normal sample variance the same rule gives
+n minus one, which is ordinary Welch. The resulting Student t distribution
+is still an approximation that needs empirical checking.”
+
+**Notes:** For a generic variance estimate U modelled as c times a
+variable with a chi-squared distribution on ν degrees of freedom,
+E(U) = cν and Var(U) = 2c²ν, giving ν = 2[E(U)]²/Var(U). Scaling by
+fixed n leaves this ratio unchanged.
+
+**Source:** Thesis Section 4.1.2, Equations 4.2–4.7; Satterthwaite (1946).
+
+### Backup Slide 18 — Derivation 3 of 3: estimated and combined degrees of freedom
+
+**Question answered:** How do the moments become the formula used in the
+test, and how are P and Q combined?
+
+**Show:** Five numbered steps: substitute Derivation 1 into Derivation 2
+to get ν_P,FO = 2n_P V(P)²/tau-squared(P) (Equation 4.39); read it as two
+over the relative variance of V-hat (Equation 4.40); estimate
+tau-hat-squared from the empirical sensitivities over occupied cells,
+centred explicitly (Equations 4.41–4.42); plug in to get
+ν-hat_P = 2n_P V-hat(P)²/tau-hat-squared(P) (Equation 4.43); and
+moment-match the squared standard error V-hat(P)/n_P + V-hat(Q)/n_Q,
+whose means and variances add because the samples are independent, which
+gives the Welch–Satterthwaite combined ν-hat (Equation 4.44). Below, three
+pale-green cards name the three component df quantities (thesis Table
+4.1): the target ν_P,mom from the sampling moments; the population
+first-order ν_P,FO from V(P), tau-squared(P) and n_P; and the estimate
+ν-hat_P from one table. The source line says Slide 8 compares all three
+and that tau-squared(P) > 0 is required (Assumption 5).
+
+**Answer to give:** “Putting the first-order mean and variance into the
+moment-matching rule gives two n V-squared over tau-squared. That is two
+divided by the relative variance of V-hat, so more relative variation
+gives fewer degrees of freedom. The test replaces V and tau-squared by
+their table estimates, which gives nu-hat for P, and the same for Q. To
+combine them, I apply moment matching once more to the squared standard
+error. The samples are independent, so the variances add, which gives the
+Welch–Satterthwaite formula.”
+
+**Notes:** For the Slide 7 example at n = 1,000, the first-order
+component df are 15.30 against the moment target 21.03: approximately
+(1/1.19)²/0.97 = 0.73. The squared mean enters the target, so the mean
+ratio matters twice. Positive V does not guarantee positive tau-squared;
+a zero component is not an ordinary finite df.
+
+**Source:** Thesis Sections 4.3.3–4.3.4, Equations 4.39–4.44 and Table
+4.1; Satterthwaite (1946); Welch (1947).
+
+### Backup Slide 19 — Variance sensitivity in full
 
 **Question answered:** What exactly did you differentiate, and where do
 the margin terms enter?
@@ -993,7 +1188,7 @@ MI is equivalent to positive V (Appendix A.3), but positive V does not
 guarantee positive tau-squared. Do not treat a zero component as ordinary
 finite df.
 
-### B1 continued / Slide 16 — Variance sensitivity in cell probabilities
+### Backup Slide 20 — Variance sensitivity in cell probabilities
 
 **Question answered:** What are g and tau-squared in familiar terms, and
 what do they reduce to in the cell probabilities?
@@ -1035,7 +1230,7 @@ errors is first order.
 matching), 4.9–4.11 (V, the perturbation, and g), 4.29 (final form of g),
 4.36 (tau-squared) and 4.41–4.43 (estimates).
 
-### B1 worked example / Slide 17 — Variance sensitivity: a worked example
+### Backup Slide 21 — Worked example: sensitivities and degrees of freedom
 
 **Question answered:** Can you show the calculation with numbers?
 
@@ -1062,54 +1257,7 @@ rounded inputs gives 16.67.
 
 **Source:** Thesis Section 4.4.1, Equations 4.41–4.43 and 4.47.
 
-### B2 / Slide 18 — Moment matching and combined degrees of freedom
-
-**Question answered:** Where do the component and combined df formulas
-come from, and why is the Student t distribution approximate?
-
-**Show:** Use the top half for the component target and its substitution:
-
-\[
-\nu_{P,\mathrm{mom}}=
-\frac{2[\mathbb E\{\widehat V(P)\}]^2}
-     {\operatorname{Var}\{\widehat V(P)\}},
-\quad
-\widehat\nu_P=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}.
-\]
-
-Use the bottom half for the combined df, with a clear line break if needed:
-
-\[
-\widehat\nu=
-\frac{\{\widehat V(P)/n_P+\widehat V(Q)/n_Q\}^2}
-{\{\widehat V(P)/n_P\}^2/\widehat\nu_P+
- \{\widehat V(Q)/n_Q\}^2/\widehat\nu_Q}.
-\]
-
-Keep one sentence below: “Moment matching does not establish the standard
-normal numerator, or its independence from the variance estimates, that an
-exact Student t distribution requires.” Put the
-scaled-chi-squared mean/variance derivation in notes rather than forcing
-another four equations onto the slide.
-
-**Answer to give:** “A variable with a scaled chi-squared distribution has
-variance twice its squared mean divided by its degrees of freedom. Matching those two moments
-gives the target. Dividing V-hat by fixed sample size rescales the squared
-mean and variance equally, so it leaves the component target unchanged.
-Independence between the two samples lets their variance contributions add.
-The resulting Student t distribution still requires empirical assessment.”
-
-**Source:** Thesis Sections 4.1 and 4.3, pp. 23–36; Satterthwaite (1946).
-
-**Notes to include:** For a generic variance estimate U modelled as
-c times a variable with a chi-squared distribution on ν degrees of freedom,
-E(U)=cν and Var(U)=2c²ν, giving
-ν=2[E(U)]²/Var(U). Scaling by fixed n leaves this ratio unchanged.
-For the Slide 7 example at n=1,000, first-order component df are 15.30
-against the moment target 21.03: approximately (1/1.19)²/0.97=0.73.
-This explains the squared-mean effect without another main-slide formula.
-
-### B3 / Slide 19 — Population construction, grid, and calculation requirements
+### Backup Slide 22 — Population construction, grid, and calculation requirements
 
 **Question:** How are known-MI populations generated and degenerate
 calculations handled?
@@ -1162,7 +1310,7 @@ and is one association family, not all categorical distributions.
 **Source:** Chapter 5 and Appendix B.1–B.5; current grid CSVs. No
 calibration or four-cell study.
 
-### B4 / Slide 20 — Approximation ratios across table sizes
+### Backup Slide 23 — Approximation ratios across table sizes
 
 **Question:** Is the 4×4 example representative of other sizes and both
 populations?
@@ -1182,14 +1330,14 @@ understood separately.”
 
 **Notes:** Figure 6.2 separately checks how those moment errors affect
 df. In the worked 4×4/n=1,000 case, FO/target is about 0.73 and the exact
-values are 15.30/21.03; B2 explains why. Do not infer the mean of estimated
+values are 15.30/21.03; Slide 18's notes explain why. Do not infer the mean of estimated
 df by inserting mean inputs into a nonlinear ratio. Full current Figure
 6.2 remains in the thesis; it is not needed as another timed slide.
 
 **Source:** Sections 6.1.1–6.1.2, Figures 6.1–6.2, and current moments.csv;
 expected 80 rows: 4 sizes × 10 sample sizes × 2 populations.
 
-### B5 / Slide 21 — Near-independence noise calculation
+### Backup Slide 24 — Near-independence noise calculation
 
 **Question answered:** Why do the mean estimated df remain near five?
 
@@ -1227,7 +1375,7 @@ approximations, which explains their separation.”
 local approximations under fixed dimensions and positive limiting cell
 probabilities, not exact finite-sample distribution identities.
 
-### B6 / Slide 22 — Full null results: uniform margins
+### Backup Slide 25 — Full null results: uniform margins
 
 **Question answered:** What happens outside the highlighted different-skew
 16×16 example?
@@ -1236,9 +1384,9 @@ probabilities, not exact finite-sample distribution identities.
 readable 2×2 grid, with all three MI levels and both methods. Share the
 method and MI legends. Use about 13 pt labels and fewer ticks where
 necessary. Preserve the original y-axis range for each table size and keep
-those ranges identical in B6–B8. Retain the compact calculation-success strips.
+those ranges identical on Slides 25–27. Retain the compact calculation-success strips.
 Use shared labels and a few ticks to keep the four-panel view readable. State the all-repetitions denominator
-in the footer and point to B3 for the calculation requirements.
+in the footer and point to Slide 22 for the calculation requirements.
 
 **Answer to give:** “Under the copying construction, equal MI and uniform
 margins give identical population tables. Their expected MI biases cancel
@@ -1249,12 +1397,12 @@ shared MI changes those patterns.”
 **Source:** Final Figure 6.4 and balanced-null combined rates, uniform
 profile. This page contains all 120 settings for that profile.
 
-### B7 / Slide 23 — Full null results: same-skew margins
+### Backup Slide 26 — Full null results: same-skew margins
 
 **Question answered:** What changes when both populations have the same
 uneven category frequencies?
 
-**Show/layout:** The same layout and scale policy as B6, using all four
+**Show/layout:** The same layout and scale policy as Slide 25, using all four
 panels of Figure 6.5. Label P and Q margins as \(m_k(0.8)\). Retain
 all MI levels, both methods and all ten sample sizes.
 
@@ -1267,12 +1415,12 @@ Expanded Welch lowers those already-low rates further.”
 **Source:** Final Figure 6.5 and balanced-null combined rates, same-skew
 profile. This page contains all 120 settings for that profile.
 
-### B8 / Slide 24 — Full null results: different-skew margins
+### Backup Slide 27 — Full null results: different-skew margins
 
 **Question answered:** Are the severe failures restricted to the largest
 table, and what is visible over the complete margin-specific grid?
 
-**Show/layout:** The same layout and scale policy as B6, using all four
+**Show/layout:** The same layout and scale policy as Slide 25, using all four
 panels of Figure 6.6. Label margins \(m_k(0.7)\) in P and \(m_k(0.8)\)
 in Q. The main diagnostic table uses the .02/n=1,000 slice of these
 populations.
@@ -1291,7 +1439,7 @@ and Expanded Welch 34.38%, with every calculation successful in both
 tests. This is a different shared-MI level from the diagnostic table's
 .02; do not interchange the numbers.
 
-### B9 / Slide 25 — Ordinary Welch degrees of freedom
+### Backup Slide 28 — Ordinary Welch degrees of freedom
 
 **Question answered:** Would ordinary Welch degrees of freedom work as well
 as the MI-specific calculation?
@@ -1337,7 +1485,7 @@ limitation (Section 7.2); the main comparison is with the Wald test.
 
 **Source:** Thesis Section 6.2.5, Table 6.2; Section 7.2.
 
-### B10 / Slide 26 — Full power results: uniform margins
+### Backup Slide 29 — Full power results: uniform margins
 
 **Question:** How does absolute power change with MI gap, sample size, and table size under uniform margins?
 
@@ -1357,7 +1505,7 @@ sample sizes.”
 denominator=all. At n=10,000 and gap=.01, EW is 89.44% for 2×2 and 71.12%
 for 16×16. These values describe the stated population family.
 
-### B11 / Slide 27 — Full power results: same-skew margins
+### Backup Slide 30 — Full power results: same-skew margins
 
 **Question answered:** Do the power patterns also occur when both groups
 have the same uneven margins?
@@ -1377,7 +1525,7 @@ smaller than these gap and setting effects at larger sample sizes.”
 **Source:** Final Figure 6.8; Section 6.3.2; MI-gap combined rates,
 same-skew profile. This page contains all 120 settings for that profile.
 
-### B12 / Slide 28 — Full power results: different-skew margins
+### Backup Slide 31 — Full power results: different-skew margins
 
 **Question:** How does the bias-related failure vary with gap and table
 size?
@@ -1401,26 +1549,27 @@ Do not apply that conditional percentage to the entire grid or all
 **Source:** Section 6.3.3, Figure 6.9, and current power CSVs,
 profile=different_skew, denominator=all.
 
-### B13 / Slide 29 — References: MI and testing foundations
+### Backup Slide 32 — References: MI and testing foundations
 
 **Show/layout:** Follow preferred-reference page 25 and donor Slide 11's two-column bibliography,
-using three entries per column, in Lato 14.5 pt with comfortable
+using four entries in the left column and three in the right, in Lato 14.5 pt with comfortable
 paragraph spacing. Keep the common 28 pt black title and
 white background. Use author, year, title, venue and DOI/URL where supplied.
 Do not use a screenshot of a bibliography page. Retain published spelling
 and names. Exact bibliographic text comes from the thesis `references.bib`.
 
 Include these keys: `bossomaier2016`, `moddemeijer1989`, `paninski2003`,
-`mora2009`, `satterthwaite1946`, `welch1947`.
+`miller1955`, `mora2009`, `satterthwaite1946`, `welch1947`.
 
 **Speech:** No prepared narration. Use this page if a source is requested.
 It is not part of the 20-minute talk.
 
-### B14 / Slide 30 — References: related methods and evaluation
+### Backup Slide 33 — References: related methods and evaluation
 
-**Show/layout:** Four entries, two per column, in the same style and at the
-same readable size as B13. Include `hutcheson1970`, `panwall2002`,
-`morris2019`, `wald1943`.
+**Show/layout:** Seven entries, four in the left column and three in the
+right, in alphabetical order, in the same style and at the same readable
+size as Slide 32. Include `chaoshen2003`, `hutcheson1970`, `morris2019`,
+`nemenman2002`, `panwall2002`, `panzeri1996`, `wald1943`.
 
 **Speech:** No prepared narration. Do not add another thank-you or
 conclusion page after the references.
@@ -1434,26 +1583,28 @@ a proposed extension.
 
 | Likely question | Suggested answer and boundary | Destination |
 | --- | --- | --- |
-| What exactly is new here? | “The MI first-order variance and the general Satterthwaite principle are established. I derive the MI variance sensitivity including the changing margins, use it for component df, and evaluate where the resulting approximation succeeds or fails.” Avoid a claim of global priority beyond the literature review. | B1–B2 |
-| Why not just use sample size minus one? | “That assignment follows from the ordinary sample-variance distribution under normal sampling. An estimated pointwise-MI variance depends on changing probabilities and log ratios, so I calculate its sampling variability instead.” | B1–B2, B9 |
-| Why does moment matching imply a Student t test? | “It motivates an approximate reference distribution. Matching a variance component to a scaled chi-squared distribution does not establish the standard normal numerator, or its independence from the variance estimates, that an exact Student t distribution requires.” | B2 |
-| How is equal MI different from equal distributions? | “Distinct tables can have the same probability-weighted MI average. The different-skew null settings explicitly test that weaker hypothesis, allowing the tables and remaining estimation biases to differ.” | B3, B8 |
-| Would a label-permutation test solve this? | “A simple pooled label permutation is exact under identical distributions. Equal MI alone does not give that exchangeability. A specialised parameter-valid permutation procedure would need its own justification.” Do not claim every permutation method is invalid. | B3; thesis Section 2.4 |
+| What exactly is new here? | “The MI first-order variance and the general Satterthwaite principle are established. I derive the MI variance sensitivity including the changing margins, use it for component df, and evaluate where the resulting approximation succeeds or fails.” Avoid a claim of global priority beyond the literature review. | Slides 16–20 |
+| Why not just use sample size minus one? | “That assignment follows from the ordinary sample-variance distribution under normal sampling. An estimated pointwise-MI variance depends on changing probabilities and log ratios, so I calculate its sampling variability instead.” | Slides 17 and 28 |
+| Why does moment matching imply a Student t test? | “It motivates an approximate reference distribution. Matching a variance component to a scaled chi-squared distribution does not establish the standard normal numerator, or its independence from the variance estimates, that an exact Student t distribution requires.” | Slide 17 |
+| Where does the variance of V-hat come from? | “V-hat is V at the sample table, which is an average of one-observation tables. A first-order expansion turns its error into an average of one sensitivity per observation, so its variance is tau-squared over n.” | Slide 16 |
+| How are the two component df combined? | “By moment matching once more, now on the squared standard error. The samples are independent, so the variances add, which gives the Welch–Satterthwaite formula.” | Slide 18 |
+| How is equal MI different from equal distributions? | “Distinct tables can have the same probability-weighted MI average. The different-skew null settings explicitly test that weaker hypothesis, allowing the tables and remaining estimation biases to differ.” | Slides 22 and 27 |
+| Would a label-permutation test solve this? | “A simple pooled label permutation is exact under identical distributions. Equal MI alone does not give that exchangeability. A specialised parameter-valid permutation procedure would need its own justification.” Do not claim every permutation method is invalid. | Slide 22; thesis Section 2.4 |
 | Why use only Wald as the comparator? | “It isolates the effect of changing the reference cutoff while sharing the same estimates and statistic. The study does not establish superiority over bootstrap methods or other MI estimators.” | Slide 13 |
 | Why evaluate power when its ordering is already known? | “The ordering follows from the testing rules, but its magnitude and dependence on sample size, gap, and margins require evaluation. The biased examples also show why rejection can fail to identify the true direction.” | Slides 11–12 |
 | Is this a fair power comparison if actual false-positive rates differ? | “It compares the methods under their usual nominal testing rules. It is not a comparison at a common achieved false-positive rate, and I interpret it alongside the null results.” Do not describe an abandoned fitted-threshold experiment. | Slide 11 |
-| Why does stronger population separation sometimes lower power? | “A persistent positive bias can oppose the negative true difference. Making that true difference more negative initially moves the sampling centre closer to zero, reducing positive-tail rejection before negative-tail rejection recovers.” | B12; Section 6.3.3 |
+| Why does stronger population separation sometimes lower power? | “A persistent positive bias can oppose the negative true difference. Making that true difference more negative initially moves the sampling centre closer to zero, reducing positive-tail rejection before negative-tail rejection recovers.” | Slide 31; Section 6.3.3 |
 | Are wrong-direction rejections excluded from power? | “No. The tests are two-sided, so both directions count. I report the sign separately to show that detecting some difference does not necessarily identify which population has greater MI.” | Slide 12 |
-| Why do estimated df stay near five at almost zero MI? | “Sampling creates apparent association. The quadratic approximation retains it and gives approximately G/2 for the component df, rather than n times population MI alone.” | B5 |
-| Is the moment target the correct t df? | “It is the target defined by matching the actual first two moments of the variance estimate. It is not a guarantee that the statistic follows a Student t distribution.” | B2, B5 |
-| Could unsuccessful calculations explain the low rejection? | “They contribute at some small sample sizes. I report calculation success separately. Important conservative ranges and the highlighted excessive-rejection cases persist when every calculation succeeds.” | B3; Slides 9–10 and B6–B8 |
-| Why count unsuccessful calculations as non-rejections? | “That reports the full implemented procedure's ability to reject. Restricting to successful calculations would condition on a selected subset. Reporting calculation success separately makes the distinction visible.” | B3 |
-| Does the leading bias correction matter with equal sample sizes? | “For the shared fixed table dimensions, the corrections cancel exactly. Residual biases can still differ. The general method allows unequal sample sizes, but the simulations do not assess the correction's unequal-sample performance.” | B3; thesis Section 5.5 |
-| Why one construction and equal row/column margins? | “They give a controlled family where I can vary MI and sparsity while preserving chosen margins. The balanced grid is broad within that family, but other association patterns and unequal margins remain a limitation.” | B3, B6–B12 |
+| Why do estimated df stay near five at almost zero MI? | “Sampling creates apparent association. The quadratic approximation retains it and gives approximately G/2 for the component df, rather than n times population MI alone.” | Slide 24 |
+| Is the moment target the correct t df? | “It is the target defined by matching the actual first two moments of the variance estimate. It is not a guarantee that the statistic follows a Student t distribution.” | Slides 17 and 24 |
+| Could unsuccessful calculations explain the low rejection? | “They contribute at some small sample sizes. I report calculation success separately. Important conservative ranges and the highlighted excessive-rejection cases persist when every calculation succeeds.” | Slides 9–10, 22 and 25–27 |
+| Why count unsuccessful calculations as non-rejections? | “That reports the full implemented procedure's ability to reject. Restricting to successful calculations would condition on a selected subset. Reporting calculation success separately makes the distinction visible.” | Slide 22 |
+| Does the leading bias correction matter with equal sample sizes? | “For the shared fixed table dimensions, the corrections cancel exactly. Residual biases can still differ. The general method allows unequal sample sizes, but the simulations do not assess the correction's unequal-sample performance.” | Slide 15; thesis Section 5.5 |
+| Why one construction and equal row/column margins? | “They give a controlled family where I can vary MI and sparsity while preserving chosen margins. The balanced grid is broad within that family, but other association patterns and unequal margins remain a limitation.” | Slides 22 and 25–31 |
 | Can you recommend Expanded Welch for a new dataset? | “The evidence supports conditional improvements rather than a universal choice. In sparse settings, both methods can be inaccurate even when every calculation succeeds.” | Slides 9–13 |
 | Why judge accuracy with a 4–6% band? | “The band is only descriptive: 4–6% gives 130 settings for Wald and 136 for Expanded Welch, but 4.5–5.5% gives 105 and 98. The answer rests on the pattern on Slide 9 and the mechanisms on Slide 10, not on a band.” | Slides 9–10 |
 | Did you apply the tests to real data? | “Yes. Thesis Section 6.4 compares month–purchase and weekend–purchase MI between new and returning visitors in the Online Shoppers data. I left it out of this talk because unknown population tables cannot show which test is accurate; the known-population simulations carry that evidence.” | Thesis Section 6.4 |
-| How much computation does one test require? | “The calculations use a fixed number of scans of an r-by-c table, so time and working memory are O(rc). I have not used this presentation to claim a measured runtime advantage over resampling.” | B1–B2; thesis Section 4.4 |
+| How much computation does one test require? | “The calculations use a fixed number of scans of an r-by-c table, so time and working memory are O(rc). I have not used this presentation to claim a measured runtime advantage over resampling.” | Slides 16–20; thesis Section 4.4 |
 
 If a requested comparison was not performed, name that limitation and the
 specific result established here. Do not invent a broader conclusion.
@@ -1540,7 +1691,7 @@ Timing remains provisional until a complete timed rehearsal.
   the **share of wrong-direction rejections across the different-skew
   grid**. These are summaries of the existing results, not new experiments.
 - Keep component and combined df distinct; distinguish the moment target
-  from an exact Student t distribution. B1's derivative is exact under its
+  from an exact Student t distribution. The derivative of V (Slide 19) is exact under its
   population assumptions; its sampling expansion is first order.
 - Slide 12's conditional denominator is 9,662 EW rejections: 9,659 positive,
   3 negative. Do not turn over 99.9% into a percentage of all repetitions.
@@ -1571,9 +1722,9 @@ Timing remains provisional until a complete timed rehearsal.
 Under `/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/`, the current
 version:
 
-- `Daniel_Zhao_Welch_MI_Presentation.pptx`: 13 main slides, one appendix title slide and 14 backup slides,
+- `Daniel_Zhao_Welch_MI_Presentation.pptx`: 13 main slides, one appendix title slide and 19 backup slides,
   editable text/equations/tables, complete notes.
-- `Daniel_Zhao_Welch_MI_Presentation.pdf`: matching 28-page PDF, including
+- `Daniel_Zhao_Welch_MI_Presentation.pdf`: matching 33-page PDF, including
   backups and references, suitable for upload.
 - `Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md`: final speech,
   timings, cues and short route, synchronised after rehearsal.
@@ -1614,6 +1765,110 @@ removed calibration and four-cell studies stay excluded. No new analysis
 is needed for this replan: its figures select existing results.
 
 ## 11. Revision and verification record
+
+**Appendix reorganised, with three derivation slides (13 November):** The
+backups now follow the order of the talk: Method (Slides 15–21, supporting
+Slides 4–5), Evaluation design (Slide 22), RQ1 (Slides 23–24), RQ2 (Slides
+25–28), RQ3 (Slides 29–31) and References (Slides 32–33). B numbers are
+retired: every pointer on the slides, in the notes and in this plan uses
+the physical slide number, and each backup carries a top-right breadcrumb
+naming its group and the main slide it supports. Three new backups derive
+Slide 5's equations at a high level, as ladders of numbered steps with
+thesis equation numbers: Slide 16, Var{V-hat(P)} ≈ tau-squared(P)/n_P
+(Sections 4.2.1 and 4.3.1–4.3.2); Slide 17, moment matching (Section
+4.1.2); and Slide 18, the estimated and combined df (Sections
+4.3.3–4.3.4). The former “Moment matching and combined degrees of freedom”
+backup is absorbed into Slides 17 and 18, including its caveat, answer and
+notes. The exact derivative, the cell-probability grid and the worked
+example follow the derivations on Slides 19–21, and the first and third
+are retitled. Slide 14's index, Slide 13's notes index, the source lines
+on Slides 3–11, Slide 5's source field, Slide 7's source note and the
+question destinations are updated. Section 7 is rewritten with a new index
+table, and its backup sections are renamed “Backup Slide N” and reordered;
+plan_notes.py reads them by slide number. Two questions are added for the
+derivations. The deck has 33 slides. Entries below keep the B numbers of
+their time.
+
+**Slide 5 redesign (13 November):** The draft on Slide 32 was approved
+and now replaces Slide 5; Slide 32 is removed, so the deck again has 31
+slides. The three steps now use the deck's three-category colours: orange
+(step 1), navy (step 2), and green (step 3), including their markers,
+headings, contribution tags and approximation labels. Slide 5's on-slide
+content and layout above are rewritten to match; its script, timing,
+transition and source are unchanged. All other slides are unchanged.
+
+**Draft Slide 5 for review (13 November):** A proposed replacement for
+Slide 5 is appended as Slide 32, labelled “Draft: new Slide 5”. It shows
+three steps that follow the first three paragraphs of the Slide 5 script:
+V-hat(P) varies between samples, with a schematic spread that uses no data;
+Var{V-hat(P)} ≈ tau-squared(P)/n_P, with g and tau-squared defined in words;
+and the moment-matching rule in words above the component df formula, with
+the consequence “more variation → fewer df → larger cutoff”. Steps 2 and 3
+carry Contribution 1 and 2 tags and name their approximations. A bottom
+strip covers combining P and Q and points to RQ1. Slides 1–31 are
+byte-identical to the previous build. Slide 5's section above is unchanged
+until the draft is approved.
+
+**Bias-correction backup (13 November):** A new backup, B4 (physical
+Slide 20), shows the plug-in estimator, its leading bias, and the
+bias-corrected difference (thesis Equations 2.7–2.9 and 3.7), and explains
+why the correction cancels in these equal-sample simulations, leaving the
+higher-order bias seen on Slides 10 and 12. Former B4–B14 are now B5–B15
+on physical Slides 21–31. All references to them were renumbered: slide
+labels, footers, the appendix index on Slide 14, Slide 13's notes index,
+this plan's backup sections and question destinations, the README, and the
+script doc's jump table. Earlier revision entries keep the numbers that
+were correct when written. Slides 4 and 10 now point to B4. The references
+add Miller (1955), Panzeri and Treves (1996), Chao and Shen (2003), and
+Nemenman et al. (2002). The deck in `Thesis Presentation/` was updated in
+place.
+
+**Slide 10 colours (13 November):** The third mechanism, bias in the MI
+difference, now has its own colour: a muted green (#2E7D5B) marker and
+heading on a pale mint panel (#EAF4EE), so the three mechanisms read as
+orange, navy and green in both the table and the panels. (A plum was tried
+first and replaced with green the same day.) Nothing else changed.
+
+**Hats in the preview and other viewers (13 November):** Renderers without
+Office maths (the LibreOffice preview PDF, and likely Keynote or Quick
+Look) show each inline symbol's fallback text. A hat on a Unicode
+maths-italic letter (for example 𝑉̂) sat to the left of the letter there.
+The fallbacks for V̂, V̂(P), Î(P) and p̂ now use a plain Latin letter in
+Times New Roman italic with a combining hat, which every tested renderer
+centres; Δ̂ uses Georgia, and ν̂ keeps its maths-italic form, which already
+rendered well. Where a plain V sits beside a hatted one (Slides 4, 7 and
+B4), it now uses the same inline-maths construction, so both letters match
+in either renderer. Slide 17's p̂ is now inline maths too. PowerPoint
+still shows native Office maths. Checked on Slides 4, 6, 7, 8, 17, 20 and
+21; nothing else changed.
+
+**Supervisor feedback on Slide 2 (13 November):** Each population box on
+Slide 2 now reads “n observed pairs (X, Y)”, and the left heading reads
+“Two populations, the same two discrete variables”. One line beneath the
+diagram reads “Both variables are discrete (categorical), giving count
+tables.” An earlier version of that line also defined P and Q as joint
+probability tables of X and Y; that part was dropped the same day as
+unnecessary, and the speaker script still says it. A one-sentence illustrative example sits above the
+question: X = mid-semester test grade, Y = final exam grade; P = students
+before generative AI, Q = students after. The footer notes that the
+example is not thesis data. The Slide 2 script adds these points (about 60
+more words; Slide 2 still fits its 1:15). No other slide changed. The deck
+in `Thesis Presentation/` was updated in place.
+
+**Review fixes (12 November):** Four changes from a full review of the
+deck. Slide 10's table rows and explanation panels now carry matching
+numbered markers (1 orange, 2 navy, 3 orange), and the panels are slightly
+taller so the third holds its three lines. Slide 14 now shows the backup
+index, grouped by method, research question, and references, with each
+physical slide number, beside “Appendix” and a jump hint. The captions on
+Slides 9 and 12 break after their first sentence, so no word sits alone,
+and Slide 12's caption sits lower, clear of the axis label. Slide 3's strip
+now reads “Contributions: Derive that sensitivity, construct the Expanded
+Welch test from it, and evaluate both empirically.”, matching Slide 13,
+and Slide 5 is titled “Approach and contributions”. Slide 3's script ends
+“I derive that sensitivity, construct the Expanded Welch test from it, and
+evaluate both.” (six more words). The deck in `Thesis Presentation/` was
+updated in place.
 
 **Conclusion slide split (11 November):** Slide 13's “Contribution and
 findings” row is now two separate elements. “Contributions” shows the

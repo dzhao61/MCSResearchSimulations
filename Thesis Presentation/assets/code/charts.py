@@ -407,9 +407,40 @@ def backups_grid():
                     {k: 50 for k in lims}, "Power (%)", f"B{10 + i}_power_{prof}", False)
 
 
+# ---------------------------------------------------------------- Slide 5 (schematic, no data)
+def slide05():
+    """Schematic spread of the variance estimate over repeated samples. No simulation data."""
+    fig, ax = plt.subplots(figsize=(3.45, 1.85))
+    fig.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.2)
+    fig.patch.set_alpha(0)                       # transparent, so the slide panel shows through
+    ax.patch.set_alpha(0)
+    x = np.linspace(0, 4.2, 801)
+    y = stats.gamma.pdf(x, 6, scale=0.25)
+    ax.fill_between(x, 0, y, color=ORANGE, alpha=0.14, lw=0)
+    ax.plot(x, y, color=ORANGE, lw=2.0)
+    v = 1.5                                      # the mean, near V(P)
+    ax.vlines(v, 0, y.max() * 1.08, color=NAVY, lw=1.3, ls=(0, (4, 3)))
+    ax.text(v + 0.06, y.max() * 1.02, r"$V(P)$", color=NAVY, fontsize=12.5, fontweight="bold", ha="left")
+    for xs in (0.86, 1.12, 1.36, 1.58, 1.85, 2.3):
+        ax.plot([xs], [-0.035], marker="o", ms=4.2, color=ORANGE, clip_on=False)
+    h = y.max() * 0.42
+    lo, hi = v - 0.61, v + 0.61                  # one standard deviation either side
+    ax.annotate("", xy=(lo, h), xytext=(hi, h), arrowprops=dict(arrowstyle="<->", color=CHARCOAL, lw=1.1))
+    ax.text(v - 0.1, h + 0.03, "spread", color=CHARCOAL, fontsize=12, va="bottom", ha="right")
+    ax.set_yticks([])
+    ax.set_xticks([])
+    ax.spines["left"].set_visible(False)
+    ax.set_xlim(0, 4.2)
+    ax.set_ylim(-0.07, y.max() * 1.2)
+    ax.spines["bottom"].set_position(("data", -0.07))
+    ax.set_xlabel("Each dot: one sample’s estimate", labelpad=4)
+    save(fig, "slide05_vhat_spread")
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     slide04()
+    slide05()
     slide07()
     slide08()
     slide09()
