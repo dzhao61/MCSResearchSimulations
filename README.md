@@ -11,7 +11,8 @@ presentation remain in their existing folders.
 The current thesis source is
 `Simulations/Thesis Writeup/Welch MI/main.tex`. Its named delivery files are
 in that thesis folder's `deliverables/` directory. The current presentation
-is `Thesis Presentation/Daniel_Zhao_Welch_MI_Presentation.pptx`.
+is `Thesis Presentation/Daniel_Zhao_Welch_MI_Presentation_Final.pptx`.
+Presentation upload files are in [Thesis Presentation/Submission](Thesis%20Presentation/Submission/).
 
 Read [the scientific workspace instructions](Simulations/AGENTS.md) before
 working on the thesis or experiments. The existing numerical environment

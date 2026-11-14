@@ -169,14 +169,27 @@ into a background. No university logo is added by default.
 
 ### Chart meanings
 
-- Main method comparisons: navy Wald, solid/filled circles; orange
-  Expanded Welch, dashed/open squares. Keep overlaps real.
+- Grid method encodings: solid/filled circles for Wald and dashed/open
+  squares for Expanded Welch. Keep overlaps real.
+- Three-colour rule: orange is primary, navy secondary and green third.
+  Every set of boxes (panels, cards, steps, populations) takes these
+  colours by position: the first box orange, the second navy and the
+  third green. Charts on the same slide follow their boxes (Slide 4's
+  Expanded Welch curve is green, like its box). Where a chart's colours
+  carry a fixed meaning, order the boxes to match rather than recolour the
+  chart (Slide 8 puts the sample-based panel first). Column headers stay
+  neutral when rows carry the category colours. Items listed inside one
+  box (Slide 6's research questions) and a single flow of steps (Slide 2's
+  statistical task) keep one colour.
 - RQ1: colours identify quantities. Slide 7 uses navy population-based
-  inputs and orange sample-based inputs. Slide 8 keeps those meanings:
-  charcoal target, orange sample-based estimate and dotted navy
-  population-based value. Label directly.
-- Full grid backups retain thesis parameter colours for shared MI/gap,
-  with solid circles versus dashed squares identifying methods. Supply
+  inputs and orange sample-based inputs, with the mean in neutral
+  charcoal. Slide 8 keeps those meanings: orange sample-based estimate,
+  dotted navy population-based value and green target; Slide 18's df
+  cards follow the same order and colours. Label directly.
+- Full grid backups colour the three shared MI or gap levels orange,
+  navy and green, with solid circles versus dashed squares identifying
+  methods. Slide 23 colours its four table sizes orange, navy, green and
+  grey. Supply
   explicit legends and announce that encoding when opening a backup.
 - Mark the ten observed sample sizes. Use logarithmic sample-size axes
   where specified. Lines guide the eye between tested points.
@@ -297,8 +310,9 @@ table. Estimate MI from each table. Assess whether sampling noise can explain th
 **Layout and evidence:** Adapt preferred-reference page 2. Put both
 hypotheses, as in thesis Equation 1.1, on one line in a shallow peach
 area labelled “Hypotheses”. At left align the two populations,
-generic table icons and their MI estimates; at right use three connected
-task steps. The icons are schematic and encode no counts. Show no dataset,
+generic table icons and their MI estimates, with P in orange (peach box,
+orange tints) and Q in navy (blue box, navy tints); at right use three
+connected task steps: two outlined in orange, then the last filled orange. The icons are schematic and encode no counts. Show no dataset,
 sample sizes or estimated values. Each population box reads “n observed
 pairs (X, Y)”, and the heading says the variables are discrete. One line
 beneath the diagram reads “Both variables are discrete (categorical),
@@ -392,10 +406,14 @@ it from one sampled table.
 illustration; cutoff about ±2.57.
 
 **Layout and evidence:** Follow preferred-reference page 4. Put shared
-equations/definitions at left above pale-blue Wald and pale-peach Expanded
-Welch panels with navy and orange headings. At right use a shared-axis
-density plot with direct labels and
-marked cutoffs. The illustrative df are 5, not an experimental estimate.
+equations/definitions at left in a peach panel, above pale-blue Wald and
+pale-green Expanded Welch panels with navy and green headings. At right use
+a shared-axis density plot with a line key above it (solid navy “Standard
+normal (Wald)”, dashed green “Student t, 5 df (Expanded Welch)”), marked
+cutoffs, and a
+small label for the shaded 5% rejection region of t. The plot spans the
+same height as the left column, with its caption level with the bottom of
+the two test panels. The illustrative df are 5, not an experimental estimate.
 Calculation requirements are introduced on Slide 6 and specified on Slide 22.
 
 **Speaker script:**
@@ -505,8 +523,8 @@ the target MI.
 count as non-rejections; calculation success is reported separately.
 
 **Layout and evidence:** Follow preferred-reference page 6. Put questions
-in a navy-headed area at left and settings in an orange-headed area at
-right. Keep sample size and repetition count distinct. Put reporting below.
+in an orange-headed peach area at left, with RQ1, RQ2 and RQ3 all marked
+orange, and settings in a navy-headed blue area at right. Keep sample size and repetition count distinct. Put reporting below.
 State 360 settings each for null and power in speech/notes, without another
 counter. Exact vectors, sample sizes, and requirements are on Slide 22.
 
@@ -536,9 +554,13 @@ first-order sampling-variance prediction is accurate.
 
 **Setting:** Different-skew P; 4×4; population MI 0.02 nats.
 
-- Top plot: mean of \(\widehat V\) / population \(V\).
-- Bottom plot: predicted / observed sampling variance of \(\widehat V\).
-- Bottom curves: population-based inputs; sample-based inputs.
+- Top plot, headed “Mean check: \(\mathbb E(\widehat V)\) ÷ \(V\)”.
+- Bottom plot, headed “Variance check: \(\tau^2/n\) ÷
+  \(\operatorname{Var}(\widehat V)\)”, followed by “predicted ÷ actual
+  sampling variance” in grey.
+- Bottom lines: “true \(\tau^2\) (population-based)”; “mean estimated
+  \(\widehat\tau^2\) (sample-based)”. Both plots mark the line at one
+  “1 = exact”.
 
 **Mean: rare cells can inflate it.** Newly observed rare cells can have
 large pointwise-MI deviations, whose squares raise V-hat.
@@ -593,12 +615,12 @@ about half the target.
 
 **Setting:** Different-skew P; 4×4; n=1,000 fixed.
 
+**Sample-based: noise keeps it near 5:** Quadratic sampling errors create
+apparent association, which remains in each sample's calculation.
+
 **Population-based: falls to about n × MI:** Inserts known population
 inputs into the first-order formula. Near independence it is about
 n × population MI, which heads to zero.
-
-**Sample-based: noise keeps it near 5:** Quadratic sampling errors create
-apparent association, which remains in each sample's calculation.
 
 **At MI 0.0001:** target ≈9.1; mean sample-based estimate ≈4.9;
 population-based value ≈0.1.
@@ -609,26 +631,30 @@ mean and variance of V-hat across 100,000 samples.
 **Layout and evidence:** Follow preferred-reference page 8. Place a large
 chart at left, two short explanations at right and one numerical callout
 beneath them. Plot df_mean, nu_mom and nu_fo for the P/4×4/n=1,000
-association-display rows against MI, both axes logarithmic and labelled
-as such. Use charcoal for the target, orange for the sample-based estimate
-and dotted navy for the population-based value, matching Slide 7's
-colours, with direct labels: “target (measured from 100,000 samples)”,
-“mean sample-based estimate” and “population-based value”. Mark the gap at
-MI 0.0001 with a small bracket labelled “about half the target”. The footer
-names the thesis symbols ν_P,mom, mean ν̂_P and ν_P,FO. These are
+association-display rows against MI. MI is logarithmic and labelled as
+such; degrees of freedom are linear (0–40), so “about half the target”
+reads directly and the population-based value visibly sits near zero. Use
+green for the target, orange for the sample-based estimate and dotted
+navy for the population-based value, matching Slide 7's colours. A key at
+the top left, above the 40 gridline, names each line with its formula, in
+the order of the chain: “Target ν_P,mom = 2[E(V̂)]²/Var(V̂)”,
+“Population-based first order ν_P,FO = 2nV²/τ²” and “Mean sample-based
+estimate ν̂_P = 2nV̂²/τ̂²”. Mark the gap at MI 0.0001 with a small bracket,
+labelled “estimate 4.9 vs target 9.1” just above the target line. The footer
+points to Slide 18 for the definitions of the three lines. These are
 quantities, not methods.
 Preserve all seven MI values. The target is not “true t df”. Slide 24 explains
 the local prediction and compares it with observations.
 
 **Speaker script:**
 
-> Here sample size stays at one thousand while population MI approaches zero. Start with the charcoal line: this is the moment-matching target, calculated from the mean and variance of V-hat across 100,000 sampled tables. It is our benchmark for the component degrees of freedom.
+> Here sample size stays at one thousand while population MI approaches zero. Start with the green line: this is the moment-matching target, calculated from the mean and variance of V-hat across 100,000 sampled tables. It is our benchmark for the component degrees of freedom.
 
 > The dotted navy line instead uses population inputs in the first-order formula. The orange line averages the component degrees of freedom estimated from each sampled table. At the weakest association, the target is about nine, the population-based value is about 0.1, and the mean sample-based estimate is about five, or half the target.
 
 > Random count fluctuations can make sampled tables look associated even when the variables are independent in the population. At independence, the linear sampling contribution vanishes, but variation from squared probability errors remains. These are the quadratic terms omitted by the first-order calculation. The sample-based calculation retains apparent association, keeping its mean positive. A calculation that includes this sampling noise predicts about 4.6, close to the observed 4.9.
 
-**Delivery cue:** Pause when the graph appears. Introduce the charcoal target first, then dotted navy population-based values and orange mean sample-based estimates. Point to the weakest-association end. Preserve this slide in every shorter route. Matching the target does not prove an exact Student t distribution.
+**Delivery cue:** Pause when the graph appears. Introduce the green target first, then dotted navy population-based values and orange mean sample-based estimates. Point to the weakest-association end. Preserve this slide in every shorter route. Matching the target does not prove an exact Student t distribution.
 
 **Transition:** “The decision-level question is whether the larger cutoff brings false positives towards five percent.”
 
@@ -663,9 +689,13 @@ Dashed lines: the 5% target.
 
 **Layout and evidence:** One scatter of all 360 null settings at left:
 Wald false-positive rate on the horizontal axis, Expanded Welch on the
-vertical, both logarithmic, with the diagonal, dashed 5% lines and lightly
-shaded halves (“Wald too low”, “Wald too high”). Circle and label the two
-thesis examples. Panels and callout at right. Counts are tallies of the
+vertical, both linear from 0% to 40%, with the diagonal, dashed 5% lines and lightly
+shaded halves. Label all four quadrants: “Both too high” (top right);
+“Wald too high, Expanded Welch too low” (bottom right); “Wald too low,
+Expanded Welch too high: none” (top left, rotated in the narrow strip);
+and “Both too low” inside an enlarged inset of the crowded 0–6% corner,
+which is boxed on the main chart and joined to the inset. Circle and
+label the two thesis examples. Panels and callout at right. Counts are tallies of the
 balanced null rates using all 100,000 repetitions per setting, with
 unsuccessful calculations counted as non-rejections; two settings have a
 Wald rate of exactly 5%. Report both directions of change, never a
@@ -825,11 +855,21 @@ rejections with the wrong sign.
 estimate +0.0207. Expanded Welch rejects in 9.66% of repetitions, and over
 99.9% of those point the wrong way.
 
-**Bias outweighs the gap:** A larger cutoff cannot remove bias; more data
-can. By n = 10,000, under 0.4% of rejections point the wrong way.
+**Higher-order bias outweighs the gap** (three bullets):
+- **Leading term:** 0.11 nats each; equal n cancels it.
+- **Higher-order bias:** differs between P’s and Q’s margins, shifting the
+  difference by +0.031 nats (3× the gap).
+- **Fix:** more data, not a larger cutoff.
 
-**All 360 power settings:** at least 90% wrong in 28, all with
-different-skew margins.
+(Leading term: (16 − 1)²/(2 × 1,000) = 0.1125 nats for each estimate,
+identical for P and Q. Shift: mean estimate +0.0207 minus true difference
+−0.0100 = +0.0307 nats. Thesis Equations 2.8 and 3.7; Section 5.5.)
+
+**Across all 360 power settings,** 28 have at least 90% of rejections
+pointing the wrong way. All 28 are 8×8 or 16×16 with different-skew
+margins. (By gap 0.005/0.01/0.02: 8×8 has 4/4/2 and 16×16 has 6/6/6, all
+at n = 20 to 1,000; Expanded Welch rejects in about 1–20% of repetitions
+in these settings.)
 
 **Chart note:** Percentages are rounded. A value of 50% means half the
 rejections have the wrong estimated sign.
@@ -838,7 +878,9 @@ rejections have the wrong estimated sign.
 size (columns) for different-skew margins and the 0.01-nat gap, each cell
 the percentage of Expanded Welch rejections with a positive estimated
 difference (the true difference is negative). Print the value in each
-cell and outline the 16×16, n = 1,000 cell. Panels and callout at right.
+cell and outline the 16×16, n = 1,000 cell in dark charcoal. Panels and
+callout at right: the outlined-cell panel first (peach), the bias panel
+second (blue).
 Shares come from the signed rejection counts in the MI-gap power
 diagnostics. The 0.005 and 0.02 gaps show the same pattern. Do not turn
 “over 99.9%” into a percentage of all repetitions.
@@ -902,11 +944,12 @@ Thank you.
 
 **Layout and evidence:** Follow preferred-reference page 14. Keep
 contributions and findings as two separate elements. Contributions are the
-highlight: three cards in a stronger peach, each with a large orange
-numeral, a dark-orange name and a one-line description, beneath an orange
-“Contributions” heading. Findings follow as three pale-blue cards beneath a
-navy “Findings by research question” heading, each with a navy RQ tag, a
-short navy title and the finding. Then a navy-bar scope line, and the two
+highlight: three cards in stronger peach, blue and mint, each with a
+large numeral and a name in orange, navy and green, and a one-line
+description, beneath an orange “Contributions” heading. Findings follow as
+three pale peach, blue and mint cards beneath a navy “Findings by research
+question” heading, each with an RQ tag and short title in orange, navy and
+green, and the finding. Then a navy-bar scope line, and the two
 next steps as orange-arrow items without boxes beneath orange. Keep phrases readable and add no new
 equations. This combines the former limitations and conclusion pages.
 Leave it displayed during questions. Its speaker notes contain the
@@ -941,8 +984,8 @@ example “Appendix · Method · for Slide 5, step 2”. The index appears on
 Slide 14 and in Slide 13's notes. Jump by physical slide number and return
 to Slide 13. Preserve the same fonts, equation/panel styles and
 readability. Full grid backups retain their explicit parameter legends and
-compact calculation-success strips; their colours differ in meaning from
-main method comparisons, which must be stated when opening one.
+compact calculation-success strips; their orange, navy and green mark
+shared MI or gap levels, not methods, which must be stated when opening one.
 
 Slides 16–18 derive the three equations on Slide 5 at a high level. They
 may be denser than other slides because supervisors may read them through.
@@ -1122,7 +1165,7 @@ centred explicitly (Equations 4.41–4.42); plug in to get
 moment-match the squared standard error V-hat(P)/n_P + V-hat(Q)/n_Q,
 whose means and variances add because the samples are independent, which
 gives the Welch–Satterthwaite combined ν-hat (Equation 4.44). Below, three
-pale-green cards name the three component df quantities (thesis Table
+cards name the three component df quantities in Slide 8's colours and in orange, navy, green order (the estimate, the population first-order value, the target) (thesis Table
 4.1): the target ν_P,mom from the sampling moments; the population
 first-order ν_P,FO from V(P), tau-squared(P) and n_P; and the estimate
 ν-hat_P from one table. The source line says Slide 8 compares all three
@@ -1273,8 +1316,8 @@ p_{ij}(\lambda)=(1-\lambda)a_i a_j+
 - k=2, 4, 8, 16; uniform, same-skew, or different-skew margins.
 - Same skew: both use m_k(0.8). Different skew: P uses m_k(0.7),
   Q uses m_k(0.8), where m_k(ρ)=(ρ,(1−ρ)/(k−1),…).
-- Null: shared MI .005, .02, .30. Power: I(P) = .02; I(Q) = .025, .03, .04.
 - n=10, 20, 50, 100, 250, 500, 1,000, 2,500, 10,000, 50,000 per group.
+- Null: shared MI .005, .02, .30. Power: I(P) = .02; I(Q) = .025, .03, .04.
 - Each null or power study has 360 settings, 100,000 independent pairs
   per setting.
 - A Wald calculation needs a finite difference and a positive finite
@@ -1319,8 +1362,13 @@ populations?
 curves, P and Q columns, and three rows: mean_ratio, variance_ratio,
 plugin_variance_ratio. Filter to different-skew null-display IDs at shared
 MI .02. Use log sample size, the original logarithmic y-axes and a line
-at one. Keep each quantity's ratio direction. Supply shared legends and
-outer labels, with chart text at about 13 pt.
+at one, keyed “1 = exact”. Keep each quantity's ratio direction. Label
+the rows by the ratio they plot, as in Figure 6.1: “Mean check
+\(\mathbb E(\widehat V)\) ÷ \(V\)”; “Variance check \(\tau^2/n\) ÷
+\(\operatorname{Var}(\widehat V)\), true \(\tau^2\)”; and “Variance check
+mean \(\widehat\tau^2/n\) ÷ \(\operatorname{Var}(\widehat V)\), estimated
+\(\widehat\tau^2\)”. Supply a shared table-size legend, with chart text at
+about 13 pt.
 
 **Answer:** “The larger tables generally have higher mean peaks, deeper
 population-variance troughs, and slower recovery in this family. Sample
@@ -1382,7 +1430,8 @@ probabilities, not exact finite-sample distribution identities.
 
 **Show/layout:** Replot all four table-size panels of Figure 6.4 in a
 readable 2×2 grid, with all three MI levels and both methods. Share the
-method and MI legends. Use about 13 pt labels and fewer ticks where
+method and MI legends; the method legend also keys the dotted line as
+“5% target”. Use about 13 pt labels and fewer ticks where
 necessary. Preserve the original y-axis range for each table size and keep
 those ranges identical on Slides 25–27. Retain the compact calculation-success strips.
 Use shared labels and a few ticks to keep the four-panel view readable. State the all-repetitions denominator
@@ -1455,7 +1504,7 @@ ordinary Welch gives each component \(n-1\) degrees of freedom; shared MI
 | Different skew 16×16, n = 1,000 | 26.01% | 25.95% | 24.84% |
 
 Add a quiet note beneath it: “False-positive rates; nominal target 5%.”
-Then three short peach panels:
+Then three short panels in peach, blue and green (one per setting), with neutral column headers:
 
 - **n = 20:** Ordinary Welch reduces the excess less than Expanded Welch.
 - **n = 50:** Wald is already close to 5%; Expanded Welch is the most
@@ -1491,7 +1540,7 @@ limitation (Section 7.2); the main comparison is with the Wald test.
 
 **Show:** Replot all four size panels of current Figure 6.7 with all
 three gaps, both methods and ten sample sizes, common 0–100% power axes
-and compact calculation-success strips. Retain thesis gap colours and method
+and compact calculation-success strips. Colour the gaps orange, navy and green, keep method
 line/marker encodings, explicitly labelled. There are 120 settings,
 240 method rows for this margin profile.
 
@@ -1558,8 +1607,9 @@ white background. Use author, year, title, venue and DOI/URL where supplied.
 Do not use a screenshot of a bibliography page. Retain published spelling
 and names. Exact bibliographic text comes from the thesis `references.bib`.
 
-Include these keys: `bossomaier2016`, `moddemeijer1989`, `paninski2003`,
-`miller1955`, `mora2009`, `satterthwaite1946`, `welch1947`.
+Include these keys, in alphabetical order: `bossomaier2016`, `miller1955`,
+`moddemeijer1989`, `mora2009`, `paninski2003`, `satterthwaite1946`,
+`welch1947`.
 
 **Speech:** No prepared narration. Use this page if a source is requested.
 It is not part of the 20-minute talk.
@@ -1722,7 +1772,7 @@ Timing remains provisional until a complete timed rehearsal.
 Under `/Users/danielzhao/MyMac/Masters Degree/Research/Thesis Presentation/`, the current
 version:
 
-- `Daniel_Zhao_Welch_MI_Presentation.pptx`: 13 main slides, one appendix title slide and 19 backup slides,
+- `Daniel_Zhao_Welch_MI_Presentation_Final.pptx`: 13 main slides, one appendix title slide and 19 backup slides,
   editable text/equations/tables, complete notes.
 - `Daniel_Zhao_Welch_MI_Presentation.pdf`: matching 33-page PDF, including
   backups and references, suitable for upload.
@@ -1765,6 +1815,67 @@ removed calibration and four-cell studies stay excluded. No new analysis
 is needed for this replan: its figures select existing results.
 
 ## 11. Revision and verification record
+
+**Speaker notes are the script alone (14 November):** The notes for Slides 1–13 now contain only the spoken script, word for word; the plan's time lines, delivery cues and sources, and Slide 13's backup index, are removed from the deck's notes. Slide 14's notes are the script's question-and-answer guides. Backup notes are unchanged. The plan keeps its cues and sources here for reference.
+
+**Speaker notes from the spoken script (14 November):** The deck's notes for Slides 1–13 now use the spoken script (Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md, edited 14 November) verbatim in place of the plan's Section 6 scripts and transitions; the plan's delivery cues and sources stay. Time lines are estimates at 145 words per minute (about 2,665 words, about 18:25 in total). Slide 14's notes add the script's question-and-answer guides. Backup notes are unchanged. build_deck.py takes the spoken script as an optional fifth argument. The slides are unchanged, and the submission PDF is pixel-identical to a fresh render of the updated deck.
+
+**Final filenames (14 November):** The deck is now `Daniel_Zhao_Welch_MI_Presentation_Final.pptx` and its PDF `Daniel_Zhao_Welch_MI_Presentation_Final.pdf` (previously `Daniel_Zhao_Welch_MI_Presentation.pptx` and `Daniel_Zhao_Welch_MI_Presentation_preview.pdf`). The files were renamed only; their contents are unchanged.
+
+**Final version (14 November):** Marked final. A last check of all 33 slides found no layout or rendering problems; the file passes the Office validator, every slide has speaker notes, no slide is hidden, and the equations fit their boxes as before. Document properties now carry the final date. The deck uses Lato throughout, with Aptos on the cover and Cambria Math in equations. One stale reference remains in Daniel_Zhao_Welch_MI_Presentation_Script.md, which this pass leaves alone: it says Slides 16 and 17 give the cell formulas and worked example, which are now Slides 20 and 21 (the spoken script is already correct). The slide content is unchanged.
+
+**Slides 2 and 6 steps and RQ markers restored (14 November):** Slide 2's three task steps are back to two orange outlines and a filled orange final step. Slide 6's RQ1–RQ3 markers and headings are a single colour again, orange to match their panel. The other position-based colours stay. Speaker notes are unchanged.
+
+**Boxes coloured by position; Slide 9 quadrants (14 November):** Every set of boxes now runs orange, navy, green in order. Slide 2: Population P orange and Q navy (box, table icon, arrows and estimate box); task steps outlined orange, then navy, then filled green. Slide 4: Expanded Welch panel green, and its curve, cutoffs, shading and key in the chart green. Slide 6: research-questions area orange with RQ1–RQ3 marked orange, navy and green; grid area navy. Slide 7: the Mean panel is orange and the variance panel navy; the mean line and “19% high” go back to neutral, so orange in the chart still only means sample-based. Slide 8: the sample-based panel moves first (orange) and the population-based panel second (navy), matching the line colours. Slide 12: outlined-cell panel orange, bias panel navy, heat-map outline dark charcoal. Slide 13: contribution and finding cards orange, navy, green. Slide 18: df cards reordered to estimate, population first order, target (orange, navy, green). Slide 9's chart now labels all four quadrants, with an enlarged inset of the 0–6% corner for “Both too low”. Speaker notes are unchanged.
+
+**Three-colour consistency (14 November):** Orange is primary, navy secondary and green third, and no colour marks two different things on one slide. Slide 7: the mean check line, the “Mean” panel and “19% high” are green, so orange now only means sample-based and navy only population-based. Slide 8: the target line, “target ≈9.1” and “Target:” are green (previously charcoal). Slide 10: the Wald and Expanded Welch headers are neutral, so orange and navy only mark error kinds 1 and 2; the conclusion uses the standard orange callout bar. Slide 18: the three df cards take Slide 8's colours (green target, navy population-based, orange estimate). Slide 23: table sizes are orange, navy, green and grey (previously off-palette blue, orange, green and red), with a lighter “1 = exact” line. Slides 25–31: the three shared MI or gap levels are orange, navy and green (previously off-palette blue, amber and teal), and panel titles are dark grey instead of orange. Slide 28: neutral column headers, the three setting panels in peach, blue and green, and the standard orange conclusion bar. Speaker notes: Slide 8's two mentions of the “charcoal” target now say “green”; nothing else changed.
+
+**Slide 9 linear chart (14 November):** Both axes of the null scatter are now linear from 0% to 40%, because the log axes were hard to read. The full range keeps the 36.38% to 34.38% bias example that the callout cites; the 180 “Wald too low” settings sit in the 0–5% strip at the left. Axis titles drop “(log scale)”, the “Wald too low” label is stacked to fit the strip, and both example labels sit clear of the points. A 0–15% zoom was also drafted but dropped 37 settings, including that example. charts.py keeps the log and zoom versions as options (slide09(scale="log") or "zoom"). Speaker notes are unchanged.
+
+**Backup spacing (14 November):** Slides 19, 22 and 24 now fill the slide instead of leaving the bottom third empty. Slide 19 spreads the perturbation line, the g panel and the two definitions down the slide. Slide 22 labels the equation “Copying construction”, raises both panels’ text to 15.5 pt with even spacing, and breaks lines at natural points (after “same-skew,”, after each sentence of the skew bullet, and before “Power:” and “Calculation success”). Slide 24 enlarges the equation and the table and spaces them evenly. Speaker notes are unchanged.
+
+**Design pass (14 November):** Layout fixes only; no wording changes. Right-hand columns on Slides 7, 8, 9, 11 and 12 now use 0.2-inch gaps between panels and callouts. Panels with spare height on Slides 8, 9 and 11 centre their text, so the padding is even. Slide 9's callout fits its three lines. Slide 7's blue heading breaks after “Sampling variance:”, so “changes.” no longer sits alone. Slide 11 keeps “79.87%–96.47%” on one line. Slide 6 keeps “near independence” and “per population” together. Slide 15's cards fit their text, with 0.2-inch gaps. Slide 17 step 5 breaks after the semicolon. Slide 20's header and first row are slightly tighter, so the note clears the footer; equation fit is unchanged. Slide 22 keeps “50,000 per group” and “I(Q) = 0.025” together. Slides 32–33 no longer split the Satterthwaite and Hutcheson page ranges or the Panzeri–Treves DOI across lines. Speaker notes are unchanged.
+
+**Slide 5 contribution tags centred (14 November):** The two contribution tags now span the text column (3.43 inches, starting 0.2 inches in), so they are centred in their panels and line up with the text above and below. They were 2.95 inches wide from the same left edge, which left a larger gap on the right. Equations and the step 3 consequence line stay centred; text lines stay left-aligned. Speaker notes are unchanged.
+
+**Slide 12 higher-order bias (14 November):** The peach panel is now
+“Higher-order bias outweighs the gap”. It says equal n cancels the leading
+bias term (about 0.11 nats per estimate for 16×16 at n = 1,000), while the
+higher-order bias differs between P’s and Q’s margins and shifts the
+difference by about +0.031 nats, three times the 0.01 gap. The outlined-cell
+panel is slightly shorter and the callout moves down to make room. Speaker
+notes are unchanged. The panel was then cut to three short bullets
+(leading term, higher-order bias, fix); the heatmap itself shows the
+near-zero rates at n = 10,000, so that sentence was dropped. The callout below
+now reads “Across all 360 power settings, 28 have at least 90% of
+rejections pointing the wrong way. All 28 are 8×8 or 16×16 with
+different-skew margins”, checked against the saved power counts.
+
+**Slide 8 chart (14 November):** The chart now uses a linear
+degrees-of-freedom axis with MI kept logarithmic (version B of three shown
+for review). A key names each line with its formula: target ν_P,mom =
+2[E(V̂)]²/Var(V̂), population-based first order ν_P,FO = 2nV²/τ², and mean
+sample-based estimate ν̂_P = 2nV̂²/τ̂². The bracket now reads “estimate 4.9
+vs target 9.1”. Slide text and speaker notes are unchanged.
+
+**Formatting pass and chart keys (14 November):** Every line in every
+chart now has a label or key. Slide 7's plots are headed “Mean check:
+E(V-hat) ÷ V” and “Variance check: tau-squared/n ÷ Var(V-hat)”, as in
+thesis Figure 6.1; the bottom lines read “true tau-squared
+(population-based)” and “mean estimated tau-hat-squared (sample-based)”,
+and both plots mark “1 = exact”. Slide 23's rows use the same labels and
+its legend adds “1 = exact”. Slide 8's lines carry their symbols
+(ν_P,mom, ν̂_P, ν_P,FO), and its footer points to Slide 18. Slide 4's
+plot has a line key and a label for the shaded rejection region, and now
+spans the height of the left column. The null-grid legends (Slides 25–27)
+key the dotted 5% line. Alignment: Slide 2's task boxes line up with their
+heading rule; Slide 5's step 1 heading shows V-hat(P) in orange and its
+text shares the panel's left edge; the derivation slides (16–18) have a
+wider step column and reference column, so no step or reference wraps
+badly; rows on Slides 16, 18 and 20 are tall enough for their equations;
+every sum has a thin space before its summand; Slide 22's sample sizes
+move into the parameter-grid panel and both panels fit their lists; Slide
+32's references are in alphabetical order. Speaker notes are unchanged.
 
 **Appendix reorganised, with three derivation slides (13 November):** The
 backups now follow the order of the talk: Method (Slides 15–21, supporting

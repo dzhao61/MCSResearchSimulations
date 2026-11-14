@@ -1,4 +1,12 @@
-# Thesis presentation (whole-grid results, 9 November 2026)
+# Thesis presentation (final, 14 November 2026)
+
+**Status: final.** `Daniel_Zhao_Welch_MI_Presentation_Final.pptx` is the version to present: 13 main slides and 20 appendix slides (33 in all), with speaker notes. `Daniel_Zhao_Welch_MI_Presentation_Final.pdf` matches it page for page. The change log below records every edit since the whole-grid version of 9 November.
+
+**For Canvas:** the [Submission folder](Submission/) contains the three upload PDFs. For the live talk, open the PowerPoint deck and use the [spoken script](Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md).
+
+**Before presenting:** install Lato on the presenting computer, or PowerPoint will substitute another font. Keep the final PDF as a backup; it shows every slide, with equations as images.
+
+## Whole-grid results (9 November 2026)
 
 This version answers RQ2 and RQ3 across the whole simulation grid instead of single settings, and Slide 10 explains the three RQ2 patterns with all three illustrative settings of thesis Table 6.1. It starts from the application-removed version, now in `Earlier versions/app_removed_2026-11-09/`, and keeps its design, timing, and the rest of its content. The other earlier versions are unchanged apart from their location; their READMEs still give the paths they had when built.
 
@@ -8,16 +16,30 @@ The plan in `Planning/` was updated at the same time (Sections 1, 3–6, 8–11)
 
 | Folder | Contents |
 | --- | --- |
-| This folder | The current deck, preview PDF, speaker notes, and build assets. |
-| `Planning/` | The presentation execution plan, its evidence manifest, and the style template notes. |
+| This folder | The final PowerPoint deck for the live presentation and this README. |
+| `Submission/` | The three PDFs for Canvas: slides, signed consent declaration, and AI acknowledgement. |
+| `Rehearsal/` | The current spoken script for the live talk. |
+| `assets/` | Charts, data, build scripts, and reference material. |
+| `Planning/` | The presentation execution plan, evidence manifest, style notes, and expanded speaker notes. |
 | `Earlier versions/` | `original_16_slide/`, `replanned_2026-11-05/`, `replanned_2026-11-05_v2/`, `replanned_2026-11-05_v3/`, `final_2026-11-08/`, `final_2026-11-08_v2/`, `submitted_2026-11-09/`, `rq_labels_2026-11-09/`, and `app_removed_2026-11-09/`. |
 
 ## What changed
 
+- **Speaker notes from the spoken script (14 November):** the PowerPoint notes for Slides 1–13 are now the spoken script from `Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md`, word for word, and nothing else: no timings, delivery cues, sources, or backup index. Slide 14's notes are the script's question-and-answer guides. The backup notes (Slides 15–33) are unchanged. The slides themselves are unchanged, and `Submission/Daniel_Zhao_Welch_MI_Presentation_Final.pdf` still matches them page for page. `Planning/Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md` is regenerated from the updated deck.
 - **Slide 9, “RQ2 results: false positives across all null settings”:** a scatter of all 360 null settings, Wald rate against Expanded Welch rate. Where Wald is above 5% (178 settings), Expanded Welch is closer to 5% in 165; where Wald is below 5% (180), it is further away in 176 and unchanged in four. Within a descriptive 4–6% band, 130 versus 136 settings. The thesis examples (8.35% to 4.90%; 36.38% to 34.38%) are circled.
 - **Slide 11, “RQ3 results: the power cost of the larger cutoff”:** power lost by Expanded Welch across all 360 power settings, by sample size (median and range). Expanded Welch never has more power; the loss is about 6 points at n = 10, about 1 point from n = 50 to 1,000, and under 0.32 points at n = 10,000.
 - **Slide 12:** a heat map of the share of Expanded Welch rejections pointing the wrong way, across every table size and sample size under different-skew margins (0.01 gap), with the thesis example (16×16, n = 1,000) outlined. At least 90% of rejections point the wrong way in 28 of the 360 power settings, all different-skew.
 - **Slide 10, “RQ2 results: why the cutoff helps, hurts, or cannot fix it”:** restores the uniform 4×4, n = 20 row of thesis Table 6.1, so its three rows (standard error too small, standard error too big, bias) explain the three patterns on Slide 9. Three mechanism panels replace the two, and the settings are labelled as illustrative.
+- **Slides 2 and 6 restored (14 November):** Slide 2's task steps are orange again (two outlines, filled final step); Slide 6's RQ markers are one colour, orange to match their panel.
+- **Boxes by position; Slide 9 quadrants (14 November):** every set of boxes runs orange, navy, green (Slides 2, 4, 6, 7, 8, 12, 13 and 18; Slide 8's panels and Slide 18's cards are reordered to keep chart colours consistent). Slide 4's Expanded Welch curve is green to match its box. Slide 9's chart labels all four quadrants, with an enlarged inset for the crowded 0–6% corner.
+- **Three-colour consistency (14 November):** orange primary, navy secondary, green third, with no colour marking two things on one slide. Slides 7 and 8 colour the mean and the target green; Slide 10 and 28 headers are neutral; Slide 18's df cards match Slide 8; Slides 23 and 25–31 use the deck colours instead of off-palette ones. Speaker notes: Slide 8's “charcoal” target is now “green”.
+- **Slide 9 linear chart (14 November):** the null scatter now uses linear axes from 0% to 40%, so it shows every setting, including the 36.38% to 34.38% bias example, without log scales.
+- **Backup spacing (14 November):** Slides 19, 22 and 24 now use the full slide. Slide 22 labels its equation “Copying construction” and uses larger text; Slide 24 has a larger equation and table.
+- **Design pass (14 November):** layout only, no wording changes. Even gaps and padding in the right-hand columns of Slides 7–9, 11 and 12, and on Slide 15's cards; no single words left on a line (Slides 6, 7, 17 and 22); no ranges or DOIs split across lines (Slides 11, 32 and 33); Slide 20's note clears the footer.
+- **Slide 5 contribution tags centred (14 November):** the two contribution tags now span the text column, so they sit centred in their panels and line up with the text.
+- **Slide 12 higher-order bias (14 November):** the peach panel is now “Higher-order bias outweighs the gap”, as three bullets: the leading term (0.11 nats each) cancels with equal n; the higher-order bias differs between P’s and Q’s margins, shifting the difference by +0.031 nats (3× the 0.01 gap); the fix is more data, not a larger cutoff. The callout below it now says that 28 of the 360 power settings have at least 90% of rejections pointing the wrong way, all 8×8 or 16×16 with different-skew margins.
+- **Slide 8 chart (14 November):** degrees of freedom are now on a linear axis (MI stays logarithmic), so the estimate visibly sits at about half the target and the population-based value near zero. A key gives each line's formula: target ν_P,mom = 2[E(V̂)]²/Var(V̂), population-based first order ν_P,FO = 2nV²/τ², and mean sample-based estimate ν̂_P = 2nV̂²/τ̂². The bracket reads “estimate 4.9 vs target 9.1”.
+- **Formatting pass and chart keys (14 November):** every line in every chart now has a label or key. Slide 7’s plots are headed “Mean check: E(V-hat) ÷ V” and “Variance check: tau-squared/n ÷ Var(V-hat)”, as in thesis Figure 6.1; the bottom lines read “true tau-squared (population-based)” and “mean estimated tau-hat-squared (sample-based)”, and both plots mark “1 = exact”. Slide 23’s rows use the same labels. Slide 8’s lines carry their symbols, and Slide 4’s plot has a line key and a label for the shaded rejection region. The null grids (Slides 25–27) key the dotted 5% line. Alignment fixes on Slides 2, 4, 5, 16–18, 20 and 22; Slide 32’s references are now alphabetical. Speaker notes are unchanged.
 - **Appendix reorganised, with three derivation slides (13 November):** the backups now follow the order of the talk: Method (Slides 15–21, supporting Slides 4–5), Evaluation design (Slide 22, for Slide 6), RQ1 (Slides 23–24), RQ2 (Slides 25–28), RQ3 (Slides 29–31), and References (Slides 32–33). B numbers are gone: every pointer uses the slide number you type to jump, and each backup has a top-right breadcrumb such as “Appendix · Method · for Slide 5, step 2”. Slides 16–18 are new and derive Slide 5’s three equations step by step, with thesis equation numbers: Derivation 1, Var{V-hat(P)} ≈ tau-squared(P)/n_P (navy, matching step 2); Derivation 2, moment matching and the df rule; and Derivation 3, the estimated and combined degrees of freedom (both green, matching step 3). The old “Moment matching and combined degrees of freedom” backup is absorbed into Derivations 2 and 3. The exact derivative, the cell-probability grid, and the worked example now follow the derivations (Slides 19–21). Slide 14’s index, Slide 13’s notes index, the source lines on Slides 3–11, the speaker notes, and the plan all use the new numbers. Earlier entries below keep the B numbers of their time.
 - **Slide 5 redesign (13 November):** Slide 5 now shows three steps in the order of its script: V-hat(P) varies between samples (a schematic, not data), measuring that variation, and turning it into degrees of freedom. Each step has its own colour, as on Slide 10: orange, navy, and green. Steps 2 and 3 carry Contribution 1 and 2 tags and name the approximation each step makes; a strip below covers combining P and Q. The script and timing are unchanged. It was reviewed as a draft on Slide 32, which is now removed.
 - **Bias-correction backup (13 November):** a new B4, “Bias correction” (Slide 20, in the Method group), shows the plug-in estimate, its leading bias (Miller, 1955), and the bias-corrected difference (thesis Equations 2.7–2.9 and 3.7). Three cards give the size of the leading term, why it cancels in these equal-sample simulations, and the higher-order bias that remains. Slides 4 and 10 point to it. The former B4–B14 are now B5–B15 on Slides 21–31; the slide labels, footers, Slide 14’s index, Slide 13’s notes index, and the speaker notes match. The references add Miller (1955), Panzeri and Treves (1996), Chao and Shen (2003), and Nemenman et al. (2002). Earlier entries below keep the B numbers of their time.
@@ -42,9 +64,12 @@ The counts on Slides 9, 11, and 12 are tallies of the thesis simulation results 
 
 | File | Purpose |
 | --- | --- |
-| `Daniel_Zhao_Welch_MI_Presentation.pptx` | The deck: 13 main slides, an appendix title and index (Slide 14) and 19 backups (Slides 15–33, in the order of the talk), with editable text, tables and native equations, and full speaker notes. |
-| `Daniel_Zhao_Welch_MI_Presentation_preview.pdf` | A 33-page preview rendered outside PowerPoint. Use it for checking only. |
-| `Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md` | Scripts, timings, transitions, cues, and backup answers, then plan Sections 8 (question preparation) and 9 (rehearsal and timing control). |
+| `Daniel_Zhao_Welch_MI_Presentation_Final.pptx` | The deck: 13 main slides, an appendix title and index (Slide 14) and 19 backups (Slides 15–33, in the order of the talk), with editable text, tables and native equations, and full speaker notes. |
+| `Submission/Daniel_Zhao_Welch_MI_Presentation_Final.pdf` | The 33-page slide PDF for Canvas and a backup for the live talk. |
+| `Submission/Declaration-presentation signed.pdf` | Signed and dated consent declaration for sharing the presentation slides. |
+| `Submission/AI_Acknowledgement.pdf` | Completed AI acknowledgement for this presentation. The editable Word source is outside the upload folder. |
+| `Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md` | The current trimmed script and Q&A prompts. |
+| `Planning/Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md` | The deck's speaker notes as one file: the spoken script for Slides 1–13, the question guides, and the backup answers. |
 | `assets/charts/` | Chart images (PNG at 300 dpi, plus SVG), each drawn at its size on the slide. |
 | `assets/data/` | The filtered rows behind every chart and table. The application file is kept for reference; the deck no longer uses it. |
 | `assets/code/` | `extract_data.py` (filters and manifest checks), `charts.py`, `build_deck.py`, `plan_notes.py` (reads the notes from the plan), `pptlib.py`, `eqrender.py`, `gen_notes.py`. |
@@ -57,7 +82,7 @@ The counts on Slides 9, 11, and 12 are tallies of the thesis simulation results 
    - the equations on Slides 2, 4 and 5 (including the df rule in words), the derivations on Slides 16–18, and Slides 15 and 19–24;
    - the inline "n − 1" on Slides 17 and 28;
    - the cover title, which uses Aptos Display.
-2. Export the upload PDF from PowerPoint as `Daniel_Zhao_Welch_MI_Presentation.pdf`, the name the plan gives it.
+2. Upload the three PDFs in [Submission/](Submission/) using the presentation assignment in Canvas. If you edit the deck or acknowledgement after organising the files, refresh the corresponding upload PDF.
 
 The preview shows each equation through its fallback image, because the preview renderer cannot read Office equations. It also substitutes other fonts for Aptos on the cover and for Cambria Math in the short inline symbols. PowerPoint shows the native equations and fonts.
 
@@ -74,6 +99,7 @@ The preview shows each equation through its fallback image, because the preview 
 - **Comparison with the application-removed version:** slide text, shape positions, images, and speaker notes were compared slide by slide. Only Slides 2, 6, 9–13, B3–B5, and B6’s notes differ.
 - **Tallies:** every count was recomputed from the saved rates, and Slide 10’s three rows were checked against thesis Table 6.1 and the null diagnostics; the circled and outlined examples were checked against the thesis values (8.35%, 4.90%, 36.38%, 34.38%, 9.66%, and 9,659 of 9,662 positive rejections). The signed counts add up to the saved rejection counts for all 360 power settings.
 - **Comparison for the bias-correction backup (13 November):** apart from the new Slide 20, only the source lines on Slides 3, 4 and 7–11, Slide 14’s index, Slide 13’s notes index, the backup labels and slide numbers, and the two references slides differ from the previous build.
+- **Comparison for the formatting pass (14 November):** speaker notes are identical to the previous build. Slide text changed only on Slides 7, 8, 17, 22 and 23; positions changed on Slides 2, 4, 5, 8, 16–18, 20, 22 and 23; charts were redrawn on Slides 4, 7, 8, 23 and 25–27, and fallback equation images on Slides 15–18, 20 and 21. Every fallback equation image now holds its equation.
 - **Comparison for the appendix reorganisation (13 November):** every moved backup matches its previous version apart from its slide number, breadcrumb, and pointers; the exact-derivative and worked-example slides also have new titles. Main slides differ only in the source lines on Slides 3–11, Slide 14’s index, and the notes on Slides 5, 7 and 13.
 - **Derivations:** each step on Slides 16–18 was checked against thesis Sections 4.1.2 and 4.3 (Equations 4.2–4.7, 4.10–4.11, 4.30–4.31, and 4.35–4.44).
 - **Rendering:** all 33 slides were rendered and inspected.
@@ -88,8 +114,8 @@ Run from this folder, with Lato installed:
 ```
 python3 assets/code/extract_data.py <Simulations root> assets/data
 python3 assets/code/charts.py
-python3 assets/code/build_deck.py <copy of vF2 .pptx> Daniel_Zhao_Welch_MI_Presentation.pptx assets/charts assets/plan_snapshot/PRESENTATION_EXECUTION_PLAN_2026-11-04.md
-python3 assets/code/gen_notes.py Daniel_Zhao_Welch_MI_Presentation.pptx assets/plan_snapshot/PRESENTATION_EXECUTION_PLAN_2026-11-04.md Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md
+python3 assets/code/build_deck.py <copy of vF2 .pptx> Daniel_Zhao_Welch_MI_Presentation_Final.pptx assets/charts assets/plan_snapshot/PRESENTATION_EXECUTION_PLAN_2026-11-04.md Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md
+python3 assets/code/gen_notes.py Daniel_Zhao_Welch_MI_Presentation_Final.pptx assets/plan_snapshot/PRESENTATION_EXECUTION_PLAN_2026-11-04.md Planning/Daniel_Zhao_Welch_MI_Presentation_Speaker_Notes.md
 ```
 
 `charts.py` reads `assets/data/` and writes `assets/charts/`. `build_deck.py` needs `pandoc`.

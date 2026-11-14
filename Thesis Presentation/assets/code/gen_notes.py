@@ -77,8 +77,10 @@ last_backup = min(drafts) if drafts else len(prs.slides)
 md = ["# Comparing Mutual Information in Finite Samples: speaker notes", "",
       "Daniel Zhao. Talk target 18:50 for Slides 1–13; Slide 13 stays up for questions. Slide 14 is the appendix "
       f"title and the backups are Slides 15–{last_backup}.",
-      "Scripts, transitions, delivery cues, sources, and backup answers are copied from the presentation execution "
-      "plan, as updated on 13 November 2026.", "", "## Main talk", ""]
+      "The notes for Slides 1–13 and the question guides under Slide 14 are the spoken script "
+      "(Rehearsal/Daniel_Zhao_Welch_MI_Presentation_Script_Spoken.md, 14 November 2026), word for word. The backup "
+      "notes (Slides 15–33) come from the presentation execution plan.", "",
+      "## Main talk", ""]
 for i in range(13):
     md += [f"### Slide {i + 1}: {titles[i]}", "", to_md(prs.slides[i].notes_slide.notes_text_frame.text), ""]
 md += ["## Appendix", "", "### Slide 14: Appendix title", "", to_md(prs.slides[13].notes_slide.notes_text_frame.text),
