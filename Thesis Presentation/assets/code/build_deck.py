@@ -112,8 +112,11 @@ def BR():
 
 
 def lead(s, runs, h=0.64):
-    return text(s, L, 0.98, W, h, [{"runs": runs}], sz=17, color=SOFT, name="Lead", margins=(0.03, 0.03, 0.02, 0.02),
-                line=1.02)
+    """Lead sentence under the title, as in the vF2 template: bold, near-black, key phrases in orange."""
+    runs = [(r, {"b": True}) if isinstance(r, str) else
+            (r[0], {**r[1], "b": True}) if isinstance(r, tuple) and isinstance(r[1], dict) else r for r in runs]
+    return text(s, L, 0.98, W, h, [{"runs": runs}], sz=16, color=INK, name="Lead", margins=(0.03, 0.03, 0.02, 0.02),
+                line=1.05)
 
 
 def intro(s, runs):
@@ -258,8 +261,8 @@ for c in list(bp):
 bp.set("anchor", "b")
 fill_text_body(tb, ["Comparing Mutual", "Information in Finite", "Samples"], sz=29, color=COVER_ORANGE,
                font="Aptos Display", line=0.94)
-text(cover, 0.6, 3.78, 4.3, 0.8, [[("Can MI-specific degrees of freedom improve comparisons between populations?",
-                                    {"i": True})]], sz=15.5, color="505050", font="Aptos", name="Research question",
+text(cover, 0.6, 3.78, 4.3, 0.8, [[("Wald and Expanded", {"i": True}), BR(), ("Welch–Satterthwaite Tests",
+                                    {"i": True})]], sz=15.5, color="505050", font="Aptos", name="Subtitle",
      margins=(0.09, 0.04, 0.02, 0.02), line=1.0)
 div.left, div.top, div.width = emu(0.68), emu(4.78), emu(3.6)
 sph.left, sph.top, sph.width, sph.height = emu(0.6), emu(4.95), emu(4.5), emu(1.6)
@@ -275,8 +278,9 @@ notes(cover, main_note(1))
 
 # =================================================================== Slide 2
 s = new_slide("Motivation: comparing MI across populations", 2)
-lead(s, ["Mutual information measures how much observing one variable reduces uncertainty about another, on average. ",
-         O("Different sample estimates can arise from sampling noise.")])
+lead(s, ["Mutual information (MI) ", O("measures how much knowing one variable reduces uncertainty about another"),
+         ". We ask whether a gap between two populations’ MI estimates ",
+         O("reflects a real difference or only sampling noise"), "."])
 soft(s, 3.0, 1.82, 7.33, 0.64, "peach", name="Hypothesis panel")
 text(s, 3.25, 1.82, 1.4, 0.64, [[B("Hypotheses", c=ORANGE)]], sz=13, anchor="ctr")
 equation(s, 4.6, 1.82, 5.6, 0.64, r"H_0:I(P)=I(Q)\quad\text{against}\quad H_1:I(P)\neq I(Q)", sz=22, jc="left")
@@ -322,21 +326,21 @@ notes(s, main_note(2))
 
 # =================================================================== Slide 3
 s = new_slide("Literature review: foundations and the MI-specific step", 3)
-lead(s, ["Existing results provide MI estimates, a Wald test using a standard normal distribution, and moment "
-         "matching.", BR(),
-         O("This project derives the MI variance sensitivity needed for its degrees of freedom.")])
+lead(s, ["We ", O("build on three established strands of work"),
+         ": MI estimation, the Wald test, and Welch–Satterthwaite moment matching. Applying moment matching to MI ",
+         O("needs one new result, the sensitivity of the MI variance"), "."])
 H = dict(sz=14, color=ORANGE, b=True, anchor="b", align="ctr", bottom=None)
 Lb = dict(sz=13.5, color=ORANGE, b=True, anchor="ctr", align="r")
 C = dict(sz=14.5, color=INK, anchor="ctr", align="ctr", ml=0.18, mr=0.18)
 cols = ["MI estimation and uncertainty", "Wald comparison", "Welch–Satterthwaite moment matching"]
 rows = [[dict(paras=[""], **H)] + [dict(paras=[[(c_, {"i": True, "b": True})]], **H) for c_ in cols]]
-data3 = [("Idea", ["Estimate MI and first-order sampling variance",
-                   "Divide the estimated difference by its standard error",
-                   "Match variance moments to choose degrees of freedom"]),
-         ("Key work", [["Moddemeijer (1989);", "Paninski (2003)"], ["Wald (1943);", "Mora and Ruiz-Castillo (2009)"],
+data3 = [("Idea", ["Estimate MI and its first-order sampling variance",
+                   "Divide the estimated difference by its standard error; compare with the standard normal",
+                   "Match the variance estimate’s mean and variance to choose Student t degrees of freedom"]),
+         ("Key work", [["Moddemeijer (1989);", "Brillinger (2004); Paninski (2003)"], ["Wald (1943);", "Mora and Ruiz-Castillo (2009)"],
                        ["Satterthwaite (1946); Welch (1947);", "Hutcheson (1970); Pan and Wall (2002)"]]),
          ("Required step", ["Track variation in the variance estimate itself",
-                            ["Assess the fixed cutoff from the", BR(), "standard normal distribution", BR(), "in finite samples"],
+                            "Assess that standard normal cutoff in finite samples",
                             "Calculate the MI-specific variance sensitivity"])]
 for lab, cells in data3:
     if lab == "Key work":
@@ -356,8 +360,9 @@ notes(s, main_note(3))
 
 # =================================================================== Slide 4
 s = new_slide("Method: one statistic, two reference distributions", 4)
-lead(s, ["Both methods use ", O("the same estimated MI difference and standard error"),
-         ".", BR(), "Expanded Welch uses estimated degrees of freedom for a Student t distribution."])
+lead(s, ["Both tests ", O("use the same statistic: the bias-corrected MI difference divided by its standard error"),
+         ". They differ only in the reference distribution, so ", O("Expanded Welch always has the larger cutoff"),
+         "."])
 soft(s, L, 1.95, 5.8, 2.38, "peach", name="Shared statistic panel")
 text(s, 0.8, 2.04, 5.4, 0.3, [[B("Shared statistic", c=ORANGE)]], sz=14.5, margins=(0, 0, 0, 0))
 equation(s, 0.7, 2.35, 5.6, 0.95,
@@ -381,11 +386,11 @@ notes(s, main_note(4))
 
 # =================================================================== Slide 5
 s = new_slide("Approach and contributions", 5)
-lead(s, ["The estimated pointwise-MI variance changes between samples.", BR(), "We approximate that variation and ",
-         O("use it to choose the degrees of freedom"), "."])
+lead(s, ["The variance estimate itself changes between samples. We ", O("measure that variation for MI"), " and ",
+         O("use it to choose the degrees of freedom"), ", which gives our first two contributions."])
 VH = M(r"\hat{V}(P)", [TI("V", hat=True), CM("(𝑃)")])
 NUH = M(r"\hat{\nu}", [CM("𝜈̂")])
-CW5, GAP5, Y5, H5 = 3.83, 0.32, 1.85, 3.95
+CW5, GAP5, Y5, H5 = 3.83, 0.32, 2.28, 3.72
 STEP_COLS = [ORANGE, NAVY, GREEN]                 # the deck's three-category colours, as on Slide 10
 STEP_TINTS = [ORANGE_TINT, NAVY_TINT, GREEN_TINT]
 STEP_KINDS = ["peach", "blue", "green"]
@@ -414,33 +419,46 @@ def approx_tag(x_, y_, txt, k):
 
 # Step 1: the estimate varies
 x1 = L
-pic(s, "slide05_vhat_spread", x1 + 0.19, Y5 + 0.75, 3.45, 1.85)
-text(s, x1 + 0.2, Y5 + 2.72, CW5 - 0.4, 0.75, [["Each new sample gives a new table, and so a new ", VH, "."]],
+pic(s, "slide05_vhat_spread", x1 + 0.19, Y5 + 0.7, 3.45, 1.85)
+text(s, x1 + 0.2, Y5 + 2.6, CW5 - 0.4, 0.66, [["Each new sample gives a new table, and so a new ", VH, "."]],
      sz=14, color=INK, name="Step 1 text", margins=(0.02, 0.02, 0.02, 0.02))
-text(s, x1 + 0.2, Y5 + 3.48, CW5 - 0.4, 0.34, [[("Schematic, not data.", {"i": True})]], sz=11.5, color=SOFT,
+text(s, x1 + 0.2, Y5 + 3.26, CW5 - 0.4, 0.34, [[("Schematic, not data.", {"i": True})]], sz=11.5, color=SOFT,
      anchor="ctr", name="Schematic note", margins=(0.02, 0.02, 0, 0))
 # Step 2: measure the variation (contribution 1)
 x2 = L + CW5 + GAP5
-equation(s, x2 + 0.1, Y5 + 0.78, CW5 - 0.2, 0.85, r"\operatorname{Var}\{\widehat V(P)\}\approx\frac{\tau^2(P)}{n_P}",
+equation(s, x2 + 0.1, Y5 + 0.72, CW5 - 0.2, 0.85, r"\operatorname{Var}\{\widehat V(P)\}\approx\frac{\tau^2(P)}{n_P}",
          sz=20, jc="center")
-text(s, x2 + 0.2, Y5 + 1.75, CW5 - 0.4, 1.35, [
-    {"runs": [CM("𝑔"), CM("𝑃", sub=True), CM("(𝑥, 𝑦)"), ": how much ", CM("𝑉(𝑃)"),
-              " changes when a little probability moves to cell ", CM("(𝑥, 𝑦)")], "space_after": 6},
-    {"runs": [CM("𝜏"), CM("2", sup=True), CM("(𝑃)"), ": the variance of ", CM("𝑔"), CM("𝑃", sub=True),
-              CM("(𝑋, 𝑌)")]}], sz=13.5, color=INK, name="Step 2 definitions", margins=(0.02, 0.02, 0.02, 0.02))
-contrib_tag(x2 + 0.2, Y5 + 3.1, "Contribution 1: derivation", 1)
-approx_tag(x2 + 0.2, Y5 + 3.48, "first-order expansion", 1)
+equation(s, x2 + 0.1, Y5 + 1.64, CW5 - 0.2, 0.6,
+         r"g_P(x,y)=\frac{d}{d\varepsilon}\,V\{(1-\varepsilon)P+\varepsilon\,\delta_{(x,y)}\}\,|_{\varepsilon=0}",
+         sz=13.5, jc="center")
+equation(s, x2 + 0.1, Y5 + 2.28, CW5 - 0.2, 0.45, r"\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}", sz=13.5, jc="center")
+contrib_tag(x2 + 0.2, Y5 + 2.88, "Contribution 1: derivation", 1)
+approx_tag(x2 + 0.2, Y5 + 3.26, "first-order expansion", 1)
 # Step 3: degrees of freedom (contribution 2)
 x3 = L + 2 * (CW5 + GAP5)
-equation(s, x3 + 0.1, Y5 + 0.72, CW5 - 0.2, 0.78,
-         r"\mathrm{df}=\frac{2\times(\text{mean of }\widehat V)^2}{\text{variance of }\widehat V}", sz=15, jc="center")
-equation(s, x3 + 0.1, Y5 + 1.55, CW5 - 0.2, 0.8, r"\widehat\nu_P=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}",
+equation(s, x3 + 0.1, Y5 + 0.68, CW5 - 0.2, 0.78,
+         r"\nu_P=\frac{2\,[\mathbb{E}\{\widehat V(P)\}]^2}{\operatorname{Var}\{\widehat V(P)\}}", sz=17, jc="center")
+equation(s, x3 + 0.1, Y5 + 1.48, CW5 - 0.2, 0.8, r"\widehat\nu_P=\frac{2n_P\widehat V(P)^2}{\widehat\tau^2(P)}",
          sz=19, jc="center")
-text(s, x3 + 0.12, Y5 + 2.45, CW5 - 0.24, 0.55, [[B("More variation → fewer df → larger cutoff", c=GREEN)]],
+text(s, x3 + 0.12, Y5 + 2.32, CW5 - 0.24, 0.5, [[B("More variation → fewer df → larger cutoff", c=GREEN)]],
      sz=13.5, anchor="ctr", align="ctr", name="Step 3 consequence")
-contrib_tag(x3 + 0.2, Y5 + 3.1, "Contribution 2: test construction", 2)
-approx_tag(x3 + 0.2, Y5 + 3.48, "moment matching", 2)
-accent(s, L, 6.05, W, 0.6, [B("Then: ", c=NAVY), "repeat for Q and combine using Welch–Satterthwaite into one ", NUH,
+contrib_tag(x3 + 0.2, Y5 + 2.88, "Contribution 2: test construction", 2)
+approx_tag(x3 + 0.2, Y5 + 3.26, "moment matching", 2)
+# Callout bubble, as on vF2 slide 2: every value in panels 2 and 3 comes from a probability table
+OC = dict(c=ORANGE, i=True)
+OM = dict(c=ORANGE)                          # maths runs: already italic, so no added slant
+bub = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGULAR_CALLOUT, emu(8.13), emu(1.44), emu(4.6), emu(0.76))
+bub.adjustments[0], bub.adjustments[1], bub.adjustments[2] = -0.517, 1.05, 0.16667   # tail tip in panel 2's top corner
+shape_fill_line(bub, "FBE3D6", NAVY, 1.25)
+bub.name = "Probability table callout"
+panel_text(bub, [[B("Calculated from a probability table", c=ORANGE)],
+                 [("Plug in the population probabilities for ", OC), M(r"V", [TI("V")], **OM), (", ", OC),
+                  M(r"g", [TI("g")], **OM), (", and ", OC), M(r"\tau^2", [CM("𝜏"), CM("\u200a"), CM("2", sup=True)], **OM),
+                  (", or the sampled table for ", OC), M(r"\hat{V}", [TI("V", hat=True)], **OM), (", ", OC),
+                  M(r"\hat{\tau}^2", [CM("𝜏̂"), CM("\u200a"), CM("2", sup=True)], **OM), (", and ", OC),
+                  M(r"\hat{\nu}", [CM("𝜈̂")], **OM), (".", OC)]],
+           sz=12.5, color=ORANGE, align="ctr", anchor="ctr", margins=(0.1, 0.1, 0.03, 0.03))
+accent(s, L, 6.14, W, 0.54, [B("Then: ", c=NAVY), "repeat for Q and combine using Welch–Satterthwaite into one ", NUH,
                             " for the Student t cutoff. RQ1 checks both approximations (Slides 7–8)."],
        color=NAVY, sz=14, name="Combine")
 footer(s, [("Thesis Sections 4.1–4.3. Derivations of these equations: Slides 16–18; ", {"i": True}), CM("𝑔"),
@@ -450,8 +468,9 @@ notes(s, main_note(5))
 
 # =================================================================== Slide 6
 s = new_slide("Evaluation design", 6)
-lead(s, ["Known populations separate approximation accuracy, false positives, and power.", BR(), "Both tests receive ",
-         O("the same sampled table pairs"), "."])
+lead(s, ["We ", O("answer three research questions using known simulated populations"), ". Both tests ",
+         O("receive the same 100,000 table pairs per setting"),
+         ", so when both calculations succeed, any difference comes from the cutoff."])
 label(s, L, 1.82, 5.85, "Research questions", ORANGE)
 soft(s, L, 2.38, 5.85, 3.3, "peach")
 rq = [("RQ1: Approximation accuracy", ["Sampling moments of ", M(r"\hat{V}", [TI("V", hat=True)]), " and component df, including near independence"]),
@@ -476,13 +495,14 @@ panel_text(p, [
 accent(s, L, 5.95, W, 0.6, [B("Reporting: "), "usual 0.05 p-value thresholds. Unsuccessful calculations count as "
                                                "non-rejections; calculation success is reported separately."],
        color=NAVY, sz=14.5, name="Reporting")
-footer(s, "Morris et al. (2019). Thesis Chapter 5, Tables 5.1–5.3; exact vectors, sample sizes, and requirements on Slide 22")
+footer(s, "Design framework: Morris et al. (2019); copying construction: a special case of Bocci et al. (2010). "
+          "Thesis Chapter 5, Tables 5.1–5.3; full details on Slide 22")
 notes(s, main_note(6))
 
 # =================================================================== Slide 7
 s = new_slide("RQ1 results: approximation accuracy", 7)
-lead(s, ["The mean of ", M(r"\hat{V}", [TI("V", hat=True)]), " can ", O("remain inflated"),
-         " even when its population first-order sampling-variance prediction is accurate."])
+lead(s, ["In this example, we ", O("predict the spread of the variance estimate to within 8% by n\u00a0=\u00a01,000"),
+         ", but ", O("its average is still 19% too high"), ". The degrees of freedom depend on both."])
 text(s, L, 1.8, 6.4, 0.3, [[B("Mean check: "), M(r"\mathbb{E}(\hat{V})", [CM("𝔼("), TI("V", hat=True), CM(")")], b=True),
                             B(" ÷ "), M(r"V", [TI("V")], b=True)]], sz=13.5,
      color=INK, name="Top plot heading", margins=(0.03, 0.03, 0, 0))
@@ -509,8 +529,9 @@ notes(s, main_note(7))
 
 # =================================================================== Slide 8
 s = new_slide("RQ1 results: near independence", 8)
-lead(s, ["Near independence, first-order theory gives almost no degrees of freedom, while", BR(),
-         O("sampling noise keeps the mean sample-based estimate at about half the target"), "."])
+lead(s, ["Near independence, ", O("the first-order formula predicts almost no degrees of freedom"),
+         ". Estimates from each sample pick up some sampling noise, but ",
+         O("still reach only about half the target"), "."])
 pic(s, "slide08_near_independence_df", 0.55, 1.85, 6.4, 4.3)
 text(s, L, 6.2, 6.3, 0.5, [[B("Target: ", c=GREEN), "component degrees of freedom from the actual mean and variance of ",
                             M(r"\hat{V}", [TI("V", hat=True)]), " across 100,000 samples."]], sz=12.5, color=SOFT,
@@ -530,8 +551,8 @@ notes(s, main_note(8))
 
 # =================================================================== Slide 9
 s = new_slide("RQ2 results: false positives across all null settings", 9)
-lead(s, ["A larger cutoff ", O("helps only where Wald rejects too often"), ";", BR(),
-         "where Wald already rejects too rarely, it never brings the rate closer to 5%."])
+lead(s, ["Across all 360 null settings, ", O("the larger cutoff helps only where Wald rejects too often"),
+         ". Where Wald already rejects too rarely, ", O("it never brings the rate closer to 5%"), "."])
 setting(s, "All 360 null settings · equal MI in P and Q · each point is one setting")
 pic(s, "slide09_null_all_settings", 0.55, 2.05, 6.4, 4.3)
 text(s, L, 6.4, 6.3, 0.5, [["Below the diagonal: Expanded Welch rejects less often.", BR(), "Dashed lines: the 5% target."]],
@@ -549,7 +570,8 @@ notes(s, main_note(9))
 
 # =================================================================== Slide 10
 s = new_slide("RQ2 results: why the cutoff helps, hurts, or cannot fix it", 10)
-lead(s, [O("Three kinds of estimation error"), " explain the three patterns on Slide 9."])
+lead(s, ["The cutoff’s effect depends on ", O("which estimate is wrong: the standard error or the MI difference itself"),
+         "."])
 setting(s, "Three illustrative settings (thesis Table 6.1) · equal MI 0.02 nats · every calculation succeeds",
         y=1.45)
 Rr = dict(sz=15, color=INK, anchor="ctr", align="ctr")
@@ -589,8 +611,9 @@ notes(s, main_note(10))
 
 # =================================================================== Slide 11
 s = new_slide("RQ3 results: the power cost of the larger cutoff", 11)
-lead(s, ["Expanded Welch ", O("never has more power than Wald"), ";", BR(),
-         "the loss is largest in small samples and under 0.32 points by n = 10,000."])
+lead(s, ["With its larger cutoff, Expanded Welch ", O("never has more power than Wald"), ". The loss is ",
+         O("largest in small samples"),
+         " and is under a third of a percentage point by n\u00a0=\u00a010,000."])
 setting(s, "All 360 power settings · MI in P = 0.02 nats · gaps of 0.005, 0.01, and 0.02 nats")
 pic(s, "slide11_power_loss_all_settings", 0.55, 2.05, 6.4, 4.3)
 text(s, L, 6.4, 6.3, 0.5, [["Power lost: Wald power minus Expanded Welch power, in percentage points."]],
@@ -608,44 +631,52 @@ footer(s, "Tallies of the thesis power study (Sections 6.3.1–6.3.3, Figures 6.
 notes(s, main_note(11))
 
 # =================================================================== Slide 12
+# Rare-cell mechanism behind the wrong-sign result (exact calculation: assets/code/bias_breakdown.py)
+STEPS15 = ["The leading correction assumes every cell is seen often enough to add its share of upward bias.",
+           "Q’s margins are more skewed, so its rare pairs are much rarer and usually unseen.",
+           "Unseen cells add little bias, so Q’s raw estimate is inflated less than P’s.",
+           "The same correction then leaves Q’s estimate further below its true MI, so P − Q flips sign on "
+           "average."]
 s = new_slide("RQ3 results: bias can reverse the estimated direction", 12)
-lead(s, ["Under different-skew margins, sparse tables give rejections that ",
-         O("point to the wrong population"), "."])
+lead(s, ["With different-skew margins, ", O("bias can reverse the sign of the estimated difference"),
+         ". In sparse tables, ", O("most rejections can point to the wrong population"),
+         ", and a larger cutoff cannot correct that."])
 setting(s, "Different-skew margins · MI gap 0.01 nats · % of Expanded Welch rejections with the wrong sign")
 pic(s, "slide12_wrong_direction_heatmap", 0.55, 2.05, 6.4, 4.3)
 text(s, L, 6.5, 6.3, 0.46, [["Percentages are rounded.", BR(), "A value of 50% means half the rejections have the "
                             "wrong estimated sign."]], sz=12.5, color=SOFT, name="Chart note", margins=(0.03, 0.03, 0, 0))
-panel(s, 7.4, 2.15, 5.33, 1.3, "peach", heading="Outlined cell: 16×16, n = 1,000",
+panel(s, 7.4, 2.08, 5.33, 1.25, "peach", heading="Outlined cell: 16×16, n\u00a0=\u00a01,000",
       body=[["True difference −0.0100 nats; mean estimate +0.0207. Expanded Welch rejects in 9.66% of repetitions, "
-             "and over 99.9% of those point the wrong way."]])
-p = soft(s, 7.4, 3.65, 5.33, 1.62, "blue", name="Bias panel")
-panel_text(p, [
-    {"runs": [("Higher-order bias outweighs the gap", {"b": True, "c": NAVY})], "sz": 14.5, "space_after": 5},
-    {"runs": [B("Leading term:"), " 0.11 nats each; equal n cancels it"], "bullet": True, "bullet_color": NAVY, "space_after": 4},
-    {"runs": [B("Higher-order bias:"), " differs between P’s and Q’s margins, shifting the difference by +0.031 nats "
-              "(3× the gap)"], "bullet": True, "bullet_color": NAVY, "space_after": 4},
-    {"runs": [B("Fix:"), " more data, not a larger cutoff"], "bullet": True, "bullet_color": NAVY},
-], sz=13.5, color=INK, anchor="t", margins=(0.2, 0.18, 0.15, 0.12))
-accent(s, 7.4, 5.47, 5.33, 0.9, [B("Across all 360 power settings, "), "28 have at least 90% of rejections pointing "
-                                "the wrong way. All 28 are 8×8 or 16×16 with different-skew margins."], sz=13.5)
+             "and over 99.9% of those point the wrong way."]], bsz=13)
+# Why the estimate points to P: the rare-cell mechanism in four plain steps (figures in Slide 15's notes)
+B12Y, B12H = 3.45, 2.58
+soft(s, 7.4, B12Y, 5.33, B12H, "blue", name="Bias panel")
+text(s, 7.6, B12Y + 0.12, 4.93, 0.3, [[B("Why the estimate points to P", c=NAVY)]], sz=14.5, margins=(0, 0, 0, 0),
+     anchor="ctr", name="Bias panel heading")
+for i_, (st, h_) in enumerate(zip(STEPS15, [0.44, 0.44, 0.44, 0.44])):
+    y_ = B12Y + 0.52 + sum([0.44, 0.44, 0.44][:i_]) + 0.08 * i_
+    circle(s, 7.6, y_ + 0.02, 0.24, str(i_ + 1), NAVY, sz=10.5, name=f"Bias step {i_ + 1} marker")
+    text(s, 7.98, y_, 4.55, h_, [[st]], sz=12.5, color=INK, margins=(0, 0, 0, 0), name=f"Bias step {i_ + 1}")
+accent(s, 7.4, 6.15, 5.33, 0.78, [B("Across all 360 power settings, "), "28 have at least 90% of rejections pointing "
+                                 "the wrong way. All 28 are 8×8 or 16×16 with different-skew margins."], sz=13)
 footer(s, "Tallies of the thesis power-study diagnostics (Section 6.3.3, Figure 6.9); other gaps show the same pattern. "
           "Outlined cell: 9,659 of 9,662 rejections positive")
 notes(s, main_note(12))
 
 # =================================================================== Slide 13 (conclusions)
 s = new_slide("Conclusions and next steps", 13)
-lead(s, ["MI-specific degrees of freedom improve some false-positive rates, while remaining failures identify ",
-         O("estimation accuracy as a priority"), "."])
-label(s, L, 1.7, W, "Contributions", ORANGE)
+lead(s, ["MI-specific degrees of freedom ", O("move some false-positive rates closer to 5%"), ", but ",
+         O("a better cutoff cannot replace a better estimated difference and standard error"), "."])
+label(s, L, 1.75, W, "Contributions", ORANGE)
 for i, (name, desc) in enumerate(CONTRIBUTIONS):       # stronger peach and large numerals: the slide's highlight
     x = L + i * 4.12
-    rect(s, x, 2.2, 3.89, 0.92, fill=CONTRIB_FILLS[i], rounded=0.04, name=f"Contribution {i + 1}")
-    text(s, x + 0.12, 2.2, 0.55, 0.92, [[(str(i + 1), {"b": True, "c": POS_COLS[i]})]], sz=34, align="ctr", anchor="ctr",
+    rect(s, x, 2.25, 3.89, 0.92, fill=CONTRIB_FILLS[i], rounded=0.04, name=f"Contribution {i + 1}")
+    text(s, x + 0.12, 2.25, 0.55, 0.92, [[(str(i + 1), {"b": True, "c": POS_COLS[i]})]], sz=34, align="ctr", anchor="ctr",
          name=f"Contribution {i + 1} number", margins=(0, 0, 0, 0))
-    text(s, x + 0.72, 2.2, 3.05, 0.92, [{"runs": [B(name, c=[EW_TEXT, NAVY, GREEN][i])], "sz": 14.5, "space_after": 2},
+    text(s, x + 0.72, 2.25, 3.05, 0.92, [{"runs": [B(name, c=[EW_TEXT, NAVY, GREEN][i])], "sz": 14.5, "space_after": 2},
                                         {"runs": [desc], "line": 1.0}], sz=12.5, color=INK, anchor="ctr",
          name=f"Contribution {i + 1} text")
-label(s, L, 3.26, W, "Findings by research question", NAVY)
+label(s, L, 3.42, W, "Findings by research question", NAVY)
 finds = [("RQ1", "Approximation accuracy", "Approximations improve as samples grow; near independence, first-order "
                                             "theory misses sampling noise."),
          ("RQ2", "False positives", "Helped only where Wald rejected too often; pushed conservative settings further "
@@ -654,24 +685,21 @@ finds = [("RQ1", "Approximation accuracy", "Approximations improve as samples gr
                                         "rejections point the wrong way.")]
 for i, (rq, hd, bd) in enumerate(finds):
     x = L + i * 4.12
-    soft(s, x, 3.76, 3.89, 1.25, POS_KINDS[i], name=f"Finding {rq}")
-    pill = rect(s, x + 0.2, 3.9, 0.56, 0.27, fill=POS_COLS[i], rounded=0.5, name=f"{rq} tag")
+    soft(s, x, 3.92, 3.89, 1.25, POS_KINDS[i], name=f"Finding {rq}")
+    pill = rect(s, x + 0.2, 4.06, 0.56, 0.27, fill=POS_COLS[i], rounded=0.5, name=f"{rq} tag")
     panel_text(pill, [[(rq, {"b": True})]], sz=11, color=WHITE, align="ctr", anchor="ctr", margins=(0, 0, 0, 0))
-    text(s, x + 0.86, 3.87, 2.9, 0.33, [[B(hd, c=POS_COLS[i])]], sz=13.5, anchor="ctr", name=f"{rq} heading")
-    text(s, x + 0.2, 4.24, 3.55, 0.72, [{"runs": [bd], "line": 1.0}], sz=12.5, color=INK, name=f"{rq} finding")
-accent(s, L, 5.12, W, 0.38, [B("Scope: ", c=NAVY), "The evaluation covers one population construction and equal "
-                                                "sample sizes, with the Wald test as the main benchmark."],
-       color=NAVY, sz=13, name="Scope")
-label(s, L, 5.58, W, "Next steps", ORANGE)
+    text(s, x + 0.86, 4.03, 2.9, 0.33, [[B(hd, c=POS_COLS[i])]], sz=13.5, anchor="ctr", name=f"{rq} heading")
+    text(s, x + 0.2, 4.4, 3.55, 0.72, [{"runs": [bd], "line": 1.0}], sz=12.5, color=INK, name=f"{rq} finding")
+label(s, L, 5.42, W, "Next steps", ORANGE)
 nexts = ["Reduce bias in the estimated MI difference and improve its standard error and degrees of freedom, "
          "including near independence.",
-         "Test other association constructions and unequal sample sizes."]
+         "Test other table constructions and unequal sample sizes."]
 for i, txt in enumerate(nexts):
     x = L + i * 6.165
-    arrow(s, x + 0.04, 6.18, w=0.26, h=0.2)
-    text(s, x + 0.42, 6.02, 5.5, 0.52, [{"runs": [txt], "line": 1.0}], sz=13, color=INK, anchor="ctr",
+    arrow(s, x + 0.04, 6.06, w=0.26, h=0.2)
+    text(s, x + 0.42, 5.9, 5.5, 0.52, [{"runs": [txt], "line": 1.0}], sz=13, color=INK, anchor="ctr",
          name=f"Next step {i + 1}")
-text(s, L, 6.64, W, 0.32, ["Thank you."], sz=15, color=SOFT, align="ctr", name="Thank you")
+text(s, L, 6.6, W, 0.32, ["Thank you."], sz=15, color=SOFT, align="ctr", name="Thank you")
 BACKUP_INDEX = """BACKUP INDEX (type the slide number, press Enter, then return to 13)
 14  Appendix title and index
 Method (supports Slides 4–5)
@@ -705,10 +733,7 @@ notes(s, main_note(13, extra=BACKUP_INDEX))
 s = prs.slides.add_slide(LAYOUT)
 for ph in list(s.placeholders):
     ph._element.getparent().remove(ph._element)
-text(s, L, 2.45, 3.4, 0.85, [[B("Appendix")]], sz=44, color=NAVY, anchor="ctr", name="Appendix title")
-text(s, L, 3.3, 3.4, 0.4, ["Backup slides for questions"], sz=17, color=SOFT, name="Appendix subtitle")
-text(s, L, 3.85, 3.3, 1.2, ["Grouped in the order of the talk. To jump, type the slide number and press Enter. "
-                            "Type 13 to return to the conclusion."], sz=13, color=FAINT, name="Jump hint")
+text(s, L, 3.48, 3.4, 0.85, [[B("Appendix")]], sz=44, color=NAVY, anchor="ctr", name="Appendix title")   # centred on the index rule
 vline(s, 4.35, 1.2, 5.4, color=RULE, width=1.0)
 APPENDIX_GROUPS = [   # (group heading, colour, x, y, [(physical slide, short title)]), in talk order
     ("Method (Slides 4–5)", ORANGE, 4.75, 1.2,
@@ -735,16 +760,16 @@ notes(s, f"Questions and answer guides\n\n{SPOKEN_QA}" if SPOKEN_QA else
 
 # =================================================================== Slide 15: bias correction
 s = new_slide("Bias correction", 15)
-backup_label(s, "Appendix · Method · for Slide 4")
+backup_label(s, "Appendix · Method · for Slides 4 and 12")
 intro(s, [B("The leading correction removes the 1/n bias from each estimate; with equal sample sizes it cancels "
             "from the difference")])
-LW4 = 6.95                                   # formula column width
+LW4 = 5.95                                   # formula column width
 label(s, L, 1.55, LW4, "Plug-in estimate and its leading bias", ORANGE)
 equation(s, L, 2.02, LW4, 0.8, r"\widehat I(P)=\sum_{i,j:\,\widehat p_{ij}>0}\,\widehat p_{ij}\log"
          r"\frac{\widehat p_{ij}}{\widehat p_{i+}\,\widehat p_{+j}}", sz=18)
 equation(s, L, 2.86, LW4, 0.62, r"\mathbb E\{\widehat I(P)\}-I(P)=\frac{(r-1)(c-1)}{2n_P}+O(n_P^{-2})", sz=18)
 text(s, L, 3.52, LW4, 0.5, [[CM("𝑟"), " and ", CM("𝑐"), " are the numbers of rows and columns. The bias is positive "
-                             "even when ", CM("𝑋"), " and ", CM("𝑌"), " are independent (Miller, 1955)."]],
+                             "even when ", CM("𝑋"), " and ", CM("𝑌"), " are independent (Miller, 1955; Moddemeijer, 1989)."]],
      sz=12.5, color=SOFT, name="Bias note")
 label(s, L, 4.12, LW4, "Bias-corrected difference", NAVY)
 equation(s, L, 4.6, LW4, 0.8, r"\widehat\Delta_{\mathrm{BC}}=\left\{\widehat I(P)-\frac{(r-1)(c-1)}{2n_P}\right\}"
@@ -754,19 +779,25 @@ text(s, L, 5.45, LW4, 0.5, [["Without it, unequal sample sizes bias the differen
                              " = 100, at equal MI."]], sz=12.5, color=SOFT, name="Unequal note")
 CX4 = L + LW4 + 0.35                         # card column
 CW4 = L + W - CX4
-for i_, (kind, hd, bd) in enumerate([
-        ("peach", "Size of the leading term",
-         ["16×16 at n\u00a0=\u00a01,000: 225/2,000 ≈ 0.11 nats per estimate, over five times the MI of 0.02."]),
-        ("blue", "It cancels in these simulations",
-         [CM("𝑛"), CM("𝑃", sub=True), " = ", CM("𝑛"), CM("𝑄", sub=True), " and the table sizes match, so ",
-          M(r"\hat{\Delta}_{\mathrm{BC}}", [("Δ̂", {"font": "Georgia"}), CM("BC", sub=True, i=False)]),
-          " equals the raw plug-in difference."]),
-        ("green", "What remains",
-         ["Higher-order bias, which depends on the whole table and can differ between P and Q. Different-skew "
-          "16×16, n\u00a0=\u00a01,000: true difference −0.01 nats, mean estimate +0.0207 (Slide 12)."])]):
-    panel(s, CX4, [1.55, 2.87, 4.19][i_], CW4, [1.12, 1.12, 1.6][i_], kind, heading=hd, body=[bd], hsz=14.5,
-          bsz=13.5, name=f"Bias card {i_ + 1}")
-accent(s, L, 6.12, W, 0.55, [B("Beyond the leading term: ", c=NAVY), "Panzeri–Treves, the jackknife, Chao–Shen "
+panel(s, CX4, 1.55, CW4, 1.02, "peach", heading="The leading term: large, but it cancels", body=[
+    ["16×16, n\u00a0=\u00a01,000: 0.11 nats per estimate, over five times the MI of 0.02. Equal sample sizes cancel "
+     "it."]], hsz=14.5, bsz=13, name="Bias card 1")
+# When the leading correction is enough: exact bias against the 1/n^2 expansion (assets/code/bias_breakdown.py)
+pc = soft(s, CX4, 2.72, CW4, 3.0, "blue", name="Bias card 2")
+NB = dict(bullet=True, bullet_color=NAVY, space_after=6)
+panel_text(pc, [
+    {"runs": [("When is the leading correction enough?", {"b": True, "c": NAVY})], "sz": 14.5, "space_after": 7},
+    {"runs": ["It assumes every cell is well sampled. Then what remains is a small higher-order term that shrinks "
+              "like 1/", CM("𝑛"), "²."], **NB},
+    {"runs": [B("Well sampled: "), "in the 16×16 tables at n\u00a0=\u00a010,000, what remains is under 0.002 nats."], **NB},
+    {"runs": [B("Sparse: "), "when many cells are expected less than once, that expansion breaks down. Its 1/",
+              CM("𝑛"), "² term even points the wrong way."], **NB},
+    {"runs": ["There the correction overshoots, by more for Q than for P. Slide\u00a012 shows how that flips the sign."],
+     **NB, "space_after": 10},
+    {"runs": [("Exact calculation from the population tables; not in the thesis.", {"i": True, "c": SOFT})],
+     "sz": 11},
+], sz=13, color=INK, anchor="t", margins=(0.2, 0.18, 0.15, 0.12))
+accent(s, L, 6.2, W, 0.5, [B("Beyond the leading term: ", c=NAVY), "Panzeri–Treves, the jackknife, Chao–Shen "
                              "coverage, and NSB estimators (thesis Section 2.2.2)."], color=NAVY, sz=14,
        name="Beyond")
 footer(s, "Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2 and 5.5. References: Slides 32–33")
@@ -836,7 +867,8 @@ result_box(s, y + 0.1, 0.8, "blue", NAVY, "Result: Slide 5, step 2",
 text(s, L, y + 0.94, W, 0.34, [["First order: drops terms quadratic in the cell errors and needs positive cell "
                                 "probabilities. Slide 7 checks both approximations; ", CM("𝑔"),
                                 " in full: Slides 19–20."]], sz=12.5, color=SOFT, anchor="ctr", name="Derivation note")
-footer(s, "Thesis Sections 4.2.1, 4.3.1 and 4.3.2")
+footer(s, "Perturbation and first-order expansion: Hampel (1974); van der Vaart (1998). Thesis Sections 4.2.1, 4.3.1 "
+          "and 4.3.2")
 notes(s, backup_note(16))
 
 # ---------------------------------------------------------------- Derivation 2 (Slide 17)
@@ -860,8 +892,8 @@ y = ladder(s, [
        r"]^2/n_P^2}{" + VV + r"/n_P^2}=\nu_{P,\mathrm{mom}}", 17, 0.72, None)], "Section 4.1.2", 0.86),
 ], 1.48, GREEN)
 result_box(s, y + 0.1, 0.72, "green", GREEN, "Result: the df rule on Slide 5, step 3",
-           r"\mathrm{df}=\frac{2\times(\text{mean of }\widehat V)^2}{\text{variance of }\widehat V}=\nu_{P,\mathrm{mom}}",
-           sz=18)
+           r"\nu_P=\frac{2\,[\mathbb{E}\{\widehat V(P)\}]^2}{\operatorname{Var}\{\widehat V(P)\}}=\nu_{P,\mathrm{mom}}",
+           sz=16.5)
 text(s, L, y + 0.9, W, 0.62, [
     {"runs": [B("Check: "), "for normal data, ", CM("𝑠"), CM("2", sup=True), " is exactly ",
               M(r"\sigma^2\chi^2_{n-1}/(n-1)", [CM("𝜎"), CM("2", sup=True), CM("𝜒"), CM("2", sup=True),
@@ -909,7 +941,8 @@ for i_, (hd, bd) in enumerate(DF_CARDS):
     text(s, x_ + 0.15, y + 0.14, CWD - 0.3, 0.72, [{"runs": hd, "sz": 14, "space_after": 2}, {"runs": bd}], sz=12.5,
          color=INK, anchor="ctr", name=f"df card {i_ + 1} text")
 footer(s, [("Slide 8 compares all three. Requires ", {"i": True}), CM("𝜏"), CM("2", sup=True),
-           ("(P) > 0 (Assumption 5). Thesis Sections 4.3.3–4.3.4, Table 4.1", {"i": True})])
+           ("(P) > 0 (Assumption 5). Combined df: Satterthwaite (1946); Welch (1947). Thesis Sections 4.3.3–4.3.4, "
+            "Table 4.1", {"i": True})])
 notes(s, backup_note(18))
 
 # =================================================================== Slide 19: variance sensitivity in full
@@ -928,12 +961,13 @@ text(s, L, 5.45, 3.3, 0.55, ["Pointwise MI:"], sz=16, color=INK, anchor="ctr")
 equation(s, 3.95, 5.45, 7.5, 0.55, r"\ell_P(i,j)=\log\{p_{ij}/(p_{i+}p_{+j})\}", sz=20)
 text(s, L, 6.2, 3.3, 0.55, ["Sensitivity variance:"], sz=16, color=INK, anchor="ctr")
 equation(s, 3.95, 6.2, 7.5, 0.55, r"\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}", sz=20)
-footer(s, "Exact for positive population tables; its use for sampling errors is first order. Thesis Chapter 4")
+footer(s, "Exact for positive population tables; its use for sampling errors is first order. Perturbation: Hampel (1974); "
+          "van der Vaart (1998). Thesis Chapter 4")
 notes(s, backup_note(19,
     extra="Assumptions: fixed categories, independent observations within each sample, independent samples, positive population cell probabilities, and positive V and tau-squared for the first-order degrees-of-freedom construction. With every cell positive, positive MI is equivalent to positive V (Appendix A.3), but positive V does not guarantee positive tau-squared. A zero component is not an ordinary finite degrees-of-freedom value.",
     source="Thesis Chapter 4: perturbation path (eq:contamination-path), final form of g (eq:g-final), and definition of "
-           "tau-squared (eq:tau-definition). This derivative is exact for positive population tables. Its use for "
-           "sampling errors is first order."))
+           "tau-squared (eq:tau-definition). The perturbation follows Hampel (1974) and van der Vaart (1998). This "
+           "derivative is exact for positive population tables. Its use for sampling errors is first order."))
 
 # =================================================================== Slide 20: sensitivity in cell probabilities
 s = new_slide("Variance sensitivity in cell probabilities", 20)
@@ -984,7 +1018,8 @@ text(s, L, y + 0.03, W, 0.27, [["The sensitivities have probability-weighted mea
                                CM("𝑝"), CM("𝑖𝑗", sub=True), " with ", CM("𝑛"), CM("𝑖𝑗", sub=True), CM("/𝑛"),
                                CM("𝑃", sub=True), " over occupied cells. Worked example: next slide."]],
      sz=12.5, color=SOFT, name="Estimate note")
-footer(s, "Thesis Equations 2.3, 2.4, 4.7, 4.9–4.11, 4.29, 4.36 and 4.41–4.43")
+footer(s, "Perturbation: Hampel (1974); van der Vaart (1998). Thesis Equations 2.3, 2.4, 4.7, 4.9–4.11, 4.29, 4.36 "
+          "and 4.41–4.43")
 notes(s, backup_note(20))
 
 # =================================================================== Slide 21: worked example
@@ -1069,11 +1104,12 @@ panel_text(p, [
     {"runs": ["Rate = rejections from successful calculations / all repetitions.", BR(),
               "Calculation success is reported separately."], "bullet": True, "bullet_color": NAVY},
 ], sz=15.5, color=INK, anchor="ctr", margins=(0.28, 0.24, 0.2, 0.2))
-footer(s, "Thesis Chapter 5 and Appendix B.1–B.5")
+footer(s, "Copying construction: a special case of Bocci et al. (2010). Thesis Chapter 5 and Appendix B.1–B.5")
 notes(s, backup_note(22,
     extra="""Full requirements (Appendix B.3): a Wald calculation succeeds when it has a finite corrected difference, a finite positive standard error, V-hat(P) + V-hat(Q) > 10^-14, and a finite p-value. The Expanded Welch calculation additionally requires positive finite component and combined degrees of freedom and a finite p-value; if either component fails, the Expanded Welch calculation is unsuccessful. If a sampled table has V-hat = tau-hat-squared = 0, the component formula requires 0/0, so the Expanded Welch calculation is unsuccessful even if the other table makes the shared standard error positive and finite. Zero and undefined component degrees of freedom are distinct cases; both fail the positive-finite requirement. A failed calculation is not evidence of equality.
 Sampling is independent within and between populations, and both methods receive identical sampled pairs. The construction uses the same vector for row and column margins within each population and is one association family, not all categorical distributions.""",
-    source="Thesis Chapter 5 and Appendix B.1–B.5; current grid results."))
+    source="Thesis Chapter 5 and Appendix B.1–B.5; current grid results. The copying construction is a special case of "
+           "the mixture model of Bocci et al. (2010) (thesis Section 5.1.1)."))
 
 # =================================================================== Slide 23: approximation ratios
 s = new_slide("Approximation ratios across table sizes", 23)
@@ -1102,8 +1138,8 @@ for q, a, b in [("Sample-based estimate (mean component df)", "4.60", "4.86"), (
                  dict(paras=[a], sz=17, color=INK, align="ctr", anchor="ctr"),
                  dict(paras=[b], sz=17, color=INK, align="ctr", anchor="ctr")])
 table(s, L, 3.55, [7.0, 2.56, 2.57], [0.55, 0.8, 0.8, 0.8], rows, name="Noise table")
-footer(s, "Local approximations under fixed dimensions and positive limiting cell probabilities. Thesis Appendix A.2, "
-          "Section 6.1.3")
+footer(s, "Local approximations under fixed dimensions and positive limiting cell probabilities. Chi-squared limit: "
+          "Wilks (1938); noncentral form: Banerjee (2005). Thesis Appendix A.2, Section 6.1.3")
 notes(s, backup_note(24,
     extra="Formulas: mean estimated component df (d + kappa)/2 = 4.60; sampling-moment target (d + kappa)^2/(d + 2 kappa) = 9.00; variance-prediction ratio 2(d + kappa)/(d + 2 kappa) = 1.96. The observed column is population P. The model predicts 9.00 for the target; it does not predict the observed 9.12 exactly.",
 ))
@@ -1193,7 +1229,16 @@ REFS1 = [
       "variances are involved. ", {}), ("Biometrika", {"i": True}),
      (", 34(1–2), 28–35. doi:10.1093/biomet/34.1-2.28", {})],
 ]
-REFS1.sort(key=lambda ref: ref[0][0])   # alphabetical by first author
+REFS1 += [
+    [("Banerjee, M. (2005). Likelihood ratio tests under local alternatives in regular semiparametric models. ", {}),
+     ("Statistica Sinica", {"i": True}), (", 15(3), 635–644.", {})],
+    [("Brillinger, D. R. (2004). Some data analyses using mutual information. ", {}),
+     ("Brazilian Journal of Probability and Statistics", {"i": True}), (", 18(2), 163–182.", {})],
+    [("Wilks, S. S. (1938). The large-sample distribution of the likelihood ratio for testing composite "
+      "hypotheses. ", {}), ("The Annals of Mathematical Statistics", {"i": True}),
+     (", 9(1), 60–62. doi:10.1214/aoms/1177732360", {})],
+]
+REFS1.sort(key=lambda ref: ref[0][0].lower())   # alphabetical by first author
 
 REFS2 = [
     [("Chao, A. and Shen, T.-J. (2003). Nonparametric estimation of Shannon’s index of diversity when there are "
@@ -1217,6 +1262,17 @@ REFS2 = [
       "observations is large. ", {}), ("Transactions of the American Mathematical Society", {"i": True}),
      (", 54(3), 426–482. doi:10.1090/S0002-9947-1943-0012401-3", {})],
 ]
+REFS2 += [
+    [("Bocci, C., Carlini, E. and Rapallo, F. (2010). Geometry of diagonal-effect models for contingency tables. "
+      "In M. A. G. Viana and H. P. Wynn (Eds.), ", {}), ("Algebraic Methods in Statistics and Probability II", {"i": True}),
+     (" (pp. 61–73). Contemporary Mathematics 516. American Mathematical Society. doi:10.1090/conm/516/10166", {})],
+    [("Hampel, F. R. (1974). The influence curve and its role in robust estimation. ", {}),
+     ("Journal of the American Statistical Association", {"i": True}),
+     (", 69(346), 383–393. doi:10.1080/01621459.1974.10482962", {})],
+    [("van der Vaart, A. W. (1998). ", {}), ("Asymptotic Statistics", {"i": True}),
+     (". Cambridge University Press, Cambridge. doi:10.1017/CBO9780511802256", {})],
+]
+REFS2.sort(key=lambda ref: ref[0][0].lower())   # alphabetical by first author
 for n, title, refs in [(32, "References: MI and testing foundations", REFS1),
                        (33, "References: related methods and evaluation", REFS2)]:
     s = new_slide(title, n)
@@ -1231,12 +1287,12 @@ for n, title, refs in [(32, "References: MI and testing foundations", REFS1),
 
 cp = prs.core_properties
 cp.title = "Comparing Mutual Information in Finite Samples"
-cp.subject = "Normal Wald and Expanded Welch–Satterthwaite comparisons of mutual information"
+cp.subject = "Wald and Expanded Welch–Satterthwaite Tests"
 cp.author = "Daniel Zhao"
 cp.last_modified_by = "Daniel Zhao"
 cp.comments = ""
 cp.keywords = "final"
-cp.modified = datetime.datetime(2026, 11, 14)     # final version
+cp.modified = datetime.datetime(2026, 11, 15)     # final version
 prs.save(OUT)
 import pptlib
 for row in pptlib.EQUATION_LOG:

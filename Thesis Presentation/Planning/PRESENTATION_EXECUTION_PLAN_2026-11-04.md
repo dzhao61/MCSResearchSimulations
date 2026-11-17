@@ -128,7 +128,7 @@ not lists of technical nouns. The deck in
 | --- | --- |
 | Canvas | 16:9, 13.3333 × 7.5 inches; donor size 12,192,000 × 6,858,000 EMU. |
 | Title | Lato Bold 28 pt, black, left aligned at x=0.6, y≈0.3. Retain the titles below and sentence case. |
-| Lead | Lato 17 pt regular in `#555555`, one or two lines at y≈1.0; set one meaningful phrase in bold orange. Backups use one 15 pt regular introduction line. |
+| Lead | Lato 16 pt bold in `#262626`, one or two lines at y≈1.0, as in the vF2 template; set the key phrase or phrases in orange. Backups use one 15 pt regular introduction line. |
 | Setting line | Lato 13 pt bold orange, one line under the lead or at the top of the right-hand column. |
 | Section labels | Lato 14 pt bold navy or orange, with a 1 pt hairline beneath in `#B8C5D6` or `#F5C7AA`. |
 | Main text | Panel headings Lato 14.5–15 pt bold; panel and body text 13.5–15 pt; table cells 14.5–16 pt under 12.5–14 pt bold headers. |
@@ -252,7 +252,8 @@ pauses and slower delivery, not added material.
 
 Comparing Mutual Information in Finite Samples
 
-*Can MI-specific degrees of freedom improve comparisons between populations?*
+*Wald and Expanded Welch–Satterthwaite Tests* (the thesis subtitle; line break
+before “Welch” so the name stays together)
 
 Daniel Zhao (Master of Computer Science)
 
@@ -284,9 +285,10 @@ hypothesis.
 
 **On-slide content:**
 
-**Lead:** Mutual information measures how much observing one variable
-reduces uncertainty about another, on average. Different sample estimates
-can arise from sampling noise.
+**Lead:** Mutual information (MI) measures how much knowing one variable
+reduces uncertainty about another. We ask whether a gap between two
+populations’ MI estimates reflects a real difference or only sampling
+noise.
 
 \[
 H_0:I(P)=I(Q)\quad\text{against}\quad H_1:I(P)\neq I(Q)
@@ -341,15 +343,15 @@ then trace each population into its estimate and point to the null.
 
 **On-slide content:**
 
-**Lead:** Existing results provide MI estimates, a Wald test using a
-standard normal distribution, and moment matching. This project derives the
-MI variance sensitivity needed for its degrees of freedom.
+**Lead:** We build on three established strands of work: MI estimation, the
+Wald test, and Welch–Satterthwaite moment matching. Applying moment
+matching to MI needs one new result, the sensitivity of the MI variance.
 
 | | MI estimation and uncertainty | Wald comparison | Welch–Satterthwaite moment matching |
 | --- | --- | --- | --- |
-| Idea | Estimate MI and first-order sampling variance | Divide the estimated difference by its standard error | Match variance moments to choose degrees of freedom |
-| Key work | Moddemeijer (1989); Paninski (2003) | Wald (1943); Mora and Ruiz-Castillo (2009) | Satterthwaite (1946); Welch (1947); Hutcheson (1970); Pan and Wall (2002) |
-| Required step | Track variation in the variance estimate itself | Assess the fixed cutoff from the standard normal distribution in finite samples | Calculate the MI-specific variance sensitivity |
+| Idea | Estimate MI and its first-order sampling variance | Divide the estimated difference by its standard error; compare with the standard normal | Match the variance estimate’s mean and variance to choose Student t degrees of freedom |
+| Key work | Moddemeijer (1989); Brillinger (2004); Paninski (2003) | Wald (1943); Mora and Ruiz-Castillo (2009) | Satterthwaite (1946); Welch (1947); Hutcheson (1970); Pan and Wall (2002) |
+| Required step | Track variation in the variance estimate itself | Assess that standard normal cutoff in finite samples | Calculate the MI-specific variance sensitivity |
 
 **Contributions:** Derive that sensitivity, construct the Expanded Welch
 test from it, and evaluate both empirically. This matches the three
@@ -382,9 +384,9 @@ hutcheson1970, and panwall2002.
 
 **On-slide content:**
 
-**Lead:** Both methods use the same estimated MI difference and standard
-error. Expanded Welch uses estimated degrees of freedom for a Student t
-distribution.
+**Lead:** Both tests use the same statistic: the bias-corrected MI
+difference divided by its standard error. They differ only in the reference
+distribution, so Expanded Welch always has the larger cutoff.
 
 \[
 T=\frac{\widehat\Delta_{\mathrm{BC}}}{\widehat{\mathrm{SE}}},\qquad
@@ -437,8 +439,9 @@ normal distribution and the Student t distribution with 5 degrees of freedom.
 
 **On-slide content:**
 
-**Lead:** The estimated pointwise-MI variance changes between samples. We
-approximate that variation and use it to choose the degrees of freedom.
+**Lead:** The variance estimate itself changes between samples. We measure
+that variation for MI and use it to choose the degrees of freedom, which
+gives our first two contributions.
 
 **Three steps, left to right:**
 
@@ -448,15 +451,20 @@ approximate that variation and use it to choose the degrees of freedom.
    \(\widehat V(P)\).
 2. Measure that variation:
    \(\operatorname{Var}\{\widehat V(P)\}\approx\tau^2(P)/n_P\).
-   \(g_P(x,y)\): how much \(V(P)\) changes when a little probability
-   moves to cell \((x,y)\). \(\tau^2(P)\): the variance of
-   \(g_P(X,Y)\). Tags: “Contribution 1: derivation”; “Approximation:
+   Beneath it, in smaller type:
+   \(g_P(x,y)=\frac{d}{d\varepsilon}V\{(1-\varepsilon)P+\varepsilon\delta_{(x,y)}\}|_{\varepsilon=0}\);
+   \(\tau^2(P)=\operatorname{Var}_P\{g_P(X,Y)\}\). Tags: “Contribution 1: derivation”; “Approximation:
    first-order expansion”.
-3. Turn it into degrees of freedom: the rule in words,
-   df = 2 × (mean of \(\widehat V\))² / variance of \(\widehat V\), above
+3. Turn it into degrees of freedom: the moment-matching rule
+   \(\nu_P=2[\mathbb E\{\widehat V(P)\}]^2/\operatorname{Var}\{\widehat V(P)\}\), above
    \(\widehat\nu_P=2n_P\widehat V(P)^2/\widehat\tau^2(P)\), then “More
    variation → fewer df → larger cutoff”. Tags: “Contribution 2: test
    construction”; “Approximation: moment matching”.
+
+**Callout bubble (top right):** Calculated from a probability table. Plug
+in the population probabilities for \(V\), \(g\), and \(\tau^2\), or the
+sampled table for \(\widehat V\), \(\widehat\tau^2\), and
+\(\widehat\nu\).
 
 **Bottom strip:** Then: repeat for Q and combine using Welch–Satterthwaite
 into one \(\widehat\nu\) for the Student t cutoff. RQ1 checks both
@@ -466,7 +474,10 @@ approximations (Slides 7–8).
 three-category colours (as on Slide 10): orange on peach for step 1, navy
 on pale blue for step 2, green on pale green for step 3. Each panel has a
 numbered marker and a heading in its colour; the contribution and
-approximation tags use the same colour. The strip below uses the navy
+approximation tags use the same colour. The callout is a speech bubble in
+the style of vF2 slide 2: pale orange fill, navy outline, a bold orange
+heading over italic orange text. It sits under the lead at top right, and
+its tail points into panel 2. The strip below the panels uses the navy
 callout bar. The steps follow the first three paragraphs of the speaker
 script, and the strip follows the fourth. The three derivations are on
 Slides 16–18, and g and tau-squared in full, with a worked example, on
@@ -498,8 +509,9 @@ repetition count.
 
 **On-slide content:**
 
-**Lead:** Known populations separate approximation accuracy, false
-positives, and power. Both tests receive the same sampled table pairs.
+**Lead:** We answer three research questions using known simulated
+populations. Both tests receive the same 100,000 table pairs per setting,
+so when both calculations succeed, any difference comes from the cutoff.
 
 | Research question | Evaluation |
 | --- | --- |
@@ -541,7 +553,12 @@ counter. Exact vectors, sample sizes, and requirements are on Slide 22.
 **Transition:** “The first result shows why accurate variance prediction can coexist with an inflated mean.”
 
 **Source:** Thesis Chapter 5, Tables 5.1–5.3, and Appendix B; Morris et al.
-(2019). Current balanced-null and MI-gap grids.
+(2019) for the simulation-design framework; Bocci et al. (2010) for the
+mixture model of which the copying construction is a special case (thesis
+Section 5.1.1). Current balanced-null and MI-gap grids. Footer: “Design
+framework: Morris et al. (2019); copying construction: a special case of
+Bocci et al. (2010). Thesis Chapter 5, Tables 5.1–5.3; full details on
+Slide 22”.
 
 ### Slide 7 — RQ1 results: approximation accuracy
 
@@ -549,8 +566,9 @@ counter. Exact vectors, sample sizes, and requirements are on Slide 22.
 
 **On-slide content:**
 
-**Lead:** The mean of V-hat can remain inflated even when its population
-first-order sampling-variance prediction is accurate.
+**Lead:** In this example, we predict the spread of the variance estimate
+to within 8% by n = 1,000, but its average is still 19% too high. The
+degrees of freedom depend on both.
 
 **Setting:** Different-skew P; 4×4; population MI 0.02 nats.
 
@@ -609,9 +627,9 @@ and explain the three distinct quantities.
 
 **On-slide content:**
 
-**Lead:** Near independence, first-order theory gives almost no degrees
-of freedom, while sampling noise keeps the mean sample-based estimate at
-about half the target.
+**Lead:** Near independence, the first-order formula predicts almost no
+degrees of freedom. Estimates from each sample pick up some sampling noise,
+but still reach only about half the target.
 
 **Setting:** Different-skew P; 4×4; n=1,000 fixed.
 
@@ -668,8 +686,9 @@ where the larger cutoff helps and where it hurts.
 
 **On-slide content:**
 
-**Lead:** A larger cutoff helps only where Wald rejects too often; where
-Wald already rejects too rarely, it never brings the rate closer to 5%.
+**Lead:** Across all 360 null settings, the larger cutoff helps only where
+Wald rejects too often. Where Wald already rejects too rarely, it never
+brings the rate closer to 5%.
 
 **Setting:** All 360 null settings; equal MI in P and Q; each point is one
 setting.
@@ -728,8 +747,8 @@ illustrative settings of thesis Table 6.1.
 
 **On-slide content:**
 
-**Lead:** Three kinds of estimation error explain the three patterns on
-Slide 9.
+**Lead:** The cutoff’s effect depends on which estimate is wrong: the
+standard error or the MI difference itself.
 
 **Setting:** Three illustrative settings (thesis Table 6.1); equal MI 0.02
 nats; every calculation succeeds.
@@ -794,8 +813,9 @@ larger cutoff costs, and when.
 
 **On-slide content:**
 
-**Lead:** Expanded Welch never has more power than Wald; the loss is
-largest in small samples and under 0.32 points by n = 10,000.
+**Lead:** With its larger cutoff, Expanded Welch never has more power than
+Wald. The loss is largest in small samples and is under a third of a
+percentage point by n = 10,000.
 
 **Setting:** All 360 power settings; MI in P = 0.02 nats; gaps of 0.005,
 0.01, and 0.02 nats.
@@ -845,8 +865,9 @@ outlined.
 
 **On-slide content:**
 
-**Lead:** Under different-skew margins, sparse tables give rejections that
-point to the wrong population.
+**Lead:** With different-skew margins, bias can reverse the sign of the
+estimated difference. In sparse tables, most rejections can point to the
+wrong population, and a larger cutoff cannot correct that.
 
 **Setting:** Different-skew margins; MI gap 0.01 nats; % of Expanded Welch
 rejections with the wrong sign.
@@ -855,15 +876,24 @@ rejections with the wrong sign.
 estimate +0.0207. Expanded Welch rejects in 9.66% of repetitions, and over
 99.9% of those point the wrong way.
 
-**Higher-order bias outweighs the gap** (three bullets):
-- **Leading term:** 0.11 nats each; equal n cancels it.
-- **Higher-order bias:** differs between P’s and Q’s margins, shifting the
-  difference by +0.031 nats (3× the gap).
-- **Fix:** more data, not a larger cutoff.
+**Why the estimate points to P** (four numbered steps, no figures):
+1. The leading correction assumes every cell is seen often enough to add
+   its share of upward bias.
+2. Q’s margins are more skewed, so its rare pairs are much rarer and
+   usually unseen.
+3. Unseen cells add little bias, so Q’s raw estimate is inflated less than
+   P’s.
+4. The same correction then leaves Q’s estimate further below its true MI,
+   so P − Q flips sign on average.
 
-(Leading term: (16 − 1)²/(2 × 1,000) = 0.1125 nats for each estimate,
-identical for P and Q. Shift: mean estimate +0.0207 minus true difference
-−0.0100 = +0.0307 nats. Thesis Equations 2.8 and 3.7; Section 5.5.)
+(Exact expectations from the population tables,
+assets/code/bias_breakdown.py; not in the thesis. Leading term (16 − 1)²/(2
+× 1,000) = 0.1125 nats for each estimate. Raw plug-in inflation is 0.105
+for P and 0.074 for Q, so after the same correction P is 0.008 too low and
+Q 0.039 too low, a shift of +0.031 that matches the thesis +0.0307. Each
+rare pairing is expected 0.37 times in P and 0.16 times in Q. Equal true MI
+gives almost the same shift (+0.030), and same-skew margins give +0.0009,
+so the margins drive it. Slide 15's notes hold these figures.)
 
 **Across all 360 power settings,** 28 have at least 90% of rejections
 pointing the wrong way. All 28 are 8×8 or 16×16 with different-skew
@@ -879,8 +909,8 @@ size (columns) for different-skew margins and the 0.01-nat gap, each cell
 the percentage of Expanded Welch rejections with a positive estimated
 difference (the true difference is negative). Print the value in each
 cell and outline the 16×16, n = 1,000 cell in dark charcoal. Panels and
-callout at right: the outlined-cell panel first (peach), the bias panel
-second (blue).
+callout at right: the outlined-cell panel first (peach), the four-step
+bias panel second (blue, numbered navy markers).
 Shares come from the signed rejection counts in the MI-gap power
 diagnostics. The 0.005 and 0.02 gaps show the same pattern. Do not turn
 “over 99.9%” into a percentage of all repetitions.
@@ -910,8 +940,9 @@ observed limitations.
 
 **On-slide content:**
 
-**Lead:** MI-specific degrees of freedom improve some false-positive rates,
-while remaining failures identify estimation accuracy as a priority.
+**Lead:** MI-specific degrees of freedom move some false-positive rates
+closer to 5%, but a better cutoff cannot replace a better estimated
+difference and standard error.
 
 **Contributions** (thesis Section 1.3)
 
@@ -931,14 +962,11 @@ while remaining failures identify estimation accuracy as a priority.
 - RQ3, power and direction: at the same nominal 5% threshold, power is no
   higher; bias can make rejections point the wrong way.
 
-**Scope:** The evaluation covers one population construction and equal
-sample sizes, with the Wald test as the main benchmark.
-
 **Next steps**
 
 - Reduce bias in the estimated MI difference and improve its standard error
   and degrees of freedom, including near independence.
-- Test other association constructions and unequal sample sizes.
+- Test other table constructions and unequal sample sizes.
 
 Thank you.
 
@@ -949,8 +977,9 @@ large numeral and a name in orange, navy and green, and a one-line
 description, beneath an orange “Contributions” heading. Findings follow as
 three pale peach, blue and mint cards beneath a navy “Findings by research
 question” heading, each with an RQ tag and short title in orange, navy and
-green, and the finding. Then a navy-bar scope line, and the two
-next steps as orange-arrow items without boxes beneath orange. Keep phrases readable and add no new
+green, and the finding. Then the two next steps as orange-arrow items
+without boxes beneath orange; there is no separate scope line, since the
+next steps name the untested constructions and unequal sample sizes. Keep phrases readable and add no new
 equations. This combines the former limitations and conclusion pages.
 Leave it displayed during questions. Its speaker notes contain the
 backup-number index.
@@ -1020,10 +1049,9 @@ Slide 5's step 2; Derivations 2 and 3 use green, matching step 3.
 **Purpose:** Mark the beginning of the supporting material clearly in the
 slide deck and PDF, and index it.
 
-**On screen:** On the left, **Appendix** in bold navy Lato (44 pt), the
-subtitle “Backup slides for questions”, and a quiet hint (“Grouped in the
-order of the talk. To jump, type the slide number and press Enter. Type 13
-to return to the conclusion.”). On the right, beside a light vertical rule,
+**On screen:** On the left, **Appendix** in bold navy Lato (44 pt), centred
+vertically on the index rule, with no subtitle or navigation hint. On
+the right, beside a light vertical rule,
 the index in two columns. Left column: Method (Slides 4–5), Evaluation
 design (Slide 6) and References, with orange headings. Right column: RQ1
 accuracy (Slides 7–8), RQ2 null results (Slides 9–10) and RQ3 power
@@ -1037,43 +1065,66 @@ Slide 13 afterwards. The divider adds no time to the 18:50 main talk.
 
 ### Backup Slide 15 — Bias correction
 
-**Question answered:** Which bias correction do you use, and why does it
-not remove the bias seen on Slides 10 and 12?
+**Question answered:** Which bias correction do you use, why does it not
+remove the bias seen on Slides 10 and 12, and is what remains a
+higher-order effect?
 
 **Show:** On the left, the plug-in estimator (thesis Equation 2.7), its
-leading bias (Equation 2.8, Miller 1955), and the bias-corrected
-difference (Equation 3.7), with a note that unequal sample sizes give the
-uncorrected difference a leading bias (Equation 2.9: 2×2, n_P = 50,
-n_Q = 100 gives 0.005 nats). On the right, three cards: the size of the
-leading term (16×16 at n = 1,000: 225/2,000 ≈ 0.11 nats per estimate, over
-five times the MI of 0.02); its cancellation in these simulations (n_P =
-n_Q with equal table sizes, so the corrected difference equals the raw
-plug-in difference); and what remains (higher-order bias that differs
-between distinct tables, as in the different-skew 16×16, n = 1,000 setting:
-true difference −0.01 nats, mean estimate +0.0207). The third card uses
-the green of Slide 10's bias mechanism. A bottom line names estimators
-beyond the leading term: Panzeri–Treves, the jackknife, Chao–Shen
-coverage, and NSB.
+leading bias (Equation 2.8, Miller 1955), and the bias-corrected difference
+(Equation 3.7), with a note that unequal sample sizes give the uncorrected
+difference a leading bias (Equation 2.9: 2×2, n_P = 50, n_Q = 100 gives
+0.005 nats). On the right, two cards. The peach card, “The leading term:
+large, but it cancels”: 16×16, n = 1,000: 0.11 nats per estimate, over five
+times the MI of 0.02; equal sample sizes cancel it. The blue card, “When is
+the leading correction enough?”, has four bullets: it assumes every cell is
+well sampled, and then what remains is a small higher-order term that
+shrinks like 1/n²; well sampled: in the 16×16 tables at n = 10,000, what
+remains is under 0.002 nats; sparse: when many cells are expected less than
+once, that expansion breaks down, and its 1/n² term even points the wrong
+way; there the correction overshoots, by more for Q than for P, and Slide
+12 shows how that flips the sign. A small note marks this as an exact
+calculation, not in the thesis. A bottom line names estimators beyond the
+leading term: Panzeri–Treves, the jackknife, Chao–Shen coverage, and NSB.
 
-**Answer to give:** “Each MI estimate subtracts the leading bias,
-(r − 1)(c − 1) over 2n, which is Miller's correction. In every simulation
-the two samples have the same size and table dimensions, so the two
-corrections are equal and cancel from the difference. What remains is
-higher-order bias, which depends on the whole probability table. Distinct
-tables with equal MI can have different remaining biases, and that shifts
-the estimated difference, as on Slides 10 and 12. Reducing that bias is my
-first next step.”
+**Answer to give:** “Each MI estimate subtracts the leading bias, (r − 1)(c
+− 1) over 2n, following Miller and Moddemeijer. In every simulation the two
+samples have the same size and table dimensions, so the two corrections are
+equal and cancel from the difference. The correction assumes every cell is
+well sampled. Then what remains is a small higher-order term: under 0.002
+nats for the 16×16 tables at n = 10,000. In the sparse tables on Slide 12,
+many cells are expected less than once, and that expansion breaks down. The
+correction overshoots instead, and by more for Q, whose rare pairs are
+rarer. That's what flips the sign. So it isn't a small higher-order effect;
+it's sparse sampling. Reducing this bias is my first next step.”
 
-**Notes:** The leading term is 0.1125 nats per estimate for 16×16 at
-n = 1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes,
-the correction removes the leading unequal-sample bias; its performance
-there is untested (thesis Section 7.2). Corrected estimates can be negative
-and are retained. Empty sampled cells contribute nothing to the plug-in
-sum.
+**Notes:** The leading term is 0.1125 nats per estimate for 16×16 at n =
+1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes, the
+correction removes the leading unequal-sample bias; its performance there
+is untested (thesis Section 7.2). Corrected estimates can be negative and
+are retained. Empty sampled cells contribute nothing to the plug-in sum.
+The figures below are exact expectations, not simulations: plug-in MI is a
+sum of per-cell terms and each cell count is binomial. Bias beyond the
+leading term, exact against the 1/n² term of the large-sample expansion: P
+at n = 1,000, −0.008 against +0.048; Q at n = 1,000, −0.039 against +0.110;
+P at n = 10,000, +0.0008 against +0.0005; Q at n = 10,000, +0.0017 against
++0.0011; at n = 50,000 they agree. Slide 12's mechanism: raw plug-in
+inflation is 0.105 nats for P and 0.074 for Q; each of the 210 rare
+pairings is expected 0.37 times in P (margin 0.7) but 0.16 times in Q
+(0.8); these cells account for 0.0308 of the 0.0307 gap. Copying
+probabilities: 0.069 in P and 0.100 in Q. Equal MI 0.02 with the same
+margins (Slide 10's different-skew row) gives +0.030; same-skew margins
+with MI 0.02 and 0.03 give +0.0009; swapped margins give −0.029, which
+keeps the true sign. The gap shrinks with n: 0.083 at n = 250, 0.031 at
+1,000, 0.008 at 2,500 (mean −0.0016, the power trough), and about zero at
+10,000. The figures reproduce the thesis values in Section 6.3.3 (bias
++0.0307, mean +0.0207). This breakdown is not in the thesis; the thesis
+attributes the shift to different residual biases from unequal margins
+(Sections 6.2.3 and 6.3.3; Paninski, 2003).
 
-**Source:** Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.5 and
-7.2; Miller (1955); Panzeri and Treves (1996); Paninski (2003); Chao and
-Shen (2003); Nemenman et al. (2002).
+**Source:** Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.1.2,
+5.5, 6.2.3, 6.3.3 and 7.2; Miller (1955); Moddemeijer (1989); Panzeri and Treves (1996);
+Paninski (2003); Chao and Shen (2003); Nemenman et al. (2002). Exact bias
+figures: calculated for this presentation (assets/code/bias_breakdown.py).
 
 ### Backup Slide 16 — Derivation 1 of 3: how much the variance estimate varies
 
@@ -1117,7 +1168,9 @@ approximation. Slide 7 shows both checks: the mean of V-hat over V, and
 the predicted over the observed variance.
 
 **Source:** Thesis Sections 4.2.1, 4.3.1 and 4.3.2; Equations 4.10, 4.11,
-4.30, 4.31 and 4.35–4.38.
+4.30, 4.31 and 4.35–4.38. The perturbation towards one cell and the
+first-order expansion follow Hampel (1974) and van der Vaart (1998), as
+the thesis cites them in Sections 2.3.2, 4.2.1 and 4.3.1.
 
 ### Backup Slide 17 — Derivation 2 of 3: moment matching gives the df rule
 
@@ -1221,8 +1274,9 @@ column margins. Both contributions are necessary because the pointwise-MI
 values themselves depend on the table.”
 
 **Source:** Chapter 4, source labels `eq:contamination-path`, `eq:g-final`,
-`eq:tau-definition`. This derivative is exact for positive population
-tables. Its use for sampling errors is first order.
+`eq:tau-definition`; perturbation: Hampel (1974); van der Vaart (1998).
+This derivative is exact for positive population tables. Its use for
+sampling errors is first order.
 The notes must state the assumptions: fixed categories,
 independent observations within each sample, independent samples,
 positive population cell probabilities, and positive V and tau-squared
@@ -1271,7 +1325,8 @@ errors is first order.
 
 **Source:** Thesis Equations 2.3 and 2.4 (pointwise MI and MI), 4.7 (moment
 matching), 4.9–4.11 (V, the perturbation, and g), 4.29 (final form of g),
-4.36 (tau-squared) and 4.41–4.43 (estimates).
+4.36 (tau-squared) and 4.41–4.43 (estimates); perturbation: Hampel
+(1974); van der Vaart (1998).
 
 ### Backup Slide 21 — Worked example: sensitivities and degrees of freedom
 
@@ -1350,8 +1405,10 @@ populations; methods receive identical sampled pairs. This construction
 uses the same vector for row and column margins within each population
 and is one association family, not all categorical distributions.
 
-**Source:** Chapter 5 and Appendix B.1–B.5; current grid CSVs. No
-calibration or four-cell study.
+**Source:** Chapter 5 and Appendix B.1–B.5; current grid CSVs. The
+copying construction is a special case of the mixture model of Bocci et al.
+(2010) (thesis Section 5.1.1). No calibration or
+four-cell study.
 
 ### Backup Slide 23 — Approximation ratios across table sizes
 
@@ -1419,7 +1476,9 @@ two, whose mean is about 4.6 in this setting. The population first-order
 formula instead approaches n times population MI. These are different
 approximations, which explains their separation.”
 
-**Source:** Thesis Appendix A.2 and Section 6.1.3; Figure 6.3. These are
+**Source:** Thesis Appendix A.2 and Section 6.1.3; Figure 6.3; Wilks
+(1938) for the chi-squared limit of 2nI-hat at independence and Banerjee
+(2005) for its noncentral form under local alternatives. These are
 local approximations under fixed dimensions and positive limiting cell
 probabilities, not exact finite-sample distribution identities.
 
@@ -1601,25 +1660,26 @@ profile=different_skew, denominator=all.
 ### Backup Slide 32 — References: MI and testing foundations
 
 **Show/layout:** Follow preferred-reference page 25 and donor Slide 11's two-column bibliography,
-using four entries in the left column and three in the right, in Lato 14.5 pt with comfortable
+using five entries in each column, in Lato 14.5 pt with comfortable
 paragraph spacing. Keep the common 28 pt black title and
 white background. Use author, year, title, venue and DOI/URL where supplied.
 Do not use a screenshot of a bibliography page. Retain published spelling
 and names. Exact bibliographic text comes from the thesis `references.bib`.
 
-Include these keys, in alphabetical order: `bossomaier2016`, `miller1955`,
-`moddemeijer1989`, `mora2009`, `paninski2003`, `satterthwaite1946`,
-`welch1947`.
+Include these keys, in alphabetical order: `banerjee2005`, `bossomaier2016`,
+`brillinger2004`, `miller1955`, `moddemeijer1989`, `mora2009`,
+`paninski2003`, `satterthwaite1946`, `welch1947`, `wilks1938`.
 
 **Speech:** No prepared narration. Use this page if a source is requested.
 It is not part of the 20-minute talk.
 
 ### Backup Slide 33 — References: related methods and evaluation
 
-**Show/layout:** Seven entries, four in the left column and three in the
-right, in alphabetical order, in the same style and at the same readable
-size as Slide 32. Include `chaoshen2003`, `hutcheson1970`, `morris2019`,
-`nemenman2002`, `panwall2002`, `panzeri1996`, `wald1943`.
+**Show/layout:** Ten entries, five in each column, in alphabetical order,
+in the same style and at the same readable size as Slide 32. Include
+`bocci2010`, `chaoshen2003`, `hampel1974`, `hutcheson1970`, `morris2019`,
+`nemenman2002`, `panwall2002`, `panzeri1996`, `vandervaart1998`,
+`wald1943`.
 
 **Speech:** No prepared narration. Do not add another thank-you or
 conclusion page after the references.
@@ -1815,6 +1875,42 @@ removed calibration and four-cell studies stay excluded. No new analysis
 is needed for this replan: its figures select existing results.
 
 ## 11. Revision and verification record
+
+**Slide 1: cover subtitle (15 November):** The italic line under the cover title now reads “Wald and Expanded Welch–Satterthwaite Tests”, the thesis subtitle, in place of the question “Can MI-specific degrees of freedom improve comparisons between populations?”. It breaks before “Welch” so the name stays on one line. The document subject property matches. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 14: title only (15 November):** The subtitle “Backup slides for questions” is removed at Daniel's request, leaving “Appendix” alone on the left, now centred vertically on the index rule. Daniel will present from the PDF. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 13: “table constructions”; Slide 14 hint removed (15 November):** The second next step now reads “Test other table constructions and unequal sample sizes.”, in place of “other association constructions”, at Daniel's request. Slide 14's grey navigation hint (“Grouped in the order of the talk. To jump, type the slide number and press Enter. Type 13 to return to the conclusion.”) is removed at Daniel's request. The Slide 13 notes are the spoken script alone, so the jump instructions no longer appear in the deck; each backup slide's notes still end with “Return to Slide 13 afterwards”. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 13: scope line removed (15 November):** The navy-bar line “Scope: The evaluation covers one population construction and equal sample sizes, with the Wald test as the main benchmark” is removed at Daniel's request. The second next step already names other constructions and unequal sample sizes, and the Wald benchmark is clear from the rest of the talk. The freed space is shared out: the contributions, findings and next steps sit slightly further apart. No wording or other slide changed. The notes follow the spoken script as revised at 2:19 pm on 15 November (Slides 4, 7–13 changed; the Slide 13 script no longer states the scope). The submission PDF is regenerated from the same build.
+
+**Citation audit (15 November):** Every citation on the deck was checked against the thesis text and bibliography. All existing citations are used for the same purpose as in the thesis, and all 14 existing reference entries match the thesis bibliography (20 entries after this change). Where a slide showed a method or result that the thesis credits to a source the deck did not cite, the credit was added: Slide 6 footer, “Design framework: Morris et al. (2019); copying construction: a special case of Bocci et al. (2010)” (Morris et al. had stood alone, which could read as the source of the construction); Slide 22 footer, Bocci et al. (2010); Slides 16, 19 and 20 footers, the perturbation and first-order expansion, Hampel (1974) and van der Vaart (1998); Slide 18 footer, the combined df, Satterthwaite (1946) and Welch (1947); Slide 24 footer, the chi-squared limit, Wilks (1938), and its noncentral form, Banerjee (2005); Slide 15 bias note, (Miller, 1955; Moddemeijer, 1989), in place of Miller alone, matching thesis Equation 3.7; Slide 3 Key work, Brillinger (2004) beside Moddemeijer (1989) for the first-order variance. Six references are added: Banerjee (2005), Brillinger (2004) and Wilks (1938) on Slide 32; Bocci et al. (2010), Hampel (1974) and van der Vaart (1998) on Slide 33, each now five entries per column. Slide 15's suggested answer now credits Miller and Moddemeijer, and the backup source lines for Slides 6, 15, 16, 19, 20, 22 and 24 name the same sources. Deliberately not added: Shannon (1948) on Slide 2 (thesis Chapter 1 cites Bossomaier et al. alone for the definition used); Brent (1973), the root-finder for the copying probability, which no slide shows; Wilson (1927) for the rate intervals in the Slides 25–31 grids, which are drawn but too narrow to see at 100,000 repetitions. No slide numbers or other content changed. The notes follow the spoken script as revised at 12:24 pm on 15 November (Slides 2–13 and question guides 1, 2 and 6 changed; the Slide 6 script now credits Bocci et al.). The submission PDF is regenerated from the same build.
+
+**Slide 3: precise Idea row (15 November):** The Idea row now names each method's reference distribution: “Estimate MI and its first-order sampling variance”; “Divide the estimated difference by its standard error; compare with the standard normal”; “Match the variance estimate’s mean and variance to choose Student t degrees of freedom”. The Wald Required step becomes “Assess that standard normal cutoff in finite samples”, since the Idea row now names the standard normal. The spoken script for Slide 3 already says this and is unchanged. The notes follow the spoken script as revised at 11:31 am on 15 November (Slide 2 changed). No other slide changed. The submission PDF is regenerated from the same build.
+
+**Pre-submission check (15 November):** A full check of the deck and PDF before submission. All 33 slides were rendered and inspected; no text is clipped or overlapping, and the PDF has 33 pages, 16:9, with all fonts embedded. Every “Slide N” cross-reference on the slides and in the script points to the right slide. Every thesis equation, figure, table, and section cited on the slides exists in the thesis. The Slide 9, 10, 11, and 12 figures were recomputed from the saved CSVs (178/165, 180/176/4, 130 versus 136, 36.38% to 34.38%, 8.35% to 4.90%, no setting where Expanded Welch beats Wald, median loss 5.78 at n = 10 and 0.16 at n = 10,000, maximum 0.313 at n = 10,000, 79.87%–96.47%, 28 wrong-way settings, 9,659 of 9,662), as were Slide 7 (1.19, 0.97, 1.08) and the Slide 21 worked example; all match. One change: Slide 6's lead now reads “…so when both calculations succeed, any difference comes from the cutoff”, in place of “…come from the cutoff alone”, because failed calculations also separate the two tests (Slide 11) and the spoken script already says this. The speaker notes follow the spoken script as revised at 11:19 pm on 14 November (Slides 3–8, 10, 12, 13, and question guides 2, 3, 6 and 9 changed). The document's modified date is 15 November. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slides 12 and 15: rare-cell steps move to Slide 12 (14 November):** Slide 12's blue box, “Higher-order bias outweighs the gap”, is replaced by “Why the estimate points to P”: the four numbered steps from Slide 15, with step 4 shortened to “The same correction then leaves Q’s estimate further below its true MI, so P − Q flips sign on average.” The box drops the leading-term, +0.031 and “Fix” bullets; the outlined-cell panel and the bottom callout keep their text at 13 pt. Slide 15's blue card is now “When is the leading correction enough?”: with well-sampled cells what remains is a small 1/n² term (under 0.002 nats for 16×16 at n = 10,000); with many cells expected less than once the expansion breaks down, its 1/n² term points the wrong way, and the correction overshoots, by more for Q. Slide 15's question, answer and notes now cover this; its notes keep all the figures. bias_breakdown.py adds the 1/n² comparison. The spoken script for Slide 12 is unchanged. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 15: plain-language steps (14 November):** The blue card, now “What remains: why P looks ahead on Slide 12”, replaces the table with four numbered steps and a check line, with no figures: the correction assumes every cell is seen often enough; Q’s more skewed margins leave its rare pairs usually unseen; unseen cells add little bias, so Q’s raw estimate is inflated less; the same correction then leaves Q further below its true MI, pushing P − Q up enough to flip its sign on average. The check: equal true MI gives almost the same shift. The figures stay in Slide 15's notes, and the footer now marks the explanation as an exact calculation not in the thesis. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 15: less dense (14 November):** The blue card's paragraphs become one cause line, a small P-and-Q table (raw MI inflation +0.105 and +0.074; after the same correction −0.008 and −0.039), a result line (P − Q shifts up by 0.031: a true −0.010 becomes an average +0.021) and the equal-MI check. The peach card is shortened to two lines. The wording and figures are unchanged in substance; no other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 15: clearer rare-cell explanation (14 November):** The blue card now uses Daniel's wording: Q’s more skewed margins make rare pairs much rarer, so its raw MI estimate is less inflated than P’s; the same bias correction then leaves Q’s estimate too low by more than P’s, pushing P − Q up by about 0.031 nats, from a true −0.010 to an average +0.021; and almost the same shift appears at equal true MI, which shows the margins drive it. The card no longer lists the expected counts or the swapped-margin check; Slide 15's notes keep them, with the same answer. No other slide changed. The submission PDF is regenerated from the same build.
+
+**Slide 15: why P looks ahead on Slide 12 (14 November):** Slide 15's right column now has two cards. The first combines the size of the leading term with its cancellation. The second, “What remains: rarely seen cells (Slide 12)”, explains the different-skew shift: the 210 rare pairings in 16×16 are expected 0.37 times each in P but 0.16 in Q, so P’s plug-in estimate is inflated by 0.105 nats and Q’s by 0.074, and the +0.031 gap outweighs the true −0.01. Swapped margins give −0.029. These are exact expected values from the population tables (binomial cell counts), calculated for the presentation by assets/code/bias_breakdown.py; they are not in the thesis but reproduce its Section 6.3.3 values. The formula column is 1 in narrower to make room. The backup label now reads “for Slides 4 and 12”, and Slide 15's notes carry the new answer. Slide 12 is unchanged. The notes for Slides 1–13 follow the spoken script as revised at 9:46 pm (Slide 12 changed). The submission PDF is regenerated from the same build.
+
+**Slide 5: callout as a speech bubble (14 November):** The probability-table callout is now a speech bubble in the style of vF2 slide 2, in place of the full-width box below the panels. It has a pale orange fill (`#FBE3D6`), a navy outline, a bold orange heading, and italic orange text: “Calculated from a probability table. Plug in the population probabilities for V, g, and τ², or the sampled table for V̂, τ̂², and ν̂.” It sits under the lead at top right, and its tail points into panel 2. The panels move down 0.43 in to make room, and the box below them is removed. No other slide changed. The notes for Slides 1–13 follow the spoken script as revised at 9:19 pm, which changed Slides 4–13. The submission PDF is regenerated from the same build.
+
+**Slide 5: probability-table callout (14 November):** A one-line callout box now sits between the three panels and the “Then” strip: “Calculated from a probability table: population probabilities give V, g, and τ²; the sampled table’s proportions give V̂ and τ̂², and so ν̂.” It is a white box with an orange outline. To make room, the panels are 0.23 in shorter, with their contents moved up, and the “Then” strip sits 0.29 in lower. No other slide changed. The notes for Slides 1–13 and the Slide 14 guides follow the spoken script as revised at 9:06 pm, which changed Slides 5, 7, 8, 10, and 12. The submission PDF is regenerated from the same build.
+
+**Lead sentences in the vF2 style (14 November):** The lead sentences on Slides 2–13 are rewritten in the style of the vF2 template (assets/style_reference): each says what the slide shows in plain words, with the key phrase or phrases in orange, and no symbols or forced line breaks. They are now Lato 16 pt bold in `#262626`, in place of 17 pt regular `#555555` with one bold orange phrase. Section 6 lists the new wording; Section 4 records the format. Every figure in them appears on its slide. The notes for Slides 1–13 and the Slide 14 guides follow the spoken script as revised at 8:50 pm, which changed Slides 4–8 and 12. No other slide content changed. The submission PDF is regenerated from the same build.
+
+**Slide 5: expanded g restored, sub-equations smaller (14 November):** Step 2 goes back to g_P(x,y) = d/dε V{(1−ε)P + εδ_(x,y)} at ε = 0, without the separate P_ε line, and the g and τ² equations are both 13.5 pt, below the 20 pt main equation. eqrender.py is back to its earlier version. No other slide changed.
+
+**Slide 5: thesis form of g (14 November):** Step 2 now writes the sensitivity as in thesis Eq. 4.11, g_P(x,y) = dV(P_ε)/dε evaluated at 0, with P_ε = (1−ε)P + εδ_(x,y) from Eq. 4.10 on the line beneath. The equation image used by the PDF draws this one equation in Computer Modern, because the STIX font draws the tall evaluation bar as a heavy block; PowerPoint draws it natively. No other slide changed.
+
+**Slide 5 equations; notes from the revised script (14 November):** Slide 5's word definitions are now equations: step 2 shows g_P(x,y) = d/dε V{(1−ε)P + εδ_(x,y)} at ε = 0 and τ²(P) = Var_P{g_P(X,Y)}, and step 3 shows ν_P = 2[E{V̂(P)}]²/Var{V̂(P)} in place of “df = 2 × (mean of V̂)² / variance of V̂”. Slide 17's result box states the same rule, as ν_P = 2[E{V̂(P)}]²/Var{V̂(P)} = ν_P,mom. The notes for Slides 1–13 and the question guides on Slide 14 now follow the spoken script as revised at 5:33 pm, which changed Slide 5's section. No other slide changed. The submission PDF is regenerated from the same build.
 
 **Speaker notes are the script alone (14 November):** The notes for Slides 1–13 now contain only the spoken script, word for word; the plan's time lines, delivery cues and sources, and Slide 13's backup index, are removed from the deck's notes. Slide 14's notes are the script's question-and-answer guides. Backup notes are unchanged. The plan keeps its cues and sources here for reference.
 

@@ -6,7 +6,7 @@ Hi everyone, today I'll talk about comparing mutual information between two popu
 
 ## Slide 2: Motivation: comparing MI across populations
 
-Let's start with mutual information, or MI. It measures how much knowing one variable reduces uncertainty about another, on average. If the variables are independent, MI is zero.
+Let's start with mutual information. It measures how much knowing one variable reduces uncertainty about another, on average. If the variables are independent, MI is zero.
 
 The hypotheses at the top compare MI for the same two categorical variables, X and Y, in populations P and Q. Under the null, the population MI values are equal, while under the alternative they differ.
 
@@ -20,7 +20,7 @@ In the middle is my baseline, the Wald test. It uses a cutoff from the standard 
 
 On the right, the Welch–Satterthwaite rule gives me a way to choose the degrees of freedom for a Student t distribution. To apply that rule to MI, I need one more quantity: how much the variance estimate itself varies from sample to sample.
 
-My first contribution is to derive an approximation for that variation. I use it to build the Expanded Welch test, then use simulations to check the approximation and compare the two tests.
+The bottom row sums up my contributions. I work out how changes in the table affect the variance estimate, use that result to build the Expanded Welch test, and check how both the approximation and the test perform in simulations.
 
 ## Slide 4: Method: one statistic, two reference distributions
 
@@ -34,17 +34,17 @@ In the next box, Expanded Welch compares the same statistic with a Student t dis
 
 ## Slide 5: Approach and contributions
 
-In step one, each sample gives a new count table and a new estimate, V-hat. To choose the degrees of freedom, I need the sampling variance of V-hat across samples of the same size.
+In step one, each sample from the population gives me a new count table and a new estimate, V-hat. To choose the degrees of freedom, I need to know how much V-hat varies across samples of the same size. That's its sampling variance.
 
-In step two, I start with the middle equation. If I shift a little probability towards one cell, I change its row and column totals too. That can change the pointwise MI in other cells. The derivative g tells us how fast the variance of pointwise MI starts to change as I make that shift.
+To work that out, I start with the middle equation in step two. Imagine shifting a little probability towards one cell. That also changes its row and column totals, which can affect the pointwise MI in other cells. The derivative g tells me how fast the variance of pointwise MI starts to change when I make that shift.
 
-Now draw one observation from the population. The cell it lands in determines its g value, so g can differ from one draw to the next. The bottom equation gives the variance of g across those draws. That's tau-squared.
+Now think about drawing one observation. The cell it lands in gives me its g value, so I can get different g values from different draws. The bottom equation gives the variance of g across those draws, which I call tau-squared.
 
-For a whole sample, each observation contributes the g value of its cell. A first-order Taylor expansion lets me use the average of those g values to approximate how V-hat varies across samples. Since the observations are independent, the variance of that average is tau-squared divided by the sample size. That's the approximation for the sampling variance of V-hat at the top.
+For a whole sample, I average those g values, counting one for each observation. A first-order Taylor expansion lets me use that average to approximate how V-hat varies across samples. Since the observations are independent, I divide tau-squared by the sample size to get the variance of that average. That gives me the approximation at the top.
 
-Finally, in step three, I use the sampling variance of V-hat to choose the degrees of freedom. The top equation gives the Satterthwaite moment matching rule. It uses two quantities: the expectation of V-hat and its sampling variance. The second equation shows how I estimate the degrees of freedom from one table. For the same expectation, a larger sampling variance gives fewer degrees of freedom, which means a larger cutoff from the Student t distribution.
+Finally, in step three, I use that sampling variance to choose the degrees of freedom. The top equation shows how the Satterthwaite moment matching rule uses the expectation of V-hat and its sampling variance. The second equation shows how I estimate the degrees of freedom from one table. If the expectation stays the same, more sampling variance means fewer degrees of freedom, which gives a larger cutoff from the Student t distribution.
 
-As the callout shows, I can calculate these estimates from the sampled table counts. I repeat the calculation for Q and use the Welch–Satterthwaite rule at the bottom to get the combined degrees of freedom. The full calculations are in the appendix.
+As the callout shows, I can get the estimates I need from the sampled table counts. At the bottom, I repeat the calculation for Q and combine the results using the Welch–Satterthwaite rule. The full calculations are in the appendix.
 
 ## Slide 6: Evaluation design
 

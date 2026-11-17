@@ -11,161 +11,143 @@ Hi everyone, today I'll talk about comparing mutual information between two popu
 
 ### Slide 2: Motivation: comparing MI across populations
 
-Mutual information, or MI, measures how much knowing one variable reduces uncertainty about another, on average. If the variables are independent, MI is zero.
+Let's start with mutual information, or MI. It measures how much knowing one variable reduces uncertainty about another, on average. If the variables are independent, MI is zero.
 
 The hypotheses at the top compare MI for the same two categorical variables, X and Y, in populations P and Q. The null says their population MI values are equal. The alternative says they differ.
 
 On the left, each observation gives us a pair: one category for X and one for Y. We count how often each pair occurs and estimate MI from that count table. We do that for each population. Even if the populations have equal MI, those estimates can differ. So the last step on the right asks whether sampling noise could explain the difference we see.
 
-In the example at the bottom, imagine X is a student's mid-semester test grade and Y is their final exam grade, both recorded as categories. The two populations are students before and after generative AI. Does knowing the mid-semester grade tell us as much about the final grade in both groups?
+In the example at the bottom, imagine X is a student's mid-semester test grade and Y is their final exam grade, both recorded as categories. The two populations are students before and after generative AI, and we want to know if there is a change in relationship between the two as measured by mutual information.
 
 ### Slide 3: Literature review: foundations and the MI-specific step
 
-The left column gives us an MI estimator, a leading bias correction, and a first-order approximation for its sampling variance. The step I need is to work out how much the variance estimate itself changes between samples.
+With that question in mind, let's look at what the literature gives us. On the left, the literature on MI gives us a way to estimate MI, correct its leading bias, and approximate the sampling variance of the MI estimator. However, to choose degrees of freedom, we also need to know the sampling variance of the variance estimate itself: how much it varies across repeated samples.
 
-In the middle is the Wald test. It uses the standard normal distribution to approximate how the test statistic behaves when population MI is equal. I check how well that cutoff works in finite samples.
+In the middle, the literature on Wald tests gives us a baseline for comparing MI. We divide the estimated MI difference by its standard error and use a cutoff from the standard normal distribution. However, we still need to check how often that cutoff leads to false positives in finite samples.
 
-The right column introduces Welch–Satterthwaite moment matching. It uses the mean and variance of the estimated variance contributions to choose degrees of freedom. For MI, that requires a new calculation of variance sensitivity.
+On the right, Welch–Satterthwaite moment matching gives us a way to choose the degrees of freedom for a Student t distribution. The calculation uses the expectation and sampling variance of the estimated variance contributions. However, to apply it to MI, we need to work out how shifting a little probability towards a cell changes the variance of pointwise MI.
 
-At the bottom are my three steps: derive that sensitivity, use it to construct the Expanded Welch test, and compare the two tests in simulations.
+My first contribution is to derive that rate of change and use it to approximate the sampling variance of the pointwise-MI variance estimate. My second is to use that approximation to build the Expanded Welch test, and my third is to check the approximation and compare Expanded Welch with the Wald test in simulations.
 
 ### Slide 4: Method: one statistic, two reference distributions
 
-In the box on the left, both tests start with the estimated MI in P minus the estimated MI in Q. They correct for the leading bias and divide by the estimated standard error. For example, plus two means the corrected difference is two standard errors above zero. The two-sided test uses the distance from zero in either direction.
+Let's put those ideas together and look at how the two tests work. In the box at the top, both tests start with the estimated MI of P minus the estimated MI of Q. They correct for the leading bias and divide by the estimated standard error. For example, plus two means the corrected difference is two standard errors above zero.
 
-In the second equation, V-hat estimates the variance of pointwise MI, the information contribution of each category pair. Dividing V-hat by sample size estimates the sampling variance of MI. The samples are independent, so we add those two estimates to get the squared standard error.
+In the second equation, V-hat estimates the variance of pointwise MI. Dividing V-hat by the sample size estimates the sampling variance of the MI estimator. Since the samples are independent, we add those two estimates to get the squared standard error.
 
-In the blue box, the Wald test uses the standard normal distribution. At the 5% significance level, its cutoff is about 1.96 in either direction.
+In the first box below the equations, the Wald test compares the statistic with the standard normal distribution. At the 5% significance level, its cutoff is about 1.96 in either direction.
 
-In the green box, the Expanded Welch test uses a Student t distribution as its reference. I estimate the degrees of freedom from the tables to account for how much the variance estimates can vary.
+In the next box, the Expanded Welch test uses a Student t distribution as its reference. One of my main contributions is how I estimate the degrees of freedom for that distribution. I'll explain how I do that on the next slide.
 
-On the right, the dashed green curve shows a Student t distribution with five degrees of freedom. Its heavier tails put the 5% rejection region further out, past about 2.57 in either direction. Five is just for illustration. With more degrees of freedom, the cutoff gets closer to the Wald cutoff.
+The graph compares the dark blue curve for the standard normal distribution with the green curve for a Student t distribution. The green curve uses five degrees of freedom as an example. Its heavier tails put the 5% cutoffs further out, at about 2.57 in either direction. With more degrees of freedom, the Student t distribution approaches the standard normal distribution.
 
-Since both tests use the same statistic and the Expanded Welch cutoff is larger, every Expanded Welch rejection is also a Wald rejection. So how do I choose the degrees of freedom that set that cutoff?
+Since both tests use the same statistic and the Expanded Welch cutoff is larger, every Expanded Welch rejection is also a Wald rejection.
 
 ### Slide 5: Approach and contributions
 
-Start with the orange panel on the left. Each dot in this sketch is a V-hat from a different sample of the same size. V-hat measures variation in pointwise MI within one sample. The spread of the dots is a second kind of variation: how much V-hat itself changes between samples. The dashed line marks the population value V.
+Next, I'll show how I choose the degrees of freedom for Expanded Welch. In step one, each sample from the population gives a new count table and an estimate, V-hat. To choose the degrees of freedom, I need its sampling variance: how much V-hat varies across samples of the same size.
 
-To explain that spread, look at the middle panel. I start with one cell: if I move a little probability towards it, how quickly does V change? That shift changes the cell weights, the row and column totals, and the pointwise MI values that depend on them. I call that sensitivity g. Its sign tells us whether V initially rises or falls.
+In step two, I start with the middle equation. If I shift a little probability towards one cell, I change its row and column totals too. That can change the pointwise MI in other cells. The derivative g tells us how fast the variance of pointwise MI starts to change as I make that shift.
 
-A random observation lands in one cell and picks out that cell's g. Tau-squared is the variance of g across observations from the population.
+Now draw one observation from the population. The cell it lands in determines its g value, so g can differ from one draw to the next. The bottom equation gives the variance of g across those draws. That's tau-squared.
 
-The first-order expansion keeps the linear effect of changes in the table, so the error in V-hat is approximately the average of the sensitivities in the sample. The sensitivities average to zero in the population, so the approximation centres V-hat at V. The observations are independent, so the variance of their average is tau-squared divided by sample size. That's the approximation at the top of the panel.
+For a whole sample, I have one g value per observation. A first-order Taylor expansion lets me use the average of those g values to approximate how V-hat varies across samples. Since the observations are independent, the variance of that average is tau-squared divided by the sample size. That's the approximation for the sampling variance of V-hat at the top.
 
-In the green panel, I use the mean and sampling variance of V-hat to choose degrees of freedom. Matching those two quantities to a scaled chi-squared distribution gives the first formula: twice the squared mean divided by the variance. For a given mean, more variation gives fewer degrees of freedom and a larger cutoff. The second formula uses V as the approximate mean and tau-squared over sample size as the approximate variance, with both inputs estimated from the table for P. That gives the component degrees of freedom, meaning the value for one population.
+Finally, in step three, I use the sampling variance of V-hat to choose the degrees of freedom. The top equation gives the Satterthwaite moment matching rule. It uses two quantities: the expectation of V-hat, meaning its average across repeated samples, and its sampling variance. The second equation shows how I estimate the degrees of freedom from one table. For the same expectation, a larger sampling variance gives fewer degrees of freedom, which means a larger cutoff from the Student t distribution.
 
-At the bottom, I repeat the calculation for Q and use the Welch–Satterthwaite rule to combine the two into the degrees of freedom for the Student t distribution. RQ1 checks both approximations.
+As the callout shows, we can calculate all these estimates from the sampled table counts. I've left the full calculations to the appendix because they're lengthy.
 
 ### Slide 6: Evaluation design
 
-On the left are the three questions. RQ1 checks the approximations, including near zero MI. RQ2 checks false-positive rates when MI is equal, and RQ3 checks power. For the power study, I keep MI in P at 0.02 nats and give Q the higher value. MI is in nats because I use natural logarithms.
+To see how the test performs, I used simulations to answer the three questions on the left. RQ1 checks how well I can approximate the expectation and sampling variance of V-hat, and how accurately those approximations predict the degrees of freedom near and away from independence.
 
-On the right, there are four table sizes, from two by two to sixteen by sixteen. The margin labels describe the category frequencies: uniform means equally frequent, same-skew means uneven in the same way in both populations, and different-skew means uneven in different ways. With ten sample sizes and three MI levels or gaps, that gives 360 settings per study for RQ2 and RQ3.
+For RQ2, I give both populations the same MI and check how often the tests falsely say they differ. I repeat that at three shared MI values.
 
-I draw 100,000 independent table pairs per setting. Both tests get the same pairs, so a difference in their decisions can't come from using different samples.
+For RQ3, I give the populations different MI values and check how often the tests detect the difference. I keep the MI of P at 0.02 nats and increase the MI of Q to create three different gaps.
 
-The model line shows how I set population MI. I draw X, then either copy its category into Y or draw Y independently from the same frequencies. I adjust the probability of copying to reach each target MI without changing the category frequencies.
+On the right is the grid for the false-positive and power studies. I use four table sizes, from two by two to sixteen by sixteen.
+
+Next are the margins, which describe how often the categories occur. With uniform margins, the categories are equally frequent. With same-skew margins, the frequencies are uneven but match across the two populations. With different-skew margins, the two populations have different uneven frequencies.
+
+I also vary the number of observations per population across ten sample sizes. Combining the table sizes, margins, and sample sizes with the three shared MI values for RQ2 or the three MI gaps for RQ3 gives 360 settings in each study.
+
+I draw 100,000 independent table pairs per setting. Both tests get the same pairs, so when both calculations succeed, any difference in their decisions comes from the cutoff.
+
+To set the population MI, I use a special case of the mixture model described by Bocci and colleagues in 2010. The details are on backup Slide 22.
 
 At the bottom, both tests use a 5% significance level. If a calculation fails, I count it as a non-rejection and report calculation success separately.
 
 ### Slide 7: RQ1 results: approximation accuracy
 
-Both graphs vary sample size. They show population P in a four-by-four, different-skew setting, with population MI of 0.02 nats.
+Turning to the results, I'll start with the approximations. I use repeated samples to check how well they predict the expectation and sampling variance of V-hat. Both graphs use the same illustrative four-by-four example. Sample size increases as we move right, and a ratio of one means the prediction and the simulations agree.
 
-The top graph divides average V-hat by population V. The ratio is well above one for small samples, so the first-order approximation gives too low a mean there. As sample size grows, the curve comes down towards one.
+The top graph checks the expectation of V-hat. I estimate it by averaging V-hat across the simulated samples, then divide by the population value V. The curve starts well above one and approaches one as the sample size grows. So V underestimates the expectation most in small samples. The orange box explains one reason: when a rare combination shows up, its pointwise MI can be far from the table's MI. Squaring that gap can push V-hat up.
 
-The box beside the top graph points to one reason. A rare category pair that appears in a sample can have a pointwise MI far from the table's MI. Squaring that gap can push V-hat up. Even at 1,000 observations, average V-hat is still 19% above V.
+The lower graph checks the sampling variance of V-hat. Here the ratio is the predicted variance divided by the variance measured across the simulated samples, so above one means the prediction is too high. As the blue box explains, rare cells appear in some samples and not others. That can cause changes in V-hat that the first-order approximation misses. That helps explain why the dark blue line, which uses population inputs, is often below one. The orange line uses inputs from the sampled tables and often overpredicts the sampling variance. At larger sample sizes, both lines are close to one.
 
-The lower graph divides the predicted sampling variance of V-hat by the variance observed across repeated samples. Below one means the prediction is too low, and above one means it's too high.
-
-The solid navy curve uses the population tau-squared. Rare cells appearing in some samples but not others can produce changes larger than the linear approximation predicts. At the same sample size of 1,000, this prediction is about 3% low.
-
-The dashed orange curve uses tau-squared estimated from each table, then averages the resulting predictions. Estimating sensitivities from sparse counts can instead overpredict the variation; at that sample size, the prediction is about 8% high.
-
-Look at the summary at the bottom. The population inputs give us a fairly accurate prediction of the variance even though they give us too low a mean. Moment matching squares the mean, so using that lower value can push the degrees of freedom down.
+So the sampling variance can be close while V still underestimates the expectation. Both quantities enter the degrees-of-freedom calculation.
 
 ### Slide 8: RQ1 results: near independence
 
-Here the table size stays four by four and sample size stays at 1,000. We move left towards smaller population MI on the log scale and look at the component degrees of freedom on the vertical axis.
+Next, let's see how the approximations behave near independence. In this illustrative example, I keep the sample size fixed and focus on the smallest population MI values. The green line is our benchmark: the degrees of freedom we get when we estimate the expectation and sampling variance of V-hat using repeated samples.
 
-Start with the green line. It is the moment-matching target, calculated from V-hat's mean and variance across repeated samples. At the leftmost point, the target is about 9.1.
+For the orange line, I calculate degrees of freedom from each sampled table instead of the population probability table, then average these sampled estimates of degrees of freedom. As the orange box explains, chance fluctuations in the counts can make X and Y look related in a sample even when they're nearly independent in the population. Near independence, that apparent MI comes largely from squared errors in the sampled probabilities. The calculation from each table picks up some of that effect, so the average stays near five at the smallest MI values. That's still only about half the green benchmark.
 
-The dotted navy line uses known population inputs in the first-order formula, as explained in the navy box. Close to zero MI, this component value is approximately sample size times population MI, so it heads towards zero. At the same MI value it is about 0.1, far below the target.
+For the dark blue line, I use the known population probabilities in the first-order degrees-of-freedom formula. As the dark blue box shows, the result near independence is roughly the sample size times population MI. With the sample size fixed, that prediction heads towards zero as population MI falls.
 
-The orange line averages the component degrees of freedom estimated from the sampled tables. As the orange box explains, at zero population MI the linear term in the uncorrected MI estimate vanishes, but squared probability errors can still make that estimate positive. The calculation from each table picks up that noise. The bracket shows the result: about 4.9, roughly half the target.
-
-Hitting that target would still leave us with a question: how often do the tests reject when population MI is equal?
+So the degrees of freedom can be hard to estimate near independence. What matters for the test is how often it actually rejects when MI is equal.
 
 ### Slide 9: RQ2 results: false positives across all null settings
 
-Each dot is one of the 360 equal-MI settings. The horizontal axis shows the Wald test's false-positive rate, and the vertical axis shows Expanded Welch's. The dashed lines mark 5%.
+Moving on to false positives, I've plotted all 360 settings where the two populations have equal MI. Each dot is one setting. The horizontal axis is the false-positive rate for the Wald test, and the vertical axis is the rate for Expanded Welch. Points below the diagonal tell us Expanded Welch rejects less often. The dashed lines mark the 5% target.
 
-The diagonal means equal rejection rates. All points lie on or below it because Expanded Welch can only reduce rejection.
+The orange box shows what happens when the Wald test starts above 5%: Expanded Welch brings most of those rates closer to the target. The dark blue box shows what happens when the Wald test starts below 5%: Expanded Welch pushes nearly all of those rates further below 5%.
 
-Start with the top box on the right. The Wald test is above 5% in 178 settings, and Expanded Welch gets closer to 5% in 165 of them. The highlighted uniform example goes from 8.35% to 4.90%.
-
-In the next box, the Wald test is below 5% in 180 settings. Expanded Welch pushes the rate even lower in 176 of those and leaves four unchanged.
-
-At the bottom right, the two tests land in the 4% to 6% band in roughly the same number of settings. Now look at the circled different-skew example near the top right of the plot. Here the shared MI is 0.005 nats. The false-positive rate falls from about 36% to about 34%, still far above 5%.
-
-To see why a larger cutoff helps in some settings and does little in others, let's look at the estimated difference and its standard error.
+The two marked points give illustrative examples of how much the improvement can vary. In the uniform example, the rate comes down from 8.35% to 4.90%. For the point near the top right, it drops from about 36% to 34%, still a long way from 5%. So what makes the Wald test miss the target in the first place?
 
 ### Slide 10: RQ2 results: why the cutoff helps, hurts, or cannot fix it
 
-All three rows use equal MI of 0.02 nats, and every calculation succeeds. The bias column shows how far the average estimated difference is from zero, in sampling standard deviations. In the next column, one means the average squared standard error matches the observed variance of the estimated difference.
+To see why the larger cutoff helps in some settings and hurts in others, let's look at these three illustrative examples. The true MI difference is zero in all three, so the bias column tells us how far the expectation of the estimated difference is from zero, in sampling standard deviations.
 
-In the uniform row, the biases cancel in expectation, so the difference is centred near zero. The variance ratio is below one, so the squared standard error is too small on average. For a given difference, a smaller standard error puts the statistic further from zero. Here the larger cutoff offsets that, bringing the false-positive rate from 8.35% to 4.90%.
+The variance ratio compares the average squared standard error with the sampling variance measured across repetitions. If the ratio is below one, we're underestimating that variance on average. If it's above one, we're overestimating it.
 
-In the same-skew row, the biases again cancel in expectation, but the variance ratio is nearly two. That overstatement of uncertainty helps explain why the Wald test rejects only about 0.6% of the time. The larger cutoff pushes it further below 5%, to about 0.5%.
+In example one, the estimates are centred near zero, but we underestimate the sampling variance. Dividing by a standard error that's too small makes the same estimated difference look more extreme, so the larger cutoff helps bring the false-positive rate back towards 5%.
 
-The third row keeps the table size and sample size but uses different-skew margins. The variance ratio is still nearly two, but now the estimated difference averages about two sampling standard deviations above zero. The false-positive rate only falls from about 26% to about 25%. As the final box shows, changing the cutoff leaves that bias in place.
+In example two, the estimates are still centred near zero, but this time we overestimate the sampling variance. The Wald test already rejects too rarely, so the larger cutoff pushes the false-positive rate even further below 5%.
 
-The takeaway at the bottom is that a larger cutoff can offset a standard error that's too small, but it leaves the bias in the estimated difference unchanged.
+In example three, the estimated difference has an expectation about two sampling standard deviations above zero. The larger cutoff makes rejection harder, but it can't move those estimates back towards zero. Both tests still reject in about 25% of runs.
 
 ### Slide 11: RQ3 results: the power cost of the larger cutoff
 
-Power is the chance of detecting a real MI difference. This graph shows how many percentage points of power Expanded Welch loses compared with the Wald test. The line is the median loss across 36 settings at each sample size, and the shading shows the full range.
+Now let's turn to power. When there's a real difference in MI, a larger cutoff makes it harder to detect. This graph shows the power Expanded Welch loses compared with the Wald test at the same 5% significance level. The orange line shows the median loss at each sample size, and the shaded band shows the range across settings. The tests can still have different actual false-positive rates, as we just saw.
 
-The upper-right box summarises the small-sample cost. With ten observations per population, the median loss is about six percentage points, partly because some calculations fail. From 50 to 1,000 observations, the median loss is about one point. By 10,000, even the largest loss is less than a third of a percentage point.
+The median loss is largest at the smallest sample size, partly because some Expanded Welch calculations fail. At larger sample sizes, the typical loss is smaller and the range across settings is narrower. By ten thousand observations per population, the loss is under a third of a percentage point in every setting studied.
 
-Both tests use a 5% significance level. Their actual false-positive rates can differ, so read the power results alongside those rates.
+The blue box shows how power depends on the size of the MI gap. At fifty thousand observations per population, both tests detect the two larger gaps almost every time. For the smallest gap, power still ranges from about 80% to 96% across settings.
 
-The lower-right box concerns absolute power. Even at 50,000 observations, the smallest MI gap of 0.005 nats gives Expanded Welch power of about 80% to 96%. Power is above 99.9% for the two larger gaps. So the two tests can have similar power and still miss some real differences when the MI gap is small.
-
-At the bottom, notice that power counts rejections in either direction. Next, we'll see what happens to the estimated sign.
+One more thing: power counts every rejection when the population MI values differ. It doesn't tell us whether the estimate points to the right population.
 
 ### Slide 12: RQ3 results: bias can reverse the estimated direction
 
-This heat map uses different category frequencies and an MI gap of 0.01 nats, with Q always having greater population MI. Rows show table sizes and columns show sample sizes.
+To check the direction, I look at which population the rejections point to. Q has the higher population MI in every setting shown here. Each cell shows the percentage of Expanded Welch rejections where the estimate puts P ahead. Darker cells mean that happens more often.
 
-Each cell shows the share of Expanded Welch rejections that point to the wrong population. So 50% means about half the rejections point to P as having higher MI.
+In the bigger tables, it takes more observations before most rejections point to Q. At the largest sample sizes shown, almost all rejections point to Q, no matter the table size.
 
-The dark cells show that almost every rejection points the wrong way over parts of the sparse, larger-table range.
+The outlined cell is an illustrative example: a sixteen-by-sixteen table with a thousand observations per population. I subtract the MI of Q from the MI of P, so Q's true lead of 0.01 nats gives a negative difference. But the estimated difference has a positive expectation of about 0.02 nats, which puts P ahead on average. The test rejects in about 10% of runs, and over 99.9% of those rejections point to P.
 
-Look at the outlined sixteen-by-sixteen cell at 1,000 observations per population. Q truly has more MI, by 0.01 nats. On average, the estimate points the other way and puts P ahead by about 0.02 nats. Expanded Welch rejects in about 10% of repetitions. Almost every one of those rejections points to P as having higher MI.
+The numbered box explains why. First, the leading correction assumes each cell is sampled often enough to contribute its share of the upward bias. Second, Q's margins are more skewed, so its rare pairs are much rarer and usually go unobserved. Third, those rare cells add less upward bias in Q, so its raw MI estimate is inflated less than P's. Finally, the same correction leaves Q's estimate further below its true MI, so P minus Q flips sign on average.
 
-The next box shows why. The table sizes and sample sizes match, so the two leading corrections cancel in the difference. But the remaining bias pulls Q's estimate down more than P's. That shifts the estimated difference up by about 0.03 nats, three times the true gap. The cutoff can't undo that shift. With 10,000 observations per population, fewer than 0.4% of rejections pointed the wrong way in every setting at that sample size.
-
-At the bottom is the tally across all 360 power settings. In 28 settings, at least 90% of rejections point the wrong way. All 28 use different-skew margins with eight-by-eight or sixteen-by-sixteen tables. Those rejections still count towards two-sided power.
+The bottom callout puts this example in context. In 28 of the 360 power settings, at least 90% of Expanded Welch rejections point the wrong way. All 28 use eight-by-eight or sixteen-by-sixteen tables with different-skew margins. A larger cutoff can change which estimates lead to a rejection, but it can't correct a sign reversal caused by bias.
 
 ### Slide 13: Conclusions and next steps
 
-Across the top are the three contributions. First, I derived how a change in the probability table affects pointwise-MI variance. Second, I used that result to choose degrees of freedom for the Student t distribution. Third, I evaluated the approximations and compared the tests in simulations.
+To wrap up, I'll return to the three contributions in the top row. I derived an approximation for the sampling variance of V-hat, used that to choose degrees of freedom for the Student t distribution, and compared the resulting test with the Wald test in simulations.
 
-In the next row, RQ1 shows that the approximations generally improve with sample size, but the first-order calculation misses sampling noise near zero MI.
+The middle row gives the findings for each research question. First, on approximation accuracy, the approximations generally improve as samples grow, but the first-order Taylor approximation misses some sampling variation near independence. Second, on false positives, the larger cutoff moves some rates closer to 5% and pushes others further below it. Third, on power and direction, the larger cutoff can cost power, and bias can still make rejections point to the wrong population.
 
-For RQ2, the larger cutoff brings many excessive false-positive rates closer to 5%, but pushes them further below 5% when the Wald test already rejects too rarely.
+So I wouldn't switch to Expanded Welch simply because the samples are small. Its larger cutoff can offset a standard error that's too small, but if bias makes the wrong population look like it has higher MI, the estimate itself needs to improve.
 
-For RQ3, Expanded Welch can't have higher power than the Wald test at the same 5% significance level. A large enough bias can also make rejections point to the wrong population.
-
-These findings come from one way of constructing populations, equal sample sizes, and a comparison with the Wald test.
-
-The first next step is to reduce bias in the estimated MI difference and improve its standard error and degrees of freedom, including when population MI is close to zero.
-
-The second is to evaluate other population constructions and unequal sample sizes.
-
-Overall, the cutoff adjustment helps in some settings, but reliable comparisons also require accurate estimates of the MI difference and its standard error.
+That brings me to the two next steps at the bottom. I'd start by reducing bias in the estimated MI difference and improving the standard error and the degrees-of-freedom approximation, especially near independence. Then I'd check how those changes perform with other population constructions and unequal sample sizes.
 
 Thank you.
 
@@ -177,20 +159,20 @@ Questions and answer guides
 
 1. What is your main contribution?
 
-• I derived the MI-specific sensitivity of the pointwise-MI variance as the cell probabilities, margins, and log ratios change.
+• I derived how the variance of pointwise MI starts to change when we shift probability towards a cell, accounting for changes to the joint and marginal probabilities.
 • That gives the sampling-variance approximation needed to estimate component degrees of freedom and combine them using the established Welch–Satterthwaite rule.
 • I evaluated approximation accuracy, false positives, power, and calculation success. Keeping the same estimated difference and standard error as the Wald test lets me isolate the effect of changing the reference distribution.
 
 2. What do V, g, and tau-squared actually mean?
 
-• V measures variation in pointwise MI across outcomes. V-hat estimates it from one table, and V-hat divided by n estimates MI's sampling variance.
-• g measures how sensitive V is to shifting probability towards a particular cell, including the resulting changes in the margins. Slide 20 gives the cell formulas, and Slide 21 works through an example.
-• Tau-squared is the variance of those sensitivities across outcomes. The sampling variance of V-hat is approximately tau-squared divided by n; tau is the standard deviation of the sensitivities.
+• V is the variance of pointwise MI across observations from the population. V-hat estimates it from one table, and V-hat divided by n estimates MI's sampling variance.
+• g is the derivative of V as we shift probability towards a particular cell, evaluated at the original probability table. It includes the effect of changing the row and column totals. Slide 20 gives the cell formulas, and Slide 21 works through an example.
+• Tau-squared is the variance of g across observations from the population. The sampling variance of V-hat is approximately tau-squared divided by n; tau is the standard deviation of g.
 
 3. Where do the degrees of freedom come from, and is the Student t distribution exact?
 
-• A scaled chi-squared distribution with mean m and degrees of freedom nu has variance 2m²/nu. Matching moments gives nu as twice the squared mean divided by the variance.
-• Approximating those moments by V and tau-squared/n gives component degrees of freedom of about 2nV²/tau-squared. The test estimates the inputs from each table. Slides 16–18 walk through the sampling variance, moment matching, and the combined degrees of freedom.
+• A scaled chi-squared distribution with mean m and degrees of freedom nu has variance 2m²/nu. Matching the expectation and sampling variance of V-hat gives nu as twice the squared expectation divided by the sampling variance.
+• Approximating the expectation by V and the sampling variance by tau-squared/n gives component degrees of freedom of about 2nV²/tau-squared. The test estimates the inputs from each table. Slides 16–18 walk through the sampling variance, moment matching, and the combined degrees of freedom.
 • The Student t distribution is the reference distribution, an approximation under equal population MI. Matching moments does not establish independence between the estimated MI difference and the variance estimates.
 
 4. Why does the approximation struggle when population MI is close to zero?
@@ -207,8 +189,8 @@ Questions and answer guides
 
 6. Why does bias remain after your correction?
 
-• With equal dimensions and sample sizes, the two leading bias corrections cancel exactly in the MI difference. Slide 15 shows the correction and why it cancels.
-• Higher-order biases remain. Identical population tables have matching expected biases, but distinct tables can have unequal biases even when their MI values agree.
+• With equal dimensions and sample sizes, the two leading bias corrections cancel exactly in the MI difference. Slide 15 shows why the correction cancels and explains why the leading approximation works better when the cells have large expected counts.
+• Higher-order biases remain. Identical population tables have the same bias at equal sample sizes, but distinct tables can have unequal biases even when their MI values agree.
 • The difference can therefore be shifted away from its true value. Raising the rejection cutoff does not remove that shift.
 
 7. Why does Expanded Welch help in some settings and hurt in others?
@@ -226,7 +208,7 @@ Questions and answer guides
 9. What does the wrong-direction result mean?
 
 • Population MI really differs, so these are rejections under an alternative. The error is that the estimated sign identifies the wrong population as having greater MI.
-• In the highlighted example, the true difference is −0.01, but its estimated mean is about +0.0207 because the biases remaining after correction differ enough to outweigh the gap.
+• In the highlighted example, the true difference is −0.01, but the expectation of the estimated difference is about +0.0207. Q's more skewed margins make the rare off-diagonal pairs much rarer. In this example, the bias in the marginal entropies is nearly the same for P and Q, but Q's joint entropy estimate has a smaller downward bias. Since MI subtracts joint entropy, Q's raw MI estimate has less upward bias. Subtracting the same correction leaves Q's estimate further below its true MI.
 • Of 9,662 rejections, 9,659 point the wrong way. That is over 99.9% of the rejections. Two-sided power counts those rejections.
 
 10. Why not use permutation or bootstrap instead?
@@ -247,25 +229,25 @@ Questions and answer guides
 • I would first improve the MI-difference and standard-error estimates, changing one at a time to identify what resolves the failures.
 • Further work should retain additional sampling variation when population MI is close to zero and evaluate other population constructions and unequal sample sizes. There is no universal sample-size rule established here.
 
-### Slide 15 (Method · for Slide 4): Bias correction
+### Slide 15 (Method · for Slides 4 and 12): Bias correction
 
 Not part of the timed talk. Return to Slide 13 afterwards.
 
 **Question answered**
 
-Which bias correction do you use, and why does it not remove the bias seen on Slides 10 and 12?
+Which bias correction do you use, why does it not remove the bias seen on Slides 10 and 12, and is what remains a higher-order effect?
 
 **Answer to give**
 
-“Each MI estimate subtracts the leading bias, (r − 1)(c − 1) over 2n, which is Miller's correction. In every simulation the two samples have the same size and table dimensions, so the two corrections are equal and cancel from the difference. What remains is higher-order bias, which depends on the whole probability table. Distinct tables with equal MI can have different remaining biases, and that shifts the estimated difference, as on Slides 10 and 12. Reducing that bias is my first next step.”
+“Each MI estimate subtracts the leading bias, (r − 1)(c − 1) over 2n, following Miller and Moddemeijer. In every simulation the two samples have the same size and table dimensions, so the two corrections are equal and cancel from the difference. The correction assumes every cell is well sampled. Then what remains is a small higher-order term: under 0.002 nats for the 16×16 tables at n = 10,000. In the sparse tables on Slide 12, many cells are expected less than once, and that expansion breaks down. The correction overshoots instead, and by more for Q, whose rare pairs are rarer. That's what flips the sign. So it isn't a small higher-order effect; it's sparse sampling. Reducing this bias is my first next step.”
 
 **Notes**
 
-The leading term is 0.1125 nats per estimate for 16×16 at n = 1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes, the correction removes the leading unequal-sample bias; its performance there is untested (thesis Section 7.2). Corrected estimates can be negative and are retained. Empty sampled cells contribute nothing to the plug-in sum.
+The leading term is 0.1125 nats per estimate for 16×16 at n = 1,000, and 0.225 nats for 4×4 at n = 20. With unequal sample sizes, the correction removes the leading unequal-sample bias; its performance there is untested (thesis Section 7.2). Corrected estimates can be negative and are retained. Empty sampled cells contribute nothing to the plug-in sum. The figures below are exact expectations, not simulations: plug-in MI is a sum of per-cell terms and each cell count is binomial. Bias beyond the leading term, exact against the 1/n² term of the large-sample expansion: P at n = 1,000, −0.008 against +0.048; Q at n = 1,000, −0.039 against +0.110; P at n = 10,000, +0.0008 against +0.0005; Q at n = 10,000, +0.0017 against +0.0011; at n = 50,000 they agree. Slide 12's mechanism: raw plug-in inflation is 0.105 nats for P and 0.074 for Q; each of the 210 rare pairings is expected 0.37 times in P (margin 0.7) but 0.16 times in Q (0.8); these cells account for 0.0308 of the 0.0307 gap. Copying probabilities: 0.069 in P and 0.100 in Q. Equal MI 0.02 with the same margins (Slide 10's different-skew row) gives +0.030; same-skew margins with MI 0.02 and 0.03 give +0.0009; swapped margins give −0.029, which keeps the true sign. The gap shrinks with n: 0.083 at n = 250, 0.031 at 1,000, 0.008 at 2,500 (mean −0.0016, the power trough), and about zero at 10,000. The figures reproduce the thesis values in Section 6.3.3 (bias +0.0307, mean +0.0207). This breakdown is not in the thesis; the thesis attributes the shift to different residual biases from unequal margins (Sections 6.2.3 and 6.3.3; Paninski, 2003).
 
 **Source**
 
-Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.5 and 7.2; Miller (1955); Panzeri and Treves (1996); Paninski (2003); Chao and Shen (2003); Nemenman et al. (2002).
+Thesis Equations 2.7–2.9 and 3.7; Sections 2.2, 3.1.2, 5.1.2, 5.5, 6.2.3, 6.3.3 and 7.2; Miller (1955); Moddemeijer (1989); Panzeri and Treves (1996); Paninski (2003); Chao and Shen (2003); Nemenman et al. (2002). Exact bias figures: calculated for this presentation (assets/code/bias_breakdown.py).
 
 ### Slide 16 (Method · for Slide 5, step 2): Derivation 1 of 3: how much the variance estimate varies
 
@@ -285,7 +267,7 @@ The expansion follows the straight line P + t(P-hat − P) from t = 0 to t = 1; 
 
 **Source**
 
-Thesis Sections 4.2.1, 4.3.1 and 4.3.2; Equations 4.10, 4.11, 4.30, 4.31 and 4.35–4.38.
+Thesis Sections 4.2.1, 4.3.1 and 4.3.2; Equations 4.10, 4.11, 4.30, 4.31 and 4.35–4.38. The perturbation towards one cell and the first-order expansion follow Hampel (1974) and van der Vaart (1998), as the thesis cites them in Sections 2.3.2, 4.2.1 and 4.3.1.
 
 ### Slide 17 (Method · for Slide 5, step 3): Derivation 2 of 3: moment matching gives the df rule
 
@@ -345,7 +327,7 @@ Assumptions: fixed categories, independent observations within each sample, inde
 
 **Source**
 
-Thesis Chapter 4: perturbation path (eq:contamination-path), final form of g (eq:g-final), and definition of tau-squared (eq:tau-definition). This derivative is exact for positive population tables. Its use for sampling errors is first order.
+Thesis Chapter 4: perturbation path (eq:contamination-path), final form of g (eq:g-final), and definition of tau-squared (eq:tau-definition). The perturbation follows Hampel (1974) and van der Vaart (1998). This derivative is exact for positive population tables. Its use for sampling errors is first order.
 
 ### Slide 20 (Method · detail for Slide 16): Variance sensitivity in cell probabilities
 
@@ -365,7 +347,7 @@ The sensitivities have probability-weighted mean zero, so the weighted average o
 
 **Source**
 
-Thesis Equations 2.3 and 2.4 (pointwise MI and MI), 4.7 (moment matching), 4.9–4.11 (V, the perturbation, and g), 4.29 (final form of g), 4.36 (tau-squared) and 4.41–4.43 (estimates).
+Thesis Equations 2.3 and 2.4 (pointwise MI and MI), 4.7 (moment matching), 4.9–4.11 (V, the perturbation, and g), 4.29 (final form of g), 4.36 (tau-squared) and 4.41–4.43 (estimates); perturbation: Hampel (1974); van der Vaart (1998).
 
 ### Slide 21 (Method · example for Slides 16–20): Worked example: sensitivities and degrees of freedom
 
@@ -407,7 +389,7 @@ Sampling is independent within and between populations, and both methods receive
 
 **Source**
 
-Thesis Chapter 5 and Appendix B.1–B.5; current grid results.
+Thesis Chapter 5 and Appendix B.1–B.5; current grid results. The copying construction is a special case of the mixture model of Bocci et al. (2010) (thesis Section 5.1.1).
 
 ### Slide 23 (RQ1 · for Slide 7): Approximation ratios across table sizes
 
@@ -451,7 +433,7 @@ Formulas: mean estimated component df (d + kappa)/2 = 4.60; sampling-moment targ
 
 **Source**
 
-Thesis Appendix A.2 and Section 6.1.3; Figure 6.3. These are local approximations under fixed dimensions and positive limiting cell probabilities, not exact finite-sample distribution identities.
+Thesis Appendix A.2 and Section 6.1.3; Figure 6.3; Wilks (1938) for the chi-squared limit of 2nI-hat at independence and Banerjee (2005) for its noncentral form under local alternatives. These are local approximations under fixed dimensions and positive limiting cell probabilities, not exact finite-sample distribution identities.
 
 ### Slide 25 (RQ2 · for Slide 9): Full null results: uniform margins
 
