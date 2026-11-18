@@ -8,9 +8,9 @@ Hi everyone, today I'll talk about comparing mutual information between two popu
 
 Let's start with mutual information. It measures how much knowing one variable reduces uncertainty about another, on average. If the variables are independent, MI is zero.
 
-The hypotheses at the top compare MI for the same two categorical variables, X and Y, in populations P and Q. Under the null, the population MI values are equal, while under the alternative they differ.
+At the top, the test compares MI across two populations, P and Q, for the same categorical variables, X and Y. Under the null, the population MI values are equal, while under the alternative they differ.
 
-We don't know those population MI values, so we take a sample from each population to estimate them. Even if the populations have equal MI, their sample estimates can differ. So the last step on the right asks whether that difference could be explained by sampling noise.
+We don't know those population MI values, so we take a sample from each population to estimate them. Even if the populations have equal MI, their sample estimates can differ. So the last step on the right asks whether that difference is genuine or could be explained by sampling noise.
 
 ## Slide 3: Literature review: foundations and the MI-specific step
 
@@ -18,19 +18,19 @@ To answer that question, I draw on three areas of previous work. On the left is 
 
 In the middle is my baseline, the Wald test. It uses a cutoff from the standard normal distribution, and I check how well that cutoff controls false positives in finite samples.
 
-On the right, the Welch–Satterthwaite rule gives me a way to choose the degrees of freedom for a Student t distribution. To apply that rule to MI, I need one more quantity: how much the variance estimate itself varies from sample to sample.
+On the right, Welch's test compares two means using a cutoff from a Student t distribution to allow for uncertainty in the estimated standard error. To adapt that approach to MI, I use the Welch–Satterthwaite rule to choose the degrees of freedom. For that, I'll need an MI-specific approximation for how much the variance estimate itself varies from sample to sample.
 
 The bottom row sums up my contributions. I work out how changes in the table affect the variance estimate, use that result to build the Expanded Welch test, and check how both the approximation and the test perform in simulations.
 
 ## Slide 4: Method: one statistic, two reference distributions
 
-Let's put those ideas together and look at how the two tests work. In the box at the top, both tests start with the estimated MI of P minus the estimated MI of Q. They correct for the leading bias and divide by the estimated standard error. For example, plus two means the corrected difference is two standard errors above zero.
+Let's put those ideas together and look at how the two tests work. In the box at the top, both tests start with the estimated MI of P minus the estimated MI of Q. They correct for the leading bias and divide by the estimated standard error.
 
 In the second equation, V-hat estimates the variance of pointwise MI. Dividing V-hat by the sample size estimates the sampling variance of the MI estimator. Since the samples are independent, we add those two estimates to get the squared standard error.
 
-In the first box below the equations, the Wald test compares the statistic with the standard normal distribution. At the 5% significance level, its cutoff is about 1.96 in either direction.
+The boxes below the equations show the approximate null distribution for each test. For the Wald test, we compare the statistic to the standard normal distribution. At the 5% significance level, its cutoff is about 1.96 in either direction.
 
-In the next box, Expanded Welch compares the same statistic with a Student t distribution, which gives a larger cutoff. That means every Expanded Welch rejection is also a Wald rejection. On the next slide, I'll explain one of my main contributions: how I estimate the degrees of freedom for that distribution.
+In the next box, Expanded Welch compares the same statistic with a Student t distribution, which gives a larger cutoff. That means every Expanded Welch rejection is also a Wald rejection. The degrees of freedom determine how much higher that cutoff is. On the next slide, I'll explain one of my main contributions: how I estimate those degrees of freedom from the count tables.
 
 ## Slide 5: Approach and contributions
 
