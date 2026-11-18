@@ -50,9 +50,9 @@ As the callout shows, I can get the estimates I need from the sampled table coun
 
 To see how the test performs, I used simulations to answer the three questions on the left. RQ1 checks how well I can approximate the expectation and sampling variance of V-hat, and how accurately those approximations predict the degrees of freedom near and away from independence.
 
-For RQ2, I give both populations the same MI and check how often the tests falsely say they differ. I repeat that at three shared MI values.
+For RQ2, I give both populations the same MI by construction, then check how often the tests falsely say they differ. I repeat that at three shared MI values.
 
-For RQ3, I give the populations different MI values and check how often the tests detect the difference. I keep the MI of P at 0.02 nats and increase the MI of Q to create three different gaps.
+For RQ3, I give the populations different MI values by construction, then check how often the tests detect that difference. I keep the MI of P at 0.02 nats and increase the MI of Q to create three different gaps.
 
 On the right is the shared grid for RQ2 and RQ3. I vary table size, sample size, and the margins, which are the category frequencies. Combining those choices with the three MI levels or gaps gives 360 settings per study. For each setting, I draw 100,000 independent pairs of tables and run both tests on each pair at the 5% significance level.
 
@@ -100,9 +100,9 @@ Now that we've seen how often the tests detect a difference, let's look more clo
 
 ## Slide 12: RQ3 results: bias can reverse the estimated direction
 
-So when the test rejects, which population does the estimate point to? Q has higher MI throughout the heat map. In the darker cells, a higher percentage of Expanded Welch rejections put P ahead. In the bigger tables, it takes more observations before most rejections point to Q.
+So by construction, the MI of Q is higher than the MI of P. There's a real difference, so we want Expanded Welch to reject. But sometimes it rejects because the estimated difference is large in the wrong direction. The darker the cell, the higher the percentage of rejections that put P ahead. In larger tables, it takes more observations before most rejections point to Q.
 
-Take the outlined cell as an illustrative example. Q leads by 0.01 nats, but the estimate puts P ahead by about 0.02 nats on average. Expanded Welch rejects in about 10% of runs, but over 99.9% of those rejections point to P.
+Take the outlined cell as an illustrative example. Q's MI is higher by 0.01 nats, but the estimate puts P ahead by about 0.02 nats on average. Expanded Welch rejects in about 10% of runs, and over 99.9% of those rejections get the direction wrong.
 
 The blue box shows how that happens. The leading correction assumes the cells are sampled often enough, but Q's more skewed margins make its rare pairs less likely to appear. Here, that means Q's raw MI estimate has less upward bias than P's. I subtract the same correction from both, so Q's estimate ends up further below its true MI. That's enough to put P ahead on average.
 
