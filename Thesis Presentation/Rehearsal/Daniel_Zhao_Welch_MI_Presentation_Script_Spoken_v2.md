@@ -16,9 +16,9 @@ We don't know those population MI values, so we take a sample from each populati
 
 To answer that question, I draw on three areas of previous work. On the left is the work on estimating MI. We can estimate MI from a count table and correct for its leading bias. We can also estimate its sampling variance, which tells us how much the MI estimate varies across samples.
 
-In the middle is my baseline, the Wald test. It uses a cutoff from the standard normal distribution, and I check how well that cutoff controls false positives in finite samples.
+In the middle is the Wald test, which I use as my baseline. It asks whether the estimated MI difference is large compared with its standard error. To decide how large is large enough, it uses a cutoff from the standard normal distribution.
 
-On the right, Welch's test compares two means using a cutoff from a Student t distribution to allow for uncertainty in the estimated standard error. To adapt that approach to MI, I use the Welch–Satterthwaite rule to choose the degrees of freedom. For that, I'll need an MI-specific approximation for how much the variance estimate itself varies from sample to sample.
+On the right, we have Welch's test. In its original form, it compares two means using a cutoff from a Student t distribution to allow for uncertainty in the estimated standard error. My main contribution in this thesis is to adapt Welch's test to compare MI. I use the Welch–Satterthwaite rule to choose the degrees of freedom, and for that I need an MI-specific approximation for how much the variance estimate itself varies from sample to sample.
 
 The bottom row sums up my contributions. I work out how changes in the table affect the variance estimate, use that result to build the Expanded Welch test, and check how both the approximation and the test perform in simulations.
 
@@ -26,7 +26,7 @@ The bottom row sums up my contributions. I work out how changes in the table aff
 
 Let's put those ideas together and look at how the two tests work. In the box at the top, both tests start with the estimated MI of P minus the estimated MI of Q. They correct for the leading bias and divide by the estimated standard error.
 
-In the second equation, V-hat estimates the variance of pointwise MI. Dividing V-hat by the sample size estimates the sampling variance of the MI estimator. Since the samples are independent, we add those two estimates to get the squared standard error.
+In the second equation, V-hat estimates the variance of pointwise MI. So if we divide V-hat by the sample size, we get an estimate of the sampling variance of the MI estimator. Since the samples are independent, we add those two estimates to get the squared standard error.
 
 The boxes below the equations show the approximate null distribution for each test. For the Wald test, we compare the statistic to the standard normal distribution. At the 5% significance level, its cutoff is about 1.96 in either direction.
 
